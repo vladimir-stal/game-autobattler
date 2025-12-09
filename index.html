@@ -2,13 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/game-autobattler/vite.svg" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GH PAGES TEST</title>
-    <script type="module" crossorigin src="/game-autobattler/assets/index-CKDEH73e.js"></script>
-    <link rel="stylesheet" crossorigin href="/game-autobattler/assets/index-COcDBgFa.css">
+    <title>Colyseus + Discord (Vite + TS)</title>
+
+    <!--
+      The JavaScript code below dynamically set ".proxy/" as base url.
+      This is meant to allow testing the app both locally and on from the Discord Activity iframe.
+
+      If you're making a specific build for Discord Activities, you can use the tag directly instead:
+
+        <base href=".proxy" />
+    -->
+    <script type="text/javascript">
+      if (window.location.href.includes(".discordsays.com")) {
+        document.write('<base href=".proxy/" />');
+      }
+    </script>
+    <!-- / -->
+
+    <script type="module" crossorigin src="/game-autobattler/assets/index-8hfahTfH.js"></script>
+    <link rel="stylesheet" crossorigin href="/game-autobattler/assets/index-DnoiwlIv.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" style="background-color: black;"></div>
   </body>
 </html>
+
+
