@@ -1,4 +1,5 @@
 import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
+import { i18n } from "./consts";
 import {
     IMAGE_ITEM_ARMOR_1,
     IMAGE_ITEM_BOOTS_1,
@@ -19,7 +20,8 @@ import {
 
 export const basic_hat_2: IItem = {
     id: "basic_hat",
-    name: "Helmet(2)",
+    //name: "Helmet(2)",
+    name: i18n.items.basic_hat + "(2)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -30,7 +32,8 @@ export const basic_hat_2: IItem = {
 
 export const basic_hat: IItem = {
     id: "basic_hat",
-    name: "Helmet",
+    //name: "Helmet",
+    name: i18n.items.basic_hat,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,
@@ -44,7 +47,8 @@ export const basic_hat: IItem = {
 
 export const basic_jacket_2: IItem = {
     id: "basic_jacket",
-    name: "Armor(2)",
+    //name: "Armor(2)",
+    name: i18n.items.basic_jacket + "(2)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -55,7 +59,8 @@ export const basic_jacket_2: IItem = {
 
 export const basic_jacket: IItem = {
     id: "basic_jacket",
-    name: "Armor",
+    //name: "Armor",
+    name: i18n.items.basic_jacket,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,
@@ -69,7 +74,8 @@ export const basic_jacket: IItem = {
 
 export const basic_pants_2: IItem = {
     id: "basic_pants",
-    name: "Pants(2)",
+    //name: "Pants(2)",
+    name: i18n.items.basic_pants + "(2)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -83,7 +89,8 @@ export const basic_pants_2: IItem = {
 
 export const basic_pants: IItem = {
     id: "basic_pants",
-    name: "Pants",
+    //name: "Pants",
+    name: i18n.items.basic_pants,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,
@@ -100,7 +107,8 @@ export const basic_pants: IItem = {
 
 export const basic_boots_2: IItem = {
     id: "basic_boots",
-    name: "Boots(2)",
+    //name: "Boots(2)",
+    name: i18n.items.basic_boots + "(2)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -111,7 +119,8 @@ export const basic_boots_2: IItem = {
 
 export const basic_boots: IItem = {
     id: "basic_boots",
-    name: "Boots",
+    //name: "Boots",
+    name: i18n.items.basic_boots,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,
@@ -125,7 +134,8 @@ export const basic_boots: IItem = {
 
 export const basic_ring_regen: IItem = {
     id: "basic_ring_regen",
-    name: "Regen ring",
+    //name: "Regen ring",
+    name: i18n.items.basic_ring_regen,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,
@@ -138,7 +148,8 @@ export const basic_ring_regen: IItem = {
 
 export const basic_ring_damage: IItem = {
     id: "basic_ring_damage",
-    name: "Damage ring",
+    //name: "Damage ring",
+    name: i18n.items.basic_ring_damage,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,
@@ -151,7 +162,8 @@ export const basic_ring_damage: IItem = {
 
 export const basic_gold_bag: IItem = {
     id: "basic_gold_bag",
-    name: "Gold bag",
+    //name: "Gold bag",
+    name: i18n.items.basic_gold_bag,
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -164,8 +176,9 @@ export const basic_gold_bag: IItem = {
 // BASIC EXP BAG
 
 export const basic_exp_bag: IItem = {
-    id: "basic_exp_bag",
-    name: "Exp ring",
+    id: "basic_exp_ring",
+    //name: "Exp ring",
+    name: i18n.items.basic_exp_ring,
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -179,7 +192,8 @@ export const basic_exp_bag: IItem = {
 
 export const basic_heal_2: IItem = {
     id: "basic_heal",
-    name: "Heal ring(2)",
+    //name: "Heal ring(2)",
+    name: i18n.items.basic_heal + "(2)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -191,7 +205,8 @@ export const basic_heal_2: IItem = {
 
 export const basic_heal: IItem = {
     id: "basic_heal",
-    name: "Heal ring",
+    //name: "Heal ring",
+    name: i18n.items.basic_heal,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,

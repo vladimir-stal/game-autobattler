@@ -11,6 +11,7 @@ import {
     IMobsVariants,
     THeroSkills,
     EHeroSkillType,
+    AnimationType,
 } from "../types";
 import { basic_boots, basic_hat, basic_jacket, basic_pants } from "./commonItemConsts";
 import { itemGoblinBoneDagger, itemGoblinSilverCoin, itemPeasantPitchfork } from "./mobItemConsts";
@@ -47,6 +48,7 @@ const minotaurSkills: THeroSkills = [
                         },
                     ],
                 },
+                animation: AnimationType.BOSS_MINOTAUR_SPELL,
             },
         ],
     },
@@ -64,6 +66,7 @@ const minotaurSkills: THeroSkills = [
                 valueType: "number",
                 targetType: ETargetType.ALL_ENEMIES,
                 attackType: EHeroAttackType.PHYSICAL,
+                animation: AnimationType.BOSS_MINOTAUR_STOMP,
             },
         ],
     },
@@ -85,7 +88,7 @@ export const bossMinotaur: IUnit = {
     basicPhysicalPower: 0,
     name: "Minotaur",
     id: "BOSSMINOTAUR",
-    skills: minotaurSkills,
+    skills: [], //minotaurSkills,
     items: [],
     level: 5,
     exp: 0,

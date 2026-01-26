@@ -29,11 +29,19 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
         rect.setInteractive();
         //rect.setInteractive(new Phaser.Geom.Rectangle(0, 0, 30, 30), Phaser.Geom.Rectangle.Contains);
         rect.on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-            this.hint.show();
+            if (!this.skillSet) {
+                return;
+                //this.hint.show();
+            }
+            const { x, y } = this.getWorldPoint();
+            this.gameScene.hintPanel.showSkill(x + 40, y, this.skillSet);
         })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-                //if (this.skillSet) {
-                this.hint.hide();
+                if (!this.skillSet) {
+                    return;
+                    //this.hint.hide();
+                }
+                this.gameScene.hintPanel.hide();
                 //}
             })
             .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {

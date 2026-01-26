@@ -2,7 +2,7 @@ import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
 import { ECardType, EHeroClass, ICard, IUnit } from "../../../types";
 import { CardSlot } from "../CardSlot";
-import { colors } from "../../consts";
+import { colors, i18n } from "../../consts";
 import { createUnit } from "../../utils/unitUtils";
 import { Card } from "../Card";
 import { getRandomArrayItems } from "../../utils/commonUtils";
@@ -78,21 +78,26 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
     renderCard(mcHeroClass: EHeroClass, index: number) {
         this.renderImage(mcHeroClass, index);
 
-        const mcClassTextObject = this.scene.add.text(150 + index * 200, 0, mcHeroClass);
+        const mcHero = getMcHeroByClass(mcHeroClass);
+
+        const mcClassTextObject = this.scene.add.text(150 + index * 200, 0, mcHero.name);
         this.add(mcClassTextObject);
 
         // show/hide skill description
         const rect = this.gameScene.add.rectangle(130 + index * 200, 0, 150, 350, colors.BLACK, 0).setOrigin(0, 0);
         rect.setInteractive()
             .on("pointerover", () => {
-                skillTextObject.setVisible(true);
+                //skillTextObject.setVisible(true);
+                const { x, y } = this.getWorldPoint();
+                this.gameScene.hintPanel.showUnit(x + index * 200 + 280, y, mcHero, { isSkills: true });
             })
             .on("pointerout", () => {
-                skillTextObject.setVisible(false);
+                //skillTextObject.setVisible(false);
+                this.gameScene.hintPanel.hide();
             });
         this.add(rect);
 
-        const mcSkill = getMcHeroByClass(mcHeroClass).skills[0];
+        const mcSkill = mcHero.skills[0];
         const skillTextObject = this.scene.add.text(150 + index * 200, 220, mcSkill.name + "\n" + mcSkill.desc, {
             fontSize: 12,
             color: "#dddddd",
@@ -107,7 +112,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
             this.add(hcTag);
         });
 
-        const upgradeButton = this.scene.add.text(150 + index * 200, 300, "UPGRADE", {
+        const upgradeButton = this.scene.add.text(150 + index * 200, 300, i18n.ui.UPGRADE, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#aaffaa",
@@ -150,7 +155,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
 
     renderButtons() {
         //if (this.isRerollAvailable) {
-        const rerollButton = this.scene.add.text(120, -30, "REROLL", {
+        const rerollButton = this.scene.add.text(120, -30, i18n.ui.REROLL, {
             //fontFamily: "Arial Black",
             fontSize: 18,
             color: "#aaffaa",

@@ -1,11 +1,15 @@
 import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { i18n } from "../consts";
+import { IMAGE_SKILL_HEAL_1 } from "../utils/imageLoadUtil";
 
 // HEAL SELF
 
 export const healSelf_3: IHeroSkillSet = {
     id: "healSelf",
-    name: "Heal self(3)",
-    desc: "Heal [8] self",
+    //name: "Heal self(3)",
+    //desc: "Heal [8] self",
+    name: i18n.skills.basic.healSelf.name + "(3)",
+    desc: i18n.skills.basic.healSelf.desc3,
     level: 3,
     heroClasses: [EHeroClass.PRIEST],
     skills: [
@@ -16,12 +20,15 @@ export const healSelf_3: IHeroSkillSet = {
             targetType: ETargetType.SELF,
         },
     ],
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 export const healSelf_2: IHeroSkillSet = {
     id: "healSelf",
-    name: "Heal self(2)",
-    desc: "Heal [6] self",
+    //name: "Heal self(2)",
+    //desc: "Heal [6] self",
+    name: i18n.skills.basic.healSelf.name + "(2)",
+    desc: i18n.skills.basic.healSelf.desc2,
     level: 2,
     heroClasses: [EHeroClass.PRIEST],
     skills: [
@@ -33,12 +40,15 @@ export const healSelf_2: IHeroSkillSet = {
         },
     ],
     nextLevel: healSelf_3,
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 export const healSelf: IHeroSkillSet = {
     id: "healSelf",
-    name: "Heal self",
-    desc: "Heal [4] self",
+    //name: "Heal self",
+    //desc: "Heal [4] self",
+    name: i18n.skills.basic.healSelf.name,
+    desc: i18n.skills.basic.healSelf.desc1,
     level: 1,
     heroClasses: [EHeroClass.PRIEST],
     skills: [
@@ -50,14 +60,17 @@ export const healSelf: IHeroSkillSet = {
         },
     ],
     nextLevel: healSelf_2,
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 // HEAL FIRST
 
 export const healFirst_3: IHeroSkillSet = {
     id: "healFirst",
-    name: "Heal first(3)",
-    desc: "Heal [7] first ally",
+    //name: "Heal first(3)",
+    //desc: "Heal [7] first ally",
+    name: i18n.skills.basic.healFirst.name + "(3)",
+    desc: i18n.skills.basic.healFirst.desc3,
     level: 3,
     heroClasses: [EHeroClass.PRIEST],
     skills: [
@@ -68,12 +81,15 @@ export const healFirst_3: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ALLY,
         },
     ],
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 export const healFirst_2: IHeroSkillSet = {
     id: "healFirst",
-    name: "Heal first(2)",
-    desc: "Heal [5] first ally",
+    //name: "Heal first(2)",
+    //desc: "Heal [5] first ally",
+    name: i18n.skills.basic.healFirst.name + "(2)",
+    desc: i18n.skills.basic.healFirst.desc2,
     level: 2,
     heroClasses: [EHeroClass.PRIEST],
     skills: [
@@ -84,12 +100,15 @@ export const healFirst_2: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ALLY,
         },
     ],
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 export const healFirst: IHeroSkillSet = {
     id: "healFirst",
-    name: "Heal first",
-    desc: "Heal [3] first ally",
+    //name: "Heal first",
+    //desc: "Heal [3] first ally",
+    name: i18n.skills.basic.healFirst.name,
+    desc: i18n.skills.basic.healFirst.desc1,
     level: 1,
     heroClasses: [EHeroClass.PRIEST],
     skills: [
@@ -101,6 +120,7 @@ export const healFirst: IHeroSkillSet = {
         },
     ],
     nextLevel: healFirst_2,
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 // HEAL LOWEST HP ALLY
@@ -120,6 +140,7 @@ export const healLowHpSkill_3: IHeroSkillSet = {
             mpScale: 100,
         },
     ],
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 export const healLowHpSkill_2: IHeroSkillSet = {
@@ -138,6 +159,7 @@ export const healLowHpSkill_2: IHeroSkillSet = {
         },
     ],
     nextLevel: healLowHpSkill_3,
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 export const healLowHpSkill: IHeroSkillSet = {
@@ -156,6 +178,7 @@ export const healLowHpSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: healLowHpSkill_2,
+    image: IMAGE_SKILL_HEAL_1,
 };
 
 //

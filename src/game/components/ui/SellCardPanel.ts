@@ -1,6 +1,6 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
-import { colors } from "../../consts";
+import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
 import { ECardType } from "../../../types";
 
@@ -57,7 +57,7 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
 
         //this.gameScene.addCardSlot(cardSlot);
 
-        const textObject = this.scene.add.text(50, 60, "SELL", {
+        const textObject = this.scene.add.text(30, 60, i18n.ui.SELL, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#888888",

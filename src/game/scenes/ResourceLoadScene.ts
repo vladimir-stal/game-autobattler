@@ -1,8 +1,7 @@
-import { ERoomStatus, EScene } from "../../types";
-import { EventBus, EventType } from "../EventBus";
+import { EScene } from "../../types";
 import { Cameras, GameObjects, Scene } from "phaser";
-import { loadImages } from "../utils/imageLoadUtils";
-import { loadSounds } from "../utils/soundLoadUtils";
+import { loadImages } from "../utils/imageLoadUtil";
+import { createAnimations } from "../utils/animationUtils";
 
 export class ResourceLoadScene extends Scene {
     camera: Cameras.Scene2D.Camera;
@@ -17,24 +16,17 @@ export class ResourceLoadScene extends Scene {
     }
 
     preload() {
-        //loadImages(this);
-        //loadSounds(this);
+        loadImages(this);
+        // loadSounds(this);
     }
 
     create() {
-        //createAnimations(this);
+        createAnimations(this);
 
-        // when all players load resources
-        EventBus.on(EventType.ROOM_STATUS_CHANGED, (status: ERoomStatus) => {
-            if (status === ERoomStatus.PLATFORM_LOADED) {
-                setTimeout(() => {
-                    this.scene.stop(EScene.GAME_LOADING);
-                    this.scene.stop();
-                    this.scene.start(EScene.GAME);
-                }, 1000);
-            }
-        });
+        console.log("RESOURCE LOADED! CHANGE SCENE!");
 
-        EventBus.emit(EventType.SCENE_PLATFORM_LOADED);
+        this.scene.stop(EScene.LOBBY_LOADING);
+        this.scene.stop();
+        this.scene.start(EScene.GAME);
     }
 }

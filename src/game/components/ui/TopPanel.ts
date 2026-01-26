@@ -1,5 +1,6 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
+import { i18n } from "../../consts";
 
 /** UI panel at the top of the window */
 export class TopPanel extends Phaser.GameObjects.Container {
@@ -17,6 +18,7 @@ export class TopPanel extends Phaser.GameObjects.Container {
     startSelectButton: GameObjects.Text;
     nextRoomButton: GameObjects.Text;
     //calculateBattleButton: GameObjects.Text;
+    restartButton: GameObjects.Text;
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -30,7 +32,8 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
     renderHp() {
         const hp = this.gameScene.leaderController.hp;
-        this.hpText = this.scene.add.text(50, 150, "HP: " + hp, {
+        const text = i18n.ui.HP + ": ";
+        this.hpText = this.scene.add.text(50, 150, text + hp, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ccffcc",
@@ -41,14 +44,16 @@ export class TopPanel extends Phaser.GameObjects.Container {
     renderGold() {
         const { totalGold, income } = this.gameScene.bankController;
 
-        this.goldText = this.scene.add.text(20, 20, "GOLD: " + totalGold, {
+        const goldText = i18n.ui.GOLD + ": " + totalGold;
+        this.goldText = this.scene.add.text(20, 20, goldText, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ffffff",
         });
         this.add(this.goldText);
 
-        this.incomeText = this.scene.add.text(120, 20, "INCOME: " + income, {
+        const incomeText = i18n.ui.INCOME + ": " + income;
+        this.incomeText = this.scene.add.text(150, 20, incomeText, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ffffff",
@@ -59,14 +64,16 @@ export class TopPanel extends Phaser.GameObjects.Container {
     renderDay() {
         const { day, hour } = this.gameScene.selectController;
 
-        this.dayText = this.scene.add.text(20, 50, "DAY: " + day, {
+        const dayText = i18n.ui.DAY + ": " + day;
+        this.dayText = this.scene.add.text(20, 50, dayText, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ffffff",
         });
         this.add(this.dayText);
 
-        this.hourText = this.scene.add.text(120, 50, "HOUR: " + hour, {
+        const hourText = i18n.ui.HOUR + ": " + hour;
+        this.hourText = this.scene.add.text(150, 50, hourText, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ffffff",
@@ -75,32 +82,10 @@ export class TopPanel extends Phaser.GameObjects.Container {
     }
 
     renderButtons() {
-        // START DUEL BUTTON
-
-        // this.startDuelButton = this.scene.add.text(700, 20, "DUEL!", {
-        //     fontFamily: "Arial Black",
-        //     fontSize: 18,
-        //     color: "#ffffff",
-        // });
-
-        // this.startDuelButton
-        //     .setInteractive(new Phaser.Geom.Rectangle(0, 0, 90, 30), Phaser.Geom.Rectangle.Contains)
-        //     .on("pointerdown", () => {
-        //         this.gameScene.changeToDuelPhase();
-        //     })
-        //     .on("pointerover", () => {
-        //         this.startDuelButton.setColor("#FFFFFF");
-        //     })
-        //     .on("pointerout", () => {
-        //         this.startDuelButton.setColor("#AAFFAA");
-        //     });
-
-        // this.add(this.startDuelButton);
-
         // START SELECTION BUTTON
 
         this.startSelectButton = this.scene.add
-            .text(700, 20, "SELECT!", {
+            .text(700, 20, i18n.ui.SKIP, {
                 fontFamily: "Arial Black",
                 fontSize: 18,
                 color: "#ffffff",
@@ -109,7 +94,6 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
         this.startSelectButton
             .setInteractive()
-            //.setInteractive(new Phaser.Geom.Rectangle(0, 0, 90, 30), Phaser.Geom.Rectangle.Contains)
             .on("pointerdown", () => {
                 this.gameScene.battlePanel.skipBattle();
                 this.gameScene.changeToSelectPhase();
@@ -126,7 +110,7 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
         // NEXT ROOM BUTTON
 
-        this.nextRoomButton = this.scene.add.text(600, 20, "NEXT ROOM", {
+        this.nextRoomButton = this.scene.add.text(600, 20, i18n.ui.NEXT_ROOM, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ffffff",
@@ -137,8 +121,6 @@ export class TopPanel extends Phaser.GameObjects.Container {
             .on("pointerdown", () => {
                 this.gameScene.selectController.showNextRoomSelect();
                 this.gameScene.cardUpgradePanel.hide();
-                //this.gameScene.roomSelectPanel.show();
-                //this.gameScene.cardSelectPanel.hide();
             })
             .on("pointerover", () => {
                 this.nextRoomButton.setColor("#FFFFFF");
@@ -149,49 +131,46 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
         this.add(this.nextRoomButton);
 
-        // CALCULATE BATTLE BUTTON
+        // RESTART BUTTON
 
-        // this.calculateBattleButton = this.scene.add
-        //     .text(400, 20, "CALCULATE", {
-        //         fontFamily: "Arial Black",
-        //         fontSize: 18,
-        //         color: "#ffffff",
-        //     })
-        //     .setVisible(false);
+        this.restartButton = this.scene.add.text(1500, 20, i18n.ui.RESTART_GAME, {
+            fontFamily: "Arial Black",
+            fontSize: 18,
+            color: "#ffffff",
+        });
+        this.restartButton
+            .setInteractive()
+            .on("pointerdown", () => {
+                this.gameScene.restartGame();
+            })
+            .on("pointerover", () => {
+                this.nextRoomButton.setColor("#FFFFFF");
+            })
+            .on("pointerout", () => {
+                this.nextRoomButton.setColor("#AAFFAA");
+            });
 
-        // this.calculateBattleButton
-        //     .setInteractive(new Phaser.Geom.Rectangle(0, 0, 150, 30), Phaser.Geom.Rectangle.Contains)
-        //     .on("pointerdown", () => {
-        //         this.gameScene.battleController.start(this.gameScene.battlePanel.playerUnits, this.gameScene.battlePanel.enemyUnits, false, 1);
-        //     })
-        //     .on("pointerover", () => {
-        //         this.calculateBattleButton.setColor("#FFFFFF");
-        //     })
-        //     .on("pointerout", () => {
-        //         this.calculateBattleButton.setColor("#AAFFAA");
-        //     });
-
-        // this.add(this.calculateBattleButton);
+        this.add(this.restartButton);
     }
 
     setBank(value: number) {
-        this.goldText.setText("GOLD: " + value);
+        this.goldText.setText(i18n.ui.GOLD + ": " + value);
     }
 
     setIncome(value: number) {
-        this.incomeText.setText("INCOME: " + value);
+        this.incomeText.setText(i18n.ui.INCOME + ": " + value);
     }
 
     setDay(day: number) {
-        this.dayText.setText("DAY: " + day);
+        this.dayText.setText(i18n.ui.DAY + ": " + day);
     }
 
     setHour(hour: number) {
-        this.hourText.setText("HOUR: " + hour);
+        this.hourText.setText(i18n.ui.HOUR + ": " + hour);
     }
 
     setHp(value: number) {
-        this.hpText.setText("HP: " + value);
+        this.hpText.setText(i18n.ui.HP + ": " + value);
     }
 
     changeToDuelPhase() {

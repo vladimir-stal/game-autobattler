@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { colors } from "../consts";
 import { ECardType, ICard, IHeroSkillSet, IItem, IUnit } from "../../types";
@@ -20,10 +20,11 @@ export class Card extends Phaser.GameObjects.Container {
     //upgradeButton: GameObjects.Text;
     onBuyPanel: boolean;
 
-    constructor(scene: GameScene, x: number, y: number, card: ICard, onBuyPanel: boolean) {
+    constructor(scene: GameScene, x: number, y: number, card: ICard, onBuyPanel: boolean, cardSlot?: CardSlot) {
         super(scene, x, y);
         this.gameScene = scene;
         this.card = card;
+        this.cardSlot = cardSlot;
         this.onBuyPanel = onBuyPanel;
         this.render();
     }
@@ -31,7 +32,20 @@ export class Card extends Phaser.GameObjects.Container {
     render() {
         this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0, 0);
         this.rect.setStrokeStyle(1, 0x777777);
+
+        this.rect.on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+            console.log("CARD ON OVER");
+        });
+
         this.add(this.rect);
+
+        // this.rect
+        //     .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+        //         console.log("IMAGE ON GAMEOBJECT_POINTER_OVER");
+        //     })
+        //     .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+        //         console.log("IMAGE ON GAMEOBJECT_POINTER_OUT");
+        //     });
 
         this.titleText = this.scene.add.text(-10, 10, this.title, { fontSize: 12, color: "#dddddd" });
         this.add(this.titleText);
@@ -48,9 +62,7 @@ export class Card extends Phaser.GameObjects.Container {
                 this.renderGoldCard();
                 break;
             case ECardType.ITEM:
-                {
-                    this.renderItemCard();
-                }
+                this.renderItemCard();
                 break;
             case ECardType.MOBS:
                 this.renderMobsCard();
@@ -74,9 +86,9 @@ export class Card extends Phaser.GameObjects.Container {
         this.titleText.setVisible(false);
         this.rect.setVisible(false);
 
-        console.log("renderHeroCard");
+        //console.log("renderHeroCard");
 
-        const heroCard = new UnitCard(this.gameScene, 0, 0, this, this.card.unit, !this.onBuyPanel, !this.onBuyPanel);
+        const heroCard = new UnitCard(this.gameScene, 0, 0, this, this.card.unit, !this.onBuyPanel, !this.onBuyPanel, this.cardSlot);
         this.add(heroCard);
     }
 
@@ -88,7 +100,7 @@ export class Card extends Phaser.GameObjects.Container {
 
         this.titleText.setVisible(false);
 
-        const itemCard = new ItemCard(this.gameScene, 0, 0, item);
+        const itemCard = new ItemCard(this.gameScene, 0, 0, item, this.cardSlot);
         this.add(itemCard);
     }
 
@@ -108,24 +120,8 @@ export class Card extends Phaser.GameObjects.Container {
 
         this.titleText.setVisible(false);
 
-        const skillCard = new SkillCard(this.gameScene, 0, 0, skill);
+        const skillCard = new SkillCard(this.gameScene, 0, 0, skill, this.cardSlot);
         this.add(skillCard);
-        // const { skill } = this.card;
-        // if (!skill) {
-        //     return;
-        // }
-
-        // const chainedText = skill.isChained ? " (CHAIN)" : "";
-
-        // this.titleText.setText(skill.name + chainedText + "\n\n" + skill.desc);
-        // this.titleText.setX(10);
-
-        // skill.heroClasses.forEach((heroClass, index) => {
-        //     const x = index * 60;
-        //     const y = 178;
-        //     const hcTag = new HeroClassTag(this.gameScene, x, y, heroClass);
-        //     this.add(hcTag);
-        // });
     }
 
     renderMobsCard() {

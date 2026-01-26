@@ -1,12 +1,14 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { i18n } from "../consts";
+import { IMAGE_SKILL_AXE_BUFF } from "../utils/imageLoadUtil";
 import { phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA X SELF
 
 const buffNextBaXSelf_3: IHeroSkillSet = {
     id: "buffNextBaX",
-    name: "Next BAx buff(3)",
-    desc: "Multiply x[1.8] self next basic attack",
+    name: i18n.skills.basic.buffNextBaX.name + "(3)",
+    desc: i18n.skills.basic.buffNextBaX.desc3, //"Multiply x[1.4] self next basic attack",
     level: 3,
     heroClasses: [EHeroClass.MASTER],
     skills: [
@@ -24,12 +26,13 @@ const buffNextBaXSelf_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_AXE_BUFF,
 };
 
 const buffNextBaXSelf_2: IHeroSkillSet = {
     id: "buffNextBaX",
-    name: "Next BAx buff(2)",
-    desc: "Multiply x[1.6] self next basic attack",
+    name: i18n.skills.basic.buffNextBaX.name + "(2)",
+    desc: i18n.skills.basic.buffNextBaX.desc2, //"Multiply x[1.4] self next basic attack",
     level: 2,
     heroClasses: [EHeroClass.MASTER],
     skills: [
@@ -48,12 +51,13 @@ const buffNextBaXSelf_2: IHeroSkillSet = {
         },
     ],
     nextLevel: buffNextBaXSelf_3,
+    image: IMAGE_SKILL_AXE_BUFF,
 };
 
 export const buffNextBaXSelf: IHeroSkillSet = {
     id: "buffNextBaX",
-    name: "Next BAx buff",
-    desc: "Multiply x[1.4] self next basic attack",
+    name: i18n.skills.basic.buffNextBaX.name,
+    desc: i18n.skills.basic.buffNextBaX.desc1, //"Multiply x[1.4] self next basic attack",
     level: 1,
     heroClasses: [EHeroClass.MASTER],
     skills: [
@@ -71,8 +75,9 @@ export const buffNextBaXSelf: IHeroSkillSet = {
             },
         },
     ],
-    isChained: true,
+    //isChained: true,
     nextLevel: buffNextBaXSelf_2,
+    image: IMAGE_SKILL_AXE_BUFF,
 };
 
 // BUFF NEXT BA IGNORE ARMOR

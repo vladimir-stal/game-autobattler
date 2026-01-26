@@ -11,13 +11,12 @@ export class BankController {
 
     constructor(scene: GameScene) {
         this.gameScene = scene;
-        this.totalGold = INITIAL_GOLD;
-        this.income = INTIAL_INCOME;
+        this.init();
     }
 
     init() {
-        //this.gameScene.topPanel.setTaxAmount(this.taxAmount);
-        //this.setTaxTimer();
+        this.totalGold = INITIAL_GOLD;
+        this.income = INTIAL_INCOME;
     }
 
     addToBank(value: number) {

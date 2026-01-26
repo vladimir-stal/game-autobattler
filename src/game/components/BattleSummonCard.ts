@@ -1,7 +1,7 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { colors } from "../consts";
-import { EStatusType, IBattleUnit, IBuff, IDebuff, ITotem, IUnit, THeroBattleAttribute } from "../../types";
+import { colors, i18n } from "../consts";
+import { EStatusType, IBattleUnit, IBuff, IDebuff, IHeroSkill, ITotem, IUnit, THeroBattleAttribute } from "../../types";
 import { IMAGE_TOTEM_ATTACK } from "../utils/imageLoadUtil";
 
 /** Card to show summoned unit or totem in battle  */
@@ -114,10 +114,13 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
     playHeal() {}
 
-    playTakeDamage(value: number, armorValue: number, status?: EStatusType, isCrit?: boolean, isEvasion?: boolean) {
+    playBuff(buff: IBuff) {}
+
+    playTakeDamage(value: number, armorValue: number, options: { status?: EStatusType; isCrit?: boolean; isEvasion?: boolean; skill?: IHeroSkill }) {
+        const { status, isCrit, isEvasion, skill } = options;
         this.changeHp(-value);
         const damageType = status || "DAMAGE";
-        this.setAction(`${damageType} ${value} ${isCrit ? " CRIT!" : ""} ${isEvasion ? " EVADE!" : ""}`);
+        this.setAction(`${damageType} ${value} ${isCrit ? " CRIT!" : ""} ${isEvasion ? " EVADE!" : ""} ${status || ""}`);
         this.actionRect.fillColor = colors.RED;
         if (armorValue > 0) {
             this.changeArmor(-armorValue);
@@ -143,9 +146,19 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         this.actionRect.fillColor = colors.GREEN;
     }
 
-    playAttrIncrease(value: number, attribute: THeroBattleAttribute) {
+    playAttrIncreaseTarget(value: number, attribute: THeroBattleAttribute) {
         this.setAction(attribute + " +" + value);
         this.changeAttribute(attribute, value);
+    }
+
+    playAttrDecreaseTarget(value: number, attribute: THeroBattleAttribute) {
+        this.setAction(attribute + " -" + value);
+        this.changeAttribute(attribute, -value);
+    }
+
+    playAttrIncrease(value: number, attribute: THeroBattleAttribute, skill?: IHeroSkill) {
+        //this.setAction(attribute + " +" + value);
+        //this.changeAttribute(attribute, value);
     }
 
     playAttrDecrease(value: number, attribute: THeroBattleAttribute) {
@@ -155,7 +168,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
     playDead() {
         this.isDead = true;
-        this.setAction("DEAD");
+        this.setAction(i18n.ui.DEAD);
         this.actionRect.fillColor = colors.BLACK;
 
         setTimeout(() => {
@@ -275,6 +288,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
                 break;
         }
     }
+
+    playApplyStatus(skill?: IHeroSkill) {}
 
     applyStatus(statusType: EStatusType, value: number) {}
 }

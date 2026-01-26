@@ -65,11 +65,11 @@ export const basicHeroAttributes: THeroAttribute[] = [
 
 export const PHYSICAL_RESIST_DESCREASE_DEBUFFS = [EDebuffType.PHYSICAL_RESIST_DECREASE, EDebuffType.MARK_HUNTER, EDebuffType.MARK_PREDATOR];
 
-export const basicClassHeroes: IUnit[] = //[masterHero, magicHero, wildHero].map((unit) => {
-    [bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, warriorHero, wildHero, summonHero].map((unit) => {
-        //[bardHero, masterHero, magicHero].map((unit) => {
-        return { ...unit };
-    });
+export const basicClassHeroes: IUnit[] = [necromancerHero, barbarianHero, paladinHero].map((unit) => {
+    //[bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, warriorHero, wildHero, summonHero].map((unit) => {
+    //[bardHero, masterHero, magicHero].map((unit) => {
+    return { ...unit };
+});
 
 export const mcClassHeroes: IUnit[] = [
     paladinHero,

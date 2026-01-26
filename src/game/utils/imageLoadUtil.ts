@@ -1,4 +1,8 @@
+import { Scene } from "phaser";
 import { GameScene } from "../scenes/GameScene";
+import { loadBasicHeroesImages } from "./load/basicHeroesImagesLoad";
+import { loadImagesMobs } from "./load/imageLoadMobs";
+import { loadMcHeroesImages } from "./load/mcHeroesImagesLoad";
 
 // UNITS
 
@@ -7,7 +11,7 @@ import { GameScene } from "../scenes/GameScene";
 //export const IMAGE_SHAMAN = "IMAGE_SHAMAN";
 export const IMAGE_SHAMAN_RIGHT = "IMAGE_SHAMAN_RIGHT";
 //export const IMAGE_SHAMAN_ATTACK = "IMAGE_SHAMAN_ATTACK";
-export const IMAGE_MAGIC_ATTACK = "IMAGE_MAGIC_ATTACK";
+
 //export const IMAGE_PRIEST = "IMAGE_PRIEST";
 //export const IMAGE_BARD = "IMAGE_BARD";
 //export const IMAGE_MAGIC = "IMAGE_MAGIC";
@@ -16,29 +20,86 @@ export const IMAGE_MAGIC_ATTACK = "IMAGE_MAGIC_ATTACK";
 //export const IMAGE_SUMMON = "IMAGE_SUMMON";
 //
 // BASIC HEROES
-// IDLE
-export const IMAGE_MAGIC_IDLE = "IMAGE_MAGIC_IDLE";
+//
+//
+// BARD
 export const IMAGE_BARD_IDLE = "IMAGE_BARD_IDLE";
-export const IMAGE_MASTER_IDLE = "IMAGE_MASTER_IDLE";
-export const IMAGE_ORDER_IDLE = "IMAGE_ORDER_IDLE";
-export const IMAGE_SUMMON_IDLE = "IMAGE_SUMMON_IDLE";
-export const IMAGE_PRIEST_IDLE = "IMAGE_PRIEST_IDLE";
+export const IMAGE_BARD_IDLE_BATTLE = "IMAGE_BARD_IDLE_BATTLE";
+export const IMAGE_BARD_ATTACK = "IMAGE_BARD_ATTACK";
+export const IMAGE_BARD_DEFEATED = "IMAGE_BARD_DEFEATED";
+export const IMAGE_BARD_BUFF = "IMAGE_BARD_BUFF";
+export const IMAGE_BARD_HURT = "IMAGE_BARD_HURT";
+//
+// DARK
 export const IMAGE_DARK_IDLE = "IMAGE_DARK_IDLE";
-export const IMAGE_WILD_IDLE = "IMAGE_WILD_IDLE";
-export const IMAGE_WARRIOR_IDLE = "IMAGE_WARRIOR_IDLE";
-// ATTACK
-export const IMAGE_PRIEST_ATTACK = "IMAGE_PRIEST_ATTACK";
-export const IMAGE_WARRIOR_ATTACK = "IMAGE_WARRIOR_ATTACK";
-export const IMAGE_WILD_ATTACK = "IMAGE_WILD_ATTACK";
-export const IMAGE_SUMMON_ATTACK = "IMAGE_SUMMON_ATTACK";
+export const IMAGE_DARK_IDLE_BATTLE = "IMAGE_DARK_IDLE_BATTLE";
 export const IMAGE_DARK_ATTACK = "IMAGE_DARK_ATTACK";
-export const IMAGE_ORDER_ATTACK = "IMAGE_ORDER_ATTACK";
+export const IMAGE_DARK_SPELL = "IMAGE_DARK_SPELL";
+export const IMAGE_DARK_DEFEATED = "IMAGE_DARK_DEFEATED";
+export const IMAGE_DARK_HURT = "IMAGE_DARK_HURT";
+//
+// MAGIC
+export const IMAGE_MAGIC_IDLE = "IMAGE_MAGIC_IDLE";
+export const IMAGE_MAGIC_IDLE_BATTLE_0 = "IMAGE_MAGIC_IDLE_BATTLE_0";
+export const IMAGE_MAGIC_ATTACK = "IMAGE_MAGIC_ATTACK";
+export const IMAGE_MAGIC_SPELL = "IMAGE_MAGIC_SPELL";
+export const IMAGE_MAGIC_DEFEATED = "IMAGE_MAGIC_DEFEATED";
+export const IMAGE_MAGIC_HURT = "IMAGE_MAGIC_HURT";
+
+//
+// MASTER
+export const IMAGE_MASTER_IDLE = "IMAGE_MASTER_IDLE";
+export const IMAGE_MASTER_IDLE_BATTLE = "IMAGE_MASTER_IDLE_BATTLE";
 export const IMAGE_MASTER_ATTACK = "IMAGE_MASTER_ATTACK";
-// HEAL
+export const IMAGE_MASTER_DEFEATED = "IMAGE_MASTER_DEFEATED";
+export const IMAGE_MASTER_HURT = "IMAGE_MASTER_HURT";
+export const IMAGE_MASTER_BUFF = "IMAGE_MASTER_BUFF";
+//ORDER
+//
+export const IMAGE_ORDER_IDLE = "IMAGE_ORDER_IDLE";
+export const IMAGE_ORDER_IDLE_BATTLE = "IMAGE_ORDER_IDLE_BATTLE";
+export const IMAGE_ORDER_IDLE_BATTLE_0 = "IMAGE_ORDER_IDLE_BATTLE_0";
+export const IMAGE_ORDER_HURT = "IMAGE_ORDER_HURT";
+export const IMAGE_ORDER_ATTACK = "IMAGE_ORDER_ATTACK";
+export const IMAGE_ORDER_SHIELD_BUFF = "IMAGE_ORDER_SHIELD_BUFF";
+export const IMAGE_ORDER_DEFEATED = "IMAGE_ORDER_DEFEATED";
+//
+// PRIEST
+export const IMAGE_PRIEST_IDLE = "IMAGE_PRIEST_IDLE";
+export const IMAGE_PRIEST_IDLE_BATTLE = "IMAGE_PRIEST_IDLE_BATTLE";
+export const IMAGE_PRIEST_ATTACK = "IMAGE_PRIEST_ATTACK";
 export const IMAGE_PRIEST_HEAL = "IMAGE_PRIEST_HEAL";
+export const IMAGE_PRIEST_DEFEATED = "IMAGE_PRIEST_DEFEATED";
+export const IMAGE_PRIEST_HURT = "IMAGE_PRIEST_HURT";
+//
+// SUMMON
+export const IMAGE_SUMMON_IDLE = "IMAGE_SUMMON_IDLE";
+export const IMAGE_SUMMON_IDLE_BATTLE = "IMAGE_SUMMON_IDLE_BATTLE";
+export const IMAGE_SUMMON_ATTACK = "IMAGE_SUMMON_ATTACK";
+export const IMAGE_SUMMON_DEFEATED = "IMAGE_SUMMON_DEFEATED";
+export const IMAGE_SUMMON_SPELL = "IMAGE_SUMMON_SPELL";
+export const IMAGE_SUMMON_HURT = "IMAGE_SUMMON_HURT";
+//
+// WARRIOR
+export const IMAGE_WARRIOR_IDLE = "IMAGE_WARRIOR_IDLE";
+export const IMAGE_WARRIOR_IDLE_BATTLE = "IMAGE_WARRIOR_IDLE_BATTLE";
+export const IMAGE_WARRIOR_ATTACK = "IMAGE_WARRIOR_ATTACK";
+export const IMAGE_WARRIOR_BUFF_REGEN = "IMAGE_WARRIOR_BUFF_REGEN";
+export const IMAGE_WARRIOR_DEFEATED = "IMAGE_WARRIOR_DEFEATED";
+export const IMAGE_WARRIOR_HURT = "IMAGE_WARRIOR_HURT";
+//
+// WILD
+export const IMAGE_WILD_IDLE = "IMAGE_WILD_IDLE";
+export const IMAGE_WILD_IDLE_BATTLE = "IMAGE_WILD_IDLE_BATTLE";
+export const IMAGE_WILD_DEFEATED = "IMAGE_WILD_DEFEATED";
+export const IMAGE_WILD_BUFF_GREEN = "IMAGE_WILD_BUFF_GREEN";
+export const IMAGE_WILD_ATTACK = "IMAGE_WILD_ATTACK";
+export const IMAGE_WILD_HURT = "IMAGE_WILD_HURT";
 //
 //
-// MC HEROES
+//
+//
+//////////// MC HEROES //////////////////////////////////////////////////////////////
 export const IMAGE_NECROMANCER = "IMAGE_NECROMANCER";
 export const IMAGE_PALADIN = "IMAGE_PALADIN";
 export const IMAGE_MONK = "IMAGE_MONK";
@@ -74,14 +135,18 @@ export const IMAGE_EXORCIST = "IMAGE_EXORCIST";
 export const IMAGE_INQUISITOR = "IMAGE_INQUISITOR";
 export const IMAGE_DUELIST = "IMAGE_DUELIST";
 export const IMAGE_BISHOP = "IMAGE_BISHOP";
+export const IMAGE_MAGIC_BARD = "IMAGE_MAGIC_BARD";
 // MC ANIMATION
-export const IMAGE_SAMURAI_IDLE = "IMAGE_SAMURAI_IDLE";
-
 //
-
-//export const IMAGE_MAGIC_DEAD = "IMAGE_MAGIC_DEAD";
-//export const IMAGE_SUMMON_DEAD = "IMAGE_SUMMON_DEAD";
-//export const IMAGE_WARRIOR_DEAD = "IMAGE_WARRIOR_DEAD";
+// BARBARIAN
+export const IMAGE_BARBARIAN_IDLE = "IMAGE_BARBARIAN_IDLE";
+export const IMAGE_BARBARIAN_BATTLE_IDLE = "IMAGE_BARBARIAN_BATTLE_IDLE";
+export const IMAGE_BARBARIAN_ATTACK = "IMAGE_BARBARIAN_ATTACK";
+//
+// SAMURAI
+export const IMAGE_SAMURAI_IDLE = "IMAGE_SAMURAI_IDLE";
+export const IMAGE_SAMURAI_BATTLE_IDLE = "IMAGE_SAMURAI_BATTLE_IDLE";
+export const IMAGE_SAMURAI_ATTACK = "IMAGE_SAMURAI_ATTACK";
 
 export const IMAGE_FISHMAN = "IMAGE_FISHMAN";
 
@@ -90,14 +155,13 @@ export const IMAGE_FISHMAN = "IMAGE_FISHMAN";
 export const IMAGE_LEADER_1 = "IMAGE_LEADER_1";
 export const IMAGE_LEADER_1_IDLE = "IMAGE_LEADER_1_IDLE";
 
-// MOBS
-
-export const IMAGE_SKELETON_1 = "IMAGE_SKELETON_1";
-export const IMAGE_GOBLIN_1 = "IMAGE_GOBLIN_1";
-export const IMAGE_PESANT_1 = "IMAGE_PESANT_1";
-
 // BOSSES
 export const IMAGE_BOSS_MINOTAUR = "IMAGE_BOSS_MINOTAUR";
+export const IMAGE_BOSS_MINOTAUR_IDLE = "IMAGE_BOSS_MINOTAUR_IDLE";
+export const IMAGE_BOSS_MINOTAUR_ATTACK = "IMAGE_BOSS_MINOTAUR_ATTACK";
+export const IMAGE_BOSS_MINOTAUR_STOMP = "IMAGE_BOSS_MINOTAUR_STOMP";
+export const IMAGE_BOSS_MINOTAUR_SPELL = "IMAGE_BOSS_MINOTAUR_SPELL";
+export const IMAGE_BOSS_MINOTAUR_HURT = "IMAGE_BOSS_MINOTAUR_HURT";
 
 // TOTEMS
 
@@ -144,10 +208,12 @@ export const IMAGE_ITEM_BOOK_MAGIC = "IMAGE_ITEM_BOOK_MAGIC";
 
 export const IMAGE_ITEM_HOLY_GLOVES_1 = "IMAGE_ITEM_HOLY_GLOVES_1";
 export const IMAGE_ITEM_MAGIC_GLOVES_1 = "IMAGE_ITEM_MAGIC_GLOVES_1";
+// mob items
 export const IMAGE_ITEM_GOBLIN_SILVER_COIN = "IMAGE_ITEM_GOBLIN_SILVER_COIN";
 export const IMAGE_ITEM_GOBLIN_GOLD_COIN = "IMAGE_ITEM_GOBLIN_GOLD_COIN";
 export const IMAGE_ITEM_GOBLIN_BONE_DAGGER = "IMAGE_ITEM_GOBLIN_BONE_DAGGER";
 export const IMAGE_ITEM_PEASANTS_PITCHFORK = "IMAGE_ITEM_PEASANTS_PITCHFORK";
+export const IMAGE_ITEM_REGEN_MANTLE = "IMAGE_ITEM_REGEN_MANTLE";
 
 // ICONS
 //
@@ -160,123 +226,48 @@ export const IMAGE_STATUS_BURN = "IMAGE_STATUS_BURN";
 export const IMAGE_ICON_ATTACK = "IMAGE_ICON_ATTACK";
 export const IMAGE_ICON_HEALTH = "IMAGE_ICON_HEALTH";
 export const IMAGE_ICON_SHIELD = "IMAGE_ICON_SHIELD";
+
+export const IMAGE_ICON_REGEN = "IMAGE_ICON_REGEN";
+export const IMAGE_ICON_MP = "IMAGE_ICON_MP";
+export const IMAGE_ICON_PP = "IMAGE_ICON_PP";
+export const IMAGE_ICON_CRIT = "IMAGE_ICON_CRIT";
+export const IMAGE_ICON_EVASION = "IMAGE_ICON_EVASION";
+
 export const IMAGE_ICON_CHAINED = "IMAGE_ICON_CHAINED";
 
 //
+// SKILLS
+//
 
-export function loadImages(scene: GameScene) {
-    // scene.load.spritesheet(IMAGE_SORCERESS, "assets/sprites/sorceress_spritesheet.png", {
-    //     frameWidth: 624,
-    //     frameHeight: 624,
-    // });
+export const IMAGE_SKILL_PHYS_ATTACK = "IMAGE_SKILL_PHYS_ATTACK";
+export const IMAGE_SKILL_BARD_BUFF_1 = "IMAGE_SKILL_BARD_BUFF_1";
+export const IMAGE_SKILL_BARD_BUFF_2 = "IMAGE_SKILL_BARD_BUFF_2";
+export const IMAGE_SKILL_SHIELD_BUFF_1 = "IMAGE_SKILL_SHIELD_BUFF_1";
 
-    scene.load.spritesheet(IMAGE_WILD_IDLE, "assets/sprites/units/wild/wild_idle_spritesheet_300_t.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
+export const IMAGE_SKILL_BURN = "IMAGE_SKILL_BURN";
+export const IMAGE_SKILL_LIGHTNING = "IMAGE_SKILL_LIGHTNING";
+export const IMAGE_SKILL_SUMMON_FIREFLY = "IMAGE_SKILL_SUMMON_FIREFLY";
+export const IMAGE_SKILL_SUMMON_SPIRIT = "IMAGE_SKILL_SUMMON_SPIRIT";
+export const IMAGE_SKILL_POISON = "IMAGE_SKILL_POISON";
+export const IMAGE_SKILL_MAGIC_MISSILES = "IMAGE_SKILL_MAGIC_MISSILES";
 
-    scene.load.spritesheet(IMAGE_WARRIOR_IDLE, "assets/sprites/units/warrior/warrior_idle_spritesheet_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
+export const IMAGE_SKILL_REGEN = "IMAGE_SKILL_REGEN";
+export const IMAGE_SKILL_TOTEM_1 = "IMAGE_SKILL_TOTEM_1";
+export const IMAGE_SKILL_SWORD_BUFF = "IMAGE_SKILL_SWORD_BUFF";
+export const IMAGE_SKILL_SWORD_BUFF_2 = "IMAGE_SKILL_SWORD_BUFF_2";
+export const IMAGE_SKILL_AXE_BUFF = "IMAGE_SKILL_AXE_BUFF";
+export const IMAGE_SKILL_HEAL_1 = "IMAGE_SKILL_HEAL_1";
 
-    // scene.load.spritesheet(IMAGE_SHAMAN_ATTACK, "assets/sprites/shaman_attack_sprite.png", {
-    //     frameWidth: 624,
-    //     frameHeight: 624,
-    // });
+//
 
-    scene.load.spritesheet(IMAGE_MAGIC_IDLE, "assets/sprites/units/magic/magic_idle_spritesheet_300_t.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_BARD_IDLE, "assets/sprites/units/bard/bard_idle_spritesheet_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_MASTER_IDLE, "assets/sprites/units/master/master_idle_spritesheet_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_ORDER_IDLE, "assets/sprites/units/order/order_idle_spritesheet_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_SUMMON_IDLE, "assets/sprites/units/summon/summon_idle_spritesheet_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_PRIEST_IDLE, "assets/sprites/units/priest/priest_idle_spritesheet_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_DARK_IDLE, "assets/sprites/units/dark/dark_idle_spritesheet_300_t.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
+export function loadImages(scene: Scene) {
+    // BASIC HEROES
+    loadBasicHeroesImages(scene);
 
     //
-
-    scene.load.spritesheet(IMAGE_MAGIC_ATTACK, "assets/sprites/units/magic/magic_attack_sprite_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_PRIEST_HEAL, "assets/sprites/units/priest/priest_heal_3000.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_PRIEST_ATTACK, "assets/sprites/units/priest/priest_attack_3000.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_WARRIOR_ATTACK, "assets/sprites/units/warrior/warrior_attack_300.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_WILD_ATTACK, "assets/sprites/units/wild/wild_attack_2.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_SUMMON_ATTACK, "assets/sprites/units/summon/summon_attack.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_DARK_ATTACK, "assets/sprites/units/dark/dark_attack.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_ORDER_ATTACK, "assets/sprites/units/order/order_attack.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    scene.load.spritesheet(IMAGE_MASTER_ATTACK, "assets/sprites/units/master/master_attack.png", {
-        frameWidth: 300,
-        frameHeight: 300,
-    });
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //scene.load.image(IMAGE_PRIEST, "assets/sprites/priest.png");
-    //scene.load.image(IMAGE_BARD, "assets/sprites/bard.png");
-    //scene.load.image(IMAGE_MAGIC, "assets/sprites/mage.png");
-    //scene.load.image(IMAGE_ORDER, "assets/sprites/guard.png");
-    //scene.load.image(IMAGE_DARK, "assets/sprites/dark.png");
-    //scene.load.image(IMAGE_SUMMON, "assets/sprites/summoner.png");
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    //
     // MC HEROES
+    //
     scene.load.image(IMAGE_ALHEMIST, "assets/sprites/units/alchemist.png");
     scene.load.image(IMAGE_BEASTMASTER, "assets/sprites/units/beastmaster.png");
     scene.load.image(IMAGE_BLADEDANCER, "assets/sprites/units/bladedancer.png");
@@ -312,26 +303,44 @@ export function loadImages(scene: GameScene) {
     scene.load.image(IMAGE_INQUISITOR, "assets/sprites/units/inquisitor.png");
     scene.load.image(IMAGE_DUELIST, "assets/sprites/units/duelist.png");
     scene.load.image(IMAGE_BISHOP, "assets/sprites/units/bishop.png");
+    scene.load.image(IMAGE_MAGIC_BARD, "assets/sprites/units/magic_bard.png");
 
     scene.load.image(IMAGE_FISHMAN, "assets/sprites/units/fishman1.png");
 
     // MC ANIMATION
 
-    scene.load.spritesheet(IMAGE_SAMURAI_IDLE, "assets/sprites/units/mc/samurai/samurai_idle_sprite_320.png", {
-        frameWidth: 320,
-        frameHeight: 320,
-    });
+    loadMcHeroesImages(scene);
 
     // BOSSES
 
     scene.load.image(IMAGE_BOSS_MINOTAUR, "assets/sprites/units/bosses/minotaur.png");
 
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500_t.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_500_t.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
     //
-
-    //scene.load.image(IMAGE_MAGIC_DEAD, "assets/sprites/units/dead/magic_dead.png");
-    //scene.load.image(IMAGE_SUMMON_DEAD, "assets/sprites/units/dead/summon_dead.png");
-    //scene.load.image(IMAGE_WARRIOR_DEAD, "assets/sprites/units/dead/warrior_dead.png");
-
     // LEADERS
 
     scene.load.image(IMAGE_LEADER_1, "assets/sprites/leader/rider_1.png");
@@ -342,9 +351,84 @@ export function loadImages(scene: GameScene) {
 
     // MOBS
 
-    scene.load.image(IMAGE_SKELETON_1, "assets/sprites/mobs/skeleton_1.png");
-    scene.load.image(IMAGE_GOBLIN_1, "assets/sprites/mobs/goblin_1.png");
-    scene.load.image(IMAGE_PESANT_1, "assets/sprites/mobs/peasant.png");
+    loadImagesMobs(scene);
+
+    // scene.load.image(IMAGE_SKELETON_1, "assets/sprites/units/mobs/skeleton_1/skeleton_1.png");
+    // scene.load.image(IMAGE_GOBLIN_1, "assets/sprites/units/mobs/goblin_1/goblin_1.png");
+    // scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.png");
+    // scene.load.image(IMAGE_PEASANT_1, "assets/sprites/units/mobs/peasant/peasant.png");
+
+    // // SKELETON_1
+
+    // scene.load.spritesheet(IMAGE_SKELETON_BATTLE_IDLE, "assets/sprites/units/mobs/skeleton_1/skeleton_battle_idle_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // // GOBLIN_1
+
+    // scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // // GOBLIN_2
+
+    // scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // scene.load.spritesheet(IMAGE_GOBLIN_2_ATTACK, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // // GOBLIN_SHAMAN
+
+    // scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    //     scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_DEFEATED, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // // PEASANT
+
+    // scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // TOTEMS
     scene.load.image(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/totem1.png");
@@ -396,10 +480,12 @@ export function loadImages(scene: GameScene) {
 
     scene.load.image(IMAGE_ITEM_HOLY_GLOVES_1, "assets/sprites/items/holy_gloves1.png");
     scene.load.image(IMAGE_ITEM_MAGIC_GLOVES_1, "assets/sprites/items/magic_gloves1.png");
+    // mob items
     scene.load.image(IMAGE_ITEM_GOBLIN_SILVER_COIN, "assets/sprites/items/goblin_silver_coin.png");
     scene.load.image(IMAGE_ITEM_GOBLIN_GOLD_COIN, "assets/sprites/items/goblin_gold_coin.png");
     scene.load.image(IMAGE_ITEM_GOBLIN_BONE_DAGGER, "assets/sprites/items/mobs/bone_dagger.png");
     scene.load.image(IMAGE_ITEM_PEASANTS_PITCHFORK, "assets/sprites/items/mobs/peasants_pitchfork.png");
+    scene.load.image(IMAGE_ITEM_REGEN_MANTLE, "assets/sprites/items/mobs/regenMantle.png");
 
     // STATUSES
 
@@ -410,5 +496,32 @@ export function loadImages(scene: GameScene) {
     scene.load.image(IMAGE_ICON_ATTACK, "assets/sprites/icons/sword.png");
     scene.load.image(IMAGE_ICON_HEALTH, "assets/sprites/icons/heart.png");
     scene.load.image(IMAGE_ICON_SHIELD, "assets/sprites/icons/shield.png");
+    scene.load.image(IMAGE_ICON_REGEN, "assets/sprites/icons/regen.png");
+    scene.load.image(IMAGE_ICON_MP, "assets/sprites/icons/magic_power.png");
+    scene.load.image(IMAGE_ICON_PP, "assets/sprites/icons/physical_power.png");
+    scene.load.image(IMAGE_ICON_CRIT, "assets/sprites/icons/crit.png");
+    scene.load.image(IMAGE_ICON_EVASION, "assets/sprites/icons/evasion.png");
+
     scene.load.image(IMAGE_ICON_CHAINED, "assets/sprites/icons/chain.png");
+
+    // SKILLS
+
+    scene.load.image(IMAGE_SKILL_PHYS_ATTACK, "assets/sprites/skills/sword_attack_100.png");
+    scene.load.image(IMAGE_SKILL_BARD_BUFF_1, "assets/sprites/skills/bard_buff_1.png");
+    scene.load.image(IMAGE_SKILL_BARD_BUFF_2, "assets/sprites/skills/bard_buff_2.png");
+    scene.load.image(IMAGE_SKILL_SHIELD_BUFF_1, "assets/sprites/skills/shield_empower.png");
+
+    scene.load.image(IMAGE_SKILL_BURN, "assets/sprites/skills/burn.png");
+    scene.load.image(IMAGE_SKILL_LIGHTNING, "assets/sprites/skills/lightning.png");
+    scene.load.image(IMAGE_SKILL_SUMMON_FIREFLY, "assets/sprites/skills/summon_1.png");
+    scene.load.image(IMAGE_SKILL_SUMMON_SPIRIT, "assets/sprites/skills/summon_2.png");
+    scene.load.image(IMAGE_SKILL_POISON, "assets/sprites/skills/poison1.png");
+    scene.load.image(IMAGE_SKILL_MAGIC_MISSILES, "assets/sprites/skills/magic_missiles.png");
+
+    scene.load.image(IMAGE_SKILL_REGEN, "assets/sprites/skills/regen.png");
+    scene.load.image(IMAGE_SKILL_TOTEM_1, "assets/sprites/skills/summon_totem_1.png");
+    scene.load.image(IMAGE_SKILL_SWORD_BUFF, "assets/sprites/skills/sword_buff.png");
+    scene.load.image(IMAGE_SKILL_SWORD_BUFF_2, "assets/sprites/skills/sword_buff_2.png");
+    scene.load.image(IMAGE_SKILL_AXE_BUFF, "assets/sprites/skills/empower_axe.png");
+    scene.load.image(IMAGE_SKILL_HEAL_1, "assets/sprites/skills/holy_spell_1.png");
 }

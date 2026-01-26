@@ -15,8 +15,9 @@ import {
     EStatusType,
     ITotem,
     TBattleRecord,
-    IActionAttackTarget,
+    IActionTarget,
     EItemBattleBonusType,
+    IHeroSkillSet,
 } from "../../types";
 import { eachTurnDebuffs, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -68,8 +69,48 @@ export class BattleController {
         this.roundCount = 1;
     }
 
-    start(player1Units: (IUnit | null)[], player2Units: (IUnit | null)[], isTillDeath: boolean, roundCount: number) {
-        console.log("battle start", player1Units, roundCount);
+    activateOnStartSkills() {
+        const onStartSkills: { unit: IBattleUnit; skillSet: IHeroSkillSet; isPlayer1: boolean }[] = [];
+        this.player1BattleUnits.forEach((unit) => {
+            if (!unit) {
+                return;
+            }
+
+            unit.skills.forEach((skill) => {
+                if (skill.isActivateOnStart) {
+                    onStartSkills.push({ unit, skillSet: skill, isPlayer1: true });
+                }
+            });
+        });
+        this.player2BattleUnits.forEach((unit) => {
+            if (!unit) {
+                return;
+            }
+
+            unit.skills.forEach((skill) => {
+                if (skill.isActivateOnStart) {
+                    onStartSkills.push({ unit, skillSet: skill, isPlayer1: false });
+                }
+            });
+        });
+        console.log("ON START SKILLS", onStartSkills);
+        //
+        onStartSkills.forEach(({ unit, skillSet, isPlayer1 }) => {
+            const skillSetBattleAction: IBattleAction = {
+                unitId: unit.id,
+                type: EBattleActionType.PEFORM_SKILLSET,
+                name: skillSet.name,
+            };
+            this.battleRecord.push(skillSetBattleAction);
+
+            skillSet.skills.forEach((skill) => {
+                this.performSkill(unit, skill, isPlayer1, true);
+            });
+        });
+    }
+
+    async start(player1Units: (IUnit | null)[], player2Units: (IUnit | null)[], isTillDeath: boolean, roundCount: number) {
+        //console.log("battle start", player1Units, roundCount);
         this.player1Units = player1Units;
         this.player2Units = player2Units;
         this.roundCount = roundCount;
@@ -83,12 +124,18 @@ export class BattleController {
         }
 
         let battleIsOver = false;
-        console.log("start battle " + this.roundCount);
+
+        // activate all on start skills
+        this.activateOnStartSkills();
+
+        //console.log("start battle " + this.roundCount);
         for (let i = 0; i < this.roundCount; i++) {
             if (battleIsOver) {
                 break;
             }
             this.battleRecord.push({ type: EBattleActionType.ROUND_START, value: i });
+
+            //
             // calculate attacks order
             for (let j = 0; j < slotCount; j++) {
                 const player1Unit = this.player1BattleUnits[j];
@@ -131,6 +178,9 @@ export class BattleController {
 
             return prepareUnitToBattle(unit);
         });
+
+        //console.log(">>>>>>>>>>>>>>> prepareToBattle");
+        //console.log(this.player2BattleUnits);
     }
 
     performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean) {
@@ -144,12 +194,23 @@ export class BattleController {
 
         this.battleRecord.push({ type: EBattleActionType.TURN_START, name: unit.id, unitId: unit.id });
 
-        //const skillIndex = round % 3;
         const skillIndex = unit.currentSkillIndex;
-        unit.currentSkillIndex++;
+        if (unit.currentSkillIndex === 2) {
+            unit.currentSkillIndex = 0;
+        } else {
+            unit.currentSkillIndex++;
+        }
+
         const skillSet = unit.skills.length >= skillIndex ? unit.skills[skillIndex] : null;
 
         if (skillSet) {
+            const skillSetBattleAction: IBattleAction = {
+                unitId: unit.id,
+                type: EBattleActionType.PEFORM_SKILLSET,
+                name: skillSet.name,
+            };
+            this.battleRecord.push(skillSetBattleAction);
+
             skillSet.skills.forEach((skill) => {
                 this.performSkill(unit, skill, isPlayer1);
 
@@ -159,24 +220,6 @@ export class BattleController {
                 } else {
                     this.performBasicAttack(unit, skill, isPlayer1);
                 }
-
-                // const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
-                // const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
-
-                // if (skill.isBasicAttack) {
-                //     if (unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.BASIC_ATTACK_TWICE)) {
-                //         this.basicAttack(unit, isPlayer1, 40);
-                //         this.basicAttack(unit, isPlayer1, 40);
-                //         for (let i = 0; i < additionalBaTimes; i++) {
-                //             this.basicAttack(unit, isPlayer1, 40);
-                //         }
-                //     } else {
-                //         this.basicAttack(unit, isPlayer1);
-                //         for (let i = 0; i < additionalBaTimes; i++) {
-                //             this.basicAttack(unit, isPlayer1);
-                //         }
-                //     }
-                // }
             });
         } else {
             // if there is no skill for the round perform basic attack
@@ -222,58 +265,58 @@ export class BattleController {
         }
     }
 
-    performSkill(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performSkill(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         switch (skill.type) {
             case EHeroSkillType.ATTACK:
-                this.performAttack(unit, skill, isPlayer1);
+                this.performAttack(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.ATTRIBUTE_INCREASE:
-                this.performAttrIncrease(unit, skill, isPlayer1);
+                this.performAttrIncrease(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.ATTRIBUTE_DECREASE:
-                this.performAttrDecrease(unit, skill, isPlayer1);
+                this.performAttrDecrease(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.BUFF:
-                this.performBuff(unit, skill.buff, isPlayer1);
+                this.performBuff(unit, skill, skill.buff, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.BUFF_COPY:
-                this.performBuffCopy(unit, skill, isPlayer1);
+                this.performBuffCopy(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.BUFF_INCREASE_VALUE:
-                this.performBuffValueIncrease(unit, skill, isPlayer1);
+                this.performBuffValueIncrease(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.DEBUFF:
-                this.performDebuff(unit, skill, isPlayer1);
+                this.performDebuff(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.DEBUFF_REMOVE:
-                this.performDebuffRemove(unit, skill, isPlayer1);
+                this.performDebuffRemove(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.HEAL:
-                this.performHeal(unit, skill, isPlayer1);
+                this.performHeal(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.STATUS_APPLY:
-                this.performApplyStatus(unit, skill, isPlayer1);
+                this.performApplyStatus(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.STATUS_REMOVE:
-                this.performRemoveStatus(unit, skill, isPlayer1);
+                this.performRemoveStatus(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.SUMMON:
-                this.performSummon(unit, skill, isPlayer1);
+                this.performSummon(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.SUMMON_REMOVE:
-                this.performRemoveSummon(unit, skill, isPlayer1);
+                this.performRemoveSummon(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.SWAP_HP:
-                this.performSwapHp(unit, skill, isPlayer1);
+                this.performSwapHp(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.TOTEM:
-                this.performTotem(unit, skill, isPlayer1);
+                this.performTotem(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.TOTEM_REMOVE:
-                this.performRemoveTotem(unit, skill, isPlayer1);
+                this.performRemoveTotem(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.TOTEM_INCREASE_VALUE:
-                this.performTotemIncreaseValue(unit, skill, isPlayer1);
+                this.performTotemIncreaseValue(unit, skill, isPlayer1, isStartBattle);
                 break;
             default:
                 console.log("No handler for skill type", skill.type);
@@ -302,7 +345,7 @@ export class BattleController {
         }
     }
 
-    performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType, value, attackType } = skill;
         if (!targetType || !attackType || value === undefined) {
             console.log("NO TARGET TYPE OR VALUE");
@@ -349,7 +392,7 @@ export class BattleController {
         }
 
         // record
-        const attackRecord = { unitId: unit.id, type: EBattleActionType.ATTACK, value: attackDamage, isCrit, targets: [] };
+        const attackRecord = { unitId: unit.id, type: EBattleActionType.ATTACK, value: attackDamage, isCrit, targets: [], skill, isStartBattle };
         this.battleRecord.push(attackRecord);
 
         targets.forEach((target) => {
@@ -367,7 +410,7 @@ export class BattleController {
         });
     }
 
-    performAttrIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performAttrIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { value, valueType, valueFrom, attribute, targetType } = skill;
         if (!value || !valueType || !attribute || !targetType) {
             return;
@@ -380,16 +423,26 @@ export class BattleController {
             return;
         }
 
+        const battleAction: IBattleAction = {
+            unitId: unit.id,
+            type: EBattleActionType.ATTRIBUTE_INCREASE,
+            targets: [],
+            skill,
+            isStartBattle,
+        };
+        this.battleRecord.push(battleAction);
+
         targets.forEach((target) => {
-            console.log("INCR ATTR TARGET", attribute, target);
+            //console.log("INCR ATTR TARGET", attribute, target);
             const increaseValue = calculateIncreaseValue(target[attribute], value, valueType, valueFrom && unit[valueFrom]);
             target[attribute] += increaseValue;
-            console.log(">>>>", increaseValue, target[attribute]);
-            this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
+            //console.log(">>>>", increaseValue, target[attribute]);
+            //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
+            battleAction.targets.push({ targetId: target.id, attribute, value: increaseValue });
         });
     }
 
-    performAttrDecrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performAttrDecrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { value, valueType, attribute, targetType } = skill;
         if (!value || !valueType || !attribute || !targetType) {
             return;
@@ -408,17 +461,24 @@ export class BattleController {
             if (target[attribute] < 0) {
                 target[attribute] = 0;
             }
-            this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_DECREASE, attribute, value: decreaseValue });
+            this.battleRecord.push({
+                unitId: unit.id,
+                targetId: target.id,
+                type: EBattleActionType.ATTRIBUTE_DECREASE,
+                attribute,
+                value: decreaseValue,
+                isStartBattle,
+            });
         });
     }
 
-    performBuff(unit: IBattleUnit, buff: IBuff | undefined, isPlayer1: boolean) {
+    performBuff(unit: IBattleUnit, skill: IHeroSkill, buff: IBuff | undefined, isPlayer1: boolean, isStartBattle?: boolean) {
         if (!buff) {
             return;
         }
 
         // record
-        const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff };
+        const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff, isStartBattle, skill };
         this.battleRecord.push(buffAction);
 
         const { type, targetType, attribute, value, statusType } = buff;
@@ -497,7 +557,7 @@ export class BattleController {
         }
     }
 
-    performBuffValueIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performBuffValueIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType, value, valueType } = skill;
 
         if (!targetType || value === undefined || !valueType) {
@@ -519,12 +579,12 @@ export class BattleController {
             buff.value += addValue;
 
             // record
-            const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff };
+            const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff, isStartBattle };
             this.battleRecord.push(buffAction);
         });
     }
 
-    performBuffCopy(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performBuffCopy(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType, value, valueType } = skill;
 
         if (!targetType || value === undefined || !valueType) {
@@ -543,11 +603,11 @@ export class BattleController {
                 return;
             }
 
-            this.performBuff(unit, buff, isPlayer1);
+            this.performBuff(unit, skill, buff, isPlayer1, isStartBattle);
         });
     }
 
-    performApplyStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performApplyStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { status, targetType, value } = skill;
         if (!status || !targetType || value === undefined) {
             return;
@@ -567,12 +627,12 @@ export class BattleController {
         }
 
         targets.forEach((target) => {
-            applyStatus(unit, target, status, finalValue, this.battleRecord);
+            applyStatus(unit, target, status, finalValue, this.battleRecord, isStartBattle);
         });
     }
 
     /** Remove random status from target units */
-    performRemoveStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performRemoveStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType } = skill;
         if (!targetType) {
             console.log("NO TARGET TYPE OR VALUE");
@@ -595,11 +655,11 @@ export class BattleController {
                 return;
             }
             const randomStatus = getRandomArrayItem(target.statuses);
-            removeStatus(unit, target, randomStatus.type, this.battleRecord);
+            removeStatus(unit, target, randomStatus.type, this.battleRecord, isStartBattle);
         });
     }
 
-    performDebuff(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performDebuff(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { debuff } = skill;
         if (!debuff) {
             return;
@@ -608,7 +668,7 @@ export class BattleController {
         console.log("performDebuff", debuff);
 
         // record
-        const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff };
+        const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff, isStartBattle };
         this.battleRecord.push(debuffAction);
 
         const { type, targetType, name, attribute, value, mpScale, ppScale } = debuff;
@@ -668,7 +728,7 @@ export class BattleController {
         }
     }
 
-    performDebuffRemove(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performDebuffRemove(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType } = skill;
         if (!targetType) {
             console.log("NO TARGET TYPE OR VALUE");
@@ -691,11 +751,11 @@ export class BattleController {
                 return;
             }
             const randomIndex = getRandomArrayIndex(target.debuffs);
-            removeDebuff(unit, target, randomIndex, this.battleRecord);
+            removeDebuff(unit, target, randomIndex, this.battleRecord, isStartBattle);
         });
     }
 
-    performHeal(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performHeal(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType, value, mpScale, ppScale } = skill;
         if (!targetType || !value) {
             console.log("NO TARGET TYPE OR VALUE");
@@ -736,11 +796,11 @@ export class BattleController {
                 target.hp = target.maxHp;
             }
 
-            this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.HEAL, value: finalHeal });
+            this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.HEAL, value: finalHeal, isStartBattle });
         });
     }
 
-    performSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { summon } = skill;
         if (!summon) {
             return;
@@ -758,10 +818,10 @@ export class BattleController {
             }
         });
 
-        this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SUMMON, name: summon.name, summon: { ...unit.summon } });
+        this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SUMMON, name: summon.name, summon: { ...unit.summon }, skill, isStartBattle });
     }
 
-    performRemoveSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performRemoveSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         const target = getTargetWithSummon(opponentUnits);
 
@@ -770,10 +830,10 @@ export class BattleController {
         }
 
         removeSummon(target);
-        this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.SUMMON_REMOVE });
+        this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.SUMMON_REMOVE, isStartBattle });
     }
 
-    performTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { totem } = skill;
         if (!totem) {
             return;
@@ -784,10 +844,10 @@ export class BattleController {
         }
 
         unit.totem = prepareTotemToBattle(totem);
-        this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.TOTEM_PLACE, name: totem.name, totem: unit.totem });
+        this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.TOTEM_PLACE, name: totem.name, totem: unit.totem, skill, isStartBattle });
     }
 
-    performRemoveTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performRemoveTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         const target = getTargetWithTotem(opponentUnits);
 
@@ -796,10 +856,10 @@ export class BattleController {
         }
 
         removeTotem(target);
-        this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.TOTEM_REMOVE });
+        this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.TOTEM_REMOVE, isStartBattle });
     }
 
-    performTotemIncreaseValue(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performTotemIncreaseValue(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType, value, valueType, valueFrom, mpScale, ppScale } = skill;
 
         if (!targetType || value === undefined || !valueType) {
@@ -825,11 +885,11 @@ export class BattleController {
                 totemSkill.value += calculateIncreaseValue(totemSkill.value, value, valueType, percentFrom) + mpScaleValue + ppScaleValue;
             });
 
-            this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.TOTEM_INCREASE_VALUE, name: "Increase totem value", totem });
+            this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.TOTEM_INCREASE_VALUE, name: "Increase totem value", totem, isStartBattle });
         });
     }
 
-    performSwapHp(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean) {
+    performSwapHp(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType } = skill;
         if (!targetType) {
             console.log("NO TARGET TYPE OR VALUE");
@@ -844,7 +904,7 @@ export class BattleController {
         }
 
         targets.forEach((target) => {
-            swapHp(unit, target, this.battleRecord);
+            swapHp(unit, target, this.battleRecord, isStartBattle);
         });
     }
 
@@ -924,6 +984,14 @@ export class BattleController {
                     }
                     applyStatus(unit, target, statusType, value, this.battleRecord);
                 }
+                const applyStatusBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_POISON_ON_HIT);
+                if (applyStatusBonus) {
+                    const { type, value } = applyStatusBonus;
+                    if (!type || value === undefined) {
+                        return;
+                    }
+                    applyStatus(unit, target, EStatusType.POISON, value, this.battleRecord);
+                }
             });
         });
 
@@ -939,7 +1007,7 @@ export class BattleController {
         damageValue: number,
         damageType: EHeroAttackType,
         parentUnit: IBattleUnit | undefined,
-        attackRecord: IBattleAction
+        attackRecord: IBattleAction,
     ) {
         const recordTarget = { targetId: target.id, damageValue: 0, isEvasion: false };
         attackRecord.targets?.push(recordTarget);
@@ -1083,7 +1151,7 @@ export class BattleController {
         this.takeDamage(target, finalDamageValue, parentUnit, recordTarget);
     }
 
-    takeDamage(target: IBattleUnit, damageValue: number, parentUnit: IBattleUnit | undefined, recordTarget: IActionAttackTarget) {
+    takeDamage(target: IBattleUnit, damageValue: number, parentUnit: IBattleUnit | undefined, recordTarget: IActionTarget) {
         target.hp -= damageValue;
 
         //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp });
@@ -1149,14 +1217,14 @@ export class BattleController {
         //console.log("checkBattleOver");
         const allPlayerHeroesDead = this.player1BattleUnits.every((unit) => unit === null || unit.hp <= 0);
         if (allPlayerHeroesDead) {
-            console.log("all Player Heroes Dead");
+            //console.log("all Player Heroes Dead");
             this.isBattleWin = false;
             return true;
         }
         const allEnemyHeroesDead = this.player2BattleUnits.every((unit) => unit === null || unit.hp <= 0);
         if (allEnemyHeroesDead) {
             this.isBattleWin = true;
-            console.log("all enemy Heroes Dead");
+            //console.log("all enemy Heroes Dead");
             return true;
         }
         return false;

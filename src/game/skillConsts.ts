@@ -12,14 +12,14 @@ import { wildSkills, wildSkills_2 } from "./skills/wildSkillConsts";
 export const BASIC_CLASS_MAX_SKILL_COUNT = 2;
 export const MC_CLASS_MAX_SKILL_COUNT = 4; // or 3?
 
-export const SKILL_MAX_LEVEL = 5;
+export const SKILL_MAX_LEVEL = 3;
 
 // skill price for skill level
 export const skillPrices: Record<number, number> = {
     1: 4,
-    2: 8,
-    3: 12,
-    4: 20,
+    2: 6,
+    3: 8,
+    4: 10,
 };
 
 //  COMMMON SKILLS  //////////////////////////////////////////////////////////////

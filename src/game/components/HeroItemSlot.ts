@@ -33,13 +33,19 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
         rect.setInteractive();
         //rect.setInteractive(new Phaser.Geom.Rectangle(0, 0, 30, 30), Phaser.Geom.Rectangle.Contains);
         rect.on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-            //if (this.item) {
-            this.hint.show();
+            if (!this.item) {
+                this.hint.show();
+                return;
+            }
+            const { x, y } = this.getWorldPoint();
+            this.gameScene.hintPanel.showItem(x + 40, y - 50, this.item);
             //}
         })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-                //if (this.item) {
-                this.hint.hide();
+                if (!this.item) {
+                    this.hint.hide();
+                }
+                this.gameScene.hintPanel.hide();
                 //}
             })
             .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {

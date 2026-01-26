@@ -45,10 +45,14 @@ export class SelectController {
     prevRooms: ERoomType[];
 
     constructor(gameScene: GameScene) {
+        this.gameScene = gameScene;
+        this.init();
+    }
+
+    init() {
         this.day = 0;
         this.hour = 0;
         this.maxHours = 6;
-        this.gameScene = gameScene;
         this.prevRooms = [];
     }
 
@@ -96,7 +100,7 @@ export class SelectController {
 
     showCardSelect(
         type: ERoomType,
-        { heroClasses, isRerollAvailableForce, tripleSetTypes }: { heroClasses?: EHeroClass[]; isRerollAvailableForce?: boolean; tripleSetTypes?: ECardType[] }
+        { heroClasses, isRerollAvailableForce, tripleSetTypes }: { heroClasses?: EHeroClass[]; isRerollAvailableForce?: boolean; tripleSetTypes?: ECardType[] },
     ) {
         //console.log("SHOW CARD SELECT", type);
         if (type === ERoomType.UPGRADE_SKILL_OR_ITEM) {
@@ -134,7 +138,7 @@ export class SelectController {
     selectRoom(
         type: ERoomType,
         day: number,
-        { heroClasses, tripleSetTypes, units }: { heroClasses?: EHeroClass[]; tripleSetTypes?: ECardType[]; units?: IUnit[] }
+        { heroClasses, tripleSetTypes, units }: { heroClasses?: EHeroClass[]; tripleSetTypes?: ECardType[]; units?: IUnit[] },
     ) {
         if (instantRooms.includes(type)) {
             this.executeRoomAction(type, day, units);
@@ -199,6 +203,7 @@ export class SelectController {
                     if (!mobs) {
                         return;
                     }
+                    console.log("executeCardAction", mobs);
                     this.gameScene.selectController.setMobsReward(mobs.reward);
                     this.gameScene.changeToMobsDuelPhase(mobs.units);
                 }
@@ -210,7 +215,7 @@ export class SelectController {
 
     /** Perform card action when it is used on another card (e.x. item is used on unit) */
     performCardAction(card: ICard, targetCard: Card) {
-        console.log("to performCardAction");
+        //console.log("to performCardAction");
 
         switch (card.type) {
             case ECardType.ATTRIBUTE:
@@ -288,7 +293,7 @@ export class SelectController {
                     // skill to skill (upgrade skill)
                     if (targetCard.card.skill && targetCard.card.skill.id === card.skill.id && targetCard.card.skill.level === card.skill.level) {
                         // upgrade skill
-                        const upgradedSkill = upgradeSkillSet(targetCard.card.skill);
+                        const upgradedSkill = upgradeSkillSet(targetCard.card.skill, card.skill);
                         targetCard.setSkill(upgradedSkill);
                         return;
                     }

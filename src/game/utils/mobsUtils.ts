@@ -3,6 +3,8 @@ import { getRandomArrayItem } from "./commonUtils";
 
 export const getMobs = (day: number) => {
     switch (day) {
+        case 0:
+            return [getRandomArrayItem(mobsLvl1), getRandomArrayItem(mobsLvl2), getRandomArrayItem(mobsLvl2)];
         case 1:
             return [getRandomArrayItem(mobsLvl1), getRandomArrayItem(mobsLvl2), getRandomArrayItem(mobsLvl3)];
         case 2:

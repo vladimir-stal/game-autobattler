@@ -51,6 +51,11 @@ const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit:
                 unit.basicMaxHp += value;
             }
             break;
+        case EItemAfterDuelBonusType.STAT_HP_REGEN:
+            {
+                unit.basicHpRegen += value;
+            }
+            break;
         case EItemAfterDuelBonusType.STAT_CRIT_CHANCE:
             {
                 unit.basicCritChance += value;

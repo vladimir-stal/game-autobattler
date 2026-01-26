@@ -1,6 +1,11 @@
+import { i18n as i18n_eng } from "../i18n/en";
+import { i18n as i18n_ru } from "../i18n/ru";
 import { ETargetType, EBuffTimeType, EBuffType, EDebuffType, EHeroAttackType, EHeroClass, EUnitType, IUnit, EHeroClassType } from "../types";
+import { LANG } from "./consts";
 
 //  BASIC HEROES  //////////////////////////////////////////////////////////////
+
+const i18n = LANG === "eng" ? i18n_eng : i18n_ru;
 
 // BARD
 export const bardHero: IUnit = {
@@ -17,7 +22,7 @@ export const bardHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Bard",
+    name: i18n.heroes.basic.BARD,
     id: "BARD",
     skills: [],
     items: [],
@@ -41,7 +46,7 @@ export const darkHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 4,
     basicPhysicalPower: 0,
-    name: "Dark",
+    name: i18n.heroes.basic.DARK,
     id: "DARK",
     skills: [],
     items: [],
@@ -65,7 +70,7 @@ export const magicHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Magic",
+    name: i18n.heroes.basic.MAGIC,
     id: "MAGIC",
     skills: [],
     items: [],
@@ -89,7 +94,7 @@ export const masterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Master",
+    name: i18n.heroes.basic.MASTER,
     id: "MASTER",
     skills: [],
     items: [],
@@ -113,7 +118,7 @@ export const summonHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Summon",
+    name: i18n.heroes.basic.SUMMON,
     id: "SUMMON",
     skills: [],
     items: [],
@@ -137,7 +142,7 @@ export const orderHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Order",
+    name: i18n.heroes.basic.ORDER,
     id: "ORDER",
     skills: [],
     items: [],
@@ -161,7 +166,7 @@ export const priestHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Priest",
+    name: i18n.heroes.basic.PRIEST,
     id: "PRIEST",
     skills: [],
     items: [],
@@ -185,7 +190,7 @@ export const warriorHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Warrior",
+    name: i18n.heroes.basic.WARRIOR,
     id: "WARRIOR",
     skills: [],
     items: [],
@@ -209,7 +214,7 @@ export const wildHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Wild",
+    name: i18n.heroes.basic.WILD,
     id: "WILD",
     skills: [],
     items: [],

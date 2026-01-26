@@ -1,0 +1,105 @@
+import { Scene } from "phaser";
+import { GameScene } from "../../scenes/GameScene";
+
+//
+
+export const IMAGE_SKELETON_1 = "IMAGE_SKELETON_1";
+export const IMAGE_GOBLIN_1 = "IMAGE_GOBLIN_1";
+export const IMAGE_GOBLIN_2 = "IMAGE_GOBLIN_2";
+export const IMAGE_PEASANT_1 = "IMAGE_PEASANT_1";
+
+export const IMAGE_SKELETON_BATTLE_IDLE = "IMAGE_SKELETON_BATTLE_IDLE";
+export const IMAGE_SKELETON_ATTACK = "IMAGE_SKELETON_ATTACK";
+
+export const IMAGE_GOBLIN_1_BATTLE_IDLE = "IMAGE_GOBLIN_1_BATTLE_IDLE";
+export const IMAGE_GOBLIN_1_ATTACK = "IMAGE_GOBLIN_1_ATTACK";
+
+export const IMAGE_GOBLIN_2_BATTLE_IDLE = "IMAGE_GOBLIN_2_BATTLE_IDLE";
+export const IMAGE_GOBLIN_2_ATTACK = "IMAGE_GOBLIN_2_ATTACK";
+
+export const IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE = "IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE";
+export const IMAGE_GOBLIN_SHAMAN_ATTACK = "IMAGE_GOBLIN_SHAMAN_ATTACK";
+export const IMAGE_GOBLIN_SHAMAN_SPELL = "IMAGE_GOBLIN_SHAMAN_SPELL";
+export const IMAGE_GOBLIN_SHAMAN_DEFEATED = "IMAGE_GOBLIN_SHAMAN_DEFEATED";
+
+export const IMAGE_PEASANT_BATTLE_IDLE = "IMAGE_PEASANT_BATTLE_IDLE";
+export const IMAGE_PEASANT_ATTACK = "IMAGE_PEASANT_ATTACK";
+
+//
+
+export function loadImagesMobs(scene: Scene) {
+    scene.load.image(IMAGE_SKELETON_1, "assets/sprites/units/mobs/skeleton_1/skeleton_1.png");
+    scene.load.image(IMAGE_GOBLIN_1, "assets/sprites/units/mobs/goblin_1/goblin_1.png");
+    scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.png");
+    scene.load.image(IMAGE_PEASANT_1, "assets/sprites/units/mobs/peasant/peasant.png");
+
+    // SKELETON_1 //////////////////////////////////////////////////////////////
+
+    scene.load.spritesheet(IMAGE_SKELETON_BATTLE_IDLE, "assets/sprites/units/mobs/skeleton_1/skeleton_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // GOBLIN_1 //////////////////////////////////////////////////////////////
+
+    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // GOBLIN_2 //////////////////////////////////////////////////////////////
+
+    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_GOBLIN_2_ATTACK, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // GOBLIN_SHAMAN //////////////////////////////////////////////////////////////
+
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_DEFEATED, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_defeated_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // PEASANT //////////////////////////////////////////////////////////////
+
+    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+}

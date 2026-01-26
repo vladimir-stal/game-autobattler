@@ -11,7 +11,9 @@ import {
     IMobsVariants,
 } from "../types";
 import { basic_boots, basic_hat, basic_jacket, basic_pants } from "./commonItemConsts";
+import { i18n } from "./consts";
 import { itemGoblinBoneDagger, itemGoblinSilverCoin, itemPeasantPitchfork } from "./mobItemConsts";
+import { goblinShamanHpRegIncr } from "./skills/mobSkills";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -55,7 +57,8 @@ export const weakGoblinUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Weak goblin",
+    //name: "Weak goblin",
+    name: i18n.units.WEAKGOBLIN,
     id: "WEAKGOBLIN",
     skills: [],
     items: [],
@@ -77,9 +80,32 @@ export const goblinUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Goblin",
+    //name: "Goblin",
+    name: i18n.units.GOBLIN,
     id: "GOBLIN",
     skills: [],
+    items: [],
+    level: 2,
+    exp: 0,
+};
+
+export const goblinShamanUnit: IUnit = {
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.WILD,
+    attackType: EHeroAttackType.PHYSICAL,
+    attackTargetType: ETargetType.FIRST_ENEMY,
+    basicAttack: 4,
+    basicAttackTimes: 1,
+    basicMaxHp: 14,
+    basicHpRegen: 0,
+    basicArmor: 0,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: i18n.units.GOBLINSHAMAN,
+    id: "GOBLINSHAMAN",
+    skills: [goblinShamanHpRegIncr],
     items: [],
     level: 2,
     exp: 0,
@@ -99,7 +125,8 @@ export const skeletonUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Skeleton",
+    //name: "Skeleton",
+    name: i18n.units.SKELETON,
     id: "SKELETON",
     skills: [],
     items: [],
@@ -121,7 +148,8 @@ export const skeletonWarriorUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Skeleton warrior",
+    //name: "Skeleton warrior",
+    name: i18n.units.SKELETONWARRIOR,
     id: "SKELETONWARRIOR",
     skills: [],
     items: [],
@@ -143,7 +171,8 @@ export const skeletonMageUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Skeleton Mage",
+    //name: "Skeleton Mage",
+    name: i18n.units.SKELETONMAGE,
     id: "SKELETONMAGE",
     skills: [],
     items: [],
@@ -165,7 +194,8 @@ export const soldierUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Soldier",
+    //name: "Soldier",
+    name: i18n.units.SOLDIER,
     id: "SOLDIER",
     skills: [],
     items: [],
@@ -187,7 +217,8 @@ export const goldGoblin1Unit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Goblin trader",
+    //name: "Goblin trader",
+    name: i18n.units.GOLDGOBLIN1,
     id: "GOLDGOBLIN1",
     skills: [],
     items: [],
@@ -196,13 +227,36 @@ export const goldGoblin1Unit: IUnit = {
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1 }],
 };
 
+//
+//
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+
 export const mobsLvl1: IMobsVariants[] = [
+    // {
+    //     name: "Peasants",
+    //     units: [peasantUnit, peasantUnit, null, null],
+    //     rewards: [
+    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+    //         { type: IMobRewardType.GOLD, item: itemPeasantPitchfork, exp: 1 },
+    //         { type: IMobRewardType.GOLD, item: itemPeasantPitchfork, exp: 1 },
+    //     ],
+    // },
+    // {
+    //     name: "Weak goblins",
+    //     units: [weakGoblinUnit, weakGoblinUnit, null, null],
+    //     rewards: [
+    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+    //         { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 1 },
+    //     ],
+    // },
     {
-        name: "Peasants",
-        units: [peasantUnit, peasantUnit, null, null],
+        name: "Goblin shaman",
+        units: [goblinShamanUnit, null, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            { type: IMobRewardType.GOLD, item: itemPeasantPitchfork, exp: 1 },
+            { type: IMobRewardType.UNIT, unit: goblinShamanUnit, exp: 1 },
         ],
     },
 ];

@@ -2,7 +2,7 @@ import { GameScene } from "../../scenes/GameScene";
 import { ECardType, EHeroClass, ERoomType, ICard } from "../../../types";
 import { getRandomArrayItem } from "../../utils/commonUtils";
 import { Card } from "../Card";
-import { colors } from "../../consts";
+import { colors, i18n } from "../../consts";
 import { Input } from "phaser";
 import { createUnit, generateUnitId } from "../../utils/unitUtils";
 
@@ -39,7 +39,6 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         heroClasses: EHeroClass[] | undefined,
         options: { isSingleSelect?: boolean; isSelectRequired?: boolean; isRerollAvailable?: boolean }
     ) {
-        //roomType: ERoomType,
         this.setVisible(true);
         this.roomType = roomType;
         this.heroClasses = heroClasses;
@@ -87,7 +86,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         const cardBomponent = new Card(this.gameScene, 75 + index * cardDistance, 0, card, true);
         this.add(cardBomponent);
 
-        const buttonTitle = card.price > 0 ? "BUY " + card.price : "TAKE";
+        const buttonTitle = card.price > 0 ? i18n.ui.BUY + " " + card.price : i18n.ui.TAKE;
         const buyCardText = this.scene.add.text(75 + 20 + index * cardDistance, 150, buttonTitle, {
             fontFamily: "Arial Black",
             fontSize: 18,
@@ -125,21 +124,21 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderButtons() {
-        //if (this.isRerollAvailable) {
-        const rerollButton = this.scene.add.text(0, -100, "REROLL", {
-            //fontFamily: "Arial Black",
-            fontSize: 18,
-            color: "#aaffaa",
-        });
+        if (this.isRerollAvailable) {
+            const rerollButton = this.scene.add.text(0, -100, i18n.ui.REROLL, {
+                //fontFamily: "Arial Black",
+                fontSize: 18,
+                color: "#aaffaa",
+            });
 
-        rerollButton.setInteractive().on("pointerdown", () => {
-            this.isRerollAvailable = false;
-            // get new cards
-            this.gameScene.selectController.showCardSelect(this.roomType, { heroClasses: this.heroClasses, isRerollAvailableForce: false });
-        });
+            rerollButton.setInteractive().on("pointerdown", () => {
+                this.isRerollAvailable = false;
+                // get new cards
+                this.gameScene.selectController.showCardSelect(this.roomType, { heroClasses: this.heroClasses, isRerollAvailableForce: false });
+            });
 
-        this.add(rerollButton);
-        //}
+            this.add(rerollButton);
+        }
     }
 
     finishBuy() {
@@ -162,6 +161,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
             }
 
             const isLastCard = this.cards.length === this.boughtCardIndexes.length + 1;
+            console.log("isLastCard", isLastCard, this.cards.length, this.boughtCardIndexes.length);
             if (isLastCard) {
                 this.gameScene.selectController.showNextRoomSelect();
                 return;

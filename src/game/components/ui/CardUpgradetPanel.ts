@@ -2,12 +2,12 @@ import { GameScene } from "../../scenes/GameScene";
 import { ECardType, EHeroClass, ERoomType, ICard } from "../../../types";
 import { getRandomArrayItem } from "../../utils/commonUtils";
 import { Card } from "../Card";
-import { colors } from "../../consts";
+import { colors, i18n } from "../../consts";
 import { GameObjects, Input } from "phaser";
 import { createUnit } from "../../utils/unitUtils";
 import { CardSlot } from "../CardSlot";
 
-/** UI panel to select cards for specific room */
+/** UI panel to upgrade a card (skill or item) */
 export class CardUpgradetPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
 
@@ -85,10 +85,10 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
     }
 
     renderUpgradeButton() {
-        this.upgradeButton = this.scene.add.text(300, 150, "UPGRADE", { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" }).setVisible(false);
+        this.upgradeButton = this.scene.add.text(300, 150, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" }).setVisible(false);
 
         this.upgradeButton.setInteractive().on("pointerdown", () => {
-            console.log("UPGRADE UNIT", this.cardSlot.card?.card.type, this.cardSlot.card?.card.item?.name);
+            //console.log("UPGRADE UNIT", this.cardSlot.card?.card.type, this.cardSlot.card?.card.item?.name);
 
             if (!this.cardSlot.card?.card) {
                 return;
@@ -116,6 +116,8 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
                 }
                 if (skill.nextLevel) {
                     const newSkill = skill.nextLevel;
+                    newSkill.isActivateOnStart = skill.isActivateOnStart;
+                    newSkill.isChained = skill.isChained;
                     this.cardSlot.placeCard({ type: ECardType.SKILL, price: 0, skill: newSkill }, undefined);
                     //this.moveButton.setVisible(true);
                     this.upgradeButton.setVisible(false);
@@ -130,7 +132,7 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
     handlePlaceCard = () => {
         this.upgradeButton.setVisible(true);
         this.moveButton.setVisible(true);
-        console.log("card placed", this.cardSlot?.card?.card.type, this.cardSlot?.card?.card.item?.name);
+        //console.log("card placed", this.cardSlot?.card?.card.type, this.cardSlot?.card?.card.item?.name);
     };
 
     handleRemoveCard = () => {

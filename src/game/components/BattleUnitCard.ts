@@ -1,7 +1,20 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { ANIMATION_COMPLETE, colors } from "../consts";
-import { EHeroClass, EStatusType, EUnitType, IBattleUnit, IBuff, IDebuff, IStatus, ITotem, IUnit, THeroBattleAttribute } from "../../types";
+import { ANIMATION_COMPLETE, colors, i18n } from "../consts";
+import {
+    EHeroAttackType,
+    EHeroClass,
+    EStatusType,
+    EUnitType,
+    IBattleUnit,
+    IBuff,
+    IDebuff,
+    IHeroSkill,
+    IStatus,
+    ITotem,
+    IUnit,
+    THeroBattleAttribute,
+} from "../../types";
 import { BattleSummonCard } from "./BattleSummonCard";
 import { BattleBuffCard } from "./BattleBuffCard";
 import { BattleDebuffCard } from "./BattleDebuffCard";
@@ -18,6 +31,14 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     turnRect: GameObjects.Rectangle;
     actionRect: GameObjects.Rectangle;
     actionText: GameObjects.Text;
+    actionFlyRect: GameObjects.Rectangle;
+    actionFlyText: GameObjects.Text;
+    actionFlyRect2: GameObjects.Rectangle;
+    actionFlyText2: GameObjects.Text;
+    actionFlyRect3: GameObjects.Rectangle;
+    actionFlyText3: GameObjects.Text;
+    actionFlyRect4: GameObjects.Rectangle;
+    actionFlyText4: GameObjects.Text;
     summonCard: BattleSummonCard;
 
     buffs: IBuff[] = [];
@@ -40,6 +61,13 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     unitAnimation: string | undefined;
     unitAttackAnimation: string | undefined;
     unitHealAnimation: string | undefined;
+    unitHurtAnimation: string | undefined;
+    unitBuffAnimation: string | undefined;
+    unitDefeatedAnimation: string | undefined;
+    magicAttackSkillAnimation: string | undefined;
+    summonTotemAnimation: string | undefined;
+    size: number | undefined;
+    distance: number | undefined;
 
     isDead: boolean;
 
@@ -52,7 +80,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     render() {
-        this.renderBorder();
+        //this.renderBorder();
         if (this.unit) {
             this.renderUnit();
         }
@@ -60,14 +88,45 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     renderImage(heroClass: EHeroClass, unitType: EUnitType, unitId: string) {
-        const { image, animation, attackAnimation, healAnimation } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(unitId);
-        this.unitImage = image;
-        this.unitAnimation = animation;
+        const {
+            image,
+            imageBattle,
+            animation,
+            attackAnimation,
+            healAnimation,
+            idleBattleAnimation,
+            hurtAnimation,
+            buffAnimation,
+            defeatedAnimation,
+            magicAttackSkillAnimation,
+            summonTotemAnimation,
+            distance,
+            distanceEnemy,
+            size,
+        } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(unitId);
+        this.unitImage = imageBattle || image;
+        this.unitAnimation = idleBattleAnimation || animation;
         this.unitAttackAnimation = attackAnimation;
         this.unitHealAnimation = healAnimation;
-        this.unitImageObject = this.gameScene.add.sprite(-100, -100, image, 0).setOrigin(0, 0).setDisplaySize(300, 300).setFlipX(this.isInverted); //.setScale(-1, 1)
-        if (animation) {
-            this.unitImageObject.anims.play(animation);
+        this.unitHurtAnimation = hurtAnimation;
+        this.unitBuffAnimation = buffAnimation;
+        this.unitDefeatedAnimation = defeatedAnimation;
+        this.magicAttackSkillAnimation = magicAttackSkillAnimation;
+        this.summonTotemAnimation = summonTotemAnimation;
+        this.distance = distance;
+        this.size = size;
+        const displaySize = this.size || 300;
+
+        const x = -100 + (this.distance || 0) + (distanceEnemy && this.isInverted ? distanceEnemy : 0);
+
+        //console.log(">>> renderImage", displaySize);
+        this.unitImageObject = this.gameScene.add
+            .sprite(x, 200, this.unitImage, 0)
+            .setOrigin(0, 1)
+            .setDisplaySize(displaySize, displaySize)
+            .setFlipX(this.isInverted); //.setScale(-1, 1)
+        if (this.unitAnimation) {
+            this.unitImageObject.anims.play(this.unitAnimation);
         }
         this.add(this.unitImageObject);
     }
@@ -76,11 +135,43 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.turnRect = this.scene.add.rectangle(0, 205, 100, 20, colors.GREY).setOrigin(0, 0);
         this.add(this.turnRect);
 
-        this.actionRect = this.scene.add.rectangle(0, -160, 100, 20, colors.GREY).setOrigin(0, 0);
+        this.actionRect = this.scene.add.rectangle(0, -160, 100, 20, colors.GREY).setOrigin(0, 0).setVisible(false);
         this.add(this.actionRect);
 
-        this.actionText = this.scene.add.text(20, -155, "", { fontSize: 12, color: "#dddddd" });
+        this.actionText = this.scene.add.text(20, -155, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.actionText);
+
+        // 1
+
+        this.actionFlyRect = this.scene.add.rectangle(0, -160, 100, 20, colors.GREY).setOrigin(0, 0).setVisible(false);
+        this.add(this.actionFlyRect);
+
+        this.actionFlyText = this.scene.add.text(20, -155, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.actionFlyText);
+
+        // 2
+
+        this.actionFlyRect2 = this.scene.add.rectangle(0, -160, 100, 20, colors.GREY).setOrigin(0, 0).setVisible(false);
+        this.add(this.actionFlyRect2);
+
+        this.actionFlyText2 = this.scene.add.text(20, -155, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.actionFlyText2);
+
+        // 3
+
+        this.actionFlyRect3 = this.scene.add.rectangle(0, -160, 100, 20, colors.GREY).setOrigin(0, 0).setVisible(false);
+        this.add(this.actionFlyRect3);
+
+        this.actionFlyText3 = this.scene.add.text(20, -155, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.actionFlyText3);
+
+        // 4
+
+        this.actionFlyRect4 = this.scene.add.rectangle(0, -160, 100, 20, colors.GREY).setOrigin(0, 0).setVisible(false);
+        this.add(this.actionFlyRect4);
+
+        this.actionFlyText4 = this.scene.add.text(20, -155, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.actionFlyText4);
     }
 
     renderSummonCard() {
@@ -171,13 +262,86 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         });
     }
 
+    flyAction(color?: number) {
+        //console.log("flyAction", color);
+        if (!this.actionFlyRect.visible) {
+            //console.log("flyAction 1");
+            this.flyActionPanel(this.actionFlyRect, this.actionFlyText, color);
+        } else if (!this.actionFlyRect2.visible) {
+            //console.log("flyAction 2");
+            this.flyActionPanel(this.actionFlyRect2, this.actionFlyText2, color);
+        } else if (!this.actionFlyRect3.visible) {
+            //console.log("flyAction 3");
+            this.flyActionPanel(this.actionFlyRect3, this.actionFlyText3, color);
+        } else if (!this.actionFlyRect4.visible) {
+            //console.log("flyAction 4");
+            this.flyActionPanel(this.actionFlyRect4, this.actionFlyText4, color);
+        } else {
+            //console.log("flyAction 1 LAST");
+            this.flyActionPanel(this.actionFlyRect, this.actionFlyText, color);
+        }
+    }
+
+    flyActionPanel(colorPanel: GameObjects.Rectangle, textPanel: GameObjects.Text, color?: number) {
+        //console.log("flyActionPanel", color);
+        colorPanel.setY(-160);
+        colorPanel.fillColor = color;
+        colorPanel.setAlpha(1);
+
+        //colorPanel.setFillStyle(this.actionRect.fillColor, 1);
+        colorPanel.setVisible(true);
+
+        //const textColor = color ? "#FFFFFF" : color === colors.GREEN ? "#00FF00" : "#FF0000";
+
+        //textPanel.setColor(textColor);
+        textPanel.setY(-155);
+        textPanel.setAlpha(1);
+        textPanel.setText(this.actionText.text);
+        textPanel.setVisible(true);
+
+        this.gameScene.tweens.add({
+            targets: colorPanel,
+            y: { from: -160, to: -400 },
+            alpha: { from: 1, to: 0 },
+            ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 4000,
+            repeat: 0, // -1: infinity
+            yoyo: false,
+            onCompleteHandler: () => {
+                //colorPanel.setVisible(false);
+                colorPanel.setY(-160);
+            },
+        });
+
+        this.gameScene.tweens.add({
+            targets: textPanel,
+            y: { from: -155, to: -395 },
+            alpha: { from: 1, to: 0 },
+            ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 4000,
+            repeat: 0, // -1: infinity
+            yoyo: false,
+            onCompleteHandler: () => {
+                //textPanel.setVisible(false);
+                textPanel.setY(-155);
+            },
+        });
+    }
+
     refresh() {
         this.removeAll(true);
         this.render();
     }
 
-    setAction(action: string) {
+    setAction(action: string, color?: number) {
+        //console.log("setAction", action, color);
         this.actionText.setText(action);
+        // if (color) {
+        //     this.actionRect.fillColor = color;
+        // } else {
+        //     this.actionRect.fillColor = colors.GREY;
+        // }
+        this.flyAction(color);
     }
 
     setIsActive(value: boolean) {
@@ -185,23 +349,41 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.turnRect.fillColor = color;
     }
 
-    playAttack() {
-        //console.log("playAttack", this.unitAttackAnimation);
-        if (this.unitAttackAnimation) {
-            console.log("animation is not undefined");
-            console.log(this.unitAttackAnimation);
-            this.unitImageObject.anims.play(this.unitAttackAnimation);
+    async playAttack(value: number, skill?: IHeroSkill) {
+        this.setAction("ATTACK " + value);
+        //
+        let skillAnimation = undefined;
+        if (skill) {
+            if (skill.animation) {
+                skillAnimation = skill.animation;
+            } else {
+                if (skill.attackType === EHeroAttackType.MAGIC) {
+                    skillAnimation = this.magicAttackSkillAnimation;
+                }
+            }
+        }
+        //
+        const attackAnimation = skillAnimation || this.unitAttackAnimation;
+        //console.log("attackAnimation", attackAnimation);
+        if (attackAnimation) {
+            this.unitImageObject.anims.play(attackAnimation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 if (this.unitAnimation) {
                     this.unitImageObject.anims.play(this.unitAnimation);
                 }
                 this.unitImageObject.removeListener(ANIMATION_COMPLETE);
             });
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, this.unitImageObject.anims.currentAnim.duration);
+            });
         }
     }
 
-    playHeal(value: number) {
-        this.setAction("HEAL " + value);
+    async playHeal(value: number): Promise<number> {
+        this.setAction("HEAL " + value, colors.GREEN);
         if (this.unitHealAnimation) {
             this.unitImageObject.anims.play(this.unitHealAnimation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
@@ -210,16 +392,42 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 }
                 this.unitImageObject.removeListener(ANIMATION_COMPLETE);
             });
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, this.unitImageObject.anims.currentAnim.duration);
+            });
+        } else {
+            return 0;
         }
     }
 
-    playTakeDamage(value: number, armorValue: number, status?: EStatusType, isCrit?: boolean, isEvasion?: boolean) {
+    playTakeDamage(value: number, armorValue: number, options: { status?: EStatusType; isCrit?: boolean; isEvasion?: boolean; skill?: IHeroSkill }) {
+        const { status, isCrit, isEvasion, skill } = options;
         this.changeHp(-value);
         const damageType = status || "DAMAGE";
-        this.setAction(`${damageType} ${value} ${isCrit ? " CRIT!" : ""} ${isEvasion ? " EVADE!" : ""}`);
-        this.actionRect.fillColor = colors.RED;
+        this.setAction(`${damageType} ${value} ${isCrit ? " CRIT!" : ""} ${isEvasion ? " EVADE!" : ""} ${status || ""}`, colors.RED);
+
         if (armorValue > 0) {
             this.changeArmor(-armorValue);
+        }
+
+        // dont show hurt animation when taking damage from status (poison, burn, etc.)
+        if (status) {
+            return;
+        }
+
+        const hurtAnimation = this.unitHurtAnimation;
+
+        if (hurtAnimation) {
+            this.unitImageObject.anims.play(hurtAnimation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
         }
     }
 
@@ -232,37 +440,118 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     playHealed(value: number) {
         this.changeHp(value);
-        this.setAction("HEALED " + value);
-        this.actionRect.fillColor = colors.GREEN;
+        this.setAction("HEALED " + value, colors.GREEN);
+        //this.actionRect.fillColor = colors.GREEN;
     }
 
     playRegenHp(value: number) {
         this.changeHp(value);
-        this.setAction("REGEN " + value);
+        this.setAction("REGEN " + value, colors.GREEN);
         this.actionRect.fillColor = colors.GREEN;
     }
 
-    playAttrIncrease(value: number, attribute: THeroBattleAttribute) {
+    playAttrIncreaseTarget(value: number, attribute: THeroBattleAttribute) {
         this.setAction(attribute + " +" + value);
         this.changeAttribute(attribute, value);
     }
 
-    playAttrDecrease(value: number, attribute: THeroBattleAttribute) {
+    async playBuff(buff: IBuff, skill?: IHeroSkill) {
+        //this.setAction("BUFF " + buff.name);
+
+        const animation = skill?.animation || this.unitBuffAnimation;
+        if (animation) {
+            this.unitImageObject.anims.play(animation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            const animDuration = this.unitImageObject.anims.duration;
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, animDuration);
+            });
+        }
+    }
+
+    async playAttrIncrease(value: number, attribute: THeroBattleAttribute, skill?: IHeroSkill) {
+        //this.setAction("ATTR INC");
+
+        if (!skill) {
+            return;
+        }
+
+        const animation = skill?.animation || this.unitBuffAnimation;
+        if (animation) {
+            this.unitImageObject.anims.play(animation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            const animDuration = this.unitImageObject.anims.duration;
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, animDuration);
+            });
+        }
+    }
+
+    playAttrDecreaseTarget(value: number, attribute: THeroBattleAttribute) {
         this.setAction(attribute + " -" + value);
         this.changeAttribute(attribute, -value);
     }
 
     playDead() {
         this.isDead = true;
-        this.setAction("DEAD");
+        this.setAction(i18n.ui.DEAD, colors.RED);
+        this.actionText.setVisible(true);
         this.actionRect.fillColor = colors.BLACK;
+
+        const animation = this.unitDefeatedAnimation;
+        if (animation) {
+            this.unitImageObject.anims.play(animation);
+            // this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+            //     if (this.unitAnimation) {
+            //         this.unitImageObject.anims.play(this.unitAnimation);
+            //     }
+            //     this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            // });
+        }
     }
 
-    summonUnit(unit: IBattleUnit) {
+    async summonUnit(unit: IBattleUnit, skill?: IHeroSkill): Promise<BattleSummonCard> {
         this.setAction("SUMMON " + unit.name);
         this.summonCard.setUnit(unit);
-        this.summonCard.setVisible(true);
-        return this.summonCard;
+        //this.summonCard.setVisible(true);
+        //return this.summonCard;
+
+        const summonAnimation = skill?.animation || this.summonTotemAnimation;
+        if (summonAnimation) {
+            this.unitImageObject.anims.play(summonAnimation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            return new Promise<BattleSummonCard>((resolve, reject) => {
+                setTimeout(() => {
+                    this.summonCard.setVisible(true);
+                    resolve(this.summonCard);
+                }, this.unitImageObject.anims.currentAnim.duration);
+            });
+        } else {
+            this.summonCard.setVisible(true);
+            return this.summonCard;
+        }
     }
 
     removeSummon() {
@@ -270,11 +559,34 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.summonCard.removeUnit();
     }
 
-    placeTotem(totem: ITotem) {
+    async placeTotem(totem: ITotem, skill?: IHeroSkill): Promise<BattleSummonCard> {
+        //console.log("PLACE TOTEM");
+        //console.log("skill", skill);
+
         this.setAction("TOTEM " + totem.name);
         this.summonCard.setTotem(totem);
-        this.summonCard.setVisible(true);
-        return this.summonCard;
+        //return this.summonCard;
+
+        const totemAnimation = skill?.animation || this.summonTotemAnimation;
+        if (totemAnimation) {
+            this.unitImageObject.anims.play(totemAnimation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            return new Promise<BattleSummonCard>((resolve, reject) => {
+                setTimeout(() => {
+                    this.summonCard.setVisible(true);
+                    resolve(this.summonCard);
+                }, this.unitImageObject.anims.currentAnim.duration);
+            });
+        } else {
+            this.summonCard.setVisible(true);
+            return this.summonCard;
+        }
     }
 
     removeTotem() {
@@ -334,7 +646,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     removeBuff(buff: IBuff) {
-        this.setAction("REMOVE BUFF " + buff.name);
+        //this.setAction("REMOVE BUFF " + buff.name);
         this.buffs = this.buffs.filter((b) => b.type !== buff.type);
         this.renderBuffs();
     }
@@ -377,7 +689,31 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
     }
 
-    applyStatus(statusType: EStatusType, value: number) {
+    async playApplyStatus(skill?: IHeroSkill) {
+        // ANIMATION
+
+        const animation = skill?.animation || this.magicAttackSkillAnimation;
+        if (animation) {
+            console.log("start play APPLY STATUS ANMATION");
+            this.unitImageObject.anims.play(animation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            const animDuration = this.unitImageObject.anims.duration;
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    console.log("finish APPLY STATUS ANMATION");
+                    resolve(0);
+                }, animDuration);
+            });
+        }
+    }
+
+    applyStatus(statusType: EStatusType, value: number, skill?: IHeroSkill) {
         this.setAction(`${statusType} +${value}`);
 
         const existingStatus = this.statuses.find((status) => status.type === statusType);

@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { EHeroClassType, EUnitType, IUnit } from "../../types";
 import { HeroItemSlot } from "./HeroItemSlot";
@@ -10,25 +10,31 @@ import { getMulticlassSubclasses } from "../utils/heroUtils";
 import { getHeroImage, getUnitImage } from "../utils/imageUtils";
 import { HeroClassTag } from "./ui/HeroClassTag";
 import { IMAGE_ICON_ATTACK, IMAGE_ICON_HEALTH, IMAGE_ICON_SHIELD } from "../utils/imageLoadUtil";
+import { colors, i18n } from "../consts";
+import { CardSlot } from "./CardSlot";
 
 /** Card to buy from shop  */
 export class UnitCard extends Phaser.GameObjects.Container {
     gameScene: GameScene;
+    cardSlot: CardSlot | undefined;
     parentCard: Card;
     titleText: GameObjects.Text;
     unit: IUnit;
     title: string;
     upgradeButton: GameObjects.Text;
+    rect: GameObjects.Rectangle;
 
     skillSlots: HeroSkillSlot[] = [];
     itemSlots: HeroItemSlot[] = [];
     isShowItems: boolean;
     isShowSkills: boolean;
 
-    constructor(scene: GameScene, x: number, y: number, card: Card, unit: IUnit, isShowItems: boolean, isShowSkills: boolean) {
+    constructor(scene: GameScene, x: number, y: number, card: Card, unit: IUnit, isShowItems: boolean, isShowSkills: boolean, cardSlot?: CardSlot) {
         super(scene, x, y);
         this.parentCard = card;
         this.gameScene = scene;
+        this.cardSlot = cardSlot;
+
         this.unit = unit;
         this.isShowItems = isShowItems;
         this.isShowSkills = isShowSkills;
@@ -36,6 +42,8 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     render() {
+        this.renderBorder();
+
         const { basicAttack, basicMaxHp, heroClass, name, basicArmor, items, level, unitType, heroClassType, exp, basicMagicPower, basicPhysicalPower } =
             this.unit;
 
@@ -74,8 +82,8 @@ export class UnitCard extends Phaser.GameObjects.Container {
         // armorText.setVisible(basicArmor > 0);
         // this.add(armorText);
 
-        const powerText = this.scene.add.text(10, 90, basicPhysicalPower + "PP" + " " + basicMagicPower + "MP", { fontSize: 12, color: "#dddddd" });
-        this.add(powerText);
+        //const powerText = this.scene.add.text(10, 90, basicPhysicalPower + "PP" + " " + basicMagicPower + "MP", { fontSize: 12, color: "#dddddd" });
+        //this.add(powerText);
 
         this.renderUpgradeButton();
 
@@ -92,11 +100,41 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.showSkillSlots();
     }
 
+    renderBorder() {
+        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK, 0).setOrigin(0, 0);
+        //this.rect.setStrokeStyle(1, 0x777777);
+
+        this.rect.setInteractive();
+        this.rect
+            .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+                //console.log(">>>>>>>>>> ON GAMEOBJECT_POINTER_OVER");
+                //console.log(this.x, this.y);
+                //console.log(this.getWorldPoint());
+                const { x, y } = this.getWorldPoint();
+                this.gameScene.hintPanel.showUnit(x + 150, y - 30, this.unit);
+            })
+            .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+                //console.log(">>>>>> ON GAMEOBJECT_POINTER_OUT");
+                this.gameScene.hintPanel.hide();
+            })
+            .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+                console.log("CLICK ON RECT", this.gameScene.isCardMoveMode, this.cardSlot);
+
+                if (this.gameScene.isCardMoveMode && this.cardSlot) {
+                    //console.log("CLICK CARD SLOT");
+                    this.cardSlot.click();
+                }
+            });
+        this.add(this.rect);
+    }
+
     renderImage() {
         const { image, animation } = this.unit.unitType === EUnitType.HERO ? getHeroImage(this.unit.heroClass) : getUnitImage(this.unit.id);
         const imageObject = this.gameScene.add.sprite(-100, 200, image, 0).setOrigin(0, 1); //setDisplaySize(300, 300)
         if (animation) {
-            imageObject.anims.play(animation);
+            if (this.unit.heroClassType === EHeroClassType.MULTI) {
+                imageObject.anims.play(animation);
+            }
         }
         this.add(imageObject);
     }
@@ -104,8 +142,10 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderUpgradeButton() {
         const { level, unitType, heroClassType } = this.unit;
 
-        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 3;
-        this.upgradeButton = this.scene.add.text(0, 120, "UPGRADE", { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" }).setVisible(isVisible);
+        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 1;
+        this.upgradeButton = this.scene.add
+            .text(0, 120, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" })
+            .setVisible(isVisible);
 
         this.upgradeButton.setInteractive().on("pointerdown", () => {
             //this.gameScene.setIsUnitUpgradeMode(true, this.cardSlot);

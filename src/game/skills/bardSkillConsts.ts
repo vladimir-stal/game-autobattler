@@ -1,11 +1,13 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { i18n } from "../consts";
+import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2 } from "../utils/imageLoadUtil";
 
 // BUFF NEXT BA ALL
 
 export const buffNextBaAll_3: IHeroSkillSet = {
     id: "buffBaNextBaAll",
-    name: "Buff BA all(3)",
-    desc: "Buff next basic attack for [4] damage for all allies",
+    name: i18n.skills.basic.buffBaNextBaAll.name + "(3)",
+    desc: i18n.skills.basic.buffBaNextBaAll.desc3, //"Buff next basic attack for [2] damage for all allies",
     level: 3,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -23,12 +25,13 @@ export const buffNextBaAll_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_BARD_BUFF_1,
 };
 
 export const buffNextBaAll_2: IHeroSkillSet = {
     id: "buffBaNextBaAll",
-    name: "Buff BA all(2)",
-    desc: "Buff next basic attack for [3] damage for all allies",
+    name: i18n.skills.basic.buffBaNextBaAll.name + "(2)",
+    desc: i18n.skills.basic.buffBaNextBaAll.desc2, //"Buff next basic attack for [2] damage for all allies",
     level: 2,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -47,12 +50,13 @@ export const buffNextBaAll_2: IHeroSkillSet = {
         },
     ],
     nextLevel: buffNextBaAll_3,
+    image: IMAGE_SKILL_BARD_BUFF_1,
 };
 
 export const buffNextBaAll: IHeroSkillSet = {
     id: "buffBaNextBaAll",
-    name: "Buff BA all",
-    desc: "Buff next basic attack for [2] damage for all allies",
+    name: i18n.skills.basic.buffBaNextBaAll.name,
+    desc: i18n.skills.basic.buffBaNextBaAll.desc1, //"Buff next basic attack for [2] damage for all allies",
     level: 1,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -71,14 +75,15 @@ export const buffNextBaAll: IHeroSkillSet = {
         },
     ],
     nextLevel: buffNextBaAll_2,
+    image: IMAGE_SKILL_BARD_BUFF_1,
 };
 
 // BUFF BA SELF
 
 export const buffBaSelf_3: IHeroSkillSet = {
     id: "buffBaSelf",
-    name: "Buff self BA(3)",
-    desc: "Buff self basic attack [3]",
+    name: i18n.skills.basic.buffBaSelf.name + "(3)",
+    desc: i18n.skills.basic.buffBaSelf.desc3, //"Buff self basic attack [1]",
     level: 3,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -96,12 +101,13 @@ export const buffBaSelf_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_BARD_BUFF_2,
 };
 
 export const buffBaSelf_2: IHeroSkillSet = {
     id: "buffBaSelf",
-    name: "Buff self BA(2)",
-    desc: "Buff self basic attack [2]",
+    name: i18n.skills.basic.buffBaSelf.name + "(2)",
+    desc: i18n.skills.basic.buffBaSelf.desc2, //"Buff self basic attack [1]",
     level: 2,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -120,12 +126,13 @@ export const buffBaSelf_2: IHeroSkillSet = {
         },
     ],
     nextLevel: buffBaSelf_3,
+    image: IMAGE_SKILL_BARD_BUFF_2,
 };
 
 export const buffBaSelf: IHeroSkillSet = {
     id: "buffBaSelf",
-    name: "Buff self BA",
-    desc: "Buff self basic attack [1]",
+    name: i18n.skills.basic.buffBaSelf.name,
+    desc: i18n.skills.basic.buffBaSelf.desc1, //"Buff self basic attack [1]",
     level: 1,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -144,14 +151,15 @@ export const buffBaSelf: IHeroSkillSet = {
         },
     ],
     nextLevel: buffBaSelf_2,
+    image: IMAGE_SKILL_BARD_BUFF_2,
 };
 
 // BUFF PP ALL SKILL
 
 export const buffPPAll_3: IHeroSkillSet = {
     id: "buffPpAll",
-    name: "Buff PP all(3)",
-    desc: "Buff Physical power  \n[1]+[MP] all allies",
+    name: i18n.skills.basic.buffPpAll.name + "(3)",
+    desc: i18n.skills.basic.buffPpAll.desc3, //"Buff Physical power \n[1]+[MP*50%] all allies",
     level: 5,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -170,12 +178,13 @@ export const buffPPAll_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_BARD_BUFF_1,
 };
 
 export const buffPPAll_2: IHeroSkillSet = {
     id: "buffPpAll",
-    name: "Buff PP all(2)",
-    desc: "Buff Physical power  \n[1]+[MP*70%] all allies",
+    name: i18n.skills.basic.buffPpAll.name + "(2)",
+    desc: i18n.skills.basic.buffPpAll.desc2, //"Buff Physical power \n[1]+[MP*50%] all allies",
     level: 4,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -195,12 +204,13 @@ export const buffPPAll_2: IHeroSkillSet = {
         },
     ],
     nextLevel: buffPPAll_3,
+    image: IMAGE_SKILL_BARD_BUFF_1,
 };
 
 export const buffPPAll: IHeroSkillSet = {
     id: "buffPpAll",
-    name: "Buff PP all",
-    desc: "Buff Physical power \n[1]+[MP*50%] all allies",
+    name: i18n.skills.basic.buffPpAll.name,
+    desc: i18n.skills.basic.buffPpAll.desc1, //"Buff Physical power \n[1]+[MP*50%] all allies",
     level: 3,
     heroClasses: [EHeroClass.BARD],
     skills: [
@@ -220,6 +230,7 @@ export const buffPPAll: IHeroSkillSet = {
         },
     ],
     nextLevel: buffPPAll_2,
+    image: IMAGE_SKILL_BARD_BUFF_1,
 };
 
 //

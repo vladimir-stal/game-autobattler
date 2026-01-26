@@ -1,4 +1,6 @@
 import { EBuffTimeType, EDebuffType, EHeroAttackType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { i18n } from "../consts";
+import { IMAGE_SKILL_MAGIC_MISSILES, IMAGE_SKILL_POISON } from "../utils/imageLoadUtil";
 
 // DEBUFF NEXT BA
 
@@ -80,8 +82,10 @@ export const debuffBaNextBaAll: IHeroSkillSet = {
 
 export const poisonRandom_3: IHeroSkillSet = {
     id: "poisonRandom",
-    name: "Posion random(3)",
-    desc: "Poison [5] random enemy",
+    //name: "Posion random(3)",
+    //desc: "Poison [5] random enemy",
+    name: i18n.skills.basic.poisonRandom.name + "(3)",
+    desc: i18n.skills.basic.poisonRandom.desc3,
     level: 3,
     heroClasses: [EHeroClass.DARK],
     skills: [
@@ -93,12 +97,15 @@ export const poisonRandom_3: IHeroSkillSet = {
             targetType: ETargetType.RANDOM_ENEMY,
         },
     ],
+    image: IMAGE_SKILL_POISON,
 };
 
 export const poisonRandom_2: IHeroSkillSet = {
     id: "poisonRandom",
-    name: "Posion random(2)",
-    desc: "Poison [4] random enemy",
+    //name: "Posion random(2)",
+    //desc: "Poison [4] random enemy",
+    name: i18n.skills.basic.poisonRandom.name + "(2)",
+    desc: i18n.skills.basic.poisonRandom.desc2,
     level: 2,
     heroClasses: [EHeroClass.DARK],
     skills: [
@@ -111,12 +118,15 @@ export const poisonRandom_2: IHeroSkillSet = {
         },
     ],
     nextLevel: poisonRandom_3,
+    image: IMAGE_SKILL_POISON,
 };
 
 export const poisonRandom: IHeroSkillSet = {
     id: "poisonRandom",
-    name: "Posion random",
-    desc: "Poison [3] random enemy",
+    //name: "Posion random",
+    //desc: "Poison [3] random enemy",
+    name: i18n.skills.basic.poisonRandom.name,
+    desc: i18n.skills.basic.poisonRandom.desc1,
     level: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
@@ -129,14 +139,17 @@ export const poisonRandom: IHeroSkillSet = {
         },
     ],
     nextLevel: poisonRandom_2,
+    image: IMAGE_SKILL_POISON,
 };
 
 // MAGIC ATTACK X3
 
 export const magicAttackX3_3: IHeroSkillSet = {
     id: "magicAttackX3",
-    name: "Magic Attack x3(3)",
-    desc: "Deal [4] magic damage to random enemy 3 times",
+    //name: "Magic Attack x3(3)",
+    //desc: "Deal [4] magic damage to random enemy 3 times",
+    name: i18n.skills.basic.magicAttackX3.name + "(3)",
+    desc: i18n.skills.basic.magicAttackX3.desc3,
     level: 3,
     heroClasses: [EHeroClass.DARK],
     skills: [
@@ -162,12 +175,15 @@ export const magicAttackX3_3: IHeroSkillSet = {
             attackType: EHeroAttackType.MAGIC,
         },
     ],
+    image: IMAGE_SKILL_MAGIC_MISSILES,
 };
 
 export const magicAttackX3_2: IHeroSkillSet = {
     id: "magicAttackX3",
-    name: "Magic Attack x3(2)",
-    desc: "Deal [3] magic damage to random enemy 3 times",
+    //name: "Magic Attack x3(2)",
+    //desc: "Deal [3] magic damage to random enemy 3 times",
+    name: i18n.skills.basic.magicAttackX3.name + "(2)",
+    desc: i18n.skills.basic.magicAttackX3.desc2,
     level: 2,
     heroClasses: [EHeroClass.DARK],
     skills: [
@@ -194,12 +210,15 @@ export const magicAttackX3_2: IHeroSkillSet = {
         },
     ],
     nextLevel: magicAttackX3_3,
+    image: IMAGE_SKILL_MAGIC_MISSILES,
 };
 
 export const magicAttackX3: IHeroSkillSet = {
     id: "magicAttackX3",
-    name: "Magic Attack x3",
-    desc: "Deal [2] magic damage to random enemy 3 times",
+    //name: "Magic Attack x3",
+    //desc: "Deal [2] magic damage to random enemy 3 times",
+    name: i18n.skills.basic.magicAttackX3.name,
+    desc: i18n.skills.basic.magicAttackX3.desc1,
     level: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
@@ -226,6 +245,7 @@ export const magicAttackX3: IHeroSkillSet = {
         },
     ],
     nextLevel: magicAttackX3_2,
+    image: IMAGE_SKILL_MAGIC_MISSILES,
 };
 
 export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];

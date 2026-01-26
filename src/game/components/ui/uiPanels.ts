@@ -11,6 +11,7 @@ import { SellCardPanel } from "./SellCardPanel";
 import { LeaderPanel } from "./LeaderPanel";
 import { LeadersPanel } from "./LeadersPanel";
 import { CardUpgradetPanel } from "./CardUpgradetPanel";
+import { CardHintPanel } from "./CardHintPanel";
 
 export function createUIPanels(scene: GameScene) {
     const fixedContainer = scene.add.container().setScrollFactor(0, 0, true).setDepth(200);
@@ -65,6 +66,10 @@ export function createUIPanels(scene: GameScene) {
 
     scene.cardUpgradePanel = new CardUpgradetPanel(scene, cardsPanelX, cardsPanelY - 100);
     fixedContainer.add(scene.cardUpgradePanel);
+
+    scene.hintPanel = new CardHintPanel(scene, 0, 0).setDepth(500).setVisible(false);
+    //console.log("HINT PANEL INIT COORDINATES", scene.hintPanel.x, scene.hintPanel.y);
+    scene.add.existing(scene.hintPanel);
 
     // DUEL PHASE
 

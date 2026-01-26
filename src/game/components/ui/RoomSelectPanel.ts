@@ -1,6 +1,6 @@
 import { GameScene } from "../../scenes/GameScene";
 import { ECardType, EHeroClass, ERoomType } from "../../../types";
-import { colors } from "../../consts";
+import { colors, i18n } from "../../consts";
 import { getSelectRoomDisplayName, IRoomOptions } from "../../utils/selectPhaseUtils";
 import { roomsWithSingleHeroClass, tripleSetCardTypes } from "../SelectController";
 import { getRandomArrayItems } from "../../utils/commonUtils";
@@ -47,9 +47,6 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderRoom(index: number, type: ERoomType, roomOptions?: IRoomOptions) {
-        //heroClasses?: EHeroClass[]
-        console.log("renderRoom TYPE: ", type, getSelectRoomDisplayName(type));
-
         const { heroClasses, boss } = roomOptions || {};
 
         // TRIPLE SET ROOM
@@ -82,7 +79,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         });
         this.add(roomDescriptionText);
 
-        const selectRoomText = this.scene.add.text(100 + index * 250, 80, "SELECT", {
+        const selectRoomText = this.scene.add.text(100 + index * 250, 80, i18n.ui.SELECT, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#aaffaa",

@@ -6,9 +6,8 @@ import { MainMenuScene } from "./scenes/MainMenuScene";
 //import { GameMultScene } from './scenes/GameMultScene';
 import { GameLoadingScene } from "./scenes/GameLoadingScene";
 import { GameScene } from "./scenes/GameScene";
-import { LobbyScene } from "./scenes/LobbyScene";
+//import { LobbyScene } from "./scenes/LobbyScene";
 import { LobbyLoadingScene } from "./scenes/LobbyLoadingScene";
-import { GameResultsScene } from "./scenes/GameResultsScene";
 import { ResourceLoadScene } from "./scenes/ResourceLoadScene";
 //import { Preloader } from './scenes/Preloader';
 
@@ -36,7 +35,7 @@ const config: Phaser.Types.Core.GameConfig = {
     //         game.domContainer.style.pointerEvents = "none";
     //     },
     // },
-    scene: [MainMenuScene, LobbyScene, LobbyLoadingScene, GameScene, GameResultsScene, GameLoadingScene, ResourceLoadScene],
+    scene: [MainMenuScene, LobbyLoadingScene, GameScene, GameLoadingScene, ResourceLoadScene],
 };
 
 const StartGame = (parent: string) => {

@@ -1,6 +1,6 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
-import { colors } from "../../consts";
+import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
 
 /** UI panel to store cards */
@@ -11,12 +11,16 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
 
     //selectedCardIndex: number | undefined;
 
-    slots: { moveText: GameObjects.Text; slot: CardSlot }[] = [];
+    slots: { moveText: GameObjects.Text; slot: CardSlot }[];
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
         this.gameScene = scene;
+        this.init();
+    }
 
+    init() {
+        this.slots = [];
         this.slotCount = 4;
         this.show();
     }
@@ -67,7 +71,7 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
         this.gameScene.addCardSlot(cardSlot);
 
         const moveCardText = this.scene.add
-            .text(x + 20, y + 150, "MOVE", {
+            .text(x + 20, y + 150, i18n.ui.MOVE, {
                 fontFamily: "Arial Black",
                 fontSize: 18,
                 color: "#aaffaa",

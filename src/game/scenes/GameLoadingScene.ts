@@ -1,9 +1,7 @@
 import { AnimationType, ERoomStatus, EScene } from "../../types";
 import { ANIMATION_COMPLETE, IMAGE_LOBBY_FOX_SMILE, IMAGE_LOBBY_LOADING } from "../consts";
 import { EventBus, EventType } from "../EventBus";
-import { Cameras, Display, Events, GameObjects, Input, Scene, Types } from "phaser";
-import { loadImages } from "../utils/imageLoadUtils";
-import { loadSounds } from "../utils/soundLoadUtils";
+import { Cameras, GameObjects, Scene } from "phaser";
 
 export class GameLoadingScene extends Scene {
     camera: Cameras.Scene2D.Camera;
@@ -75,9 +73,9 @@ export class GameLoadingScene extends Scene {
                     });
                 });
 
-                setTimeout(() => {
-                    this.scene.launch(EScene.PLATFORM);
-                }, 1000);
+                // setTimeout(() => {
+                //     this.scene.launch(EScene.PLATFORM);
+                // }, 1000);
             }
         });
 

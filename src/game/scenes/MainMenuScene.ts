@@ -1,19 +1,14 @@
-import { EGameStatus, ERoomStatus, EScene } from "../../types";
-import {
-    IMAGE_MAIN_MENU,
-    SOUND_MAIN_MENU_CHANGE_SCENE,
-    //SOUND_MAIN_MENU_CLICK,
-    SOUND_MAIN_MENU_CLICK_2,
-    //SOUND_MAIN_MENU_MUSIC,
-    //SOUND_MAIN_MENU_START,
-} from "../consts";
+import { EScene } from "../../types";
 import { EventBus, EventType } from "../EventBus";
-import { Actions, Cameras, Display, Events, GameObjects, Input, Scale, Scene, Sound, Structs } from "phaser";
+import { Cameras, GameObjects, Input, Scale, Scene, Sound, Structs } from "phaser";
+
+const IMAGE_MAIN_MENU = "IMAGE_MAIN_MENU";
+const SOUND_MAIN_MENU_CHANGE_SCENE = "SOUND_MAIN_MENU_CHANGE_SCENE";
+const SOUND_MAIN_MENU_CLICK_2 = "SOUND_MAIN_MENU_CLICK_2";
 
 export class MainMenuScene extends Scene {
     camera: Cameras.Scene2D.Camera;
     background: GameObjects.Image;
-    //titleText: GameObjects.Text;
     mainContainer: GameObjects.Container;
 
     changeSceneSound1: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
@@ -28,7 +23,7 @@ export class MainMenuScene extends Scene {
     preload() {
         console.log("MainMenuScene preload");
         //this.load.audio(SOUND_MAIN_MENU_START, "assets/audio/sounds/main_menu_start.mp3");
-        this.load.audio(SOUND_MAIN_MENU_CHANGE_SCENE, "assets/audio/sounds/owl_1.mp3");
+        this.load.audio(SOUND_MAIN_MENU_CHANGE_SCENE, "assets/audio/    /owl_1.mp3");
         //this.load.audio(SOUND_MAIN_MENU_CLICK, "assets/audio/sounds/ui_click_2.mp3");
         this.load.audio(SOUND_MAIN_MENU_CLICK_2, "assets/audio/sounds/ui_click_1.mp3");
         //this.load.audio(SOUND_MAIN_MENU_MUSIC, "assets/audio/music/main_menu.mp3");
@@ -53,7 +48,7 @@ export class MainMenuScene extends Scene {
                 EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
                 this.scene.switch(EScene.LOBBY_LOADING);
             },
-            this
+            this,
         );
 
         //sounds test
@@ -115,7 +110,7 @@ export class MainMenuScene extends Scene {
                 const currentPosition = { x: this.mainContainer.x, y: this.mainContainer.y };
                 this.mainContainer.setPosition(
                     (gameSize.width - previousWidth) / 2 + currentPosition.x,
-                    (gameSize.height - previousHeight) / 2 + currentPosition.y
+                    (gameSize.height - previousHeight) / 2 + currentPosition.y,
                 );
                 this.background.setPosition(screenCenterX, screenCenterY);
                 //this.mainContainer.setSize(this.cameras.main.width / 4, this.cameras.main.height / 4);
@@ -128,7 +123,7 @@ export class MainMenuScene extends Scene {
                 //         'x' +
                 //         this.mainContainer.height
                 // );
-            }
+            },
         );
         // use this methods to align one game object inside another game object
         //Display.Align.In.Center(this.titleText, this, )
@@ -139,7 +134,8 @@ export class MainMenuScene extends Scene {
         // this.mainContainer.add(bg1);
 
         const titleText = this.add
-            .text(0, -250, "START GAME", {
+            .text(0, -250, "НАЧАТЬ ИГРУ", {
+                //"START GAME"
                 //screenCenterX, screenCenterY - 100,
                 fontFamily: "Arial Black",
                 fontSize: 64,
@@ -157,7 +153,7 @@ export class MainMenuScene extends Scene {
                 EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
                 this.scene.switch(EScene.LOBBY_LOADING);
             },
-            this
+            this,
         );
         this.mainContainer.add(titleText);
 

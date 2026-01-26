@@ -1,4 +1,5 @@
 import { EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
+import { i18n } from "./consts";
 import { heraldHero } from "./mcHeroConsts";
 import {
     IMAGE_ITEM_AXE_1,
@@ -19,7 +20,8 @@ import {
 
 export const axe1_2: IItem = {
     id: "axe1",
-    name: "Axe(2)",
+    //name: "Axe(2)",
+    name: i18n.items.axe1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -31,7 +33,8 @@ export const axe1_2: IItem = {
 
 export const axe1: IItem = {
     id: "axe1",
-    name: "Axe",
+    //name: "Axe",
+    name: i18n.items.axe1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -46,7 +49,8 @@ export const axe1: IItem = {
 
 export const dagger1_2: IItem = {
     id: "dagger1",
-    name: "Dagger(2)",
+    //name: "Dagger(2)",
+    name: i18n.items.dagger1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -59,7 +63,8 @@ export const dagger1_2: IItem = {
 
 export const dagger1: IItem = {
     id: "dagger1",
-    name: "Dagger",
+    //name: "Dagger",
+    name: i18n.items.dagger1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -75,7 +80,8 @@ export const dagger1: IItem = {
 
 export const mace1_2: IItem = {
     id: "mace1",
-    name: "Mace(2)",
+    //name: "Mace(2)",
+    name: i18n.items.mace1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -90,7 +96,8 @@ export const mace1_2: IItem = {
 
 export const mace1: IItem = {
     id: "mace1",
-    name: "Mace",
+    //name: "Mace",
+    name: i18n.items.mace1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -108,7 +115,8 @@ export const mace1: IItem = {
 
 export const musical1_2: IItem = {
     id: "musical1",
-    name: "Lute(2)",
+    //name: "Lute(2)",
+    name: i18n.items.musical1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -123,7 +131,8 @@ export const musical1_2: IItem = {
 
 export const musical1: IItem = {
     id: "musical1",
-    name: "Lute",
+    //name: "Lute",
+    name: i18n.items.musical1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -141,7 +150,8 @@ export const musical1: IItem = {
 
 export const scepter1_2: IItem = {
     id: "scepter1",
-    name: "Scepter(2)",
+    //name: "Scepter(2)",
+    name: i18n.items.scepter1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -153,7 +163,8 @@ export const scepter1_2: IItem = {
 
 export const scepter1: IItem = {
     id: "scepter1",
-    name: "Scepter",
+    //name: "Scepter",
+    name: i18n.items.scepter1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -168,7 +179,8 @@ export const scepter1: IItem = {
 
 export const shield1_2: IItem = {
     id: "shield1",
-    name: "Shield(2)",
+    //name: "Shield(2)",
+    name: i18n.items.shield1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -183,7 +195,8 @@ export const shield1_2: IItem = {
 
 export const shield1: IItem = {
     id: "shield1",
-    name: "Shield",
+    //name: "Shield",
+    name: i18n.items.shield1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -201,7 +214,8 @@ export const shield1: IItem = {
 
 export const staff1_2: IItem = {
     id: "staff1",
-    name: "Staff(2)",
+    //name: "Staff(2)",
+    name: i18n.items.staff1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -213,7 +227,8 @@ export const staff1_2: IItem = {
 
 export const staff1: IItem = {
     id: "staff1",
-    name: "Staff",
+    //name: "Staff",
+    name: i18n.items.staff1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -228,7 +243,8 @@ export const staff1: IItem = {
 
 export const sword1_2: IItem = {
     id: "sword1",
-    name: "Sword(2)",
+    //name: "Sword(2)",
+    name: i18n.items.sword1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -240,7 +256,8 @@ export const sword1_2: IItem = {
 
 export const sword1: IItem = {
     id: "sword1",
-    name: "Sword",
+    //name: "Sword",
+    name: i18n.items.sword1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -255,7 +272,8 @@ export const sword1: IItem = {
 
 export const totem1_2: IItem = {
     id: "totem1",
-    name: "Totem(2)",
+    //name: "Totem(2)",
+    name: i18n.items.totem1 + "(2)",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -270,7 +288,8 @@ export const totem1_2: IItem = {
 
 export const totem1: IItem = {
     id: "totem1",
-    name: "Totem",
+    //name: "Totem",
+    name: i18n.items.totem1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,
@@ -288,7 +307,8 @@ export const totem1: IItem = {
 
 export const wand1_2: IItem = {
     id: "wand1",
-    name: "Wand(2)",
+    //name: "Wand(2)",
+    name: i18n.items.wand1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
@@ -301,7 +321,8 @@ export const wand1_2: IItem = {
 
 export const wand1: IItem = {
     id: "wand1",
-    name: "Wand",
+    //name: "Wand",
+    name: i18n.items.wand1,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 1,

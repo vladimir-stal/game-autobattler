@@ -14,8 +14,10 @@ import {
     THeroAttribute,
 } from "../../types";
 import { bosses } from "../bossConsts";
+import { gloves_priest2 } from "../commonItemConsts";
 import { CardSlot } from "../components/CardSlot";
 import { roomsWithHeroClasses, tripleSetCardTypes } from "../components/SelectController";
+import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes } from "../heroConsts";
 import { basicWeapons } from "../itemConsts";
 import { GameScene } from "../scenes/GameScene";
@@ -92,26 +94,42 @@ export const getRooms = (
     day: number,
     hour: number,
     prevRooms: ERoomType[],
-    ownedHeroesCount: number
+    ownedHeroesCount: number,
     //): ({ roomType: ERoomType; heroClasses?: EHeroClass[] } | null)[] => {
 ): ({ roomType: ERoomType; roomOptions?: IRoomOptions } | null)[] => {
-    console.log("GETROOMS");
-    prevRooms.forEach((prevroom) => console.log(">>  " + prevroom));
+    //console.log("GETROOMS");
+    //prevRooms.forEach((prevroom) => console.log(">>  " + prevroom));
     switch (day) {
         case 0:
             {
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                 }
+                // if (hour === 1) {
+                //     return [null, { roomType: ERoomType.MOBS }, null];
+                // }
+
+                // if (hour === 1) {
+                //     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                // }
+                // if (hour === 1) {
+                //     return [null, { roomType: ERoomType.SKILLS_SELL_ENHANCED }, null];
+                // }
                 if (hour === 1) {
-                    return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                    return [null, { roomType: ERoomType.MOBS }, null];
+                }
+                if (hour === 2) {
+                    return [null, { roomType: ERoomType.DUEL }, null];
                 }
                 // if (hour === 2) {
                 //     return [{ roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }];
                 // }
-                if (hour === 3) {
-                    return [null, { roomType: ERoomType.DUEL }, null];
-                }
+                //if (hour === 3) {
+                // if (hour === 1) {
+                //     //return [null, { roomType: ERoomType.DUEL }, null];
+                //     const boss = getRandomArrayItem(bosses);
+                //     return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: { name: boss.name, units: [boss] } } }, null];
+                // }
             }
             break;
         case 1:
@@ -132,9 +150,13 @@ export const getRooms = (
             if (hour === 3) {
                 return [null, { roomType: ERoomType.DUEL }, null];
             }
+            break;
         }
         case 3:
             {
+                if (hour === 0) {
+                    return [null, { roomType: ERoomType.SKILLS_SELL_ENHANCED }, null];
+                }
                 if (hour === 1) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                 }
@@ -145,14 +167,23 @@ export const getRooms = (
             }
             break;
         case 4:
-        case 5:
             {
                 if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                 }
 
                 if (hour === 5) {
-                    //return [null, { roomType: ERoomType.DUEL }, null];
+                    return [null, { roomType: ERoomType.DUEL }, null];
+                }
+            }
+            break;
+        case 5:
+            {
+                // if (hour === 2) {
+                //     return [null, { roomType: ERoomType.MOBS }, null];
+                // }
+
+                if (hour === 5) {
                     const boss = getRandomArrayItem(bosses);
                     return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: { name: boss.name, units: [boss] } } }, null];
                 }
@@ -228,23 +259,23 @@ export const getRooms = (
     if (prevRooms[0]) {
         const prevSellRoomIndex = firstRooms.findIndex((roomType) => roomType === prevRooms[0]);
         if (prevSellRoomIndex !== -1) {
-            console.log(firstRooms[prevSellRoomIndex] + " is REMOVED from sell rooms");
+            //console.log(firstRooms[prevSellRoomIndex] + " is REMOVED from sell rooms");
             firstRooms.splice(prevSellRoomIndex, 1);
         }
     }
     if (prevRooms[1]) {
         const prevChoiseRoomIndex = secondRooms.findIndex((roomType) => roomType === prevRooms[1]);
         if (prevChoiseRoomIndex !== -1) {
-            console.log(secondRooms[prevChoiseRoomIndex] + " is REMOVED from choise rooms");
+            //console.log(secondRooms[prevChoiseRoomIndex] + " is REMOVED from choise rooms");
             const text: string = secondRooms.reduce((text, room) => `${text} ${room}`, "");
-            console.log("CHOISE ROOM BEFORE SPLICE: " + text);
+            //console.log("CHOISE ROOM BEFORE SPLICE: " + text);
             secondRooms.splice(prevChoiseRoomIndex, 1);
         }
     }
     if (prevRooms[2]) {
         const prevRandomRoomIndex = thirdRooms.findIndex((roomType) => roomType === prevRooms[2]);
         if (prevRandomRoomIndex !== -1) {
-            console.log(thirdRooms[prevRandomRoomIndex] + " is REMOVED from random rooms");
+            //console.log(thirdRooms[prevRandomRoomIndex] + " is REMOVED from random rooms");
             thirdRooms.splice(prevRandomRoomIndex, 1);
         }
     }
@@ -270,9 +301,9 @@ export const getCards = (
     day: number,
     hour: number,
     heroClasses?: EHeroClass[],
-    tripleSetTypes?: ECardType[]
+    tripleSetTypes?: ECardType[],
 ): { cards: (ICard | null)[]; isSingleSelect: boolean; isSelectRequired: boolean; isRerollAvailable: boolean } => {
-    console.log("GET CARDS", roomType, heroClasses);
+    //console.log("GET CARDS", roomType, heroClasses);
     const initialHeroSelect = day === 0 && hour === 0;
     let isSingleSelect = false;
     let isSelectRequired = false;
@@ -424,6 +455,9 @@ export const getCards = (
                 isSingleSelect = true;
                 isSelectRequired = true;
 
+                //const item = gloves_priest2;
+                //cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
+
                 let item;
                 if (gameScene.units.length === 0) {
                     console.log("no units. get random item");
@@ -494,7 +528,7 @@ export const getCards = (
                     const mixed: (IItem | IHeroSkillSet)[] = getRandomArrayItems(
                         [...heroClassItems.filter((item) => item), ...heroClassSkills.filter((skill) => skill)],
                         3,
-                        true
+                        true,
                     );
 
                     console.log("MIXED_CLASS_SELECT", mixed);
@@ -551,6 +585,24 @@ export const getCards = (
                         return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.level) };
                     });
                 }
+            }
+            break;
+        case ERoomType.SKILLS_SELL_ENHANCED:
+            {
+                isSingleSelect = true;
+                isSelectRequired = false;
+                isRerollAvailable = true;
+
+                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 3, true).map((skill) => {
+                    const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
+                    const enchancedSkill = { ...skill };
+                    enchancedSkill[enchancedOption] = true;
+                    return enchancedSkill;
+                });
+
+                cards = randomSkills.map((skill) => {
+                    return { skill, type: ECardType.SKILL, price: 0 };
+                });
             }
             break;
         case ERoomType.TRIPLE_SET:
@@ -624,6 +676,7 @@ export const getCards = (
         case ERoomType.MOBS:
             {
                 const randomMobs = getMobs(gameScene.selectController.day);
+                console.log("ERoomType.MOBS", randomMobs);
                 cards = randomMobs.map((mobs) => {
                     const { name, units, rewards } = mobs;
                     const reward = getRandomArrayItem(rewards);
@@ -894,7 +947,7 @@ export const getDuelRewardCards = (day: number): ICard[] => {
 };
 
 export const getAttrValue = (attr: THeroAttribute, day: number) => {
-    console.log(">>> getAttrValue", attr, day);
+    //console.log(">>> getAttrValue", attr, day);
     let basicValue = 1;
     if (day >= 0) {
         basicValue = 1;
@@ -925,83 +978,7 @@ export const getExpAfterDuelValue = (day: number) => {
 };
 
 export const getSelectRoomDisplayName = (roomType: ERoomType) => {
-    switch (roomType) {
-        //
-        // SELL ROOMS
-        //
-        case ERoomType.HEROES_SELL:
-            return "TAVERN";
-        case ERoomType.ITEM_CLASS_SELL:
-            return "SPECIAL SHOP";
-        case ERoomType.ITEM_WEAPON_CLASS_SELL:
-            return "WEAPON STORE";
-        case ERoomType.ITEM_WEAPON_SELL:
-            return "ARSENAL";
-        case ERoomType.ITEM_COMMON_SELL:
-            return "BLACKSMITH";
-        case ERoomType.SKILLS_CLASS_SELL:
-            return "MAGIC STORE";
-        case ERoomType.SKILLS_SELL:
-            return "MAGIC SHOP";
-        case ERoomType.UNIT_SELL:
-            return "MERCENARIES";
-        //
-        // CHOISE ROOMS
-        //
-        case ERoomType.ATTRIBUTE_SELECT:
-            return "EXERCISES";
-        case ERoomType.EXP_ALL:
-            return "";
-        case ERoomType.EXP_SELECT:
-            return "TRAINING CAMP";
-        case ERoomType.ITEM_SELECT:
-            return "BLACK MARKET";
-        case ERoomType.MIXED_CLASS_SELECT:
-            return "SPECIALIST";
-        case ERoomType.UPGRADE_SKILL_OR_ITEM:
-            return "UPGRADE";
-        //
-        // RANDOM ROOMS
-        //
-        case ERoomType.ATTRIBUTE_RANDOM:
-            return "EXERCISE";
-        case ERoomType.EXP_SINGLE:
-            return "TRAINING";
-        case ERoomType.GOLD:
-            return "FIND COINS";
-        case ERoomType.INCOME:
-            return "INCOME";
-        case ERoomType.ITEM_CLASS_RANDOM:
-            return "STEAL ITEM";
-        case ERoomType.ITEM_RANDOM:
-            return "FIND ITEM";
-        case ERoomType.ITEM_COMMON_RANDOM:
-            return "GET ARMOR";
-        case ERoomType.ITEM_WEAPON_BASIC_RANDOM:
-            return "LEGACY";
-        case ERoomType.ITEM_WEAPON_CLASS_RANDOM:
-            return "STEAL WEAPON";
-        case ERoomType.SKILL_CLASS_RANDOM:
-            return "MAGIC SCHOOL";
-        case ERoomType.SKILL_RANDOM:
-            return "MAGIC TRICK";
-        case ERoomType.UNIT_RANDOM:
-            return "FOLLOWER";
-        //
-        // SPECIAL ROOMS
-        //
-        case ERoomType.DUEL:
-            return "DUEL";
-        case ERoomType.MOBS:
-            return "MOBS";
-        case ERoomType.BOSS:
-            return "DUNGEON BOSS";
-        case ERoomType.TRIPLE_SET:
-            return "DUNGEON";
-        //
-        default:
-            return "NOTHING HERE...";
-    }
+    return i18n.rooms[roomType];
 };
 
 export const getGold = (day: number) => {
@@ -1058,7 +1035,7 @@ export const getCurrentHeroClasses = (gameScene: GameScene) => {
         return heroClasses;
     }, [] as EHeroClass[]);
 
-    console.log(">>> getCurrentHeroClasses", allHeroClasses);
+    //console.log(">>> getCurrentHeroClasses", allHeroClasses);
 
     return allHeroClasses;
 };

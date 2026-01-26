@@ -1,4 +1,3 @@
-import { add } from "@tweenjs/tween.js";
 import { EHeroClass, EHeroClassType, EUnitType, IHeroSkill, IHeroSkillSet, IUnit, THeroAttribute, TUnits } from "../../types";
 import { basicClassHeroesByLevel } from "../heroConsts";
 import { basicCommonItems, basicWeapons } from "../itemConsts";
@@ -130,7 +129,7 @@ export const createUnits = (unitTemplates: TUnits): TUnits => {
 
 export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroAttribute; value: number }[]): IUnit => {
     const id = unitTemplate.id + "_" + generateId();
-    const skills = unitTemplate.heroClassType === EHeroClassType.MULTI ? [...unitTemplate.skills] : [];
+    const skills = unitTemplate.unitType === EUnitType.UNIT || unitTemplate.heroClassType === EHeroClassType.MULTI ? [...unitTemplate.skills] : [];
     const unit: IUnit = { ...unitTemplate, id, skills, items: [], addedAttributes: [] };
     // add random hero class skill to basic hero
     if (unit.heroClassType === EHeroClassType.BASIC) {

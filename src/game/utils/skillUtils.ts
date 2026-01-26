@@ -100,7 +100,7 @@ export const getSkillPrice = (skillLeveL: number) => {
     return skillPrices[skillLeveL];
 };
 
-export const upgradeSkillSet = (skillSet: IHeroSkillSet): IHeroSkillSet => {
+export const upgradeSkillSet = (skillSet: IHeroSkillSet, skillSet2: IHeroSkillSet): IHeroSkillSet => {
     if (skillSet.level === SKILL_MAX_LEVEL) {
         return skillSet;
     }
@@ -110,7 +110,12 @@ export const upgradeSkillSet = (skillSet: IHeroSkillSet): IHeroSkillSet => {
         return skillSet;
     }
 
-    return skillSet.nextLevel;
+    const upgradedSkill = skillSet.nextLevel;
+
+    upgradedSkill.isActivateOnStart = skillSet.isActivateOnStart || skillSet2.isActivateOnStart;
+    upgradedSkill.isChained = skillSet.isChained || skillSet2.isChained;
+
+    return upgradedSkill;
 };
 
 export const isSkillSet = (entity: unknown): entity is IHeroSkillSet => {

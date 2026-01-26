@@ -26,6 +26,7 @@ import { LeaderPanel } from "../components/ui/LeaderPanel";
 import { LeadersPanel } from "../components/ui/LeadersPanel";
 import { getDuelEnemy } from "../utils/duelUtils";
 import { CardUpgradetPanel } from "../components/ui/CardUpgradetPanel";
+import { CardHintPanel } from "../components/ui/CardHintPanel";
 
 export class GameScene extends Phaser.Scene {
     isHost: boolean;
@@ -51,6 +52,7 @@ export class GameScene extends Phaser.Scene {
     leadersPanel: LeadersPanel;
     battlePanel: BattlePanel;
     cardUpgradePanel: CardUpgradetPanel;
+    hintPanel: CardHintPanel;
 
     leaderController: LeaderController;
     bankController: BankController;
@@ -76,11 +78,15 @@ export class GameScene extends Phaser.Scene {
     }
 
     async preload() {
-        loadImages(this);
+        //loadImages(this);
+        console.log("GAME SCENE PRELOAD");
     }
 
     // CREATE /////////////////////////////////////////////////////////////////////////////////
     create() {
+        console.log("GAME SCENE CREAE");
+        //this.input.setTopOnly(false); // for top interactive object not to stop capturing events on low level objects
+
         //console.log("GAME SCENE >> CREATE");
         this.camera = this.cameras.main;
         //this.audio = new AudioManager(this);
@@ -170,7 +176,7 @@ export class GameScene extends Phaser.Scene {
                 // CAMERA
                 //this.camera.pan(this.mainDude.gameObject.x, this.cameraY, 0, "Sine.easeIn");
                 //this.setCameraY(this.levelController.getLevel());
-            }
+            },
         );
 
         //EventBus.emit(EventType.GET_HOUSE);
@@ -182,7 +188,7 @@ export class GameScene extends Phaser.Scene {
         this.camera.setBounds(0, 0, 2000, 2000);
         this.selectController = new SelectController(this);
 
-        createAnimations(this);
+        //createAnimations(this);
 
         this.leaderController = new LeaderController(this);
         this.leaderController.selectNextOpponent();
@@ -191,7 +197,7 @@ export class GameScene extends Phaser.Scene {
 
         createUIPanels(this);
 
-        this.bankController.init();
+        //this.bankController.init();
 
         this.battleController = new BattleController();
 
@@ -282,6 +288,28 @@ export class GameScene extends Phaser.Scene {
         this.selectController.startNewDay();
         this.bankController.getIncome();
         this.leaderController.selectNextOpponent();
+    }
+
+    restartGame() {
+        this.phase = "SELECT";
+        //
+        this.bankController.init();
+        this.topPanel.setIncome(this.bankController.income);
+        this.topPanel.setBank(this.bankController.totalGold);
+        //
+        this.topPanel.startSelectButton.setVisible(false);
+        //
+        this.selectController.init();
+        this.topPanel.setDay(this.selectController.day);
+        this.topPanel.setHour(this.selectController.hour);
+        this.selectController.showRoomSelect();
+        //
+        this.units = [];
+        this.unitPanel.init();
+        this.unitPanel.show();
+        this.inventoryPanel.init();
+        //
+        this.battlePanel.hide();
     }
 
     changeToDuelPhase() {

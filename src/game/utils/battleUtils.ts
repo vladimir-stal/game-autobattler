@@ -296,6 +296,7 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
 
 export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
     const { basicArmor, basicMaxHp, basicAttack, basicHpRegen, basicEvasionChance, basicCritChance, basicMagicPower, basicPhysicalPower, items } = unit;
+    console.log("prepareUnitToBattle", unit);
     const itemBonuses: IItemBattleBonus[] = items.reduce((bonuses, item) => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
             item.battleBonuses.forEach((bonus) => bonuses.push(bonus));
@@ -423,9 +424,16 @@ export const takeDamage = (target: IBattleUnit, damageValue: number, battleRecor
     }
 };
 
-export const applyStatus = (unit: IBattleUnit, target: IBattleUnit, statusType: EStatusType, value: number, battleRecord: TBattleRecord) => {
+export const applyStatus = (
+    unit: IBattleUnit,
+    target: IBattleUnit,
+    statusType: EStatusType,
+    value: number,
+    battleRecord: TBattleRecord,
+    isStartBattle?: boolean,
+) => {
     const existingStatus = target.statuses.find((st) => st.type === statusType);
-    battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_APPLY, status: statusType, value });
+    battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_APPLY, status: statusType, value, isStartBattle: isStartBattle });
     if (existingStatus) {
         existingStatus.value += value;
         return;
@@ -433,12 +441,12 @@ export const applyStatus = (unit: IBattleUnit, target: IBattleUnit, statusType: 
     target.statuses.push({ type: statusType, value });
 };
 
-export const removeStatus = (unit: IBattleUnit, target: IBattleUnit, statusType: EStatusType, battleRecord: TBattleRecord) => {
-    battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_REMOVE, status: statusType });
+export const removeStatus = (unit: IBattleUnit, target: IBattleUnit, statusType: EStatusType, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
+    battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_REMOVE, status: statusType, isStartBattle });
     target.statuses = target.statuses.filter((status) => status.type !== statusType);
 };
 
-export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex: number, battleRecord: TBattleRecord) => {
+export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex: number, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
     const debuff = target.debuffs[debuffIndex];
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.DEBUFF_REMOVE, value: debuffIndex, debuff });
 
@@ -451,7 +459,14 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
                     return;
                 }
                 target[attribute] += totalValue;
-                battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: totalValue });
+                battleRecord.push({
+                    unitId: unit.id,
+                    targetId: target.id,
+                    type: EBattleActionType.ATTRIBUTE_INCREASE,
+                    attribute,
+                    value: totalValue,
+                    isStartBattle,
+                });
             }
             break;
     }
@@ -459,7 +474,7 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
     target.debuffs = target.debuffs.filter((_, index) => index !== debuffIndex);
 };
 
-export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBattleRecord) => {
+export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
     const unitHp = unit.hp;
     const targetHp = target.hp;
     unit.hp = targetHp;
@@ -470,7 +485,7 @@ export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBa
     if (target.hp > target.maxHp) {
         target.hp = target.maxHp;
     }
-    battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.SWAP_HP, value: unit.hp, value2: target.hp });
+    battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.SWAP_HP, value: unit.hp, value2: target.hp, isStartBattle });
 };
 
 export const getTargetWithTotem = (units: TBattleUnits): IBattleUnit | null => {

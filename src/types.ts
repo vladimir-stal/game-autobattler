@@ -5,7 +5,6 @@ export enum EScene {
     LOBBY = "LOBBY",
     LOBBY_LOADING = "LOBBY_LOADING",
     MAIN_MENU = "MAIN_MENU",
-    PLATFORM = "PLATFORM",
     RESOURCE_LOAD = "RESOURCE_LOAD",
 }
 
@@ -36,37 +35,135 @@ export enum AnimationType {
     LOBBY_FOX_SMILE = "LOBBY_FOX_SMILE",
     // CHARACTERS
     // BASIC
-    //IDLE
+    //
+    // BARD
     BARD_IDLE = "BARD_IDLE",
+    BARD_IDLE_BATTLE = "BARD_IDLE_BATTLE",
+    BARD_ATTACK = "BARD_ATTACK",
+    BARD_DEFEATED = "BARD_DEFEATED",
+    BARD_BUFF = "BARD_BUFF",
+    BARD_HURT = "BARD_HURT",
+    //
+    // DARK
+    //
     DARK_IDLE = "DARK_IDLE",
-    MAGIC_IDLE = "MAGIC_IDLE",
-    MAGIC_ATTACK = "MAGIC_ATTACK",
-    MASTER_IDLE = "MASTER_IDLE",
-    ORDER_IDLE = "ORDER_IDLE",
-    PRIEST_IDLE = "PRIEST_IDLE",
-    SUMMON_IDLE = "SUMMON_IDLE",
-    WARRIOR_IDLE = "IMAGE_WARRIOR_IDLE",
-    WILD_IDLE = "WILD_IDLE",
-    // HEAL
-    PRIEST_HEAL = "PRIEST_HEAL",
-    // ATTACK
+    DARK_IDLE_BATTLE = "DARK_IDLE_BATTLE",
     DARK_ATTACK = "DARK_ATTACK",
+    DARK_SPELL = "DARK_SPELL",
+    DARK_DEFEATED = "DARK_DEFEATED",
+    DARK_HURT = "DARK_HURT",
+    //
+    // MAGIC
+    //
+    MAGIC_IDLE = "MAGIC_IDLE",
+    MAGIC_IDLE_BATTLE = "MAGIC_IDLE_BATTLE",
+    MAGIC_ATTACK = "MAGIC_ATTACK",
+    MAGIC_ATTACK_SPELL = "MAGIC_ATTACK_SPELL",
+    MAGIC_DEFEATED = "MAGIC_DEFEATED",
+    MAGIC_HURT = "MAGIC_HURT",
+    //
+    // MASTER
+    //
+    MASTER_IDLE = "MASTER_IDLE",
+    MASTER_IDLE_BATTLE = "MASTER_IDLE_BATTLE",
     MASTER_ATTACK = "MASTER_ATTACK",
+    MASTER_DEFEATED = "MASTER_DEFEATED",
+    MASTER_HURT = "MASTER_HURT",
+    MASTER_BUFF = "MASTER_BUFF",
+    //
+    // ORDER
+    //
+    ORDER_IDLE = "ORDER_IDLE",
+    ORDER_IDLE_BATTLE = "ORDER_IDLE_BATTLE",
+    ORDER_HURT = "ORDER_HURT",
     ORDER_ATTACK = "ORDER_ATTACK",
+    ORDER_SHIELD_BUFF = "ORDER_SHIELD_BUFF",
+    ORDER_DEFEATED = "ORDER_DEFEATED",
+    //
+    // PRIEST
+    //
+    PRIEST_IDLE = "PRIEST_IDLE",
+    PRIEST_IDLE_BATTLE = "PRIEST_IDLE_BATTLE",
     PRIEST_ATTACK = "PRIEST_ATTACK",
+    PRIEST_HEAL = "PRIEST_HEAL",
+    PRIEST_DEFEATED = "PRIEST_DEFEATED",
+    PRIEST_HURT = "PRIEST_HURT",
+    //
+    // SUMMON
+    //
+    SUMMON_IDLE = "SUMMON_IDLE",
+    SUMMON_IDLE_BATTLE = "SUMMON_IDLE_BATTLE",
     SUMMON_ATTACK = "SUMMON_ATTACK",
+    SUMMON_DEFEATED = "SUMMON_DEFEATED",
+    SUMMON_SPELL = "SUMMON_SPELL",
+    SUMMON_HURT = "SUMMON_HURT",
+    //
+    // WARRIOR
+    //
+    WARRIOR_IDLE = "WARRIOR_IDLE",
+    WARRIOR_IDLE_BATTLE = "WARRIOR_IDLE_BATTLE",
     WARRIOR_ATTACK = "WARRIOR_ATTACK",
+    WARRIOR_BUFF_REGEN = "WARRIOR_BUFF_REGEN",
+    WARRIOR_DEFEATED = "WARRIOR_DEFEATED",
+    WARRIOR_HURT = "WARRIOR_HURT",
+    //
+    // WILD
+    //
+    WILD_IDLE = "WILD_IDLE",
+    WILD_IDLE_BATTLE = "WILD_IDLE_BATTLE",
     WILD_ATTACK = "WILD_ATTACK",
-    // MC
-    //IDLE
-    BARBARIAN_IDLE = "BARBARIAN_IDLE",
-    BARBARIAN_ATTACK = "BARBARIAN_ATTACK",
+    WILD_DEFEATED = "WILD_DEFEATED",
+    WILD_BUFF = "WILD_BUFF",
+    WILD_HURT = "WILD_HURT",
+    //
+    //
+    // MC HEROES ///////////////////////////////////////////////// MC HEROES /////////////////////////////////////////////
+    //
+
     SHAMAN_IDLE = "SHAMAN_IDLE",
     //SHAMAN_ATTACK = "SHAMAN_ATTACK",
     SORCERER_IDLE = "SORCERER_IDLE",
+    // BARBARIAN
+    BARBARIAN_IDLE = "BARBARIAN_IDLE",
+    BARBARIAN_ATTACK = "BARBARIAN_ATTACK",
+    BARBARIAN_BATTLE_IDLE = "BARBARIAN_BATTLE_IDLE",
+    //
+    NECROMANCER_BATTLE_IDLE = "NECROMANCER_BATTLE_IDLE",
+    NECROMANCER_ATTACK = "NECROMANCER_ATTACK",
+    // PALADIN
+    PALADIN_BATTLE_IDLE = "PALADIN_BATTLE_IDLE",
+    PALADIN_ATTACK = "PALADIN_ATTACK",
+    PALADIN_MAGIC_SHIELD = "PALADIN_MAGIC_SHIELD",
+    // SAMURAI
     SAMURAI_IDLE = "SAMURAI_IDLE",
+    SAMURAI_BATTLE_IDLE = "SAMURAI_BATTLE_IDLE",
+    SAMURAI_ATTACK = "SAMURAI_ATTACK",
+    //
     // LEADER
     LEADER_1_IDLE = "LEADER_1_IDLE",
+    // MOBS
+    MOB_SKELETON_BATTLE_IDLE = "MOB_SKELETON_BATTLE_IDLE",
+    MOB_SKELETON_ATTACK = "MOB_SKELETON_ATTACK",
+    MOB_GOBLIN_1_BATTLE_IDLE = "MOB_GOBLIN_1_BATTLE_IDLE",
+    MOB_GOBLIN_1_ATTACK = "MOB_GOBLIN_1_ATTACK",
+    MOB_GOBLIN_2_BATTLE_IDLE = "MOB_GOBLIN_2_BATTLE_IDLE",
+    MOB_GOBLIN_2_ATTACK = "MOB_GOBLIN_2_ATTACK",
+    //
+    MOB_GOBLIN_SHAMAN_BATTLE_IDLE = "MOB_GOBLIN_SHAMAN_BATTLE_IDLE",
+    MOB_GOBLIN_SHAMAN_ATTACK = "MOB_GOBLIN_SHAMAN_ATTACK",
+    MOB_GOBLIN_SHAMAN_DEFEATED = "MOB_GOBLIN_SHAMAN_DEFEATED",
+    MOB_GOBLIN_SHAMAN_SPELL = "MOB_GOBLIN_SHAMAN_SPELL",
+    //
+    MOB_PEASANT_BATTLE_IDLE = "MOB_PEASANT_BATTLE_IDLE",
+    MOB_PEASANT_ATTACK = "MOB_PEASANT_ATTACK",
+    // BOSSES
+    // MINOTAUR
+    BOSS_MINOTAUR_IDLE = "BOSS_MINOTAUR_IDLE",
+    BOSS_MINOTAUR_ATTACK = "BOSS_MINOTAUR_ATTACK",
+    BOSS_MINOTAUR_STOMP = "BOSS_MINOTAUR_STOMP",
+    BOSS_MINOTAUR_SPELL = "BOSS_MINOTAUR_SPELL",
+    BOSS_MINOTAUR_HURT = "BOSS_MINOTAUR_HURT",
+    //
 }
 
 export interface Player {
@@ -114,13 +211,16 @@ export interface IGuildsMembersRead {
 export enum ERoomType {
     ATTRIBUTE_RANDOM = "ATTRIBUTE_RANDOM",
     ATTRIBUTE_SELECT = "ATTRIBUTE_SELECT",
+    BOSS = "BOSS",
+    DUEL = "DUEL",
     EXP_ALL = "EXP_ALL",
     EXP_SELECT = "EXP_SELECT",
     EXP_SINGLE = "EXP_SINGLE",
-    GOLD = "GOLD",
-    //HEAL_CHOISE = "HEAL_CHOISE",
-    HEROES_SELL = "HEROES_SELL",
-    INCOME = "INCOME",
+    ENCHANCE_SKILL_CHAINED = "ENCHANCE_SKILL_CHAINED", // add <chained> to skill >>> TODO: IMPLEMENT
+    ENCHANCE_SKILL_ONSTART = "ENCHANCE_SKILL_ONSTART", // add <onStart> to skill >>> TODO: IMPLEMENT
+    GOLD = "GOLD", // get gold
+    HEROES_SELL = "HEROES_SELL", // buy a basic class hero
+    INCOME = "INCOME", // increase gold income
     ITEM_SELECT = "ITEM_SELECT", // buy one of 3 random items of all items available for current day
     ITEM_CLASS_RANDOM = "ITEM_CLASS_RANDOM", // get random item for specific hero classes
     ITEM_RANDOM = "ITEM_RANDOM", // get random item (common or weapon)
@@ -133,8 +233,10 @@ export enum ERoomType {
     ITEM_CLASS_SELL = "ITEM_CLASS_SELL", // buy one of 3 random items for specific hero classes
     ITEMS_SELL = "ITEMS_SELL", // buy one of 3 random items (common/weapon or just common ??)
     MIXED_CLASS_SELECT = "MIXED_CLASS_SELECT", // select 3 item/skill from one basic class
+    MOBS = "MOBS", // fight vs mobs
     MOBS_REWARDS = "MOBS_REWARDS",
     SKILLS_SELL = "SKILLS_SELL", // buy 3 random skills
+    SKILLS_SELL_ENHANCED = "SKILLS_SELL_ENHANCED", // buy 1 of 3 random skills with chain or onStart
     SKILLS_CLASS_SELL = "SKILLS_CLASS_SELL", // buy one of 3 random skills for specific hero classes
     SKILL_CLASS_RANDOM = "SKILL_CLASS_RANDOM", // get random skill for specific hero classes
     SKILL_RANDOM = "SKILL_RANDOM", // get random skill
@@ -142,11 +244,6 @@ export enum ERoomType {
     UNIT_RANDOM = "UNIT_RANDOM",
     UNIT_SELL = "UNIT_SELL",
     UPGRADE_SKILL_OR_ITEM = "UPGRADE_SKILL_OR_ITEM", // allow to upgrade item or a skill to next level
-    // SPECIAL
-    //
-    DUEL = "DUEL",
-    MOBS = "MOBS",
-    BOSS = "BOSS",
 }
 
 export enum ECardType {
@@ -263,6 +360,7 @@ export enum EItemAfterDuelBonusType {
     EXP = "EXP",
     STAT_ARMOR = "STAT_ARMOR",
     STAT_MAX_HP = "STAT_MAX_HP",
+    STAT_HP_REGEN = "STAT_HP_REGEN",
     STAT_MP = "STAT_MP",
     STAT_PP = "STAT_PP",
     STAT_CRIT_CHANCE = "STAT_CRIT_CHANCE",
@@ -270,6 +368,7 @@ export enum EItemAfterDuelBonusType {
 }
 
 export enum EItemBattleBonusType {
+    APPLY_POISON_ON_HIT = "APPLY_POISON_ON_HIT",
     CRIT_INCR_NONCRIT_DECR = "CRIT_INCR_NONCRIT_DECR", // TODO: implement
     HEAL_INCREASE = "HEAL_INCREASE",
     INCREASE_MAGIC_DAMAGE = "INCREASE_MAGIC_DAMAGE",
@@ -301,6 +400,7 @@ export enum EBattleActionType {
     DEBUFF = "DEBUFF",
     DEBUFF_REMOVE = "DEBUFF_REMOVE",
     HEAL = "HEAL",
+    PEFORM_SKILLSET = "PEFORM_SKILLSET",
     REGEN_HP = "REGEN_HP",
     ROUND_END = "ROUND_END",
     ROUND_START = "ROUND_START",
@@ -477,6 +577,9 @@ export interface IUnit {
     skills: THeroSkills;
     items: IItem[];
     afterDuelBonuses?: IAfterDuelBonus[];
+    passiveSkill?: {
+        desc: string;
+    };
 }
 
 export type THeroAttribute = keyof Pick<
@@ -556,11 +659,13 @@ export interface IItem {
     nextLevel?: IItem;
 }
 
-export interface IActionAttackTarget {
+export interface IActionTarget {
     targetId: string;
-    damageValue: number;
+    damageValue?: number;
     armorValue?: number;
     isEvasion?: boolean;
+    value?: number;
+    attribute?: THeroBattleAttribute;
 }
 
 export interface IActionBuffTarget {
@@ -576,7 +681,7 @@ export interface IBattleAction {
     value2?: number;
     name?: string;
     status?: EStatusType;
-    targets?: IActionAttackTarget[];
+    targets?: IActionTarget[];
     summon?: IBattleUnit;
     totem?: ITotem;
     buff?: IBuff;
@@ -584,6 +689,8 @@ export interface IBattleAction {
     buffTargets?: IActionBuffTarget[];
     armorValue?: number;
     isCrit?: boolean;
+    skill?: IHeroSkill;
+    isStartBattle?: boolean;
 }
 
 export interface IBuff {
@@ -631,6 +738,8 @@ export interface IHeroSkill {
     markType?: EDebuffType;
     mpScale?: number; // % of MP value is added to skill value
     ppScale?: number; // % of PP value is added to skill value
+    //
+    animation?: AnimationType;
 }
 
 /**
@@ -646,6 +755,8 @@ export interface IHeroSkillSet {
     nextLevel?: IHeroSkillSet;
     isMcSkill?: boolean;
     isChained?: boolean;
+    isActivateOnStart?: boolean;
+    image?: string;
 }
 
 export interface ITotem {

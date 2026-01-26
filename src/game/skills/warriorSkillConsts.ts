@@ -1,12 +1,16 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { i18n } from "../consts";
+import { IMAGE_SKILL_SWORD_BUFF_2 } from "../utils/imageLoadUtil";
 import { phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA
 
 export const buffNextBa_3: IHeroSkillSet = {
     id: "buffNextBa",
-    name: "Next BA+ buff(3)",
-    desc: "Buff [8] self next basic attack",
+    //name: "Next BA+ buff(3)",
+    //desc: "Buff [8] self next basic attack",
+    name: i18n.skills.basic.buffNextBa.name + "(3)",
+    desc: i18n.skills.basic.buffNextBa.desc3,
     level: 3,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
@@ -24,12 +28,15 @@ export const buffNextBa_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_SWORD_BUFF_2,
 };
 
 export const buffNextBa_2: IHeroSkillSet = {
     id: "buffNextBa",
-    name: "Next BA+ buff(2)",
-    desc: "Buff [6] self next basic attack",
+    //name: "Next BA+ buff(2)",
+    //desc: "Buff [6] self next basic attack",
+    name: i18n.skills.basic.buffNextBa.name + "(2)",
+    desc: i18n.skills.basic.buffNextBa.desc2,
     level: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
@@ -48,12 +55,15 @@ export const buffNextBa_2: IHeroSkillSet = {
         },
     ],
     nextLevel: buffNextBa_3,
+    image: IMAGE_SKILL_SWORD_BUFF_2,
 };
 
 export const buffNextBa: IHeroSkillSet = {
     id: "buffNextBa",
-    name: "Next BA+ buff",
-    desc: "Buff [4] self next basic attack",
+    //name: "Next BA+ buff",
+    //desc: "Buff [4] self next basic attack",
+    name: i18n.skills.basic.buffNextBa.name,
+    desc: i18n.skills.basic.buffNextBa.desc1,
     level: 1,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
@@ -72,6 +82,7 @@ export const buffNextBa: IHeroSkillSet = {
         },
     ],
     nextLevel: buffNextBa_2,
+    image: IMAGE_SKILL_SWORD_BUFF_2,
 };
 
 // BUFF NEXT BA +1 TIME

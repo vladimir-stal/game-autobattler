@@ -1,11 +1,13 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { i18n } from "../consts";
+import { IMAGE_SKILL_BURN, IMAGE_SKILL_LIGHTNING } from "../utils/imageLoadUtil";
 
 // MAGIC ATTACK
 
 export const magicAttack_3: IHeroSkillSet = {
     id: "magicAttack",
-    name: "Magic Attack(3)",
-    desc: "Deal [9] magic damage to first enemy",
+    name: i18n.skills.basic.magicAttack.name + "(3)",
+    desc: i18n.skills.basic.magicAttack.desc3, //"Deal [5] magic damage to first enemy",
     level: 3,
     heroClasses: [EHeroClass.MAGIC],
     skills: [
@@ -17,12 +19,13 @@ export const magicAttack_3: IHeroSkillSet = {
             attackType: EHeroAttackType.MAGIC,
         },
     ],
+    image: IMAGE_SKILL_LIGHTNING,
 };
 
 export const magicAttack_2: IHeroSkillSet = {
     id: "magicAttack",
-    name: "Magic Attack(2)",
-    desc: "Deal [7] magic damage to first enemy",
+    name: i18n.skills.basic.magicAttack.name + "(2)",
+    desc: i18n.skills.basic.magicAttack.desc2, //"Deal [5] magic damage to first enemy",
     level: 2,
     heroClasses: [EHeroClass.MAGIC],
     skills: [
@@ -35,14 +38,16 @@ export const magicAttack_2: IHeroSkillSet = {
         },
     ],
     nextLevel: magicAttack_3,
+    image: IMAGE_SKILL_LIGHTNING,
 };
 
 export const magicAttack: IHeroSkillSet = {
     id: "magicAttack",
-    name: "Magic Attack",
-    desc: "Deal [5] magic damage to first enemy",
+    name: i18n.skills.basic.magicAttack.name,
+    desc: i18n.skills.basic.magicAttack.desc1, //"Deal [5] magic damage to first enemy",
     level: 1,
     heroClasses: [EHeroClass.MAGIC],
+    //isActivateOnStart: true,
     skills: [
         {
             isBasicAttack: true,
@@ -53,14 +58,15 @@ export const magicAttack: IHeroSkillSet = {
         },
     ],
     nextLevel: magicAttack_2,
+    image: IMAGE_SKILL_LIGHTNING,
 };
 
 // APPLY BURN
 
 export const applyBurn_3: IHeroSkillSet = {
     id: "applyBurn",
-    name: "Burn(3)",
-    desc: "Apply [6] burn on the first enemy",
+    name: i18n.skills.basic.applyBurn.name + "(3)",
+    desc: i18n.skills.basic.applyBurn.desc3, //"Apply [3] burn on the first enemy",
     level: 2,
     heroClasses: [EHeroClass.MAGIC],
     skills: [
@@ -72,12 +78,13 @@ export const applyBurn_3: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
     ],
+    image: IMAGE_SKILL_BURN,
 };
 
 export const applyBurn_2: IHeroSkillSet = {
     id: "applyBurn",
-    name: "Burn(2)",
-    desc: "Apply [4] burn on the first enemy",
+    name: i18n.skills.basic.applyBurn.name + "(2)",
+    desc: i18n.skills.basic.applyBurn.desc2, //"Apply [3] burn on the first enemy",
     level: 2,
     heroClasses: [EHeroClass.MAGIC],
     skills: [
@@ -90,14 +97,16 @@ export const applyBurn_2: IHeroSkillSet = {
         },
     ],
     nextLevel: applyBurn_3,
+    image: IMAGE_SKILL_BURN,
 };
 
 export const applyBurn: IHeroSkillSet = {
     id: "applyBurn",
-    name: "Burn",
-    desc: "Apply [3] burn on the first enemy",
+    name: i18n.skills.basic.applyBurn.name,
+    desc: i18n.skills.basic.applyBurn.desc1, //"Apply [3] burn on the first enemy",
     level: 1,
     heroClasses: [EHeroClass.MAGIC],
+    //isActivateOnStart: true,
     skills: [
         {
             isBasicAttack: true,
@@ -108,6 +117,7 @@ export const applyBurn: IHeroSkillSet = {
         },
     ],
     nextLevel: applyBurn_2,
+    image: IMAGE_SKILL_BURN,
 };
 
 // MAGIC ATTACK ALL ENEMIES
@@ -169,6 +179,6 @@ export const magicAttackAll: IHeroSkillSet = {
 };
 
 //
-export const magicSkills: THeroSkills = [applyBurn]; //[magicAttack, applyBurn];
+export const magicSkills: THeroSkills = [magicAttack, applyBurn];
 
 export const magicSkills_2: THeroSkills = [magicAttackAll, magicAttack, applyBurn];
