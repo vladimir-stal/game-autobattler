@@ -34,16 +34,17 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
         //rect.setInteractive(new Phaser.Geom.Rectangle(0, 0, 30, 30), Phaser.Geom.Rectangle.Contains);
         rect.on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
             if (!this.item) {
-                this.hint.show();
+                //this.hint.show();
                 return;
             }
             const { x, y } = this.getWorldPoint();
-            this.gameScene.hintPanel.showItem(x + 40, y - 50, this.item);
+            this.gameScene.hintPanel.showItem(x + 40, y - 250, this.item, true);
             //}
         })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 if (!this.item) {
-                    this.hint.hide();
+                    //this.hint.hide();
+                    return;
                 }
                 this.gameScene.hintPanel.hide();
                 //}
@@ -64,12 +65,13 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
         }
 
         if (this.item) {
-            this.hint = new ItemHintPanel(this.gameScene, 0, 35, this.item).setVisible(false);
-            this.add(this.hint);
-        } else {
-            this.hint = new HintPanel(this.gameScene, 0, 35, "no item").setVisible(false);
+            this.hint = new ItemHintPanel(this.gameScene, 0, -100, this.item, true).setVisible(false);
             this.add(this.hint);
         }
+        // else {
+        //     this.hint = new HintPanel(this.gameScene, 0, 35, "no item").setVisible(false);
+        //     this.add(this.hint);
+        // }
 
         // if (this.item?.type === EItemType.COMMON) {
         //     const hintText = this.item ? this.item.name : "no item";

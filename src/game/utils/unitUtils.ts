@@ -7,7 +7,7 @@ import { magicSkills } from "../skills/magicSkillConsts";
 import { masterSkills } from "../skills/masterSkillConsts";
 import { orderSkills } from "../skills/orderSkillConsts";
 import { priestSkills } from "../skills/priestSkillConsts";
-import { summonSkills } from "../skills/summonSkillConsts";
+import { summonSkills } from "../skills/summonSkillConsts2";
 import { warriorSkills } from "../skills/warriorSkillConsts";
 import { wildSkills } from "../skills/wildSkillConsts";
 import {
@@ -21,7 +21,7 @@ import {
     unitsLvl4,
     unitsLvl5,
 } from "../unitConsts";
-import { getRandomArrayItem } from "./commonUtils";
+import { checkProbability, getRandomArrayItem } from "./commonUtils";
 import { applyItemBonuses, getHeroClassWeaponTypes, removeItemBonuses } from "./itemUtils";
 
 const MAX_LEVEL = 5;
@@ -63,7 +63,7 @@ export const addExpToUnit = (unit: IUnit, expAdd: number) => {
     }
 
     unit.exp = currentExp + expAdd;
-    console.log("Unit " + unit.name + " now has " + unit.exp + " exp");
+    //console.log("Unit " + unit.name + " now has " + unit.exp + " exp");
     const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[currentLevel + 1] : EXP_FOR_LEVEL_MC[currentLevel + 1];
     if (unit.exp >= nextLevelExp) {
         levelUpUnit(unit);
@@ -129,10 +129,12 @@ export const createUnits = (unitTemplates: TUnits): TUnits => {
 
 export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroAttribute; value: number }[]): IUnit => {
     const id = unitTemplate.id + "_" + generateId();
-    const skills = unitTemplate.unitType === EUnitType.UNIT || unitTemplate.heroClassType === EHeroClassType.MULTI ? [...unitTemplate.skills] : [];
-    const unit: IUnit = { ...unitTemplate, id, skills, items: [], addedAttributes: [] };
+    const { heroClassType, skills, unitType, items } = unitTemplate;
+    const newSkills = unitType === EUnitType.UNIT || heroClassType === EHeroClassType.MULTI ? [...skills] : [];
+    const newItems = unitType === EUnitType.HERO ? [] : [...items];
+    const unit: IUnit = { ...unitTemplate, id, skills: newSkills, items: newItems, addedAttributes: [] };
     // add random hero class skill to basic hero
-    if (unit.heroClassType === EHeroClassType.BASIC) {
+    if (unit.unitType === EUnitType.HERO && unit.heroClassType === EHeroClassType.BASIC) {
         unit.skills = [getRandomArrayItem(getClassSkills(unit.heroClass))];
     }
     // added Attributes
@@ -141,6 +143,10 @@ export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroA
             unit[attr] += value;
         });
     }
+    // add stats from items
+    unit.items.forEach((item) => {
+        applyItemBonuses(item, unit);
+    });
     return unit;
 };
 
@@ -255,9 +261,9 @@ export const getClassSkills = (heroClass: EHeroClass): IHeroSkillSet[] => {
     }
 };
 
-export const removeItemFromUnit = (unit: IUnit, itemIndex: number) => {
+export const removeItemFromUnit = (unit: IUnit, itemIndex: number, units?: IUnit[]) => {
     const item = unit.items[itemIndex];
-    removeItemBonuses(item, unit);
+    removeItemBonuses(item, unit, units);
     unit.items.splice(itemIndex, 1);
 };
 
@@ -267,4 +273,36 @@ export const getMaxUnitItemCount = (heroClassType: EHeroClassType) => {
 
 export const getMaxUnitWeaponCount = (heroClassType: EHeroClassType) => {
     return heroClassType === EHeroClassType.BASIC ? BASIC_CLASS_MAX_WEAPON_COUNT : MC_CLASS_MAX_WEAPON_COUNT;
+};
+
+export const getUnitNextLevelExp = (unit: IUnit) => {
+    const { heroClassType, level } = unit;
+    const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[level + 1] : EXP_FOR_LEVEL_MC[level + 1];
+    return nextLevelExp;
+};
+
+/** With some probability add mob item to unit when buying or receiving its card */
+export const addMobItem = (unit: IUnit) => {
+    console.log(">>>>> addMobItem");
+    if (!unit.mobItems) {
+        console.log(">>>>> no mob items");
+        return;
+    }
+
+    for (let i = 0; i < unit.mobItems.length; i++) {
+        const { item, probability } = unit.mobItems[i];
+        console.log("check item", item.name);
+        const isItemAdded = checkProbability(probability);
+        if (isItemAdded) {
+            unit.items.push({ ...item });
+            console.log("add item to unit", unit);
+            break;
+        }
+    }
+};
+
+export const copyUnit = (unit: IUnit): IUnit => {
+    const copy: IUnit = { ...unit };
+    copy.items = [];
+    return copy;
 };

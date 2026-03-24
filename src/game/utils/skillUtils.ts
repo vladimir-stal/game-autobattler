@@ -1,14 +1,23 @@
 import { EHeroClass, EHeroClassType, IHeroSkill, IHeroSkillSet, IItem, IUnit, THeroSkills } from "../../types";
-import { allBasicClassesSkills, allClassesSkills_2, BASIC_CLASS_MAX_SKILL_COUNT, MC_CLASS_MAX_SKILL_COUNT, SKILL_MAX_LEVEL, skillPrices } from "../skillConsts";
-import { bardSkills, bardSkills_2 } from "../skills/bardSkillConsts";
-import { darkSkills, darkSkills_2 } from "../skills/darkSkillConsts";
-import { magicSkills, magicSkills_2 } from "../skills/magicSkillConsts";
-import { masterSkills, masterSkills_2 } from "../skills/masterSkillConsts";
-import { orderSkills, orderSkills_2 } from "../skills/orderSkillConsts";
-import { priestSkills, priestSkills_2 } from "../skills/priestSkillConsts";
-import { summonSkills, summonSkills_2 } from "../skills/summonSkillConsts";
-import { warriorSkills, warriorSkills_2 } from "../skills/warriorSkillConsts";
-import { wildSkills, wildSkills_2 } from "../skills/wildSkillConsts";
+import {
+    allBasicClassesSkills,
+    allClassesSkills_2,
+    allClassesSkills_3,
+    BASIC_CLASS_MAX_SKILL_COUNT,
+    MC_CLASS_MAX_SKILL_COUNT,
+    SKILL_MAX_LEVEL,
+    skillPrices,
+} from "../skillConsts";
+import { bardSkills, bardSkills_2, bardSkills_3 } from "../skills/bardSkillConsts";
+import { darkSkills, darkSkills_2, darkSkills_3 } from "../skills/darkSkillConsts";
+import { magicSkills, magicSkills_2, magicSkills_3 } from "../skills/magicSkillConsts";
+import { masterSkills, masterSkills_2, masterSkills_3 } from "../skills/masterSkillConsts";
+import { orderSkills, orderSkills_2, orderSkills_3 } from "../skills/orderSkillConsts";
+import { priestSkills, priestSkills_2, priestSkills_3 } from "../skills/priestSkillConsts";
+import { summonSkills, summonSkills_2, summonSkills_3 } from "../skills/summonSkillConsts2";
+import { warriorSkills, warriorSkills_2, warriorSkills_3 } from "../skills/warriorSkillConsts";
+import { wildSkills, wildSkills_2, wildSkills_3 } from "../skills/wildSkillConsts";
+import { getRandomArrayItem } from "./commonUtils";
 
 export const getMaxUnitSkillCount = (heroClassType: EHeroClassType) => {
     return heroClassType === EHeroClassType.BASIC ? BASIC_CLASS_MAX_SKILL_COUNT : MC_CLASS_MAX_SKILL_COUNT;
@@ -19,7 +28,7 @@ export const removeSkillFromUnit = (unit: IUnit, skillIndex: number) => {
 };
 
 export const getHeroClassSkills = (heroClass: EHeroClass, day: number): THeroSkills => {
-    if (day < 4) {
+    if (day < 3) {
         switch (heroClass) {
             case EHeroClass.BARD:
                 return bardSkills;
@@ -42,7 +51,7 @@ export const getHeroClassSkills = (heroClass: EHeroClass, day: number): THeroSki
             default:
                 return [];
         }
-    } else if (day < 8) {
+    } else if (day < 5) {
         switch (heroClass) {
             case EHeroClass.BARD:
                 return bardSkills_2;
@@ -62,34 +71,95 @@ export const getHeroClassSkills = (heroClass: EHeroClass, day: number): THeroSki
                 return warriorSkills_2;
             case EHeroClass.WILD:
                 return wildSkills_2;
+            default:
+                return [];
+        }
+    } else if (day < 7) {
+        switch (heroClass) {
+            case EHeroClass.BARD:
+                return bardSkills_3;
+            case EHeroClass.DARK:
+                return darkSkills_3;
+            case EHeroClass.MAGIC:
+                return magicSkills_3;
+            case EHeroClass.MASTER:
+                return masterSkills_3;
+            case EHeroClass.ORDER:
+                return orderSkills_3;
+            case EHeroClass.SUMMON:
+                return summonSkills_3;
+            case EHeroClass.PRIEST:
+                return priestSkills_3;
+            case EHeroClass.WARRIOR:
+                return warriorSkills_3;
+            case EHeroClass.WILD:
+                return wildSkills_3;
+            default:
+                return [];
+        }
+    } else if (day < 7) {
+        switch (heroClass) {
+            case EHeroClass.BARD:
+                return bardSkills_3;
+            case EHeroClass.DARK:
+                return darkSkills_3;
+            case EHeroClass.MAGIC:
+                return magicSkills_3;
+            case EHeroClass.MASTER:
+                return masterSkills_3;
+            case EHeroClass.ORDER:
+                return orderSkills_3;
+            case EHeroClass.SUMMON:
+                return summonSkills_3;
+            case EHeroClass.PRIEST:
+                return priestSkills_3;
+            case EHeroClass.WARRIOR:
+                return warriorSkills_3;
+            case EHeroClass.WILD:
+                return wildSkills_3;
             default:
                 return [];
         }
     } else {
-        //TODO: implement
         switch (heroClass) {
             case EHeroClass.BARD:
-                return bardSkills_2;
+                return bardSkills_3;
             case EHeroClass.DARK:
-                return darkSkills_2;
+                return darkSkills_3;
             case EHeroClass.MAGIC:
-                return magicSkills_2;
+                return magicSkills_3;
             case EHeroClass.MASTER:
-                return masterSkills_2;
+                return masterSkills_3;
             case EHeroClass.ORDER:
-                return orderSkills_2;
+                return orderSkills_3;
             case EHeroClass.SUMMON:
-                return summonSkills_2;
+                return summonSkills_3;
             case EHeroClass.PRIEST:
-                return priestSkills_2;
+                return priestSkills_3;
             case EHeroClass.WARRIOR:
-                return warriorSkills_2;
+                return warriorSkills_3;
             case EHeroClass.WILD:
-                return wildSkills_2;
+                return wildSkills_3;
             default:
                 return [];
         }
     }
+};
+
+export const getTopHeroClassSkill = (heroClass: EHeroClass, day: number): IHeroSkillSet => {
+    let topPriceLevel;
+
+    if (day < 3) {
+        topPriceLevel = 1;
+    } else if (day < 6) {
+        topPriceLevel = 2;
+    } else if (day < 8) {
+        topPriceLevel = 3;
+    } else {
+        topPriceLevel = 3;
+    }
+
+    return getRandomArrayItem(getHeroClassSkills(heroClass, day).filter((skill) => skill.priceLevel === topPriceLevel));
 };
 
 export const getHeroClassesSkills = (heroClasses: EHeroClass[], day: number): IHeroSkillSet[] => {
@@ -122,12 +192,61 @@ export const isSkillSet = (entity: unknown): entity is IHeroSkillSet => {
     return (entity as IHeroSkillSet).skills !== undefined;
 };
 
+/**
+ *
+ * @param day
+ * @returns List of all skills for current day
+ */
 export const getAllClassesSkills = (day: number) => {
-    if (day < 4) {
+    if (day < 3) {
         return allBasicClassesSkills;
+    } else if (day < 6) {
+        return allClassesSkills_2;
     } else if (day < 8) {
-        return allClassesSkills_2;
+        return allClassesSkills_3;
     } else {
-        return allClassesSkills_2;
+        return allClassesSkills_3;
     }
 };
+
+/**
+ *
+ * @param day
+ * @returns Random top level skill for current day
+ */
+export const getTopAllClassesSkill = (day: number) => {
+    let topPriceLevel;
+    let allSkills: IHeroSkillSet[];
+
+    if (day < 3) {
+        topPriceLevel = 1;
+        allSkills = allBasicClassesSkills;
+    } else if (day < 6) {
+        topPriceLevel = 2;
+        allSkills = allClassesSkills_2;
+    } else if (day < 8) {
+        topPriceLevel = 3;
+        allSkills = allClassesSkills_3;
+    } else {
+        topPriceLevel = 3;
+        allSkills = allClassesSkills_3;
+    }
+
+    return getRandomArrayItem(allSkills.filter((skill) => skill.priceLevel === topPriceLevel));
+};
+
+// export const getSkillColor = (skillRarity?: number) => {
+//     const rarity = skillRarity || 1;
+//     switch (rarity) {
+//         case 1:
+//             return 0x777777; // gey
+//         case 2:
+//             return 0x77ee77; // green
+//         case 3:
+//             return 0x777777; // blue/purple
+//         case 4:
+//             return 0xeebb00; // orange
+//         case 5:
+//             return 0xeebb00; //orange
+//     }
+// };

@@ -1,6 +1,6 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, EUnitType, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
+import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, EUnitType, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
 
 // SUMMON UNITS
 
@@ -20,8 +20,8 @@ export const fireflySummon: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Firefly",
-    id: "FIREFLY_SUMMON",
+    name: i18n.units.FIREFLY,
+    id: "FIREFLYSUMMON",
     skills: [],
     items: [],
     level: 1,
@@ -42,8 +42,8 @@ export const fireflySummon_2: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Firefly(2)",
-    id: "FIREFLY_SUMMON",
+    name: i18n.units.FIREFLY + "(2)",
+    id: "FIREFLYSUMMON",
     skills: [],
     items: [],
     level: 1,
@@ -64,17 +64,17 @@ export const fireflySummon_3: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Firefly(3)",
-    id: "FIREFLY_SUMMON",
+    name: i18n.units.FIREFLY + "(3)",
+    id: "FIREFLYSUMMON",
     skills: [],
     items: [],
     level: 1,
     exp: 0,
 };
 
-// SPARK SUMMON UNIT
+// WARRIOR SUMMON UNIT
 
-export const sparkSummon: IUnit = {
+export const warriorSummon: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WARRIOR,
     attackType: EHeroAttackType.PHYSICAL,
@@ -88,15 +88,15 @@ export const sparkSummon: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Spark",
-    id: "SPARK_SUMMON",
+    name: i18n.units.WARRIORSUMMON,
+    id: "WARRIORSUMMON",
     skills: [],
     items: [],
     level: 1,
     exp: 0,
 };
 
-export const sparkSummon_2: IUnit = {
+export const warriorSummon_2: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WARRIOR,
     attackType: EHeroAttackType.PHYSICAL,
@@ -110,15 +110,15 @@ export const sparkSummon_2: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Spark",
-    id: "SPARK_SUMMON",
+    name: i18n.units.WARRIORSUMMON + "(2)",
+    id: "WARRIORSUMMON",
     skills: [],
     items: [],
     level: 2,
     exp: 0,
 };
 
-export const sparkSummon_3: IUnit = {
+export const warriorSummon_3: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WARRIOR,
     attackType: EHeroAttackType.PHYSICAL,
@@ -132,8 +132,8 @@ export const sparkSummon_3: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Spark",
-    id: "SPARK_SUMMON",
+    name: i18n.units.WARRIORSUMMON + "(3)",
+    id: "WARRIORSUMMON",
     skills: [],
     items: [],
     level: 3,
@@ -149,6 +149,7 @@ export const fireflySummonSkill_3: IHeroSkillSet = {
     name: i18n.skills.basic.fireflySummon.name + "(3)",
     desc: i18n.skills.basic.fireflySummon.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
@@ -167,6 +168,7 @@ export const fireflySummonSkill_2: IHeroSkillSet = {
     name: i18n.skills.basic.fireflySummon.name + "(2)",
     desc: i18n.skills.basic.fireflySummon.desc2,
     level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
@@ -186,6 +188,7 @@ export const fireflySummonSkill: IHeroSkillSet = {
     name: i18n.skills.basic.fireflySummon.name,
     desc: i18n.skills.basic.fireflySummon.desc1,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
@@ -201,36 +204,38 @@ export const fireflySummonSkill: IHeroSkillSet = {
 // SPARK SUMMON SKILL
 
 export const sparkSummonSkill_3: IHeroSkillSet = {
-    id: "sparkSummon",
+    id: "warriorSummon",
     //name: "Spark Summon(3)",
     //desc: "Summon magic spark [7,1]",
     name: i18n.skills.basic.sparkSummon.name + "(3)",
     desc: i18n.skills.basic.sparkSummon.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
             type: EHeroSkillType.SUMMON,
             isBasicAttack: true,
-            summon: sparkSummon_3,
+            summon: warriorSummon_3,
         },
     ],
     image: IMAGE_SKILL_SUMMON_SPIRIT,
 };
 
 export const sparkSummonSkill_2: IHeroSkillSet = {
-    id: "sparkSummon",
+    id: "warriorSummon",
     //name: "Spark Summon(2)",
     //desc: "Summon magic spark [4,1]",
     name: i18n.skills.basic.sparkSummon.name + "(2)",
     desc: i18n.skills.basic.sparkSummon.desc2,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
             type: EHeroSkillType.SUMMON,
             isBasicAttack: true,
-            summon: sparkSummon_2,
+            summon: warriorSummon_2,
         },
     ],
     nextLevel: sparkSummonSkill_3,
@@ -238,18 +243,19 @@ export const sparkSummonSkill_2: IHeroSkillSet = {
 };
 
 export const sparkSummonSkill: IHeroSkillSet = {
-    id: "sparkSummon",
+    id: "warriorSummon",
     //name: "Spark Summon",
     //desc: "Summon magic spark [3,1]",
     name: i18n.skills.basic.sparkSummon.name,
     desc: i18n.skills.basic.sparkSummon.desc1,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
             type: EHeroSkillType.SUMMON,
             isBasicAttack: true,
-            summon: sparkSummon,
+            summon: warriorSummon,
         },
     ],
     nextLevel: sparkSummonSkill_2,
@@ -262,7 +268,8 @@ export const incrSummonBa_3: IHeroSkillSet = {
     id: "incrSummonBa",
     name: "Increase summon attack(3)",
     desc: "Increase current summon basic attack damage [1]+[MP]",
-    level: 4,
+    level: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
@@ -280,7 +287,8 @@ export const incrSummonBa_2: IHeroSkillSet = {
     id: "incrSummonBa",
     name: "Increase summon attack(2)",
     desc: "Increase current summon basic attack damage [1]+[MP*70%]",
-    level: 3,
+    level: 2,
+    priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
@@ -299,7 +307,8 @@ export const incrSummonBa: IHeroSkillSet = {
     id: "incrSummonBa",
     name: "Increase summon attack",
     desc: "Increase current summon basic attack damage [1]+[MP*50%]",
-    level: 2,
+    level: 1,
+    priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
     skills: [
         {
@@ -317,6 +326,74 @@ export const incrSummonBa: IHeroSkillSet = {
 
 //
 
+//
+// BUFF SUMMON CRIT CHANCE
+//
+
+//TODO: remove and use from commonSkill3Consts
+
+export const buffSummonCritSkill_2: IHeroSkillSet = {
+    id: "buffSummonCritSkill",
+    //name: i18n.skills.basic.shieldAttackSkill.name,
+    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
+    name: "Crit summon(2)",
+    desc: "Buff summon crit\nchance [5]+[30%xMP]",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
+    skills: [
+        {
+            isBasicAttack: true,
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Crit",
+                targetType: ETargetType.SUMMON_CURRENT,
+                timeType: EBuffTimeType.DUEL,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "critChance",
+                value: 5,
+                valueType: "number",
+                mpScale: 30,
+            },
+        },
+    ],
+    //nextLevel: buffSummonCritSkill_2,
+    image: IMAGE_SKILL_TEST,
+};
+
+export const buffSummonCritSkill: IHeroSkillSet = {
+    id: "buffSummonCritSkill",
+    //name: i18n.skills.basic.shieldAttackSkill.name,
+    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
+    name: "Crit summon",
+    desc: "Buff summon crit\nchance [5]+[20%xMP]",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
+    skills: [
+        {
+            isBasicAttack: true,
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Crit",
+                targetType: ETargetType.SUMMON_CURRENT,
+                timeType: EBuffTimeType.DUEL,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "critChance",
+                value: 5,
+                valueType: "number",
+                mpScale: 20,
+            },
+        },
+    ],
+    nextLevel: buffSummonCritSkill_2,
+    image: IMAGE_SKILL_TEST,
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const summonSkills: THeroSkills = [fireflySummonSkill, sparkSummonSkill];
 
-export const summonSkills_2: THeroSkills = [incrSummonBa, fireflySummonSkill, sparkSummonSkill];
+export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa]);
+
+export const summonSkills_3: THeroSkills = summonSkills_2.concat([buffSummonCritSkill]); // buffSummonCritSkill

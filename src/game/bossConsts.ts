@@ -13,8 +13,6 @@ import {
     EHeroSkillType,
     AnimationType,
 } from "../types";
-import { basic_boots, basic_hat, basic_jacket, basic_pants } from "./commonItemConsts";
-import { itemGoblinBoneDagger, itemGoblinSilverCoin, itemPeasantPitchfork } from "./mobItemConsts";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -30,6 +28,7 @@ const minotaurSkills: THeroSkills = [
         name: "Minotaur totem",
         desc: "Summons a totem that heals",
         level: 1,
+        priceLevel: 1,
         heroClasses: [EHeroClass.WILD],
         skills: [
             {
@@ -57,6 +56,7 @@ const minotaurSkills: THeroSkills = [
         name: "Minotaur Earthquake",
         desc: "Deal damage to all ememies",
         level: 1,
+        priceLevel: 1,
         heroClasses: [EHeroClass.WILD],
         skills: [
             {

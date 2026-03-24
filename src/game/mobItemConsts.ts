@@ -1,13 +1,38 @@
-import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
 import {
+    EHeroClass,
+    EItemAfterDuelBonusCondition,
+    EItemAfterDuelBonusType,
+    EItemBattleBonusType,
+    EItemBonusType,
+    EItemType,
+    EStatusType,
+    EWeaponItemType,
+    IItem,
+} from "../types";
+import {
+    IMAGE_ITEM_COIN,
     IMAGE_ITEM_GOBLIN_BONE_DAGGER,
     IMAGE_ITEM_GOBLIN_GOLD_COIN,
     IMAGE_ITEM_GOBLIN_SILVER_COIN,
     IMAGE_ITEM_PEASANTS_PITCHFORK,
     IMAGE_ITEM_REGEN_MANTLE,
-} from "./utils/imageLoadUtil";
+    IMAGE_ITEM_SPIRIT_SPEAR,
+} from "./utils/load/imageLoadItems";
 
 ////// MOB ITEMS /////////////////////////////////////////
+
+// COMMON
+
+export const itemCoin: IItem = {
+    id: "coin",
+    name: "Монета",
+    type: EItemType.COMMON,
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [],
+    bonuses: [],
+    image: IMAGE_ITEM_COIN,
+};
 
 // PEASANT
 
@@ -21,7 +46,7 @@ export const itemPeasantPitchfork_2: IItem = {
     priceLevel: 1,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" }],
     image: IMAGE_ITEM_PEASANTS_PITCHFORK,
 };
 
@@ -33,7 +58,7 @@ export const itemPeasantPitchfork: IItem = {
     priceLevel: 1,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
     image: IMAGE_ITEM_PEASANTS_PITCHFORK,
     nextLevel: itemPeasantPitchfork_2,
 };
@@ -42,30 +67,56 @@ export const itemPeasantPitchfork: IItem = {
 
 // GOBLIN SILVER COIN
 
+export const itemGoblinSilverCoin_2: IItem = {
+    id: "goblin_silver_coin",
+    name: "Серебряная монета(2)",
+    type: EItemType.COMMON,
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [],
+    bonuses: [],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 2, condition: EItemAfterDuelBonusCondition.WON }],
+    image: IMAGE_ITEM_GOBLIN_SILVER_COIN,
+};
+
 export const itemGoblinSilverCoin: IItem = {
     id: "goblin_silver_coin",
     name: "Серебряная монета",
     type: EItemType.COMMON,
     level: 1,
-    priceLevel: 1,
+    priceLevel: 2,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
     image: IMAGE_ITEM_GOBLIN_SILVER_COIN,
+    nextLevel: itemGoblinSilverCoin_2,
 };
 
 // GOBLIN GOLD COIN
 
-export const itemGoblinGoldCoin: IItem = {
-    id: "goblin_silver_coin",
-    name: "Серебряная монета",
+export const itemGoblinGoldCoin_2: IItem = {
+    id: "goblin_gold_coin",
+    name: "Золотая монета",
     type: EItemType.COMMON,
-    level: 1,
-    priceLevel: 1,
+    level: 2,
+    priceLevel: 3,
     heroClasses: [],
     bonuses: [],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 2 }],
     image: IMAGE_ITEM_GOBLIN_GOLD_COIN,
+};
+
+export const itemGoblinGoldCoin: IItem = {
+    id: "goblin_gold_coin",
+    name: "Золотая монета",
+    type: EItemType.COMMON,
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [],
+    bonuses: [],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1 }],
+    image: IMAGE_ITEM_GOBLIN_GOLD_COIN,
+    nextLevel: itemGoblinGoldCoin_2,
 };
 
 // GOBLIN BONE DAGGER
@@ -79,7 +130,7 @@ export const itemGoblinBoneDagger_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.APPLY_POISON_ON_HIT, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK, value: 1, valueType: "number", status: EStatusType.POISON }],
     image: IMAGE_ITEM_GOBLIN_BONE_DAGGER,
 };
 
@@ -96,11 +147,23 @@ export const itemGoblinBoneDagger: IItem = {
     nextLevel: itemGoblinBoneDagger_2,
 };
 
-//////
+// REGENERATION MANTLE
+
+export const regenMantle_2: IItem = {
+    id: "regen_mantle",
+    name: "Мантия регенерации(2)",
+    type: EItemType.COMMON,
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [],
+    bonuses: [],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 2 }],
+    image: IMAGE_ITEM_REGEN_MANTLE,
+};
 
 export const regenMantle: IItem = {
-    id: "goblin_silver_coin",
-    name: "Серебряная монета",
+    id: "regen_mantle",
+    name: "Мантия регенерации",
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1,
@@ -108,4 +171,48 @@ export const regenMantle: IItem = {
     bonuses: [],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1 }],
     image: IMAGE_ITEM_REGEN_MANTLE,
+    nextLevel: regenMantle_2,
 };
+
+// SPIRIT SPEAR
+
+export const itemSpiritSpear_2: IItem = {
+    id: "spiritSpear",
+    name: "Spirit Spear(2)",
+    type: EItemType.WEAPON,
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.ALL],
+    weaponType: EWeaponItemType.SPEAR,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    image: IMAGE_ITEM_SPIRIT_SPEAR,
+};
+
+export const itemSpiritSpear: IItem = {
+    id: "spiritSpear",
+    name: "Spirit Spear",
+    type: EItemType.WEAPON,
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.ALL],
+    weaponType: EWeaponItemType.SPEAR,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    image: IMAGE_ITEM_SPIRIT_SPEAR,
+    nextLevel: itemSpiritSpear_2,
+};
+
+// SPIRIT ARMOR
+
+// export const spiritArmor: IItem = {
+//     id: "goblin_silver_coin",
+//     name: "Серебряная монета",
+//     type: EItemType.COMMON,
+//     level: 1,
+//     priceLevel: 1,
+//     heroClasses: [],
+//     bonuses: [],
+//     battleBonuses: [{type: EItemBattleBonusType.}]
+//     image: IMAGE_ITEM_REGEN_MANTLE,
+// };

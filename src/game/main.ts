@@ -39,7 +39,6 @@ const config: Phaser.Types.Core.GameConfig = {
 };
 
 const StartGame = (parent: string) => {
-    console.log("start game");
     const game = new Game({ ...config, parent });
     // game.scale.addListener(
     //     Phaser.Scale.Events.RESIZE,

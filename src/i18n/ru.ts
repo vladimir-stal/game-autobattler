@@ -26,11 +26,14 @@ export const i18n: Ii18n = {
             STAT_HP_REGEN: "Регенерация",
         },
         bonusType: {
-            APPLY_POISON_ON_HIT: "Накладывает яд при базовой атаке",
+            ADDITIONAL_BUFF_TARGET: "Бафф также накладывается\n на случайного союзника,\nкроме начальной цели.",
+            APPLY_STATUS_ON_BASIC_ATTACK: "Накладывает статус при базовой атаке",
+            //APPLY_POISON_ON_HIT: "Накладывает яд при базовой атаке",
             BASIC_ATTACK_TWICE: "Атакует дважды",
             BASIC_ONCE_IN_TWO_TURNS: "атакует одинр раз в 2 хода",
             CRIT_EVERY_TWO_TURNS: "Критический удар каждые 2 хода",
             CRIT_INCR_NONCRIT_DECR: "Увеличивает критический удар",
+            CRIT_WITH_MAGIC: "Магические атаки могут быть критическими",
             HEAL_INCREASE: "Увеливает лечение",
             INCREASE_DAMAGE_TO_ARMOR: "Увеливает урон по броне",
             INCREASE_DAMAGE_TO_BLEEDING: "Увеливает урон по целям с кровотоком",
@@ -41,13 +44,14 @@ export const i18n: Ii18n = {
             INCREASE_PHYSICAL_DAMAGE: "Увеливает физический урон",
             INCREASE_SUMMON_ATTACK: "Увеливает атаку призыва",
             INCREASE_SUMMON_HP: "Увеливает здоровье призыва",
+            INCREASE_TOTAL_DAMAGE_FROM_HP: "Увеливает весь урон на % от текущего здоровья",
             STATUS_BLEED_APPLY_INCREASE: "Увеливает накладываемый кровоток",
             STATUS_BURN_APPLY_INCREASE: "Увеливает накладываемый ожог",
             STATUS_POISON_APPLY_INCREASE: "Увеливает накладываемый яд",
             SUMMON_INCREASE_DAMAGE: "Увеливает урон призыва",
             TOTEM_INCREASE_VALUE: "Увеливает урон тотема",
         },
-        itemBonusType: { ATTRIBUTE: "АТРИБУТ" },
+        itemBonusType: { ATTRIBUTE: "АТРИБУТ", ITEM_WEAPON_SLOT: "Дополнительный слот для оружия" },
     },
     heroes: {
         basic: {
@@ -82,11 +86,11 @@ export const i18n: Ii18n = {
             [EHeroClass.ILLUSIONIST]: "Иллюзионист",
             [EHeroClass.INQUISITOR]: "Инквизитор",
             [EHeroClass.KNIGHT]: "Королевский рыцарь",
-            [EHeroClass.MAGIC_BARD]: "Магический бард",
+            [EHeroClass.MAGIC_BARD]: "Шут",
             [EHeroClass.MIMIC]: "Мимик",
             [EHeroClass.MINSTREL]: "Министерль",
             [EHeroClass.MONK]: "Монах",
-            [EHeroClass.NECROMANCER]: "Нектомант",
+            [EHeroClass.NECROMANCER]: "Некромант",
             [EHeroClass.ORACLE]: "Оракул",
             [EHeroClass.PALADIN]: "Паладин",
             [EHeroClass.PREDATOR]: "Хищник",
@@ -110,6 +114,8 @@ export const i18n: Ii18n = {
         SOLDIER: "Солдат",
         GOLDGOBLIN1: "Гоблин торговец",
         PEASANT: "Крестьянин",
+        WARRIORSUMMON: "Дух воина",
+        FIREFLY: "Светлячок",
     },
     items: {
         //basic
@@ -134,6 +140,9 @@ export const i18n: Ii18n = {
         basic_pants: "Старый штаны",
         basic_boots: "Старый ботинки",
         //
+    },
+    totems: {
+        basicWildTotem: "Дикий тотем",
     },
     rooms: {
         //
@@ -253,7 +262,7 @@ export const i18n: Ii18n = {
                 name: "Удар",
                 desc1: "Наносит [4] физического \nурона первому врагу",
                 desc2: "Наносит [6] физического \nурона первому врагу",
-                desc3: "Наносит [8] физического \nурона первому врагу",
+                desc3: "Наносит [6]+[PPx50%] физического \nурона первому врагу",
             },
             //
             // ORDER
@@ -296,9 +305,9 @@ export const i18n: Ii18n = {
             },
             sparkSummon: {
                 name: "Дух воина",
-                desc1: "Призвать магическое существо [2,3]",
-                desc2: "Призвать магическое существо [3,4]",
-                desc3: "Призвать магическое существо [6,6]",
+                desc1: "Призвать дух воина [2,3]",
+                desc2: "Призвать дух воина [3,4]",
+                desc3: "Призвать дух воина [6,6]",
             },
             //
             // WARRIOR
@@ -325,6 +334,28 @@ export const i18n: Ii18n = {
                 desc3: "Вызывает тотем, который наносит \n[3] урона случайному врагу",
             },
         },
+        level2: {
+            applyShock: {
+                name: "Шок",
+                desc1: "Накладывает [1] шок \nна первого врага",
+                desc2: "Накладывает [2] шок \nна первого врага",
+                desc3: "Накладывает [3] шок \nна первого врага",
+            },
+        },
+        common: {
+            removeBuff: {
+                name: "Очищение усиления",
+                desc1: "Очистить [1] усиление у врага",
+                desc2: "Очистить [2] усиления у врагов",
+                desc3: "Очистить [3] усиления у врагов",
+            },
+            removeDebuff: {
+                name: "Очищение проклятия",
+                desc1: "Очистить [1] проклятие у союзника",
+                desc2: "Очистить [2] проклятия у союзников",
+                desc3: "Очистить [3] проклятия у союзников",
+            },
+        },
         mc: {
             BarbarianShout: {
                 name: "Боевой крик",
@@ -334,9 +365,15 @@ export const i18n: Ii18n = {
             },
             DivineShield: {
                 name: "Божественный щит",
-                desc1: "Защищает себя магическим щитом\n, который поглощает урон от первой атаки",
-                desc2: "Защищает себя магическим щитом\n, который поглощает урон от первой атаки",
-                desc3: "Защищает себя магическим щитом\n, который поглощает урон от первой атаки",
+                desc1: "Защищает себя магическим щитом,\nкоторый поглощает урон от первой атаки",
+                desc2: "Защищает себя магическим щитом,\nкоторый поглощает урон от первой атаки",
+                desc3: "Защищает себя магическим щитом,\nкоторый поглощает урон от первой атаки",
+            },
+            shamanTotemEmpower: {
+                name: "Обряд поклонения",
+                desc1: "Увеличивает силу всех тотемов на [1]+[MP*50%]",
+                desc2: "Увеличивает силу всех тотемов на [1]+[MP*70%]",
+                desc3: "Увеличивает силу всех тотемов на [1]+[MP]",
             },
         },
         mobs: {
@@ -358,6 +395,8 @@ export const i18n: Ii18n = {
         SUMMON: "МИСТИК",
         WARRIOR: "ВОИН",
         WILD: "ДИКИЙ",
+        //
+        ALL: "ВСЕ",
     },
     ui: {
         BUY: "КУПИТЬ",
@@ -375,6 +414,9 @@ export const i18n: Ii18n = {
         NEXT_ROOM: "СЛЕДУЮЩАЯ КОМНАТА",
         UPGRADE: "УЛУЧШИТЬ",
         RESTART_GAME: "РЕСТАРТ",
+        PREPARE: "ПОДГОТОВКА",
+        NEXT: "ДАЛЬШЕ",
+        SELECT_UPGRADE: "ВЫБЕРИТЕ УЛУЧШЕНИЕ",
         //
         SKILL: "НАВЫК",
         ITEM: "ПРЕДМЕТ",

@@ -1,6 +1,8 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_REGEN, IMAGE_SKILL_TOTEM_1 } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST, IMAGE_SKILL_TOTEM_1 } from "../utils/imageLoadUtil";
+import { increaseMaxHpSkill } from "./commonSkill3Consts";
+import { removeBuffSkill } from "./commonSkillConsts";
 
 // ATTR INCR HP REGEN
 
@@ -11,6 +13,7 @@ export const attrIncrHpReg_3: IHeroSkillSet = {
     name: i18n.skills.basic.attrIncrHpReg.name + "(3)",
     desc: i18n.skills.basic.attrIncrHpReg.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
@@ -32,6 +35,7 @@ export const attrIncrHpReg_2: IHeroSkillSet = {
     name: i18n.skills.basic.attrIncrHpReg.name + "(2)",
     desc: i18n.skills.basic.attrIncrHpReg.desc2,
     level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
@@ -54,8 +58,9 @@ export const attrIncrHpReg: IHeroSkillSet = {
     name: i18n.skills.basic.attrIncrHpReg.name,
     desc: i18n.skills.basic.attrIncrHpReg.desc1,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
-    isActivateOnStart: true,
+    //isActivateOnStart: true,
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
@@ -79,6 +84,7 @@ export const totemAttackSkill_3: IHeroSkillSet = {
     name: i18n.skills.basic.totemAttack.name + "(3)",
     desc: i18n.skills.basic.totemAttack.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
@@ -109,6 +115,7 @@ export const totemAttackSkill_2: IHeroSkillSet = {
     name: i18n.skills.basic.totemAttack.name + "(2)",
     desc: i18n.skills.basic.totemAttack.desc2,
     level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
@@ -140,14 +147,15 @@ export const totemAttackSkill: IHeroSkillSet = {
     name: i18n.skills.basic.totemAttack.name,
     desc: i18n.skills.basic.totemAttack.desc1,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
             type: EHeroSkillType.TOTEM,
             isBasicAttack: true,
             totem: {
-                id: "basicTotem",
-                name: "Totem",
+                id: "basicWildTotem",
+                name: i18n.totems.basicWildTotem,
                 skills: [
                     {
                         type: EHeroSkillType.ATTACK,
@@ -170,7 +178,8 @@ export const attrDescArmor_3: IHeroSkillSet = {
     id: "attrDescArmor",
     name: "-armor(3)",
     desc: "Break [13] armor to first enemy",
-    level: 4,
+    level: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
@@ -188,7 +197,8 @@ export const attrDescArmor_2: IHeroSkillSet = {
     id: "attrDescArmor",
     name: "-armor(2)",
     desc: "Break [10] armor to first enemy",
-    level: 3,
+    level: 2,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
@@ -207,7 +217,8 @@ export const attrDescArmor: IHeroSkillSet = {
     id: "attrDescArmor",
     name: "-armor",
     desc: "Break [8] armor to first enemy",
-    level: 2,
+    level: 1,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WILD],
     skills: [
         {
@@ -222,8 +233,58 @@ export const attrDescArmor: IHeroSkillSet = {
     nextLevel: attrDescArmor_2,
 };
 
-//
+// INCR TOTEM VALUE (LEVEL 3) ///////////////////////////////////////////////////////////////////////////////////
 
-export const wildSkills: THeroSkills = [attrIncrHpReg]; //[totemAttackSkill, attrIncrHpReg];
+export const incrTotemValueSkill_2: IHeroSkillSet = {
+    id: "incrTotemValueSkill",
+    name: "Empower totem(2)",
+    //name: i18n.skills.mc.shamanTotemEmpower.name,
+    desc: "Increase current totem\n values by [1]+[MPx40%]",
+    //desc: i18n.skills.mc.shamanTotemEmpower.desc1, //"Increase all totems values by [1]+[MP*50%]",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WILD],
+    isMcSkill: true,
+    skills: [
+        {
+            type: EHeroSkillType.TOTEM_INCREASE_VALUE,
+            isBasicAttack: true,
+            value: 1,
+            valueType: "number",
+            targetType: ETargetType.TOTEM_ALLY_CURRENT,
+            mpScale: 40,
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+    //nextLevel: incrTotemValueSkill_2,
+};
 
-export const wildSkills_2: THeroSkills = [attrDescArmor, totemAttackSkill, attrIncrHpReg];
+export const incrTotemValueSkill: IHeroSkillSet = {
+    id: "incrTotemValueSkill",
+    name: "Empower totem",
+    //name: i18n.skills.mc.shamanTotemEmpower.name,
+    desc: "Increase current totem\n values by [1]+[MPx20%]",
+    //desc: i18n.skills.mc.shamanTotemEmpower.desc1, //"Increase all totems values by [1]+[MP*50%]",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WILD],
+    isMcSkill: true,
+    skills: [
+        {
+            type: EHeroSkillType.TOTEM_INCREASE_VALUE,
+            isBasicAttack: true,
+            value: 1,
+            valueType: "number",
+            targetType: ETargetType.TOTEM_ALLY_CURRENT,
+            mpScale: 20,
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+    nextLevel: incrTotemValueSkill_2,
+};
+
+export const wildSkills: THeroSkills = [totemAttackSkill, attrIncrHpReg];
+
+export const wildSkills_2: THeroSkills = wildSkills.concat([attrDescArmor, removeBuffSkill]);
+
+export const wildSkills_3: THeroSkills = wildSkills_2.concat([incrTotemValueSkill, increaseMaxHpSkill]);

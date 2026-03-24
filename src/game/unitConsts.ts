@@ -1,19 +1,9 @@
-import {
-    ETargetType,
-    EHeroAttackType,
-    EHeroClass,
-    IUnit,
-    EUnitType,
-    TUnits,
-    IMobReward,
-    IMobRewardType,
-    EItemAfterDuelBonusType,
-    IMobsVariants,
-} from "../types";
+import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardType, EItemAfterDuelBonusType, IMobsVariants } from "../types";
 import { basic_boots, basic_hat, basic_jacket, basic_pants } from "./commonItemConsts";
 import { i18n } from "./consts";
-import { itemGoblinBoneDagger, itemGoblinSilverCoin, itemPeasantPitchfork } from "./mobItemConsts";
-import { goblinShamanHpRegIncr } from "./skills/mobSkills";
+import { itemCoin, itemGoblinBoneDagger, itemGoblinSilverCoin, itemPeasantPitchfork, itemSpiritSpear, regenMantle } from "./mobItemConsts";
+import { goblinApplyShock, goblinShamanHpRegIncr } from "./skills/mobSkills";
+import { warriorSummon } from "./skills/summonSkillConsts2";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -41,6 +31,10 @@ export const peasantUnit: IUnit = {
     items: [],
     level: 1,
     exp: 0,
+    mobItems: [
+        { item: itemCoin, probability: 20 },
+        { item: itemPeasantPitchfork, probability: 20 },
+    ],
 };
 
 export const weakGoblinUnit: IUnit = {
@@ -57,7 +51,6 @@ export const weakGoblinUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    //name: "Weak goblin",
     name: i18n.units.WEAKGOBLIN,
     id: "WEAKGOBLIN",
     skills: [],
@@ -80,10 +73,9 @@ export const goblinUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    //name: "Goblin",
     name: i18n.units.GOBLIN,
     id: "GOBLIN",
-    skills: [],
+    skills: [goblinApplyShock],
     items: [],
     level: 2,
     exp: 0,
@@ -234,29 +226,32 @@ export const goldGoblin1Unit: IUnit = {
 //
 
 export const mobsLvl1: IMobsVariants[] = [
-    // {
-    //     name: "Peasants",
-    //     units: [peasantUnit, peasantUnit, null, null],
-    //     rewards: [
-    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-    //         { type: IMobRewardType.GOLD, item: itemPeasantPitchfork, exp: 1 },
-    //         { type: IMobRewardType.GOLD, item: itemPeasantPitchfork, exp: 1 },
-    //     ],
-    // },
-    // {
-    //     name: "Weak goblins",
-    //     units: [weakGoblinUnit, weakGoblinUnit, null, null],
-    //     rewards: [
-    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-    //         { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 1 },
-    //     ],
-    // },
     {
-        name: "Goblin shaman",
-        units: [goblinShamanUnit, null, null],
+        name: "Peasants",
+        units: [peasantUnit, peasantUnit, null, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            { type: IMobRewardType.UNIT, unit: goblinShamanUnit, exp: 1 },
+            //{ type: IMobRewardType.ITEM, item: itemCoin, exp: 1 },
+            { type: IMobRewardType.ITEM, item: itemPeasantPitchfork, exp: 1 },
+            { type: IMobRewardType.UNIT, unit: peasantUnit, exp: 1 },
+        ],
+    },
+    {
+        name: "Weak goblins",
+        units: [weakGoblinUnit, weakGoblinUnit, null, null],
+        rewards: [
+            //{ type: IMobRewardType.ITEM, item: itemCoin, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 1 },
+        ],
+    },
+    {
+        name: "Spirit warriror",
+        units: [warriorSummon, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 1 },
+            //{ type: IMobRewardType.ITEM, item: itemCoin, exp: 1 },
         ],
     },
 ];
@@ -265,10 +260,33 @@ export const mobsLvl2: IMobsVariants[] = [
         name: "Goblins",
         units: [goblinUnit, weakGoblinUnit, null, null],
         rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemGoblinSilverCoin, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemGoblinBoneDagger, exp: 2 },
             { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 2 },
+        ],
+    },
+    {
+        name: "Goblin shaman",
+        units: [goblinShamanUnit, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: regenMantle, exp: 2 },
+            { type: IMobRewardType.UNIT, unit: goblinShamanUnit, exp: 2 },
+        ],
+    },
+    {
+        name: "Skeletons(2)",
+        units: [skeletonUnit, null, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_hat, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_boots, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_pants, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_jacket, exp: 2 },
         ],
     },
 ];
@@ -277,22 +295,50 @@ export const mobsLvl3: IMobsVariants[] = [
         name: "Skeletons(3)",
         units: [skeletonUnit, skeletonUnit, null, null],
         rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_hat, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_boots, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_jacket, exp: 3 },
         ],
     },
+    {
+        name: "Goblin shaman",
+        units: [goblinShamanUnit, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 3 },
+            { type: IMobRewardType.ITEM, item: regenMantle, exp: 3 },
+            { type: IMobRewardType.UNIT, unit: goblinShamanUnit, exp: 3 },
+        ],
+    },
+    {
+        name: "Goblins",
+        units: [weakGoblinUnit, goblinUnit, goblinUnit, goblinUnit],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 1 },
+            { type: IMobRewardType.UNIT, unit: goblinUnit, exp: 1 },
+        ],
+    },
 ];
+
 export const mobsLvl4: IMobsVariants[] = [
     {
         name: "Skeletons(4)",
         units: [skeletonWarriorUnit, skeletonUnit, null, null],
         rewards: [
+            { type: IMobRewardType.GOLD, value: 3, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_hat, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_boots, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_jacket, exp: 4 },
+        ],
+    },
+    {
+        name: "Goblins(4)",
+        units: [goblinShamanUnit, goblinUnit, goblinUnit, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: goblinUnit, exp: 4 },
         ],
     },
 ];

@@ -1,6 +1,5 @@
-import { EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
+import { EHeroClass, EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
 import { i18n } from "./consts";
-import { heraldHero } from "./mcHeroConsts";
 import {
     IMAGE_ITEM_AXE_1,
     IMAGE_ITEM_DAGGER_1,
@@ -12,7 +11,7 @@ import {
     IMAGE_ITEM_SWORD_1,
     IMAGE_ITEM_TOTEM_1,
     IMAGE_ITEM_WAND_1,
-} from "./utils/imageLoadUtil";
+} from "./utils/load/imageLoadItems";
 
 //////  LVL 1 (BASIC) WEAPONS /////////////////////////////////////////
 
@@ -47,18 +46,32 @@ export const axe1: IItem = {
 
 ////// DAGGER /////////////////////////////////////////
 
+export const dagger1_3: IItem = {
+    id: "dagger1",
+    //name: "Dagger(2)",
+    name: i18n.items.dagger1 + "(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 1,
+    image: IMAGE_ITEM_DAGGER_1,
+    heroClasses: [EHeroClass.ALL],
+    weaponType: EWeaponItemType.DAGGER,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
+    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+};
+
 export const dagger1_2: IItem = {
     id: "dagger1",
     //name: "Dagger(2)",
     name: i18n.items.dagger1 + "(2)",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 1,
     image: IMAGE_ITEM_DAGGER_1,
-    heroClasses: [],
+    heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.DAGGER,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" }],
+    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
 };
 
 export const dagger1: IItem = {
@@ -69,10 +82,10 @@ export const dagger1: IItem = {
     level: 1,
     priceLevel: 1,
     image: IMAGE_ITEM_DAGGER_1,
-    heroClasses: [],
+    heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.DAGGER,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
+    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
     nextLevel: dagger1_2,
 };
 

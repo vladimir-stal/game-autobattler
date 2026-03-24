@@ -105,4 +105,12 @@ export class UnitPanel extends Phaser.GameObjects.Container {
 
         return moveCardText;
     }
+
+    refreshAllCards() {
+        this.slots.forEach((slot) => {
+            if (!slot.slot.isEmpty) {
+                slot.slot.card.refresh();
+            }
+        });
+    }
 }

@@ -1,7 +1,7 @@
 import { AnimationType, EScene } from "../../types";
 import { ANIMATION_COMPLETE } from "../consts";
 import { Cameras, GameObjects, Scene } from "phaser";
-import { getRandomArrayItem } from "../utils/commonUtils";
+import { getRandomArrayIndex, getRandomArrayItem } from "../utils/commonUtils";
 
 //const IMAGE_LOBBY_LOADING = "IMAGE_LOBBY_LOADING";
 //const IMAGE_LOBBY_FOX_SMILE = "IMAGE_LOBBY_FOX_SMILE";
@@ -19,6 +19,7 @@ export class LobbyLoadingScene extends Scene {
     hintText: GameObjects.Text;
 
     hints: string[];
+    currentHintIndex: number;
 
     timeoutId: number;
 
@@ -124,8 +125,10 @@ export class LobbyLoadingScene extends Scene {
             })
             .setOrigin(0.5, 0); //LOADING...
 
+        this.currentHintIndex = getRandomArrayIndex(this.hints);
+
         this.hintText = this.add
-            .text(screenCenterX, screenCenterY, getRandomArrayItem(this.hints), {
+            .text(screenCenterX, screenCenterY, this.hints[this.currentHintIndex], {
                 fontFamily: "Arial Black",
                 fontSize: 20,
                 color: "#dddddd",
@@ -219,12 +222,19 @@ export class LobbyLoadingScene extends Scene {
             yoyo: false,
         });
 
+        const newHintIndex = getRandomArrayIndex(this.hints);
+        if (this.currentHintIndex === newHintIndex) {
+            this.currentHintIndex = newHintIndex === this.hints.length - 1 ? 0 : newHintIndex + 1;
+        } else {
+            this.currentHintIndex = newHintIndex;
+        }
+
         this.timeoutId = setTimeout(() => {
             if (this.scene.getStatus(EScene.LOBBY_LOADING) !== 5) {
                 return;
             }
 
-            this.hintText.setText(getRandomArrayItem(this.hints));
+            this.hintText.setText(this.hints[this.currentHintIndex]);
 
             this.tweens.add({
                 targets: this.hintText,
@@ -274,5 +284,11 @@ export class LobbyLoadingScene extends Scene {
         );
 
         this.hints.push("ПОДСКАЗКА: Герои мультикласса имеют 2 базовых класса\n" + "и могут экипировать предметы и навыки обоих классов.");
+
+        this.hints.push("ПОДСКАЗКА: Можно пропустить анимацию боя кликнув на <Пропустить> вверху экрана.");
+
+        this.hints.push("ПОДСКАЗКА: Чтобы продать предмет или навык, кликните на <Двигать>, а затем на <Продать>");
+
+        this.hints.push("ПОДСКАЗКА: После нажатия <Двигать>,<Взять> или <Купить>\nдоступные места для перемещения будут подсвечены.");
     }
 }

@@ -65,7 +65,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         const randomHeroClasses = getRandomArrayItems(
             BASIC_CLASSES.filter((heroClass) => heroClass !== this.unit.heroClass),
             3,
-            true
+            true,
         );
 
         const mcClasses = randomHeroClasses.map((randomClass) => getHeroMulticlass(this.unit.heroClass, randomClass));
@@ -146,7 +146,8 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
     renderImage(heroClass: EHeroClass, index: number) {
         const x = 50 + index * 200;
         const { image, animation } = getHeroImage(heroClass);
-        const imageObject = this.gameScene.add.sprite(x, 40, image, 0).setOrigin(0, 0);
+        const y = 350;
+        const imageObject = this.gameScene.add.sprite(x, y, image, 0).setOrigin(0, 1);
         if (animation) {
             imageObject.anims.play(animation);
         }

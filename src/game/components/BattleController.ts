@@ -18,24 +18,32 @@ import {
     IActionTarget,
     EItemBattleBonusType,
     IHeroSkillSet,
+    IDebuff,
 } from "../../types";
-import { eachTurnDebuffs, summonItemBattleBonuses } from "../battleConsts";
+import { eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
 import {
+    applyDebuff,
     applyStatus,
     calculateBuffValue,
+    calculateDamageBonuses,
     calculateDebuffValue,
     calculateIncreaseValue,
     calculateUnitsAfterBattle,
+    changeBuffValue,
+    checkSkillCondition,
     executeDebuff,
     getAllyTargets,
     getAllyTotems,
+    getExistingBuff,
     getOpponentTargets,
     getStatusItemBonusType,
+    getTargets,
     getTargetWithSummon,
     getTargetWithTotem,
     prepareSummonToBattle,
     prepareTotemToBattle,
+    prepareUniqueSummonToBattle,
     prepareUnitToBattle,
     removeBuff,
     removeDebuff,
@@ -43,12 +51,11 @@ import {
     removeSummon,
     removeTotem,
     swapHp,
+    takeStatusDamage,
 } from "../utils/battleUtils";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomIntFromInterval } from "../utils/commonUtils";
 import { performTotemSkill } from "../utils/totemBattleUtils";
 
-const CRIT_MODIFIER = 0.5;
-const EVASION_MODIFIER = 0.5;
 const slotCount = 4;
 
 export class BattleController {
@@ -93,7 +100,7 @@ export class BattleController {
                 }
             });
         });
-        console.log("ON START SKILLS", onStartSkills);
+        //console.log("ON START SKILLS", onStartSkills);
         //
         onStartSkills.forEach(({ unit, skillSet, isPlayer1 }) => {
             const skillSetBattleAction: IBattleAction = {
@@ -141,14 +148,14 @@ export class BattleController {
                 const player1Unit = this.player1BattleUnits[j];
                 this.performAction(player1Unit, i, true);
                 if (player1Unit && this.checkBattleOver()) {
-                    console.log("BATTLE IS OVER");
+                    console.log("BATTLE IS OVER. player 1 units all dead");
                     battleIsOver = true;
                     break;
                 }
                 const player2Unit = this.player2BattleUnits[j];
                 this.performAction(player2Unit, i, false);
                 if (player2Unit && this.checkBattleOver()) {
-                    console.log("BATTLE IS OVER");
+                    console.log("BATTLE IS OVER. player 2 units all dead");
                     battleIsOver = true;
                     break;
                 }
@@ -203,7 +210,23 @@ export class BattleController {
 
         const skillSet = unit.skills.length >= skillIndex ? unit.skills[skillIndex] : null;
 
+        let isSkillDisabled = false;
         if (skillSet) {
+            // check for disable skill debuffs (DISABLE_SKILL)
+            if (!skillSet.isMcSkill) {
+                //console.log("skillset: ", skillSet.name);
+                const disableSkillDebuffIndex = unit.debuffs.findIndex((db) => db.type === EDebuffType.DISABLE_SKILL);
+                if (disableSkillDebuffIndex !== -1) {
+                    isSkillDisabled = true;
+                    removeDebuff(unit, unit, disableSkillDebuffIndex, this.battleRecord);
+                }
+            }
+
+            if (isSkillDisabled) {
+                this.performBasicAttack(unit, undefined, isPlayer1);
+                return;
+            }
+
             const skillSetBattleAction: IBattleAction = {
                 unitId: unit.id,
                 type: EBattleActionType.PEFORM_SKILLSET,
@@ -211,8 +234,16 @@ export class BattleController {
             };
             this.battleRecord.push(skillSetBattleAction);
 
+            // TODO: skill set should store isBasicAttack instead of skill
             skillSet.skills.forEach((skill) => {
-                this.performSkill(unit, skill, isPlayer1);
+                if (skill.condition) {
+                    const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
+                    if (isConditionFulfilled) {
+                        this.performSkill(unit, skill, isPlayer1);
+                    }
+                } else {
+                    this.performSkill(unit, skill, isPlayer1);
+                }
 
                 if (skillSet.isChained) {
                     this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
@@ -232,6 +263,7 @@ export class BattleController {
     /** Execute all after action activities every round:
      * statuses actication (poison, bleed, burn, hpRegen);
      * totem actions;
+     * every turn buffs and debufs actions
      */
     executeAfterAction(unit: IBattleUnit, isPlayer1: boolean) {
         const { hpRegen, statuses, totem, debuffs } = unit;
@@ -253,7 +285,11 @@ export class BattleController {
         // check statuses
         statuses.forEach((st) => {
             const { type, value } = st;
-            this.takeStatusDamage(unit, value, type);
+            //this.takeStatusDamage(unit, value, type);
+            if (st.type === EStatusType.SHOCK) {
+                return;
+            }
+            takeStatusDamage(unit, value, type, this.battleRecord);
         });
         // totem
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
@@ -318,15 +354,22 @@ export class BattleController {
             case EHeroSkillType.TOTEM_INCREASE_VALUE:
                 this.performTotemIncreaseValue(unit, skill, isPlayer1, isStartBattle);
                 break;
+            case EHeroSkillType.NONE:
+                {
+                }
+                break;
             default:
                 console.log("No handler for skill type", skill.type);
         }
     }
 
     performBasicAttack(unit: IBattleUnit, skill: IHeroSkill | undefined, isPlayer1: boolean) {
-        //TODO: basic atack should go after skill set (not every skill in skillset)
-
         if (!skill || skill.isBasicAttack) {
+            if (unit.summon) {
+                this.performActionSummon(unit.summon, isPlayer1);
+                return;
+            }
+
             const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
             const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
 
@@ -346,7 +389,7 @@ export class BattleController {
     }
 
     performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { targetType, value, attackType } = skill;
+        const { targetType, value, attackType, mpScale, ppScale } = skill;
         if (!targetType || !attackType || value === undefined) {
             console.log("NO TARGET TYPE OR VALUE");
             return;
@@ -358,38 +401,50 @@ export class BattleController {
             return;
         }
 
+        let isCritAllowed = attackType === EHeroAttackType.PHYSICAL;
+        if (attackType === EHeroAttackType.MAGIC) {
+            // check if crit with magic available
+            const isCritWithMagic = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_WITH_MAGIC);
+            isCritAllowed = !!isCritWithMagic;
+        }
+
         // calculate attack damage
-        let attackDamage = value;
+        const { attackDamage, isCrit } = calculateDamageBonuses(unit, attackType, value, mpScale, ppScale, isCritAllowed);
 
         // calculate attack damage according to items bonuses
-        const bonusType =
-            unit.attackType === EHeroAttackType.MAGIC ? EItemBattleBonusType.INCREASE_MAGIC_DAMAGE : EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE;
-        unit.itemBonuses.forEach((bonus) => {
-            if (bonus.type === bonusType) {
-                attackDamage += calculateIncreaseValue(attackDamage, bonus.value, bonus.valueType);
-            }
-        });
+        // const bonusType =
+        //     unit.attackType === EHeroAttackType.MAGIC ? EItemBattleBonusType.INCREASE_MAGIC_DAMAGE : EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE;
+        // unit.itemBonuses.forEach((bonus) => {
+        //     if (bonus.type === bonusType) {
+        //         attackDamage += calculateIncreaseValue(attackDamage, bonus.value, bonus.valueType);
+        //     }
+        // });
+
+        // calculate scale from MP or PP
+        // const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+        // const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+        // attackDamage += mpScaleValue + ppScaleValue;
 
         // calculate attack damage according to buffs and debuffs
-        unit.buffs.forEach((buff) => {
-            if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
-                const { value, valueType, valueFrom } = buff;
-                if (!valueType || value === undefined) {
-                    return;
-                }
-                const percentFrom = valueFrom ? unit[valueFrom] : undefined;
-                attackDamage += calculateIncreaseValue(attackDamage!, value, valueType, percentFrom);
-            }
-        });
+        // unit.buffs.forEach((buff) => {
+        //     if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
+        //         const { value, valueType, valueFrom } = buff;
+        //         if (!valueType || value === undefined) {
+        //             return;
+        //         }
+        //         const percentFrom = valueFrom ? unit[valueFrom] : undefined;
+        //         attackDamage += calculateIncreaseValue(attackDamage!, value, valueType, percentFrom);
+        //     }
+        // });
 
         // calculate critical strike value
-        let isCrit = false;
-        if (unit.critChance > 0) {
-            if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
-                isCrit = true;
-                attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
-            }
-        }
+        // let isCrit = false;
+        // if (unit.critChance > 0) {
+        //     if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
+        //         isCrit = true;
+        //         attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
+        //     }
+        // }
 
         // record
         const attackRecord = { unitId: unit.id, type: EBattleActionType.ATTACK, value: attackDamage, isCrit, targets: [], skill, isStartBattle };
@@ -397,21 +452,27 @@ export class BattleController {
 
         targets.forEach((target) => {
             // check if target has a summon - summon takes damage instead
-            let parentUnit;
+            let parentUnit; // owner of a summon
             let finalTarget = target;
             if (target.summon) {
                 finalTarget = target.summon;
                 parentUnit = target;
             }
-            // record
-            //this.battleRecord.push({ unitId: unit.id, targetId: finalTarget.id, type: EBattleActionType.ATTACK, value: attackDamage });
-            //
-            this.dealDamage(unit, finalTarget, attackDamage!, skill.attackType!, parentUnit, attackRecord);
+
+            // check if target unit has antiskill shield
+            const antiskillShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
+            if (antiskillShieldBuff) {
+                removeBuff(target, antiskillShieldBuff, this.battleRecord);
+                this.dealDamage(unit, unit, attackDamage, skill.attackType!, parentUnit, attackRecord);
+                return;
+            }
+
+            this.dealDamage(unit, finalTarget, attackDamage, skill.attackType!, parentUnit, attackRecord);
         });
     }
 
     performAttrIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { value, valueType, valueFrom, attribute, targetType } = skill;
+        const { value, valueType, valueFrom, attribute, targetType, mpScale, ppScale } = skill;
         if (!value || !valueType || !attribute || !targetType) {
             return;
         }
@@ -432,9 +493,14 @@ export class BattleController {
         };
         this.battleRecord.push(battleAction);
 
+        // check scaling from MP and PP
+        const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+        const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+
         targets.forEach((target) => {
             //console.log("INCR ATTR TARGET", attribute, target);
-            const increaseValue = calculateIncreaseValue(target[attribute], value, valueType, valueFrom && unit[valueFrom]);
+            const increaseValue = calculateIncreaseValue(target[attribute], value, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
+
             target[attribute] += increaseValue;
             //console.log(">>>>", increaseValue, target[attribute]);
             //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
@@ -443,14 +509,16 @@ export class BattleController {
     }
 
     performAttrDecrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { value, valueType, attribute, targetType } = skill;
+        const { value, valueType, attribute, targetType, targetUnitId } = skill;
         if (!value || !valueType || !attribute || !targetType) {
             return;
         }
 
+        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
 
-        const targets = getOpponentTargets(opponentUnits, targetType);
+        const targets = getTargets(unit, allyUnits, opponentUnits, targetType, targetUnitId);
+
         if (!targets) {
             return;
         }
@@ -481,13 +549,19 @@ export class BattleController {
         const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff, isStartBattle, skill };
         this.battleRecord.push(buffAction);
 
-        const { type, targetType, attribute, value, statusType } = buff;
+        const { type, targetType, targetUnitId, attribute, value, statusType, mpScale, ppScale } = buff;
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
 
         switch (type) {
             case EBuffType.ADD_STATUS_ON_BASIC_ATTACK:
+            case EBuffType.OUTGOING_HEAL:
+            case EBuffType.TOTAL_DAMAGE_INCREASE:
                 {
-                    if (!statusType || value === undefined) {
+                    if (type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK && !statusType) {
+                        return;
+                    }
+
+                    if (value === undefined) {
                         console.log("ERROR! Buff has no statusType or value", buff);
                         return;
                     }
@@ -497,11 +571,36 @@ export class BattleController {
                         console.log("ERROR! No targets found for buff", buff);
                         return;
                     }
+                    if (targets.length === 1) {
+                        const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
+                        if (isAdditionalTarget) {
+                            console.log("ADDITIONAL_BUFF_TARGET found");
+                            const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
+                            console.log("additionalTargets", additionalTargets);
+                            targets.push(additionalTargets[0]);
+                            console.log("targets", targets);
+                        }
+                    }
+
+                    // check scaling from MP and PP
+                    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+                    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+
+                    const initValue = type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK ? calculateBuffValue(unit[attribute], buff, unit) : value;
+                    const buffValue = initValue + mpScaleValue + ppScaleValue;
+
+                    //console.log("BUFF >>>", type, buffValue, mpScaleValue);
 
                     targets.forEach((target) => {
-                        target.buffs.push({ ...buff, totalValue: value });
-                        buffAction.buffTargets?.push({ targetId: target.id });
-                        //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.BUFF, name });
+                        const existingBuff = getExistingBuff(target, buff);
+                        if (existingBuff) {
+                            existingBuff.value += buffValue;
+                            existingBuff.totalValue += buffValue;
+                            buffAction.buffTargets?.push({ targetId: target.id, value: existingBuff.totalValue, isExisting: true });
+                        } else {
+                            target.buffs.push({ ...buff, value: buffValue, totalValue: buffValue });
+                            buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });
+                        }
                     });
                 }
                 break;
@@ -511,9 +610,19 @@ export class BattleController {
                         return;
                     }
 
-                    const targets = getAllyTargets(unit, allyUnits, targetType);
+                    const targets = getAllyTargets(unit, allyUnits, targetType, targetUnitId);
                     if (!targets) {
                         return;
+                    }
+                    if (targets.length === 1) {
+                        const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
+                        if (isAdditionalTarget) {
+                            console.log("ADDITIONAL_BUFF_TARGET found");
+                            const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
+                            console.log("additionalTargets", additionalTargets);
+                            targets.push(additionalTargets[0]);
+                            console.log("targets", targets);
+                        }
                     }
 
                     targets.forEach((target) => {
@@ -521,10 +630,17 @@ export class BattleController {
                         const buffValue = calculateBuffValue(unit[attribute], buff, target);
                         target[attribute] += buffValue;
 
+                        const existingBuff = getExistingBuff(target, buff);
+
                         // save buff with calculated total value to unit buffs
-                        target.buffs.push({ ...buff, totalValue: buffValue });
-                        buffAction.buffTargets?.push({ targetId: target.id });
-                        //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.BUFF, name, buff });
+                        if (existingBuff) {
+                            existingBuff.value += buffValue;
+                            existingBuff.totalValue += buffValue;
+                        } else {
+                            target.buffs.push({ ...buff, totalValue: buffValue });
+                        }
+
+                        buffAction.buffTargets?.push({ targetId: target.id, isExisting: !!existingBuff });
 
                         this.battleRecord.push({
                             unitId: unit.id,
@@ -536,16 +652,61 @@ export class BattleController {
                     });
                 }
                 break;
+            case EBuffType.EVADE:
+            case EBuffType.IGNORE_NEXT_DEBUFF:
+            case EBuffType.FIRE_SHIELD:
+                {
+                    const targets = getAllyTargets(unit, allyUnits, targetType);
+                    if (!targets) {
+                        return;
+                    }
+
+                    // check scaling from MP and PP
+                    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+                    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+
+                    const buffValue = calculateBuffValue(unit[attribute], buff, unit) + mpScaleValue + ppScaleValue;
+
+                    targets.forEach((target) => {
+                        //console.log("BUFF >> FIRE_SHIELD >>>", target, buffValue, mpScaleValue);
+                        const existingBuff = getExistingBuff(target, buff);
+                        // save buff with calculated total value to unit buffs
+                        if (existingBuff) {
+                            existingBuff.value += buffValue;
+                            existingBuff.totalValue += buffValue;
+                        } else {
+                            target.buffs.push({ ...buff, value: buffValue, totalValue: buffValue });
+                        }
+
+                        buffAction.buffTargets?.push({ targetId: target.id, isExisting: !!existingBuff, value: buffValue });
+                    });
+                }
+                break;
             case EBuffType.DIVINE_SHIELD:
+            case EBuffType.ANTISKILL_SHIELD:
+            case EBuffType.DARK_HEAL:
+            case EBuffType.BLADEDANCE:
             case EBuffType.IGNORE_ARMOR:
-            case EBuffType.TOTAL_DAMAGE_INCREASE:
             case EBuffType.BASIC_ATTACK_IS_CRIT:
+            case EBuffType.CHANGE_TARGET_TYPE:
             case EBuffType.BASIC_ATTACK_ADD_TIMES:
                 {
                     const targets = getAllyTargets(unit, allyUnits, targetType);
                     if (!targets) {
                         return;
                     }
+
+                    if (targets.length === 1) {
+                        const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
+                        if (isAdditionalTarget) {
+                            console.log("ADDITIONAL_BUFF_TARGET found");
+                            const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
+                            console.log("additionalTargets", additionalTargets);
+                            targets.push(additionalTargets[0]);
+                            console.log("targets", targets);
+                        }
+                    }
+
                     targets.forEach((target) => {
                         target.buffs.push(buff);
                         buffAction.buffTargets?.push({ targetId: target.id });
@@ -567,39 +728,67 @@ export class BattleController {
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         const targets = getAllyTargets(unit, allyUnits, targetType);
 
+        //console.log("performBuffValueIncrease > get buff from", targets);
+
+        // check if at least one buffed ally found
+        if (!targets[0]) {
+            console.log("performBuffValueIncrease > no buff to copy found");
+            return;
+        }
+
         // get buff from target and increse its value
         targets?.forEach((target) => {
-            const buff = getRandomArrayItem(target.buffs);
+            const buff = { ...getRandomArrayItem(target.buffs) };
 
             if (!buff) {
                 return;
             }
 
-            const addValue = calculateIncreaseValue(buff.value, value, valueType);
-            buff.value += addValue;
+            const addValue = calculateIncreaseValue(buff.totalValue, value, valueType);
+            buff.value = addValue;
+            buff.valueType = "number";
+            buff.targetType = ETargetType.BY_UNIT_ID;
+            buff.targetUnitId = target.id;
+
+            //console.log("performBuffValueIncrease > BUFF", buff);
 
             // record
-            const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff, isStartBattle };
-            this.battleRecord.push(buffAction);
+            // const buffAction: IBattleAction = {
+            //     unitId: unit.id,
+            //     type: EBattleActionType.BUFF,
+            //     buffTargets: [{ targetId: target.id, existingBuff: true }],
+            //     buff,
+            //     isStartBattle,
+            // };
+            // this.battleRecord.push(buffAction);
+
+            this.performBuff(unit, skill, buff, isPlayer1, isStartBattle);
         });
     }
 
     performBuffCopy(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { targetType, value, valueType } = skill;
+        const { targetType, value, valueType, targetFromType } = skill;
 
-        if (!targetType || value === undefined || !valueType) {
+        if (!targetType || !targetFromType || value === undefined || !valueType) {
             return;
         }
 
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const targets = getAllyTargets(unit, allyUnits, targetFromType);
+
+        // check if at least one buffed ally found
+        if (!targets[0]) {
+            console.log("performBuffCopy > no buff to copy found");
+            return;
+        }
 
         // get buff from target and copy it to random ally
         targets?.forEach((target) => {
             const buff = { ...getRandomArrayItem(target.buffs) };
-            buff.targetType = ETargetType.RANDOM_ALLY;
+            buff.targetType = targetType; //ETargetType.RANDOM_ALLY;
 
             if (!buff) {
+                console.log("no buff found for copy!");
                 return;
             }
 
@@ -607,19 +796,30 @@ export class BattleController {
         });
     }
 
+    /**
+     *
+     * @param unit who applies status
+     */
     performApplyStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { status, targetType, value } = skill;
+        const { status, targetType, targetUnitId, value, mpScale, ppScale } = skill;
         if (!status || !targetType || value === undefined) {
             return;
         }
+        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
 
-        const targets = getOpponentTargets(opponentUnits, targetType);
+        //const targets = getOpponentTargets(opponentUnits, targetType, undefined, targetUnitId);
+        const targets = getTargets(unit, allyUnits, opponentUnits, targetType, targetUnitId);
+
         if (!targets) {
             return;
         }
 
-        let finalValue = value;
+        // check scaling from MP and PP
+        const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+        const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+
+        let finalValue = value + mpScaleValue + ppScaleValue;
 
         const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
         if (itemBonus) {
@@ -627,6 +827,7 @@ export class BattleController {
         }
 
         targets.forEach((target) => {
+            //console.log("APPLY STATUS", unit, target, status, finalValue);
             applyStatus(unit, target, status, finalValue, this.battleRecord, isStartBattle);
         });
     }
@@ -665,11 +866,10 @@ export class BattleController {
             return;
         }
 
-        console.log("performDebuff", debuff);
+        //console.log("performDebuff", debuff);
 
         // record
-        const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff, isStartBattle };
-        this.battleRecord.push(debuffAction);
+        const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff, isStartBattle, skill };
 
         const { type, targetType, name, attribute, value, mpScale, ppScale } = debuff;
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
@@ -688,11 +888,29 @@ export class BattleController {
 
                     targets.forEach((target) => {
                         // calculate buff value and add to unit attribute
-                        const debuffValue = calculateDebuffValue(unit, target[attribute], debuff!);
+                        const debuffValue = calculateDebuffValue(unit, target[attribute], debuff);
+                        //console.log("debuff value: ", debuffValue);
+
+                        // check if target unit has antis debuff bonuses (ANTISKILL_SHIELD, IGNORE_NEXT_DEBUFF)
+                        const antiskillShieldBuff = target.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
+                        if (antiskillShieldBuff) {
+                            removeBuff(target, antiskillShieldBuff, this.battleRecord);
+                            applyDebuff(unit, { ...debuff }, debuffAction);
+                            return;
+                        }
+                        const ignoreDebuffBuff = target.buffs.find((buff) => buff.type === EBuffType.IGNORE_NEXT_DEBUFF);
+                        if (ignoreDebuffBuff) {
+                            changeBuffValue(target, ignoreDebuffBuff, -1, this.battleRecord);
+                            return;
+                        }
+                        //
+
                         target[attribute] -= debuffValue;
                         // save buff with calculated total value to unit buffs
                         target.debuffs.push({ ...debuff, totalValue: debuffValue });
                         debuffAction.buffTargets?.push({ targetId: target.id });
+
+                        this.battleRecord.push(debuffAction);
 
                         this.battleRecord.push({
                             unitId: unit.id,
@@ -706,20 +924,34 @@ export class BattleController {
                 break;
             case EDebuffType.HEALING_DECREASE:
             case EDebuffType.MAGIC_RESIST_DECREASE:
-                {
-                    targets.forEach((target) => {
-                        target.debuffs.push({ ...debuff });
-                        debuffAction.buffTargets?.push({ targetId: target.id });
-                    });
-                }
-                break;
+            case EDebuffType.MARK_BURN:
             case EDebuffType.MARK_HUNTER:
             case EDebuffType.MARK_PREDATOR:
+            case EDebuffType.ANTIHEAL:
+            case EDebuffType.DISABLE_SKILL:
             case EDebuffType.PHYSICAL_RESIST_DECREASE:
                 {
                     targets.forEach((target) => {
-                        target.debuffs.push({ ...debuff });
-                        debuffAction.buffTargets?.push({ targetId: target.id });
+                        //console.log("DEBUFF TARget", target.id);
+                        //
+                        //
+                        // check if target unit has antis debuff bonuses (ANTISKILL_SHIELD, IGNORE_NEXT_DEBUFF)
+                        const antiskillShieldBuff = target.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
+                        if (antiskillShieldBuff) {
+                            removeBuff(target, antiskillShieldBuff, this.battleRecord);
+                            applyDebuff(unit, { ...debuff }, debuffAction);
+                            this.battleRecord.push(debuffAction);
+                            return;
+                        }
+                        const ignoreDebuffBuff = target.buffs.find((buff) => buff.type === EBuffType.IGNORE_NEXT_DEBUFF);
+                        if (ignoreDebuffBuff) {
+                            changeBuffValue(target, ignoreDebuffBuff, -1, this.battleRecord);
+                            return;
+                        }
+                        //
+                        //
+                        applyDebuff(target, { ...debuff }, debuffAction);
+                        this.battleRecord.push(debuffAction);
                     });
                 }
                 break;
@@ -773,7 +1005,18 @@ export class BattleController {
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
         let finalHeal = value + mpScaleValue + ppScaleValue;
-        // TODO: calculate outgoing heal value accordint to buffs and debuffs
+
+        // calculate outgoing heal value accordint to buffs and debuffs
+        unit.buffs.forEach((buff) => {
+            if (buff.type === EBuffType.OUTGOING_HEAL) {
+                const { value, valueType, valueFrom } = buff;
+                if (!valueType || value === undefined) {
+                    return;
+                }
+                const percentFrom = valueFrom ? unit[valueFrom] : undefined;
+                finalHeal += calculateIncreaseValue(finalHeal, value, valueType, percentFrom);
+            }
+        });
 
         // calculate outgoing heal bonuses from items
         unit.itemBonuses.forEach((bonus) => {
@@ -782,6 +1025,13 @@ export class BattleController {
             }
         });
 
+        // check for DARK_HEAL buff
+        const darkHealBuff = unit.buffs.find((buff) => buff.type === EBuffType.DARK_HEAL);
+        if (darkHealBuff) {
+            this.performDarkHealAttack(unit, skill, finalHeal, isPlayer1, isStartBattle);
+            return;
+        }
+
         targets.forEach((target) => {
             // calculate incoming heal value from target buffs and debuffs
             target.debuffs.forEach((debuff) => {
@@ -789,8 +1039,27 @@ export class BattleController {
                     finalHeal = finalHeal - calculateDebuffValue(unit, finalHeal, debuff);
                 }
             });
-            console.log("FINAL HEAL after buffs/debuffs", finalHeal);
+            //console.log("FINAL HEAL after buffs/debuffs", finalHeal);
 
+            // check if target has antiheal debuffs (like ANTIHEAL)
+            const antihealDebuffIndex = target.debuffs.findIndex((debuff) => debuff.type === EDebuffType.ANTIHEAL);
+
+            if (antihealDebuffIndex !== -1) {
+                removeDebuff(target, target, antihealDebuffIndex, this.battleRecord);
+                //const antihealDebuff = target.debuffs[antihealDebuffIndex];
+                //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
+                // record
+                const attackRecord = { unitId: target.id, type: EBattleActionType.ATTACK, value: finalHeal, targets: [] };
+                this.battleRecord.push(attackRecord);
+                const recordTarget = { targetId: target.id, isEvasion: false };
+                attackRecord.targets?.push(recordTarget);
+                //
+                this.takeDamage(target, finalHeal, undefined, recordTarget);
+                //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
+                return;
+            }
+            //
+            //
             target.hp += finalHeal;
             if (target.hp > target.maxHp) {
                 target.hp = target.maxHp;
@@ -800,13 +1069,50 @@ export class BattleController {
         });
     }
 
+    performDarkHealAttack(unit: IBattleUnit, skill: IHeroSkill, value: number, isPlayer1: boolean, isStartBattle?: boolean) {
+        const { targetType, isBasicAttack } = skill;
+        const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
+
+        let newTargetType = ETargetType.FIRST_ENEMY;
+        switch (targetType) {
+            case ETargetType.ALL_ALLIES:
+                newTargetType = ETargetType.ALL_ENEMIES;
+                break;
+            case ETargetType.LOW_HP_ALLY:
+                newTargetType = ETargetType.ALL_ENEMIES;
+                break;
+            default:
+                newTargetType = ETargetType.FIRST_ENEMY;
+        }
+
+        const attackSkill: IHeroSkill = {
+            isBasicAttack,
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.MAGIC,
+            targetType: newTargetType,
+            value,
+            valueType: "number",
+        };
+
+        this.performAttack(unit, attackSkill, isPlayer1, isStartBattle);
+    }
+
     performSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { summon } = skill;
         if (!summon) {
             return;
         }
 
+        // TODO: apply bonuses instead if summon already exists
+        if (unit.summon) {
+            console.log("summon already exists !");
+            return;
+        }
+
         unit.summon = prepareSummonToBattle(summon);
+
+        // check unique summon types
+        prepareUniqueSummonToBattle(unit, unit.summon);
 
         const summonBonuses = unit.itemBonuses.filter((bonus) => summonItemBattleBonuses.includes(bonus.type));
         summonBonuses.forEach((bonus) => {
@@ -892,14 +1198,14 @@ export class BattleController {
     performSwapHp(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType } = skill;
         if (!targetType) {
-            console.log("NO TARGET TYPE OR VALUE");
+            console.log("performSwapHp > NO TARGET TYPE OR VALUE");
             return;
         }
 
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         const targets = getAllyTargets(unit, allyUnits, targetType);
-        if (!targets) {
-            console.log("NO TARGET FOUND");
+        if (!targets || targets.length === 0 || !targets[0]) {
+            console.log("performSwapHp > NO TARGET FOUND");
             return;
         }
 
@@ -908,61 +1214,120 @@ export class BattleController {
         });
     }
 
+    /** Summonned unit performs a skill or basic attack */
+    performActionSummon(summonUnit: IBattleUnit, isPlayer1: boolean) {
+        const skillIndex = summonUnit.currentSkillIndex;
+        if (summonUnit.currentSkillIndex === 2) {
+            summonUnit.currentSkillIndex = 0;
+        } else {
+            summonUnit.currentSkillIndex++;
+        }
+
+        const skillSet = summonUnit.skills.length >= skillIndex ? summonUnit.skills[skillIndex] : null;
+
+        if (skillSet) {
+            const skillSetBattleAction: IBattleAction = {
+                unitId: summonUnit.id,
+                type: EBattleActionType.PEFORM_SKILLSET,
+                name: skillSet.name,
+            };
+            this.battleRecord.push(skillSetBattleAction);
+
+            // TODO: skill set should store isBasicAttack instead of skill
+            skillSet.skills.forEach((skill) => {
+                this.performSkill(summonUnit, skill, isPlayer1);
+
+                // !!!! NO CHAIN SKILLS FOR SUMMONS
+                // if (skillSet.isChained) {
+                //     this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
+                //     this.performAction(unit, round, isPlayer1);
+                // } else {
+                //     this.performBasicAttack(unit, skill, isPlayer1, skillIndex);
+                // }
+            });
+        }
+
+        if (!skillSet || skillSet.isBasicAttack) {
+            // if there is no skill for the round perform basic attack
+            this.performBasicAttack(summonUnit, undefined, isPlayer1);
+        }
+    }
+
     /** Calculate basic attack damage from offensive buffs and debuffs and perform an attack */
     basicAttack(unit: IBattleUnit, isPlayer1: boolean, attackPercent?: number) {
-        const { attackTargetType, summon } = unit;
-        let finalUnit = unit;
+        const { attackTargetType, summon, buffs } = unit;
+        //let finalUnit = unit;
         // if unit has a summon - summon attacks instead
-        if (summon) {
-            finalUnit = summon;
+        // if (summon) {
+        //     finalUnit = summon;
+        // }
+
+        // check change target buffs
+        const changeTargetBuff = buffs.find((buff) => buff.type === EBuffType.CHANGE_TARGET_TYPE);
+        if (changeTargetBuff) {
+            console.log("CHANGE TARGET bUFF Found,", changeTargetBuff.changeTargetTypeTo);
         }
+
+        const targetType = changeTargetBuff ? changeTargetBuff.changeTargetTypeTo : attackTargetType;
 
         // find attack target
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
-        const targets = getOpponentTargets(opponentUnits, summon ? summon.attackTargetType : attackTargetType, unit.basicAttackMarkType);
+        const targets = getOpponentTargets(opponentUnits, summon ? summon.attackTargetType : targetType, unit.basicAttackMarkType);
         if (!targets) {
             return;
         }
 
+        let isCritAllowed = unit.attackType === EHeroAttackType.PHYSICAL;
+        if (unit.attackType === EHeroAttackType.MAGIC) {
+            // check if crit with magic available
+            const isCritWithMagic = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_WITH_MAGIC);
+            isCritAllowed = !!isCritWithMagic;
+        }
+
+        let { attackDamage, isCrit } = calculateDamageBonuses(unit, unit.attackType, unit.attack, 0, 0, isCritAllowed);
+
         // calculate basic attack damage according to buffs and debuffs
-        let attackDamage = attackPercent ? Math.floor((finalUnit.attack * attackPercent) / 100) : finalUnit.attack;
-        unit.buffs.forEach((buff) => {
-            if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
-                const { value, valueType, valueFrom } = buff;
-                if (!valueType || value === undefined) {
-                    return;
-                }
-                const percentFrom = valueFrom ? unit[valueFrom] : undefined;
-                attackDamage += calculateIncreaseValue(attackDamage, value, valueType, percentFrom);
-            }
-        });
+        //unit.buffs.forEach((buff) => {
+        // unit.buffs.forEach((buff) => {
+        //     if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
+        //         const { value, valueType, valueFrom } = buff;
+        //         if (!valueType || value === undefined) {
+        //             return;
+        //         }
+        //         const percentFrom = valueFrom ? unit[valueFrom] : undefined;
+        //         attackDamage += calculateIncreaseValue(attackDamage, value, valueType, percentFrom);
+        //     }
+        // });
 
         //CRIT
 
         // calculate critical strike value
-        let isCrit = false;
-        if (unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_IS_CRIT)) {
-            isCrit = true;
-            attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
-        } else if (unit.critChance > 0) {
-            if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
-                isCrit = true;
-                attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
-            }
-        }
+        // let isCrit = false;
+        // if (unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_IS_CRIT)) {
+        //     isCrit = true;
+        //     attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
+        // } else if (unit.critChance > 0) {
+        //     if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
+        //         isCrit = true;
+        //         attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
+        //     }
+        // }
 
-        const critNonCritBonus = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR);
-        if (critNonCritBonus) {
-            // increase damage if critical hit, descrese damage on non critical hit
-            if (isCrit) {
-                attackDamage += calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
-            } else {
-                attackDamage -= calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
-            }
-        }
+        // const critNonCritBonus = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR);
+        // if (critNonCritBonus) {
+        //     // increase damage if critical hit, descrese damage on non critical hit
+        //     if (isCrit) {
+        //         attackDamage += calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
+        //     } else {
+        //         attackDamage -= calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
+        //     }
+        // }
+
+        // calculate dmg if using daggers with 2 attacks but lower damage
+        attackDamage = attackPercent ? Math.floor((attackDamage * attackPercent) / 100) : attackDamage;
 
         // record
-        const attackRecord = { unitId: finalUnit.id, type: EBattleActionType.ATTACK, value: attackDamage, isCrit, targets: [] };
+        const attackRecord = { unitId: unit.id, type: EBattleActionType.ATTACK, value: attackDamage, isCrit, targets: [] };
         this.battleRecord.push(attackRecord);
         //
         targets.forEach((target) => {
@@ -974,8 +1339,51 @@ export class BattleController {
                 parentUnit = target;
             }
             //
-            this.dealDamage(unit, finalTarget, attackDamage, finalUnit.attackType, parentUnit, attackRecord);
+            // check if target has on-basic-attack buffs (like FIRE_SHIELD)
+            const fireShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.FIRE_SHIELD);
+            if (fireShieldBuff) {
+                //console.log("basicAttack >>> fireShieldBuff FOUND");
+                //removeBuff(target, antiskillShieldBuff, this.battleRecord);
+                const burnSkill: IHeroSkill = {
+                    type: EHeroSkillType.STATUS_APPLY,
+                    status: EStatusType.BURN,
+                    value: fireShieldBuff.value,
+                    valueType: "number",
+                    targetType: ETargetType.BY_UNIT_ID,
+                    targetUnitId: unit.id,
+                    isBasicAttack: false,
+                };
+                this.performApplyStatus(target, burnSkill, !isPlayer1, false);
+            }
+            //
+            // check if target has on-basic debuffs (like BLADEDANCER_MARK)
+            const bladedanceBuff = unit.buffs.find((buff) => buff.type === EBuffType.BLADEDANCE);
+            if (bladedanceBuff) {
+                //
+
+                const debuff: IDebuff = {
+                    type: EDebuffType.MARK_BLADEDANCER,
+                    value: 1,
+                    totalValue: 1,
+                    targetType: ETargetType.CUSTOM,
+                    timeType: EBuffTimeType.DUEL,
+                    name: "Bladedancer mark",
+                };
+                const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff };
+                this.battleRecord.push(debuffAction);
+
+                applyDebuff(finalTarget, debuff, debuffAction);
+
+                const bladedancerMark = finalTarget.debuffs.find((debuff) => debuff.type === EDebuffType.MARK_BLADEDANCER);
+
+                attackDamage += bladedancerMark.totalValue;
+            }
+
+            //
+            this.dealDamage(unit, finalTarget, attackDamage, unit.attackType, parentUnit, attackRecord);
+
             // apply statuses on basic attack
+            //TODO: move out of targets.forEach
             unit.buffs.forEach((buff) => {
                 if (buff.type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK) {
                     const { statusType, value } = buff;
@@ -984,15 +1392,18 @@ export class BattleController {
                     }
                     applyStatus(unit, target, statusType, value, this.battleRecord);
                 }
-                const applyStatusBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_POISON_ON_HIT);
-                if (applyStatusBonus) {
-                    const { type, value } = applyStatusBonus;
-                    if (!type || value === undefined) {
-                        return;
-                    }
-                    applyStatus(unit, target, EStatusType.POISON, value, this.battleRecord);
-                }
             });
+
+            //TODO: move out of targets.forEach
+            //const applyStatusBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_POISON_ON_HIT);
+            const applyStatusBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK);
+            if (applyStatusBonus) {
+                const { type, value, status } = applyStatusBonus;
+                if (!type || !status || value === undefined) {
+                    return;
+                }
+                applyStatus(unit, target, status, value, this.battleRecord);
+            }
         });
 
         // remove TILL_NEXT_BA buffs and debuffs
@@ -1083,7 +1494,15 @@ export class BattleController {
         // by default evasion only works versus physical attacks and skills
         if (damageType === EHeroAttackType.PHYSICAL) {
             let isEvasion = false;
-            if (unit.evasionChance > 0) {
+
+            // chek for evasion buff
+            const evadeBuff = target.buffs.find((buff) => buff.type === EBuffType.EVADE);
+            if (evadeBuff) {
+                changeBuffValue(target, evadeBuff, -1, this.battleRecord);
+                isEvasion = true;
+                finalDamageValue = Math.floor(finalDamageValue * EVASION_MODIFIER);
+                recordTarget.isEvasion = true;
+            } else if (unit.evasionChance > 0) {
                 if (getRandomIntFromInterval(0, 100) <= unit.evasionChance) {
                     isEvasion = true;
                     finalDamageValue = Math.floor(finalDamageValue * EVASION_MODIFIER);
@@ -1167,51 +1586,51 @@ export class BattleController {
         }
     }
 
-    takeStatusDamage(target: IBattleUnit, damageValue: number, statusType: EStatusType) {
-        target.hp -= damageValue;
+    // takeStatusDamage(target: IBattleUnit, damageValue: number, statusType: EStatusType) {
+    //     target.hp -= damageValue;
 
-        const { armor } = target;
+    //     const { armor } = target;
 
-        const ignoreArmor = [EStatusType.BLEED, EStatusType.POISON].includes(statusType);
+    //     const ignoreArmor = [EStatusType.BLEED, EStatusType.POISON].includes(statusType);
 
-        if (!ignoreArmor && target.armor > 0) {
-            // calclate damage to armor
-            let finalDamageValue = damageValue;
-            let armorLeft = armor - finalDamageValue;
-            if (armorLeft < 0) {
-                armorLeft = 0;
-            }
+    //     if (!ignoreArmor && target.armor > 0) {
+    //         // calclate damage to armor
+    //         let finalDamageValue = damageValue;
+    //         let armorLeft = armor - finalDamageValue;
+    //         if (armorLeft < 0) {
+    //             armorLeft = 0;
+    //         }
 
-            const armorDamaged = armorLeft > 0 ? finalDamageValue : armor;
+    //         const armorDamaged = armorLeft > 0 ? finalDamageValue : armor;
 
-            finalDamageValue -= armor;
-            if (finalDamageValue < 0) {
-                finalDamageValue = 0;
-            }
-            // decrease armor
-            target.armor = armorLeft;
-            this.battleRecord.push({
-                unitId: target.id,
-                type: EBattleActionType.TAKE_DAMAGE,
-                value: finalDamageValue,
-                value2: target.hp,
-                status: statusType,
-                armorValue: armorDamaged,
-            });
-        } else {
-            this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp, status: statusType });
-        }
+    //         finalDamageValue -= armor;
+    //         if (finalDamageValue < 0) {
+    //             finalDamageValue = 0;
+    //         }
+    //         // decrease armor
+    //         target.armor = armorLeft;
+    //         this.battleRecord.push({
+    //             unitId: target.id,
+    //             type: EBattleActionType.TAKE_DAMAGE,
+    //             value: finalDamageValue,
+    //             value2: target.hp,
+    //             status: statusType,
+    //             armorValue: armorDamaged,
+    //         });
+    //     } else {
+    //         this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp, status: statusType });
+    //     }
 
-        // remove BURN after damage
-        if (statusType === EStatusType.BURN) {
-            removeStatus(target, target, statusType, this.battleRecord);
-        }
+    //     // remove BURN after damage
+    //     if (statusType === EStatusType.BURN) {
+    //         removeStatus(target, target, statusType, this.battleRecord);
+    //     }
 
-        if (target.hp <= 0) {
-            target.hp = 0;
-            this.battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
-        }
-    }
+    //     if (target.hp <= 0) {
+    //         target.hp = 0;
+    //         this.battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
+    //     }
+    // }
 
     checkBattleOver() {
         //console.log("checkBattleOver");
@@ -1245,89 +1664,89 @@ export class BattleController {
         debuffToRemoveIndexes.forEach((index) => removeDebuff(unit, unit, index, this.battleRecord));
     }
 
-    displayBattleRecord() {
-        this.battleRecord.forEach((action) => {
-            switch (action.type) {
-                case EBattleActionType.STATUS_APPLY:
-                    {
-                        console.log(action.unitId + " applies " + action.status + " " + action.value + " on " + action.targetId);
-                    }
-                    break;
-                case EBattleActionType.ATTRIBUTE_INCREASE:
-                    {
-                        console.log(action.unitId + " increase " + action.attribute + " to " + action.value + " for " + action.targetId);
-                    }
-                    break;
-                case EBattleActionType.ATTACK:
-                    {
-                        console.log(action.unitId + " basic attack " + action.targets?.[0].targetId + " with " + action.value);
-                    }
-                    break;
-                case EBattleActionType.BUFF:
-                    {
-                        const target = action.targetId || "self";
-                        console.log(action.unitId + " buff " + target + " with " + action.name);
-                    }
-                    break;
-                case EBattleActionType.BUFF_REMOVED:
-                    {
-                        console.log(action.name + " removed from " + action.unitId);
-                    }
-                    break;
-                case EBattleActionType.DEBUFF:
-                    {
-                        const target = action.targetId || "self";
-                        console.log(action.unitId + " debuff " + target + " with " + action.name);
-                    }
-                    break;
-                case EBattleActionType.DEATH:
-                    {
-                        console.log(action.unitId + " DIED !");
-                    }
-                    break;
-                case EBattleActionType.HEAL:
-                    {
-                        console.log(action.unitId + " heals " + action.value + " " + action.targetId);
-                    }
-                    break;
-                case EBattleActionType.REGEN_HP:
-                    {
-                        console.log(action.unitId + " regens " + action.value + "hp");
-                    }
-                    break;
-                case EBattleActionType.ROUND_END:
-                    {
-                        console.log("--------- ");
-                    }
-                    break;
-                case EBattleActionType.ROUND_START:
-                    {
-                        console.log("--------- " + action.value);
-                    }
-                    break;
-                case EBattleActionType.SUMMON:
-                    {
-                        console.log(action.unitId + " summons " + action.name);
-                    }
-                    break;
-                case EBattleActionType.TAKE_DAMAGE:
-                    {
-                        console.log(action.unitId + " takes " + action.value + " damage, " + action.value2 + " hp left");
-                    }
-                    break;
-                case EBattleActionType.TOTEM_PLACE:
-                    {
-                        console.log(action.unitId + " places totem " + action.name);
-                    }
-                    break;
-                case EBattleActionType.TURN_START:
-                    {
-                        console.log("-- " + action.name);
-                    }
-                    break;
-                default:
-                    console.log("No description for action", action.type);
-            }
-        });
-    }
+    // displayBattleRecord() {
+    //     this.battleRecord.forEach((action) => {
+    //         switch (action.type) {
+    //             case EBattleActionType.STATUS_APPLY:
+    //                 {
+    //                     console.log(action.unitId + " applies " + action.status + " " + action.value + " on " + action.targetId);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.ATTRIBUTE_INCREASE:
+    //                 {
+    //                     console.log(action.unitId + " increase " + action.attribute + " to " + action.value + " for " + action.targetId);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.ATTACK:
+    //                 {
+    //                     console.log(action.unitId + " basic attack " + action.targets?.[0].targetId + " with " + action.value);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.BUFF:
+    //                 {
+    //                     const target = action.targetId || "self";
+    //                     console.log(action.unitId + " buff " + target + " with " + action.name);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.BUFF_REMOVED:
+    //                 {
+    //                     console.log(action.name + " removed from " + action.unitId);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.DEBUFF:
+    //                 {
+    //                     const target = action.targetId || "self";
+    //                     console.log(action.unitId + " debuff " + target + " with " + action.name);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.DEATH:
+    //                 {
+    //                     console.log(action.unitId + " DIED !");
+    //                 }
+    //                 break;
+    //             case EBattleActionType.HEAL:
+    //                 {
+    //                     console.log(action.unitId + " heals " + action.value + " " + action.targetId);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.REGEN_HP:
+    //                 {
+    //                     console.log(action.unitId + " regens " + action.value + "hp");
+    //                 }
+    //                 break;
+    //             case EBattleActionType.ROUND_END:
+    //                 {
+    //                     console.log("--------- ");
+    //                 }
+    //                 break;
+    //             case EBattleActionType.ROUND_START:
+    //                 {
+    //                     console.log("--------- " + action.value);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.SUMMON:
+    //                 {
+    //                     console.log(action.unitId + " summons " + action.name);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.TAKE_DAMAGE:
+    //                 {
+    //                     console.log(action.unitId + " takes " + action.value + " damage, " + action.value2 + " hp left");
+    //                 }
+    //                 break;
+    //             case EBattleActionType.TOTEM_PLACE:
+    //                 {
+    //                     console.log(action.unitId + " places totem " + action.name);
+    //                 }
+    //                 break;
+    //             case EBattleActionType.TURN_START:
+    //                 {
+    //                     console.log("-- " + action.name);
+    //                 }
+    //                 break;
+    //             default:
+    //                 console.log("No description for action", action.type);
+    //         }
+    //     });
+    // }
 }

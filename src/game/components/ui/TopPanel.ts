@@ -194,4 +194,8 @@ export class TopPanel extends Phaser.GameObjects.Container {
     hideNextRoomButton() {
         this.nextRoomButton.setVisible(false);
     }
+
+    changeSelectButtonToNext() {
+        this.startSelectButton.setText(i18n.ui.NEXT);
+    }
 }

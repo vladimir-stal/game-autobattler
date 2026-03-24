@@ -1,6 +1,8 @@
 import { EBuffTimeType, EDebuffType, EHeroAttackType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_MAGIC_MISSILES, IMAGE_SKILL_POISON } from "../utils/imageLoadUtil";
+import { stealPPorMPSkill } from "./commonSkill3Consts";
+import { removeBuffSkill } from "./commonSkillConsts";
 
 // DEBUFF NEXT BA
 
@@ -8,7 +10,8 @@ export const debuffBaNextBaAll_3: IHeroSkillSet = {
     id: "debuffBaNextBa",
     name: "-BA Debuff all(3)",
     desc: "Debuff next basic attack [1]+[MP] all enemies",
-    level: 5,
+    level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
@@ -32,7 +35,8 @@ export const debuffBaNextBaAll_2: IHeroSkillSet = {
     id: "debuffBaNextBa",
     name: "-BA Debuff all(2)",
     desc: "Debuff next basic attack [1]+[MP*70%] all enemies",
-    level: 4,
+    level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
@@ -57,7 +61,8 @@ export const debuffBaNextBaAll: IHeroSkillSet = {
     id: "debuffBaNextBa",
     name: "-BA Debuff all",
     desc: "Debuff next basic attack [1]+[MP*50%] all enemies",
-    level: 3,
+    level: 1,
+    priceLevel: 2,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
@@ -87,6 +92,7 @@ export const poisonRandom_3: IHeroSkillSet = {
     name: i18n.skills.basic.poisonRandom.name + "(3)",
     desc: i18n.skills.basic.poisonRandom.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
@@ -107,6 +113,7 @@ export const poisonRandom_2: IHeroSkillSet = {
     name: i18n.skills.basic.poisonRandom.name + "(2)",
     desc: i18n.skills.basic.poisonRandom.desc2,
     level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
@@ -128,6 +135,7 @@ export const poisonRandom: IHeroSkillSet = {
     name: i18n.skills.basic.poisonRandom.name,
     desc: i18n.skills.basic.poisonRandom.desc1,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
@@ -151,26 +159,27 @@ export const magicAttackX3_3: IHeroSkillSet = {
     name: i18n.skills.basic.magicAttackX3.name + "(3)",
     desc: i18n.skills.basic.magicAttackX3.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 4, //TODO MP: add MP to attack
+            value: 4,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 4, //TODO MP: add MP to attack
+            value: 4,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 4, //TODO MP: add MP to attack
+            value: 4,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
@@ -185,26 +194,27 @@ export const magicAttackX3_2: IHeroSkillSet = {
     name: i18n.skills.basic.magicAttackX3.name + "(2)",
     desc: i18n.skills.basic.magicAttackX3.desc2,
     level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 3, //TODO MP: add MP to attack
+            value: 3,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 3, //TODO MP: add MP to attack
+            value: 3,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 3, //TODO MP: add MP to attack
+            value: 3,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
@@ -220,26 +230,27 @@ export const magicAttackX3: IHeroSkillSet = {
     name: i18n.skills.basic.magicAttackX3.name,
     desc: i18n.skills.basic.magicAttackX3.desc1,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 2, //TODO MP: add MP to attack
+            value: 2,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 2, //TODO MP: add MP to attack
+            value: 2,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
         {
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
-            value: 2, //TODO MP: add MP to attack
+            value: 2,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.MAGIC,
         },
@@ -250,4 +261,6 @@ export const magicAttackX3: IHeroSkillSet = {
 
 export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];
 
-export const darkSkills_2: THeroSkills = [debuffBaNextBaAll, poisonRandom, magicAttackX3];
+export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, removeBuffSkill]);
+
+export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill]);

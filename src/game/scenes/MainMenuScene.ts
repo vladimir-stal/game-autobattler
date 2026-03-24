@@ -9,6 +9,7 @@ const SOUND_MAIN_MENU_CLICK_2 = "SOUND_MAIN_MENU_CLICK_2";
 export class MainMenuScene extends Scene {
     camera: Cameras.Scene2D.Camera;
     background: GameObjects.Image;
+    //titleText: GameObjects.Text;
     mainContainer: GameObjects.Container;
 
     changeSceneSound1: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
@@ -23,7 +24,7 @@ export class MainMenuScene extends Scene {
     preload() {
         console.log("MainMenuScene preload");
         //this.load.audio(SOUND_MAIN_MENU_START, "assets/audio/sounds/main_menu_start.mp3");
-        this.load.audio(SOUND_MAIN_MENU_CHANGE_SCENE, "assets/audio/    /owl_1.mp3");
+        this.load.audio(SOUND_MAIN_MENU_CHANGE_SCENE, "assets/audio/sounds/owl_1.mp3");
         //this.load.audio(SOUND_MAIN_MENU_CLICK, "assets/audio/sounds/ui_click_2.mp3");
         this.load.audio(SOUND_MAIN_MENU_CLICK_2, "assets/audio/sounds/ui_click_1.mp3");
         //this.load.audio(SOUND_MAIN_MENU_MUSIC, "assets/audio/music/main_menu.mp3");

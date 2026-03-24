@@ -6,6 +6,7 @@ import { getWeaponItemHeroClasses } from "../utils/itemUtils";
 import { HeroClassTag } from "./ui/HeroClassTag";
 import { colors, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
+import { getCardBorderColor } from "../utils/commonUtils";
 
 /** Card to buy from shop  */
 export class ItemCard extends Phaser.GameObjects.Container {
@@ -28,8 +29,7 @@ export class ItemCard extends Phaser.GameObjects.Container {
     }
 
     render() {
-        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0, 0);
-        this.rect.setStrokeStyle(1, 0x777777);
+        this.renderBorder();
 
         this.rect.setInteractive();
         this.rect
@@ -108,6 +108,11 @@ export class ItemCard extends Phaser.GameObjects.Container {
         // this.add(afterDuelBonusesTextObject);
     }
 
+    renderBorder() {
+        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0, 0);
+        this.rect.setStrokeStyle(1, getCardBorderColor(this.item.priceLevel));
+    }
+
     renderImage() {
         const { image } = this.item;
         const imageObject = this.gameScene.add.sprite(-25, 50, image, 0).setDisplaySize(150, 150).setOrigin(0, 0);
@@ -122,7 +127,7 @@ export class ItemCard extends Phaser.GameObjects.Container {
             heroClasses = this.item.heroClasses;
         }
 
-        console.log("heroClasses", heroClasses);
+        //console.log("heroClasses", heroClasses);
 
         heroClasses.forEach((heroClass, index) => {
             const x = index * 60;

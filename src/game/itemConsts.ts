@@ -17,6 +17,7 @@ import {
     hat21,
     jacket21,
 } from "./commonItemConsts";
+import { armor_amulet, hp_amulet } from "./commonItemConsts2";
 import {
     axe21,
     axe22,
@@ -38,7 +39,22 @@ import {
     wand21,
     wand22,
 } from "./weaponItem2Consts";
-import { axe31, dagger31, mace31, scepter31, shield31, staff31, sword31, totem31, wand31 } from "./weaponItem3Consts";
+import {
+    axe31,
+    axe32,
+    dagger31,
+    dagger32,
+    mace31,
+    musical31,
+    scepter31,
+    shield31,
+    shield32,
+    staff31,
+    sword31,
+    totem31,
+    totem32,
+    wand31,
+} from "./weaponItem3Consts";
 
 export const ITEM_MAX_LEVEL = 5;
 
@@ -62,7 +78,7 @@ export const basicItems = basicCommonItems.concat(basicWeapons);
 
 ////// LVL 2
 
-export const commonItemsLvl2 = [hat21, boots21, jacket21, gloves_war2, gloves_magic2, gloves_priest2];
+export const commonItemsLvl2 = [hat21, boots21, jacket21, gloves_war2, gloves_magic2, gloves_priest2, armor_amulet, hp_amulet];
 
 export const weaponsLvl2 = [
     axe21,
@@ -92,12 +108,16 @@ export const itemsLvl2 = weaponsLvl2.concat(commonItemsLvl2);
 
 export const commonItemsLvl3 = [];
 
-export const weaponsLvl3 = [axe31, dagger31, mace31, scepter31, shield31, staff31, sword31, totem31, wand31];
+export const weaponsLvl3 = [axe31, axe32, dagger31, dagger32, mace31, musical31, scepter31, shield31, shield32, staff31, sword31, totem31, totem32, wand31];
 
 export const itemsLvl3 = weaponsLvl3.concat(commonItemsLvl3);
 
-//
+////// LVL 4
 
+export const commonItemsLvl4 = [hat21, boots21, jacket21, gloves_war2]; // TODO: change
+export const weaponsLvl4 = [axe31, axe32, dagger31, dagger32]; // TODO: change
+export const itemsLvl4 = weaponsLvl4.concat(commonItemsLvl4);
+//
 //
 
 export const itemBattleBonuseTypes = [

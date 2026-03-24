@@ -24,6 +24,11 @@ export interface Ii18n {
         SOLDIER: string;
         GOLDGOBLIN1: string;
         PEASANT: string;
+        WARRIORSUMMON: string;
+        FIREFLY: string;
+    };
+    totems: {
+        basicWildTotem: string;
     };
     items: {
         //basic weapons
@@ -71,12 +76,21 @@ export interface Ii18n {
             fireflySummon: TSkillI18n;
             sparkSummon: TSkillI18n;
         };
+        level2: {
+            // magic
+            applyShock: TSkillI18n;
+        };
+        common: {
+            removeBuff: TSkillI18n;
+            removeDebuff: TSkillI18n;
+        };
         mobs: {
             goblinShamanHpRegIncr: TSkillI18n;
         };
         mc: {
             DivineShield: TSkillI18n;
             BarbarianShout: TSkillI18n;
+            shamanTotemEmpower: TSkillI18n;
         };
     };
     tags: Partial<Record<EHeroClass, string>>;
@@ -96,6 +110,9 @@ export interface Ii18n {
         NEXT_ROOM: string;
         UPGRADE: string;
         RESTART_GAME: string;
+        PREPARE: string;
+        NEXT: string;
+        SELECT_UPGRADE: string;
         //
         SKILL: string;
         ITEM: string;
@@ -131,11 +148,14 @@ export const i18n: Ii18n = {
             STAT_HP_REGEN: "STAT_HP_REGEN",
         },
         bonusType: {
-            APPLY_POISON_ON_HIT: "APPLY_POISON_ON_HIT",
+            ADDITIONAL_BUFF_TARGET: "ADDITIONAL_BUFF_TARGET",
+            APPLY_STATUS_ON_BASIC_ATTACK: "APPLY_STATUS_ON_BASIC_ATTACK",
+            //APPLY_POISON_ON_HIT: "APPLY_POISON_ON_HIT",
             BASIC_ATTACK_TWICE: "BASIC_ATTACK_TWICE",
             BASIC_ONCE_IN_TWO_TURNS: "BASIC_ONCE_IN_TWO_TURNS",
             CRIT_EVERY_TWO_TURNS: "CRIT_EVERY_TWO_TURNS",
             CRIT_INCR_NONCRIT_DECR: "CRIT_INCR_NONCRIT_DECR",
+            CRIT_WITH_MAGIC: "CRIT_WITH_MAGIC",
             HEAL_INCREASE: "HEAL_INCREASE",
             INCREASE_DAMAGE_TO_ARMOR: "INCREASE_DAMAGE_TO_ARMOR",
             INCREASE_DAMAGE_TO_BLEEDING: "INCREASE_DAMAGE_TO_BLEEDING",
@@ -146,13 +166,14 @@ export const i18n: Ii18n = {
             INCREASE_PHYSICAL_DAMAGE: "INCREASE_PHYSICAL_DAMAGE",
             INCREASE_SUMMON_ATTACK: "INCREASE_SUMMON_ATTACK",
             INCREASE_SUMMON_HP: "INCREASE_SUMMON_HP",
+            INCREASE_TOTAL_DAMAGE_FROM_HP: "INCREASE_TOTAL_DAMAGE_FROM_HP",
             STATUS_BLEED_APPLY_INCREASE: "STATUS_BLEED_APPLY_INCREASE",
             STATUS_BURN_APPLY_INCREASE: "STATUS_BURN_APPLY_INCREASE",
             STATUS_POISON_APPLY_INCREASE: "STATUS_POISON_APPLY_INCREASE",
             SUMMON_INCREASE_DAMAGE: "SUMMON_INCREASE_DAMAGE",
             TOTEM_INCREASE_VALUE: "TOTEM_INCREASE_VALUE",
         },
-        itemBonusType: { ATTRIBUTE: "ATTRIBUTE" },
+        itemBonusType: { ATTRIBUTE: "ATTRIBUTE", ITEM_WEAPON_SLOT: "ITEM_WEAPON_SLOT" },
     },
     heroes: {
         basic: {
@@ -215,6 +236,11 @@ export const i18n: Ii18n = {
         SOLDIER: "Soldier",
         GOLDGOBLIN1: "Goblin merchant",
         PEASANT: "Peasant",
+        WARRIORSUMMON: "Spirit warrior",
+        FIREFLY: "Firefly",
+    },
+    totems: {
+        basicWildTotem: "Wild Totem",
     },
     items: {
         //basic
@@ -333,8 +359,8 @@ export const i18n: Ii18n = {
             buffNextBaX: {
                 name: "Next BAx buff",
                 desc1: "Multiply x[1.4] self next basic attack",
-                desc2: "Multiply x[1.4] self next basic attack",
-                desc3: "Multiply x[1.4] self next basic attack",
+                desc2: "Multiply x[1.6] self next basic attack",
+                desc3: "Multiply x[1.8] self next basic attack",
             },
             //
             // MAGIC
@@ -358,7 +384,7 @@ export const i18n: Ii18n = {
                 name: "Phys Attack",
                 desc1: "Deal [4] physical damage to first enemy",
                 desc2: "Deal [6] physical damage to first enemy",
-                desc3: "Deal [8] physical damage to first enemy",
+                desc3: "Deal [6]+[PPx50%] physical damage to first enemy",
             },
             //
             // ORDER
@@ -402,9 +428,9 @@ export const i18n: Ii18n = {
             sparkSummon: {
                 name: "Heal self",
 
-                desc1: "Summon magic creature [2,3]",
-                desc2: "Summon magic creature [3,4]",
-                desc3: "Summon magic creature [6,6]",
+                desc1: "Summon spirit warrior [2,3]",
+                desc2: "Summon spirit warrior [3,4]",
+                desc3: "Summon spirit warrior [6,6]",
             },
             //
             // WARRIOR
@@ -431,6 +457,28 @@ export const i18n: Ii18n = {
                 desc3: "Summon totem that deals \n[3] damage to random enemy",
             },
         },
+        level2: {
+            applyShock: {
+                name: "Apply Shock",
+                desc1: "Apply [1] shock to the first enemy",
+                desc2: "Apply [1] shock to the first enemy",
+                desc3: "Apply [1] shock to the first enemy",
+            },
+        },
+        common: {
+            removeBuff: {
+                name: "Remove buff",
+                desc1: "Remove [1] buff from enemy",
+                desc2: "Remove [2] buffs from enemy",
+                desc3: "Remove [3] buffs from enemy",
+            },
+            removeDebuff: {
+                name: "Remove debuff",
+                desc1: "Remove [1] debuff from ally",
+                desc2: "Remove [2] debuffs from ally",
+                desc3: "Remove [3] debuff from ally",
+            },
+        },
         mc: {
             BarbarianShout: {
                 name: "Barbarian Shout",
@@ -443,6 +491,12 @@ export const i18n: Ii18n = {
                 desc1: "Shield self with magic, protecting from first attack",
                 desc2: "Shield self with magic, protecting from first attack",
                 desc3: "Shield self with magic, protecting from first attack",
+            },
+            shamanTotemEmpower: {
+                name: "Empower all totems",
+                desc1: "Increase all totems value by [1]+[MP*50%]",
+                desc2: "Increase all totems value by [1]+[MP*70%]",
+                desc3: "Increase all totems value by [1]+[MP]",
             },
         },
         mobs: {
@@ -464,6 +518,8 @@ export const i18n: Ii18n = {
         SUMMON: "mystic",
         WARRIOR: "war",
         WILD: "wild",
+        //
+        ALL: "all",
     },
     ui: {
         BUY: "BUY",
@@ -481,6 +537,9 @@ export const i18n: Ii18n = {
         NEXT_ROOM: "NEXT ROOM",
         UPGRADE: "UPGRADE",
         RESTART_GAME: "RESTART GAME",
+        PREPARE: "PREPARE",
+        NEXT: "NEXT",
+        SELECT_UPGRADE: "SELECT UPGRADE",
         //
         SKILL: "SKILL",
         ITEM: "ITEM",

@@ -1,7 +1,17 @@
 import { Scene } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
+import {
+    IMAGE_BOSS_MINOTAUR,
+    IMAGE_BOSS_MINOTAUR_ATTACK,
+    IMAGE_BOSS_MINOTAUR_HURT,
+    IMAGE_BOSS_MINOTAUR_IDLE,
+    IMAGE_BOSS_MINOTAUR_SPELL,
+    IMAGE_BOSS_MINOTAUR_STOMP,
+} from "../imageLoadUtil";
 
 //
+
+const path = "assets/sprites/units/mobs/";
 
 export const IMAGE_SKELETON_1 = "IMAGE_SKELETON_1";
 export const IMAGE_GOBLIN_1 = "IMAGE_GOBLIN_1";
@@ -24,6 +34,12 @@ export const IMAGE_GOBLIN_SHAMAN_DEFEATED = "IMAGE_GOBLIN_SHAMAN_DEFEATED";
 
 export const IMAGE_PEASANT_BATTLE_IDLE = "IMAGE_PEASANT_BATTLE_IDLE";
 export const IMAGE_PEASANT_ATTACK = "IMAGE_PEASANT_ATTACK";
+
+export const IMAGE_FIREFLY_BATTLE_IDLE = "IMAGE_FIREFLY_BATTLE_IDLE";
+export const IMAGE_FIREFLY_DEFEATED = "IMAGE_FIREFLY_DEFEATED";
+
+export const IMAGE_SUMMONKNIHGT_BATTLE_IDLE = "IMAGE_SUMMONKNIHGT_BATTLE_IDLE";
+export const IMAGE_SUMMONKNIHGT_ATTACK = "IMAGE_SUMMONKNIHGT_ATTACK";
 
 //
 
@@ -101,5 +117,58 @@ export function loadImagesMobs(scene: Scene) {
     scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
+    });
+
+    // FIREFLY
+
+    scene.load.spritesheet(IMAGE_FIREFLY_BATTLE_IDLE, path + "firefly/firefly_battle_idle_cut_300.png", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+
+    scene.load.spritesheet(IMAGE_FIREFLY_DEFEATED, path + "firefly/firefly_defeated_cut_300.png", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+
+    // SUMMON KNIHGT
+
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_BATTLE_IDLE, path + "summon_knight/knight_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // BOSSES
+
+    scene.load.image(IMAGE_BOSS_MINOTAUR, "assets/sprites/units/bosses/minotaur.png");
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500_t.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_500_t.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
     });
 }

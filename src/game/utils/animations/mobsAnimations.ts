@@ -11,6 +11,8 @@ import {
     IMAGE_BOSS_MINOTAUR_STOMP,
 } from "../imageLoadUtil";
 import {
+    IMAGE_FIREFLY_BATTLE_IDLE,
+    IMAGE_FIREFLY_DEFEATED,
     IMAGE_GOBLIN_1_ATTACK,
     IMAGE_GOBLIN_1_BATTLE_IDLE,
     IMAGE_GOBLIN_2_ATTACK,
@@ -23,6 +25,8 @@ import {
     IMAGE_PEASANT_BATTLE_IDLE,
     IMAGE_SKELETON_ATTACK,
     IMAGE_SKELETON_BATTLE_IDLE,
+    IMAGE_SUMMONKNIHGT_ATTACK,
+    IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
 } from "../load/imageLoadMobs";
 
 //
@@ -216,6 +220,79 @@ export function createMobAnimations(scene: Scene) {
             ],
         }),
         frameRate: 30,
+        //repeat: -1,
+    });
+
+    // FIREFLY /////////////////////////////////////////////////////////////////////////
+
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_BATTLE_IDLE, { start: 0, end: 99 }),
+        // frames: scene.anims.generateFrameNumbers(IMAGE_PEASANT_ATTACK, {
+        //     frames: [
+        //         11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 30, 32, 34, 36, 38,
+        //         //
+        //         42, 42, 42, 42, 42, 41,
+        //         //
+        //         20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+        //     ],
+        // }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_DEFEATED, { start: 0, end: 43 }),
+        frameRate: 40,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_APPEAR,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_DEFEATED, {
+            frames: [29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    // SUMMON KNIHGT
+
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_BATTLE_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_ATTACK, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_ATTACK, {
+            frames: [
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                //21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                22, 24, 26, 28, 30,
+                //
+                //31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                32, 34, 36, 38, 40,
+                //
+                //41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                42, 44, 46, 48, 50,
+                //
+                //51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+                54, 58,
+                //
+                //61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+                62, 66, 70,
+                //
+                71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+                //29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+            ],
+        }),
+        frameRate: 40,
         //repeat: -1,
     });
 

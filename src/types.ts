@@ -67,6 +67,7 @@ export enum AnimationType {
     MASTER_IDLE = "MASTER_IDLE",
     MASTER_IDLE_BATTLE = "MASTER_IDLE_BATTLE",
     MASTER_ATTACK = "MASTER_ATTACK",
+    MASTER_ATTACK_2 = "MASTER_ATTACK_2",
     MASTER_DEFEATED = "MASTER_DEFEATED",
     MASTER_HURT = "MASTER_HURT",
     MASTER_BUFF = "MASTER_BUFF",
@@ -77,6 +78,7 @@ export enum AnimationType {
     ORDER_IDLE_BATTLE = "ORDER_IDLE_BATTLE",
     ORDER_HURT = "ORDER_HURT",
     ORDER_ATTACK = "ORDER_ATTACK",
+    ORDER_ATTACK_2 = "ORDER_ATTACK_2",
     ORDER_SHIELD_BUFF = "ORDER_SHIELD_BUFF",
     ORDER_DEFEATED = "ORDER_DEFEATED",
     //
@@ -119,25 +121,60 @@ export enum AnimationType {
     //
     // MC HEROES ///////////////////////////////////////////////// MC HEROES /////////////////////////////////////////////
     //
-
-    SHAMAN_IDLE = "SHAMAN_IDLE",
-    //SHAMAN_ATTACK = "SHAMAN_ATTACK",
-    SORCERER_IDLE = "SORCERER_IDLE",
+    // ASSASSIN
+    ASSASSIN_IDLE = "ASSASSIN_IDLE",
+    ASSASSIN_BATTLE_IDLE = "ASSASSIN_BATTLE_IDLE",
+    ASSASSIN_ATTACK = "ASSASSIN_ATTACK",
+    //
+    BATTLEMAGE_IDLE = "BATTLEMAGE_IDLE",
+    BATTLEMAGE_BATTLE_IDLE = "BATTLEMAGE_BATTLE_IDLE",
+    BATTLEMAGE_ATTACK = "BATTLEMAGE_ATTACK",
     // BARBARIAN
     BARBARIAN_IDLE = "BARBARIAN_IDLE",
     BARBARIAN_ATTACK = "BARBARIAN_ATTACK",
     BARBARIAN_BATTLE_IDLE = "BARBARIAN_BATTLE_IDLE",
     //
+    BLADEDANCER_IDLE = "BLADEDANCER_IDLE",
+    BLADEDANCER_BATTLE_IDLE = "BLADEDANCER_BATTLE_IDLE",
+    BLADEDANCER_ATTACK = "BLADEDANCER_ATTACK",
+    // COMMADER
+    COMMANDER_IDLE = "COMMANDER_IDLE",
+    COMMANDER_BATTLE_IDLE = "COMMANDER_BATTLE_IDLE",
+    COMMANDER_ATTACK = "COMMANDER_ATTACK",
+    // HUNTER
+    HUNTER_IDLE = "HUNTER_IDLE",
+    HUNTER_BATTLE_IDLE = "HUNTER_BATTLE_IDLE",
+    HUNTER_ATTACK = "HUNTER_ATTACK",
+    // JESTER
+    JESTER_IDLE = "JESTER_IDLE",
+    JESTER_BATTLE_IDLE = "JESTER_BATTLE_IDLE",
+    JESTER_ATTACK = "JESTER_ATTACK",
+    // NECROMANCER
+    NECROMANCER_IDLE = "NECROMANCER_IDLE",
     NECROMANCER_BATTLE_IDLE = "NECROMANCER_BATTLE_IDLE",
     NECROMANCER_ATTACK = "NECROMANCER_ATTACK",
     // PALADIN
     PALADIN_BATTLE_IDLE = "PALADIN_BATTLE_IDLE",
     PALADIN_ATTACK = "PALADIN_ATTACK",
     PALADIN_MAGIC_SHIELD = "PALADIN_MAGIC_SHIELD",
+    // PREDATOR
+    PREDATOR_IDLE = "PREDATOR_IDLE",
+    PREDATOR_BATTLE_IDLE = "PREDATOR_BATTLE_IDLE",
+    // RUNECASTER
+    RUNECASTER_IDLE = "RUNECASTER_IDLE",
+    RUNECASTER_BATTLE_IDLE = "RUNECASTER_BATTLE_IDLE",
     // SAMURAI
     SAMURAI_IDLE = "SAMURAI_IDLE",
     SAMURAI_BATTLE_IDLE = "SAMURAI_BATTLE_IDLE",
     SAMURAI_ATTACK = "SAMURAI_ATTACK",
+    SAMURAI_ATTACK_2 = "SAMURAI_ATTACK_2",
+    // SHAMAN
+    SHAMAN_IDLE = "SHAMAN_IDLE",
+    //SHAMAN_ATTACK = "SHAMAN_ATTACK",
+    // SORCERER
+    SORCERER_IDLE = "SORCERER_IDLE",
+    // WARLOCK
+    WARLOCK_IDLE = "WARLOCK_IDLE",
     //
     // LEADER
     LEADER_1_IDLE = "LEADER_1_IDLE",
@@ -156,6 +193,13 @@ export enum AnimationType {
     //
     MOB_PEASANT_BATTLE_IDLE = "MOB_PEASANT_BATTLE_IDLE",
     MOB_PEASANT_ATTACK = "MOB_PEASANT_ATTACK",
+    //
+    MOB_FIREFLY_BATTLE_IDLE = "MOB_FIREFLY_BATTLE_IDLE",
+    MOB_FIREFLY_DEFEATED = "MOB_FIREFLY_DEFEATED",
+    MOB_FIREFLY_APPEAR = "MOB_FIREFLY_APPEAR",
+    //
+    MOB_SUMMONKNIGHT_BATTLE_IDLE = "MOB_SUMMONKNIGHT_BATTLE_IDLE",
+    MOB_SUMMONKNIGHT_ATTACK = "MOB_SUMMONKNIGHT_ATTACK",
     // BOSSES
     // MINOTAUR
     BOSS_MINOTAUR_IDLE = "BOSS_MINOTAUR_IDLE",
@@ -164,6 +208,24 @@ export enum AnimationType {
     BOSS_MINOTAUR_SPELL = "BOSS_MINOTAUR_SPELL",
     BOSS_MINOTAUR_HURT = "BOSS_MINOTAUR_HURT",
     //
+    // TOTEMS
+    TOTEM_WILD_1_IDLE = "TOTEM_WILD_1_IDLE",
+}
+
+export enum EEffectAnimationType {
+    EFFECT_LIGHTNING_1 = "EFFECT_LIGHTNING_1",
+    // BASIC
+    EFFECT_BARD_ATTACK = "EFFECT_BARD_ATTACK",
+    EFFECT_DARK_ATTACK = "EFFECT_DARK_ATTACK",
+    EFFECT_MAGIC_ATTACK = "EFFECT_MAGIC_ATTACK",
+    EFFECT_MASTER_ATTACK_2 = "EFFECT_MASTER_ATTACK_2",
+    EFFECT_ORDER_ATTACK_2 = "EFFECT_ORDER_ATTACK_2",
+    EFFECT_PRIEST_ATTACK = "EFFECT_PRIEST_ATTACK",
+    EFFECT_PRIEST_HEAL = "EFFECT_PRIEST_HEAL",
+    EFFECT_WARRIOR_ATTACK_2 = "EFFECT_WARRIOR_ATTACK_2",
+    EFFECT_WILD_ATTACK = "EFFECT_WILD_ATTACK",
+    // MC
+    EFFECT_SAMURAI_ATTACK_2 = "EFFECT_SAMURAI_ATTACK_2",
 }
 
 export interface Player {
@@ -244,6 +306,9 @@ export enum ERoomType {
     UNIT_RANDOM = "UNIT_RANDOM",
     UNIT_SELL = "UNIT_SELL",
     UPGRADE_SKILL_OR_ITEM = "UPGRADE_SKILL_OR_ITEM", // allow to upgrade item or a skill to next level
+    //
+    // FOR_TESTING
+    GIVE_TEST_ITEM = "GIVE_TEST_ITEM",
 }
 
 export enum ECardType {
@@ -348,10 +413,21 @@ export enum EWeaponItemType {
     SWORD = "SWORD",
     TOTEM = "TOTEM",
     WAND = "WAND",
+    //
+    BOOK = "BOOK",
+    SPEAR = "SPEAR",
 }
 
+/**
+ * @constant ATTRIBUTE Item increases hero attribute
+ */
 export enum EItemBonusType {
     ATTRIBUTE = "ATTRIBUTE",
+    ITEM_WEAPON_SLOT = "ITEM_WEAPON_SLOT",
+}
+
+export enum EItemAfterDuelBonusCondition {
+    WON = "WON",
 }
 
 export enum EItemAfterDuelBonusType {
@@ -367,9 +443,17 @@ export enum EItemAfterDuelBonusType {
     STAT_EVAS_CHANCE = "STAT_EVAS_CHANCE",
 }
 
+/**
+ * @constant CRIT_INCR_NONCRIT_DECR Increase critical attack value, but decrease noncrit attack value
+ * @constant INCREASE_SUMMON_ATTACK Increases basic attack damage of your summons
+ * @constant INCREASE_SUMMON_HP Increases hp of your summons
+ */
 export enum EItemBattleBonusType {
-    APPLY_POISON_ON_HIT = "APPLY_POISON_ON_HIT",
+    ADDITIONAL_BUFF_TARGET = "ADDITIONAL_BUFF_TARGET", // add one additional target when appliing single target buff (except initial target)
+    //APPLY_POISON_ON_HIT = "APPLY_POISON_ON_HIT",
+    APPLY_STATUS_ON_BASIC_ATTACK = "APPLY_STATUS_ON_BASIC_ATTACK",
     CRIT_INCR_NONCRIT_DECR = "CRIT_INCR_NONCRIT_DECR", // TODO: implement
+    CRIT_WITH_MAGIC = "CRIT_WITH_MAGIC", // allows crit with magic attacks
     HEAL_INCREASE = "HEAL_INCREASE",
     INCREASE_MAGIC_DAMAGE = "INCREASE_MAGIC_DAMAGE",
     INCREASE_PHYSICAL_DAMAGE = "INCREASE_PHYSICAL_DAMAGE",
@@ -378,8 +462,9 @@ export enum EItemBattleBonusType {
     INCREASE_DAMAGE_TO_BLEEDING = "INCREASE_DAMAGE_TO_BLEEDING",
     INCREASE_DAMAGE_TO_POISONED = "INCREASE_DAMAGE_TO_POISONED",
     INCREASE_DAMAGE_TO_SUMMON = "INCREASE_DAMAGE_TO_SUMMON",
-    INCREASE_SUMMON_ATTACK = "INCREASE_SUMMON_ATTACK", // increases basic attack damage of your summons
-    INCREASE_SUMMON_HP = "INCREASE_SUMMON_HP", // increases hp of your summons
+    INCREASE_SUMMON_ATTACK = "INCREASE_SUMMON_ATTACK",
+    INCREASE_SUMMON_HP = "INCREASE_SUMMON_HP",
+    INCREASE_TOTAL_DAMAGE_FROM_HP = "INCREASE_TOTAL_DAMAGE_FROM_HP",
     BASIC_ATTACK_TWICE = "BASIC_ATTACK_TWICE",
     BASIC_ONCE_IN_TWO_TURNS = "BASIC_ONCE_IN_TWO_TURNS", // TODO: implement
     SUMMON_INCREASE_DAMAGE = "SUMMON_INCREASE_DAMAGE", // TODO: implement
@@ -395,7 +480,9 @@ export enum EBattleActionType {
     ATTRIBUTE_DECREASE = "ATTRIBUTE_DECREASE",
     ATTACK = "ATTACK",
     BUFF = "BUFF",
+    //BUFF_INCREASED = "BUFF_INCREASED",
     BUFF_REMOVED = "BUFF_REMOVED",
+    BUFF_VALUE_CHANGED = "BUFF_VALUE_CHANGED",
     DEATH = "DEATH",
     DEBUFF = "DEBUFF",
     DEBUFF_REMOVE = "DEBUFF_REMOVE",
@@ -425,10 +512,11 @@ export enum EHeroSkillType {
     BUFF = "BUFF",
     BUFF_INCREASE_VALUE = "BUFF_INCREASE_VALUE", // increase the value of a buff
     BUFF_COPY = "BUFF_COPY", // copy random buff from buffed ally to random ally
+    BUFF_REMOVE = "BUFF_REMOVE", // remove one(2,3) random buff from enemy target
     DEBUFF = "DEBUFF",
-    DEBUFF_REMOVE = "DEBUFF_REMOVE", // remove one random debuff from target
+    DEBUFF_REMOVE = "DEBUFF_REMOVE", // remove one(2,3) random debuff from ally target
     HEAL = "HEAL",
-    NONE = "NONE", // use this skill type to trigger basic attack without a skill
+    NONE = "NONE", // use this skill type to trigger basic attack without a skill, or to trigger no skill and no basic attack
     STATUS_APPLY = "STATUS_APPLY", // apply a status to target
     STATUS_REMOVE = "STATUS_REMOVE", // remove one random status from target
     SUMMON = "SUMMON", // summon a unit to the battle
@@ -443,24 +531,35 @@ export enum EStatusType {
     BLEED = "BLEED",
     BURN = "BURN",
     POISON = "POISON",
+    SHOCK = "SHOCK",
 }
 
 export enum EBuffType {
     ADD_STATUS_ON_BASIC_ATTACK = "ADD_STATUS_ON_BASIC_ATTACK",
     ATTRIBUTE_INCREASE = "ATTRIBUTE_INCREASE",
-    DIVINE_SHIELD = "DIVINE_SHIELD",
+    DIVINE_SHIELD = "DIVINE_SHIELD", // ignores first incoming damage
+    ANTISKILL_SHIELD = "ANTISKILL_SHIELD", // reflects first enemy skill back to attacker
+    FIRE_SHIELD = "FIRE_SHIELD", // on taking damage applies burn to enemy
+    DARK_HEAL = "DARK_HEAL", // transforms heal spells into magic attack spells
+    BLADEDANCE = "BLADEDANCE", // consecutive attacks deal more damage
     IGNORE_ARMOR = "IGNORE_ARMOR",
-    TOTAL_DAMAGE_INCREASE = "TOTAL_DAMAGE_INCREASE",
+    TOTAL_DAMAGE_INCREASE = "TOTAL_DAMAGE_INCREASE", // increase any time of outgoing damage
     BASIC_ATTACK_IS_CRIT = "BASIC_ATTACK_IS_CRIT", // basic attack is a critical hit
     BASIC_ATTACK_ADD_TIMES = "BASIC_ATTACK_ADD_TIMES", // basic attack repeat [x] more times
+    CHANGE_TARGET_TYPE = "CHANGE_TARGET_TYPE", // use basic attack on specific target
+    EVADE = "EVADE", // evade next N basic attacks
+    IGNORE_NEXT_DEBUFF = "IGNORE_NEXT_DEBUFF",
+    OUTGOING_HEAL = "OUTGOING_HEAL",
 }
 
 export enum EDebuffType {
-    ATTRIBUTE_DECREASE = "ATTRIBUTE_DECREASE", // descrese hero attribute
+    ANTIHEAL = "ANTIHEAL", // transforms next incoming heal into damage
     HEALING_DECREASE = "HEALING_DECREASE", // descrese hero outgoing healing
+    ATTRIBUTE_DECREASE = "ATTRIBUTE_DECREASE", // descrese hero attribute
     MARK_BURN = "MARK_BURN", // debuff hero with a mark, that applies burn each turn
     MARK_HUNTER = "MARK_HUNTER", // debuff hero with specific mark (HUNTER)
     MARK_PREDATOR = "MARK_PREDATOR", // debuff hero with specific mark (PREDATOR)
+    MARK_BLADEDANCER = "MARK_BLADEDANCER", // debuff hero with specific mark (BLADEDANCER)
     MAGIC_RESIST_DECREASE = "MAGIC_RESIST_DECREASE", // decrease hero magic resist
     PHYSICAL_RESIST_DECREASE = "PHYSICAL_RESIST_DECREASE", // decrease hero physical resist
     DISABLE_SKILL = "DISABLE_SKILL", // enemy next skill is not performed
@@ -475,11 +574,14 @@ export enum ETargetType {
     // ALLY
     ALL_ALLIES = "ALL_ALLIES",
     ALL_ALLY_SUMMONS = "ALL_ALLY_SUMMONS",
+    ALLY_IN_FRONT = "ALLY_IN_FRONT", // ally who stays in front of buffer
     BUFFED_ALLY_RANDOM = "BUFFED_ALLY_RANDOM", // random ally with a buff
     CUSTOM = "CUSTOM",
+    DEBUFFED_ALLY_RANDOM = "DEBUFFED_ALLY_RANDOM", // random ally with a debuff
     FIRST_ALLY = "FIRST_ALLY",
     LOW_HP_ALLY = "LOW_HP_ALLY",
     RANDOM_ALLY = "RANDOM_ALLY",
+    RANDOM_ALLY_EXCEPT_ID = "RANDOM_ALLY_EXCEPT_ID", // get random ally except ally with id
     SELF = "SELF",
     TOTEM_ALLY_ALL = "TOTEM_ALLY_ALL", // all totems on ally side
     TOTEM_ALLY_CURRENT = "TOTEM_ALLY_CURRENT",
@@ -487,13 +589,18 @@ export enum ETargetType {
     ALL_ENEMIES = "ALL_ENEMIES",
     FIRST_ENEMY = "FIRST_ENEMY",
     FIRST_TWO_ENEMIES = "FIRST_TWO_ENEMIES",
+    FIRST_THREE_ENEMIES = "FIRST_THREE_ENEMIES",
     HIGH_ATTACK_ENEMY = "HIGH_ATTACK_ENEMY",
+    HIGH_BLEED_ENEMY = "HIGH_BLEED_ENEMY",
     HIGH_MP_ENEMY = "HIGH_MP_ENEMY",
+    HIGH_PP_ENEMY = "HIGH_PP_ENEMY",
     LOW_HP_ENEMY = "LOW_HP_ENEMY",
     MARKED_ENEMY = "MARKED_ENEMY",
     RANDOM_ENEMY = "RANDOM_ENEMY",
     SECOND_ENEMY = "SECOND_ENEMY",
     SUMMON_CURRENT = "SUMMON_CURRENT",
+    // COMMON
+    BY_UNIT_ID = "BY_UNIT_ID",
 }
 
 export enum EWeaponType {
@@ -507,6 +614,30 @@ export enum EWeaponType {
     SWORD = "SWORD",
     TOTEM = "TOTEM",
     WAND = "WAND",
+}
+
+export enum ESkillSetType {
+    MAGIC_ATTACK = "MAGIC_ATTACK",
+    PHYSICAL_ATTACK = "PHYSICAL_ATTACK",
+    BUFF = "BUFF",
+    DEBUFF = "DEBUFF",
+    HEAL = "HEAL",
+    MIXED = "MIXED",
+}
+
+export enum ESkillCondition {
+    PP_IS_HIGHER_THAN_MP = "PP_IS_HIGHER_THAN_MP",
+    MP_IS_HIGHER_THAN_PP = "MP_IS_HIGHER_THAN_PP",
+    MP_IS_EQUALS_PP = "MP_IS_EQUALS_PP",
+}
+
+/**
+ * @constant SELF Item bonuses applied to single unit
+ * @constant ALL_ALLIES Item bonuses applied to all ally units
+ */
+export enum EItemTargetType {
+    SELF = "SELF",
+    ALL_ALLIES = "ALL_ALLIES",
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -550,6 +681,10 @@ export interface ICard {
     mobs?: { units: TUnits; reward: IMobReward };
 }
 
+/**
+ * @prop basicAttackMarkType - hero basic attack type on marked enemy unit
+ * @prop mobItems - list of items unit can probably have when bought
+ */
 export interface IUnit {
     id: string;
     name: string;
@@ -572,7 +707,7 @@ export interface IUnit {
     basicHpRegen: number;
     basicArmor: number;
     basicAttackTimes: number;
-    basicAttackMarkType?: EDebuffType; // hero basic attack type on marked enemy unit
+    basicAttackMarkType?: EDebuffType;
     //
     skills: THeroSkills;
     items: IItem[];
@@ -580,6 +715,7 @@ export interface IUnit {
     passiveSkill?: {
         desc: string;
     };
+    mobItems?: { item: IItem; probability: number }[];
 }
 
 export type THeroAttribute = keyof Pick<
@@ -624,17 +760,20 @@ export interface IItemBonus {
     value: number;
     valueType: TValueType;
     attribute?: THeroAttribute;
+    targetType?: EItemTargetType;
 }
 
 export interface IAfterDuelBonus {
     type: EItemAfterDuelBonusType;
     value: number;
+    condition?: EItemAfterDuelBonusCondition;
 }
 
 export interface IItemBattleBonus {
     type: EItemBattleBonusType;
     value: number;
     valueType: TValueType;
+    status?: EStatusType;
 }
 
 export interface IItemHeroClassBonus {
@@ -670,6 +809,8 @@ export interface IActionTarget {
 
 export interface IActionBuffTarget {
     targetId: string;
+    isExisting?: boolean;
+    value?: number;
 }
 
 export interface IBattleAction {
@@ -698,12 +839,14 @@ export interface IBuff {
     type: EBuffType;
     timeType: EBuffTimeType;
     targetType: ETargetType;
+    targetUnitId?: string;
     value: number;
     valueType?: TValueType;
     valueFrom?: THeroBattleAttribute;
     attribute?: THeroBattleAttribute;
     totalValue?: number; // total value is calculated in battle
     statusType?: EStatusType;
+    changeTargetTypeTo?: ETargetType;
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
 }
@@ -721,25 +864,37 @@ export interface IDebuff {
     ppScale?: number; // % of PP value is added to debuff value
 }
 
+/**
+ * @constant isBasicAttack Flag: skill is followed by basic attack
+ * @constant mpScale % of MP value is added to skill value
+ * @constant ppScale % of PP value is added to skill value
+ * @constant condition
+ */
 export interface IHeroSkill {
     type: EHeroSkillType;
-    isBasicAttack: boolean; // flag: skill is followed by basic attack
+    isBasicAttack: boolean;
     attackType?: EHeroAttackType;
     attribute?: THeroBattleAttribute;
     buff?: IBuff;
     debuff?: IDebuff;
     value?: number;
     targetType?: ETargetType;
+    targetFromType?: ETargetType;
+    targetUnitId?: string;
     valueType?: TValueType;
     valueFrom?: THeroBattleAttribute;
     summon?: IUnit;
     totem?: ITotem;
     status?: EStatusType;
     markType?: EDebuffType;
-    mpScale?: number; // % of MP value is added to skill value
-    ppScale?: number; // % of PP value is added to skill value
+    mpScale?: number;
+    ppScale?: number;
     //
     animation?: AnimationType;
+    condition?: ESkillCondition;
+    effectAnimationType?: EEffectAnimationType;
+    effectAnimationDelay?: number;
+    effectAnimDistance?: { x?: number; y?: number };
 }
 
 /**
@@ -757,6 +912,10 @@ export interface IHeroSkillSet {
     isChained?: boolean;
     isActivateOnStart?: boolean;
     image?: string;
+    rarity?: number;
+    type?: ESkillSetType;
+    isBasicAttack?: boolean; // flag: skill is followed by basic attack
+    priceLevel: number;
 }
 
 export interface ITotem {

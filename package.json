@@ -1,6 +1,6 @@
 {
   "name": "autobattler-game-concept-check",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "Autobattler game concept check",
   "scripts": {
@@ -8,7 +8,7 @@
     "dev": "vite",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "author": "vladimir-stal",
@@ -16,6 +16,7 @@
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.0",
+    "gh-pages": "^6.3.0",
     "typescript": "^5.2.2",
     "vite": "^5.2.10"
   },

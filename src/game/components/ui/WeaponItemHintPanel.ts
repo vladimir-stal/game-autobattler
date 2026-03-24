@@ -5,16 +5,18 @@ import { HintPanel } from "./HintPanel";
 
 export class ItemHintPanel extends HintPanel {
     item: IItem;
+    isFromHero: boolean;
 
-    constructor(gameScene: GameScene, x: number, y: number, item: IItem) {
+    constructor(gameScene: GameScene, x: number, y: number, item: IItem, isFromHero?: boolean) {
         super(gameScene, x, y, "");
         this.item = item;
+        this.isFromHero = !!isFromHero;
         this.renderItem();
     }
 
     renderItem() {
         const { name, weaponType, battleBonuses, bonuses, heroClassBonuses } = this.item;
-        const text = name + "" + (weaponType ? "(" + weaponType + ")" : "");
+        const text = name + "ABABABA" + (weaponType ? "(" + weaponType + ")" : "");
         const bonusesText =
             battleBonuses?.reduce((text, bonus) => {
                 text += bonus.type + "\n";
@@ -46,6 +48,19 @@ export class ItemHintPanel extends HintPanel {
             const heroClassBonusTextObject = this.scene.add.text(0, 60, heroClassBonusText).setOrigin(0, 0);
             this.add(heroClassBonusTextObject);
         }
+
+        if (this.isFromHero) {
+            this.renderImage();
+        }
+    }
+
+    renderImage() {
+        const rect = this.scene.add.rectangle(0, 0, 250, 0, colors.GREY).setOrigin(0, 0);
+        this.add(rect);
+
+        const { image } = this.item;
+        const imageObject = this.scene.add.sprite(-25, 50, image, 0).setDisplaySize(150, 150).setOrigin(0, 0);
+        this.add(imageObject);
     }
 
     show() {

@@ -1,4 +1,4 @@
-import { ECardType, EHeroClass, ERoomType, EUnitType, ICard, IMobReward, IUnit } from "../../types";
+import { ECardType, EHeroClass, EItemTargetType, ERoomType, EUnitType, ICard, IMobReward, IUnit } from "../../types";
 import { bosses } from "../bossConsts";
 import { GameScene } from "../scenes/GameScene";
 import { getRandomArrayItem, getRandomArrayItems } from "../utils/commonUtils";
@@ -67,6 +67,7 @@ export class SelectController {
         const rewardCard = getMobRewardCard(this.mobsReward);
         const expCard = { price: 0, type: ECardType.EXP, value: this.mobsReward.exp };
         const cards = [expCard, rewardCard, null];
+        console.log("SHOW REWARDS", rewardCard);
         this.gameScene.cardSelectPanel.show(cards, ERoomType.MOBS_REWARDS, undefined, { isSingleSelect: false, isSelectRequired: false });
     }
 
@@ -187,7 +188,7 @@ export class SelectController {
     /** Execute instant card action when card is selected on cardSelectPanel */
     executeCardAction(card: ICard) {
         const { type, mobs, value } = card;
-        console.log("executeCardAction", type);
+        console.log("executeCardAction", type, mobs);
         switch (type) {
             case ECardType.GOLD:
                 {
@@ -203,7 +204,7 @@ export class SelectController {
                     if (!mobs) {
                         return;
                     }
-                    console.log("executeCardAction", mobs);
+                    //console.log("executeCardAction", mobs);
                     this.gameScene.selectController.setMobsReward(mobs.reward);
                     this.gameScene.changeToMobsDuelPhase(mobs.units);
                 }
@@ -276,12 +277,17 @@ export class SelectController {
 
                     const { unit } = targetCard.card;
                     const { items } = unit;
+                    const { units } = this.gameScene;
 
-                    applyItemBonuses(card.item, unit);
+                    applyItemBonuses(card.item, unit, units);
 
                     items.push(card.item);
 
-                    targetCard.refresh();
+                    if (card.item.bonuses.find((bonus) => bonus.targetType === EItemTargetType.ALL_ALLIES)) {
+                        this.gameScene.unitPanel.refreshAllCards();
+                    } else {
+                        targetCard.refresh();
+                    }
                 }
                 break;
             case ECardType.SKILL:

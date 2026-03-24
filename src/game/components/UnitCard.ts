@@ -1,8 +1,8 @@
 import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { EHeroClassType, EUnitType, IUnit } from "../../types";
+import { EHeroClassType, EItemBonusType, EItemTargetType, EUnitType, IUnit } from "../../types";
 import { HeroItemSlot } from "./HeroItemSlot";
-import { getMaxUnitItemCount, removeItemFromUnit } from "../utils/unitUtils";
+import { getMaxUnitItemCount, getUnitNextLevelExp, removeItemFromUnit } from "../utils/unitUtils";
 import { getMaxUnitSkillCount, removeSkillFromUnit } from "../utils/skillUtils";
 import { HeroSkillSlot } from "./HeroSkillSlot";
 import { Card } from "./Card";
@@ -38,6 +38,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.unit = unit;
         this.isShowItems = isShowItems;
         this.isShowSkills = isShowSkills;
+        //console.log("UnitCard BEFORE RENDER", this.unit.items.length);
         this.render();
     }
 
@@ -50,7 +51,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
         // render image
         this.renderImage();
 
-        const title = name + " " + level + "(" + exp + ")";
+        const title = name + " " + level + "(" + exp + "/" + getUnitNextLevelExp(this.unit) + ")";
         this.titleText = this.scene.add.text(10, -140, title, { fontSize: 12, color: "#dddddd" });
         this.add(this.titleText);
 
@@ -118,7 +119,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
                 this.gameScene.hintPanel.hide();
             })
             .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-                console.log("CLICK ON RECT", this.gameScene.isCardMoveMode, this.cardSlot);
+                //console.log("CLICK ON RECT", this.gameScene.isCardMoveMode, this.cardSlot);
 
                 if (this.gameScene.isCardMoveMode && this.cardSlot) {
                     //console.log("CLICK CARD SLOT");
@@ -132,9 +133,9 @@ export class UnitCard extends Phaser.GameObjects.Container {
         const { image, animation } = this.unit.unitType === EUnitType.HERO ? getHeroImage(this.unit.heroClass) : getUnitImage(this.unit.id);
         const imageObject = this.gameScene.add.sprite(-100, 200, image, 0).setOrigin(0, 1); //setDisplaySize(300, 300)
         if (animation) {
-            if (this.unit.heroClassType === EHeroClassType.MULTI) {
-                imageObject.anims.play(animation);
-            }
+            //if (this.unit.heroClassType === EHeroClassType.MULTI) {
+            imageObject.anims.play(animation);
+            //}
         }
         this.add(imageObject);
     }
@@ -142,7 +143,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderUpgradeButton() {
         const { level, unitType, heroClassType } = this.unit;
 
-        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 1;
+        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 2;
         this.upgradeButton = this.scene.add
             .text(0, 120, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" })
             .setVisible(isVisible);
@@ -167,8 +168,17 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     handleItemRemoved(index: number) {
-        removeItemFromUnit(this.unit, index);
-        this.refresh();
+        const item = this.unit.items[index];
+        const isAllUnitsBonus = item.bonuses.find((bonus) => bonus.targetType === EItemTargetType.ALL_ALLIES);
+
+        const { units } = this.gameScene;
+        removeItemFromUnit(this.unit, index, units);
+
+        if (isAllUnitsBonus) {
+            this.gameScene.unitPanel.refreshAllCards();
+        } else {
+            this.refresh();
+        }
     }
 
     handleSkillRemoved(index: number) {
@@ -177,15 +187,31 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     showItemSlots() {
-        if (!this.isShowItems || this.unit.unitType === EUnitType.UNIT || !this.unit.heroClassType) {
+        //|| this.unit.unitType === EUnitType.UNIT || !this.unit.heroClassType
+        if (!this.isShowItems) {
             return;
         }
 
-        const itemSlotsCount = getMaxUnitItemCount(this.unit.heroClassType);
+        const itemSlotsCount = this.unit.unitType === EUnitType.HERO ? getMaxUnitItemCount(this.unit.heroClassType) : 1;
         for (let i = 0; i < itemSlotsCount; i++) {
             const x = 10 + (i % 2) * 40;
             const y = i < 2 ? 230 : 270;
-            const isWeaponSlot = this.unit.heroClassType === EHeroClassType.BASIC ? i === 0 : i < 2;
+            //
+            let isWeaponSlot = false;
+            if (this.unit.unitType === EUnitType.UNIT || this.unit.heroClassType === EHeroClassType.BASIC) {
+                isWeaponSlot = i === 0;
+            } else {
+                let weaponSlotCount = 2;
+                // check for +1 weapon slot item
+                const isAddWeaponSlot = this.unit.items.find((item) => item.bonuses.find((bonus) => bonus.type === EItemBonusType.ITEM_WEAPON_SLOT));
+                if (isAddWeaponSlot) {
+                    weaponSlotCount += 1;
+                }
+                isWeaponSlot = i < weaponSlotCount;
+            }
+
+            //const isWeaponSlot = this.unit.unitType === EUnitType.UNIT || this.unit.heroClassType === EHeroClassType.BASIC ? i === 0 : i < 2;
+            //
             const itemSlot = new HeroItemSlot(this.gameScene, x, y, isWeaponSlot, this.unit.items[i], () => this.handleItemRemoved(i));
             this.add(itemSlot);
             this.itemSlots.push(itemSlot);
@@ -215,7 +241,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     refresh() {
-        console.log("UNIT CARD refersh");
+        //console.log("UNIT CARD refersh");
         this.removeAll(true);
         this.render();
     }

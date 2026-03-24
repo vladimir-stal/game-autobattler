@@ -20,12 +20,14 @@ import {
     IMAGE_MAGIC_IDLE_BATTLE_0,
     IMAGE_MAGIC_SPELL,
     IMAGE_MASTER_ATTACK,
+    IMAGE_MASTER_ATTACK_2,
     IMAGE_MASTER_BUFF,
     IMAGE_MASTER_DEFEATED,
     IMAGE_MASTER_HURT,
     IMAGE_MASTER_IDLE,
     IMAGE_MASTER_IDLE_BATTLE,
     IMAGE_ORDER_ATTACK,
+    IMAGE_ORDER_ATTACK_2,
     IMAGE_ORDER_DEFEATED,
     IMAGE_ORDER_HURT,
     IMAGE_ORDER_IDLE,
@@ -157,12 +159,6 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    // OLD
-    // scene.load.spritesheet(IMAGE_MAGIC_ATTACK, "assets/sprites/units/magic/magic_attack_sprite_300.png", {
-    //     frameWidth: 300,
-    //     frameHeight: 300,
-    // });
-
     scene.load.spritesheet(IMAGE_MAGIC_ATTACK, "assets/sprites/units/magic/magic_attack_2_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
@@ -194,13 +190,12 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    // OLD
-    // scene.load.spritesheet(IMAGE_MASTER_ATTACK, "assets/sprites/units/master/master_attack.png", {
-    //     frameWidth: 300,
-    //     frameHeight: 300,
-    // });
-
     scene.load.spritesheet(IMAGE_MASTER_ATTACK, "assets/sprites/units/master/master_attack_3_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MASTER_ATTACK_2, "assets/sprites/units/master/master_attack_2_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -231,14 +226,14 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 300,
     });
 
-    scene.load.spritesheet(IMAGE_ORDER_IDLE_BATTLE, "assets/sprites/units/order/order_idle_cut_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
+    scene.load.spritesheet(IMAGE_ORDER_IDLE_BATTLE, "assets/sprites/units/order/order_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
     });
 
-    scene.load.spritesheet(IMAGE_ORDER_HURT, "assets/sprites/units/order/order_hurt_cut_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
+    scene.load.spritesheet(IMAGE_ORDER_HURT, "assets/sprites/units/order/order_hurt_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
     });
 
     scene.load.spritesheet(IMAGE_ORDER_ATTACK, "assets/sprites/units/order/order_attack_cut_500.png", {
@@ -246,14 +241,19 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 500,
     });
 
-    scene.load.spritesheet(IMAGE_ORDER_SHIELD_BUFF, "assets/sprites/units/order/order_shield_buff_cut_500.png", {
+    scene.load.spritesheet(IMAGE_ORDER_ATTACK_2, "assets/sprites/units/order/order_attack_2_cut_500.png", {
         frameWidth: 500,
-        frameHeight: 500,
+        frameHeight: 375,
     });
 
-    scene.load.spritesheet(IMAGE_ORDER_DEFEATED, "assets/sprites/units/order/order_defeated_cut_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
+    scene.load.spritesheet(IMAGE_ORDER_SHIELD_BUFF, "assets/sprites/units/order/order_shield_buff_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_ORDER_DEFEATED, "assets/sprites/units/order/order_defeated_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
     });
 
     scene.load.image(IMAGE_ORDER_IDLE_BATTLE_0, "assets/sprites/units/order/order_idle_500_img.png");
@@ -346,18 +346,8 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    // OLD
-    // scene.load.spritesheet(IMAGE_WARRIOR_ATTACK, "assets/sprites/units/warrior/warrior_attack_300.png", {
-    //     frameWidth: 300,
-    //     frameHeight: 300,
-    // });
-
-    // scene.load.spritesheet(IMAGE_WARRIOR_ATTACK, "assets/sprites/units/warrior/warrior_attack_2_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    scene.load.spritesheet(IMAGE_WARRIOR_ATTACK, "assets/sprites/units/warrior/warrior_attack_4_cut_400.png", {
+    // prev image: warrior_attack_4_cut_400
+    scene.load.spritesheet(IMAGE_WARRIOR_ATTACK, "assets/sprites/units/warrior/warrior_attack_5_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });

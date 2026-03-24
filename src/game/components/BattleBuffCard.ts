@@ -24,7 +24,9 @@ export class BattleBuffCard extends Phaser.GameObjects.Container {
     }
 
     renderBuff() {
-        this.titleText = this.scene.add.text(10, -10, this.buff.name, { fontSize: 12, color: "#dddddd" });
+        const { name, value } = this.buff;
+        const text = name + " " + (value || "");
+        this.titleText = this.scene.add.text(10, -10, text, { fontSize: 12, color: "#dddddd" });
         this.add(this.titleText);
     }
 

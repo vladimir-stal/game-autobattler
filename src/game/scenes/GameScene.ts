@@ -1,5 +1,5 @@
 import { Cameras, Input, Scale, Structs } from "phaser";
-import { AnimationType, ECardType, EScene, IUnit, TUnits } from "../../types";
+import { ECardType, EScene, IUnit, TUnits } from "../../types";
 import { initInputListeners } from "./PlatformScene/keyboardInputs";
 import { createUIPanels } from "../components/ui/uiPanels";
 import { TopPanel } from "../components/ui/TopPanel";
@@ -14,12 +14,10 @@ import { BattlePanel } from "../components/ui/BattlePanel";
 import { BattleController } from "../components/BattleController";
 import { basicClassHeroes } from "../heroConsts";
 import { SelectController } from "../components/SelectController";
-import { activateSlots, getExpAfterDuelValue } from "../utils/selectPhaseUtils";
-import { addExp, generateUnitId } from "../utils/unitUtils";
+import { activateSlots } from "../utils/selectPhaseUtils";
+import { generateUnitId } from "../utils/unitUtils";
 import { UnitUpgradePanel } from "../components/ui/UnitUpgradePanel";
 import { applyAfterDuelBonuses } from "../utils/afterDuelUtils";
-import { loadImages } from "../utils/imageLoadUtil";
-import { createAnimations } from "../utils/animationUtils";
 import { LeaderController } from "../components/LeaderController";
 import { SellCardPanel } from "../components/ui/SellCardPanel";
 import { LeaderPanel } from "../components/ui/LeaderPanel";
@@ -249,11 +247,12 @@ export class GameScene extends Phaser.Scene {
     finishCardMove() {
         this.setIsCardMoveMode(false);
         if (this.isCardBuyMode) {
+            this.setIsCardBuyMode(false);
+            this.cardSelectPanel.finishBuy();
+
             if (this.cardToMove?.card.type === ECardType.UNIT && this.cardToMove?.card.unit) {
                 this.units.push(this.cardToMove.card.unit);
             }
-            this.setIsCardBuyMode(false);
-            this.cardSelectPanel.finishBuy();
         }
 
         if (!this.cardToMove) {
@@ -286,7 +285,7 @@ export class GameScene extends Phaser.Scene {
 
     startNewDay() {
         this.selectController.startNewDay();
-        this.bankController.getIncome();
+        this.bankController.getIncome(this.selectController.day);
         this.leaderController.selectNextOpponent();
     }
 
@@ -298,6 +297,7 @@ export class GameScene extends Phaser.Scene {
         this.topPanel.setBank(this.bankController.totalGold);
         //
         this.topPanel.startSelectButton.setVisible(false);
+        this.sellCardPanel.setVisible(true);
         //
         this.selectController.init();
         this.topPanel.setDay(this.selectController.day);
@@ -383,8 +383,9 @@ export class GameScene extends Phaser.Scene {
 
     changeToSelectPhase() {
         const { day } = this.selectController;
+        const { isBattleWin } = this.battleController;
         const units = this.battleController.player1Units;
-        console.log("DUEL FINISHED. WIN:", this.battleController.isBattleWin);
+        console.log("DUEL FINISHED. WIN:", isBattleWin);
         //
         this.topPanel.changeToSelectPhase();
         this.roomSelectPanel.setVisible(true);
@@ -393,7 +394,7 @@ export class GameScene extends Phaser.Scene {
             //const experienceFromBattle = getExpAfterDuelValue(day);
             //addExp(units, experienceFromBattle);
             //
-            if (!this.battleController.isBattleWin) {
+            if (!isBattleWin) {
                 this.leaderController.decreaseMainPlayerHp(day + 1);
             } else {
                 this.leaderController.decreasePlayerHp(this.leaderController.nextOpponentId, day + 1);
@@ -401,7 +402,7 @@ export class GameScene extends Phaser.Scene {
             this.leaderController.decreaseRandomPlayersHp(day + 1);
             this.leadersPanel.refresh();
         } else if (this.phase === "BOSS_DUEL") {
-            if (!this.battleController.isBattleWin) {
+            if (!isBattleWin) {
                 this.leaderController.decreaseMainPlayerHp(day + 1);
             }
             this.leaderController.decreaseRandomPlayersHp(day + 1);
@@ -413,7 +414,7 @@ export class GameScene extends Phaser.Scene {
         if (this.phase === "DUEL" || this.phase === "BOSS_DUEL") {
             this.startNewDay();
         } else if (this.phase === "MOB_DUEL") {
-            if (this.battleController.isBattleWin) {
+            if (isBattleWin) {
                 this.selectController.showMobRewards();
             } else {
                 this.selectController.showNextRoomSelect();
@@ -424,7 +425,7 @@ export class GameScene extends Phaser.Scene {
         this.unitPanel.show();
         if (this.phase === "DUEL" || this.phase === "BOSS_DUEL") {
             // check items with after duel bonuses
-            applyAfterDuelBonuses(this, units);
+            applyAfterDuelBonuses(this, units, isBattleWin);
         }
 
         this.inventoryPanel.setVisible(true);
