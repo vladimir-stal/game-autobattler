@@ -20,23 +20,29 @@ export function createUIPanels(scene: GameScene) {
 
     // SELECTION PHASE
 
+    const leaderPanelX = -10; // scene.camera.width / 2 - 800
+    const leaderPanelY = 50-scene.camera.height;
+    scene.leaderPanel = new LeaderPanel(scene, leaderPanelX, leaderPanelY);
+    fixedContainer.add(scene.leaderPanel);
+
     const roomPanelX = scene.camera.width / 2 - 400;
     const roomPanelY = -scene.camera.height + 100;
     scene.roomSelectPanel = new RoomSelectPanel(scene, roomPanelX, roomPanelY);
     fixedContainer.add(scene.roomSelectPanel);
 
     const cardsPanelX = scene.camera.width / 2 - 360;
-    const cardsPanelY = -scene.camera.height + 200;
+    const cardsPanelY = -scene.camera.height + 160;
     scene.cardSelectPanel = new CardSelectPanel(scene, cardsPanelX, cardsPanelY);
     fixedContainer.add(scene.cardSelectPanel);
 
     const unitPanelX = scene.camera.width / 2 - 350;
-    const unitPanelY = -scene.camera.height + 550;
+    const unitPanelY = -300;//-scene.camera.height + 550;
     scene.unitPanel = new UnitPanel(scene, unitPanelX, unitPanelY);
+    
     fixedContainer.add(scene.unitPanel);
 
-    const invPanelX = scene.camera.width / 2 - 700;
-    const invPanelY = -scene.camera.height + 400;
+    const invPanelX = -5; //scene.camera.width / 2 - 700;
+    const invPanelY = -430; //leaderPanelY + scene.leaderPanel.imgHeight; //-scene.camera.height + 400;
     scene.inventoryPanel = new CardInventoryPanel(scene, invPanelX, invPanelY);
     fixedContainer.add(scene.inventoryPanel);
 
@@ -49,11 +55,6 @@ export function createUIPanels(scene: GameScene) {
     const upgPanelY = -scene.camera.height + 100;
     scene.unitUpgradePanel = new UnitUpgradePanel(scene, upgPanelX, upgPanelY);
     fixedContainer.add(scene.unitUpgradePanel);
-
-    const leaderPanelX = scene.camera.width / 2 - 800;
-    const leaderPanelY = -scene.camera.height;
-    scene.leaderPanel = new LeaderPanel(scene, leaderPanelX, leaderPanelY);
-    fixedContainer.add(scene.leaderPanel);
 
     const leadersPanelX = scene.camera.width - 100;
     const leadersPanelY = -scene.camera.height + 300;

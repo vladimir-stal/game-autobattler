@@ -287,8 +287,8 @@ export function loadImages(scene: Scene) {
     //
     // LEADERS
 
-    scene.load.image(IMAGE_LEADER_1, "assets/sprites/leader/rider_1.png");
-    scene.load.spritesheet(IMAGE_LEADER_1_IDLE, "assets/sprites/leader/leader1_sprite.png", {
+    scene.load.image(IMAGE_LEADER_1, "assets/sprites/leader/rider_1.webp");
+    scene.load.spritesheet(IMAGE_LEADER_1_IDLE, "assets/sprites/leader/leader1_sprite.webp", {
         frameWidth: 600,
         frameHeight: 600,
     });

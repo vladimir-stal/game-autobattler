@@ -93,6 +93,7 @@ export class TopPanel extends Phaser.GameObjects.Container {
             .setVisible(false);
 
         this.startSelectButton
+            .setX(this.gameScene.camera.width/2 - this.startSelectButton.width/2)
             .setInteractive()
             .on("pointerdown", () => {
                 this.gameScene.battlePanel.skipBattle();
@@ -117,6 +118,7 @@ export class TopPanel extends Phaser.GameObjects.Container {
         });
 
         this.nextRoomButton
+            .setX(this.gameScene.camera.width/2 - this.nextRoomButton.width/2)
             .setInteractive()
             .on("pointerdown", () => {
                 this.gameScene.selectController.showNextRoomSelect();
@@ -133,7 +135,8 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
         // RESTART BUTTON
 
-        this.restartButton = this.scene.add.text(1500, 20, i18n.ui.RESTART_GAME, {
+        this.restartButton = this.scene.add.text(this.gameScene.camera.width-120, 20, i18n.ui.RESTART_GAME, {
+            // was text(1500,20, ...)
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ffffff",
