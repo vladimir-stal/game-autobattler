@@ -18,6 +18,7 @@ export const colors = {
     BLUE: 0x333399,
     GREY: 0x666666,
     GREEN: 0x339933,
+    GREEN_2: 0x339933,
     WHITE: 0x999999,
     GREY_HOVER: 0x888888,
     GREEN_HOVER: 0x22aa22,

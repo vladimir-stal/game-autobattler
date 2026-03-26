@@ -1,6 +1,5 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { colors } from "../consts";
 import { IBuff } from "../../types";
 
 /** Card to show buffs on unit in battle  */

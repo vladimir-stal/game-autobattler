@@ -217,14 +217,14 @@ export class CardSlot extends Phaser.GameObjects.Container {
         //console.log("SET ACTIVE", value);
 
         if (this.card && this.card.card.type === ECardType.UNIT) {
-            const color = value ? colors.GREEN : colors.GREY;
+            const color = value ? colors.GREEN_2 : colors.GREY;
             //console.log("SET ACTIVE UNIT", color);
             this.unitRect.fillColor = color;
             return;
         }
 
         //this.rect.setVisible(value);
-        const color = value ? colors.GREEN : colors.BLACK;
+        const color = value ? colors.GREEN_2 : colors.BLACK;
         this.rect.fillColor = color;
         //console.log("setIsActive", value, color);
     }

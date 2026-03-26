@@ -72,7 +72,7 @@ export const buffNextBaXSelf: IHeroSkillSet = {
                 name: "x2 next ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
-                value: 100,
+                value: 40,
                 valueType: "percent",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,

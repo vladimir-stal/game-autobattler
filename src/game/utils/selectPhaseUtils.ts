@@ -4,6 +4,7 @@ import {
     EHeroClassType,
     EItemType,
     ERoomType,
+    ESelectCardHint,
     EUnitType,
     EWeaponItemType,
     ICard,
@@ -15,21 +16,15 @@ import {
     THeroAttribute,
 } from "../../types";
 import { bosses } from "../bossConsts";
-import { gloves_magic2, gloves_priest2 } from "../commonItemConsts";
-import { armorMassHp } from "../commonItemConsts4";
-import { weaponSlotSheath } from "../commonItemConsts5";
 import { CardSlot } from "../components/CardSlot";
-import { roomsWithHeroClasses, tripleSetCardTypes } from "../components/SelectController";
+import { roomsWithHeroClasses } from "../components/SelectController";
 import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes } from "../heroConsts";
 import { basicWeapons } from "../itemConsts";
 import { GameScene } from "../scenes/GameScene";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { magicAttack, magicAttack_2 } from "../skills/magicSkillConsts";
-import { unitsLvl1 } from "../unitConsts";
-import { music5AddBuffTarget, staff5MagicCrit, totem5HptoDmg, wand5ShockOnBA } from "../weaponItem5Consts";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
-import { getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
+import { getMulticlassSubclasses } from "./heroUtils";
 import {
     getXFromAllItems,
     getAllItems,
@@ -57,7 +52,7 @@ import {
     getTopHeroClassSkill,
     isSkillSet,
 } from "./skillUtils";
-import { addMobItem, copyUnit, createUnits, getMaxUnitItemCount, getMaxUnitWeaponCount, getRandomUnitForSell } from "./unitUtils";
+import { addMobItem, copyUnit, createUnits, getMaxUnitItemCount, getMaxUnitWeaponCount, getRandomUnitForRandom, getRandomUnitForSell } from "./unitUtils";
 
 //TODO: add rooms for potions - temporary boost for duel, exp in bottle - can be applied to any hero
 
@@ -170,11 +165,9 @@ export const getRooms = (
             {
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
-                } else 
-                if (hour === 1) {
+                } else if (hour === 1) {
                     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                } else
-                if (hour === 2) {
+                } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                 }
                 if (hour === 5) {
@@ -188,11 +181,9 @@ export const getRooms = (
             // }
             if (hour === 1) {
                 return [{ roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }];
-            } else 
-            if (hour === 2) {
+            } else if (hour === 2) {
                 return [null, { roomType: ERoomType.MOBS }, null];
-            } else
-            if (hour === 5) {
+            } else if (hour === 5) {
                 return [null, { roomType: ERoomType.DUEL }, null];
             }
             break;
@@ -201,11 +192,9 @@ export const getRooms = (
             {
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.SKILLS_SELL_ENHANCED }, null];
-                } else 
-                if (hour === 2) {
+                } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
-                } else 
-                if (hour === 5) {
+                } else if (hour === 5) {
                     return [null, { roomType: ERoomType.DUEL }, null];
                 }
             }
@@ -214,11 +203,9 @@ export const getRooms = (
             {
                 if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
-                } else
-                if (hour === 3) {
+                } else if (hour === 3) {
                     return [{ roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }];
-                } else
-                if (hour === 5) {
+                } else if (hour === 5) {
                     return [null, { roomType: ERoomType.DUEL }, null];
                 }
             }
@@ -348,23 +335,27 @@ export const getCards = (
     hour: number,
     heroClasses?: EHeroClass[],
     tripleSetTypes?: ECardType[],
-): { cards: (ICard | null)[]; isSingleSelect: boolean; isSelectRequired: boolean; isRerollAvailable: boolean } => {
+): { cards: (ICard | null)[]; isSingleSelect: boolean; isSelectRequired: boolean; isRerollAvailable: boolean; hintTextType: ESelectCardHint } => {
     console.log("GET CARDS", roomType, heroClasses);
-    const initialHeroSelect = day === 0 && hour === 0;
+    const initialHeroSelect = day === 1 && hour === 0;
     let isSingleSelect = false;
     let isSelectRequired = false;
     let isRerollAvailable = false;
+    let hintTextType: ESelectCardHint | undefined = undefined;
 
     let cards: (ICard | null)[] = [];
 
     switch (roomType) {
         case ERoomType.ATTRIBUTE_SELECT:
             {
+                isSingleSelect = true;
+                isSelectRequired = false;
+                hintTextType = ESelectCardHint.SELECT_SINGLE;
+
                 const randomAttribute1: THeroAttribute = getRandomArrayItem(basicHeroAttributes);
                 const randomAttribute2: THeroAttribute = getRandomArrayItem(basicHeroAttributes);
                 const randomAttribute3: THeroAttribute = getRandomArrayItem(basicHeroAttributes);
-                isSingleSelect = true;
-                isSelectRequired = false;
+
                 const attrValue1 = getAttrValue(randomAttribute1, day);
                 const attrValue2 = getAttrValue(randomAttribute1, day) * 2;
                 const attrValue3 = getAttrValue(randomAttribute1, day) * 3;
@@ -377,12 +368,13 @@ export const getCards = (
             break;
         case ERoomType.ATTRIBUTE_RANDOM:
             {
-                const randomAttribute: THeroAttribute = getRandomArrayItem(basicHeroAttributes);
-                //const value = ["basicArmor", "basicMaxHp"].includes(randomAttribute) ? 2 : 1;
-                const value = getAttrValue(randomAttribute, day);
-                const card: ICard = { price: 0, type: ECardType.ATTRIBUTE, value, attribute: randomAttribute };
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_REWARD;
+
+                const randomAttribute: THeroAttribute = getRandomArrayItem(basicHeroAttributes);
+                const value = getAttrValue(randomAttribute, day);
+                const card: ICard = { price: 0, type: ECardType.ATTRIBUTE, value, attribute: randomAttribute };
                 cards = [null, card, null];
             }
             break;
@@ -390,6 +382,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.SELECT_SINGLE;
 
                 const basicExpValue = getExpValue(day);
                 cards = [
@@ -403,6 +396,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_REWARD;
 
                 const basicExpValue = getExpValue(day);
                 cards = [null, { type: ECardType.EXP, value: basicExpValue, price: 0 }, null];
@@ -413,6 +407,7 @@ export const getCards = (
                 isSingleSelect = true;
                 isSelectRequired = initialHeroSelect;
                 isRerollAvailable = !initialHeroSelect;
+                hintTextType = ESelectCardHint.SELECT_SINGLE_HERO;
 
                 //isSingleSelect = false;
                 // isSelectRequired = false;
@@ -428,6 +423,8 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_ITEM;
+
                 const item = getRandomArrayItem(getAllItems(day));
                 cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
             }
@@ -436,6 +433,8 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_ITEM;
+
                 const item = getRandomArrayItem(getCommonItems(day));
                 cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
             }
@@ -484,6 +483,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_ITEM;
 
                 if (!heroClasses) {
                     cards = [];
@@ -498,6 +498,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_ITEM;
 
                 if (!heroClasses) {
                     cards = [];
@@ -511,6 +512,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = true;
+                hintTextType = ESelectCardHint.TAKE_ITEM;
 
                 //const item = gloves_priest2;
                 //cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
@@ -544,7 +546,7 @@ export const getCards = (
         case ERoomType.ITEM_SELECT:
             {
                 const topItem = getAllItemTop(day);
-                console.log("topItem", topItem);
+                //console.log("topItem", topItem);
                 const items = [...getXFromAllItems(day, 3), topItem];
 
                 cards = items.map((item) => {
@@ -597,7 +599,7 @@ export const getCards = (
                         true,
                     );
 
-                    console.log("MIXED_CLASS_SELECT", heroClasses, mixed);
+                    //console.log("MIXED_CLASS_SELECT", heroClasses, mixed);
 
                     cards = mixed.map((itemOrSkill) => {
                         if (!itemOrSkill) {
@@ -615,6 +617,8 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_SKILL;
+
                 const randomSkill = getRandomArrayItem(getAllClassesSkills(day));
                 cards = [null, { type: ECardType.SKILL, price: 0, skill: randomSkill }, null];
             }
@@ -623,6 +627,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_SKILL;
 
                 if (!heroClasses) {
                     cards = [];
@@ -670,6 +675,7 @@ export const getCards = (
                 isSingleSelect = true;
                 isSelectRequired = false;
                 isRerollAvailable = true;
+                hintTextType = ESelectCardHint.SELECT_SINGLE;
 
                 const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 4, true).map((skill) => {
                     // const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
@@ -688,6 +694,7 @@ export const getCards = (
             {
                 isSingleSelect = false;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.TAKE_ALL_REWARDS;
 
                 if (!tripleSetTypes) {
                     cards = [];
@@ -735,7 +742,9 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
-                const randomUnit = { ...getRandomArrayItem(unitsLvl1) };
+                hintTextType = ESelectCardHint.TAKE_REWARD;
+
+                const randomUnit = { ...getRandomUnitForRandom(day) };
                 addMobItem(randomUnit);
 
                 cards = [null, { unit: randomUnit, type: ECardType.UNIT, price: 0 }, null];
@@ -745,6 +754,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = false;
+                hintTextType = ESelectCardHint.SELECT_SINGLE;
 
                 const unit1 = { ...getRandomUnitForSell(day - 1) };
                 addMobItem(unit1);
@@ -768,6 +778,7 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isSelectRequired = true;
+                hintTextType = ESelectCardHint.SELECT_SINGLE_DUNGEON;
 
                 const randomMobs = getMobs(gameScene.selectController.day);
                 console.log("ERoomType.MOBS", randomMobs);
@@ -818,7 +829,7 @@ export const getCards = (
 
     console.log("GET CARDS > result", cards, isSingleSelect, isSelectRequired, isRerollAvailable);
 
-    return { cards, isSingleSelect, isSelectRequired, isRerollAvailable };
+    return { cards, isSingleSelect, isSelectRequired, isRerollAvailable, hintTextType };
 };
 
 //TODO: implement card prise depending on day, itemLevel

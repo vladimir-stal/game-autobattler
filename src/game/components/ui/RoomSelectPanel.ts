@@ -79,7 +79,8 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         });
         this.add(roomDescriptionText);
 
-        const selectRoomText = this.scene.add.text(100 + index * 250, 80, i18n.ui.SELECT, {
+        const buttonText = type === ERoomType.DUEL ?  i18n.ui.START : i18n.ui.SELECT
+        const selectRoomText = this.scene.add.text(100 + index * 250, 80, buttonText, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#aaffaa",
@@ -87,7 +88,6 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
 
         selectRoomText
             .setInteractive()
-            //.setInteractive(new Phaser.Geom.Rectangle(0, 0, 90, 40), Phaser.Geom.Rectangle.Contains)
             .on("pointerdown", () => {
                 this.gameScene.selectController.selectRoom(type, this.gameScene.selectController.day, { heroClasses, tripleSetTypes, units: boss?.units });
             })

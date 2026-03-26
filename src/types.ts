@@ -328,6 +328,16 @@ export enum ECardType {
     UNIT = "UNIT",
 }
 
+export enum ESelectCardHint {
+    TAKE_ITEM = "TAKE_ITEM",
+    TAKE_SKILL = "TAKE_SKILL",
+    TAKE_REWARD = "TAKE_REWARD",
+    TAKE_ALL_REWARDS = "TAKE_ALL_REWARDS",
+    SELECT_SINGLE = "SELECT_SINGLE",
+    SELECT_SINGLE_HERO = "SELECT_SINGLE_HERO",
+    SELECT_SINGLE_DUNGEON = "SELECT_SINGLE_DUNGEON"
+}
+
 export enum EHeroClassType {
     BASIC = "BASIC",
     MULTI = "MULTI",

@@ -17,6 +17,8 @@ export const IMAGE_SKELETON_1 = "IMAGE_SKELETON_1";
 export const IMAGE_GOBLIN_1 = "IMAGE_GOBLIN_1";
 export const IMAGE_GOBLIN_2 = "IMAGE_GOBLIN_2";
 export const IMAGE_PEASANT_1 = "IMAGE_PEASANT_1";
+export const IMAGE_WOLF_1 = "IMAGE_WOLF_1";
+export const IMAGE_WOLF_2 = "IMAGE_WOLF_2";
 
 export const IMAGE_SKELETON_BATTLE_IDLE = "IMAGE_SKELETON_BATTLE_IDLE";
 export const IMAGE_SKELETON_ATTACK = "IMAGE_SKELETON_ATTACK";
@@ -48,6 +50,9 @@ export function loadImagesMobs(scene: Scene) {
     scene.load.image(IMAGE_GOBLIN_1, "assets/sprites/units/mobs/goblin_1/goblin_1.png");
     scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.png");
     scene.load.image(IMAGE_PEASANT_1, "assets/sprites/units/mobs/peasant/peasant.png");
+
+    scene.load.image(IMAGE_WOLF_1, "assets/sprites/units/mobs/wolfs/wolf_1.png");
+    scene.load.image(IMAGE_WOLF_2, "assets/sprites/units/mobs/wolfs/wolf_2.png");
 
     // SKELETON_1 //////////////////////////////////////////////////////////////
 

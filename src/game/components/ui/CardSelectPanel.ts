@@ -1,11 +1,16 @@
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, EHeroClass, ERoomType, ICard } from "../../../types";
+import { ECardType, EHeroClass, ERoomType, ESelectCardHint, ICard } from "../../../types";
 import { getRandomArrayItem } from "../../utils/commonUtils";
 import { Card } from "../Card";
 import { colors, i18n } from "../../consts";
-import { Input } from "phaser";
+import { GameObjects, Input } from "phaser";
 import { createUnit, generateUnitId } from "../../utils/unitUtils";
 import { getRerollPrice } from "../../utils/selectPhaseUtils";
+
+const hintTopY = -50;
+const hintBottomY = 220;
+
+const chooseTypeRooms = [ERoomType.HEROES_SELL, ERoomType.TRIPLE_SET, ERoomType.MOBS];
 
 /** UI panel to select cards for specific room */
 export class CardSelectPanel extends Phaser.GameObjects.Container {
@@ -27,6 +32,9 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     isRerollAvailable: boolean;
     rerollsCount: number;
 
+    hintText: GameObjects.Text;
+    hintTextType: ESelectCardHint;
+
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
         this.gameScene = scene;
@@ -39,7 +47,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         cards: (ICard | null)[],
         roomType: ERoomType,
         heroClasses: EHeroClass[] | undefined,
-        options: { isSingleSelect?: boolean; isSelectRequired?: boolean; isRerollAvailable?: boolean },
+        options: { isSingleSelect?: boolean; isSelectRequired?: boolean; isRerollAvailable?: boolean; hintTextType?: ESelectCardHint },
     ) {
         this.setVisible(true);
         this.roomType = roomType;
@@ -49,6 +57,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         this.isRerollAvailable = !!options.isRerollAvailable;
         this.isSingleSelect = !!options.isSingleSelect;
         this.isSelectRequired = !!options.isSelectRequired;
+        this.hintTextType = options.hintTextType;
         this.render();
     }
 
@@ -59,6 +68,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     render() {
         this.removeAll(true);
         this.renderBorder();
+        this.renderHintPanel();
         this.renderCards();
         this.renderButtons();
     }
@@ -67,6 +77,15 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         const rect = this.scene.add.rectangle(0, 0, 720, 200, colors.BLACK).setOrigin(0, 0);
         rect.setStrokeStyle(1, 0x777777);
         this.add(rect);
+    }
+
+    renderHintPanel() {
+        if (this.hintTextType) {
+            const text = i18n.ui[this.hintTextType];
+            const y = this.hintTextType === ESelectCardHint.SELECT_SINGLE_HERO ? hintBottomY : hintTopY;
+            this.hintText = this.scene.add.text(350, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
+            this.add(this.hintText);
+        }
     }
 
     renderCards() {
@@ -88,7 +107,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         const cardBomponent = new Card(this.gameScene, 75 + index * cardDistance, 0, card, true);
         this.add(cardBomponent);
 
-        const buttonTitle = card.price > 0 ? i18n.ui.BUY + " " + card.price : i18n.ui.TAKE;
+        const buttonTitle = chooseTypeRooms.includes(this.roomType) ? i18n.ui.SELECT : card.price > 0 ? i18n.ui.BUY + " " + card.price : i18n.ui.TAKE;
         const buyCardText = this.scene.add.text(75 + 20 + index * cardDistance, 150, buttonTitle, {
             fontFamily: "Arial Black",
             fontSize: 18,

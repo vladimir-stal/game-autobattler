@@ -6,6 +6,7 @@ import {
     EEffectAnimationType,
     EHeroAttackType,
     EHeroClass,
+    EHeroClassType,
     EStatusType,
     EUnitType,
     IActionBuffTarget,
@@ -124,7 +125,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.add(this.effectImageObject);
     }
 
-    renderImage(heroClass: EHeroClass, unitType: EUnitType, unitId: string) {
+    renderImage(heroClass: EHeroClass, unit: IBattleUnit) {
+        const {unitType, id, heroClassType} = unit;
         const {
             image,
             imageBattle,
@@ -140,9 +142,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             distance,
             distanceEnemy,
             size,
-        } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(unitId);
+        } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(id);
         this.unitImage = imageBattle || image;
-        if (GAME_MODE === "FULL") {
+        if (GAME_MODE === "FULL" || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
             this.unitAnimation = idleBattleAnimation || animation;
             this.unitAttackAnimation = attackAnimation;
             this.unitHealAnimation = healAnimation;
@@ -240,7 +242,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
         this.renderSummonCard();
 
-        this.renderImage(this.unit.heroClass, this.unit.unitType, this.unit.id);
+        this.renderImage(this.unit.heroClass, this.unit);
 
         const { basicAttack, hp, maxHp, heroClass, name, armor, items, level } = this.unit;
         this.title = name + "(" + level + ")";

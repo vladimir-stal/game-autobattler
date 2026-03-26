@@ -2,7 +2,7 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardT
 import { dagger1, shield1, staff1, wand1 } from "./basicWeaponItemConsts";
 import { basic_boots, basic_hat, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen } from "./commonItemConsts";
 import { armor_amulet, hp_amulet } from "./commonItemConsts2";
-import { i18n } from "./consts";
+
 import {
     itemCoin,
     itemGoblinBoneDagger,
@@ -18,6 +18,7 @@ import { warriorSummon, warriorSummon_3 } from "./skills/summonSkillConsts2";
 import { goblinShamanUnit, goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
 import { fireflySummonMob, warriorSummonMob, warriorSummonMob_5 } from "./units/summonMobUnits";
 import { skeletonMageUnit, skeletonUnit, skeletonWarriorUnit } from "./units/skeletonsMobUnits";
+import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -107,6 +108,19 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: staff1, exp: 1 },
         ],
     },
+    {
+        name: "Wolf",
+        units: [wolfUnit, null, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.ITEM, item: basic_pants, exp: 1 },
+            { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 1 },
+        ],
+    },
 ];
 export const mobsLvl2: IMobsVariants[] = [
     {
@@ -148,6 +162,19 @@ export const mobsLvl2: IMobsVariants[] = [
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 2 },
+        ],
+    },
+    {
+        name: "Wolfs(2)",
+        units: [wolfUnit, wolfUnit, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_pants, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 2 },
         ],
     },
 ];
@@ -201,6 +228,17 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: itemCoin, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_ring_damage, exp: 3 },
+        ],
+    },
+    {
+        name: "Wolfs(3)",
+        units: [strongWolfUnit, null, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 3 },
+            { type: IMobRewardType.ITEM, item: basic_pants, exp: 3 },
+            { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 3 },
         ],
     },
 ];
@@ -289,8 +327,8 @@ export const mobsLvl6: IMobsVariants[] = [
     },
 ];
 
-export const unitsLvl1 = [peasantUnit];
-export const unitsLvl2 = [weakGoblinUnit];
-export const unitsLvl3 = [goblinUnit, goldGoblin1Unit, skeletonUnit];
-export const unitsLvl4 = [skeletonUnit, skeletonWarriorUnit];
-export const unitsLvl5 = [skeletonWarriorUnit, skeletonMageUnit, goldGoblin1Unit];
+export const unitsLvl1 = [peasantUnit, weakGoblinUnit];
+export const unitsLvl2 = [goblinUnit];
+export const unitsLvl3 = [goblinUnit, goldGoblin1Unit, skeletonUnit, wolfUnit];
+export const unitsLvl4 = [skeletonWarriorUnit, goldGoblin1Unit];
+export const unitsLvl5 = [skeletonWarriorUnit, skeletonMageUnit, strongWolfUnit];

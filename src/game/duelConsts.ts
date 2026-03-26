@@ -9,8 +9,6 @@ import {
     basic_jacket,
     basic_pants,
     basic_ring_damage,
-    basic_ring_regen,
-    gloves_war2,
 } from "./commonItemConsts";
 import {
     assasinHero,
@@ -47,6 +45,7 @@ import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
 import { axe22, mace21, musical21, musical21_2, scepter22, shield22, sword22_2, totem21, totem22, wand21, wand21_2 } from "./weaponItem2Consts";
 import { weakGoblinUnit } from "./units/goblinMobUnits";
+import { gloves_war2 } from "./commonItemConsts2";
 
 type TDuelEnemy = Record<number, (IUnit | null)[]>;
 
