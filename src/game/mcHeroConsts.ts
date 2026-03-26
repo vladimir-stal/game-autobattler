@@ -1,983 +1,79 @@
 import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
-import {
-    ETargetType,
-    EBuffTimeType,
-    EBuffType,
-    EDebuffType,
-    EHeroAttackType,
-    EHeroClass,
-    EHeroSkillType,
-    IHeroSkill,
-    IUnit,
-    EUnitType,
-    EStatusType,
-    EHeroClassType,
-    THeroSkills,
-    AnimationType,
-} from "../types";
+import { ETargetType, EDebuffType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EHeroClassType } from "../types";
 import { LANG } from "./consts";
+import { alchemistSkills } from "./skills/mc/alchemistSkills";
+import { assassinSkills } from "./skills/mc/assassinSkills";
+import { barbarianSkills } from "./skills/mc/barbarianSkills";
+import { battleMageSkills } from "./skills/mc/battleMageSkills";
+import { beastMasterSkills } from "./skills/mc/beastmasterSkills";
+import { bishopSkills } from "./skills/mc/bishopSkills";
+import { blackKnightSkills } from "./skills/mc/blackKnightSkills";
+import { bladedancerSkills } from "./skills/mc/bladedancerSkills";
+import { commanderSkills } from "./skills/mc/commanderSkills";
+import { doomsayerSkills } from "./skills/mc/doomsayerSkills";
+import { druidSkills } from "./skills/mc/druidSkills";
+import { duelistSkills } from "./skills/mc/duelistSkills";
+import { exorcistSkills } from "./skills/mc/exorcistSkills";
+import { forestSpititSkills } from "./skills/mc/forestSpiritSkills";
+import { gladiatorSkills } from "./skills/mc/gladiatorSkills";
+import { heraldSkills } from "./skills/mc/heraldSkills";
+import { hunterSkills } from "./skills/mc/hunterSkills";
+import { illusionistSkills } from "./skills/mc/illusionistSkills";
+import { inquisitorSkills } from "./skills/mc/inquisitorSkills";
+import { knightSkills } from "./skills/mc/knightSkills";
+import { magicBardSkills } from "./skills/mc/magicBardSkills";
+import { mimicSkills } from "./skills/mc/mimicSkills";
+import { minstrelSkills } from "./skills/mc/minstrelSkills";
+import { monkSkills } from "./skills/mc/monkSkills";
+import { necromancerSkills } from "./skills/mc/necromancerSkills";
+import { oracleSkills } from "./skills/mc/oracleSkills";
+import { paladinSkills } from "./skills/mc/paladinSkills";
+import { predatorSkills } from "./skills/mc/predatorSkills";
+import { runecasterSkills } from "./skills/mc/runecasterSkills";
+import { samuraiSkills } from "./skills/mc/samuraiSkills";
+import { shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
 import { shamanSkills } from "./skills/mc/shamanSkills";
-import { skeletonUnit } from "./unitConsts";
+import { sorcererSkills } from "./skills/mc/sorcererSkills";
+import { warlockSkills } from "./skills/mc/warlockSkills";
+import { witchSkills } from "./skills/mc/witchSkills";
+import { zealotSkills } from "./skills/mc/zealotSkills";
 
 const i18n = LANG === "eng" ? i18n_eng : i18n_ru;
 
 //  SKILLS  //////////////////////////////////////////////////////////////
 
-const paladinSkills: THeroSkills = [
-    {
-        id: "DivineShield",
-        //name: "Divine Shield",
-        //desc: "Shield self with magic, protecting from first attack",
-        name: i18n.skills.mc.DivineShield.name,
-        desc: i18n.skills.mc.DivineShield.desc1,
-        level: 1,
-        heroClasses: [EHeroClass.PALADIN],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.BUFF,
-                isBasicAttack: true,
-                buff: {
-                    name: "Divine shield",
-                    type: EBuffType.DIVINE_SHIELD,
-                    targetType: ETargetType.SELF,
-                    timeType: EBuffTimeType.DUEL,
-                    value: 1,
-                },
-                animation: AnimationType.PALADIN_MAGIC_SHIELD,
-            },
-        ],
-    },
-];
-
-const barbarianSkills: THeroSkills = [
-    // [
-    //     {
-    //         type: EHeroSkillType.BUFF,
-    //         isBasicAttack: false,
-    //         buff: {
-    //             name: "+4 hp regen",
-    //             type: EBuffType.ATTRIBUTE_INCREASE,
-    //             value: 4,
-    //             valueType: "number",
-    //             attribute: "hpRegen",
-    //             targetType: ETargetType.SELF,
-    //             timeType: EBuffTimeType.DUEL,
-    //         },
-    //     },
-    //     {
-    //         type: EHeroSkillType.BUFF,
-    //         isBasicAttack: true,
-    //         buff: {
-    //             name: "+2 ba",
-    //             type: EBuffType.ATTRIBUTE_INCREASE,
-    //             attribute: "attack",
-    //             value: 2,
-    //             valueType: "number",
-    //             targetType: ETargetType.SELF,
-    //             timeType: EBuffTimeType.DUEL,
-    //         },
-    //     },
-    // ],
-    {
-        id: "BarbarianShout",
-        name: "Barbarian shout",
-        desc: "Add hp regen value to self next basic attack",
-        level: 1,
-        heroClasses: [EHeroClass.BARBARIAN],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.BUFF,
-                isBasicAttack: true,
-                buff: {
-                    name: "add hpReg to next ba",
-                    type: EBuffType.ATTRIBUTE_INCREASE,
-                    attribute: "attack",
-                    value: 100,
-                    valueType: "percent",
-                    valueFrom: "hpRegen",
-                    targetType: ETargetType.SELF,
-                    timeType: EBuffTimeType.TILL_NEXT_BA,
-                },
-            },
-        ],
-    },
-];
-
-// TODO: rework!
-const knightSkills: THeroSkills = [
-    {
-        id: "KnightArmor",
-        name: "Knight armor",
-        desc: "Armor self [8]",
-        level: 1,
-        heroClasses: [EHeroClass.KNIGHT],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                isBasicAttack: true,
-                value: 8, //TODO PP: add pp to armor
-                valueType: "number",
-                attribute: "armor",
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-//TODO: change to Totem which gives armor all
-const heraldSkills: THeroSkills = [
-    {
-        id: "HeraldHorn",
-        name: "Herald horn",
-        desc: "Armor all allies [4]",
-        level: 1,
-        heroClasses: [EHeroClass.HERALD],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                isBasicAttack: true,
-                value: 4, //TODO PP: add pp to armor
-                valueType: "number",
-                attribute: "armor",
-                targetType: ETargetType.ALL_ALLIES,
-            },
-        ],
-    },
-];
-
-//TODO: do
-const blackKnightSkills: THeroSkills = [
-    {
-        id: "blackKnightShield",
-        name: "TEMP: Heal self",
-        desc: "Not implemented yet",
-        level: 1,
-        heroClasses: [EHeroClass.BLACK_KNIGHT],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.HEAL,
-                isBasicAttack: true,
-                value: 5,
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-//TODO: do
-const bishopSkills: THeroSkills = [
-    {
-        id: "bishopHeal",
-        name: "TEMP: Heal self",
-        desc: "Not implemented yet",
-        level: 1,
-        heroClasses: [EHeroClass.BISHOP],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.HEAL,
-                isBasicAttack: true,
-                value: 5,
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
 //TODO: use this skill
-const shamanSkills_OLD: THeroSkills = [
-    {
-        id: "ShamanTotem",
-        name: "Shaman totem",
-        desc: "Place a totem that \nheals low hp ally",
-        level: 1,
-        heroClasses: [EHeroClass.SHAMAN],
-        isMcSkill: true,
-        skills: [
-            {
-                //heroClasses: [EHeroClass.ALL],
-                type: EHeroSkillType.TOTEM,
-                isBasicAttack: true,
-                totem: {
-                    id: "SHAMAN_TOTEM",
-                    name: "Shaman totem",
-                    skills: [
-                        {
-                            type: EHeroSkillType.HEAL,
-                            isBasicAttack: false,
-                            value: 3, // TODO MP: add MP modifier to value
-                            valueType: "number",
-                            targetType: ETargetType.LOW_HP_ALLY,
-                        },
-                    ],
-                },
-            },
-        ],
-    },
-];
-
-const samuraiSkills: THeroSkills = [
-    {
-        id: "SamuraiSharpBlade",
-        name: "Samurai sharp blade",
-        desc: "Next basic attack applies [2] bleed",
-        level: 1,
-        heroClasses: [EHeroClass.SAMURAI],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.BUFF,
-                isBasicAttack: true,
-                buff: {
-                    name: "+2 bleed on ba",
-                    type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
-                    statusType: EStatusType.BLEED,
-                    value: 2,
-                    valueType: "number",
-                    targetType: ETargetType.SELF,
-                    timeType: EBuffTimeType.DUEL,
-                },
-            },
-        ],
-        isChained: true,
-    },
-];
-
-export const necromancerSkills: THeroSkills = [
-    {
-        id: "NecromancerSkeleton",
-        name: "Necromancer skeleton",
-        desc: "Summon a skeleton [4,10]",
-        level: 1,
-        heroClasses: [EHeroClass.NECROMANCER],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.SUMMON,
-                isBasicAttack: true,
-                summon: skeletonUnit,
-            },
-        ],
-    },
-];
-
-const beastMasterSkills: THeroSkills = [
-    {
-        id: "BeastmasterCrows",
-        name: "Beastmaster crows",
-        desc: "Summon two crows [2]",
-        level: 1,
-        heroClasses: [EHeroClass.BEAST_MASTER],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.TOTEM,
-                isBasicAttack: true,
-                totem: {
-                    id: "CROWS_TOTEM",
-                    name: "Crows",
-                    skills: [
-                        {
-                            //heroClasses: [EHeroClass.ALL],
-                            type: EHeroSkillType.ATTACK,
-                            isBasicAttack: false,
-                            value: 2, // TODO MP: add PP modifier to value
-                            targetType: ETargetType.RANDOM_ENEMY,
-                            attackType: EHeroAttackType.PHYSICAL,
-                        },
-                        {
-                            //heroClasses: [EHeroClass.ALL],
-                            type: EHeroSkillType.ATTACK,
-                            isBasicAttack: false,
-                            value: 2, // TODO MP: add PP modifier to value
-                            targetType: ETargetType.RANDOM_ENEMY,
-                            attackType: EHeroAttackType.PHYSICAL,
-                        },
-                    ],
-                },
-            },
-        ],
-    },
-];
-
-const gladiatorSkills: THeroSkills = [
-    {
-        id: "GladiatorTotem",
-        name: "Gladiator totem",
-        desc: "Place a totem that \nincreases basic attack damage",
-        level: 1,
-        heroClasses: [EHeroClass.GLADIATOR],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.TOTEM,
-                isBasicAttack: true,
-                totem: {
-                    id: "GLADIATOR_TOTEM",
-                    name: "Тотем гладиатора",
-                    skills: [
-                        {
-                            //heroClasses: [EHeroClass.ALL],
-                            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                            isBasicAttack: false,
-                            value: 2,
-                            valueType: "number",
-                            targetType: ETargetType.SELF,
-                            attribute: "attack",
-                        },
-                    ],
-                },
-            },
-        ],
-    },
-];
-
-const warlockSkills: THeroSkills = [
-    {
-        id: "WarlockCurse",
-        name: "Warlock curse",
-        desc: "Debuff highest attack enemy\n -[20]% basic attack damage.\n Apply [4] poison.",
-        level: 1,
-        heroClasses: [EHeroClass.WARLOCK],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.DEBUFF,
-                isBasicAttack: true,
-                debuff: {
-                    name: "-20% ba",
-                    type: EDebuffType.ATTRIBUTE_DECREASE,
-                    attribute: "attack",
-                    value: 20,
-                    valueType: "percent",
-                    targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                    timeType: EBuffTimeType.DUEL,
-                },
-            },
-            {
-                type: EHeroSkillType.STATUS_APPLY,
-                isBasicAttack: true,
-                status: EStatusType.POISON,
-                value: 4, //TODO MP: use unit MP
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-            },
-        ],
-    },
-];
-
-export const doomsayerSkills: THeroSkills = [
-    {
-        id: "DoomsayerCurse",
-        name: "Doomsayer curse",
-        desc: "Disable next enemy first hero skill",
-        level: 1,
-        heroClasses: [EHeroClass.DOOMSAYER],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.DEBUFF,
-                isBasicAttack: true,
-                debuff: {
-                    name: "Disable next skill",
-                    type: EDebuffType.DISABLE_SKILL,
-                    value: 1,
-                    targetType: ETargetType.FIRST_ALLY,
-                    timeType: EBuffTimeType.TILL_NEXT_BA,
-                },
-            },
-        ],
-    },
-];
-
-// TODO: rework!
-export const minstrelSkills: THeroSkills = [
-    {
-        id: "MinstralHeal",
-        name: "Minstral heal",
-        desc: "TEMP: Heal self [8]",
-        level: 1,
-        heroClasses: [EHeroClass.MINSTREL],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.HEAL,
-                isBasicAttack: true,
-                value: 8, // TODO MP: add MP modifier to value
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-export const magicBardSkills: THeroSkills = [
-    {
-        id: "MagicBardBuff",
-        name: "Copy buff",
-        desc: "Copy random buff from ally to random ally",
-        level: 1,
-        heroClasses: [EHeroClass.MAGIC_BARD],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.BUFF_COPY,
-                isBasicAttack: true,
-                value: 1,
-                targetType: ETargetType.BUFFED_ALLY_RANDOM,
-            },
-        ],
-    },
-];
-
-export const duelistSkills: THeroSkills = [
-    {
-        id: "DuelistBuff",
-        name: "Duelist buff",
-        desc: "Doubles value of a random buff on ally",
-        level: 1,
-        heroClasses: [EHeroClass.DUELIST],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.BUFF_INCREASE_VALUE,
-                isBasicAttack: true,
-                value: 100,
-                valueType: "percent",
-                targetType: ETargetType.BUFFED_ALLY_RANDOM,
-            },
-        ],
-    },
-];
-
-// TODO: rework!
-export const runecasterSkills: THeroSkills = [
-    {
-        id: "RunecasterHeal",
-        name: "Runecaster heal",
-        desc: "TEMP: Heal self [8]",
-        level: 1,
-        heroClasses: [EHeroClass.RUNECASTER],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.HEAL,
-                isBasicAttack: true,
-                value: 8, // TODO MP: add MP modifier to value
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-// TODO: rework!
-export const mimicSkills: THeroSkills = [
-    {
-        id: "MimicHeal",
-        name: "Mimic heal",
-        desc: "TEMP: Heal self [8]",
-        level: 1,
-        heroClasses: [EHeroClass.MIMIC],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.HEAL,
-                isBasicAttack: true,
-                value: 8, // TODO MP: add MP modifier to value
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-export const forestSpititSkills: THeroSkills = [
-    {
-        id: "forestSpiritSacrifice",
-        name: "Spirit Sacrifice",
-        desc: "Sacrifice self armor to gain [0.1] hp regen",
-        level: 1,
-        heroClasses: [EHeroClass.FOREST_SPIRIT],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                isBasicAttack: false,
-                attribute: "hpRegen",
-                value: 10,
-                valueType: "percent",
-                valueFrom: "armor",
-                targetType: ETargetType.SELF,
-            },
-            {
-                type: EHeroSkillType.ATTRIBUTE_DECREASE,
-                isBasicAttack: true,
-                attribute: "armor",
-                value: 100,
-                valueType: "percent",
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-// TODO: summon a soldier on this skill higher level?
-export const commanderSkills: THeroSkills = [
-    // [
-    //     {
-    //         type: EHeroSkillType.SUMMON,
-    //         isBasicAttack: true,
-    //         summon: soldierUnit,
-    //     },
-    // ],
-    {
-        id: "CommanderHorn",
-        name: "Commander horn",
-        desc: "Increase all summons basic attack damage [3]",
-        level: 1,
-        heroClasses: [EHeroClass.COMMANDER],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                isBasicAttack: true,
-                value: 3, //TODO PP: add pp to armor
-                valueType: "number",
-                attribute: "attack",
-                targetType: ETargetType.ALL_ALLY_SUMMONS,
-            },
-        ],
-    },
-];
-
-export const druidSkills: THeroSkills = [
-    // [
-    //     {
-    //         heroClasses: [EHeroClass.DRUID],
-    //         type: EHeroSkillType.ATTRIBUTE_DECREASE,
-    //         isBasicAttack: true,
-    //         value: 12, //TODO MP: add MP to armor decrease
-    //         valueType: "number",
-    //         attribute: "armor",
-    //         targetType: ETargetType.FIRST_ENEMY,
-    //     },
-    // ],
-    {
-        id: "DruidBurn",
-        name: "Druid burn",
-        desc: "Apply [2] burn on all enemies",
-        level: 1,
-        heroClasses: [EHeroClass.DRUID],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.STATUS_APPLY,
-                isBasicAttack: true,
-                status: EStatusType.BURN,
-                value: 2, //TODO MP: use unit MP
-                targetType: ETargetType.ALL_ENEMIES,
-            },
-        ],
-    },
-];
-
-export const battleMageSkills: THeroSkills = [
-    {
-        id: "BattlemageDebuff",
-        name: "Battlemage debuff",
-        desc: "Debuff magic resist -[20]% to first enemy",
-        level: 1,
-        heroClasses: [EHeroClass.BATTLE_MAGE],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.DEBUFF,
-                isBasicAttack: true,
-                debuff: {
-                    name: "-20% magic resist",
-                    type: EDebuffType.MAGIC_RESIST_DECREASE,
-                    value: 20,
-                    valueType: "percent",
-                    targetType: ETargetType.FIRST_ENEMY,
-                    timeType: EBuffTimeType.DUEL,
-                },
-            },
-        ],
-    },
-    // [
-    //     {
-    //         isBasicAttack: false,
-    //         type: EHeroSkillType.ATTACK,
-    //         value: 16, //TODO MP: add mp to attack
-    //         targetType: ETargetType.FIRST_ENEMY,
-    //         attackType: EHeroAttackType.MAGIC,
-    //     },
-    // ],
-];
-
-export const sorcererSkills: THeroSkills = [
-    {
-        id: "SorcererAttack",
-        name: "Sorcerer attack",
-        desc: "Deal [10] magic damage to first two enemies",
-        level: 1,
-        heroClasses: [EHeroClass.SORCERER],
-        isMcSkill: true,
-        skills: [
-            {
-                isBasicAttack: false,
-                type: EHeroSkillType.ATTACK,
-                value: 10, //TODO MP: add mp to attack
-                targetType: ETargetType.FIRST_TWO_ENEMIES,
-                attackType: EHeroAttackType.MAGIC,
-            },
-        ],
-    },
-    // [
-    //     {
-    //         type: EHeroSkillType.BUFF,
-    //         isBasicAttack: true,
-    //         buff: {
-    //             name: "Divine shield",
-    //             type: EBuffType.DIVINE_SHIELD,
-    //             targetType: ETargetType.SELF,
-    //             timeType: EBuffTimeType.DUEL,
-    //             value: 1,
-    //         },
-    //     },
-    // ],
-];
-
-const assassinSkills: THeroSkills = [
-    {
-        id: "AssassinPoisonBlade",
-        name: "Assassin poison blade",
-        desc: "Apply poison [2] on basic attack",
-        level: 1,
-        heroClasses: [EHeroClass.ASSASSIN],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.BUFF,
-                isBasicAttack: true,
-                buff: {
-                    name: "+2 poison on ba",
-                    type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
-                    statusType: EStatusType.POISON,
-                    value: 2,
-                    valueType: "number",
-                    targetType: ETargetType.SELF,
-                    timeType: EBuffTimeType.DUEL,
-                },
-            },
-        ],
-    },
-];
-
-const witchSkills: THeroSkills = [
-    {
-        id: "WitchBleedAll",
-        name: "Witch all bleed",
-        desc: "Apply [2] bleed to all enemies",
-        level: 1,
-        heroClasses: [EHeroClass.WITCH],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.STATUS_APPLY,
-                isBasicAttack: true,
-                status: EStatusType.BLEED,
-                value: 2, //TODO MP: use unit MP
-                targetType: ETargetType.ALL_ENEMIES,
-            },
-        ],
-    },
-    // [
-    //     {
-    //         type: EHeroSkillType.DEBUFF,
-    //         isBasicAttack: true,
-    //         debuff: {
-    //             name: "-30% healing",
-    //             type: EDebuffType.HEALING_DECREASE,
-    //             value: 30,
-    //             valueType: "percent",
-    //             targetType: ETargetType.FIRST_ENEMY,
-    //             timeType: EBuffTimeType.DUEL,
-    //         },
-    //     },
-    // ],
-];
-
-const monkSkills: THeroSkills = [
-    // [
-    //     {
-    //         type: EHeroSkillType.HEAL,
-    //         isBasicAttack: true,
-    //         value: 5, // TODO MP: add MP modifier to value
-    //         targetType: ETargetType.SELF,
-    //     },
-    // ],
-    {
-        id: "MonkSelfClear",
-        name: "Monk self clear",
-        desc: "Remove negative status from self. Remove debuff from self",
-        level: 1,
-        heroClasses: [EHeroClass.MONK],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.STATUS_REMOVE,
-                isBasicAttack: false,
-                targetType: ETargetType.SELF,
-            },
-            {
-                type: EHeroSkillType.DEBUFF_REMOVE,
-                isBasicAttack: true,
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-const hunterSkills: THeroSkills = [
-    {
-        id: "HunterMark",
-        name: "Hunter mark",
-        desc: "Mark second enemy and \ndecrease physical resistance -[20]%",
-        level: 1,
-        heroClasses: [EHeroClass.HUNTER],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.DEBUFF,
-                isBasicAttack: true,
-                debuff: {
-                    name: "Hunter mark",
-                    type: EDebuffType.MARK_HUNTER,
-                    targetType: ETargetType.SECOND_ENEMY,
-                    timeType: EBuffTimeType.DUEL,
-                    value: 20,
-                    valueType: "percent",
-                },
-            },
-        ],
-    },
-    // [
-    //     {
-    //         isBasicAttack: false,
-    //         type: EHeroSkillType.ATTACK,
-    //         value: 12, //TODO PP: add pp to attack
-    //         targetType: ETargetType.MARKED_ENEMY,
-    //         markType: EDebuffType.MARK_HUNTER,
-    //         attackType: EHeroAttackType.PHYSICAL,
-    //     },
-    // ],
-];
-
-const predatorSkills: THeroSkills = [
-    {
-        id: "PredatorMark",
-        name: "Predator mark",
-        desc: "Mark low hp enemy\n and decrease physical resistance -[20]%",
-        level: 1,
-        heroClasses: [EHeroClass.PREDATOR],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.DEBUFF,
-                isBasicAttack: true,
-                debuff: {
-                    name: "Predator mark",
-                    type: EDebuffType.MARK_PREDATOR,
-                    targetType: ETargetType.LOW_HP_ENEMY,
-                    timeType: EBuffTimeType.DUEL,
-                    value: 20,
-                    valueType: "percent",
-                },
-            },
-        ],
-    },
-    // [
-    //     {
-    //         type: EHeroSkillType.STATUS_APPLY,
-    //         isBasicAttack: true,
-    //         status: EStatusType.BLEED,
-    //         value: 4, //TODO PP: % unit PP to bleed
-    //         targetType: ETargetType.MARKED_ENEMY,
-    //         markType: EDebuffType.MARK_PREDATOR,
-    //     },
-    // ],
-];
-
-// TODO: bladedancer skills
-const bladedancerSkills: THeroSkills = [
-    {
-        id: "BladedancerAttack",
-        name: "Bladedancer Attack",
-        desc: "TEMP: physical attack [10]",
-        level: 1,
-        heroClasses: [EHeroClass.BLADEDANCER],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.ATTACK,
-                isBasicAttack: true,
-                targetType: ETargetType.FIRST_ENEMY,
-                value: 10,
-            },
-        ],
-    },
-];
-
-const alchemistSkills: THeroSkills = [
-    {
-        id: "AlchemistHpSwap",
-        name: "Alchemist hp swap",
-        desc: "Swap hp with first ally and heal self [5]",
-        level: 1,
-        heroClasses: [EHeroClass.ALCHEMIST],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.SWAP_HP,
-                isBasicAttack: false,
-                targetType: ETargetType.LOW_HP_ALLY,
-            },
-            {
-                type: EHeroSkillType.HEAL,
-                isBasicAttack: true,
-                value: 5, // TODO MP: add MP modifier to value
-                targetType: ETargetType.SELF,
-            },
-        ],
-    },
-];
-
-const zealotSkills: THeroSkills = [
-    {
-        id: "ZealotDebuff",
-        name: "Zealot debuff",
-        desc: "Debuff first enemy hp regen -[100]%",
-        level: 1,
-        heroClasses: [EHeroClass.ZEALOT],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.DEBUFF,
-                isBasicAttack: true,
-                debuff: {
-                    name: "hpReg -100%",
-                    type: EDebuffType.ATTRIBUTE_DECREASE,
-                    targetType: ETargetType.FIRST_ENEMY,
-                    timeType: EBuffTimeType.DUEL,
-                    value: 100,
-                    valueType: "percent",
-                    attribute: "hpRegen",
-                },
-            },
-        ],
-    },
-    // [
-    //     {
-    //         isBasicAttack: false,
-    //         type: EHeroSkillType.ATTACK,
-    //         value: 8, //TODO MP: add MP to attack
-    //         targetType: ETargetType.RANDOM_ENEMY,
-    //         attackType: EHeroAttackType.MAGIC,
-    //     },
-    //     {
-    //         isBasicAttack: false,
-    //         type: EHeroSkillType.ATTACK,
-    //         value: 8, //TODO MP: add MP to attack
-    //         targetType: ETargetType.RANDOM_ENEMY,
-    //         attackType: EHeroAttackType.MAGIC,
-    //     },
-    //     {
-    //         isBasicAttack: false,
-    //         type: EHeroSkillType.ATTACK,
-    //         value: 8, //TODO MP: add MP to attack
-    //         targetType: ETargetType.RANDOM_ENEMY,
-    //         attackType: EHeroAttackType.MAGIC,
-    //     },
-    // ],
-];
-
-const exorcistSkills: THeroSkills = [
-    // [
-    //     {
-    //         type: EHeroSkillType.SUMMON,
-    //         isBasicAttack: true,
-    //         summon: skeletonUnit,
-    //     },
-    // ],
-    {
-        id: "ExorcistClear",
-        name: "Exorcist clear",
-        desc: "Remove summon and remove totem",
-        level: 1,
-        heroClasses: [EHeroClass.EXORCIST],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.TOTEM_REMOVE,
-                isBasicAttack: false,
-                targetType: ETargetType.CUSTOM,
-            },
-            {
-                type: EHeroSkillType.SUMMON_REMOVE,
-                isBasicAttack: true,
-                targetType: ETargetType.CUSTOM,
-            },
-        ],
-    },
-];
-
-// TODO: illusionist skills
-const illusionistSkills: THeroSkills = [
-    {
-        id: "Illusionist",
-        name: "Illusionist summon",
-        desc: "TEMP: Summon skeleton",
-        level: 1,
-        heroClasses: [EHeroClass.EXORCIST],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.SUMMON,
-                isBasicAttack: true,
-                summon: skeletonUnit,
-            },
-        ],
-    },
-];
-
-const inquisitorSkills: THeroSkills = [
-    {
-        id: "InquisitorBurn",
-        name: "Inquisitor Burn",
-        desc: "Debuff highest MP enemy \nwith mark that applies [5] burn every turn.",
-        level: 1,
-        heroClasses: [EHeroClass.INQUISITOR],
-        isMcSkill: true,
-        skills: [
-            {
-                type: EHeroSkillType.DEBUFF,
-                isBasicAttack: true,
-                debuff: {
-                    name: "Burn mark",
-                    type: EDebuffType.MARK_BURN,
-                    value: 5,
-                    valueType: "number",
-                    targetType: ETargetType.HIGH_MP_ENEMY,
-                    timeType: EBuffTimeType.DUEL,
-                },
-            },
-        ],
-    },
-];
+// const shamanSkills_OLD: THeroSkills = [
+//     {
+//         id: "ShamanTotem",
+//         name: "Shaman totem",
+//         desc: "Place a totem that \nheals low hp ally",
+//         level: 1,
+//         heroClasses: [EHeroClass.SHAMAN],
+//         isMcSkill: true,
+//         skills: [
+//             {
+//                 //heroClasses: [EHeroClass.ALL],
+//                 type: EHeroSkillType.TOTEM,
+//                 isBasicAttack: true,
+//                 totem: {
+//                     id: "SHAMAN_TOTEM",
+//                     name: "Shaman totem",
+//                     skills: [
+//                         {
+//                             type: EHeroSkillType.HEAL,
+//                             isBasicAttack: false,
+//                             value: 3, // TODO MP: add MP modifier to value
+//                             valueType: "number",
+//                             targetType: ETargetType.LOW_HP_ALLY,
+//                         },
+//                     ],
+//                 },
+//             },
+//         ],
+//     },
+// ];
 
 //
 //
@@ -1004,7 +100,7 @@ export const paladinHero: IUnit = {
     id: "PALADIN",
     skills: paladinSkills,
     passiveSkill: {
-        desc: "Overheal busts basic attack damage",
+        desc: "Heal low hp unit when block or negate damage",
     },
     items: [],
     unitType: EUnitType.HERO,
@@ -1030,6 +126,9 @@ export const barbarianHero: IUnit = {
     name: i18n.heroes.mc.BARBARIAN,
     id: "BARBARIAN",
     skills: barbarianSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1054,6 +153,9 @@ export const knightHero: IUnit = {
     name: i18n.heroes.mc.KNIGHT,
     id: "KNIGHT",
     skills: knightSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1078,6 +180,9 @@ export const heraldHero: IUnit = {
     name: i18n.heroes.mc.HERALD,
     id: "HERALD",
     skills: heraldSkills,
+    passiveSkill: {
+        desc: "Increase PP per\nbuff on allies",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1097,7 +202,7 @@ export const shamanHero: IUnit = {
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 0,
-    basicMagicPower: 0,
+    basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.mc.SHAMAN,
     id: "SHAMAN",
@@ -1129,6 +234,9 @@ export const samuraiHero: IUnit = {
     name: i18n.heroes.mc.SAMURAI,
     id: "SAMURAI",
     skills: samuraiSkills,
+    passiveSkill: {
+        desc: "Upon death apply bleed to all enemies",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1152,7 +260,10 @@ export const necromancerHero: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.heroes.mc.NECROMANCER,
     id: "NECROMANCER",
-    skills: [], //necromancerSkills,
+    skills: necromancerSkills,
+    passiveSkill: {
+        desc: "Gain MP when unit dies",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1177,6 +288,9 @@ export const beastMasterHero: IUnit = {
     name: i18n.heroes.mc.BEAST_MASTER,
     id: "BEAST_MASTER",
     skills: beastMasterSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1189,7 +303,7 @@ export const gladiatorHero: IUnit = {
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
-    basicAttack: 5,
+    basicAttack: 1,
     basicAttackTimes: 1,
     basicMaxHp: 18,
     basicHpRegen: 0,
@@ -1214,7 +328,7 @@ export const gladiatorHero: IUnit = {
 export const warlockHero: IUnit = {
     heroClass: EHeroClass.WARLOCK,
     attackType: EHeroAttackType.MAGIC,
-    attackTargetType: ETargetType.HIGH_ATTACK_ENEMY,
+    attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 4,
     basicAttackTimes: 1,
@@ -1228,6 +342,9 @@ export const warlockHero: IUnit = {
     name: i18n.heroes.mc.WARLOCK,
     id: "WARLOCK",
     skills: warlockSkills,
+    passiveSkill: {
+        desc: "Enemy dies from poison increase\nnext magic attack on poison value",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1238,7 +355,7 @@ export const warlockHero: IUnit = {
 export const runecasterHero: IUnit = {
     heroClass: EHeroClass.RUNECASTER,
     attackType: EHeroAttackType.MAGIC,
-    attackTargetType: ETargetType.HIGH_ATTACK_ENEMY,
+    attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 2,
     basicAttackTimes: 1,
@@ -1252,6 +369,9 @@ export const runecasterHero: IUnit = {
     name: i18n.heroes.mc.RUNECASTER,
     id: "RUNECASTER",
     skills: runecasterSkills,
+    passiveSkill: {
+        desc: "Gain armor increases from MP",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1276,6 +396,9 @@ export const commanderHero: IUnit = {
     name: i18n.heroes.mc.COMMANDER,
     id: "COMMANDER",
     skills: commanderSkills,
+    passiveSkill: {
+        desc: "Apply buffs to hero's summon\ninstead of hero",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1284,7 +407,7 @@ export const commanderHero: IUnit = {
 
 // DOOMSAYER (dark + bard)
 export const doomsayerHero: IUnit = {
-    heroClass: EHeroClass.COMMANDER,
+    heroClass: EHeroClass.DOOMSAYER,
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
@@ -1300,6 +423,9 @@ export const doomsayerHero: IUnit = {
     name: i18n.heroes.mc.DOOMSAYER,
     id: "DOOMSAYER",
     skills: doomsayerSkills,
+    passiveSkill: {
+        desc: "Increase MP from\neach debuff on enemies",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1324,13 +450,16 @@ export const minstrelHero: IUnit = {
     name: i18n.heroes.mc.MINSTREL,
     id: "MINSTREL",
     skills: minstrelSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
     exp: 0,
 };
 
-// MAGICBARD (magic + bard)
+// MAGICBARD = JESTER (magic + bard)
 export const magicBardHero: IUnit = {
     heroClass: EHeroClass.MAGIC_BARD,
     attackType: EHeroAttackType.MAGIC,
@@ -1338,7 +467,7 @@ export const magicBardHero: IUnit = {
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 2,
     basicAttackTimes: 1,
-    basicMaxHp: 24,
+    basicMaxHp: 56,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,
@@ -1348,6 +477,9 @@ export const magicBardHero: IUnit = {
     name: i18n.heroes.mc.MAGIC_BARD,
     id: "MAGICBARD",
     skills: magicBardSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1372,6 +504,9 @@ export const duelistHero: IUnit = {
     name: i18n.heroes.mc.DUELIST,
     id: "DUELIST",
     skills: duelistSkills,
+    passiveSkill: {
+        desc: "Gets bonus when using sword",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1396,6 +531,9 @@ export const mimicHero: IUnit = {
     name: i18n.heroes.mc.MIMIC,
     id: "MIMIC",
     skills: mimicSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1412,7 +550,7 @@ export const forestSpiritHero: IUnit = {
     basicAttackTimes: 1,
     basicMaxHp: 18,
     basicHpRegen: 3,
-    basicArmor: 0,
+    basicArmor: 10,
     basicCritChance: 0,
     basicEvasionChance: 0,
     basicMagicPower: 0,
@@ -1420,13 +558,16 @@ export const forestSpiritHero: IUnit = {
     name: i18n.heroes.mc.FOREST_SPIRIT,
     id: "FORESTSPIRIT",
     skills: forestSpititSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
     exp: 0,
 };
 
-// ORACLE (order + wild)
+// ORACLE (order + summon)
 export const oracleHero: IUnit = {
     heroClass: EHeroClass.ORACLE,
     attackType: EHeroAttackType.MAGIC,
@@ -1435,7 +576,7 @@ export const oracleHero: IUnit = {
     basicAttack: 2,
     basicAttackTimes: 1,
     basicMaxHp: 20,
-    basicHpRegen: 1,
+    basicHpRegen: 0,
     basicArmor: 6,
     basicCritChance: 0,
     basicEvasionChance: 0,
@@ -1443,7 +584,10 @@ export const oracleHero: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.heroes.mc.ORACLE,
     id: "ORACLE",
-    skills: mimicSkills,
+    skills: oracleSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1467,7 +611,10 @@ export const shadowMasterHero: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.heroes.mc.SHADOW_MASTER,
     id: "SHADOW_MASTER",
-    skills: mimicSkills,
+    skills: shadowMasterSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1492,6 +639,9 @@ export const druidHero: IUnit = {
     name: i18n.heroes.mc.DRUID,
     id: "DRUID",
     skills: druidSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1516,6 +666,9 @@ export const battleMageHero: IUnit = {
     name: i18n.heroes.mc.BATTLE_MAGE,
     id: "BATTLE_MAGE",
     skills: battleMageSkills,
+    passiveSkill: {
+        desc: "Skills get bonuses both\nfrom MP and PP.\nBut cannot basic attack.",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1535,11 +688,14 @@ export const sorcererHero: IUnit = {
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 0,
-    basicMagicPower: 10,
-    basicPhysicalPower: 2,
+    basicMagicPower: 3,
+    basicPhysicalPower: 0,
     name: i18n.heroes.mc.SORCERER,
     id: "SORCERER",
     skills: sorcererSkills,
+    passiveSkill: {
+        desc: "Can crit with magic attack skills",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1550,7 +706,7 @@ export const sorcererHero: IUnit = {
 export const assasinHero: IUnit = {
     heroClass: EHeroClass.ASSASSIN,
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.RANDOM_ENEMY,
+    attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 4,
     basicAttackTimes: 1,
@@ -1564,6 +720,9 @@ export const assasinHero: IUnit = {
     name: i18n.heroes.mc.ASSASSIN,
     id: "ASSASSIN",
     skills: assassinSkills,
+    passiveSkill: {
+        desc: "Increased chance of critical\nattack on poisoned target",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1588,13 +747,16 @@ export const inquisitorHero: IUnit = {
     name: i18n.heroes.mc.INQUISITOR,
     id: "INQUISITOR",
     skills: inquisitorSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
     exp: 0,
 };
 
-// WITCH (mystic + bard) => ???
+// WITCH (mystic + bard)
 export const witchHero: IUnit = {
     heroClass: EHeroClass.WITCH,
     attackType: EHeroAttackType.MAGIC,
@@ -1602,7 +764,7 @@ export const witchHero: IUnit = {
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 2,
     basicAttackTimes: 1,
-    basicMaxHp: 25,
+    basicMaxHp: 18,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,
@@ -1612,6 +774,9 @@ export const witchHero: IUnit = {
     name: i18n.heroes.mc.WITCH,
     id: "WITCH",
     skills: witchSkills,
+    passiveSkill: {
+        desc: "Increase MP depending on\ntotal bleed on all enemies",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1622,7 +787,7 @@ export const witchHero: IUnit = {
 export const monkHero: IUnit = {
     heroClass: EHeroClass.MONK,
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ALLY,
+    attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 3,
     basicAttackTimes: 1,
@@ -1636,6 +801,9 @@ export const monkHero: IUnit = {
     name: i18n.heroes.mc.MONK,
     id: "MONK",
     skills: monkSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1652,7 +820,7 @@ export const hunterHero: IUnit = {
     basicAttack: 2,
     basicAttackTimes: 1,
     basicMaxHp: 20,
-    basicHpRegen: 1,
+    basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 5,
     basicEvasionChance: 0,
@@ -1661,6 +829,9 @@ export const hunterHero: IUnit = {
     name: i18n.heroes.mc.HUNTER,
     id: "HUNTER",
     skills: hunterSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1686,6 +857,9 @@ export const predatorHero: IUnit = {
     name: i18n.heroes.mc.PREDATOR,
     id: "PREDATOR",
     skills: predatorSkills,
+    passiveSkill: {
+        desc: "Killing marked target\ngrants PP bonus",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1698,7 +872,7 @@ export const bladedancerHero: IUnit = {
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
-    basicAttack: 4,
+    basicAttack: 3,
     basicAttackTimes: 1,
     basicMaxHp: 22,
     basicHpRegen: 0,
@@ -1710,6 +884,9 @@ export const bladedancerHero: IUnit = {
     name: i18n.heroes.mc.BLADEDANCER,
     id: "BLADEDANCER",
     skills: bladedancerSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1724,7 +901,7 @@ export const alchemistHero: IUnit = {
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 2,
     basicAttackTimes: 1,
-    basicMaxHp: 18,
+    basicMaxHp: 22,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,
@@ -1734,6 +911,9 @@ export const alchemistHero: IUnit = {
     name: i18n.heroes.mc.ALCHEMIST,
     id: "ALCHEMIST",
     skills: alchemistSkills,
+    passiveSkill: {
+        desc: "Gets double value from potions",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1758,6 +938,9 @@ export const zealotHero: IUnit = {
     name: i18n.heroes.mc.ZEALOT,
     id: "ZEALOT",
     skills: zealotSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1782,6 +965,9 @@ export const exorcistHero: IUnit = {
     name: i18n.heroes.mc.EXORCIST,
     id: "EXORCIST",
     skills: exorcistSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1806,6 +992,9 @@ export const illusionistHero: IUnit = {
     name: i18n.heroes.mc.ILLUSIONIST,
     id: "ILLUSIONIST",
     skills: illusionistSkills,
+    passiveSkill: {
+        desc: "<EMPTY>",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1830,6 +1019,9 @@ export const blackKnightHero: IUnit = {
     name: i18n.heroes.mc.BLACK_KNIGHT,
     id: "BLACK_KNIGHT",
     skills: blackKnightSkills,
+    passiveSkill: {
+        desc: "Permanently gain 1 PP\nafter every two duels",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1849,11 +1041,14 @@ export const bishopHero: IUnit = {
     basicArmor: 0,
     basicCritChance: 10,
     basicEvasionChance: 0,
-    basicMagicPower: 0,
+    basicMagicPower: 4,
     basicPhysicalPower: 0,
     name: i18n.heroes.mc.BISHOP,
     id: "BISHOP",
     skills: bishopSkills,
+    passiveSkill: {
+        desc: "Can crit with heal skills",
+    },
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

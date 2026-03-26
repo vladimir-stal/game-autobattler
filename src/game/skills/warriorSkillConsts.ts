@@ -1,6 +1,7 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_SWORD_BUFF_2 } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { buffSelfMPorPP } from "./commonSkill3Consts";
 import { phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA
@@ -12,6 +13,7 @@ export const buffNextBa_3: IHeroSkillSet = {
     name: i18n.skills.basic.buffNextBa.name + "(3)",
     desc: i18n.skills.basic.buffNextBa.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
         {
@@ -38,6 +40,7 @@ export const buffNextBa_2: IHeroSkillSet = {
     name: i18n.skills.basic.buffNextBa.name + "(2)",
     desc: i18n.skills.basic.buffNextBa.desc2,
     level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
         {
@@ -65,6 +68,7 @@ export const buffNextBa: IHeroSkillSet = {
     name: i18n.skills.basic.buffNextBa.name,
     desc: i18n.skills.basic.buffNextBa.desc1,
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
         {
@@ -91,7 +95,8 @@ export const buffNextBaTimes_3: IHeroSkillSet = {
     id: "buffNextBaTimes",
     name: "Next BA +2 time buff(3)",
     desc: "Next basic attack has +[2] time",
-    level: 4,
+    level: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
         {
@@ -107,6 +112,7 @@ export const buffNextBaTimes_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_TEST,
 };
 
 export const buffNextBaTimes_2: IHeroSkillSet = {
@@ -114,6 +120,7 @@ export const buffNextBaTimes_2: IHeroSkillSet = {
     name: "Next BA +1 time buff(2)",
     desc: "Next basic attack has +[1] time",
     level: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
         {
@@ -129,6 +136,7 @@ export const buffNextBaTimes_2: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_TEST,
     nextLevel: buffNextBaTimes_3,
 };
 
@@ -136,7 +144,8 @@ export const buffNextBaTimes: IHeroSkillSet = {
     id: "buffNextBaTimes",
     name: "Next BA +1 time buff",
     desc: "Next basic attack has +[1] time",
-    level: 2,
+    level: 1,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
         {
@@ -152,6 +161,7 @@ export const buffNextBaTimes: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_TEST,
     nextLevel: buffNextBaTimes_2,
 };
 
@@ -159,4 +169,6 @@ export const buffNextBaTimes: IHeroSkillSet = {
 
 export const warriorSkills: THeroSkills = [phycisalAttackSkill, buffNextBa];
 
-export const warriorSkills_2: THeroSkills = [buffNextBaTimes, phycisalAttackSkill, buffNextBa];
+export const warriorSkills_2: THeroSkills = warriorSkills.concat([buffNextBaTimes]);
+
+export const warriorSkills_3: THeroSkills = warriorSkills_2.concat([buffSelfMPorPP]);

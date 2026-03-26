@@ -1,7 +1,6 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { colors } from "../consts";
-import { IBuff, IDebuff } from "../../types";
+import { IDebuff } from "../../types";
 
 /** Card to show debuffs on unit in battle  */
 export class BattleDebuffCard extends Phaser.GameObjects.Container {
@@ -24,7 +23,9 @@ export class BattleDebuffCard extends Phaser.GameObjects.Container {
     }
 
     renderBuff() {
-        this.titleText = this.scene.add.text(10, -10, this.debuff.name, { fontSize: 12, color: "#dddddd" });
+        const { name, totalValue } = this.debuff;
+        const text = name + " " + (totalValue || "");
+        this.titleText = this.scene.add.text(10, -10, text, { fontSize: 12, color: "#dddddd" });
         this.add(this.titleText);
     }
 

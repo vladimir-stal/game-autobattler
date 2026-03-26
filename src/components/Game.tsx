@@ -2,7 +2,6 @@ import { FC, useRef } from 'react';
 import { IRefPhaserGame, PhaserGame } from '../game/PhaserGame';
 
 const Game: FC = () => {
-    console.log('Game')
     const phaserRef = useRef<IRefPhaserGame | null>(null);
 
     return (

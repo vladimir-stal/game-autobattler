@@ -1,6 +1,7 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_AXE_BUFF } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { buffSummonCritSkill } from "./commonSkill3Consts";
 import { phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA X SELF
@@ -8,8 +9,9 @@ import { phycisalAttackSkill } from "./commonSkillConsts";
 const buffNextBaXSelf_3: IHeroSkillSet = {
     id: "buffNextBaX",
     name: i18n.skills.basic.buffNextBaX.name + "(3)",
-    desc: i18n.skills.basic.buffNextBaX.desc3, //"Multiply x[1.4] self next basic attack",
+    desc: i18n.skills.basic.buffNextBaX.desc3,
     level: 3,
+    priceLevel: 1,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -32,8 +34,9 @@ const buffNextBaXSelf_3: IHeroSkillSet = {
 const buffNextBaXSelf_2: IHeroSkillSet = {
     id: "buffNextBaX",
     name: i18n.skills.basic.buffNextBaX.name + "(2)",
-    desc: i18n.skills.basic.buffNextBaX.desc2, //"Multiply x[1.4] self next basic attack",
+    desc: i18n.skills.basic.buffNextBaX.desc2,
     level: 2,
+    priceLevel: 1,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -59,6 +62,7 @@ export const buffNextBaXSelf: IHeroSkillSet = {
     name: i18n.skills.basic.buffNextBaX.name,
     desc: i18n.skills.basic.buffNextBaX.desc1, //"Multiply x[1.4] self next basic attack",
     level: 1,
+    priceLevel: 1,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -68,7 +72,7 @@ export const buffNextBaXSelf: IHeroSkillSet = {
                 name: "x2 next ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
-                value: 40,
+                value: 100,
                 valueType: "percent",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
@@ -76,6 +80,7 @@ export const buffNextBaXSelf: IHeroSkillSet = {
         },
     ],
     //isChained: true,
+    //isActivateOnStart: true,
     nextLevel: buffNextBaXSelf_2,
     image: IMAGE_SKILL_AXE_BUFF,
 };
@@ -87,6 +92,7 @@ export const buffNextBaIgnoreArmorSelf_3: IHeroSkillSet = {
     name: "Ignore armor(3)",
     desc: "Ignore enemy armor next basic attack. Buff next basic attack [5]",
     level: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -121,6 +127,7 @@ export const buffNextBaIgnoreArmorSelf_2: IHeroSkillSet = {
     name: "Ignore armor(2)",
     desc: "Ignore enemy armor next basic attack. Buff next basic attack [2]",
     level: 2,
+    priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -156,6 +163,7 @@ export const buffNextBaIgnoreArmorSelf: IHeroSkillSet = {
     name: "Ignore armor",
     desc: "Ignore enemy armor next basic attack",
     level: 1,
+    priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -179,7 +187,8 @@ export const buffNextBaBeCritSelf_3: IHeroSkillSet = {
     id: "buffNextBaBeCritSelf",
     name: "Next ba crit(3)",
     desc: "Next basic attack is a crit\n and increse damage [5]",
-    level: 4,
+    level: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -187,10 +196,13 @@ export const buffNextBaBeCritSelf_3: IHeroSkillSet = {
             isBasicAttack: false,
             buff: {
                 name: "BA is crit",
-                type: EBuffType.BASIC_ATTACK_IS_CRIT,
+                //type: EBuffType.BASIC_ATTACK_IS_CRIT,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "critChance",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 1,
+                value: 100,
+                valueType: "number",
             },
         },
         {
@@ -206,13 +218,15 @@ export const buffNextBaBeCritSelf_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_TEST,
 };
 
 export const buffNextBaBeCritSelf_2: IHeroSkillSet = {
     id: "buffNextBaBeCritSelf",
     name: "Next ba crit(2)",
     desc: "Next basic attack is a crit\n and increse damage [2]",
-    level: 3,
+    level: 2,
+    priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -220,10 +234,13 @@ export const buffNextBaBeCritSelf_2: IHeroSkillSet = {
             isBasicAttack: false,
             buff: {
                 name: "BA is crit",
-                type: EBuffType.BASIC_ATTACK_IS_CRIT,
+                //type: EBuffType.BASIC_ATTACK_IS_CRIT,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "critChance",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 1,
+                value: 100,
+                valueType: "number",
             },
         },
         {
@@ -240,6 +257,7 @@ export const buffNextBaBeCritSelf_2: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_TEST,
     nextLevel: buffNextBaBeCritSelf_3,
 };
 
@@ -247,7 +265,8 @@ export const buffNextBaBeCritSelf: IHeroSkillSet = {
     id: "buffNextBaBeCritSelf",
     name: "Next ba crit",
     desc: "Next basic attack is a crit",
-    level: 2,
+    level: 1,
+    priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
     skills: [
         {
@@ -255,13 +274,17 @@ export const buffNextBaBeCritSelf: IHeroSkillSet = {
             isBasicAttack: true,
             buff: {
                 name: "BA is crit",
-                type: EBuffType.BASIC_ATTACK_IS_CRIT,
+                //type: EBuffType.BASIC_ATTACK_IS_CRIT,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "critChance",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 1,
+                value: 100,
+                valueType: "number",
             },
         },
     ],
+    image: IMAGE_SKILL_TEST,
     nextLevel: buffNextBaBeCritSelf_2,
 };
 
@@ -270,4 +293,6 @@ export const buffNextBaBeCritSelf: IHeroSkillSet = {
 //TODO: add buffNextBaIgnoreArmorSelf to lvl2 skills
 export const masterSkills: THeroSkills = [phycisalAttackSkill, buffNextBaXSelf];
 
-export const masterSkills_2: THeroSkills = [buffNextBaBeCritSelf, phycisalAttackSkill, buffNextBaXSelf];
+export const masterSkills_2: THeroSkills = masterSkills.concat([buffNextBaBeCritSelf]);
+
+export const masterSkills_3: THeroSkills = masterSkills_2.concat([buffSummonCritSkill]);

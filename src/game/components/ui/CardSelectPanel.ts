@@ -5,6 +5,7 @@ import { Card } from "../Card";
 import { colors, i18n } from "../../consts";
 import { Input } from "phaser";
 import { createUnit, generateUnitId } from "../../utils/unitUtils";
+import { getRerollPrice } from "../../utils/selectPhaseUtils";
 
 /** UI panel to select cards for specific room */
 export class CardSelectPanel extends Phaser.GameObjects.Container {
@@ -24,6 +25,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     isSelectRequired: boolean; // player must select at least one option
 
     isRerollAvailable: boolean;
+    rerollsCount: number;
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -37,7 +39,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         cards: (ICard | null)[],
         roomType: ERoomType,
         heroClasses: EHeroClass[] | undefined,
-        options: { isSingleSelect?: boolean; isSelectRequired?: boolean; isRerollAvailable?: boolean }
+        options: { isSingleSelect?: boolean; isSelectRequired?: boolean; isRerollAvailable?: boolean },
     ) {
         this.setVisible(true);
         this.roomType = roomType;
@@ -82,7 +84,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderCard(index: number, card: ICard) {
-        const cardDistance = 240;
+        const cardDistance = this.cards.length > 3 ? 180 : 240;
         const cardBomponent = new Card(this.gameScene, 75 + index * cardDistance, 0, card, true);
         this.add(cardBomponent);
 
@@ -125,13 +127,21 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
     renderButtons() {
         if (this.isRerollAvailable) {
-            const rerollButton = this.scene.add.text(0, -100, i18n.ui.REROLL, {
+            this.rerollsCount = 0;
+            const rerollPrice = getRerollPrice(this.rerollsCount, this.roomType);
+            const rerollPriceText = rerollPrice > 0 ? rerollPrice + " GOLD" : "";
+            const rerollButton = this.scene.add.text(0, -100, i18n.ui.REROLL + rerollPriceText, {
                 //fontFamily: "Arial Black",
                 fontSize: 18,
                 color: "#aaffaa",
             });
 
             rerollButton.setInteractive().on("pointerdown", () => {
+                if (this.gameScene.bankController.totalGold < rerollPrice) {
+                    return;
+                }
+
+                this.gameScene.bankController.buy(rerollPrice);
                 this.isRerollAvailable = false;
                 // get new cards
                 this.gameScene.selectController.showCardSelect(this.roomType, { heroClasses: this.heroClasses, isRerollAvailableForce: false });
@@ -160,7 +170,10 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                 return;
             }
 
-            const isLastCard = this.cards.length === this.boughtCardIndexes.length + 1;
+            const isLastCard = this.cards.filter((card) => card).length === this.boughtCardIndexes.length + 1;
+
+            console.log("cards", this.cards);
+
             console.log("isLastCard", isLastCard, this.cards.length, this.boughtCardIndexes.length);
             if (isLastCard) {
                 this.gameScene.selectController.showNextRoomSelect();

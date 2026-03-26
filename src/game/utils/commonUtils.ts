@@ -10,6 +10,9 @@ export function getRandomArrayIndex(array: unknown[]) {
 
 /** Get random array item. */
 export function getRandomArrayItem<T>(array: T[]) {
+    if (array.length === 0) {
+        return null;
+    }
     return array[getRandomArrayIndex(array)];
 }
 
@@ -33,4 +36,34 @@ export function getRandomArrayItems<T>(array: T[], count: number, isUnique: bool
         arrayCopy.splice(randomIndex, 1);
     }
     return result;
+}
+
+/** Check if probability worked */
+export function checkProbability(chance: number) {
+    const random100 = getRandomIntFromInterval(0, 100);
+    return chance >= random100;
+}
+
+export function getCardBorderColor(rarityLevel: number) {
+    let borderColor = 0x777777;
+    switch (rarityLevel) {
+        case 1:
+            borderColor = 0x777777; // GREY
+            break;
+        case 2:
+            borderColor = 0x2e8b57; //0x3cb371; // 0x32cd32; // GREEN
+            break;
+        case 3:
+            borderColor = 0x4682b4; // BLUE
+            break;
+        case 4:
+            borderColor = 0x483d8b; //0x8a2be2; // PURPLE
+            break;
+        case 5:
+            borderColor = 0xbdb76b; // YELLOW
+            break;
+        default:
+            borderColor = 0x777777;
+    }
+    return borderColor;
 }

@@ -2,6 +2,7 @@ import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
 import { ETargetType, EBuffTimeType, EBuffType, EDebuffType, EHeroAttackType, EHeroClass, EUnitType, IUnit, EHeroClassType } from "../types";
 import { LANG } from "./consts";
+import { phycisalAttackSkill } from "./skills/commonSkillConsts";
 
 //  BASIC HEROES  //////////////////////////////////////////////////////////////
 
@@ -96,7 +97,7 @@ export const masterHero: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.heroes.basic.MASTER,
     id: "MASTER",
-    skills: [],
+    skills: [phycisalAttackSkill],
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

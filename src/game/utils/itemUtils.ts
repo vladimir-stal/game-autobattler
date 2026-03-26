@@ -1,4 +1,4 @@
-import { EHeroClass, EItemBonusType, EItemType, EWeaponItemType, IItem, IItemBonus, IUnit } from "../../types";
+import { EHeroClass, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem, IItemBonus, IUnit } from "../../types";
 import { axe1 } from "../basicWeaponItemConsts";
 import { gloves_magic2, gloves_priest2, gloves_war2 } from "../commonItemConsts";
 import {
@@ -12,15 +12,19 @@ import {
     ITEM_MAX_LEVEL,
     itemsLvl2,
     itemsLvl3,
+    itemsLvl4,
     weaponsLvl2,
     weaponsLvl3,
+    weaponsLvl4,
+    weaponsLvl5,
 } from "../itemConsts";
 import { calculateIncreaseValue } from "./battleUtils";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 
-/** Apply item bonuses to unit on equip */
-export const applyItemBonuses = (item: IItem, unit: IUnit) => {
-    item.bonuses.forEach((bonus) => applyItemBonus(bonus, unit));
+/** Apply item bonuses to unit (or all units) on equip */
+export const applyItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => {
+    item.bonuses.forEach((bonus) => applyItemBonus(bonus, unit, units));
+    //
     item.heroClassBonuses &&
         item.heroClassBonuses.forEach((hCbonus) => {
             if (hCbonus.heroClass === unit.heroClass) {
@@ -35,8 +39,9 @@ export const applyItemBonuses = (item: IItem, unit: IUnit) => {
         });
 };
 
-const applyItemBonus = (bonus: IItemBonus, unit: IUnit) => {
-    const { type, attribute, value, valueType } = bonus;
+const applyItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
+    //console.log("APPLY ITem BONUS", bonus);
+    const { type, attribute, value, valueType, targetType } = bonus;
     switch (type) {
         case EItemBonusType.ATTRIBUTE:
             {
@@ -44,8 +49,15 @@ const applyItemBonus = (bonus: IItemBonus, unit: IUnit) => {
                     return;
                 }
 
-                const newAttrValue = unit[attribute] + calculateIncreaseValue(unit[attribute], value, valueType);
-                unit[attribute] = newAttrValue;
+                if (!targetType || targetType === EItemTargetType.SELF) {
+                    const newAttrValue = unit[attribute] + calculateIncreaseValue(unit[attribute], value, valueType);
+                    unit[attribute] = newAttrValue;
+                } else if (targetType === EItemTargetType.ALL_ALLIES) {
+                    units.forEach((u) => {
+                        const newAttrValue = u[attribute] + calculateIncreaseValue(u[attribute], value, valueType);
+                        u[attribute] = newAttrValue;
+                    });
+                }
             }
             break;
         default:
@@ -54,8 +66,9 @@ const applyItemBonus = (bonus: IItemBonus, unit: IUnit) => {
 };
 
 /** Remove item bonuses from unit on unequip */
-export const removeItemBonuses = (item: IItem, unit: IUnit) => {
-    item.bonuses.forEach((bonus) => removeItemBonus(bonus, unit));
+export const removeItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => {
+    item.bonuses.forEach((bonus) => removeItemBonus(bonus, unit, units));
+    //
     item.heroClassBonuses &&
         item.heroClassBonuses.forEach((hCbonus) => {
             if (hCbonus.heroClass === unit.heroClass) {
@@ -70,18 +83,32 @@ export const removeItemBonuses = (item: IItem, unit: IUnit) => {
         });
 };
 
-const removeItemBonus = (bonus: IItemBonus, unit: IUnit) => {
-    const { type, attribute, value, valueType } = bonus;
+const removeItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
+    const { type, attribute, value, valueType, targetType } = bonus;
     switch (type) {
         case EItemBonusType.ATTRIBUTE:
             {
                 if (!attribute || value === undefined || !valueType) {
                     return;
                 }
-                //TODO: recalculate attribute after remove item
 
-                const newAttrValue = unit[attribute] - calculateIncreaseValue(unit[attribute], value, valueType);
-                unit[attribute] = newAttrValue;
+                console.log("remove item bonus", bonus);
+
+                if (!targetType || targetType === EItemTargetType.SELF) {
+                    const newAttrValue = unit[attribute] - calculateIncreaseValue(unit[attribute], value, valueType);
+                    unit[attribute] = newAttrValue;
+                } else if (targetType === EItemTargetType.ALL_ALLIES) {
+                    units.forEach((u) => {
+                        if (!u) {
+                            return;
+                        }
+
+                        const newAttrValue = u[attribute] - calculateIncreaseValue(u[attribute], value, valueType);
+                        u[attribute] = newAttrValue;
+
+                        console.log("remove item bonus from unit", u, newAttrValue);
+                    });
+                }
             }
             break;
         default:
@@ -93,8 +120,11 @@ export const getWeaponItemHeroClasses = (itemType: EWeaponItemType): EHeroClass[
     switch (itemType) {
         case EWeaponItemType.AXE:
             return [EHeroClass.WILD, EHeroClass.MASTER];
+        case EWeaponItemType.BOOK:
+            return [EHeroClass.ALL];
         case EWeaponItemType.DAGGER:
-            return [EHeroClass.BARD];
+            //return [EHeroClass.BARD];
+            return [EHeroClass.ALL];
         case EWeaponItemType.MACE:
             return [EHeroClass.PRIEST, EHeroClass.ORDER];
         case EWeaponItemType.MUSICAL:
@@ -112,14 +142,15 @@ export const getWeaponItemHeroClasses = (itemType: EWeaponItemType): EHeroClass[
         case EWeaponItemType.WAND:
             return [EHeroClass.MAGIC, EHeroClass.DARK];
         default:
-            return [];
+            return [EHeroClass.ALL];
     }
 };
 
 export const getHeroClassWeaponTypes = (heroClass: EHeroClass): EWeaponItemType[] => {
     switch (heroClass) {
         case EHeroClass.BARD:
-            return [EWeaponItemType.DAGGER, EWeaponItemType.MUSICAL];
+            return [EWeaponItemType.MUSICAL];
+        //return [EWeaponItemType.DAGGER, EWeaponItemType.MUSICAL];
         //return [EWeaponItemType.DAGGER, EWeaponItemType.TOTEM];
         case EHeroClass.DARK:
             return [EWeaponItemType.WAND, EWeaponItemType.TOTEM];
@@ -152,6 +183,16 @@ export const getHeroClassesItems = (heroClasses: EHeroClass[], day: number) => {
     return allClassItems;
 };
 
+export const getHeroClassesItemsWithTop = (heroClasses: EHeroClass[], day: number, count: number) => {
+    const items = getRandomArrayItems(getHeroClassesItems(heroClasses, day), count - 1, true);
+
+    const randomClass = getRandomArrayItem(heroClasses);
+    const randomItemType = day > 2 ? getRandomArrayItem(["weapon", "common"]) : "weapon";
+    const topLevelItem = randomItemType === "weapon" ? getHeroClassWeaponItemTop(randomClass, day) : getHeroClassCommonItemTop(randomClass, day);
+
+    return [...items, topLevelItem];
+};
+
 /** Return weapon items for specific hero classes */
 export const getHeroClassesWeaponItems = (heroClasses: EHeroClass[], day: number) => {
     const allClassItems: IItem[] = heroClasses.reduce((allItems, heroClass) => {
@@ -166,6 +207,7 @@ export const getHeroClassItems = (heroClass: EHeroClass, day: number): IItem[] =
     return [...weaponItems, ...commonItems];
 };
 
+/** Return a list of all available items for current day */
 export const getAllItems = (day: number): IItem[] => {
     switch (day) {
         case 0:
@@ -177,8 +219,27 @@ export const getAllItems = (day: number): IItem[] => {
             return basicItems.concat(itemsLvl2);
         case 5:
         case 6:
-        default:
             return basicItems.concat(itemsLvl2).concat(itemsLvl3);
+        default:
+            return basicItems.concat(itemsLvl2).concat(itemsLvl3).concat(itemsLvl4);
+    }
+};
+
+/** Return a random top level item for current day */
+export const getAllItemTop = (day: number): IItem => {
+    switch (day) {
+        case 0:
+        case 1:
+        case 2:
+            return getRandomArrayItem(basicItems);
+        case 3:
+        case 4:
+            return getRandomArrayItem(itemsLvl2);
+        case 5:
+        case 6:
+            return getRandomArrayItem(itemsLvl3);
+        default:
+            return getRandomArrayItem(itemsLvl4);
     }
 };
 
@@ -198,8 +259,32 @@ export const getCommonItems = (day: number): IItem[] => {
     }
 };
 
-export const get3FromAllItems = (day: number): IItem[] => {
-    return getRandomArrayItems(getAllItems(day), 3, true);
+/** Return common items with 100% chance of including 1 top level item */
+export const getCommonItemsWithTop = (day: number, count: number): IItem[] => {
+    switch (day) {
+        case 0:
+        case 1:
+        case 2:
+            return getRandomArrayItems(basicCommonItems, count, true);
+        case 3:
+        case 4: {
+            const commonItems = getRandomArrayItems(getCommonItems(day), count - 1, true);
+            const topLevelItem = getRandomArrayItem(commonItemsLvl2);
+            return [...commonItems, topLevelItem];
+        }
+        case 5:
+        case 6: {
+            const commonItems = getRandomArrayItems(getCommonItems(day), count - 1, true);
+            const topLevelItem = getRandomArrayItem(commonItemsLvl3);
+            return [...commonItems, topLevelItem];
+        }
+        default:
+            return [...basicCommonItems, ...commonItemsLvl2, ...commonItemsLvl3];
+    }
+};
+
+export const getXFromAllItems = (day: number, count: number): IItem[] => {
+    return getRandomArrayItems(getAllItems(day), count, true);
 };
 
 /** Return weapon items for a single hero class */
@@ -212,6 +297,21 @@ export const getHeroClassWeaponItems = (heroClass: EHeroClass, day: number): IIt
         default: {
             const weapons = getHeroClassWeaponTypes(heroClass).map((weaponType) => getWeaponItem(weaponType, day));
             return weapons;
+        }
+    }
+};
+
+/** Return top level weapon item for a single hero class */
+export const getHeroClassWeaponItemTop = (heroClass: EHeroClass, day: number): IItem => {
+    switch (day) {
+        case 0:
+        case 1:
+            return getRandomArrayItem(basicWeaponItemsByClass[heroClass]);
+        case 2:
+        default: {
+            const weaponType = getRandomArrayItem(getHeroClassWeaponTypes(heroClass));
+            const weapon = getWeaponItemTop(weaponType, day);
+            return weapon;
         }
     }
 };
@@ -233,6 +333,25 @@ export const getHeroClassCommonItems = (heroClass: EHeroClass, day: number): IIt
     }
 };
 
+/** Return top level common item for a single hero class for current day */
+export const getHeroClassCommonItemTop = (heroClass: EHeroClass, day: number): IItem => {
+    switch (day) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4: {
+            return getRandomArrayItem(getHeroClassCommonItemsLvl2(heroClass));
+        }
+        case 5:
+        case 6:
+        default: {
+            //TODO: change to LEVEL 3 class common items
+            return getRandomArrayItem(getHeroClassCommonItemsLvl2(heroClass));
+        }
+    }
+};
+
 /** Return  lvl 2 common items for a single hero class */
 export const getHeroClassCommonItemsLvl2 = (heroClass: EHeroClass): IItem[] => {
     switch (heroClass) {
@@ -248,7 +367,6 @@ export const getHeroClassCommonItemsLvl2 = (heroClass: EHeroClass): IItem[] => {
 };
 
 export const getWeaponItems = (day: number): IItem[] => {
-    //return weaponsLvl3;
     switch (day) {
         case 0:
         case 1:
@@ -259,21 +377,73 @@ export const getWeaponItems = (day: number): IItem[] => {
             return basicWeapons.concat(weaponsLvl2);
         case 5:
         case 6:
-        default: {
             return basicWeapons.concat(weaponsLvl2).concat(weaponsLvl3);
+        case 7:
+        case 8:
+            return basicWeapons.concat(weaponsLvl2).concat(weaponsLvl3).concat(weaponsLvl4);
+        case 9:
+        default: {
+            return basicWeapons.concat(weaponsLvl2).concat(weaponsLvl3).concat(weaponsLvl4).concat(weaponsLvl5);
         }
     }
 };
 
+/** Return weapon item of specific type for current day */
 export const getWeaponItem = (weaponType: EWeaponItemType, day: number): IItem => {
     switch (day) {
         case 0:
         case 1:
             return basicWeapons.find((item) => item.weaponType === weaponType) || axe1;
         case 2:
-        case 3:
-        default: {
+        case 3: {
             const weapons = weaponsLvl2.concat(basicWeapons);
+            const heroClassWeapons = weapons.filter((item) => item.weaponType === weaponType);
+            const item = getRandomArrayItem(heroClassWeapons);
+            return item;
+        }
+        case 4:
+        case 5:
+        case 6:
+        default: {
+            const weapons = weaponsLvl3.concat(weaponsLvl2).concat(basicWeapons);
+            const heroClassWeapons = weapons.filter((item) => item.weaponType === weaponType);
+            const item = getRandomArrayItem(heroClassWeapons);
+            return item;
+        }
+    }
+};
+
+/** Return top level weapon item of specific type for current day */
+export const getWeaponItemTop = (weaponType: EWeaponItemType, day: number): IItem => {
+    switch (day) {
+        case 0:
+        case 1:
+            return basicWeapons.find((item) => item.weaponType === weaponType) || axe1;
+        case 2:
+        case 3: {
+            const weapons = weaponsLvl2;
+            const heroClassWeapons = weapons.filter((item) => item.weaponType === weaponType);
+            const item = getRandomArrayItem(heroClassWeapons);
+            return item;
+        }
+        case 4:
+        case 5:
+        case 6: {
+            const weapons = weaponsLvl3;
+            const heroClassWeapons = weapons.filter((item) => item.weaponType === weaponType);
+            const item = getRandomArrayItem(heroClassWeapons);
+            return item;
+        }
+        case 7:
+        case 8: {
+            const weapons = weaponsLvl4;
+            const heroClassWeapons = weapons.filter((item) => item.weaponType === weaponType);
+            const item = getRandomArrayItem(heroClassWeapons);
+            return item;
+        }
+        case 9:
+        default: {
+            const weapons = weaponsLvl5;
             const heroClassWeapons = weapons.filter((item) => item.weaponType === weaponType);
             const item = getRandomArrayItem(heroClassWeapons);
             return item;
@@ -314,9 +484,14 @@ export const getUnitWeaponCount = (unit: IUnit) => {
     }, 0);
 };
 
-export const getItemPrice = (item: IItem, day: number, hour: number) => {
+export const getItemPrice = (item: IItem) => {
+    if (!item) {
+        console.log("ERROR! NO item");
+        return 0;
+    }
+
     if (!item.priceLevel) {
-        console.log("ERROR NO price for item", item.id);
+        console.log("ERROR! NO price for item", item.id);
         return 0;
     }
 

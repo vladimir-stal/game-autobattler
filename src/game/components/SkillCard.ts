@@ -6,6 +6,7 @@ import { HeroClassTag } from "./ui/HeroClassTag";
 import { IMAGE_ICON_ATTACK, IMAGE_ICON_CHAINED } from "../utils/imageLoadUtil";
 import { colors, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
+import { getCardBorderColor } from "../utils/commonUtils";
 
 /** Card to buy from shop  */
 export class SkillCard extends Phaser.GameObjects.Container {
@@ -30,14 +31,11 @@ export class SkillCard extends Phaser.GameObjects.Container {
 
     render() {
         this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0, 0);
-        this.rect.setStrokeStyle(1, 0x777777);
+        this.rect.setStrokeStyle(1, getCardBorderColor(this.skill.priceLevel)); //0x777777  green 0x77ee77 , purple 0x7777ee, orange 0xeebb00
 
         this.rect.setInteractive();
         this.rect
             .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-                //console.log(">>>>>>>>>> ON GAMEOBJECT_POINTER_OVER");
-                //console.log(this.x, this.y);
-                //console.log(this.getWorldPoint());
                 const { x, y } = this.getWorldPoint();
                 this.gameScene.hintPanel.showSkill(x + 115, y, this.skill);
             })

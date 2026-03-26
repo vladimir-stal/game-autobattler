@@ -5,8 +5,8 @@ import { ECardType, ICard, IHeroSkillSet, IItem, IUnit } from "../../types";
 import { CardSlot } from "./CardSlot";
 import { UnitCard } from "./UnitCard";
 import { ItemCard } from "./ItemCard";
-import { HeroClassTag } from "./ui/HeroClassTag";
 import { SkillCard } from "./SkillCard";
+import { IMAGE_ITEM_COIN } from "../utils/load/imageLoadItems";
 
 /** Card to buy from shop  */
 export class Card extends Phaser.GameObjects.Container {
@@ -26,6 +26,9 @@ export class Card extends Phaser.GameObjects.Container {
         this.card = card;
         this.cardSlot = cardSlot;
         this.onBuyPanel = onBuyPanel;
+        // if (card.type === ECardType.UNIT) {
+        //     console.log("CARD BEFORE RENDER", this.card.unit.items.length);
+        // }
         this.render();
     }
 
@@ -86,7 +89,7 @@ export class Card extends Phaser.GameObjects.Container {
         this.titleText.setVisible(false);
         this.rect.setVisible(false);
 
-        //console.log("renderHeroCard");
+        console.log("--> renderHeroCard", this.card.unit.name, this.card.unit.basicMaxHp);
 
         const heroCard = new UnitCard(this.gameScene, 0, 0, this, this.card.unit, !this.onBuyPanel, !this.onBuyPanel, this.cardSlot);
         this.add(heroCard);
@@ -140,6 +143,9 @@ export class Card extends Phaser.GameObjects.Container {
 
         const title = "GOLD " + value;
         this.titleText.setText(title);
+
+        const imageObject = this.gameScene.add.sprite(-20, 180, IMAGE_ITEM_COIN, 0).setOrigin(0, 1);
+        this.add(imageObject);
     }
 
     renderAttributeCard() {
@@ -153,7 +159,8 @@ export class Card extends Phaser.GameObjects.Container {
     }
 
     refresh() {
-        console.log("CARD refersh");
+        console.log("REFRESH CARD", this.card.unit);
+        //console.log("CARD refersh");
         //TODO: not the best way to update hero card
         this.removeAll(true);
         this.render();

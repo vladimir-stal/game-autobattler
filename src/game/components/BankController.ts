@@ -33,7 +33,11 @@ export class BankController {
         this.gameScene.topPanel.setBank(this.totalGold);
     }
 
-    getIncome() {
+    getIncome(day: number) {
+        if (day > 0 && day % 3 === 0) {
+            this.increaseIncome(1);
+        }
+
         this.changeBank(this.totalGold + this.income);
     }
 

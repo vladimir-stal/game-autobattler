@@ -19,7 +19,6 @@ interface IProps {
 }
 
 export const PhaserGame = forwardRef<IRefPhaserGame, IProps>(function PhaserGame({currentActiveScene}, ref) {
-    console.log('PhaserGame')
     const game = useRef<Phaser.Game | null>(null!);
 
     

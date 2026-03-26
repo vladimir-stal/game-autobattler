@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import { EHeroClassType, EItemBonusType, IHeroSkillSet, IItem, IUnit } from "../../../types";
+import { EHeroClass, EHeroClassType, EItemBonusType, EItemType, IHeroSkillSet, IItem, IUnit } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { GameScene } from "../../scenes/GameScene";
 import {
@@ -13,6 +13,9 @@ import {
     IMAGE_ICON_REGEN,
     IMAGE_ICON_SHIELD,
 } from "../../utils/imageLoadUtil";
+import { HeroClassTag } from "./HeroClassTag";
+import { getWeaponItemHeroClasses } from "../../utils/itemUtils";
+import { IMAGE_ITEM_ARMOR_1 } from "../../utils/load/imageLoadItems";
 
 export class CardHintPanel extends Phaser.GameObjects.Container {
     text: string;
@@ -23,11 +26,18 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     enchancedChainedIcon: GameObjects.Image;
     enchancedOnStartIcon: GameObjects.Image;
     enchancedText: GameObjects.Text;
+    skillImage: GameObjects.Image;
+    skillContainer: GameObjects.Container;
     // item
     bonusTextObject: GameObjects.Text;
     attrTextObject: GameObjects.Text;
     heroClassBonusTextObject: GameObjects.Text;
     afterDuelBonusesTextObject: GameObjects.Text;
+    itemImage: GameObjects.Image;
+    //itemImageBorder: GameObjects.Rectangle;
+    itemContainer: GameObjects.Container;
+    //cTag1: HeroClassTag;
+    //hcTag2: HeroClassTag;
     // unit
     hpIcon: GameObjects.Image;
     hpText: GameObjects.Text;
@@ -55,6 +65,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     //
     activeSkillText: GameObjects.Text;
     passiveSkillText: GameObjects.Text;
+    baTypeText: GameObjects.Text;
 
     constructor(gameScene: GameScene, x: number, y: number) {
         super(gameScene, x, y);
@@ -63,7 +74,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     }
 
     render() {
-        const rect = this.scene.add.rectangle(0, 0, 200, 200, colors.BLACK).setOrigin(0, 0);
+        const rect = this.scene.add.rectangle(0, 0, 200, 300, colors.BLACK).setOrigin(0, 0);
         rect.setStrokeStyle(1, 0x777777);
         this.add(rect);
 
@@ -78,7 +89,18 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         });
         this.add(this.titleText);
 
-        // SKILL
+        //
+        //
+        // SKILL //////////////////////////////////////////////////////////////// SKILL
+        //
+        //
+
+        // skill image
+
+        this.skillImage = this.scene.add.image(25, 100, IMAGE_ITEM_ARMOR_1, 0).setDisplaySize(150, 150).setOrigin(0, 0).setVisible(false);
+        this.add(this.skillImage);
+
+        //
 
         this.descrText = this.scene.add.text(20, 40, "", {
             //fontFamily: "Arial Black",
@@ -104,7 +126,16 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.enchancedOnStartIcon = this.scene.add.image(5, 160, IMAGE_ICON_ATTACK).setOrigin(0, 0).setVisible(false);
         this.add(this.enchancedOnStartIcon);
 
-        // ITEM
+        // skill tags
+
+        this.skillContainer = this.scene.add.container(0, 0).setVisible(false);
+        this.add(this.skillContainer);
+
+        //
+        //
+        // ITEM //////////////////////////////////////////////////////////////// ITEM
+        //
+        //
 
         this.bonusTextObject = this.scene.add.text(10, 60, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.bonusTextObject);
@@ -118,7 +149,31 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.afterDuelBonusesTextObject = this.scene.add.text(10, 80, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
         this.add(this.afterDuelBonusesTextObject);
 
-        // UNIT
+        // item image
+
+        //this.itemImageBorder = this.scene.add.rectangle(250, 0, 250, 300, colors.BLACK).setOrigin(0, 0).setVisible(false);
+        //this.itemImageBorder.setStrokeStyle(1, 0x777777);
+        //this.add(this.itemImageBorder);
+
+        this.itemImage = this.scene.add.image(25, 150, IMAGE_ITEM_ARMOR_1, 0).setDisplaySize(150, 150).setOrigin(0, 0).setVisible(false);
+        this.add(this.itemImage);
+
+        // item tags
+
+        this.itemContainer = this.scene.add.container(0, 0).setVisible(false);
+        this.add(this.itemContainer);
+
+        // this.hcTag1 = new HeroClassTag(this.scene as GameScene, 0, 200, EHeroClass.ALL).setVisible(false);
+        // this.add(this.hcTag1);
+
+        // this.hcTag2 = new HeroClassTag(this.scene as GameScene, 40, 200, EHeroClass.ALL).setVisible(false);
+        // this.add(this.hcTag2);
+
+        //
+        //
+        // UNIT //////////////////////////////////////////////////////////////// UNIT
+        //
+        //
 
         this.hpText = this.scene.add.text(47, 32, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.hpText);
@@ -172,13 +227,15 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         // unit skills
 
-        this.activeSkillText = this.scene.add.text(10, 120, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.activeSkillText = this.scene.add.text(10, 140, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.activeSkillText);
-        this.passiveSkillText = this.scene.add.text(10, 140, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.passiveSkillText = this.scene.add.text(10, 220, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.passiveSkillText);
+        this.baTypeText = this.scene.add.text(10, 260, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.baTypeText);
     }
 
-    showSkill(x: number, y: number, skillSet: IHeroSkillSet) {
+    showSkill(x: number, y: number, skillSet: IHeroSkillSet, isFromHero?: boolean) {
         //console.log("SHOW SKILL HINT");
         //console.log("skillset", skillSet);
 
@@ -194,24 +251,48 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.descrText.setVisible(true);
         this.descrText.setText(desc);
 
+        this.enchancedOnStartIcon.setVisible(false);
+        this.enchancedChainedIcon.setVisible(false);
+        this.enchancedText.setVisible(false);
+
         if (isActivateOnStart) {
             this.enchancedOnStartIcon.setVisible(true);
-            this.enchancedChainedIcon.setVisible(false);
             this.enchancedText.setText("triggers before battle");
             this.enchancedText.setVisible(true);
         }
 
         if (isChained) {
             this.enchancedChainedIcon.setVisible(true);
-            this.enchancedOnStartIcon.setVisible(false);
             this.enchancedText.setText("skill is chained");
             this.enchancedText.setVisible(true);
         }
 
         //
+
+        if (isFromHero) {
+            const { image } = skillSet;
+
+            this.skillImage.setTexture(image);
+            this.skillImage.setVisible(true);
+
+            // tags
+
+            this.skillContainer.setVisible(true);
+
+            skillSet.heroClasses.forEach((heroClass, index) => {
+                const x = 10 + index * 60;
+                const y = 270;
+                const hcTag = new HeroClassTag(this.scene as GameScene, x, y, heroClass);
+                this.skillContainer.add(hcTag);
+            });
+        } else {
+            this.skillImage.setVisible(false);
+            this.skillContainer.setVisible(false);
+            this.skillContainer.removeAll(true);
+        }
     }
 
-    showItem(x: number, y: number, item: IItem) {
+    showItem(x: number, y: number, item: IItem, isFromHero?: boolean) {
         this.show(x, y);
 
         this.hideSkillFields();
@@ -289,6 +370,35 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         } else {
             this.afterDuelBonusesTextObject.setVisible(false);
         }
+
+        if (isFromHero) {
+            const { image } = item;
+
+            this.itemImage.setTexture(image);
+            this.itemImage.setVisible(true);
+
+            // tags
+
+            this.itemContainer.setVisible(true);
+
+            let heroClasses: EHeroClass[] = [];
+            if (item.type === EItemType.WEAPON && item.weaponType) {
+                heroClasses = getWeaponItemHeroClasses(item.weaponType);
+            } else if (item.type === EItemType.COMMON) {
+                heroClasses = item.heroClasses;
+            }
+
+            heroClasses.forEach((heroClass, index) => {
+                const x = 10 + index * 60;
+                const y = 270;
+                const hcTag = new HeroClassTag(this.scene as GameScene, x, y, heroClass);
+                this.itemContainer.add(hcTag);
+            });
+        } else {
+            this.itemImage.setVisible(false);
+            this.itemContainer.setVisible(false);
+            this.itemContainer.removeAll(true);
+        }
     }
 
     showUnit(x: number, y: number, unit: IUnit, options?: { isSkills: boolean }) {
@@ -344,7 +454,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         if (options?.isSkills && unit.heroClassType === EHeroClassType.MULTI) {
             this.activeSkillText.setVisible(true);
-            this.activeSkillText.setText("Skill: " + unit.skills[0].name);
+            this.activeSkillText.setText("Skill: " + unit.skills[0].name + "\n" + unit.skills[0].desc);
 
             if (unit.passiveSkill) {
                 this.passiveSkillText.setVisible(true);
@@ -352,9 +462,12 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
             } else {
                 this.passiveSkillText.setVisible(false);
             }
+            this.baTypeText.setVisible(true);
+            this.baTypeText.setText("Basic attack: " + unit.attackType);
         } else {
             this.activeSkillText.setVisible(false);
             this.passiveSkillText.setVisible(false);
+            this.baTypeText.setVisible(false);
         }
     }
 
@@ -375,6 +488,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.enchancedChainedIcon.setVisible(false);
         this.enchancedOnStartIcon.setVisible(false);
         this.enchancedText.setVisible(false);
+        this.skillContainer.setVisible(false);
+        this.skillImage.setVisible(false);
     }
 
     hideItemFields() {
@@ -382,6 +497,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.attrTextObject.setVisible(false);
         this.heroClassBonusTextObject.setVisible(false);
         this.afterDuelBonusesTextObject.setVisible(false);
+        this.itemContainer.setVisible(false);
+        this.itemImage.setVisible(false);
     }
 
     hideUnitFields() {
@@ -411,5 +528,6 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         this.passiveSkillText.setVisible(false);
         this.activeSkillText.setVisible(false);
+        this.baTypeText.setVisible(false);
     }
 }

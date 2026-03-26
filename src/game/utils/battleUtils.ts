@@ -4,8 +4,11 @@ import {
     EDebuffType,
     EHeroAttackType,
     EItemBattleBonusType,
+    ESkillCondition,
+    ESkillSetType,
     EStatusType,
     ETargetType,
+    IBattleAction,
     IBattleUnit,
     IBuff,
     IDebuff,
@@ -18,7 +21,9 @@ import {
     THeroBattleAttribute,
     TValueType,
 } from "../../types";
-import { getRandomArrayItem } from "./commonUtils";
+import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
+import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { generateId, generateUnitId } from "./unitUtils";
 
 export const getFirstTarget = (units: TBattleUnits) => {
@@ -58,6 +63,55 @@ export const getFirstTwoTargets = (units: TBattleUnits): IBattleUnit[] => {
     return result;
 };
 
+export const getFirstThreeTargets = (units: TBattleUnits): IBattleUnit[] => {
+    const result: IBattleUnit[] = [];
+    let unitsFoundCount = 0;
+    units.forEach((unit) => {
+        if (unit && unit.hp > 0) {
+            if (unitsFoundCount < 3) {
+                result.push(unit);
+                unitsFoundCount++;
+            }
+        }
+    });
+    return result;
+};
+
+export const getAllyTargetInFront = (unitId: string, units: TBattleUnits): IBattleUnit => {
+    const unitIndex = units.findIndex((unit) => unit && unit.hp > 0 && unit.id === unitId);
+    if (unitIndex === -1) {
+        return null;
+    }
+    if (unitIndex === 0) {
+        return units[0];
+    }
+
+    let unitInFront = units[unitIndex - 1];
+    if (unitInFront && unitInFront.hp > 0) {
+        return unitInFront;
+    }
+
+    if (unitIndex === 1) {
+        return units[1];
+    }
+
+    unitInFront = units[unitIndex - 2];
+    if (unitInFront && unitInFront.hp > 0) {
+        return unitInFront;
+    }
+
+    if (unitIndex === 2) {
+        return units[2];
+    }
+
+    unitInFront = units[unitIndex - 3];
+    if (unitInFront && unitInFront.hp > 0) {
+        return unitInFront;
+    }
+
+    return units[3];
+};
+
 export const getHighestAttributeTarget = (units: TBattleUnits, attr: THeroBattleAttribute): IBattleUnit | null => {
     return units.reduce((result, unit) => {
         if (unit && unit.hp > 0) {
@@ -68,6 +122,24 @@ export const getHighestAttributeTarget = (units: TBattleUnits, attr: THeroBattle
         }
         return result;
     }, null);
+};
+
+export const getHighestStatusTarget = (units: TBattleUnits, statusType: EStatusType): IBattleUnit | null => {
+    return units.reduce(
+        (result, unit) => {
+            if (unit && unit.hp > 0) {
+                const statusValue = unit.statuses.find((status) => status.type === statusType).value || 0;
+
+                if (!result.unit) {
+                    return { unit, statusValue };
+                }
+
+                return statusValue > result.statusValue ? { unit, statusValue } : result;
+            }
+            return result;
+        },
+        { unit: null, statusValue: 0 },
+    ).unit;
 };
 
 export const getLowHpTarget = (units: TBattleUnits): IBattleUnit | null => {
@@ -90,16 +162,16 @@ export const getRandomTarget = (units: TBattleUnits) => {
     return getRandomArrayItem(units.filter((unit) => unit && unit.hp > 0));
 };
 
-export const getTarget = (units: TBattleUnits, targetType: ETargetType) => {
-    switch (targetType) {
-        case ETargetType.FIRST_ENEMY:
-            return getFirstTarget(units);
-        case ETargetType.RANDOM_ENEMY:
-            return getRandomTarget(units);
-        default:
-            return null;
-    }
-};
+// export const getTarget = (units: TBattleUnits, targetType: ETargetType) => {
+//     switch (targetType) {
+//         case ETargetType.FIRST_ENEMY:
+//             return getFirstTarget(units);
+//         case ETargetType.RANDOM_ENEMY:
+//             return getRandomTarget(units);
+//         default:
+//             return null;
+//     }
+// };
 
 const getAllAllySummons = (units: TBattleUnits) => {
     return units.reduce((summons, unit) => {
@@ -117,16 +189,32 @@ const getBuffedAllies = (units: TBattleUnits): IBattleUnit[] => {
     return units.filter((unit) => unit !== null).filter((unit) => unit.buffs.length);
 };
 
+const getDebuffedAllies = (units: TBattleUnits): IBattleUnit[] => {
+    return units.filter((unit) => unit !== null).filter((unit) => unit.debuffs.length);
+};
+
 const isAliveUnit = (unit: IBattleUnit | null): unit is IBattleUnit => !!unit && unit.hp > 0;
 
-export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetType: ETargetType): IBattleUnit[] | null => {
+export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetType: ETargetType, targetUnitId?: string): IBattleUnit[] | null => {
     switch (targetType) {
+        case ETargetType.BY_UNIT_ID: {
+            const targetUnit = units.find((allyUnit) => allyUnit && allyUnit.id === targetUnitId);
+            return [targetUnit];
+        }
         case ETargetType.ALL_ALLIES:
             return units.filter((unit) => isAliveUnit(unit));
         case ETargetType.ALL_ALLY_SUMMONS:
             return getAllAllySummons(units);
+        case ETargetType.ALLY_IN_FRONT: {
+            const allyInFront = getAllyTargetInFront(unit.id, units);
+            console.log("ALLY IN FRONT ", allyInFront);
+            return [allyInFront];
+        }
         case ETargetType.BUFFED_ALLY_RANDOM: {
             return [getRandomArrayItem(getBuffedAllies(units))];
+        }
+        case ETargetType.DEBUFFED_ALLY_RANDOM: {
+            return [getRandomArrayItem(getDebuffedAllies(units))];
         }
         case ETargetType.FIRST_ALLY: {
             const firstTarget = getFirstTarget(units);
@@ -150,6 +238,9 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
         case ETargetType.RANDOM_ALLY: {
             return [getRandomArrayItem(units.filter((unit) => unit !== null))];
         }
+        case ETargetType.RANDOM_ALLY_EXCEPT_ID: {
+            return [getRandomArrayItem(units.filter((unit) => unit !== null && unit.id !== targetUnitId))];
+        }
         case ETargetType.SELF:
             return [unit];
         case ETargetType.SUMMON_CURRENT:
@@ -159,23 +250,14 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
     }
 };
 
-export const getAllyTotems = (unit: IBattleUnit, units: TBattleUnits, targetType: ETargetType): ITotem[] => {
-    switch (targetType) {
-        case ETargetType.TOTEM_ALLY_ALL:
-            return units
-                .filter((unit) => isAliveUnit(unit) && unit.totem)
-                .map((unitWithTotem) => unitWithTotem!.totem)
-                .filter((totem) => !!totem);
-        case ETargetType.TOTEM_ALLY_CURRENT:
-            return unit.totem ? [unit.totem] : [];
-        default:
-            return [];
-    }
-};
-
-export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType, debuffType?: EDebuffType): IBattleUnit[] | null => {
+export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType, debuffType?: EDebuffType, targetUnitId?: string): IBattleUnit[] | null => {
     //console.log("getOpponentTargets", targetType);
     switch (targetType) {
+        case ETargetType.BY_UNIT_ID: {
+            const targetUnit = units.find((enemyUnit) => enemyUnit && enemyUnit.id === targetUnitId);
+            console.log("getOpponentTargets >>>> BY_UNIT_ID >>>> targetUnit = ", targetUnit);
+            return [targetUnit];
+        }
         case ETargetType.ALL_ENEMIES:
             return units.filter((unit) => isAliveUnit(unit));
         case ETargetType.FIRST_ENEMY: {
@@ -185,12 +267,23 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
         case ETargetType.FIRST_TWO_ENEMIES: {
             return getFirstTwoTargets(units);
         }
+        case ETargetType.FIRST_THREE_ENEMIES: {
+            return getFirstThreeTargets(units);
+        }
         case ETargetType.HIGH_ATTACK_ENEMY: {
             const target = getHighestAttributeTarget(units, "attack");
             return target ? [target] : null;
         }
+        case ETargetType.HIGH_BLEED_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.BLEED);
+            return target ? [target] : null;
+        }
         case ETargetType.HIGH_MP_ENEMY: {
             const target = getHighestAttributeTarget(units, "magicPower");
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_PP_ENEMY: {
+            const target = getHighestAttributeTarget(units, "physicalPower");
             return target ? [target] : null;
         }
         case ETargetType.LOW_HP_ENEMY: {
@@ -222,6 +315,42 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
     }
 };
 
+export const getTargets = (
+    unit: IBattleUnit,
+    allyUnits: TBattleUnits,
+    enemyUnits: TBattleUnits,
+    targetType: ETargetType,
+    targetUnitId?: string,
+    debuffType?: EDebuffType,
+): IBattleUnit[] | null => {
+    if (targetType === ETargetType.BY_UNIT_ID) {
+        if (!targetUnitId) {
+            console.log("ERROR! getTargets >>> targetType BY_UNIT_ID and targetUnitId is not provided");
+            return [];
+        }
+        console.log("getTargets >>> BY_UNIT_ID >>> ", targetUnitId);
+        console.log("allUnits >>> ", allyUnits.concat(enemyUnits));
+        const unitById = allyUnits.concat(enemyUnits).find((unit) => unit && (unit.id === targetUnitId || unit.summon?.id === targetUnitId));
+        return [unitById];
+    }
+
+    return allyTargets.includes(targetType) ? getAllyTargets(unit, allyUnits, targetType) : getOpponentTargets(enemyUnits, targetType, debuffType);
+};
+
+export const getAllyTotems = (unit: IBattleUnit, units: TBattleUnits, targetType: ETargetType): ITotem[] => {
+    switch (targetType) {
+        case ETargetType.TOTEM_ALLY_ALL:
+            return units
+                .filter((unit) => isAliveUnit(unit) && unit.totem)
+                .map((unitWithTotem) => unitWithTotem!.totem)
+                .filter((totem) => !!totem);
+        case ETargetType.TOTEM_ALLY_CURRENT:
+            return unit.totem ? [unit.totem] : [];
+        default:
+            return [];
+    }
+};
+
 export const calculateBuffValue = (initialValue: number, buff: IBuff, unit: IBattleUnit) => {
     if (buff.valueType === "number") {
         return buff.value;
@@ -234,7 +363,7 @@ export const calculateBuffValue = (initialValue: number, buff: IBuff, unit: IBat
 };
 
 export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, debuff: IDebuff): number => {
-    //console.log("calculateDebuffValue", initialValue, debuff);
+    console.log("calculateDebuffValue", initialValue, debuff);
     // add MP or PP scaling
     const { value, valueType, mpScale, ppScale } = debuff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
@@ -243,7 +372,7 @@ export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, de
         return value + mpScaleValue + ppScaleValue;
     } else if (valueType === "percent") {
         const debuffValue = Math.floor((initialValue * value) / 100);
-        return debuffValue + mpScaleValue + ppScaleValue;
+        return (debuffValue || 1) + mpScaleValue + ppScaleValue;
     }
     return 0;
 };
@@ -294,9 +423,33 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
     battleRecord.push({ unitId: unit.id, type: EBattleActionType.BUFF_REMOVED, buff });
 };
 
+export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, battleRecord: TBattleRecord) => {
+    const currentBuff = unit.buffs.find((b) => b.type === buff.type);
+
+    if (!currentBuff) {
+        console.log("ERROR! changeBuffValue >> buff not found", buff.type);
+        return;
+    }
+
+    if (currentBuff.totalValue + value <= 0) {
+        removeBuff(unit, buff, battleRecord);
+        return;
+    }
+
+    currentBuff.value += value;
+    currentBuff.totalValue += value;
+
+    battleRecord.push({
+        unitId: unit.id,
+        type: EBattleActionType.BUFF,
+        buff,
+        buffTargets: [{ targetId: unit.id, isExisting: true, value: currentBuff.totalValue }],
+    });
+};
+
 export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
     const { basicArmor, basicMaxHp, basicAttack, basicHpRegen, basicEvasionChance, basicCritChance, basicMagicPower, basicPhysicalPower, items } = unit;
-    console.log("prepareUnitToBattle", unit);
+    //console.log("prepareUnitToBattle", unit);
     const itemBonuses: IItemBattleBonus[] = items.reduce((bonuses, item) => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
             item.battleBonuses.forEach((bonus) => bonuses.push(bonus));
@@ -434,16 +587,96 @@ export const applyStatus = (
 ) => {
     const existingStatus = target.statuses.find((st) => st.type === statusType);
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_APPLY, status: statusType, value, isStartBattle: isStartBattle });
+
     if (existingStatus) {
+        const existingStatusValue = existingStatus.value;
         existingStatus.value += value;
+        // deal damage in case of SHOCK status
+        if (statusType === EStatusType.SHOCK) {
+            takeStatusDamage(target, existingStatusValue, EStatusType.SHOCK, battleRecord);
+        }
         return;
     }
     target.statuses.push({ type: statusType, value });
 };
 
+export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statusType: EStatusType, battleRecord: TBattleRecord) => {
+    target.hp -= damageValue;
+
+    const { armor } = target;
+
+    const ignoreArmor = [EStatusType.BLEED, EStatusType.POISON].includes(statusType);
+
+    if (!ignoreArmor && target.armor > 0) {
+        // calclate damage to armor
+        let finalDamageValue = damageValue;
+        let armorLeft = armor - finalDamageValue;
+        if (armorLeft < 0) {
+            armorLeft = 0;
+        }
+
+        const armorDamaged = armorLeft > 0 ? finalDamageValue : armor;
+
+        finalDamageValue -= armor;
+        if (finalDamageValue < 0) {
+            finalDamageValue = 0;
+        }
+        // decrease armor
+        target.armor = armorLeft;
+        battleRecord.push({
+            unitId: target.id,
+            type: EBattleActionType.TAKE_DAMAGE,
+            value: finalDamageValue,
+            value2: target.hp,
+            status: statusType,
+            armorValue: armorDamaged,
+        });
+    } else {
+        battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp, status: statusType });
+    }
+
+    // remove BURN after damage
+    if (statusType === EStatusType.BURN) {
+        removeStatus(target, target, statusType, battleRecord);
+    }
+
+    if (target.hp <= 0) {
+        target.hp = 0;
+        battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
+    }
+};
+
 export const removeStatus = (unit: IBattleUnit, target: IBattleUnit, statusType: EStatusType, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_REMOVE, status: statusType, isStartBattle });
     target.statuses = target.statuses.filter((status) => status.type !== statusType);
+};
+
+export const applyDebuff = (target: IBattleUnit, debuff: IDebuff, debuffAction: IBattleAction) => {
+    //
+    // if same debuff already on target, dont apply new one, but empower existing one instead
+    const existingDebuff = target.debuffs.find((dbf) => dbf.type === debuff.type);
+
+    if (existingDebuff) {
+        console.log("existing debuff found", target.id, debuff.type);
+        // TODO: empower existing debuff
+        switch (debuff.type) {
+            case EDebuffType.MARK_BLADEDANCER:
+                {
+                    existingDebuff.value += 1;
+                    existingDebuff.totalValue += 1;
+                    //debuffAction.value = existingDebuff.totalValue;
+                    //console.log("debuffAction >>>>", debuffAction);
+                    debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingDebuff.totalValue });
+                }
+                break;
+            default: {
+                debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true });
+            }
+        }
+    } else {
+        target.debuffs.push({ ...debuff });
+        debuffAction.buffTargets?.push({ targetId: target.id });
+    }
 };
 
 export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex: number, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
@@ -542,4 +775,111 @@ export const getStatusItemBonusType = (status: EStatusType) => {
             console.log("ERROR No item status bonus for status type", status);
         }
     }
+};
+
+export const getExistingBuff = (unit: IBattleUnit, buff: IBuff) => {
+    const { type, attribute } = buff;
+
+    return unit.buffs.find((existingBuff) => {
+        if (type === EBuffType.ATTRIBUTE_INCREASE && existingBuff.type === EBuffType.ATTRIBUTE_INCREASE && attribute === existingBuff.attribute) {
+            return true;
+        }
+
+        return type === existingBuff.type;
+    });
+};
+
+export const prepareUniqueSummonToBattle = (unit: IBattleUnit, summon: IBattleUnit) => {
+    // check unique summon types
+    if (unit.summon.id.startsWith("ILLUSIONSUMMON")) {
+        unit.skills.forEach((skill) => {
+            if (skill.isMcSkill) {
+                unit.summon.skills.push(noBasicAttackSkill);
+                return;
+            }
+            if (skill.type === ESkillSetType.MAGIC_ATTACK) {
+                unit.summon.skills.push({ ...skill, isBasicAttack: false });
+                return;
+            }
+            unit.summon.skills.push(noBasicAttackSkill);
+        });
+    }
+};
+
+export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillCondition) => {
+    switch (condition) {
+        case ESkillCondition.MP_IS_EQUALS_PP:
+            return unit.magicPower === unit.physicalPower;
+        case ESkillCondition.MP_IS_HIGHER_THAN_PP:
+            return unit.magicPower > unit.physicalPower;
+        case ESkillCondition.PP_IS_HIGHER_THAN_MP:
+            return unit.physicalPower > unit.magicPower;
+    }
+};
+
+export const calculateDamageBonuses = (
+    unit: IBattleUnit,
+    attackType: EHeroAttackType,
+    initialDamage: number,
+    mpScale: number,
+    ppScale: number,
+    isCritAllowed: boolean,
+) => {
+    //
+    let attackDamage = initialDamage;
+    //
+    // calculate scale from MP or PP
+    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+    attackDamage += mpScaleValue + ppScaleValue;
+    //
+    // calculate attack damage according to items bonuses
+    const bonusType = attackType === EHeroAttackType.MAGIC ? EItemBattleBonusType.INCREASE_MAGIC_DAMAGE : EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE;
+    unit.itemBonuses.forEach((bonus) => {
+        if (bonus.type === bonusType) {
+            attackDamage += calculateIncreaseValue(attackDamage, bonus.value, bonus.valueType);
+        }
+    });
+    unit.itemBonuses.forEach((bonus) => {
+        if (bonus.type === EItemBattleBonusType.INCREASE_TOTAL_DAMAGE_FROM_HP) {
+            attackDamage += Math.floor((attackDamage * (unit.hp * bonus.value)) / 100 / 100);
+            //attackDamage *= calculateIncreaseValue(attackDamage, bonus.value, bonus.valueType, unit.hp);
+        }
+    });
+
+    // calculate attack damage according to buffs and debuffs
+    unit.buffs.forEach((buff) => {
+        if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
+            const { value, valueType, valueFrom } = buff;
+            if (!valueType || value === undefined) {
+                return;
+            }
+            const percentFrom = valueFrom ? unit[valueFrom] : undefined;
+            attackDamage += calculateIncreaseValue(attackDamage!, value, valueType, percentFrom);
+        }
+    });
+
+    // calculate critical strike value
+    let isCrit = false;
+    if (isCritAllowed) {
+        if (unit.critChance > 0) {
+            if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
+                isCrit = true;
+                attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
+            }
+        }
+    }
+
+    // check bonuses/debuffs for crit and non-crit damage
+    const critNonCritBonus = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR);
+    if (critNonCritBonus) {
+        // increase damage if critical hit, descrese damage on non critical hit
+        if (isCrit) {
+            attackDamage += calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
+        } else {
+            attackDamage -= calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
+        }
+    }
+
+    return { attackDamage, isCrit };
 };

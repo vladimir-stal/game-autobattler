@@ -13,7 +13,9 @@ import {
     gloves_war2,
 } from "./commonItemConsts";
 import {
+    assasinHero,
     beastMasterHero,
+    bishopHero,
     blackKnightHero,
     druidHero,
     forestSpiritHero,
@@ -23,31 +25,33 @@ import {
     magicBardHero,
     minstrelHero,
     monkHero,
+    necromancerHero,
     paladinHero,
     predatorHero,
     samuraiHero,
     witchHero,
+    zealotHero,
 } from "./mcHeroConsts";
+import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import { phycisalAttackSkill } from "./skills/commonSkillConsts";
 import { magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { magicAttack } from "./skills/magicSkillConsts";
 import { buffNextBaIgnoreArmorSelf, buffNextBaXSelf } from "./skills/masterSkillConsts";
-import { attrArmorSelf } from "./skills/orderSkillConsts";
+import { attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2 } from "./skills/priestSkillConsts";
-import { fireflySummonSkill } from "./skills/summonSkillConsts";
+import { fireflySummonSkill } from "./skills/summonSkillConsts2";
 import { buffNextBa } from "./skills/warriorSkillConsts";
 import { attrDescArmor, totemAttackSkill } from "./skills/wildSkillConsts";
-import { peasantUnit, weakGoblinUnit } from "./unitConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
 import { axe22, mace21, musical21, musical21_2, scepter22, shield22, sword22_2, totem21, totem22, wand21, wand21_2 } from "./weaponItem2Consts";
+import { weakGoblinUnit } from "./units/goblinMobUnits";
 
 type TDuelEnemy = Record<number, (IUnit | null)[]>;
 
 const addItem = (unit: IUnit, item: IItem) => {
     unit.items.push(item);
-    //applyItemBonuses(item, unit);
 };
 
 const applyItems = (unit: IUnit): IUnit => {
@@ -574,7 +578,7 @@ export const enemy5: TDuelEnemy = {
 
 const unit61 = createHero(orderHero);
 addItem(unit61, shield1);
-unit61.skills.push(healFirst);
+unit61.skills.push(attrAttackSelf);
 
 // 1
 
@@ -591,7 +595,7 @@ levelUpUnit(unit61_2);
 
 const unit62_2 = createHero(magicHero);
 unit62_2.items = [basic_ring_damage];
-unit61.skills = [magicAttack, magicAttack];
+unit62_2.skills = [magicAttack, magicAttack];
 
 const unit63_2 = { ...weakGoblinUnit };
 
@@ -683,3 +687,121 @@ export const enemy6: TDuelEnemy = {
 //
 
 export const duelEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy1, enemy2];
+
+////////////////////////////////////
+
+// TEST
+
+export const testNecromancer: TDuelEnemy = {
+    1: [{ ...necromancerHero }, { ...necromancerHero }, { ...necromancerHero }, { ...necromancerHero }],
+    0: [necromancerHero],
+    2: [necromancerHero],
+    3: [necromancerHero],
+    4: [necromancerHero],
+    5: [necromancerHero],
+    6: [necromancerHero],
+    7: [necromancerHero],
+    8: [necromancerHero],
+    9: [necromancerHero],
+    10: [necromancerHero],
+};
+
+export const testBeastmaster: TDuelEnemy = {
+    0: [beastMasterHero],
+    1: [beastMasterHero],
+    2: [beastMasterHero],
+    3: [beastMasterHero],
+    4: [beastMasterHero],
+    5: [beastMasterHero],
+    6: [beastMasterHero],
+    7: [beastMasterHero],
+    8: [beastMasterHero],
+    9: [beastMasterHero],
+    10: [beastMasterHero],
+};
+
+export const testAssassin: TDuelEnemy = {
+    0: [assasinHero],
+    1: [assasinHero],
+    2: [assasinHero],
+    3: [assasinHero],
+    4: [assasinHero],
+    5: [assasinHero],
+    6: [assasinHero],
+    7: [assasinHero],
+    8: [assasinHero],
+    9: [assasinHero],
+    10: [assasinHero],
+};
+
+export const testWild: TDuelEnemy = {
+    0: [wildHero],
+    1: [wildHero],
+    2: [wildHero],
+    3: [wildHero],
+    4: [wildHero],
+    5: [wildHero],
+    6: [wildHero],
+    7: [wildHero],
+    8: [wildHero],
+    9: [wildHero],
+    10: [wildHero],
+};
+
+export const testMaster: TDuelEnemy = {
+    0: [masterHero],
+    1: [masterHero],
+    2: [masterHero],
+    3: [masterHero],
+    4: [masterHero],
+    5: [masterHero],
+    6: [masterHero],
+    7: [masterHero],
+    8: [masterHero],
+    9: [masterHero],
+    10: [masterHero],
+};
+
+export const testBishop: TDuelEnemy = {
+    0: [bishopHero, bishopHero, bishopHero, bishopHero],
+    1: [bishopHero],
+    2: [bishopHero],
+    3: [bishopHero],
+    4: [bishopHero],
+    5: [bishopHero],
+    6: [bishopHero],
+    7: [bishopHero],
+    8: [bishopHero],
+    9: [bishopHero],
+    10: [bishopHero],
+};
+
+export const testZealot: TDuelEnemy = {
+    0: [zealotHero],
+    1: [zealotHero],
+    2: [zealotHero],
+    3: [zealotHero],
+    4: [zealotHero],
+    5: [zealotHero],
+    6: [zealotHero],
+    7: [zealotHero],
+    8: [zealotHero],
+    9: [zealotHero],
+    10: [zealotHero],
+};
+
+export const testSamurai: TDuelEnemy = {
+    1: [samuraiHero],
+    0: [samuraiHero],
+    2: [samuraiHero],
+    3: [samuraiHero],
+    4: [samuraiHero],
+    5: [samuraiHero],
+    6: [samuraiHero],
+    7: [samuraiHero],
+    8: [samuraiHero],
+    9: [samuraiHero],
+    10: [samuraiHero],
+};
+
+export const testDuelEnemies = [testSamurai];

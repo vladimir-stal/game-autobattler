@@ -98,6 +98,38 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             const y = 0;
             this.renderCard(unit, x, y, false);
         });
+        // let x, y;
+        // this.playerUnits.forEach((unit, index) => {
+        //     switch (index) {
+        //         case 0:
+        //             {
+        //                 x = 500;
+        //                 y = 0;
+        //             }
+        //             break;
+        //         case 1:
+        //             {
+        //                 x = 200;
+        //                 y = -200;
+        //             }
+        //             break;
+        //         case 2:
+        //             {
+        //                 x = 200;
+        //                 y = 200;
+        //             }
+        //             break;
+        //         case 3:
+        //             {
+        //                 x = -100;
+        //                 y = 0;
+        //             }
+        //             break;
+        //     }
+        //     //const x = (3 - index) * 200 - 100;
+        //     //const y = 0;
+        //     this.renderCard(unit, x, y, false);
+        // });
     }
 
     renderEnemyUnitsPanel() {
@@ -106,18 +138,49 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             const y = 0;
             this.renderCard(unit, x, y, true);
         });
+
+        //let x, y;
+        // this.enemyUnits.forEach((unit, index) => {
+        //     switch (index) {
+        //         case 0:
+        //             {
+        //                 x = 900;
+        //                 y = 0;
+        //             }
+        //             break;
+        //         case 1:
+        //             {
+        //                 x = 1200;
+        //                 y = -200;
+        //             }
+        //             break;
+        //         case 2:
+        //             {
+        //                 x = 1200;
+        //                 y = 200;
+        //             }
+        //             break;
+        //         case 3:
+        //             {
+        //                 x = 1500;
+        //                 y = 0;
+        //             }
+        //             break;
+        //     }
+        //     this.renderCard(unit, x, y, true);
+        // });
     }
 
     renderResultPanel() {
         this.resultRect = this.scene.add
-            .rectangle(this.gameScene.camera.width / 2 - 200, 0, 400, 100, colors.BLACK)
+            .rectangle(this.gameScene.camera.width / 2 - 100, 0, 400, 100, colors.BLACK)
             .setOrigin(0.5, 0.5)
             .setVisible(false);
         this.resultRect.setStrokeStyle(1, 0x777777);
         this.add(this.resultRect);
 
         this.resultText = this.scene.add
-            .text(this.gameScene.camera.width / 2 - 200, 0, "", {
+            .text(this.gameScene.camera.width / 2 - 100, 0, "", {
                 fontFamily: "Arial Black",
                 fontSize: 40,
                 color: "#dddddd",
@@ -145,7 +208,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
 
         this.resultRect.setVisible(true);
         this.resultText.setVisible(true);
-        this.resultText.setText("PREPARE");
+        this.resultText.setText(i18n.ui.PREPARE);
 
         await new Promise((resolve) => {
             setTimeout(() => {
@@ -184,7 +247,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
     // }
 
     async playAction(action: IBattleAction) {
-        //console.log("PLAY ACTION", action);
+        console.log("PLAY ACTION", action);
         if (this.currentActionIndex === -1 || this.currentActionIndex === this.record.length - 1) {
             console.log("Battle is over");
             this.showResults();
@@ -195,6 +258,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             unitId,
             value,
             value2,
+            armorValue,
             name,
             targetId,
             status,
@@ -208,9 +272,10 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             skill,
             targets,
             isStartBattle,
+            animation,
         } = action;
         if (!unitId) {
-            console.log("ERROR! no unit id! playNextAction()", action.type);
+            //console.log("ERROR! no unit id! playNextAction()", action.type);
             this.playNextAction();
             return;
         }
@@ -219,34 +284,36 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         //     this.resetAllActions();
         // }
 
-        // if (this.isStartBattle && !isStartBattle) {
-        //     // start battle is over
-        //     this.isStartBattle = false;
+        if (this.isStartBattle && !isStartBattle) {
+            // start battle is over
+            this.isStartBattle = false;
 
-        //     this.resultRect.setVisible(true);
-        //     this.resultText.setVisible(true);
-        //     this.resultText.setText("START DUEL");
+            this.resultRect.setVisible(true);
+            this.resultText.setVisible(true);
+            this.resultText.setText("ДУЭЛЬ"); //START DUEL
 
-        //     await new Promise((resolve) => {
-        //         setTimeout(() => {
-        //             //setTimeout(() => {
-        //             this.resultRect.setVisible(false);
-        //             this.resultText.setVisible(false);
-        //             //}, 1500);
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    //setTimeout(() => {
+                    this.resultRect.setVisible(false);
+                    this.resultText.setVisible(false);
+                    //}, 1500);
 
-        //             resolve(0);
-        //         }, 1500);
-        //     });
-        // }
+                    resolve(0);
+                }, 1500);
+            });
+        }
 
         switch (type) {
             case EBattleActionType.ATTACK:
                 {
                     action.targets?.forEach((target) => {
+                        const { damageValue, targetId, armorValue, isEvasion } = target;
+                        const { unit } = this.cards[unitId];
+                        this.cards[targetId].playEffect(unit, skill);
                         setTimeout(() => {
-                            const { damageValue, targetId, armorValue, isEvasion } = target;
                             this.cards[targetId].playTakeDamage(damageValue, armorValue || 0, { status, isCrit, isEvasion });
-                        }, 1000);
+                        }, 700);
                     });
 
                     await this.cards[unitId].playAttack(value, skill);
@@ -286,8 +353,25 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         console.error("ERROR! no attribute or value", type);
                         return;
                     }
-                    this.cards[unitId].setAction("ATTR DESC");
-                    this.cards[targetId].playAttrDecreaseTarget(value, attribute);
+
+                    if (targets) {
+                        targets.forEach((target) => {
+                            const { targetId, value, attribute } = target;
+                            setTimeout(() => {
+                                this.cards[targetId].playAttrDecreaseTarget(value, attribute);
+                            }, 1500);
+                        });
+                    } else {
+                        if (!attribute || value === undefined || !targetId) {
+                            console.error("ERROR! no attribute or value", type);
+                            return;
+                        }
+                        setTimeout(() => {
+                            this.cards[targetId].playAttrDecreaseTarget(value, attribute);
+                        }, 1500);
+                    }
+
+                    this.cards[unitId].playAttrDecrease(value, attribute, skill);
 
                     setTimeout(() => {
                         this.playNextAction();
@@ -303,7 +387,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
 
                     buffTargets.forEach((buffTarget) => {
                         setTimeout(() => {
-                            this.cards[buffTarget.targetId].addBuff(buff);
+                            this.cards[buffTarget.targetId].addBuff(buff, buffTarget);
                         }, 1000);
                     });
 
@@ -318,6 +402,17 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     // }
                 }
                 break;
+            // case EBattleActionType.BUFF_VALUE_CHANGED:
+            //     {
+            //         if (!buff) {
+            //             console.error("ERROR! no buff", type);
+            //             return;
+            //         }
+
+            //         this.cards[unitId].changeBuffValue(buff);
+            //         this.playNextAction();
+            //     }
+            //     break;
             case EBattleActionType.BUFF_REMOVED:
                 {
                     if (!buff) {
@@ -338,6 +433,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                 break;
             case EBattleActionType.DEATH:
                 {
+                    //console.log("PLAY ACTION >>>>> DEATH");
                     this.cards[unitId].playDead();
 
                     if (mode === "FAST") {
@@ -357,9 +453,11 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     }
                     this.cards[unitId].setAction("DEBUFF " + debuff.name);
 
-                    buffTargets.forEach((buffTarget) => {
-                        this.cards[buffTarget.targetId].addDebuff(debuff);
+                    buffTargets.forEach((debuffTarget) => {
+                        this.cards[debuffTarget.targetId].addDebuff(debuff, debuffTarget);
                     });
+
+                    await this.cards[unitId].playDebuff(debuff, skill);
 
                     if (mode === "FAST") {
                         this.playNextAction();
@@ -395,6 +493,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         return;
                     }
                     console.log("HEAL", unitId, targetId, this.cards);
+                    this.cards[targetId].playHealEffect();
                     await this.cards[unitId].playHeal(value);
                     this.cards[targetId].playHealed(value);
                     //setTimeout(() => {
@@ -409,7 +508,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         return;
                     }
 
-                    this.cards[unitId].setAction(name);
+                    this.cards[unitId].playSkillSet(name, animation);
 
                     this.playNextAction();
                 }
@@ -467,7 +566,8 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         console.error("ERROR! no attribute or value or status", type);
                         return;
                     }
-                    this.cards[targetId].setAction(`Remove ${status}`);
+                    //this.cards[targetId].setAction(`Remove ${status}`);
+                    this.cards[targetId].removeStatus(status);
 
                     if (mode === "FAST") {
                         this.playNextAction();
@@ -480,11 +580,12 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                 break;
             case EBattleActionType.SUMMON:
                 {
-                    if (!summon || !this.currentActiveUnitId) {
+                    //if (!summon || !this.currentActiveUnitId) {
+                    if (!summon || !unitId) {
                         console.error("ERROR! no summon", type);
                         return;
                     }
-                    const summonCard = await this.cards[this.currentActiveUnitId].summonUnit(summon, skill);
+                    const summonCard = await this.cards[unitId].summonUnit(summon, skill);
                     this.cards[summon.id] = summonCard;
 
                     if (mode === "FAST") {
@@ -544,7 +645,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         return;
                     }
 
-                    this.cards[unitId].playTakeDamage(value, 0, { status, skill });
+                    this.cards[unitId].playTakeDamage(value, armorValue, { status, skill });
 
                     if (mode === "FAST") {
                         setTimeout(() => {
@@ -557,19 +658,6 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     }
                 }
                 break;
-            // case EBattleActionType.TAKE_ARMOR_DAMAGE:
-            //     {
-            //         if (value === undefined) {
-            //             console.error("ERROR! no value", type);
-            //             return;
-            //         }
-
-            //         this.cards[unitId].playTakeArmorDamage(value, status);
-            //         setTimeout(() => {
-            //             this.playNextAction();
-            //         }, 1000);
-            //     }
-            //     break;
             case EBattleActionType.TOTEM_PLACE:
                 {
                     //if (!totem || !this.currentActiveUnitId) {
@@ -635,6 +723,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                 {
                     //console.log("ACTION > TURN_START", unitId, this.cards);
                     if (this.currentActiveUnitId) {
+                        console.log("ACTION > TURN_START currentActiveUnitId > ", this.currentActiveUnitId);
                         this.cards[this.currentActiveUnitId].setIsActive(false);
                     }
                     this.currentActiveUnitId = unitId;
@@ -664,8 +753,10 @@ export class BattlePanel extends Phaser.GameObjects.Container {
     }
 
     showResults() {
-        //this.resultRect.setVisible(true);
-        //this.resultText.setVisible(true);
-        //this.resultText.setText(this.gameScene.battleController.isBattleWin ? i18n.ui.VICTORY : i18n.ui.DEFEAT);
+        this.resultRect.setVisible(true);
+        this.resultText.setVisible(true);
+        this.resultText.setText(this.gameScene.battleController.isBattleWin ? i18n.ui.VICTORY : i18n.ui.DEFEAT);
+
+        this.gameScene.topPanel.changeSelectButtonToNext();
     }
 }

@@ -1,13 +1,14 @@
 import { EHeroClass, EHeroSkillType, THeroSkills } from "../types";
-import { bardSkills, bardSkills_2 } from "./skills/bardSkillConsts";
-import { darkSkills, darkSkills_2 } from "./skills/darkSkillConsts";
-import { magicSkills, magicSkills_2 } from "./skills/magicSkillConsts";
-import { masterSkills, masterSkills_2 } from "./skills/masterSkillConsts";
-import { orderSkills, orderSkills_2 } from "./skills/orderSkillConsts";
-import { priestSkills, priestSkills_2 } from "./skills/priestSkillConsts";
-import { summonSkills, summonSkills_2 } from "./skills/summonSkillConsts";
-import { warriorSkills, warriorSkills_2 } from "./skills/warriorSkillConsts";
-import { wildSkills, wildSkills_2 } from "./skills/wildSkillConsts";
+import { bardSkills, bardSkills_2, bardSkills_3 } from "./skills/bardSkillConsts";
+import { noBasicAttackSkill } from "./skills/commonSkillConsts";
+import { darkSkills, darkSkills_2, darkSkills_3 } from "./skills/darkSkillConsts";
+import { magicSkills, magicSkills_2, magicSkills_3 } from "./skills/magicSkillConsts";
+import { masterSkills, masterSkills_2, masterSkills_3 } from "./skills/masterSkillConsts";
+import { orderSkills, orderSkills_2, orderSkills_3 } from "./skills/orderSkillConsts";
+import { priestSkills, priestSkills_2, priestSkills_3 } from "./skills/priestSkillConsts";
+import { summonSkills, summonSkills_2, summonSkills_3 } from "./skills/summonSkillConsts2";
+import { warriorSkills, warriorSkills_2, warriorSkills_3 } from "./skills/warriorSkillConsts";
+import { wildSkills, wildSkills_2, wildSkills_3 } from "./skills/wildSkillConsts";
 
 export const BASIC_CLASS_MAX_SKILL_COUNT = 2;
 export const MC_CLASS_MAX_SKILL_COUNT = 4; // or 3?
@@ -21,26 +22,6 @@ export const skillPrices: Record<number, number> = {
     3: 8,
     4: 10,
 };
-
-//  COMMMON SKILLS  //////////////////////////////////////////////////////////////
-
-//TODO: do we need it?
-export const commonSkills: THeroSkills = [
-    {
-        id: "noSkill",
-        name: "no skill with basic attack",
-        level: 1,
-        desc: "EMPTY SKILL",
-        heroClasses: [EHeroClass.ALL],
-        skills: [
-            {
-                // skill just for basic attack
-                type: EHeroSkillType.NONE,
-                isBasicAttack: true,
-            },
-        ],
-    },
-];
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -70,6 +51,25 @@ export const allClassesSkills_2 = [
     ...summonSkills_2,
     ...warriorSkills_2,
     ...wildSkills_2,
+    noBasicAttackSkill,
+    //onlyBasicAttackSkill,
+].filter(function (item, pos, self) {
+    return self.indexOf(item) == pos;
+});
+
+// All basic classes skills level 3
+export const allClassesSkills_3 = [
+    ...bardSkills_3,
+    ...darkSkills_3,
+    ...magicSkills_3,
+    ...masterSkills_3,
+    ...orderSkills_3,
+    ...priestSkills_3,
+    ...summonSkills_3,
+    ...warriorSkills_3,
+    ...wildSkills_3,
+    noBasicAttackSkill,
+    //onlyBasicAttackSkill,
 ].filter(function (item, pos, self) {
     return self.indexOf(item) == pos;
 });

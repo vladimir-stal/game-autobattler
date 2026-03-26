@@ -1,21 +1,21 @@
-import { EItemAfterDuelBonusType, IAfterDuelBonus, IUnit, TUnits } from "../../types";
+import { EItemAfterDuelBonusCondition, EItemAfterDuelBonusType, IAfterDuelBonus, IUnit, TUnits } from "../../types";
 import { GameScene } from "../scenes/GameScene";
 import { addExpToUnit } from "./unitUtils";
 
-export const applyAfterDuelBonuses = (gameScene: GameScene, units: TUnits) => {
+export const applyAfterDuelBonuses = (gameScene: GameScene, units: TUnits, isBattleWin: boolean) => {
     units.forEach((unit) => {
         if (!unit) {
             return;
         }
         // check units
         if (unit.afterDuelBonuses) {
-            unit.afterDuelBonuses.forEach((bonus) => applyAfterDuelBonus(gameScene, bonus, unit));
+            unit.afterDuelBonuses.forEach((bonus) => applyAfterDuelBonus(gameScene, bonus, unit, isBattleWin));
         }
         // check items
         unit.items.forEach((item) => {
             if (item.afterDuelBonuses) {
                 item.afterDuelBonuses.forEach((bonus) => {
-                    applyAfterDuelBonus(gameScene, bonus, unit);
+                    applyAfterDuelBonus(gameScene, bonus, unit, isBattleWin);
                 });
             }
         });
@@ -28,8 +28,13 @@ export const applyAfterDuelBonuses = (gameScene: GameScene, units: TUnits) => {
  * @param bonus afterDuel bonus
  * @param unit Unit who ownes the item with afterDuel bonus
  */
-const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit: IUnit) => {
+const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit: IUnit, isBattleWin: boolean) => {
     const { type, value } = bonus;
+
+    if (bonus.condition === EItemAfterDuelBonusCondition.WON && !isBattleWin) {
+        return;
+    }
+
     switch (type) {
         case EItemAfterDuelBonusType.EXP:
             {

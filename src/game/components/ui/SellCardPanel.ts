@@ -2,7 +2,7 @@ import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
 import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
-import { ECardType } from "../../../types";
+import { ECardType, EUnitType } from "../../../types";
 
 /** UI panel to store cards */
 export class SellCardPanel extends Phaser.GameObjects.Container {
@@ -38,9 +38,30 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
             if (previousSlot) {
                 previousSlot.removeCard();
             }
-            if (card.type === ECardType.ITEM) {
-                this.gameScene.bankController.addToBank(1);
+
+            let price = 0;
+            switch (card.type) {
+                case ECardType.ITEM:
+                    {
+                        price = card.item.level || 0;
+                    }
+                    break;
+                case ECardType.SKILL:
+                    {
+                        price = card.skill.level || 0;
+                    }
+                    break;
+                case ECardType.UNIT:
+                    {
+                        if (card.unit) {
+                            const { unitType, level } = card.unit;
+                            price = unitType === EUnitType.HERO ? level : 1;
+                        }
+                    }
+                    break;
             }
+
+            this.gameScene.bankController.addToBank(price);
         });
         this.add(rect);
     }

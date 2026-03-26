@@ -22,8 +22,16 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
     }
 
     render() {
-        const a = "#5b8dc5ff";
-        const color = this.skillSet ? 0x5b8dc5 : colors.GREY; // 0x0074c2
+        if (!this.skillSet) {
+            const rect = this.scene.add.rectangle(0, 0, 30, 30, colors.GREY).setOrigin(0, 0);
+            this.add(rect);
+            return;
+        }
+
+        const { isMcSkill } = this.skillSet;
+        const simpleColor = 0x5b8dc5;
+        const mcColor = 0x9966cc; //0x9933cc;
+        const color = isMcSkill ? mcColor : simpleColor;
         const rect = this.scene.add.rectangle(0, 0, 30, 30, color).setOrigin(0, 0);
         this.add(rect);
         rect.setInteractive();
@@ -34,7 +42,7 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
                 //this.hint.show();
             }
             const { x, y } = this.getWorldPoint();
-            this.gameScene.hintPanel.showSkill(x + 40, y, this.skillSet);
+            this.gameScene.hintPanel.showSkill(x + 40, y, this.skillSet, true);
         })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 if (!this.skillSet) {

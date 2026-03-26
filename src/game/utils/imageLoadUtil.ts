@@ -3,6 +3,9 @@ import { GameScene } from "../scenes/GameScene";
 import { loadBasicHeroesImages } from "./load/basicHeroesImagesLoad";
 import { loadImagesMobs } from "./load/imageLoadMobs";
 import { loadMcHeroesImages } from "./load/mcHeroesImagesLoad";
+import { loadImagesEffects } from "./load/imageLoadEffects";
+import { loadImagesItems } from "./load/imageLoadItems";
+import { GAME_MODE } from "../consts";
 
 // UNITS
 
@@ -51,6 +54,7 @@ export const IMAGE_MAGIC_HURT = "IMAGE_MAGIC_HURT";
 export const IMAGE_MASTER_IDLE = "IMAGE_MASTER_IDLE";
 export const IMAGE_MASTER_IDLE_BATTLE = "IMAGE_MASTER_IDLE_BATTLE";
 export const IMAGE_MASTER_ATTACK = "IMAGE_MASTER_ATTACK";
+export const IMAGE_MASTER_ATTACK_2 = "IMAGE_MASTER_ATTACK_2";
 export const IMAGE_MASTER_DEFEATED = "IMAGE_MASTER_DEFEATED";
 export const IMAGE_MASTER_HURT = "IMAGE_MASTER_HURT";
 export const IMAGE_MASTER_BUFF = "IMAGE_MASTER_BUFF";
@@ -61,6 +65,7 @@ export const IMAGE_ORDER_IDLE_BATTLE = "IMAGE_ORDER_IDLE_BATTLE";
 export const IMAGE_ORDER_IDLE_BATTLE_0 = "IMAGE_ORDER_IDLE_BATTLE_0";
 export const IMAGE_ORDER_HURT = "IMAGE_ORDER_HURT";
 export const IMAGE_ORDER_ATTACK = "IMAGE_ORDER_ATTACK";
+export const IMAGE_ORDER_ATTACK_2 = "IMAGE_ORDER_ATTACK_2";
 export const IMAGE_ORDER_SHIELD_BUFF = "IMAGE_ORDER_SHIELD_BUFF";
 export const IMAGE_ORDER_DEFEATED = "IMAGE_ORDER_DEFEATED";
 //
@@ -100,18 +105,15 @@ export const IMAGE_WILD_HURT = "IMAGE_WILD_HURT";
 //
 //
 //////////// MC HEROES //////////////////////////////////////////////////////////////
-export const IMAGE_NECROMANCER = "IMAGE_NECROMANCER";
 export const IMAGE_PALADIN = "IMAGE_PALADIN";
 export const IMAGE_MONK = "IMAGE_MONK";
 export const IMAGE_PREDATOR = "IMAGE_PREDATOR";
 export const IMAGE_DRUID = "IMAGE_DRUID";
 export const IMAGE_GLADIATOR = "IMAGE_GLADIATOR";
 export const IMAGE_ALHEMIST = "IMAGE_ALHEMIST";
-export const IMAGE_BLADEDANCER = "IMAGE_BLADEDANCER";
 export const IMAGE_BEASTMASTER = "IMAGE_BEASTMASTER";
 export const IMAGE_SHADOWMASTER = "IMAGE_SHADOWMASTER";
 export const IMAGE_KNIGHT = "IMAGE_KNIGHT";
-export const IMAGE_HUNTER = "IMAGE_HUNTER";
 export const IMAGE_HERALD = "IMAGE_HERALD";
 export const IMAGE_JESTER = "IMAGE_JESTER";
 export const IMAGE_SHAMAN = "IMAGE_SHAMAN";
@@ -126,7 +128,7 @@ export const IMAGE_BLACKKNIGHT = "IMAGE_BLACKKNIGHT";
 export const IMAGE_DOOMSAYER = "IMAGE_DOOMSAYER";
 export const IMAGE_BATTLEMAGE = "IMAGE_BATTLEMAGE";
 export const IMAGE_MINSTREL = "IMAGE_MINSTREL";
-export const IMAGE_ASSASSIN = "IMAGE_ASSASSIN";
+
 export const IMAGE_BARBARIAN = "IMAGE_BARBARIAN";
 export const IMAGE_WARLOCK = "IMAGE_WARLOCK";
 export const IMAGE_ZEALOT = "IMAGE_ZEALOT";
@@ -142,11 +144,25 @@ export const IMAGE_MAGIC_BARD = "IMAGE_MAGIC_BARD";
 export const IMAGE_BARBARIAN_IDLE = "IMAGE_BARBARIAN_IDLE";
 export const IMAGE_BARBARIAN_BATTLE_IDLE = "IMAGE_BARBARIAN_BATTLE_IDLE";
 export const IMAGE_BARBARIAN_ATTACK = "IMAGE_BARBARIAN_ATTACK";
-//
+// BLADEDANCER
+export const IMAGE_BLADEDANCER = "IMAGE_BLADEDANCER";
+
+// COMMANDER
+export const IMAGE_COMMANDER_IDLE = "IMAGE_COMMANDER_IDLE";
+export const IMAGE_COMMANDER_BATTLE_IDLE = "IMAGE_COMMANDER_BATTLE_IDLE";
+export const IMAGE_COMMANDER_ATTACK = "IMAGE_COMMANDER_ATTACK";
+// PREDATOR
+export const IMAGE_PREDATOR_IDLE = "IMAGE_PREDATOR_IDLE";
+export const IMAGE_PREDATOR_BATTLE_IDLE = "IMAGE_PREDATOR_BATTLE_IDLE";
+export const IMAGE_PREDATOR_ATTACK = "IMAGE_PREDATOR_ATTACK";
+
+// RUNECASTER
+export const IMAGE_RUNECASTER_IDLE = "IMAGE_RUNECASTER_IDLE";
 // SAMURAI
 export const IMAGE_SAMURAI_IDLE = "IMAGE_SAMURAI_IDLE";
 export const IMAGE_SAMURAI_BATTLE_IDLE = "IMAGE_SAMURAI_BATTLE_IDLE";
 export const IMAGE_SAMURAI_ATTACK = "IMAGE_SAMURAI_ATTACK";
+export const IMAGE_SAMURAI_ATTACK_2 = "IMAGE_SAMURAI_ATTACK_2";
 
 export const IMAGE_FISHMAN = "IMAGE_FISHMAN";
 
@@ -166,54 +182,6 @@ export const IMAGE_BOSS_MINOTAUR_HURT = "IMAGE_BOSS_MINOTAUR_HURT";
 // TOTEMS
 
 export const IMAGE_TOTEM_ATTACK = "IMAGE_TOTEM_ATTACK";
-
-// ITEMS
-
-export const IMAGE_ITEM_WAND_1 = "IMAGE_ITEM_WAND_1";
-export const IMAGE_ITEM_STAFF_1 = "IMAGE_ITEM_STAFF_1";
-export const IMAGE_ITEM_AXE_1 = "IMAGE_ITEM_AXE_1";
-export const IMAGE_ITEM_DAGGER_1 = "IMAGE_ITEM_DAGGER_1";
-export const IMAGE_ITEM_SWORD_1 = "IMAGE_ITEM_SWORD_1";
-export const IMAGE_ITEM_SHIELD_1 = "IMAGE_ITEM_SHIELD_1";
-export const IMAGE_ITEM_LUTE_1 = "IMAGE_ITEM_LUTE_1";
-export const IMAGE_ITEM_MACE_1 = "IMAGE_ITEM_MACE_1";
-export const IMAGE_ITEM_SCEPTER_1 = "IMAGE_ITEM_SCEPTER_1";
-export const IMAGE_ITEM_TOTEM_1 = "IMAGE_ITEM_TOTEM_1";
-
-export const IMAGE_ITEM_WAND_3 = "IMAGE_ITEM_WAND_3";
-export const IMAGE_ITEM_STAFF_3 = "IMAGE_ITEM_STAFF_3";
-export const IMAGE_ITEM_AXE_3 = "IMAGE_ITEM_AXE_3";
-export const IMAGE_ITEM_DAGGER_3 = "IMAGE_ITEM_DAGGER_3";
-export const IMAGE_ITEM_SWORD_3 = "IMAGE_ITEM_SWORD_3";
-export const IMAGE_ITEM_SHIELD_3 = "IMAGE_ITEM_SHIELD_3";
-export const IMAGE_ITEM_LUTE_3 = "IMAGE_ITEM_LUTE_3";
-export const IMAGE_ITEM_MACE_3 = "IMAGE_ITEM_MACE_3";
-export const IMAGE_ITEM_SCEPTER_3 = "IMAGE_ITEM_SCEPTER_3";
-export const IMAGE_ITEM_TOTEM_3 = "IMAGE_ITEM_TOTEM_3";
-
-export const IMAGE_ITEM_HELM_1 = "IMAGE_ITEM_HELM_1";
-export const IMAGE_ITEM_ARMOR_1 = "IMAGE_ITEM_ARMOR_1";
-export const IMAGE_ITEM_RING_ATTACK_1 = "IMAGE_ITEM_RING_ATTACK_1";
-export const IMAGE_ITEM_RING_REGEN_1 = "IMAGE_ITEM_RING_REGEN_1";
-export const IMAGE_ITEM_GOLD_BAG_1 = "IMAGE_ITEM_GOLD_BAG_1";
-export const IMAGE_ITEM_RING_EXP_1 = "IMAGE_ITEM_RING_EXP_1";
-export const IMAGE_ITEM_RING_HEAL_1 = "IMAGE_ITEM_RING_HEAL_1";
-export const IMAGE_ITEM_PANTS_1 = "IMAGE_ITEM_PANTS_1";
-export const IMAGE_ITEM_BOOTS_1 = "IMAGE_ITEM_BOOTS_1";
-
-export const IMAGE_ITEM_GLOVES_21 = "IMAGE_ITEM_GLOVES_21";
-export const IMAGE_ITEM_DARK_CLOAK = "IMAGE_ITEM_DARK_CLOAK";
-export const IMAGE_ITEM_AXE_RED = "IMAGE_ITEM_AXE_RED";
-export const IMAGE_ITEM_BOOK_MAGIC = "IMAGE_ITEM_BOOK_MAGIC";
-
-export const IMAGE_ITEM_HOLY_GLOVES_1 = "IMAGE_ITEM_HOLY_GLOVES_1";
-export const IMAGE_ITEM_MAGIC_GLOVES_1 = "IMAGE_ITEM_MAGIC_GLOVES_1";
-// mob items
-export const IMAGE_ITEM_GOBLIN_SILVER_COIN = "IMAGE_ITEM_GOBLIN_SILVER_COIN";
-export const IMAGE_ITEM_GOBLIN_GOLD_COIN = "IMAGE_ITEM_GOBLIN_GOLD_COIN";
-export const IMAGE_ITEM_GOBLIN_BONE_DAGGER = "IMAGE_ITEM_GOBLIN_BONE_DAGGER";
-export const IMAGE_ITEM_PEASANTS_PITCHFORK = "IMAGE_ITEM_PEASANTS_PITCHFORK";
-export const IMAGE_ITEM_REGEN_MANTLE = "IMAGE_ITEM_REGEN_MANTLE";
 
 // ICONS
 //
@@ -257,6 +225,7 @@ export const IMAGE_SKILL_SWORD_BUFF = "IMAGE_SKILL_SWORD_BUFF";
 export const IMAGE_SKILL_SWORD_BUFF_2 = "IMAGE_SKILL_SWORD_BUFF_2";
 export const IMAGE_SKILL_AXE_BUFF = "IMAGE_SKILL_AXE_BUFF";
 export const IMAGE_SKILL_HEAL_1 = "IMAGE_SKILL_HEAL_1";
+export const IMAGE_SKILL_TEST = "IMAGE_SKILL_TEST";
 
 //
 
@@ -264,21 +233,23 @@ export function loadImages(scene: Scene) {
     // BASIC HEROES
     loadBasicHeroesImages(scene);
 
+    // BASIC HEROES
+    if (GAME_MODE === "FULL") {
+        loadImagesEffects(scene);
+    }
+
     //
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    //
     // MC HEROES
     //
     scene.load.image(IMAGE_ALHEMIST, "assets/sprites/units/alchemist.png");
     scene.load.image(IMAGE_BEASTMASTER, "assets/sprites/units/beastmaster.png");
-    scene.load.image(IMAGE_BLADEDANCER, "assets/sprites/units/bladedancer.png");
     scene.load.image(IMAGE_DRUID, "assets/sprites/units/druid.png");
     scene.load.image(IMAGE_GLADIATOR, "assets/sprites/units/gladiator.png");
     scene.load.image(IMAGE_HERALD, "assets/sprites/units/herald.png");
-    scene.load.image(IMAGE_HUNTER, "assets/sprites/units/hunter.png");
     scene.load.image(IMAGE_JESTER, "assets/sprites/units/jester.png");
     scene.load.image(IMAGE_KNIGHT, "assets/sprites/units/knight.png");
     scene.load.image(IMAGE_MONK, "assets/sprites/units/monk.png");
-    scene.load.image(IMAGE_NECROMANCER, "assets/sprites/units/necrmancer.png");
     scene.load.image(IMAGE_PALADIN, "assets/sprites/units/paladin.png");
     scene.load.image(IMAGE_PREDATOR, "assets/sprites/units/predator.png");
     scene.load.image(IMAGE_SHADOWMASTER, "assets/sprites/units/shadowmaster.png");
@@ -291,10 +262,9 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_RUNECASTER, "assets/sprites/units/runecaster.png");
     scene.load.image(IMAGE_SORCERER, "assets/sprites/units/sorceress.png");
     scene.load.image(IMAGE_BLACKKNIGHT, "assets/sprites/units/black_knight.png");
-    scene.load.image(IMAGE_DOOMSAYER, "assets/sprites/units/doomsayer.png");
+    scene.load.image(IMAGE_DOOMSAYER, "assets/sprites/units/mc/doomsayer/doomsayer.png");
     scene.load.image(IMAGE_BATTLEMAGE, "assets/sprites/units/battle_mage.png");
     scene.load.image(IMAGE_MINSTREL, "assets/sprites/units/minstrel.png");
-    scene.load.image(IMAGE_ASSASSIN, "assets/sprites/units/assassin.png");
     scene.load.image(IMAGE_BARBARIAN, "assets/sprites/units/barbarian.png");
     scene.load.image(IMAGE_WARLOCK, "assets/sprites/units/warlock.png");
     scene.load.image(IMAGE_ZEALOT, "assets/sprites/units/zealot.png");
@@ -309,36 +279,10 @@ export function loadImages(scene: Scene) {
 
     // MC ANIMATION
 
-    loadMcHeroesImages(scene);
-
-    // BOSSES
-
-    scene.load.image(IMAGE_BOSS_MINOTAUR, "assets/sprites/units/bosses/minotaur.png");
-
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500_t.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_500_t.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
+    if (GAME_MODE === "FULL") {
+        loadMcHeroesImages(scene);
+    }
+   
 
     //
     // LEADERS
@@ -353,139 +297,24 @@ export function loadImages(scene: Scene) {
 
     loadImagesMobs(scene);
 
-    // scene.load.image(IMAGE_SKELETON_1, "assets/sprites/units/mobs/skeleton_1/skeleton_1.png");
-    // scene.load.image(IMAGE_GOBLIN_1, "assets/sprites/units/mobs/goblin_1/goblin_1.png");
-    // scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.png");
-    // scene.load.image(IMAGE_PEASANT_1, "assets/sprites/units/mobs/peasant/peasant.png");
-
-    // // SKELETON_1
-
-    // scene.load.spritesheet(IMAGE_SKELETON_BATTLE_IDLE, "assets/sprites/units/mobs/skeleton_1/skeleton_battle_idle_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // // GOBLIN_1
-
-    // scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // // GOBLIN_2
-
-    // scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // scene.load.spritesheet(IMAGE_GOBLIN_2_ATTACK, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // // GOBLIN_SHAMAN
-
-    // scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    //     scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_DEFEATED, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // // PEASANT
-
-    // scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
-    // scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // TOTEMS
-    scene.load.image(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/totem1.png");
+    //scene.load.image(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/green_totem_1_300.png"); //totem1
+
+    // scene.load.spritesheet(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/green_orb_150.png", {
+    //     frameWidth: 150,
+    //     frameHeight: 269,
+    // });
+
+    scene.load.spritesheet(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/wild_basic_totem_cut_100.png", {
+        frameWidth: 100,
+        frameHeight: 100,
+    });
 
     // ITEMS
 
-    scene.load.image(IMAGE_ITEM_WAND_1, "assets/sprites/items/wand_1.png");
-    scene.load.image(IMAGE_ITEM_STAFF_1, "assets/sprites/items/staff_1.png");
-    scene.load.image(IMAGE_ITEM_AXE_1, "assets/sprites/items/axe_1.png");
-    scene.load.image(IMAGE_ITEM_DAGGER_1, "assets/sprites/items/dagger_1.png");
-    scene.load.image(IMAGE_ITEM_SWORD_1, "assets/sprites/items/sword_1.png");
-    scene.load.image(IMAGE_ITEM_SHIELD_1, "assets/sprites/items/shield_1.png");
-    scene.load.image(IMAGE_ITEM_LUTE_1, "assets/sprites/items/lute_1.png");
-    scene.load.image(IMAGE_ITEM_MACE_1, "assets/sprites/items/mace_1.png");
-    scene.load.image(IMAGE_ITEM_SCEPTER_1, "assets/sprites/items/scepter_1.png");
-    scene.load.image(IMAGE_ITEM_TOTEM_1, "assets/sprites/items/totem_skull_1.png");
-
-    scene.load.image(IMAGE_ITEM_HELM_1, "assets/sprites/items/helm_1.png");
-    scene.load.image(IMAGE_ITEM_ARMOR_1, "assets/sprites/items/armor_1.png");
-    scene.load.image(IMAGE_ITEM_PANTS_1, "assets/sprites/items/pants_1.png");
-    scene.load.image(IMAGE_ITEM_BOOTS_1, "assets/sprites/items/boots_1.png");
-
-    /// LVL 3 WEAPONS
-
-    scene.load.image(IMAGE_ITEM_WAND_3, "assets/sprites/items/3/wand_2.png");
-    scene.load.image(IMAGE_ITEM_STAFF_3, "assets/sprites/items/3/wand_2.png");
-    scene.load.image(IMAGE_ITEM_AXE_3, "assets/sprites/items/3/axe_3.png");
-    scene.load.image(IMAGE_ITEM_DAGGER_3, "assets/sprites/items/3/dagger_2.png");
-    scene.load.image(IMAGE_ITEM_SWORD_3, "assets/sprites/items/3/sword_3.png");
-    scene.load.image(IMAGE_ITEM_SHIELD_3, "assets/sprites/items/3/shield_2.png");
-    //scene.load.image(IMAGE_ITEM_LUTE_3, "assets/sprites/items/3/lute_1.png");
-    scene.load.image(IMAGE_ITEM_MACE_3, "assets/sprites/items/3/mace_2.png");
-    scene.load.image(IMAGE_ITEM_SCEPTER_3, "assets/sprites/items/3/scepter_2.png");
-    scene.load.image(IMAGE_ITEM_TOTEM_3, "assets/sprites/items/3/totem_3.png");
-
-    //
-
-    scene.load.image(IMAGE_ITEM_RING_ATTACK_1, "assets/sprites/items/ring_attack_1.png");
-    scene.load.image(IMAGE_ITEM_RING_REGEN_1, "assets/sprites/items/ring_regen_1.png");
-    scene.load.image(IMAGE_ITEM_RING_EXP_1, "assets/sprites/items/ring_exp_1.png");
-    scene.load.image(IMAGE_ITEM_RING_HEAL_1, "assets/sprites/items/heal_ring_1.png");
-
-    scene.load.image(IMAGE_ITEM_GOLD_BAG_1, "assets/sprites/items/gold_bag_1.png");
-
-    scene.load.image(IMAGE_ITEM_GLOVES_21, "assets/sprites/items/gloves_21.png");
-    scene.load.image(IMAGE_ITEM_DARK_CLOAK, "assets/sprites/items/dark_cloak.png");
-    scene.load.image(IMAGE_ITEM_AXE_RED, "assets/sprites/items/axe_red.png");
-    scene.load.image(IMAGE_ITEM_BOOK_MAGIC, "assets/sprites/items/magic_book.png");
-
-    scene.load.image(IMAGE_ITEM_HOLY_GLOVES_1, "assets/sprites/items/holy_gloves1.png");
-    scene.load.image(IMAGE_ITEM_MAGIC_GLOVES_1, "assets/sprites/items/magic_gloves1.png");
-    // mob items
-    scene.load.image(IMAGE_ITEM_GOBLIN_SILVER_COIN, "assets/sprites/items/goblin_silver_coin.png");
-    scene.load.image(IMAGE_ITEM_GOBLIN_GOLD_COIN, "assets/sprites/items/goblin_gold_coin.png");
-    scene.load.image(IMAGE_ITEM_GOBLIN_BONE_DAGGER, "assets/sprites/items/mobs/bone_dagger.png");
-    scene.load.image(IMAGE_ITEM_PEASANTS_PITCHFORK, "assets/sprites/items/mobs/peasants_pitchfork.png");
-    scene.load.image(IMAGE_ITEM_REGEN_MANTLE, "assets/sprites/items/mobs/regenMantle.png");
+    loadImagesItems(scene);
 
     // STATUSES
 
@@ -524,4 +353,5 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_SWORD_BUFF_2, "assets/sprites/skills/sword_buff_2.png");
     scene.load.image(IMAGE_SKILL_AXE_BUFF, "assets/sprites/skills/empower_axe.png");
     scene.load.image(IMAGE_SKILL_HEAL_1, "assets/sprites/skills/holy_spell_1.png");
+    scene.load.image(IMAGE_SKILL_TEST, "assets/sprites/skills/skills_test.png");
 }

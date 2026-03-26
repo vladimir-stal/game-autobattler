@@ -113,10 +113,12 @@ export class CardSlot extends Phaser.GameObjects.Container {
 
         const { card, cardSlot } = this.gameScene.cardToMove;
 
+        console.log("select CARD TO MOVE", card.unit?.items.length, card);
+
         const isItemToUnit = card.type === ECardType.ITEM && this.card?.card.type === ECardType.UNIT;
         const isExpToUnit = card.type === ECardType.EXP;
         const isSkillToUnit = card.type === ECardType.SKILL && this.card?.card.type === ECardType.UNIT;
-        //const isHealToUnit = card.type === ECardType.HEAL;
+        const isUnitToUnit = card.type === ECardType.UNIT && this.card?.card.type === ECardType.UNIT;
         const isAttributeToUnit = card.type === ECardType.ATTRIBUTE;
         const isItemUpgrade =
             card.type === ECardType.ITEM &&
@@ -129,8 +131,20 @@ export class CardSlot extends Phaser.GameObjects.Container {
             this.card?.card.skill?.id === card.skill?.id &&
             this.card?.card.skill?.level === card.skill?.level;
 
-        //console.log("isSkillUpgrade", isSkillUpgrade);
-        //console.log("isItemUpgrade", isItemUpgrade);
+        // change unit places
+        if (isUnitToUnit) {
+            const currentSlot = this.gameScene.cardToMove.cardSlot;
+            const cardToPeplace = this.card.card;
+            if (!currentSlot) {
+                console.log("NO SLOT FOR CARD", this.gameScene.cardToMove);
+            } else {
+                this.placeCard(card, cardSlot);
+                currentSlot.placeCard(cardToPeplace, undefined);
+            }
+            this.gameScene.finishCardMove();
+
+            return;
+        }
 
         if (isItemToUnit || isExpToUnit || isAttributeToUnit || isSkillToUnit || isItemUpgrade || isSkillUpgrade) {
             this.card && this.gameScene.selectController.performCardAction(card, this.card);
@@ -150,7 +164,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
     }
 
     placeCard(card: ICard, previousSlot: CardSlot | undefined) {
-        //console.log("CARD PLACED", card);
+        //console.log("placeCard >>>>", card, card.unit?.items.length);
         if (this.card) {
             this.card.destroy();
         }
@@ -160,7 +174,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
         if (previousSlot) {
             previousSlot.removeCard();
         } else {
-            console.log("NO PREVIOUS SLOT");
+            //console.log("NO PREVIOUS SLOT");
         }
 
         if (card.type === ECardType.UNIT) {
