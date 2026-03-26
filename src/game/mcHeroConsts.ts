@@ -467,7 +467,7 @@ export const magicBardHero: IUnit = {
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 2,
     basicAttackTimes: 1,
-    basicMaxHp: 56,
+    basicMaxHp: 26,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,

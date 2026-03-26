@@ -207,7 +207,6 @@ export const getRandomUnitForSell = (level: number): IUnit => {
     }
     switch (level) {
         case 0:
-            return getRandomArrayItem(unitsLvl1);
         case 1:
             return getRandomArrayItem(unitsLvl1);
         case 2:
@@ -222,17 +221,29 @@ export const getRandomUnitForSell = (level: number): IUnit => {
     }
 };
 
-/* Get unit for creating duel enemy party */
-export const getRandomUnit = (day: number) => {
+/* Get unit of specific level to get as a random card */
+export const getRandomUnitForRandom  = (day: number) => {
     switch (day) {
         case 0:
-            return getRandomArrayItem(unitsLvl1);
         case 1:
-            return getRandomArrayItem(unitsLvl1.concat(unitsLvl2).concat(unitsLvl3));
+            return getRandomArrayItem(unitsLvl1);
         case 2:
+            return getRandomArrayItem(unitsLvl1.concat(unitsLvl2).concat(unitsLvl3));
+        case 3:
+            return getRandomArrayItem(unitsLvl1.concat(unitsLvl2).concat(unitsLvl3));
+        case 4:
             return getRandomArrayItem(unitsLvl2.concat(unitsLvl3));
+        case 5:
+        case 6:
+            return getRandomArrayItem(unitsLvl2.concat(unitsLvl3).concat(unitsLvl4));
+        case 7:
+            return getRandomArrayItem(unitsLvl3.concat(unitsLvl4));
+        case 8:
+            return getRandomArrayItem(unitsLvl3.concat(unitsLvl4).concat(unitsLvl5));
+        case 9:
+            return getRandomArrayItem(unitsLvl4.concat(unitsLvl5));
         default:
-            return getRandomArrayItem(unitsLvl3);
+            return getRandomArrayItem(unitsLvl4.concat(unitsLvl5));
     }
 };
 

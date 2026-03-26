@@ -62,4 +62,4 @@ const gladiatorSkill: IHeroSkillSet = {
     nextLevel: gladiatorSkill_2,
 };
 
-export const gladiatorSkills: THeroSkills = [gladiatorSkill, phycisalAttackSkill];
+export const gladiatorSkills: THeroSkills = [gladiatorSkill];

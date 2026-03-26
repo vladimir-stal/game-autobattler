@@ -10,14 +10,8 @@ import {
     basic_pants,
     basic_ring_damage,
     basic_ring_regen,
-    boots21,
-    gloves_magic2,
-    gloves_priest2,
-    gloves_war2,
-    hat21,
-    jacket21,
 } from "./commonItemConsts";
-import { armor_amulet, hp_amulet } from "./commonItemConsts2";
+import { armor_amulet, boots21, gloves_magic2, gloves_priest2, gloves_war2, hat21, hp_amulet, jacket21 } from "./commonItemConsts2";
 import {
     axe21,
     axe22,

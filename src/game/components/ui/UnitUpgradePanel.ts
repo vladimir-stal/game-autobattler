@@ -2,7 +2,7 @@ import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
 import { ECardType, EHeroClass, ICard, IUnit } from "../../../types";
 import { CardSlot } from "../CardSlot";
-import { colors, i18n } from "../../consts";
+import { colors, GAME_MODE, i18n } from "../../consts";
 import { createUnit } from "../../utils/unitUtils";
 import { Card } from "../Card";
 import { getRandomArrayItems } from "../../utils/commonUtils";
@@ -148,26 +148,33 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         const { image, animation } = getHeroImage(heroClass);
         const y = 350;
         const imageObject = this.gameScene.add.sprite(x, y, image, 0).setOrigin(0, 1);
-        if (animation) {
+        if (animation && GAME_MODE === "FULL") {
             imageObject.anims.play(animation);
         }
         this.add(imageObject);
     }
 
     renderButtons() {
-        //if (this.isRerollAvailable) {
-        const rerollButton = this.scene.add.text(120, -30, i18n.ui.REROLL, {
-            //fontFamily: "Arial Black",
-            fontSize: 18,
-            color: "#aaffaa",
-        });
+        if (this.isRerollAvailable) {
+            const rerollPrice = 4;
+            const rerollPriceText = rerollPrice + " GOLD";
+            const rerollButton = this.scene.add.text(120, -30, i18n.ui.REROLL + rerollPriceText, {
+                //fontFamily: "Arial Black",
+                fontSize: 18,
+                color: "#aaffaa",
+            });
 
-        rerollButton.setInteractive().on("pointerdown", () => {
-            this.isRerollAvailable = false;
-            this.render();
-        });
+            rerollButton.setInteractive().on("pointerdown", () => {
+                if (this.gameScene.bankController.totalGold < rerollPrice) {
+                    return;
+                }
+                
+                this.gameScene.bankController.buy(rerollPrice);
+                this.isRerollAvailable = false;
+                this.render();
+            });
 
-        this.add(rerollButton);
-        //}
+            this.add(rerollButton);
+        }
     }
 }

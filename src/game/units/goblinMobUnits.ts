@@ -48,7 +48,7 @@ export const goblinUnit: IUnit = {
     exp: 0,
     mobItems: [
         { item: itemCoin, probability: 10 },
-        { item: itemGoblinBoneDagger, probability: 10 },
+        { item: itemGoblinBoneDagger, probability: 5 },
     ],
 };
 
@@ -75,6 +75,7 @@ export const goblinShamanUnit: IUnit = {
     mobItems: [
         { item: itemCoin, probability: 10 },
         { item: itemGoblinSilverCoin, probability: 10 },
+        { item: itemGoblinBoneDagger, probability: 5 },
     ],
 };
 
@@ -100,4 +101,9 @@ export const goldGoblin1Unit: IUnit = {
     level: 3,
     exp: 0,
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1 }],
+    mobItems: [
+        { item: itemCoin, probability: 10 },
+        { item: itemGoblinSilverCoin, probability: 10 },
+        { item: itemGoblinBoneDagger, probability: 5 },
+    ],
 };

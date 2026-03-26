@@ -1,4 +1,4 @@
-import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, ERoomType, THeroAttribute } from "../types";
+import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, ERoomType, ESelectCardHint, THeroAttribute } from "../types";
 
 type TSkillI18n = Record<number | "name" | "desc1" | "desc2" | "desc3", string>;
 
@@ -26,6 +26,8 @@ export interface Ii18n {
         PEASANT: string;
         WARRIORSUMMON: string;
         FIREFLY: string;
+        WOLF: string;
+        STRONGWOLF: string;
     };
     totems: {
         basicWildTotem: string;
@@ -102,6 +104,7 @@ export interface Ii18n {
         REROLL: string;
         SELECT: string;
         SKIP: string;
+        START: string;
         GOLD: string;
         INCOME: string;
         DAY: string;
@@ -120,6 +123,14 @@ export interface Ii18n {
         DEAD: string;
         VICTORY: string;
         DEFEAT: string;
+        // hints
+        [ESelectCardHint.TAKE_ALL_REWARDS]: string;
+        [ESelectCardHint.SELECT_SINGLE_HERO]: string;
+        [ESelectCardHint.TAKE_REWARD]: string;
+        [ESelectCardHint.TAKE_ITEM]: string;
+        [ESelectCardHint.TAKE_SKILL]: string;
+        [ESelectCardHint.SELECT_SINGLE]: string;
+        [ESelectCardHint.SELECT_SINGLE_DUNGEON]: string;
     };
 }
 
@@ -238,6 +249,8 @@ export const i18n: Ii18n = {
         PEASANT: "Peasant",
         WARRIORSUMMON: "Spirit warrior",
         FIREFLY: "Firefly",
+        WOLF: "Wolf",
+        STRONGWOLF: "Strong wolf",
     },
     totems: {
         basicWildTotem: "Wild Totem",
@@ -526,6 +539,7 @@ export const i18n: Ii18n = {
         TAKE: "TAKE",
         REROLL: "REROLL",
         SELL: "SELL",
+        START: "START",
         MOVE: "MOVE",
         SELECT: "SELECT",
         SKIP: "SKIP",
@@ -547,5 +561,14 @@ export const i18n: Ii18n = {
         DEAD: "DEAD",
         VICTORY: "VICTORY",
         DEFEAT: "DEFEAT",
+        //
+        // HINTS
+        [ESelectCardHint.TAKE_ALL_REWARDS]: "TAKE ALL REWARDS",
+        [ESelectCardHint.SELECT_SINGLE_HERO]: "SELECT SINGLE HERO",
+        [ESelectCardHint.TAKE_REWARD]: "TAKE REWARD",
+        [ESelectCardHint.TAKE_ITEM]: "TAKE ITEM",
+        [ESelectCardHint.TAKE_SKILL]: "TAKE SKILL",
+        [ESelectCardHint.SELECT_SINGLE]: "SELECT ONE OPTION",
+        SELECT_SINGLE_DUNGEON: "SELECT A DUNGEON",
     },
 };

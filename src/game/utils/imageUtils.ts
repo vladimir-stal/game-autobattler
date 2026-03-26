@@ -56,6 +56,8 @@ import {
     IMAGE_PEASANT_1,
     IMAGE_SKELETON_1,
     IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
+    IMAGE_WOLF_1,
+    IMAGE_WOLF_2,
 } from "./load/imageLoadMobs";
 import { IMAGE_ASSASSIN_IDLE, IMAGE_HUNTER, IMAGE_HUNTER_IDLE, IMAGE_NECROMANCER_IDLE } from "./load/mcHeroesImagesLoad";
 
@@ -745,6 +747,11 @@ export const getUnitImage = (unitId: string): IAnimations => {
         case "SKELETONWARRIOR":
         case "SKELETONMAGE":
         case "SOLDIER":
+            return { image: IMAGE_SKELETON_1 };
+        case "WOLF":
+            return { image: IMAGE_WOLF_1 };
+        case "STRONGWOLF":
+            return { image: IMAGE_WOLF_2 };
         default:
             return { image: IMAGE_SKELETON_1 };
     }

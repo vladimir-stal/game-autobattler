@@ -10,7 +10,7 @@ import { getMulticlassSubclasses } from "../utils/heroUtils";
 import { getHeroImage, getUnitImage } from "../utils/imageUtils";
 import { HeroClassTag } from "./ui/HeroClassTag";
 import { IMAGE_ICON_ATTACK, IMAGE_ICON_HEALTH, IMAGE_ICON_SHIELD } from "../utils/imageLoadUtil";
-import { colors, i18n } from "../consts";
+import { colors, GAME_MODE, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
 
 /** Card to buy from shop  */
@@ -135,10 +135,11 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderImage() {
         const scale = this.gameScene.camera.height / 1080;
         const { image, animation } = this.unit.unitType === EUnitType.HERO ? getHeroImage(this.unit.heroClass) : getUnitImage(this.unit.id);
+
         const imageObject = this.gameScene.add.sprite(-100, 200, image, 0).setOrigin(0, 1).setScale(scale); //setDisplaySize(300, 300)
         this.imgHeight = imageObject.displayHeight;
         //console.log("DEBUG: dh=" + this.imgHeight + " scale=" + scale + " original_h=" + (this.imgHeight/scale));
-        if (animation) {
+        if (animation) { //&& GAME_MODE === "FULL"
             //if (this.unit.heroClassType === EHeroClassType.MULTI) {
             imageObject.anims.play(animation);
             //}

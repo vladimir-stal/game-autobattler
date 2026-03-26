@@ -24,7 +24,12 @@ export const skeletonUnit: IUnit = {
     items: [],
     level: 3,
     exp: 0,
-    mobItems: [{ item: itemCoin, probability: 5 }, { item: basic_hat, probability: 5 }, { item: basic_pants, probability: 5 }, { item: basic_boots, probability: 5 }],
+    mobItems: [
+        { item: itemCoin, probability: 5 },
+        { item: basic_hat, probability: 5 },
+        { item: basic_pants, probability: 5 },
+        { item: basic_boots, probability: 5 },
+    ],
 };
 
 export const skeletonWarriorUnit: IUnit = {
@@ -47,7 +52,10 @@ export const skeletonWarriorUnit: IUnit = {
     items: [],
     level: 3,
     exp: 0,
-    mobItems: [{ item: itemCoin, probability: 5  }, { item: sword1, probability: 5 }], 
+    mobItems: [
+        { item: itemCoin, probability: 5 },
+        { item: sword1, probability: 5 },
+    ],
 };
 
 export const skeletonMageUnit: IUnit = {
@@ -70,5 +78,8 @@ export const skeletonMageUnit: IUnit = {
     items: [],
     level: 3,
     exp: 0,
-    mobItems: [{ item: itemCoin, probability: 5  }, { item: staff1, probability: 5 }], 
+    mobItems: [
+        { item: itemCoin, probability: 5 },
+        { item: staff1, probability: 5 },
+    ],
 };

@@ -59,7 +59,7 @@ export function loadMcHeroesImages(scene: Scene) {
     //
     // ASSASSIN ///////////////////////////////////////////////////////////////////
 
-    //scene.load.image(IMAGE_ASSASSIN, "assets/sprites/units/assassin.webp");
+    scene.load.image(IMAGE_ASSASSIN, "assets/sprites/units/assassin.webp");
 
     scene.load.spritesheet(IMAGE_ASSASSIN_IDLE, "assets/sprites/units/mc/assassin/assassin_idle_cut_300.webp", {
         frameWidth: 300,

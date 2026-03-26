@@ -1,4 +1,4 @@
-import { EHeroClass, ERoomType } from "../types";
+import { EHeroClass, ERoomType, ESelectCardHint } from "../types";
 import { Ii18n } from "./en";
 
 export const i18n: Ii18n = {
@@ -116,6 +116,8 @@ export const i18n: Ii18n = {
         PEASANT: "Крестьянин",
         WARRIORSUMMON: "Дух воина",
         FIREFLY: "Светлячок",
+        WOLF: "Волк",
+        STRONGWOLF: "Сильный волк",
     },
     items: {
         //basic
@@ -137,8 +139,8 @@ export const i18n: Ii18n = {
         basic_heal: "Кольцо жреца",
         basic_hat: "Старый шлем",
         basic_jacket: "Старая куртка",
-        basic_pants: "Старый штаны",
-        basic_boots: "Старый ботинки",
+        basic_pants: "Старые штаны",
+        basic_boots: "Старые ботинки",
         //
     },
     totems: {
@@ -403,6 +405,7 @@ export const i18n: Ii18n = {
         TAKE: "ВЗЯТЬ",
         REROLL: "ОБНОВИТЬ",
         SELL: "ПРОДАТЬ",
+        START: "НАЧАТЬ",
         MOVE: "ДВИГАТЬ",
         SELECT: "ВЫБРАТЬ",
         SKIP: "ПРОПУСТИТЬ",
@@ -424,5 +427,14 @@ export const i18n: Ii18n = {
         DEAD: "МЁРТВ",
         VICTORY: "ПОБЕДА",
         DEFEAT: "ПОРАЖЕНИЕ",
+        //
+        // HINTS
+        [ESelectCardHint.TAKE_ALL_REWARDS]: "Заберите все награды",
+        [ESelectCardHint.SELECT_SINGLE_HERO]: "Выберите одного героя",
+        [ESelectCardHint.TAKE_REWARD]: "Заберите награду",
+        [ESelectCardHint.TAKE_ITEM]: "Заберите предмет",
+        [ESelectCardHint.TAKE_SKILL]: "Заберите навык",
+        [ESelectCardHint.SELECT_SINGLE]: "Выберите один вариант",
+        SELECT_SINGLE_DUNGEON: "Выберите подземелье",
     },
 };

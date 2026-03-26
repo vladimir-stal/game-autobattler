@@ -1,6 +1,6 @@
 import { GameScene } from "../scenes/GameScene";
 
-const INITIAL_GOLD = 4;
+const INITIAL_GOLD = 8;
 const INTIAL_INCOME = 5;
 
 export class BankController {
