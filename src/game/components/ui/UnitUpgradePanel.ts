@@ -159,8 +159,8 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
     renderButtons() {
         if (this.isRerollAvailable) {
             const rerollPrice = 4;
-            const rerollPriceText = rerollPrice + " GOLD";
-            const rerollButton = this.scene.add.text(120, -30, i18n.ui.REROLL + rerollPriceText, {
+            const rerollPriceText = rerollPrice + " " + i18n.ui.GOLD;
+            const rerollButton = this.scene.add.text(120, -30, i18n.ui.REROLL + " " + rerollPriceText, {
                 //fontFamily: "Arial Black",
                 fontSize: 18,
                 color: "#aaffaa",

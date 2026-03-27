@@ -71,10 +71,13 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         });
         this.add(roomText);
 
-        const heroClassesText = heroClasses ? "\n(" + (roomsWithSingleHeroClass.includes(type) ? heroClasses[0] : heroClasses?.join(", ")) + ")" : "";
+        const heroClassesText = heroClasses
+            ? "\n(" + (roomsWithSingleHeroClass.includes(type) ? i18n.tags[heroClasses[0]] : heroClasses?.map((hc) => i18n.tags[hc]).join(", ")) + ")"
+            : "";
         const bossDescription = type === ERoomType.BOSS ? "\n" + boss?.name : "";
-        const tripleSetTypesDescr = tripleSetTypes ? "\n" + tripleSetTypes.join(",") : "";
-        const description = type + heroClassesText + " " + tripleSetTypesDescr + bossDescription;
+        const tripleSetTypesDescr = tripleSetTypes ? "\n" + tripleSetTypes.map((tst) => i18n.ui[tst]).join(",") : "";
+        const typeText = i18n.roomDescriptions[type] || type;
+        const description = typeText + heroClassesText + " " + tripleSetTypesDescr + bossDescription;
 
         const roomDescriptionText = this.scene.add.text(50 + index * 250, 40, description, {
             //fontFamily: "Arial Black",

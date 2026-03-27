@@ -148,8 +148,8 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         if (this.isRerollAvailable) {
             this.rerollsCount = 0;
             const rerollPrice = getRerollPrice(this.rerollsCount, this.roomType);
-            const rerollPriceText = rerollPrice > 0 ? rerollPrice + " GOLD" : "";
-            const rerollButton = this.scene.add.text(0, -100, i18n.ui.REROLL + rerollPriceText, {
+            const rerollPriceText = rerollPrice > 0 ? rerollPrice + " " + i18n.ui.GOLD : "";
+            const rerollButton = this.scene.add.text(0, -100, i18n.ui.REROLL + " " + rerollPriceText, {
                 //fontFamily: "Arial Black",
                 fontSize: 18,
                 color: "#aaffaa",

@@ -98,8 +98,6 @@ export const debuffBaNextBaAll: IHeroSkillSet = {
 
 export const poisonRandom_3: IHeroSkillSet = {
     id: "poisonRandom",
-    //name: "Posion random(3)",
-    //desc: "Poison [5] random enemy",
     name: i18n.skills.basic.poisonRandom.name + "(3)",
     desc: i18n.skills.basic.poisonRandom.desc3,
     level: 3,
@@ -110,7 +108,7 @@ export const poisonRandom_3: IHeroSkillSet = {
             type: EHeroSkillType.STATUS_APPLY,
             isBasicAttack: true,
             status: EStatusType.POISON,
-            value: 5, //TODO MP: use unit MP
+            value: 5,
             targetType: ETargetType.RANDOM_ENEMY,
         },
     ],
@@ -119,8 +117,6 @@ export const poisonRandom_3: IHeroSkillSet = {
 
 export const poisonRandom_2: IHeroSkillSet = {
     id: "poisonRandom",
-    //name: "Posion random(2)",
-    //desc: "Poison [4] random enemy",
     name: i18n.skills.basic.poisonRandom.name + "(2)",
     desc: i18n.skills.basic.poisonRandom.desc2,
     level: 2,
@@ -131,7 +127,7 @@ export const poisonRandom_2: IHeroSkillSet = {
             type: EHeroSkillType.STATUS_APPLY,
             isBasicAttack: true,
             status: EStatusType.POISON,
-            value: 5, //TODO MP: use unit MP
+            value: 6,
             targetType: ETargetType.RANDOM_ENEMY,
         },
     ],
@@ -141,8 +137,6 @@ export const poisonRandom_2: IHeroSkillSet = {
 
 export const poisonRandom: IHeroSkillSet = {
     id: "poisonRandom",
-    //name: "Posion random",
-    //desc: "Poison [3] random enemy",
     name: i18n.skills.basic.poisonRandom.name,
     desc: i18n.skills.basic.poisonRandom.desc1,
     level: 1,
@@ -153,7 +147,7 @@ export const poisonRandom: IHeroSkillSet = {
             type: EHeroSkillType.STATUS_APPLY,
             isBasicAttack: true,
             status: EStatusType.POISON,
-            value: 3, //TODO MP: use unit MP
+            value: 3,
             targetType: ETargetType.RANDOM_ENEMY,
         },
     ],

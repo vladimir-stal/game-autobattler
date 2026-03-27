@@ -38,7 +38,7 @@ export function createUIPanels(scene: GameScene) {
     fixedContainer.add(scene.cardSelectPanel);
 
     const unitPanelX = scene.camera.width / 2 - 350;
-    const unitPanelY = -300; //-scene.camera.height + 550;
+    const unitPanelY = -350; //-scene.camera.height + 550;
     scene.unitPanel = new UnitPanel(scene, unitPanelX, unitPanelY);
 
     fixedContainer.add(scene.unitPanel);

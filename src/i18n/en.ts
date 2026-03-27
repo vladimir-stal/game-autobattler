@@ -67,6 +67,7 @@ export interface Ii18n {
         //
     };
     rooms: Partial<Record<ERoomType, string>>;
+    roomDescriptions: Partial<Record<ERoomType, string>>;
     skills: {
         basic: {
             buffBaNextBaAll: TSkillI18n;
@@ -129,6 +130,10 @@ export interface Ii18n {
         //
         SKILL: string;
         ITEM: string;
+        EXP: string;
+        ATTRIBUTE: string;
+        CHAINED_SKILL: string;
+        ON_START_SKILL: string;
         //
         DEAD: string;
         VICTORY: string;
@@ -345,6 +350,7 @@ export const i18n: Ii18n = {
         [ERoomType.ENCHANCE_SKILL_CHAINED]: "ENHANE",
         //
     },
+    roomDescriptions: {},
     skills: {
         basic: {
             //
@@ -374,8 +380,8 @@ export const i18n: Ii18n = {
             poisonRandom: {
                 name: "Posion random",
                 desc1: "Poison [3] random enemy",
-                desc2: "Poison [3] random enemy",
-                desc3: "Poison [3] random enemy",
+                desc2: "Poison [4] random enemy",
+                desc3: "Poison [6] random enemy",
             },
             magicAttackX3: {
                 name: "Magic missiles",
@@ -572,12 +578,17 @@ export const i18n: Ii18n = {
         NEXT: "NEXT",
         SELECT_UPGRADE: "SELECT UPGRADE",
         //
+        ATTRIBUTE: "ATTRIBUTE",
         SKILL: "SKILL",
         ITEM: "ITEM",
+        EXP: "EXP",
+        CHAINED_SKILL: "CHAINED SKILL",
+        ON_START_SKILL: "DUEL START SKILL",
         //
         DEAD: "DEAD",
         VICTORY: "VICTORY",
         DEFEAT: "DEFEAT",
+        //
         //
         // HINTS
         [ESelectCardHint.TAKE_ALL_REWARDS]: "TAKE ALL REWARDS",

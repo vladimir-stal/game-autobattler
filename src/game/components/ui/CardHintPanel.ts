@@ -263,7 +263,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         if (isChained) {
             this.enchancedChainedIcon.setVisible(true);
-            this.enchancedText.setText("skill is chained");
+            this.enchancedText.setText(i18n.ui.CHAINED_SKILL);
             this.enchancedText.setVisible(true);
         }
 
@@ -277,6 +277,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
             // tags
 
+            this.skillContainer.removeAll(true);
             this.skillContainer.setVisible(true);
 
             skillSet.heroClasses.forEach((heroClass, index) => {
@@ -380,6 +381,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
             // tags
 
+            this.itemContainer.removeAll(true);
             this.itemContainer.setVisible(true);
 
             let heroClasses: EHeroClass[] = [];
@@ -398,7 +400,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         } else {
             this.itemImage.setVisible(false);
             this.itemContainer.setVisible(false);
-            this.itemContainer.removeAll(true);
+            this.skillContainer.removeAll(true);
         }
     }
 

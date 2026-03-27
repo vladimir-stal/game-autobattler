@@ -1,6 +1,6 @@
 import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { colors } from "../consts";
+import { colors, i18n } from "../consts";
 import { ECardType, ICard, IHeroSkillSet, IItem, IUnit } from "../../types";
 import { CardSlot } from "./CardSlot";
 import { UnitCard } from "./UnitCard";
@@ -42,15 +42,7 @@ export class Card extends Phaser.GameObjects.Container {
 
         this.add(this.rect);
 
-        // this.rect
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-        //         console.log("IMAGE ON GAMEOBJECT_POINTER_OVER");
-        //     })
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-        //         console.log("IMAGE ON GAMEOBJECT_POINTER_OUT");
-        //     });
-
-        this.titleText = this.scene.add.text(-10, 10, this.title, { fontSize: 12, color: "#dddddd" });
+        this.titleText = this.scene.add.text(50, 10, this.title, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.titleText);
 
         const { type } = this.card;
@@ -112,7 +104,7 @@ export class Card extends Phaser.GameObjects.Container {
         if (!value) {
             return;
         }
-        this.titleText.setText("EXP " + value);
+        this.titleText.setText(i18n.ui.EXP + " " + value);
     }
 
     renderSkillCard() {
@@ -141,7 +133,7 @@ export class Card extends Phaser.GameObjects.Container {
             return;
         }
 
-        const title = "GOLD " + value;
+        const title = i18n.ui.GOLD + " " + value;
         this.titleText.setText(title);
 
         const imageObject = this.gameScene.add.sprite(-20, 180, IMAGE_ITEM_COIN, 0).setOrigin(0, 1);
@@ -154,12 +146,12 @@ export class Card extends Phaser.GameObjects.Container {
             return;
         }
 
-        const title = "+ " + value + " " + attribute;
+        const title = value + " " + i18n.attributes.attribute[attribute];
         this.titleText.setText(title);
     }
 
     refresh() {
-        console.log("REFRESH CARD", this.card.unit);
+        //console.log("REFRESH CARD", this.card.unit);
         //console.log("CARD refersh");
         //TODO: not the best way to update hero card
         this.removeAll(true);

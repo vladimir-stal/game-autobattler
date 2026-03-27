@@ -399,7 +399,7 @@ export class GameScene extends Phaser.Scene {
         // get experince and hp decrease after duel
         if (this.phase === "DUEL") {
             //const experienceFromBattle = getExpAfterDuelValue(day);
-            addExp(this.units, 10);
+            //addExp(this.units, 10);
             //
             if (!isBattleWin) {
                 this.leaderController.decreaseMainPlayerHp(day + 1);

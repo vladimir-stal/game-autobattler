@@ -122,11 +122,6 @@ export class SelectController {
             return;
         }
 
-        // if (type === ERoomType.TRIPLE_SET) {
-        //     tripleSetTypes = [];
-        //     getRandomArrayItems(tripleSetCardTypes, 3, true).forEach((cardType) => tripleSetTypes.push(cardType));
-        // }
-
         const { cards, isSingleSelect, isSelectRequired, isRerollAvailable, hintTextType } = getCards(
             this.gameScene,
             type,

@@ -21,8 +21,8 @@ export const i18n: Ii18n = {
             STAT_CRIT_CHANCE: "Шанс крита",
             STAT_EVAS_CHANCE: "Шанс уклонения",
             STAT_MAX_HP: "Здоровье",
-            STAT_MP: "Магическая сила",
-            STAT_PP: "Физичекая сила",
+            STAT_MP: "Маг. сила",
+            STAT_PP: "Физ. сила",
             STAT_HP_REGEN: "Регенерация",
         },
         bonusType: {
@@ -158,7 +158,7 @@ export const i18n: Ii18n = {
         [ERoomType.ITEM_COMMON_SELL]: "КУЗНИЦА",
         //
         [ERoomType.SKILLS_CLASS_SELL]: "БАШНЯ МАГА",
-        [ERoomType.SKILLS_SELL]: "МАГИЧЕСКИЙ",
+        [ERoomType.SKILLS_SELL]: "ШАТЁР МАГА",
         [ERoomType.UNIT_SELL]: "НАЁМНИКИ",
         //
         // CHOISE ROOMS
@@ -172,8 +172,8 @@ export const i18n: Ii18n = {
         //
         // RANDOM ROOMS
         //
-        [ERoomType.ATTRIBUTE_RANDOM]: "УПРАЖНЕНИЕ",
-        [ERoomType.EXP_SINGLE]: "ТРЕНИРОВКА",
+        [ERoomType.ATTRIBUTE_RANDOM]: "ТРЕНИРОВКА",
+        [ERoomType.EXP_SINGLE]: "МЕДИТАЦИЯ",
         [ERoomType.GOLD]: "ПОПРОШАЙКА",
         [ERoomType.INCOME]: "ДОХОД",
         [ERoomType.ITEM_CLASS_RANDOM]: "УКРАСТЬ ПРЕДМЕТ",
@@ -190,11 +190,48 @@ export const i18n: Ii18n = {
         [ERoomType.DUEL]: "ДУЭЛЬ",
         [ERoomType.MOBS]: "ПОДЗЕМЕЛЬЕ",
         [ERoomType.BOSS]: "БОСС ПОДЗЕМЕЛЬЯ",
-        [ERoomType.TRIPLE_SET]: "НАГРАДА",
+        [ERoomType.TRIPLE_SET]: "ОХОТА",
         [ERoomType.SKILLS_SELL_ENHANCED]: "УЛУЧШЕННЫЕ НАВЫКИ",
-        [ERoomType.UPGRADE_SKILL_OR_ITEM]: "УЛУЧШИТЬ",
-        [ERoomType.ENCHANCE_SKILL_CHAINED]: "УЛУЧШИТЬ",
+        [ERoomType.UPGRADE_SKILL_OR_ITEM]: "ВОЗВЫШЕНИЕ",
+        [ERoomType.ENCHANCE_SKILL_CHAINED]: "РИТУАЛ",
         //
+    },
+    roomDescriptions: {
+        // ATTR
+        [ERoomType.ATTRIBUTE_RANDOM]: "СЛУЧАЙНЫЙ АТРИБУТ",
+        [ERoomType.ATTRIBUTE_SELECT]: "УВЕЛИЧИТЬ АТРИБУТ",
+        // EXP
+        [ERoomType.EXP_SELECT]: "НАБРАТЬСЯ ОПЫТА",
+        [ERoomType.EXP_SINGLE]: "ПОЛУЧИТЬ ОПЫТ",
+        // GOLD
+        [ERoomType.GOLD]: "ПОЛУЧИТЬ ЗОЛОТО",
+        [ERoomType.INCOME]: "УВЕЛИЧИТЬ ДОХОД",
+        // ITEMS
+        [ERoomType.ITEM_SELECT]: "КУПИТЬ ВСЯКОЕ",
+        [ERoomType.ITEM_RANDOM]: "СЛУЧАЙНЫЙ ПРЕДМЕТ",
+        [ERoomType.ITEM_COMMON_SELL]: "КУПИТЬ ЭКИПИРОВКУ",
+        [ERoomType.ITEM_WEAPON_BASIC_RANDOM]: "БАЗОВОЕ ОРУЖИЕ",
+        [ERoomType.ITEM_COMMON_RANDOM]: "СЛУЧАЙНЫЙ ПРОСТОЙ ПРЕДМЕТ",
+        [ERoomType.ITEM_CLASS_RANDOM]: "СЛУЧАЙНЫЙ ПРЕДМЕТ КЛАССА",
+        [ERoomType.ITEM_CLASS_SELL]: "КУПИТЬ ПРЕДМЕТ КЛАССА",
+        [ERoomType.ITEM_WEAPON_CLASS_SELL]: "КУПИТЬ ОРУЖИЕ КЛАССА",
+        [ERoomType.HEROES_SELL]: "НАНЯТЬ ГЕРОЯ",
+        // SKILLS
+        [ERoomType.SKILLS_SELL]: "КУПИТЬ НАВЫКИ",
+        [ERoomType.SKILLS_CLASS_SELL]: "КУПИТЬ НАВЫКИ КЛАССА",
+        [ERoomType.SKILL_RANDOM]: "СЛУЧАЙНЫЙ НАВЫК",
+        [ERoomType.SKILLS_SELL_ENHANCED]: "ВЫБРАТЬ ЦЕПНОЙ НАВЫК",
+        // UNIT
+        [ERoomType.UNIT_SELL]: "ЗАВЕРБОВАТЬ ПОМОЩНИКА",
+        [ERoomType.UNIT_RANDOM]: "СЛУЧАЙНЫЙ ПОМОЩНИК",
+        // MIXED
+        [ERoomType.MIXED_CLASS_SELECT]: "КУПИТЬ ВСЕ ДЛЯ КЛАССА",
+        // UNIQUE
+        [ERoomType.TRIPLE_SET]: "ЗАБРАТЬ ДОБЫЧУ",
+        [ERoomType.DUEL]: "БРОСИТЬ ВЫЗОВ",
+        [ERoomType.MOBS]: "СРАЗИТЬСЯ С МОНСТРАМИ",
+        [ERoomType.BOSS]: "СРАЗИТЬСЯ С БОССОМ",
+        [ERoomType.UPGRADE_SKILL_OR_ITEM]: "УЛУЧШИТЬ ПРЕДМЕТ ИЛИ НАВЫК",
     },
     skills: {
         basic: {
@@ -226,7 +263,7 @@ export const i18n: Ii18n = {
                 name: "Ядовитый укус",
                 desc1: "Отравляет улчайного врага на [3]",
                 desc2: "Отравляет улчайного врага на [4]",
-                desc3: "Отравляет улчайного врага на [5]",
+                desc3: "Отравляет улчайного врага на [6]",
             },
             magicAttackX3: {
                 name: "Магические стрелы",
@@ -410,7 +447,6 @@ export const i18n: Ii18n = {
         MOVE: "ДВИГАТЬ",
         SELECT: "ВЫБРАТЬ",
         SKIP: "ПРОПУСТИТЬ",
-        GOLD: "ЗОЛОТО",
         INCOME: "ДОХОД",
         DAY: "ДЕНЬ",
         HOUR: "ЧАС",
@@ -422,8 +458,13 @@ export const i18n: Ii18n = {
         NEXT: "ДАЛЬШЕ",
         SELECT_UPGRADE: "ВЫБЕРИТЕ УЛУЧШЕНИЕ",
         //
+        ATTRIBUTE: "АТРИБУТ",
         SKILL: "НАВЫК",
         ITEM: "ПРЕДМЕТ",
+        EXP: "ОПЫТ",
+        GOLD: "ЗОЛОТО",
+        CHAINED_SKILL: "ЦЕПНОЙ НАВЫК",
+        ON_START_SKILL: "НАЧАЛО ДУЭЛИ",
         //
         DEAD: "МЁРТВ",
         VICTORY: "ПОБЕДА",
