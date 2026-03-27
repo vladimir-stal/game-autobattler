@@ -6,6 +6,7 @@ import { goblinApplyShock, goblinShamanHpRegIncr } from "../skills/mobSkills";
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MASTER,
+    mobHeroClasses: [EHeroClass.MASTER],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 2,
@@ -29,6 +30,7 @@ export const weakGoblinUnit: IUnit = {
 export const goblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.GLADIATOR,
+    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 5,
@@ -57,6 +59,7 @@ export const goblinUnit: IUnit = {
 export const goblinShamanUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MAGIC,
+    mobHeroClasses: [EHeroClass.MAGIC],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
@@ -85,6 +88,7 @@ export const goblinShamanUnit: IUnit = {
 export const goldGoblin1Unit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BARD,
+    mobHeroClasses: [EHeroClass.BARD],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 1,

@@ -8,6 +8,7 @@ import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemCon
 export const warriorSummonMob_5: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.KNIGHT,
+    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.WARRIOR],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 12,
@@ -36,6 +37,7 @@ export const warriorSummonMob_5: IUnit = {
 export const warriorSummonMob: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.ORDER,
+    mobHeroClasses: [EHeroClass.ORDER],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 2,
@@ -66,6 +68,7 @@ export const warriorSummonMob: IUnit = {
 export const fireflySummonMob: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.SUMMON,
+    mobHeroClasses: [EHeroClass.SUMMON],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,

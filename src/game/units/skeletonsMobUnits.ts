@@ -7,6 +7,7 @@ import { itemCoin } from "../mobItemConsts";
 export const skeletonUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.DARK,
+    mobHeroClasses: [EHeroClass.DARK],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
@@ -36,6 +37,7 @@ export const skeletonUnit: IUnit = {
 export const skeletonWarriorUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BLACK_KNIGHT,
+    mobHeroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 7,
@@ -65,6 +67,7 @@ export const skeletonWarriorUnit: IUnit = {
 export const skeletonMageUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WARLOCK,
+    mobHeroClasses: [EHeroClass.DARK, EHeroClass.MAGIC],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.RANDOM_ENEMY,
     basicAttack: 8,

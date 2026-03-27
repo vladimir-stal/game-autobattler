@@ -4,6 +4,7 @@ import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobIt
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BARBARIAN,
+    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 10,
@@ -32,6 +33,7 @@ export const peasantUnit_4: IUnit = {
 export const peasantUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WARRIOR,
+    mobHeroClasses: [EHeroClass.WARRIOR],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 1,
