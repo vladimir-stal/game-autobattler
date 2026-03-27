@@ -361,7 +361,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         const afterDuelBonusesText =
             afterDuelBonuses?.reduce((text, bonus) => {
-                text += i18n.attributes.afterDuelBonus[bonus.type] + " +" + bonus.value + " ";
+                const conditionText = bonus.condition ? i18n.ui[bonus.condition] + ": " : "";
+                text += conditionText + i18n.attributes.afterDuelBonus[bonus.type] + " +" + bonus.value + "\n";
                 return text;
             }, "") || "";
         if (afterDuelBonusesText) {

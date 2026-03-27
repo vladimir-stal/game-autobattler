@@ -21,8 +21,12 @@ import { roomsWithHeroClasses } from "../components/SelectController";
 import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes } from "../heroConsts";
 import { basicWeapons } from "../itemConsts";
+import { itemGoblinSilverCoin } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { magicAttack, magicAttack_2 } from "../skills/magicSkillConsts";
+import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
+import { wolfUnit } from "../units/wolfsMobUnits";
+import { axe32 } from "../weaponItem3Consts";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
 import {
@@ -164,6 +168,10 @@ export const getRooms = (
             break;
         case 1:
             {
+                // if (hour === 0) {
+                //     return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
+                // }
+
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                 } else if (hour === 1) {
@@ -527,17 +535,16 @@ export const getCards = (
 
                 let item;
                 if (gameScene.units.length === 0) {
-                    console.log("no units. get random item");
                     item = getRandomArrayItem(basicWeapons);
                 } else {
-                    console.log("units found. get random item for class");
+                    // get hero classes of heroes player currently has
                     const allHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
                         if (unit.unitType === EUnitType.HERO && !heroClasses.includes(unit.heroClass)) {
                             heroClasses.push(unit.heroClass);
                         }
                         return heroClasses;
                     }, [] as EHeroClass[]);
-                    console.log("allHeroClasses", allHeroClasses);
+                    //
                     if (allHeroClasses.length === 0) {
                         item = getRandomArrayItem(basicWeapons);
                     } else {
@@ -694,8 +701,18 @@ export const getCards = (
                 });
 
                 // add skill to fit the player current hero
-                const skill = getRandomArrayItem(getHeroClassesSkills(heroClasses, day));
-                randomSkills.push({ ...skill, isChained: true });
+                // get hero classes of heroes player currently has
+                const existingHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
+                    if (unit.unitType === EUnitType.HERO && !heroClasses.includes(unit.heroClass)) {
+                        heroClasses.push(unit.heroClass);
+                    }
+                    return heroClasses;
+                }, [] as EHeroClass[]);
+                //
+                if (existingHeroClasses.length !== 0) {
+                    const skill = getRandomArrayItem(getHeroClassesSkills(existingHeroClasses, day));
+                    randomSkills.push({ ...skill, isChained: true });
+                }
 
                 cards = randomSkills.map((skill) => {
                     return { skill, type: ECardType.SKILL, price: 0 };
@@ -822,10 +839,12 @@ export const getCards = (
             {
                 // armorMassHp weaponSlotSheath totem5HptoDmg staff5MagicCrit music5AddBuffTarget wand5ShockOnBA
                 //cards = [null, { type: ECardType.ITEM, price: 0, item: wand5ShockOnBA }, null];
+                //cards = [null, { type: ECardType.ITEM, price: 0, item: axe32 }, null];
                 //cards = [null, { type: ECardType.ITEM, price: 0, item: gloves_magic2 }, null];
                 //cards = [null, { type: ECardType.GOLD, price: 0, value: 2 }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
-                cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
+                //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
+                cards = [null, { type: ECardType.UNIT, price: 0, unit: wolfUnit }, null];
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:
@@ -924,7 +943,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         return;
                     }
 
-                    // place on the same item in inventory to upgrade
+                    // PLACE ON THE SAME ITEM IN INVENTORY TO UPGRADE
                     if (slot.isInventory && !slot.isEmpty) {
                         const { type, item: slotItem } = slot.card?.card || {};
                         if (type === ECardType.ITEM && slotItem && slotItem.id === item.id && slotItem.level === item.level) {
@@ -943,7 +962,33 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                     const { unitType, heroClass, heroClassType, items } = unit;
 
                     // case move target is unit
-                    if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT && unitType === EUnitType.HERO) {
+                    if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT) {
+                        //
+                        // CASE TARGET IS MOB
+                        if (unitType === EUnitType.UNIT) {
+                            if (items?.length === MOB_MAX_ITEM_COUNT) {
+                                return;
+                            }
+
+                            if (item.type === EItemType.COMMON) {
+                                slot.setIsActive(true);
+                            } else {
+                                if (item.heroClasses.includes(EHeroClass.ALL) || item.weaponType === EWeaponItemType.DAGGER) {
+                                    slot.setIsActive(true);
+                                    return;
+                                }
+                                const weaponHeroClasses = getWeaponItemHeroClasses(item.weaponType);
+                                // TODO: add mobHeroClasses to IUnit and check it instead
+                                //if (heroClassType === EHeroClassType.BASIC) {
+                                if (weaponHeroClasses.includes(heroClass)) {
+                                    slot.setIsActive(true);
+                                }
+                                //}
+                            }
+
+                            return;
+                        }
+
                         if (!unitType || !heroClassType) {
                             return;
                         }
