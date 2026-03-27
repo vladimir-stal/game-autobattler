@@ -61,6 +61,9 @@ export class Card extends Phaser.GameObjects.Container {
             case ECardType.EXP:
                 this.renderExpCard();
                 break;
+            case ECardType.EXP_PARTY:
+                this.renderExpPartyCard();
+                break;
             case ECardType.GOLD:
                 this.renderGoldCard();
                 break;
@@ -113,6 +116,14 @@ export class Card extends Phaser.GameObjects.Container {
             return;
         }
         this.titleText.setText("EXP " + value);
+    }
+
+    renderExpPartyCard() {
+        const { value } = this.card;
+        if (!value) {
+            return;
+        }
+        this.titleText.setText("PARTY EXP " + value);
     }
 
     renderSkillCard() {

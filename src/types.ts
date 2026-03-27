@@ -320,6 +320,7 @@ export enum ECardType {
     ATTRIBUTE = "ATTRIBUTE",
     BUFF = "BUFF",
     EXP = "EXP",
+    EXP_PARTY = "EXP_PARTY",
     GOLD = "GOLD",
     //HEAL = "HEAL",
     ITEM = "ITEM",

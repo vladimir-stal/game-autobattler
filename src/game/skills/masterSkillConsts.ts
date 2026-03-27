@@ -18,7 +18,7 @@ const buffNextBaXSelf_3: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "x2 next ba",
+                name: "x1.8 next ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 80,
@@ -43,7 +43,7 @@ const buffNextBaXSelf_2: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "x2 next ba",
+                name: "x1.6 next ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 60,
@@ -69,7 +69,7 @@ export const buffNextBaXSelf: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "x2 next ba",
+                name: "x1.4 next ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 40,

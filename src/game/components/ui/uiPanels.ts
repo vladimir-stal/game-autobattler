@@ -49,7 +49,7 @@ export function createUIPanels(scene: GameScene) {
     fixedContainer.add(scene.inventoryPanel);
 
     const sellPanelX = scene.camera.width / 2 + 450;
-    const sellPanelY = -scene.camera.height + 100;
+    const sellPanelY = -scene.camera.height + 50;
     scene.sellCardPanel = new SellCardPanel(scene, sellPanelX, sellPanelY);
     fixedContainer.add(scene.sellCardPanel);
 

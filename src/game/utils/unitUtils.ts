@@ -21,7 +21,7 @@ import {
     unitsLvl4,
     unitsLvl5,
 } from "../unitConsts";
-import { checkProbability, getRandomArrayItem } from "./commonUtils";
+import { checkProbability, getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { applyItemBonuses, getHeroClassWeaponTypes, removeItemBonuses } from "./itemUtils";
 
 const MAX_LEVEL = 5;
@@ -41,8 +41,8 @@ const EXP_FOR_LEVEL_MC: Record<number, number> = {
 };
 
 export const addExp = (units: (IUnit | null)[], expAdd: number) => {
-    units.forEach((unit) => {
-        if (!unit || unit.unitType === EUnitType.UNIT) {
+    units.forEach(unit => {
+        if (!unit) { 
             return;
         }
         addExpToUnit(unit, expAdd);
@@ -61,8 +61,10 @@ export const addExpToUnit = (unit: IUnit, expAdd: number) => {
     if (currentLevel === MAX_LEVEL) {
         return;
     }
-
-    unit.exp = currentExp + expAdd;
+    if (unit.unitType === EUnitType.HERO)
+       unit.exp = currentExp + expAdd;
+    else
+       unit.exp = currentExp + 2*expAdd; // EXPERIMENTAL
     //console.log("Unit " + unit.name + " now has " + unit.exp + " exp");
     const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[currentLevel + 1] : EXP_FOR_LEVEL_MC[currentLevel + 1];
     if (unit.exp >= nextLevelExp) {
@@ -101,6 +103,15 @@ const addAttributesOnLevelUp = (unit: IUnit) => {
         unit.basicMaxHp += 5;
         unit.basicAttack += 1;
     }
+    if (unit.unitType == EUnitType.UNIT) {
+        var attr = getRandomIntFromInterval(0,3);
+        unit.basicArmor += 2;
+        unit.basicAttack += 1;
+        if (attr == 0) unit.basicCritChance += 2;
+        if (attr == 1) unit.basicEvasionChance += 2;
+        if (attr == 2) unit.basicMaxHp += 2;
+        if (attr == 3) unit.basicAttack += 1;
+    }
 };
 
 export const generateUnitId = (unit: IUnit) => {
@@ -118,16 +129,16 @@ export const generateId = () => {
     return result;
 };
 
-export const createUnits = (unitTemplates: TUnits): TUnits => {
+export const createUnits = (unitTemplates: TUnits, autolevel: number = -1): TUnits => {
     return unitTemplates.map((unit) => {
         if (!unit) {
             return null;
         }
-        return createUnit(unit);
+        return createUnit(unit, null, autolevel);
     });
 };
 
-export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroAttribute; value: number }[]): IUnit => {
+export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroAttribute; value: number }[], autolevel: number = -1): IUnit => {
     const id = unitTemplate.id + "_" + generateId();
     const { heroClassType, skills, unitType, items } = unitTemplate;
     const newSkills = unitType === EUnitType.UNIT || heroClassType === EHeroClassType.MULTI ? [...skills] : [];
@@ -143,6 +154,11 @@ export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroA
             unit[attr] += value;
         });
     }
+    // autolevel
+    if (autolevel>unit.level)
+        for (let i = 0; i < (autolevel - unit.level); i++) {
+            levelUpUnit(unit)
+        }        
     // add stats from items
     unit.items.forEach((item) => {
         applyItemBonuses(item, unit);

@@ -5,7 +5,7 @@ import { getRandomArrayItem, getRandomArrayItems } from "../utils/commonUtils";
 import { applyItemBonuses, upgradeItem } from "../utils/itemUtils";
 import { getCards, getDuelRewardCards, getGold, getIncome, getMobRewardCard, getRooms } from "../utils/selectPhaseUtils";
 import { upgradeSkillSet } from "../utils/skillUtils";
-import { addAttributeToUnit, addExpToUnit } from "../utils/unitUtils";
+import { addAttributeToUnit, addExp, addExpToUnit } from "../utils/unitUtils";
 import { Card } from "./Card";
 
 /** Room which activate instant action on select and dont have cards to select */
@@ -27,7 +27,15 @@ export const roomsWithHeroClasses = [
 
 export const roomsWithSingleHeroClass = [ERoomType.MIXED_CLASS_SELECT];
 
-export const tripleSetCardTypes = [ECardType.ATTRIBUTE, ECardType.EXP, ECardType.GOLD, ECardType.ITEM, ECardType.SKILL];
+export const tripleSetCardTypes = [
+    ECardType.ATTRIBUTE,
+    ECardType.EXP,
+    ECardType.GOLD,
+    ECardType.ITEM,
+    ECardType.SKILL,
+    //ECardType.MOBS,
+    ECardType.EXP_PARTY,
+];
 
 /** Main select game phase controller  */
 export class SelectController {
@@ -65,7 +73,7 @@ export class SelectController {
     showMobRewards() {
         this.gameScene.roomSelectPanel.hide();
         const rewardCard = getMobRewardCard(this.mobsReward);
-        const expCard = { price: 0, type: ECardType.EXP, value: this.mobsReward.exp };
+        const expCard = { price: 0, type: ECardType.EXP_PARTY, value: this.mobsReward.exp };
         const cards = [expCard, rewardCard, null];
         console.log("SHOW REWARDS", rewardCard);
         this.gameScene.cardSelectPanel.show(cards, ERoomType.MOBS_REWARDS, undefined, { isSingleSelect: false, isSelectRequired: false, hintTextType: ESelectCardHint.TAKE_ALL_REWARDS });
@@ -212,6 +220,19 @@ export class SelectController {
                     //console.log("executeCardAction", mobs);
                     this.gameScene.selectController.setMobsReward(mobs.reward);
                     this.gameScene.changeToMobsDuelPhase(mobs.units);
+                }
+                break;
+            case ECardType.EXP_PARTY:
+                {
+                    if (value === undefined) {
+                        return;
+                    }
+                    //addExp(this.gameScene.units, value);
+                    this.gameScene.unitPanel.slots.forEach(sv => {
+                        if (sv.slot.card != null)
+                          addExpToUnit(sv.slot.card.card.unit, value);                        
+                    });
+                    this.gameScene.unitPanel.refreshAllCards();
                 }
                 break;
             default:

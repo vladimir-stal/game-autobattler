@@ -47,7 +47,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderRoom(index: number, type: ERoomType, roomOptions?: IRoomOptions) {
-        const { heroClasses, boss } = roomOptions || {};
+        const { heroClasses, boss, autolevel } = roomOptions || {};
 
         // TRIPLE SET ROOM
         //
@@ -71,6 +71,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         const bossDescription = type === ERoomType.BOSS ? "\n" + boss?.name : "";
         const tripleSetTypesDescr = tripleSetTypes ? "\n" + tripleSetTypes.join(",") : "";
         const description = type + heroClassesText + " " + tripleSetTypesDescr + bossDescription;
+        const leveladjustment = autolevel ? autolevel : 0;
 
         const roomDescriptionText = this.scene.add.text(50 + index * 250, 40, description, {
             //fontFamily: "Arial Black",
@@ -89,7 +90,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         selectRoomText
             .setInteractive()
             .on("pointerdown", () => {
-                this.gameScene.selectController.selectRoom(type, this.gameScene.selectController.day, { heroClasses, tripleSetTypes, units: boss?.units });
+                this.gameScene.selectController.selectRoom(type, this.gameScene.selectController.day + leveladjustment, { heroClasses, tripleSetTypes, units: boss?.units });
             })
             .on("pointerover", () => {
                 selectRoomText.setColor("#FFFFFF");

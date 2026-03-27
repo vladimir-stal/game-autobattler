@@ -105,6 +105,7 @@ const sellHeroRoom = [ERoomType.HEROES_SELL];
 export interface IRoomOptions {
     heroClasses?: EHeroClass[];
     boss?: { name: string; units: IUnit[] };
+    autolevel?: number;
 }
 
 export const getRooms = (
@@ -235,6 +236,8 @@ export const getRooms = (
             {
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.ENCHANCE_SKILL_CHAINED }, null];
+                } else if (hour%5 === 0) {
+                    return [null, { roomType: ERoomType.MOBS, roomOptions: {autolevel: Math.floor(hour/5)} }, null];
                 }
             }
             break;
@@ -733,7 +736,15 @@ export const getCards = (
                         switch (cardType) {
                             case ECardType.EXP:
                                 {
-                                    cards.push({ type: ECardType.EXP, value: 1, price: 0 });
+                                    // getExpValue(day) ~ 1 1 1 1 2 2 2 2 3 .. 3 ~ 1+ day/5
+                                    //                    0 0 1 1 1 2 2 2 3 ..   ~ day/3
+                                    //                  = 1 1 2 2 3 4 4 4 6
+                                    cards.push({ type: ECardType.EXP, value: (Math.floor(day/3) + getExpValue(day)), price: 0 });
+                                }
+                                break;
+                            case ECardType.EXP_PARTY:
+                                {
+                                    cards.push({ type: ECardType.EXP_PARTY, value: getExpValue(day), price: 0 });
                                 }
                                 break;
                             case ECardType.ATTRIBUTE:
@@ -760,6 +771,13 @@ export const getCards = (
                                     const randomCurrentHeroClass = getRandomArrayItem(getCurrentHeroClasses(gameScene));
                                     const item = getRandomArrayItem(getHeroClassItems(randomCurrentHeroClass, day));
                                     cards.push({ item, type: ECardType.ITEM, price: 0 });
+                                }
+                                break;
+                            case ECardType.MOBS:
+                                {
+                                    const randomUnit = { ...getRandomUnitForRandom(day) };
+                                    addMobItem(randomUnit);
+                                    cards.push({ unit: randomUnit, type: ECardType.UNIT, price: 0 });
                                 }
                                 break;
                         }
@@ -810,11 +828,12 @@ export const getCards = (
                 hintTextType = ESelectCardHint.SELECT_SINGLE_DUNGEON;
 
                 const randomMobs = getMobs(gameScene.selectController.day);
+                const autolevel = Math.floor((1 + gameScene.selectController.day)/2);
                 console.log("ERoomType.MOBS", randomMobs);
                 cards = randomMobs.map((mobs) => {
                     const { name, units, rewards } = mobs;
                     const reward = getRandomArrayItem(rewards);
-                    return { mobs: { units: createUnits(units), reward }, type: ECardType.MOBS, price: 0, name };
+                    return { mobs: { units: createUnits(units,autolevel), reward }, type: ECardType.MOBS, price: 0, name };
                 });
             }
             break;
@@ -1128,7 +1147,7 @@ export const getMobRewardCard = (reward: IMobReward): ICard => {
             return { price: 0, type: ECardType.UNIT, unit: rewardUnit };
         }
         default: {
-            console.log("ERRO! No card for reward found", type);
+            console.log("ERROR! No card for reward found", type);
             return { price: 0, type: ECardType.GOLD, value: 1 };
         }
     }
@@ -1140,9 +1159,9 @@ export const getDuelRewardCards = (day: number): ICard[] => {
 
     if (day > 2) {
         const expValue = getExpAfterDuelValue(day);
-        const firstExpPart = Math.floor(expValue / 2);
+        const firstExpPart = Math.floor(expValue / 3);
         const secondExpPart = expValue - firstExpPart;
-        reward.push({ price: 0, type: ECardType.EXP, value: firstExpPart });
+        reward.push({ price: 0, type: ECardType.EXP_PARTY, value: firstExpPart });
         reward.push({ price: 0, type: ECardType.EXP, value: secondExpPart });
     } else {
         reward.push({ price: 0, type: ECardType.EXP, value: getExpAfterDuelValue(day) });

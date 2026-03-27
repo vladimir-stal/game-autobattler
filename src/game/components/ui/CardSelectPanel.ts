@@ -122,9 +122,9 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                     return;
                 }
 
-                if ([ECardType.MOBS, ECardType.GOLD].includes(card.type)) {
+                if ([ECardType.MOBS, ECardType.GOLD, ECardType.EXP_PARTY].includes(card.type)) {
                     this.gameScene.selectController.executeCardAction(card);
-                    if ([ECardType.GOLD].includes(card.type)) {
+                    if ([ECardType.GOLD, ECardType.EXP_PARTY].includes(card.type)) {
                         this.boughtCardIndexes.push(index);
                         this.render();
                     }
