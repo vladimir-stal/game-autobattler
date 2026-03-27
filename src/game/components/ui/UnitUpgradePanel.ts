@@ -7,7 +7,6 @@ import { createUnit } from "../../utils/unitUtils";
 import { Card } from "../Card";
 import { getRandomArrayItems } from "../../utils/commonUtils";
 import { BASIC_CLASSES, basicClassHeroes } from "../../heroConsts";
-import { UnitCard } from "../UnitCard";
 import { getHeroMulticlass, getMcHeroByClass, getMulticlassSubclasses } from "../../utils/heroUtils";
 import { getHeroImage } from "../../utils/imageUtils";
 import { HeroClassTag } from "./HeroClassTag";
@@ -20,6 +19,8 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
     card: Card;
     //upgradeButton: GameObjects.Text;
     isRerollAvailable: boolean;
+
+    hintText: GameObjects.Text;
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -53,7 +54,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         rect.setStrokeStyle(1, 0x777777);
         this.add(rect);
 
-        const title = this.scene.add.text(320, -40, "SELECT UPGRADE", {
+        const title = this.scene.add.text(320, -40, i18n.ui.UPGRADE_HERO_TO_MC, {
             fontFamily: "Arial Black",
             fontSize: 18,
             color: "#ffffff",
@@ -148,7 +149,8 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         const { image, animation } = getHeroImage(heroClass);
         const y = 350;
         const imageObject = this.gameScene.add.sprite(x, y, image, 0).setOrigin(0, 1);
-        if (animation) { // && GAME_MODE === "FULL"
+        if (animation) {
+            // && GAME_MODE === "FULL"
             imageObject.anims.play(animation);
         }
         this.add(imageObject);
@@ -168,7 +170,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
                 if (this.gameScene.bankController.totalGold < rerollPrice) {
                     return;
                 }
-                
+
                 this.gameScene.bankController.buy(rerollPrice);
                 this.isRerollAvailable = false;
                 this.render();

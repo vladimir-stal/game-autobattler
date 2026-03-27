@@ -152,7 +152,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderUpgradeButton() {
         const { level, unitType, heroClassType } = this.unit;
 
-        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 3;
+        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC; // && level > 3;
         this.upgradeButton = this.scene.add
             .text(0, 120, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" })
             .setVisible(isVisible);
@@ -174,12 +174,13 @@ export class UnitCard extends Phaser.GameObjects.Container {
                 const hcTag = new HeroClassTag(this.gameScene, x, 180, heroClass);
                 this.add(hcTag);
             });
-        } else if  (unitType === EUnitType.UNIT) {
-            mobHeroClasses && mobHeroClasses.forEach((heroClass, index) => {
-                const x = index * 60;
-                const hcTag = new HeroClassTag(this.gameScene, x, 180, heroClass);
-                this.add(hcTag);
-            });
+        } else if (unitType === EUnitType.UNIT) {
+            mobHeroClasses &&
+                mobHeroClasses.forEach((heroClass, index) => {
+                    const x = index * 60;
+                    const hcTag = new HeroClassTag(this.gameScene, x, 180, heroClass);
+                    this.add(hcTag);
+                });
         }
     }
 

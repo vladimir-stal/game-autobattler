@@ -336,7 +336,13 @@ export enum ESelectCardHint {
     TAKE_ALL_REWARDS = "TAKE_ALL_REWARDS",
     SELECT_SINGLE = "SELECT_SINGLE",
     SELECT_SINGLE_HERO = "SELECT_SINGLE_HERO",
-    SELECT_SINGLE_DUNGEON = "SELECT_SINGLE_DUNGEON"
+    SELECT_SINGLE_DUNGEON = "SELECT_SINGLE_DUNGEON",
+}
+
+export enum ESelectRoomHint {
+    UPGRADE_SKILL_OR_ITEM = "UPGRADE_SKILL_OR_ITEM",
+    ENHANT_SKILL_CHAINED = "ENHANT_SKILL_CHAINED",
+    UPGRADE_HERO_TO_MC = "UPGRADE_HERO_TO_MC",
 }
 
 export enum EHeroClassType {
@@ -419,7 +425,7 @@ export enum EItemType {
 }
 
 export enum EWeaponItemType {
-    AXE = "AXE", // master, wild 
+    AXE = "AXE", // master, wild
     DAGGER = "DAGGER", // any
     MACE = "MACE", // order, priest
     MUSICAL = "MUSICAL", // bard

@@ -76,13 +76,21 @@ export class SelectController {
         const expCard = { price: 0, type: ECardType.EXP_PARTY, value: this.mobsReward.exp };
         const cards = [expCard, rewardCard, null];
         console.log("SHOW REWARDS", rewardCard);
-        this.gameScene.cardSelectPanel.show(cards, ERoomType.MOBS_REWARDS, undefined, { isSingleSelect: false, isSelectRequired: false, hintTextType: ESelectCardHint.TAKE_ALL_REWARDS });
+        this.gameScene.cardSelectPanel.show(cards, ERoomType.MOBS_REWARDS, undefined, {
+            isSingleSelect: false,
+            isSelectRequired: false,
+            hintTextType: ESelectCardHint.TAKE_ALL_REWARDS,
+        });
     }
 
     showDuelRewards() {
         this.gameScene.roomSelectPanel.hide();
         const rewardCards = getDuelRewardCards(this.day);
-        this.gameScene.cardSelectPanel.show(rewardCards, ERoomType.MOBS_REWARDS, undefined, { isSingleSelect: false, isSelectRequired: true, hintTextType: ESelectCardHint.TAKE_ALL_REWARDS });
+        this.gameScene.cardSelectPanel.show(rewardCards, ERoomType.MOBS_REWARDS, undefined, {
+            isSingleSelect: false,
+            isSelectRequired: true,
+            hintTextType: ESelectCardHint.TAKE_ALL_REWARDS,
+        });
         this.gameScene.topPanel.nextRoomButton.setVisible(false);
     }
 
@@ -122,13 +130,19 @@ export class SelectController {
             return;
         }
 
-
         // if (type === ERoomType.TRIPLE_SET) {
         //     tripleSetTypes = [];
         //     getRandomArrayItems(tripleSetCardTypes, 3, true).forEach((cardType) => tripleSetTypes.push(cardType));
         // }
 
-        const { cards, isSingleSelect, isSelectRequired, isRerollAvailable, hintTextType } = getCards(this.gameScene, type, this.day, this.hour, heroClasses, tripleSetTypes);
+        const { cards, isSingleSelect, isSelectRequired, isRerollAvailable, hintTextType } = getCards(
+            this.gameScene,
+            type,
+            this.day,
+            this.hour,
+            heroClasses,
+            tripleSetTypes,
+        );
         const isReroll = isRerollAvailableForce !== undefined ? isRerollAvailableForce : isRerollAvailable;
         this.gameScene.cardSelectPanel.show(cards, type, heroClasses, { isSingleSelect, isSelectRequired, isRerollAvailable: isReroll, hintTextType });
 
@@ -209,7 +223,6 @@ export class SelectController {
                         return;
                     }
                     this.gameScene.bankController.addToBank(value);
-                    //this.showNextRoomSelect();
                 }
                 break;
             case ECardType.MOBS:

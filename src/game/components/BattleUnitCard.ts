@@ -556,6 +556,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     async playBuff(buff: IBuff, skill?: IHeroSkill) {
         //this.setAction("BUFF " + buff.name);
 
+        if (GAME_MODE !== "FULL") {
+            return;
+        }
+
         const animation = skill?.animation || this.unitBuffAnimation;
         if (animation) {
             this.unitImageObject.anims.play(animation);

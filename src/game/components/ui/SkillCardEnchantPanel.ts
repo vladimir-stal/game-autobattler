@@ -23,6 +23,7 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
     cardSlot: CardSlot;
     upgradeButton: GameObjects.Text;
     moveButton: GameObjects.Text;
+    hintText: GameObjects.Text;
 
     isCardUpgraded: boolean;
 
@@ -57,6 +58,7 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
 
         this.renderUpgradeButton();
         this.renderMoveButton();
+        this.renderHintPanel();
     }
 
     renderBorder() {
@@ -102,15 +104,21 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
                 return;
             }
             if (skill.nextLevel) {
-                const newSkill: IHeroSkillSet = {...skill, isChained: true}
+                const newSkill: IHeroSkillSet = { ...skill, isChained: true };
                 this.cardSlot.placeCard({ type: ECardType.SKILL, price: 0, skill: newSkill }, undefined);
                 this.upgradeButton.setVisible(false);
                 this.isCardUpgraded = true;
             }
-            
         });
 
         this.add(this.upgradeButton);
+    }
+
+    renderHintPanel() {
+        const text = i18n.ui.ENHANT_SKILL_CHAINED;
+        const y = 220;
+        this.hintText = this.scene.add.text(350, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
+        this.add(this.hintText);
     }
 
     handlePlaceCard = () => {
