@@ -15,7 +15,7 @@ import { BattleController } from "../components/BattleController";
 import { basicClassHeroes } from "../heroConsts";
 import { SelectController } from "../components/SelectController";
 import { activateSlots } from "../utils/selectPhaseUtils";
-import { generateUnitId } from "../utils/unitUtils";
+import { addExp, generateUnitId } from "../utils/unitUtils";
 import { UnitUpgradePanel } from "../components/ui/UnitUpgradePanel";
 import { applyAfterDuelBonuses } from "../utils/afterDuelUtils";
 import { LeaderController } from "../components/LeaderController";
@@ -399,7 +399,7 @@ export class GameScene extends Phaser.Scene {
         // get experince and hp decrease after duel
         if (this.phase === "DUEL") {
             //const experienceFromBattle = getExpAfterDuelValue(day);
-            //addExp(units, experienceFromBattle);
+            addExp(this.units, 10);
             //
             if (!isBattleWin) {
                 this.leaderController.decreaseMainPlayerHp(day + 1);

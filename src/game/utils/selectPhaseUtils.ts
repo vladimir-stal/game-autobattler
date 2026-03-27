@@ -170,12 +170,9 @@ export const getRooms = (
             break;
         case 1:
             {
-                if (hour === 0) {
-                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
-                }
-                if (hour === 1) {
-                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
-                }
+                // if (hour === 1) {
+                //     return [{ roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }];
+                // }
 
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
@@ -1130,9 +1127,7 @@ export const getMobRewardCard = (reward: IMobReward): ICard => {
         }
         case IMobRewardType.UNIT: {
             const rewardUnit = copyUnit(unit);
-            console.log("BEFORE", rewardUnit.items.length);
             addMobItem(rewardUnit);
-            console.log("AFTER", rewardUnit.items.length);
             return { price: 0, type: ECardType.UNIT, unit: rewardUnit };
         }
         default: {

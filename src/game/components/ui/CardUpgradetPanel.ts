@@ -20,6 +20,7 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
     cardSlot: CardSlot;
     upgradeButton: GameObjects.Text;
     moveButton: GameObjects.Text;
+    hintText: GameObjects.Text;
 
     isCardUpgraded: boolean;
 
@@ -54,6 +55,7 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
 
         this.renderUpgradeButton();
         this.renderMoveButton();
+        this.renderHintPanel();
     }
 
     renderBorder() {
@@ -63,7 +65,7 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
     }
 
     renderMoveButton() {
-        this.moveButton = this.scene.add.text(320, 120, "MOVE", { fontFamily: "Arial Black", fontSize: 18, color: "#aaffaa" }).setVisible(false);
+        this.moveButton = this.scene.add.text(320, 120, i18n.ui.MOVE, { fontFamily: "Arial Black", fontSize: 18, color: "#aaffaa" }).setVisible(false);
         this.moveButton
             .setInteractive()
             .on("pointerdown", () => {
@@ -136,4 +138,11 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
         this.upgradeButton.setVisible(false);
         this.moveButton.setVisible(false);
     };
+
+    renderHintPanel() {
+        const text = i18n.ui.UPGRADE_SKILL_OR_ITEM;
+        const y = 220;
+        this.hintText = this.scene.add.text(350, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
+        this.add(this.hintText);
+    }
 }

@@ -1,15 +1,19 @@
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, EHeroClass, ERoomType } from "../../../types";
+import { ECardType, EHeroClass, ERoomType, ESelectRoomHint } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { getSelectRoomDisplayName, IRoomOptions } from "../../utils/selectPhaseUtils";
 import { roomsWithSingleHeroClass, tripleSetCardTypes } from "../SelectController";
 import { getRandomArrayItems } from "../../utils/commonUtils";
+import { GameObjects } from "phaser";
 
 /** UI panel to select next room */
 export class RoomSelectPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
 
     roomCount: number;
+
+    hintText: GameObjects.Text;
+    hintTextType: ESelectRoomHint;
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -79,7 +83,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         });
         this.add(roomDescriptionText);
 
-        const buttonText = type === ERoomType.DUEL ?  i18n.ui.START : i18n.ui.SELECT
+        const buttonText = type === ERoomType.DUEL ? i18n.ui.START : i18n.ui.SELECT;
         const selectRoomText = this.scene.add.text(100 + index * 250, 80, buttonText, {
             fontFamily: "Arial Black",
             fontSize: 18,
@@ -99,5 +103,14 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
             });
 
         this.add(selectRoomText);
+    }
+
+    renderHintPanel() {
+        if (this.hintTextType) {
+            const text = i18n.ui[this.hintTextType];
+            const y = 220;
+            this.hintText = this.scene.add.text(350, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
+            this.add(this.hintText);
+        }
     }
 }

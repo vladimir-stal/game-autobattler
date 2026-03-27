@@ -1,4 +1,14 @@
-import { EHeroClass, EItemAfterDuelBonusCondition, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, ERoomType, ESelectCardHint, THeroAttribute } from "../types";
+import {
+    EHeroClass,
+    EItemAfterDuelBonusCondition,
+    EItemAfterDuelBonusType,
+    EItemBattleBonusType,
+    EItemBonusType,
+    ERoomType,
+    ESelectCardHint,
+    ESelectRoomHint,
+    THeroAttribute,
+} from "../types";
 
 type TSkillI18n = Record<number | "name" | "desc1" | "desc2" | "desc3", string>;
 
@@ -123,7 +133,7 @@ export interface Ii18n {
         DEAD: string;
         VICTORY: string;
         DEFEAT: string;
-        // hints
+        // card select hints
         [ESelectCardHint.TAKE_ALL_REWARDS]: string;
         [ESelectCardHint.SELECT_SINGLE_HERO]: string;
         [ESelectCardHint.TAKE_REWARD]: string;
@@ -131,6 +141,10 @@ export interface Ii18n {
         [ESelectCardHint.TAKE_SKILL]: string;
         [ESelectCardHint.SELECT_SINGLE]: string;
         [ESelectCardHint.SELECT_SINGLE_DUNGEON]: string;
+        // room select hint
+        [ESelectRoomHint.UPGRADE_SKILL_OR_ITEM]: string;
+        [ESelectRoomHint.ENHANT_SKILL_CHAINED]: string;
+        [ESelectRoomHint.UPGRADE_HERO_TO_MC]: string;
         // bonus condition
         [EItemAfterDuelBonusCondition.WON]: string;
     };
@@ -328,7 +342,7 @@ export const i18n: Ii18n = {
         [ERoomType.TRIPLE_SET]: "DUNGEON",
         [ERoomType.SKILLS_SELL_ENHANCED]: "ENHANCED SKILLS",
         [ERoomType.UPGRADE_SKILL_OR_ITEM]: "UPGRADE",
-        [ERoomType.ENCHANCE_SKILL_CHAINED]: "ENHANE"
+        [ERoomType.ENCHANCE_SKILL_CHAINED]: "ENHANE",
         //
     },
     skills: {
@@ -573,6 +587,10 @@ export const i18n: Ii18n = {
         [ESelectCardHint.TAKE_SKILL]: "TAKE SKILL",
         [ESelectCardHint.SELECT_SINGLE]: "SELECT ONE OPTION",
         SELECT_SINGLE_DUNGEON: "SELECT A DUNGEON",
+        //
+        [ESelectRoomHint.UPGRADE_SKILL_OR_ITEM]: "PLACE ITEM OR SKILL TO UPGRADE TO THE NEXT LEVEL",
+        [ESelectRoomHint.ENHANT_SKILL_CHAINED]: "PLACE SKILL TO ENCHANT WITH CHAINED",
+        [ESelectRoomHint.UPGRADE_HERO_TO_MC]: "SELECT MULTICLASS",
         //
         [EItemAfterDuelBonusCondition.WON]: "WIN",
     },

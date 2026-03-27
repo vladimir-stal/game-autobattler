@@ -10,7 +10,7 @@ import { getRerollPrice } from "../../utils/selectPhaseUtils";
 const hintTopY = -50;
 const hintBottomY = 220;
 
-const chooseTypeRooms = [ERoomType.HEROES_SELL, ERoomType.TRIPLE_SET, ERoomType.MOBS];
+const chooseTypeRooms = [ERoomType.HEROES_SELL, ERoomType.MOBS];
 
 /** UI panel to select cards for specific room */
 export class CardSelectPanel extends Phaser.GameObjects.Container {

@@ -1,4 +1,4 @@
-import { EHeroClass, EItemAfterDuelBonusCondition, ERoomType, ESelectCardHint } from "../types";
+import { EHeroClass, EItemAfterDuelBonusCondition, ERoomType, ESelectCardHint, ESelectRoomHint } from "../types";
 import { Ii18n } from "./en";
 
 export const i18n: Ii18n = {
@@ -193,7 +193,7 @@ export const i18n: Ii18n = {
         [ERoomType.TRIPLE_SET]: "НАГРАДА",
         [ERoomType.SKILLS_SELL_ENHANCED]: "УЛУЧШЕННЫЕ НАВЫКИ",
         [ERoomType.UPGRADE_SKILL_OR_ITEM]: "УЛУЧШИТЬ",
-        [ERoomType.ENCHANCE_SKILL_CHAINED]: "УЛУЧШИТЬ"
+        [ERoomType.ENCHANCE_SKILL_CHAINED]: "УЛУЧШИТЬ",
         //
     },
     skills: {
@@ -437,6 +437,10 @@ export const i18n: Ii18n = {
         [ESelectCardHint.TAKE_SKILL]: "Заберите навык",
         [ESelectCardHint.SELECT_SINGLE]: "Выберите один вариант",
         SELECT_SINGLE_DUNGEON: "Выберите подземелье",
+        //
+        [ESelectRoomHint.UPGRADE_SKILL_OR_ITEM]: "Поместите предмет или навык чтобы улучшить до следующего уровня",
+        [ESelectRoomHint.ENHANT_SKILL_CHAINED]: "Поместите навык чтобы сделать его Цепным",
+        [ESelectRoomHint.UPGRADE_HERO_TO_MC]: "ВЫБЕРИТЕ МУЛЬТИКЛАС",
         //
         [EItemAfterDuelBonusCondition.WON]: "Победа",
     },

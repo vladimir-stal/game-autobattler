@@ -1,6 +1,6 @@
 import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
 import { i18n } from "./consts";
-import { IMAGE_ITEM_POTION_1 } from "./utils/imageLoadUtil";
+import { IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoadItems";
 
 ////// COMMON ITEMS LEVEL 5 (LEGENDARY) /////////////////////////////////////////////////
 
