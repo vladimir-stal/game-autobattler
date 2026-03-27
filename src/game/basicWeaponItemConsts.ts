@@ -56,7 +56,10 @@ export const dagger1_3: IItem = {
     image: IMAGE_ITEM_DAGGER_1,
     heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.DAGGER,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 7, valueType: "number", attribute: "basicEvasionChance" },
+    ],
     //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
 };
 
@@ -70,7 +73,10 @@ export const dagger1_2: IItem = {
     image: IMAGE_ITEM_DAGGER_1,
     heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.DAGGER,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicEvasionChance" },
+    ],
     //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
 };
 
@@ -84,7 +90,10 @@ export const dagger1: IItem = {
     image: IMAGE_ITEM_DAGGER_1,
     heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.DAGGER,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicEvasionChance" },
+    ],
     //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
     nextLevel: dagger1_2,
 };

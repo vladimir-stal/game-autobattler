@@ -1,13 +1,9 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardType, EItemAfterDuelBonusType, IMobsVariants } from "../../types";
-import { basic_boots, basic_hat, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen } from "../commonItemConsts";
-import { i18n } from "../consts";
-import { itemCoin, itemGoblinBoneDagger, itemGoblinSilverCoin, itemPeasantPitchfork, itemSpiritSpear, regenMantle } from "../mobItemConsts";
-import { goblinApplyShock, goblinShamanHpRegIncr } from "../skills/mobSkills";
-import { warriorSummon, warriorSummon_3 } from "../skills/summonSkillConsts2";
+import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobItemConsts";
 
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.BARBARIAN,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 10,
@@ -26,8 +22,10 @@ export const peasantUnit_4: IUnit = {
     level: 1,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 20 },
-        { item: itemPeasantPitchfork, probability: 20 },
+        { item: itemPeasantPitchfork, probability: 20 }, // 20%
+        { item: itemCoin, probability: 12 }, // 10% ~ 10/0.8
+        { item: itemPeasantPitchfork_2, probability: 14 }, // 10% ~ 10/0.8/0.88
+        // nothing = 100*0.80*0.88*0.86
     ],
 };
 
@@ -52,7 +50,8 @@ export const peasantUnit: IUnit = {
     level: 1,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 20 },
-        { item: itemPeasantPitchfork, probability: 20 },
+        { item: itemPeasantPitchfork, probability: 25 },
+        { item: itemCoin, probability: 20 }, // 15% ~ 15/(100-25)
+        // nothing = 100*0.75*0.80
     ],
 };

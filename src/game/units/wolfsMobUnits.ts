@@ -1,11 +1,12 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../../types";
 import { basic_pants, basic_ring_regen } from "../commonItemConsts";
+import { hp_amulet } from "../commonItemConsts2";
 import { i18n } from "../consts";
-import { itemCoin } from "../mobItemConsts";
+import { itemCoin, itemCoin2 } from "../mobItemConsts";
 
 export const wolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.WILD,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 6,
@@ -24,15 +25,16 @@ export const wolfUnit: IUnit = {
     level: 3,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 5 },
-        { item: basic_pants, probability: 5 },
-        { item: basic_ring_regen, probability: 5 },
+        { item: basic_ring_regen, probability: 15 }, // 15%
+        { item: basic_pants, probability: 17 }, // 15% ~ 15/0.85
+        { item: itemCoin, probability: 14 }, // 10% ~ 10/(0.85*0.83)
+        // 100*0.85*0.83*0.86 = 60% not to get anything
     ],
 };
 
 export const strongWolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.HUNTER,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 10,
@@ -51,8 +53,9 @@ export const strongWolfUnit: IUnit = {
     level: 3,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 10 },
-        { item: basic_pants, probability: 5 },
-        { item: basic_ring_regen, probability: 5 },
+        { item: basic_ring_regen, probability: 15 }, // 15%
+        { item: hp_amulet, probability: 17 }, // 15% ~ 15/0.85
+        { item: itemCoin2, probability: 14 }, // 10% ~ 10/(0.85*0.83)
+        // 100*0.85*0.83*0.86 = 60% not to get anything
     ],
 };

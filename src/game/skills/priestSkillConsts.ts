@@ -21,6 +21,7 @@ export const healSelf_3: IHeroSkillSet = {
             isBasicAttack: true,
             value: 8, // TODO MP: add MP modifier to value
             targetType: ETargetType.SELF,
+            mpScale: 65,
         },
     ],
     image: IMAGE_SKILL_HEAL_1,
@@ -41,6 +42,7 @@ export const healSelf_2: IHeroSkillSet = {
             isBasicAttack: true,
             value: 6,
             targetType: ETargetType.SELF,
+            mpScale: 50,
         },
     ],
     nextLevel: healSelf_3,
@@ -65,6 +67,7 @@ export const healSelf: IHeroSkillSet = {
             //
             effectAnimationType: EEffectAnimationType.EFFECT_PRIEST_HEAL,
             effectAnimationDelay: 800,
+            mpScale: 35,
         },
     ],
     nextLevel: healSelf_2,
@@ -88,6 +91,7 @@ export const healFirst_3: IHeroSkillSet = {
             isBasicAttack: true,
             value: 7, // TODO: mp power
             targetType: ETargetType.FIRST_ALLY,
+            mpScale: 65,
         },
     ],
     image: IMAGE_SKILL_HEAL_1,
@@ -108,6 +112,7 @@ export const healFirst_2: IHeroSkillSet = {
             isBasicAttack: true,
             value: 5, // TODO: mp power
             targetType: ETargetType.FIRST_ALLY,
+            mpScale: 50,
         },
     ],
     image: IMAGE_SKILL_HEAL_1,
@@ -131,6 +136,7 @@ export const healFirst: IHeroSkillSet = {
             //
             effectAnimationType: EEffectAnimationType.EFFECT_PRIEST_HEAL,
             effectAnimationDelay: 800,
+            mpScale: 35,
         },
     ],
     nextLevel: healFirst_2,
@@ -161,7 +167,7 @@ export const healLowHpSkill_3: IHeroSkillSet = {
 export const healLowHpSkill_2: IHeroSkillSet = {
     id: "healLowHp",
     name: "Heal Low Hp(2)",
-    desc: "Heal [4]+[MP*70%] lowest hp ally",
+    desc: "Heal [4]+[MP*75%] lowest hp ally",
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST],
@@ -171,7 +177,7 @@ export const healLowHpSkill_2: IHeroSkillSet = {
             isBasicAttack: true,
             value: 5,
             targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 70,
+            mpScale: 75,
         },
     ],
     nextLevel: healLowHpSkill_3,

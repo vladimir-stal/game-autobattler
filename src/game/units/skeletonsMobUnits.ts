@@ -1,12 +1,12 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../../types";
-import { staff1, sword1 } from "../basicWeaponItemConsts";
-import { basic_boots, basic_hat, basic_pants } from "../commonItemConsts";
+import { dagger1, staff1, sword1, totem1 } from "../basicWeaponItemConsts";
+import { basic_boots, basic_exp_bag, basic_hat, basic_pants, basic_ring_damage } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin } from "../mobItemConsts";
 
 export const skeletonUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.DARK,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
@@ -22,19 +22,20 @@ export const skeletonUnit: IUnit = {
     id: "SKELETON",
     skills: [],
     items: [],
-    level: 3,
+    level: 2,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 5 },
-        { item: basic_hat, probability: 5 },
-        { item: basic_pants, probability: 5 },
-        { item: basic_boots, probability: 5 },
+        { item: itemCoin, probability: 10 }, // 10%
+        { item: basic_hat, probability: 11 }, // 10% ~ 10/0.9
+        { item: basic_pants, probability: 12 }, // 10% ~ 10/0.9/0.89
+        { item: basic_boots, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
+        // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
     ],
 };
 
 export const skeletonWarriorUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.BLACK_KNIGHT,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 7,
@@ -53,14 +54,17 @@ export const skeletonWarriorUnit: IUnit = {
     level: 3,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 5 },
-        { item: sword1, probability: 5 },
+        { item: itemCoin, probability: 10 }, // 10%
+        { item: sword1, probability: 11 }, // 10% ~ 10/0.9
+        { item: totem1, probability: 12 }, // 10% ~ 10/0.9/0.89
+        { item: basic_ring_damage, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
+        // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
     ],
 };
 
 export const skeletonMageUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.MAGIC,
+    heroClass: EHeroClass.WARLOCK,
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.RANDOM_ENEMY,
     basicAttack: 8,
@@ -79,7 +83,10 @@ export const skeletonMageUnit: IUnit = {
     level: 3,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 5 },
-        { item: staff1, probability: 5 },
+        { item: itemCoin, probability: 10 }, // 10%
+        { item: staff1, probability: 11 }, // 10% ~ 10/0.9
+        { item: dagger1, probability: 12 }, // 10% ~ 10/0.9/0.89
+        { item: basic_exp_bag, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
+        // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
     ],
 };

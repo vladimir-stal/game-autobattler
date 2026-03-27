@@ -418,19 +418,19 @@ export enum EItemType {
 }
 
 export enum EWeaponItemType {
-    AXE = "AXE",
-    DAGGER = "DAGGER",
-    MACE = "MACE",
-    MUSICAL = "MUSICAL",
-    SCEPTER = "SCEPTER",
-    SHIELD = "SHIELD",
-    STAFF = "STAFF",
-    SWORD = "SWORD",
-    TOTEM = "TOTEM",
-    WAND = "WAND",
+    AXE = "AXE", // master, wild 
+    DAGGER = "DAGGER", // any
+    MACE = "MACE", // order, priest
+    MUSICAL = "MUSICAL", // bard
+    SCEPTER = "SCEPTER", // summon, priest
+    SHIELD = "SHIELD", // warrior, order
+    STAFF = "STAFF", // magic, summon
+    SWORD = "SWORD", // warrior, master
+    TOTEM = "TOTEM", // wild, dark
+    WAND = "WAND", // dark, magic
     //
     BOOK = "BOOK",
-    SPEAR = "SPEAR",
+    SPEAR = "SPEAR", // any
 }
 
 /**

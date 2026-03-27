@@ -1,11 +1,11 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType } from "../../types";
 import { i18n } from "../consts";
-import { itemCoin, itemGoblinBoneDagger, itemGoblinSilverCoin } from "../mobItemConsts";
+import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinSilverCoin } from "../mobItemConsts";
 import { goblinApplyShock, goblinShamanHpRegIncr } from "../skills/mobSkills";
 
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.MASTER,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 2,
@@ -23,12 +23,12 @@ export const weakGoblinUnit: IUnit = {
     items: [],
     level: 1,
     exp: 0,
-    mobItems: [{ item: itemCoin, probability: 10 }],
+    mobItems: [{ item: itemCoin, probability: 40 }],
 };
 
 export const goblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.GLADIATOR,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 5,
@@ -47,14 +47,16 @@ export const goblinUnit: IUnit = {
     level: 2,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 10 },
-        { item: itemGoblinBoneDagger, probability: 5 },
+        { item: itemCoin, probability: 20 },
+        { item: itemGoblinBoneDagger, probability: 12 },
+        { item: itemCoin2, probability: 14 },
+        // 100*0.80*0.88*0.86 = 60% not to get anything
     ],
 };
 
 export const goblinShamanUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WILD,
+    heroClass: EHeroClass.MAGIC,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
@@ -73,15 +75,16 @@ export const goblinShamanUnit: IUnit = {
     level: 2,
     exp: 0,
     mobItems: [
-        { item: itemCoin, probability: 10 },
-        { item: itemGoblinSilverCoin, probability: 10 },
-        { item: itemGoblinBoneDagger, probability: 5 },
+        { item: itemCoin, probability: 15 },
+        { item: itemGoblinSilverCoin, probability: 17 },
+        { item: itemGoblinBoneDagger, probability: 14 },
+        // 100*0.85*0.83*0.86 = 60% not to get anything
     ],
 };
 
 export const goldGoblin1Unit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.BARD,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 1,
@@ -102,8 +105,9 @@ export const goldGoblin1Unit: IUnit = {
     exp: 0,
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1 }],
     mobItems: [
-        { item: itemCoin, probability: 10 },
-        { item: itemGoblinSilverCoin, probability: 10 },
-        { item: itemGoblinBoneDagger, probability: 5 },
+        { item: itemCoin, probability: 15 }, // 15%
+        { item: itemGoblinSilverCoin, probability: 17 }, // 15% ~ 15/0.85
+        { item: itemGoblinBoneDagger, probability: 14 }, // 10% ~ 10/(0.85*0.83)
+        // 100*0.85*0.83*0.86 = 60% not to get anything
     ],
 };

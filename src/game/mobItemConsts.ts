@@ -24,6 +24,29 @@ import {
 
 // COMMON
 
+export const itemCoin3: IItem = {
+    id: "coin",
+    name: "Монета(3)",
+    type: EItemType.COMMON,
+    level: 10,
+    priceLevel: 3,
+    heroClasses: [],
+    bonuses: [],
+    image: IMAGE_ITEM_COIN,
+};
+
+export const itemCoin2: IItem = {
+    id: "coin",
+    name: "Монета(2)",
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [],
+    bonuses: [],
+    image: IMAGE_ITEM_COIN,
+    nextLevel: itemCoin3,
+};
+
 export const itemCoin: IItem = {
     id: "coin",
     name: "Монета",
@@ -33,11 +56,28 @@ export const itemCoin: IItem = {
     heroClasses: [],
     bonuses: [],
     image: IMAGE_ITEM_COIN,
+    nextLevel: itemCoin2,
 };
 
 // PEASANT
 
 // PEASANT PITCHFORK
+
+export const itemPeasantPitchfork_3: IItem = {
+    id: "peasantPitchfork",
+    name: "Pitchfork(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [],
+    weaponType: EWeaponItemType.AXE,
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: -4, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 25, valueType: "number", attribute: "basicCritChance" },
+        { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicMaxHp" },
+    ],
+    image: IMAGE_ITEM_PEASANTS_PITCHFORK,
+};
 
 export const itemPeasantPitchfork_2: IItem = {
     id: "peasantPitchfork",
@@ -47,8 +87,12 @@ export const itemPeasantPitchfork_2: IItem = {
     priceLevel: 1,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: -2, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 20, valueType: "number", attribute: "basicCritChance" },
+    ],
     image: IMAGE_ITEM_PEASANTS_PITCHFORK,
+    nextLevel: itemPeasantPitchfork_3,
 };
 
 export const itemPeasantPitchfork: IItem = {

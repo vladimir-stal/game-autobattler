@@ -1,12 +1,13 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../../types";
+import { basic_heal } from "../commonItemConsts";
 import { i18n } from "../consts";
-import { itemCoin } from "../mobItemConsts";
+import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemConsts";
 
 //////////// SPIRIT WARRIOR //////////////////////////
 
 export const warriorSummonMob_5: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.KNIGHT,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 12,
@@ -24,12 +25,17 @@ export const warriorSummonMob_5: IUnit = {
     items: [],
     level: 1,
     exp: 0,
-    mobItems: [{ item: itemCoin, probability: 5 }],
+    mobItems: [
+        { item: itemCoin2, probability: 20 }, // 20%
+        { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
+        { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
+        // nothing = 100*0.80*0.88*0.86
+    ],
 };
 
 export const warriorSummonMob: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.ORDER,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 2,
@@ -47,14 +53,19 @@ export const warriorSummonMob: IUnit = {
     items: [],
     level: 1,
     exp: 0,
-    mobItems: [{ item: itemCoin, probability: 5 }],
+    mobItems: [
+        { item: itemCoin, probability: 20 }, // 20%
+        { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
+        { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
+        // nothing = 100*0.80*0.88*0.86
+    ],
 };
 
 //////////// FIREFLY //////////////////////////
 
 export const fireflySummonMob: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.SUMMON,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
@@ -72,4 +83,10 @@ export const fireflySummonMob: IUnit = {
     items: [],
     level: 1,
     exp: 0,
+    mobItems: [
+        { item: itemCoin, probability: 20 }, // 20%
+        { item: itemCoin2, probability: 12 }, // 10% ~ 10/0.8
+        { item: basic_heal, probability: 14 }, // 10% ~ 10/0.8/0.88
+        // nothing = 100*0.80*0.88*0.86
+    ],
 };

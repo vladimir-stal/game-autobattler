@@ -7,6 +7,7 @@ import { BattleSummonCard } from "../BattleSummonCard";
 import { GameObjects } from "phaser";
 
 const mode: "DEV" | "FAST" = "FAST";
+const BATTLECARDWIDTH = 130;
 
 /** Panel for heroes in duel phase */
 export class BattlePanel extends Phaser.GameObjects.Container {
@@ -93,8 +94,9 @@ export class BattlePanel extends Phaser.GameObjects.Container {
     }
 
     renderPlayerUnitsPanel() {
+        const screenCenterX = this.gameScene.camera.width / 2;
         this.playerUnits.forEach((unit, index) => {
-            const x = (3 - index) * 200 - 100;
+            const x = screenCenterX - (index + 1) * BATTLECARDWIDTH;
             const y = 0;
             this.renderCard(unit, x, y, false);
         });
@@ -133,8 +135,9 @@ export class BattlePanel extends Phaser.GameObjects.Container {
     }
 
     renderEnemyUnitsPanel() {
+        const screenCenterX = this.gameScene.camera.width / 2;
         this.enemyUnits.forEach((unit, index) => {
-            const x = 900 + index * 200;
+            const x = screenCenterX + (index + 1) * BATTLECARDWIDTH;
             const y = 0;
             this.renderCard(unit, x, y, true);
         });
