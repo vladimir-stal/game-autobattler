@@ -576,11 +576,11 @@ export class BattleController {
                     if (targets.length === 1) {
                         const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
                         if (isAdditionalTarget) {
-                            console.log("ADDITIONAL_BUFF_TARGET found");
+                            //console.log("ADDITIONAL_BUFF_TARGET found");
                             const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
-                            console.log("additionalTargets", additionalTargets);
+                            //console.log("additionalTargets", additionalTargets);
                             targets.push(additionalTargets[0]);
-                            console.log("targets", targets);
+                            //console.log("targets", targets);
                         }
                     }
 

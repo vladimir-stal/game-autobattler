@@ -1,4 +1,4 @@
-import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, ERoomType, ESelectCardHint, THeroAttribute } from "../types";
+import { EHeroClass, EItemAfterDuelBonusCondition, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, ERoomType, ESelectCardHint, THeroAttribute } from "../types";
 
 type TSkillI18n = Record<number | "name" | "desc1" | "desc2" | "desc3", string>;
 
@@ -131,6 +131,8 @@ export interface Ii18n {
         [ESelectCardHint.TAKE_SKILL]: string;
         [ESelectCardHint.SELECT_SINGLE]: string;
         [ESelectCardHint.SELECT_SINGLE_DUNGEON]: string;
+        // bonus condition
+        [EItemAfterDuelBonusCondition.WON]: string;
     };
 }
 
@@ -571,5 +573,7 @@ export const i18n: Ii18n = {
         [ESelectCardHint.TAKE_SKILL]: "TAKE SKILL",
         [ESelectCardHint.SELECT_SINGLE]: "SELECT ONE OPTION",
         SELECT_SINGLE_DUNGEON: "SELECT A DUNGEON",
+        //
+        [EItemAfterDuelBonusCondition.WON]: "WIN",
     },
 };

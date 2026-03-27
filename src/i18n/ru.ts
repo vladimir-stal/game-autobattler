@@ -1,4 +1,4 @@
-import { EHeroClass, ERoomType, ESelectCardHint } from "../types";
+import { EHeroClass, EItemAfterDuelBonusCondition, ERoomType, ESelectCardHint } from "../types";
 import { Ii18n } from "./en";
 
 export const i18n: Ii18n = {
@@ -437,5 +437,7 @@ export const i18n: Ii18n = {
         [ESelectCardHint.TAKE_SKILL]: "Заберите навык",
         [ESelectCardHint.SELECT_SINGLE]: "Выберите один вариант",
         SELECT_SINGLE_DUNGEON: "Выберите подземелье",
+        //
+        [EItemAfterDuelBonusCondition.WON]: "Победа",
     },
 };

@@ -22,6 +22,7 @@ import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
+export const MOB_MAX_ITEM_COUNT = 1;
 
 export const BASIC_CLASS_MAX_WEAPON_COUNT = 1;
 export const MC_CLASS_MAX_WEAPON_COUNT = 2;

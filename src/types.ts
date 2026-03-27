@@ -705,6 +705,7 @@ export interface IUnit {
     name: string;
     unitType: EUnitType;
     heroClass: EHeroClass;
+    mobHeroClasses?: EHeroClass[];
     heroClassType?: EHeroClassType;
     level: number;
     exp: number;

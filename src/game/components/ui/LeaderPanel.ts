@@ -28,7 +28,8 @@ export class LeaderPanel extends Phaser.GameObjects.Container {
     }
 
     renderImage() {
-        const scale = this.gameScene.camera.width / 1920;
+        const {width} = this.gameScene.camera;
+        const scale = width < 1600 ? width / 1600 : 1;
         const imageObject = this.gameScene.add.sprite(0, 0, IMAGE_LEADER_1_IDLE, 0).setDisplaySize(400*scale, 400*scale).setOrigin(0, 0);
         this.imgWidth = imageObject.displayWidth;
         this.imgHeight = imageObject.displayHeight;

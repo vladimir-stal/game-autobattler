@@ -174,7 +174,7 @@ export const basic_exp_bag_2: IItem = {
     image: IMAGE_ITEM_RING_EXP_1,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.EXP, value: 1 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.EXP, value: 2 }],
 };
 
 export const basic_exp_bag: IItem = {

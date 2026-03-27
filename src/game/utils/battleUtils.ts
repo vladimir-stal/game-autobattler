@@ -504,7 +504,7 @@ export const calculateUnitsAfterBattle = (battleUnits: (IBattleUnit | null)[]): 
             return null;
         }
 
-        return {
+        const unitAfterBattle = {
             ...battleUnit,
             hp: undefined,
             maxHp: undefined,
@@ -521,6 +521,8 @@ export const calculateUnitsAfterBattle = (battleUnits: (IBattleUnit | null)[]): 
             summon: undefined,
             totem: undefined,
         };
+
+        return unitAfterBattle;
     });
 };
 

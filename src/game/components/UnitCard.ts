@@ -166,11 +166,17 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     renderTags() {
-        const { heroClassType, unitType, heroClass } = this.unit;
+        const { heroClassType, unitType, heroClass, mobHeroClasses } = this.unit;
         if (unitType === EUnitType.HERO) {
             const heroClasses = heroClassType === EHeroClassType.MULTI ? getMulticlassSubclasses(heroClass) : [heroClass];
             heroClasses.forEach((heroClass, index2) => {
                 const x = index2 * 60;
+                const hcTag = new HeroClassTag(this.gameScene, x, 180, heroClass);
+                this.add(hcTag);
+            });
+        } else if  (unitType === EUnitType.UNIT) {
+            mobHeroClasses && mobHeroClasses.forEach((heroClass, index) => {
+                const x = index * 60;
                 const hcTag = new HeroClassTag(this.gameScene, x, 180, heroClass);
                 this.add(hcTag);
             });
