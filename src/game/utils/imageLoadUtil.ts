@@ -262,7 +262,7 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_RUNECASTER, "assets/sprites/units/runecaster.png");
     scene.load.image(IMAGE_SORCERER, "assets/sprites/units/sorceress.png");
     scene.load.image(IMAGE_BLACKKNIGHT, "assets/sprites/units/black_knight.png");
-    scene.load.image(IMAGE_DOOMSAYER, "assets/sprites/units/mc/doomsayer/doomsayer.png");
+    scene.load.image(IMAGE_DOOMSAYER, "assets/sprites/units/mc/doomsayer/doomsayer.webp");
     scene.load.image(IMAGE_BATTLEMAGE, "assets/sprites/units/battle_mage.png");
     scene.load.image(IMAGE_MINSTREL, "assets/sprites/units/minstrel.png");
     scene.load.image(IMAGE_BARBARIAN, "assets/sprites/units/barbarian.png");
@@ -278,10 +278,8 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_FISHMAN, "assets/sprites/units/fishman1.png");
 
     // MC ANIMATION
-
-    if (GAME_MODE === "FULL") {
-        loadMcHeroesImages(scene);
-    }
+    
+    loadMcHeroesImages(scene);
    
 
     //

@@ -14,9 +14,10 @@ import {
     IMAGE_SAMURAI_BATTLE_IDLE,
     IMAGE_SAMURAI_IDLE,
 } from "../imageLoadUtil";
+import { GAME_MODE } from "../../consts";
 
 // ASSASSIN
-export const IMAGE_ASSASSIN = "IMAGE_ASSASSIN";
+//export const IMAGE_ASSASSIN = "IMAGE_ASSASSIN";
 export const IMAGE_ASSASSIN_IDLE = "IMAGE_ASSASSIN_IDLE";
 export const IMAGE_ASSASSIN_BATTLE_IDLE = "IMAGE_ASSASSIN_BATTLE_IDLE";
 export const IMAGE_ASSASSIN_ATTACK = "IMAGE_ASSASSIN_ATTACK";
@@ -59,22 +60,22 @@ export function loadMcHeroesImages(scene: Scene) {
     //
     // ASSASSIN ///////////////////////////////////////////////////////////////////
 
-    scene.load.image(IMAGE_ASSASSIN, "assets/sprites/units/assassin.webp");
-
     scene.load.spritesheet(IMAGE_ASSASSIN_IDLE, "assets/sprites/units/mc/assassin/assassin_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });
 
-    // scene.load.spritesheet(IMAGE_ASSASSIN_BATTLE_IDLE, "assets/sprites/units/mc/assassin/assassin_battle_idle_cut_400_8bit.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_ASSASSIN_BATTLE_IDLE, "assets/sprites/units/mc/assassin/assassin_battle_idle_cut_400_8bit.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_ASSASSIN_ATTACK, "assets/sprites/units/mc/assassin/assassin_attack_cut_400_8bit.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_ASSASSIN_ATTACK, "assets/sprites/units/mc/assassin/assassin_attack_cut_400_8bit.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // BATTLE MAGE ///////////////////////////////////////////////////////////////////
 
@@ -83,10 +84,12 @@ export function loadMcHeroesImages(scene: Scene) {
         frameHeight: 300,
     });
 
-    // scene.load.spritesheet(IMAGE_BATTLEMAGE_BATTLE_IDLE, "assets/sprites/units/mc/battlemage/battlemage_battle_idle_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_BATTLEMAGE_BATTLE_IDLE, "assets/sprites/units/mc/battlemage/battlemage_battle_idle_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // BARBARIAN ///////////////////////////////////////////////////////////////////
 
@@ -95,15 +98,17 @@ export function loadMcHeroesImages(scene: Scene) {
         frameHeight: 300,
     });
 
-    // scene.load.spritesheet(IMAGE_BARBARIAN_BATTLE_IDLE, "assets/sprites/units/mc/barbarian/barbarian_battle_idle_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_BARBARIAN_BATTLE_IDLE, "assets/sprites/units/mc/barbarian/barbarian_battle_idle_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_BARBARIAN_ATTACK, "assets/sprites/units/mc/barbarian/barbarian_attack_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_BARBARIAN_ATTACK, "assets/sprites/units/mc/barbarian/barbarian_attack_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // BLADEDANCER ///////////////////////////////////////////////////////////////////
 
@@ -116,15 +121,10 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // COMMADER ///////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_COMMANDER_IDLE, "assets/sprites/units/mc/commander/commander_idle_cut_350.webp", {
+    scene.load.spritesheet(IMAGE_COMMANDER_IDLE, "assets/sprites/units/mc/commander/commander_2_idle_cut_350.png", {
         frameWidth: 350,
         frameHeight: 350,
     });
-
-    // scene.load.spritesheet(IMAGE_COMMANDER_IDLE, "assets/sprites/units/mc/commander/commander_2_idle_cut_350.webp", {
-    //     frameWidth: 350,
-    //     frameHeight: 350,
-    // });
 
     // HUNTER ///////////////////////////////////////////////////////////////////
 
@@ -137,15 +137,17 @@ export function loadMcHeroesImages(scene: Scene) {
         frameHeight: 300,
     });
 
-    // scene.load.spritesheet(IMAGE_HUNTER_BATTLE_IDLE, "assets/sprites/units/mc/hunter/hunter_battle_idle_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_HUNTER_BATTLE_IDLE, "assets/sprites/units/mc/hunter/hunter_battle_idle_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_HUNTER_ATTACK, "assets/sprites/units/mc/hunter/hunter_attack_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_HUNTER_ATTACK, "assets/sprites/units/mc/hunter/hunter_attack_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // JESTER ///////////////////////////////////////////////////////////////////
 
@@ -154,15 +156,17 @@ export function loadMcHeroesImages(scene: Scene) {
         frameHeight: 300,
     });
 
-    // scene.load.spritesheet(IMAGE_JESTER_BATTLE_IDLE, "assets/sprites/units/mc/jester/jester_battle_idle_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_JESTER_BATTLE_IDLE, "assets/sprites/units/mc/jester/jester_battle_idle_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_JESTER_ATTACK, "assets/sprites/units/mc/jester/jester_attack_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_JESTER_ATTACK, "assets/sprites/units/mc/jester/jester_attack_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // NECROMANCER ///////////////////////////////////////////////////////////////////
 
@@ -171,15 +175,17 @@ export function loadMcHeroesImages(scene: Scene) {
         frameHeight: 300,
     });
 
-    // scene.load.spritesheet(IMAGE_NECROMANCER_BATTLE_IDLE, "assets/sprites/units/mc/necromancer/necromancer_battle_idle_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_NECROMANCER_BATTLE_IDLE, "assets/sprites/units/mc/necromancer/necromancer_battle_idle_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_NECROMANCER_ATTACK, "assets/sprites/units/mc/necromancer/necromancer_attack_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_NECROMANCER_ATTACK, "assets/sprites/units/mc/necromancer/necromancer_attack_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // PALADIN ///////////////////////////////////////////////////////////////////
 
@@ -188,15 +194,17 @@ export function loadMcHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    // scene.load.spritesheet(IMAGE_PALADIN_ATTACK, "assets/sprites/units/mc/paladin/paladin_attack_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_PALADIN_ATTACK, "assets/sprites/units/mc/paladin/paladin_attack_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_PALADIN_SHIELD_SPELL, "assets/sprites/units/mc/paladin/paladin_magic_shield_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_PALADIN_SHIELD_SPELL, "assets/sprites/units/mc/paladin/paladin_magic_shield_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // PREDATOR /////////////////////////////////////////////////////////////////////
 
@@ -219,20 +227,22 @@ export function loadMcHeroesImages(scene: Scene) {
         frameHeight: 320,
     });
 
-    // scene.load.spritesheet(IMAGE_SAMURAI_BATTLE_IDLE, "assets/sprites/units/mc/samurai/samurai_battle_idle_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+    if (GAME_MODE === "FULL") {
+        scene.load.spritesheet(IMAGE_SAMURAI_BATTLE_IDLE, "assets/sprites/units/mc/samurai/samurai_battle_idle_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_SAMURAI_ATTACK, "assets/sprites/units/mc/samurai/samurai_attack_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_SAMURAI_ATTACK, "assets/sprites/units/mc/samurai/samurai_attack_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
 
-    // scene.load.spritesheet(IMAGE_SAMURAI_ATTACK_2, "assets/sprites/units/mc/samurai/samurai_attack_2_cut_400.webp", {
-    //     frameWidth: 400,
-    //     frameHeight: 400,
-    // });
+        scene.load.spritesheet(IMAGE_SAMURAI_ATTACK_2, "assets/sprites/units/mc/samurai/samurai_attack_2_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+    }
 
     // SORCERER ///////////////////////////////////////////////////////////////////
 

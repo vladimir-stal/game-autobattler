@@ -309,7 +309,7 @@ export enum ERoomType {
     TRIPLE_SET = "TRIPLE_SET", // get 3 free random items from [commonItem, weapon, skill, gold, exp, attr]
     UNIT_RANDOM = "UNIT_RANDOM",
     UNIT_SELL = "UNIT_SELL",
-    UPGRADE_SKILL_OR_ITEM = "UPGRADE_SKILL_OR_ITEM", // allow to upgrade item or a skill to next level
+    UPGRADE_SKILL_OR_ITEM = "UPGRADE_SKILL_OR_ITEM", // allow to upgrade item or a skill to the next level
     //
     // FOR_TESTING
     GIVE_TEST_ITEM = "GIVE_TEST_ITEM",

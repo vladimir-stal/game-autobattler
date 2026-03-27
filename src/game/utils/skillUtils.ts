@@ -27,6 +27,7 @@ export const removeSkillFromUnit = (unit: IUnit, skillIndex: number) => {
     unit.skills.splice(skillIndex, 1);
 };
 
+/** @returns all skills for specific basic hero class */
 export const getHeroClassSkills = (heroClass: EHeroClass, day: number): THeroSkills => {
     if (day < 3) {
         switch (heroClass) {
@@ -97,7 +98,8 @@ export const getHeroClassSkills = (heroClass: EHeroClass, day: number): THeroSki
             default:
                 return [];
         }
-    } else if (day < 7) {
+    } else if (day < 9) {
+        // TODO: lvl 4 skills here
         switch (heroClass) {
             case EHeroClass.BARD:
                 return bardSkills_3;
@@ -121,6 +123,7 @@ export const getHeroClassSkills = (heroClass: EHeroClass, day: number): THeroSki
                 return [];
         }
     } else {
+        // TODO: lvl 5 skills here
         switch (heroClass) {
             case EHeroClass.BARD:
                 return bardSkills_3;
@@ -162,6 +165,7 @@ export const getTopHeroClassSkill = (heroClass: EHeroClass, day: number): IHeroS
     return getRandomArrayItem(getHeroClassSkills(heroClass, day).filter((skill) => skill.priceLevel === topPriceLevel));
 };
 
+/** @returns all skills for 2 basic hero classes */
 export const getHeroClassesSkills = (heroClasses: EHeroClass[], day: number): IHeroSkillSet[] => {
     return getHeroClassSkills(heroClasses[0], day).concat(getHeroClassSkills(heroClasses[1], day));
 };

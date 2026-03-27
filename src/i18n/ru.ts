@@ -169,7 +169,6 @@ export const i18n: Ii18n = {
         //
         [ERoomType.ITEM_SELECT]: "ЧЕРНЫЙ РЫНОК",
         [ERoomType.MIXED_CLASS_SELECT]: "СПЕЦИАЛИСТ",
-        [ERoomType.UPGRADE_SKILL_OR_ITEM]: "УЛУЧШИТЬ",
         //
         // RANDOM ROOMS
         //
@@ -193,6 +192,8 @@ export const i18n: Ii18n = {
         [ERoomType.BOSS]: "БОСС ПОДЗЕМЕЛЬЯ",
         [ERoomType.TRIPLE_SET]: "НАГРАДА",
         [ERoomType.SKILLS_SELL_ENHANCED]: "УЛУЧШЕННЫЕ НАВЫКИ",
+        [ERoomType.UPGRADE_SKILL_OR_ITEM]: "УЛУЧШИТЬ",
+        [ERoomType.ENCHANCE_SKILL_CHAINED]: "УЛУЧШИТЬ"
         //
     },
     skills: {

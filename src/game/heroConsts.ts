@@ -38,7 +38,6 @@ import {
     witchHero,
     zealotHero,
 } from "./mcHeroConsts";
-import { assassinSkill } from "./skills/mc/assassinSkills";
 
 export const BASIC_CLASSES = [
     EHeroClass.BARD,
@@ -66,7 +65,7 @@ export const basicHeroAttributes: THeroAttribute[] = [
 
 export const PHYSICAL_RESIST_DESCREASE_DEBUFFS = [EDebuffType.PHYSICAL_RESIST_DECREASE, EDebuffType.MARK_HUNTER, EDebuffType.MARK_PREDATOR];
 
-export const basicClassHeroes: IUnit[] = //[priestHero, wildHero, warriorHero].map((unit) => {
+export const basicClassHeroes: IUnit[] = //[priestHero, wildHero, commanderHero].map((unit) => {
     [bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, warriorHero, wildHero, summonHero].map((unit) => {
         return { ...unit };
     });

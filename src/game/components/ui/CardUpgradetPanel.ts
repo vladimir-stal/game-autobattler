@@ -1,10 +1,7 @@
 import { GameScene } from "../../scenes/GameScene";
 import { ECardType, EHeroClass, ERoomType, ICard } from "../../../types";
-import { getRandomArrayItem } from "../../utils/commonUtils";
-import { Card } from "../Card";
 import { colors, i18n } from "../../consts";
-import { GameObjects, Input } from "phaser";
-import { createUnit } from "../../utils/unitUtils";
+import { GameObjects } from "phaser";
 import { CardSlot } from "../CardSlot";
 
 /** UI panel to upgrade a card (skill or item) */

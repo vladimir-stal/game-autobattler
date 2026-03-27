@@ -302,7 +302,6 @@ export const i18n: Ii18n = {
         //
         [ERoomType.ITEM_SELECT]: "BLACK MARKET",
         [ERoomType.MIXED_CLASS_SELECT]: "SPECIALIST",
-        [ERoomType.UPGRADE_SKILL_OR_ITEM]: "UPGRADE",
         //
         // RANDOM ROOMS
         //
@@ -326,6 +325,8 @@ export const i18n: Ii18n = {
         [ERoomType.BOSS]: "DUNGEON BOSS",
         [ERoomType.TRIPLE_SET]: "DUNGEON",
         [ERoomType.SKILLS_SELL_ENHANCED]: "ENHANCED SKILLS",
+        [ERoomType.UPGRADE_SKILL_OR_ITEM]: "UPGRADE",
+        [ERoomType.ENCHANCE_SKILL_CHAINED]: "ENHANE"
         //
     },
     skills: {

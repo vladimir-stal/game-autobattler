@@ -24,6 +24,7 @@ import { LeaderPanel } from "../components/ui/LeaderPanel";
 import { LeadersPanel } from "../components/ui/LeadersPanel";
 import { getDuelEnemy } from "../utils/duelUtils";
 import { CardUpgradetPanel } from "../components/ui/CardUpgradetPanel";
+import { SkillCardEnchantPanel } from "../components/ui/SkillCardEnchantPanel";
 import { CardHintPanel } from "../components/ui/CardHintPanel";
 
 export class GameScene extends Phaser.Scene {
@@ -50,6 +51,7 @@ export class GameScene extends Phaser.Scene {
     leadersPanel: LeadersPanel;
     battlePanel: BattlePanel;
     cardUpgradePanel: CardUpgradetPanel;
+    skillCardEnchantPanel: SkillCardEnchantPanel;
     hintPanel: CardHintPanel;
 
     leaderController: LeaderController;
@@ -265,6 +267,7 @@ export class GameScene extends Phaser.Scene {
         if (this.isCardMoveAfterUpgrade) {
             this.isCardMoveAfterUpgrade = false;
             this.cardUpgradePanel.hide();
+            this.skillCardEnchantPanel.hide();
             this.selectController.showNextRoomSelect();
         }
     }
@@ -310,6 +313,10 @@ export class GameScene extends Phaser.Scene {
         this.inventoryPanel.init();
         //
         this.battlePanel.hide();
+        //
+        this.cardUpgradePanel.hide();
+        this.skillCardEnchantPanel.hide();
+        this.unitUpgradePanel.hide();
     }
 
     changeToDuelPhase() {

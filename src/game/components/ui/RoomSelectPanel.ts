@@ -59,7 +59,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         //
         //
         const title = getSelectRoomDisplayName(type);
-        const color = [ERoomType.HEROES_SELL, ERoomType.UPGRADE_SKILL_OR_ITEM].includes(type) ? "#f0dd8cff" : "#ffffff";
+        const color = [ERoomType.HEROES_SELL, ERoomType.UPGRADE_SKILL_OR_ITEM, ERoomType.ENCHANCE_SKILL_CHAINED].includes(type) ? "#f0dd8cff" : "#ffffff";
         const roomText = this.scene.add.text(50 + index * 250, 20, title, {
             fontFamily: "Arial Black",
             fontSize: 18,

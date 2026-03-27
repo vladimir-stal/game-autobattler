@@ -108,7 +108,12 @@ export class SelectController {
             this.gameScene.cardUpgradePanel.show();
             this.gameScene.topPanel.nextRoomButton.setVisible(true);
             return;
+        } else if (type === ERoomType.ENCHANCE_SKILL_CHAINED) {
+            this.gameScene.skillCardEnchantPanel.show();
+            this.gameScene.topPanel.nextRoomButton.setVisible(true);
+            return;
         }
+
 
         // if (type === ERoomType.TRIPLE_SET) {
         //     tripleSetTypes = [];

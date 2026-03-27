@@ -1,5 +1,5 @@
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, EHeroClass, ERoomType, ICard } from "../../../types";
+import { ECardType, EHeroClass, ERoomType, ICard, IHeroSkillSet } from "../../../types";
 import { getRandomArrayItem } from "../../utils/commonUtils";
 import { Card } from "../Card";
 import { colors, i18n } from "../../consts";
@@ -97,31 +97,17 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
             this.upgradeButton.setVisible(false);
 
             const { card } = this.cardSlot.card;
-            if (card.type === ECardType.ITEM) {
-                const { item } = card;
-                if (!item) {
-                    return;
-                }
-                if (item.nextLevel) {
-                    const newItem = item.nextLevel;
-                    this.cardSlot.placeCard({ type: ECardType.ITEM, price: 0, item: newItem }, undefined);
-                    //this.moveButton.setVisible(true);
-                    this.upgradeButton.setVisible(false);
-                    this.isCardUpgraded = true;
-                }
-            } else if (card.type === ECardType.SKILL) {
-                const { skill } = card;
-                if (!skill) {
-                    return;
-                }
-                if (skill.nextLevel) {
-                    const newSkill = skill.nextLevel;
-                    this.cardSlot.placeCard({ type: ECardType.SKILL, price: 0, skill: newSkill }, undefined);
-                    //this.moveButton.setVisible(true);
-                    this.upgradeButton.setVisible(false);
-                    this.isCardUpgraded = true;
-                }
+            const { skill } = card;
+            if (!skill) {
+                return;
             }
+            if (skill.nextLevel) {
+                const newSkill: IHeroSkillSet = {...skill, isChained: true}
+                this.cardSlot.placeCard({ type: ECardType.SKILL, price: 0, skill: newSkill }, undefined);
+                this.upgradeButton.setVisible(false);
+                this.isCardUpgraded = true;
+            }
+            
         });
 
         this.add(this.upgradeButton);
@@ -130,7 +116,7 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
     handlePlaceCard = () => {
         this.upgradeButton.setVisible(true);
         this.moveButton.setVisible(true);
-        console.log("card placed", this.cardSlot?.card?.card.type, this.cardSlot?.card?.card.item?.name);
+        //console.log("card placed", this.cardSlot?.card?.card.type, this.cardSlot?.card?.card.item?.name);
     };
 
     handleRemoveCard = () => {

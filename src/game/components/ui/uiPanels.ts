@@ -12,16 +12,18 @@ import { LeaderPanel } from "./LeaderPanel";
 import { LeadersPanel } from "./LeadersPanel";
 import { CardUpgradetPanel } from "./CardUpgradetPanel";
 import { CardHintPanel } from "./CardHintPanel";
+import { SkillCardEnchantPanel } from "./SkillCardEnchantPanel";
 
 export function createUIPanels(scene: GameScene) {
     const fixedContainer = scene.add.container().setScrollFactor(0, 0, true).setDepth(200);
 
     fixedContainer.setPosition(0, scene.camera.height);
+    console.log("scene.camera.height", scene.camera.height);
 
     // SELECTION PHASE
 
     const leaderPanelX = -10; // scene.camera.width / 2 - 800
-    const leaderPanelY = 50-scene.camera.height;
+    const leaderPanelY = 50 - scene.camera.height;
     scene.leaderPanel = new LeaderPanel(scene, leaderPanelX, leaderPanelY);
     fixedContainer.add(scene.leaderPanel);
 
@@ -36,9 +38,9 @@ export function createUIPanels(scene: GameScene) {
     fixedContainer.add(scene.cardSelectPanel);
 
     const unitPanelX = scene.camera.width / 2 - 350;
-    const unitPanelY = -300;//-scene.camera.height + 550;
+    const unitPanelY = -300; //-scene.camera.height + 550;
     scene.unitPanel = new UnitPanel(scene, unitPanelX, unitPanelY);
-    
+
     fixedContainer.add(scene.unitPanel);
 
     const invPanelX = -5; //scene.camera.width / 2 - 700;
@@ -68,6 +70,9 @@ export function createUIPanels(scene: GameScene) {
     scene.cardUpgradePanel = new CardUpgradetPanel(scene, cardsPanelX, cardsPanelY - 100);
     fixedContainer.add(scene.cardUpgradePanel);
 
+    scene.skillCardEnchantPanel = new SkillCardEnchantPanel(scene, cardsPanelX, cardsPanelY - 100);
+    fixedContainer.add(scene.skillCardEnchantPanel);
+
     scene.hintPanel = new CardHintPanel(scene, 0, 0).setDepth(500).setVisible(false);
     //console.log("HINT PANEL INIT COORDINATES", scene.hintPanel.x, scene.hintPanel.y);
     scene.add.existing(scene.hintPanel);
@@ -92,7 +97,7 @@ export function createUIPanels(scene: GameScene) {
 
             const roomPanelY = -scene.camera.height + 200;
             scene.roomSelectPanel.setY(roomPanelY);
-        }
+        },
     );
 
     return fixedContainer;

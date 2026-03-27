@@ -148,7 +148,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         const { image, animation } = getHeroImage(heroClass);
         const y = 350;
         const imageObject = this.gameScene.add.sprite(x, y, image, 0).setOrigin(0, 1);
-        if (animation && GAME_MODE === "FULL") {
+        if (animation) { // && GAME_MODE === "FULL"
             imageObject.anims.play(animation);
         }
         this.add(imageObject);

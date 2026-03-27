@@ -123,6 +123,7 @@ export class TopPanel extends Phaser.GameObjects.Container {
             .on("pointerdown", () => {
                 this.gameScene.selectController.showNextRoomSelect();
                 this.gameScene.cardUpgradePanel.hide();
+                this.gameScene.skillCardEnchantPanel.hide();
             })
             .on("pointerover", () => {
                 this.nextRoomButton.setColor("#FFFFFF");

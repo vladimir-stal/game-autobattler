@@ -717,6 +717,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playHealEffect() {
+
+        if (GAME_MODE !== "FULL") {
+            return;
+        }
+
         const animation = EEffectAnimationType.EFFECT_PRIEST_HEAL;
         const animationDelay = 800;
         let attackEnemyAnimDistanceX = 100;

@@ -492,6 +492,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         console.error("ERROR! no targetId or value", type);
                         return;
                     }
+
                     console.log("HEAL", unitId, targetId, this.cards);
                     this.cards[targetId].playHealEffect();
                     await this.cards[unitId].playHeal(value);

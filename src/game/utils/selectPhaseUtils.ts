@@ -121,6 +121,7 @@ export const getRooms = (
                 if (hour === 1) {
                     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                 }
+
                 // if (hour === 1) {
                 //     return [null, { roomType: ERoomType.MOBS }, null];
                 // }
@@ -219,6 +220,13 @@ export const getRooms = (
                 if (hour === 5) {
                     const boss = getRandomArrayItem(bosses);
                     return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: { name: boss.name, units: [boss] } } }, null];
+                }
+            }
+            break;
+        case 7:
+            {
+                if (hour === 0) {
+                    return [null, { roomType: ERoomType.ENCHANCE_SKILL_CHAINED }, null];
                 }
             }
             break;
@@ -677,13 +685,17 @@ export const getCards = (
                 isRerollAvailable = true;
                 hintTextType = ESelectCardHint.SELECT_SINGLE;
 
-                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 4, true).map((skill) => {
+                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 3, true).map((skill) => {
                     // const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
                     // const enchancedSkill = { ...skill };
                     // enchancedSkill[enchancedOption] = true;
                     const enchancedSkill = { ...skill, isChained: true };
                     return enchancedSkill;
                 });
+
+                // add skill to fit the player current hero
+                const skill = getRandomArrayItem(getHeroClassesSkills(heroClasses, day));
+                randomSkills.push({ ...skill, isChained: true });
 
                 cards = randomSkills.map((skill) => {
                     return { skill, type: ECardType.SKILL, price: 0 };
