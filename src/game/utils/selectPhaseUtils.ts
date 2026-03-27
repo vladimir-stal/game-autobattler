@@ -15,6 +15,7 @@ import {
     IUnit,
     THeroAttribute,
 } from "../../types";
+import { sword1 } from "../basicWeaponItemConsts";
 import { bosses } from "../bossConsts";
 import { CardSlot } from "../components/CardSlot";
 import { roomsWithHeroClasses } from "../components/SelectController";
@@ -25,6 +26,7 @@ import { itemGoblinSilverCoin } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { magicAttack, magicAttack_2 } from "../skills/magicSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
+import { goblinUnit } from "../units/goblinMobUnits";
 import { wolfUnit } from "../units/wolfsMobUnits";
 import { axe32 } from "../weaponItem3Consts";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
@@ -168,9 +170,12 @@ export const getRooms = (
             break;
         case 1:
             {
-                // if (hour === 0) {
-                //     return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
-                // }
+                if (hour === 0) {
+                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
+                }
+                if (hour === 1) {
+                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
+                }
 
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
@@ -844,12 +849,12 @@ export const getCards = (
                 //cards = [null, { type: ECardType.GOLD, price: 0, value: 2 }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
-                cards = [null, { type: ECardType.UNIT, price: 0, unit: wolfUnit }, null];
+                cards = [null, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:
             {
-                cards = [null, { type: ECardType.SKILL, price: 0, skill: { ...magicAttack_2, isChained: true } }, null];
+                cards = [null, { type: ECardType.ITEM, price: 0, item: sword1 }, null];
             }
             break;
         default:
@@ -959,7 +964,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         return;
                     }
 
-                    const { unitType, heroClass, heroClassType, items } = unit;
+                    const { unitType, heroClass, heroClassType, items, mobHeroClasses } = unit;
 
                     // case move target is unit
                     if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT) {
@@ -978,12 +983,15 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                                     return;
                                 }
                                 const weaponHeroClasses = getWeaponItemHeroClasses(item.weaponType);
-                                // TODO: add mobHeroClasses to IUnit and check it instead
-                                //if (heroClassType === EHeroClassType.BASIC) {
-                                if (weaponHeroClasses.includes(heroClass)) {
+                                if (!mobHeroClasses) {
+                                    return;
+                                }
+                                const mobHeroClassFits = mobHeroClasses.find((mobHeroClass) => {
+                                    return weaponHeroClasses.includes(mobHeroClass);
+                                });
+                                if (mobHeroClassFits) {
                                     slot.setIsActive(true);
                                 }
-                                //}
                             }
 
                             return;
