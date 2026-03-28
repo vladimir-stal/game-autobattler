@@ -33,7 +33,7 @@ export const tripleSetCardTypes = [
     ECardType.GOLD,
     ECardType.ITEM,
     ECardType.SKILL,
-    //ECardType.MOBS,
+    //ECardType.UNITS,
     ECardType.EXP_PARTY,
 ];
 
@@ -225,7 +225,6 @@ export class SelectController {
                     if (!mobs) {
                         return;
                     }
-                    //console.log("executeCardAction", mobs);
                     this.gameScene.selectController.setMobsReward(mobs.reward);
                     this.gameScene.changeToMobsDuelPhase(mobs.units);
                 }
@@ -236,9 +235,8 @@ export class SelectController {
                         return;
                     }
                     //addExp(this.gameScene.units, value);
-                    this.gameScene.unitPanel.slots.forEach(sv => {
-                        if (sv.slot.card != null)
-                          addExpToUnit(sv.slot.card.card.unit, value);                        
+                    this.gameScene.unitPanel.slots.forEach((sv) => {
+                        if (sv.slot.card != null) addExpToUnit(sv.slot.card.card.unit, value);
                     });
                     this.gameScene.unitPanel.refreshAllCards();
                 }

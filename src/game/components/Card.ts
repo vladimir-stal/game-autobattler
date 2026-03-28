@@ -115,7 +115,7 @@ export class Card extends Phaser.GameObjects.Container {
         if (!value) {
             return;
         }
-        this.titleText.setText("PARTY EXP " + value);
+        this.titleText.setText(i18n.ui.EXP_PARTY + " " + value);
     }
 
     renderSkillCard() {

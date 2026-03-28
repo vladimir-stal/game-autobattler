@@ -12,6 +12,8 @@ const hintBottomY = 220;
 
 const chooseTypeRooms = [ERoomType.HEROES_SELL, ERoomType.MOBS];
 
+const instantActionCards = [ECardType.MOBS, ECardType.GOLD, ECardType.EXP_PARTY];
+
 /** UI panel to select cards for specific room */
 export class CardSelectPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
@@ -89,6 +91,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderCards() {
+        console.log("CARD SELECT PANEL renderCards", this.cards);
         this.cards.forEach((card, i) => {
             if (this.boughtCardIndexes.includes(i)) {
                 return;
@@ -122,10 +125,16 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                     return;
                 }
 
-                if ([ECardType.MOBS, ECardType.GOLD, ECardType.EXP_PARTY].includes(card.type)) {
+                if (instantActionCards.includes(card.type)) {
                     this.gameScene.selectController.executeCardAction(card);
                     if ([ECardType.GOLD, ECardType.EXP_PARTY].includes(card.type)) {
                         this.boughtCardIndexes.push(index);
+
+                        if (this.checkShowNextRoom()) {
+                            this.gameScene.selectController.showNextRoomSelect();
+                            return;
+                        }
+
                         this.render();
                     }
                     return;
@@ -184,23 +193,42 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                 card.unit = createUnit(card.unit);
             }
 
-            if (this.isSingleSelect) {
-                this.gameScene.selectController.showNextRoomSelect();
-                return;
-            }
-
-            const isLastCard = this.cards.filter((card) => card).length === this.boughtCardIndexes.length + 1;
-
-            console.log("cards", this.cards);
-
-            console.log("isLastCard", isLastCard, this.cards.length, this.boughtCardIndexes.length);
-            if (isLastCard) {
-                this.gameScene.selectController.showNextRoomSelect();
-                return;
-            }
             this.boughtCardIndexes.push(this.selectedCardIndex);
+            if (this.checkShowNextRoom()) {
+                this.gameScene.selectController.showNextRoomSelect();
+                return;
+            }
+
+            // if (this.isSingleSelect) {
+            //     this.gameScene.selectController.showNextRoomSelect();
+            //     return;
+            // }
+
+            // const isLastCard = this.cards.filter((card) => card).length === this.boughtCardIndexes.length + 1;
+
+            // console.log("cards", this.cards);
+
+            // console.log("isLastCard", isLastCard, this.cards.length, this.boughtCardIndexes.length);
+            // if (isLastCard) {
+            //     this.gameScene.selectController.showNextRoomSelect();
+            //     return;
+            // }
+
             this.selectedCardIndex = undefined;
             this.render();
         }
+    }
+
+    private checkShowNextRoom(): boolean {
+        if (this.isSingleSelect) {
+            return true;
+        }
+
+        const isLastCard = this.cards.filter((card) => card).length === this.boughtCardIndexes.length;
+
+        console.log("cards", this.cards);
+        console.log("isLastCard", isLastCard, this.cards.length, this.cards.filter((card) => card).length, this.boughtCardIndexes.length);
+
+        return isLastCard;
     }
 }

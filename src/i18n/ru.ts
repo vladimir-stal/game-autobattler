@@ -462,6 +462,7 @@ export const i18n: Ii18n = {
         SKILL: "НАВЫК",
         ITEM: "ПРЕДМЕТ",
         EXP: "ОПЫТ",
+        EXP_PARTY: "ОПЫТ ВСЕМ",
         GOLD: "ЗОЛОТО",
         CHAINED_SKILL: "ЦЕПНОЙ НАВЫК",
         ON_START_SKILL: "НАЧАЛО ДУЭЛИ",

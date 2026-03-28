@@ -122,51 +122,17 @@ export const getRooms = (
     switch (day) {
         case 0:
             {
-                if (hour === 0) {
-                    return [null, { roomType: ERoomType.HEROES_SELL }, null];
-                }
-
-                if (hour === 1) {
-                    return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                }
-
-                // if (hour === 1) {
-                //     return [null, { roomType: ERoomType.MOBS }, null];
-                // }
-                // if (hour === 1) {
-                //     return [null, { roomType: ERoomType.SKILLS_SELL_ENHANCED }, null];
-                // }
+                // GAME START FROM DAY 1 NOW
                 //
-                // if (hour === 2) {
-                //     return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
+                //
+                // if (hour === 0) {
+                //     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                 // }
-                // if (hour === 3) {
-                //     return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
-                // }
-                // if (hour === 4) {
-                //     return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
-                // }
-                // if (hour === 4) {
-                //     return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
-                // }
-                // if (hour === 5) {
-                //     return [null, { roomType: ERoomType.UPGRADE_SKILL_OR_ITEM }, null];
-                // }
-                // if (hour === 2) {
-                //     const boss = getRandomArrayItem(bosses);
-                //     return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: { name: boss.name, units: [boss] } } }, null];
-                // }
-                if (hour === 5) {
-                    return [null, { roomType: ERoomType.DUEL }, null];
-                }
-                // if (hour === 2) {
-                //     return [{ roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }];
-                // }
-                //if (hour === 3) {
                 // if (hour === 1) {
-                //     //return [null, { roomType: ERoomType.DUEL }, null];
-                //     const boss = getRandomArrayItem(bosses);
-                //     return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: { name: boss.name, units: [boss] } } }, null];
+                //     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                // }
+                // if (hour === 2) {
+                //     return [null, { roomType: ERoomType.DUEL }, null];
                 // }
             }
             break;
@@ -185,9 +151,6 @@ export const getRooms = (
             }
             break;
         case 2: {
-            // if (hour === 1) {
-            //     return [null, { roomType: ERoomType.MOBS }, null];
-            // }
             if (hour === 1) {
                 return [{ roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }];
             } else if (hour === 2) {
@@ -221,10 +184,6 @@ export const getRooms = (
             break;
         case 5:
             {
-                // if (hour === 2) {
-                //     return [null, { roomType: ERoomType.MOBS }, null];
-                // }
-
                 if (hour === 5) {
                     const boss = getRandomArrayItem(bosses);
                     return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: { name: boss.name, units: [boss] } } }, null];
@@ -233,13 +192,14 @@ export const getRooms = (
             break;
         case 7:
             {
-                if (hour === 0) {
-                    return [null, { roomType: ERoomType.ENCHANCE_SKILL_CHAINED }, null];
-                } else if (hour%5 === 0) {
-                    return [null, { roomType: ERoomType.MOBS, roomOptions: {autolevel: Math.floor(hour/5)} }, null];
-                }
-
-                if (hour === 7) {
+                // if (hour === 0) {
+                //     return [null, { roomType: ERoomType.ENCHANCE_SKILL_CHAINED }, null];
+                // } else if (hour % 5 === 0) {
+                //     return [null, { roomType: ERoomType.MOBS, roomOptions: { autolevel: Math.floor(hour / 5) } }, null];
+                // }
+                if (hour === 3) {
+                    return [null, { roomType: ERoomType.MOBS }, null];
+                } else if (hour === 7) {
                     return [null, { roomType: ERoomType.DUEL }, null];
                 }
             }
@@ -247,9 +207,7 @@ export const getRooms = (
         default: {
             if (hour === 3) {
                 return [null, { roomType: ERoomType.MOBS }, null];
-            }
-
-            if (hour === 7) {
+            } else if (hour === 7) {
                 return [null, { roomType: ERoomType.DUEL }, null];
             }
         }
@@ -742,7 +700,7 @@ export const getCards = (
                                     // getExpValue(day) ~ 1 1 1 1 2 2 2 2 3 .. 3 ~ 1+ day/5
                                     //                    0 0 1 1 1 2 2 2 3 ..   ~ day/3
                                     //                  = 1 1 2 2 3 4 4 4 6
-                                    cards.push({ type: ECardType.EXP, value: (Math.floor(day/3) + getExpValue(day)), price: 0 });
+                                    cards.push({ type: ECardType.EXP, value: Math.floor(day / 3) + getExpValue(day), price: 0 });
                                 }
                                 break;
                             case ECardType.EXP_PARTY:
@@ -776,7 +734,7 @@ export const getCards = (
                                     cards.push({ item, type: ECardType.ITEM, price: 0 });
                                 }
                                 break;
-                            case ECardType.MOBS:
+                            case ECardType.UNIT:
                                 {
                                     const randomUnit = { ...getRandomUnitForRandom(day) };
                                     addMobItem(randomUnit);
@@ -831,12 +789,12 @@ export const getCards = (
                 hintTextType = ESelectCardHint.SELECT_SINGLE_DUNGEON;
 
                 const randomMobs = getMobs(gameScene.selectController.day);
-                const autolevel = Math.floor((1 + gameScene.selectController.day)/2);
-                console.log("ERoomType.MOBS", randomMobs);
+                const autolevel = Math.floor((1 + gameScene.selectController.day) / 2);
+                //console.log("ERoomType.MOBS", randomMobs);
                 cards = randomMobs.map((mobs) => {
                     const { name, units, rewards } = mobs;
                     const reward = getRandomArrayItem(rewards);
-                    return { mobs: { units: createUnits(units,autolevel), reward }, type: ECardType.MOBS, price: 0, name };
+                    return { mobs: { units: createUnits(units, autolevel), reward }, type: ECardType.MOBS, price: 0, name };
                 });
             }
             break;
@@ -1192,7 +1150,7 @@ export const getAttrValue = (attr: THeroAttribute, day: number) => {
         basicValue = 4;
     }
 
-    console.log("basic value", basicValue);
+    //console.log("basic value", basicValue);
 
     switch (attr) {
         case "basicArmor":

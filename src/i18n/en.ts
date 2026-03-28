@@ -131,6 +131,7 @@ export interface Ii18n {
         SKILL: string;
         ITEM: string;
         EXP: string;
+        EXP_PARTY: string;
         ATTRIBUTE: string;
         CHAINED_SKILL: string;
         ON_START_SKILL: string;
@@ -582,6 +583,7 @@ export const i18n: Ii18n = {
         SKILL: "SKILL",
         ITEM: "ITEM",
         EXP: "EXP",
+        EXP_PARTY: "EXP ALL",
         CHAINED_SKILL: "CHAINED SKILL",
         ON_START_SKILL: "DUEL START SKILL",
         //
