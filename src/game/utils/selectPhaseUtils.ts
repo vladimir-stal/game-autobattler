@@ -24,6 +24,7 @@ import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes } from "../heroCon
 import { basicWeapons } from "../itemConsts";
 import { itemGoblinSilverCoin } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
+import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { magicAttack, magicAttack_2 } from "../skills/magicSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
@@ -171,10 +172,6 @@ export const getRooms = (
             break;
         case 1:
             {
-                // if (hour === 1) {
-                //     return [{ roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }, { roomType: ERoomType.TRIPLE_SET }];
-                // }
-
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                 } else if (hour === 1) {
@@ -240,6 +237,10 @@ export const getRooms = (
                     return [null, { roomType: ERoomType.ENCHANCE_SKILL_CHAINED }, null];
                 } else if (hour%5 === 0) {
                     return [null, { roomType: ERoomType.MOBS, roomOptions: {autolevel: Math.floor(hour/5)} }, null];
+                }
+
+                if (hour === 7) {
+                    return [null, { roomType: ERoomType.DUEL }, null];
                 }
             }
             break;
@@ -801,7 +802,7 @@ export const getCards = (
             break;
         case ERoomType.UNIT_SELL:
             {
-                isSingleSelect = true;
+                isSingleSelect = false;
                 isSelectRequired = false;
                 hintTextType = ESelectCardHint.SELECT_SINGLE;
 
@@ -863,9 +864,9 @@ export const getCards = (
                 //cards = [null, { type: ECardType.ITEM, price: 0, item: axe32 }, null];
                 //cards = [null, { type: ECardType.ITEM, price: 0, item: gloves_magic2 }, null];
                 //cards = [null, { type: ECardType.GOLD, price: 0, value: 2 }, null];
-                //cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
+                cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
-                cards = [null, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
+                //cards = [null, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:

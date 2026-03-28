@@ -55,12 +55,8 @@ export class UnitCard extends Phaser.GameObjects.Container {
         const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position
 
         const title = name + " " + level + "(" + exp + "/" + getUnitNextLevelExp(this.unit) + ")";
-        this.titleText = this.scene.add.text(10, btyp - 40, title, { fontSize: 12, color: "#dddddd" });
+        this.titleText = this.scene.add.text(50, btyp - 40, title, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.titleText);
-
-        const armorTextContent = basicArmor > 0 ? basicArmor + "arm" : "";
-        //const hpText = this.scene.add.text(10, -120, basicMaxHp + "hp " + basicAttack + "A " + armorTextContent, { fontSize: 12, color: "#dddddd" });
-        //this.add(hpText);
 
         const attackText = this.scene.add.text(17, btyp - 18, basicAttack + "", { fontSize: 12, color: "#dddddd" });
         this.add(attackText);
@@ -152,13 +148,12 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderUpgradeButton() {
         const { level, unitType, heroClassType } = this.unit;
 
-        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC; // && level > 3;
+        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 3;
         this.upgradeButton = this.scene.add
             .text(0, 120, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" })
             .setVisible(isVisible);
 
         this.upgradeButton.setInteractive().on("pointerdown", () => {
-            //this.gameScene.setIsUnitUpgradeMode(true, this.cardSlot);
             this.gameScene.unitUpgradePanel.show(this.unit, this.parentCard);
             this.upgradeButton.setVisible(false);
         });
