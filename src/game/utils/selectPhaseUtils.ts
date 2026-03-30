@@ -783,9 +783,9 @@ export const getCards = (
                     const { name, units, rewards, description } = mobs;
                     const reward = getRandomArrayItem(rewards);
 
-                    var lines = description.split(" ");
-                    var wordwrap = "";
-                    var tw = 0;
+                    const lines = description.split(" ");
+                    let wordwrap = "";
+                    let tw = 0;
                     lines.forEach((word) => {
                         if (tw == 0) {
                             wordwrap += "\n" + word;

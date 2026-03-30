@@ -41,8 +41,8 @@ const EXP_FOR_LEVEL_MC: Record<number, number> = {
 };
 
 export const addExp = (units: (IUnit | null)[], expAdd: number) => {
-    units.forEach(unit => {
-        if (!unit) { 
+    units.forEach((unit) => {
+        if (!unit) {
             return;
         }
         addExpToUnit(unit, expAdd);
@@ -61,10 +61,8 @@ export const addExpToUnit = (unit: IUnit, expAdd: number) => {
     if (currentLevel === MAX_LEVEL) {
         return;
     }
-    if (unit.unitType === EUnitType.HERO)
-       unit.exp = currentExp + expAdd;
-    else
-       unit.exp = currentExp + 2*expAdd; // EXPERIMENTAL
+    if (unit.unitType === EUnitType.HERO) unit.exp = currentExp + expAdd;
+    else unit.exp = currentExp + 2 * expAdd; // EXPERIMENTAL
     //console.log("Unit " + unit.name + " now has " + unit.exp + " exp");
     const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[currentLevel + 1] : EXP_FOR_LEVEL_MC[currentLevel + 1];
     if (unit.exp >= nextLevelExp) {
@@ -104,7 +102,7 @@ const addAttributesOnLevelUp = (unit: IUnit) => {
         unit.basicAttack += 1;
     }
     if (unit.unitType == EUnitType.UNIT) {
-        var attr = getRandomIntFromInterval(0,3);
+        const attr = getRandomIntFromInterval(0, 3);
         unit.basicArmor += 2;
         unit.basicAttack += 1;
         if (attr == 0) unit.basicCritChance += 2;
@@ -120,10 +118,10 @@ export const generateUnitId = (unit: IUnit) => {
 
 export const generateId = () => {
     const length = 10;
-    var result = "";
-    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
@@ -155,10 +153,10 @@ export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroA
         });
     }
     // autolevel
-    if (autolevel>unit.level)
-        for (let i = 0; i < (autolevel - unit.level); i++) {
-            levelUpUnit(unit)
-        }        
+    if (autolevel > unit.level)
+        for (let i = 0; i < autolevel - unit.level; i++) {
+            levelUpUnit(unit);
+        }
     // add stats from items
     unit.items.forEach((item) => {
         applyItemBonuses(item, unit);
@@ -238,7 +236,7 @@ export const getRandomUnitForSell = (level: number): IUnit => {
 };
 
 /* Get unit of specific level to get as a random card */
-export const getRandomUnitForRandom  = (day: number) => {
+export const getRandomUnitForRandom = (day: number) => {
     switch (day) {
         case 0:
         case 1:

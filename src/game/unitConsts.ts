@@ -183,7 +183,7 @@ export const mobsLvl2: IMobsVariants[] = [
     {
         name: "Wolfs(2)",
         description: "Around you are two wolves",
-        units: [wolfUnit, wolfUnit, null, null], // stat 5/8 
+        units: [wolfUnit, wolfUnit, null, null], // stat 5/8
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
@@ -325,7 +325,7 @@ export const mobsLvl4: IMobsVariants[] = [
 export const mobsLvl5: IMobsVariants[] = [
     {
         name: "Skeletons(5)",
-        description: "Two warriors and one mage", 
+        description: "Two warriors and one mage",
         units: [skeletonWarriorUnit, skeletonWarriorUnit, skeletonMageUnit], // stat 7/16 + 8/9
         rewards: [
             { type: IMobRewardType.GOLD, value: 3, exp: 5 },
@@ -354,7 +354,7 @@ export const mobsLvl5: IMobsVariants[] = [
 export const mobsLvl6: IMobsVariants[] = [
     {
         name: "Skeletons(6)",
-        description: "Two warriors and two mages", 
+        description: "Two warriors and two mages",
         units: [skeletonWarriorUnit, skeletonWarriorUnit, skeletonMageUnit, skeletonMageUnit],
         rewards: [
             { type: IMobRewardType.GOLD, value: 4, exp: 5 },
