@@ -7,10 +7,10 @@ import { itemCoin, itemCoin2 } from "../mobItemConsts";
 export const wolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WILD,
-    mobHeroClasses: [EHeroClass.WILD],
+    mobHeroClasses: [EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 6,
+    basicAttack: 5,
     basicAttackTimes: 1,
     basicMaxHp: 8,
     basicHpRegen: 1,
@@ -23,7 +23,7 @@ export const wolfUnit: IUnit = {
     id: "WOLF",
     skills: [],
     items: [],
-    level: 3,
+    level: 2,
     exp: 0,
     mobItems: [
         { item: basic_ring_regen, probability: 15 }, // 15%
@@ -36,7 +36,7 @@ export const wolfUnit: IUnit = {
 export const strongWolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.HUNTER,
-    mobHeroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
+    mobHeroClasses: [EHeroClass.WILD, EHeroClass.MASTER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 10,

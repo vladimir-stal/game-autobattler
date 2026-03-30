@@ -19,6 +19,7 @@ import {
     EItemBattleBonusType,
     IHeroSkillSet,
     IDebuff,
+    EHeroClassType,
 } from "../../types";
 import { eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -191,7 +192,7 @@ export class BattleController {
         //console.log(this.player2BattleUnits);
     }
 
-    performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean) {
+    performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean, recurseDeep: number = 0) {
         if (!unit) {
             return;
         }
@@ -203,7 +204,7 @@ export class BattleController {
         this.battleRecord.push({ type: EBattleActionType.TURN_START, name: unit.id, unitId: unit.id });
 
         const skillIndex = unit.currentSkillIndex;
-        if (unit.currentSkillIndex === 2) {
+        if (unit.currentSkillIndex === 3) {
             unit.currentSkillIndex = 0;
         } else {
             unit.currentSkillIndex++;
@@ -236,6 +237,7 @@ export class BattleController {
             };
             this.battleRecord.push(skillSetBattleAction);
 
+            
             // TODO: skill set should store isBasicAttack instead of skill
             skillSet.skills.forEach((skill) => {
                 if (skill.condition) {
@@ -246,14 +248,14 @@ export class BattleController {
                 } else {
                     this.performSkill(unit, skill, isPlayer1);
                 }
-
-                if (skillSet.isChained) {
-                    this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
-                    this.performAction(unit, round, isPlayer1);
-                } else {
-                    this.performBasicAttack(unit, skill, isPlayer1);
-                }
             });
+            if (skillSet.isChained && recurseDeep<5) {
+                this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
+                this.performAction(unit, round, isPlayer1, recurseDeep+1);
+            } else {
+                this.performBasicAttack(unit, undefined, isPlayer1);
+            }
+
         } else {
             // if there is no skill for the round perform basic attack
             this.performBasicAttack(unit, undefined, isPlayer1);

@@ -352,6 +352,7 @@ export enum EHeroClassType {
 
 export enum EHeroClass {
     ALL = "ALL",
+    MOB = "MOB",
     // basic
     BARD = "BARD",
     //CHAOS = "CHAOS", coming soon
@@ -450,6 +451,9 @@ export enum EItemBonusType {
 
 export enum EItemAfterDuelBonusCondition {
     WON = "WON",
+    LOST = "LOST",
+    IS_HERO = "IS_HERO",
+    IS_MOB = "IS_MOB",
 }
 
 export enum EItemAfterDuelBonusType {
@@ -463,6 +467,7 @@ export enum EItemAfterDuelBonusType {
     STAT_PP = "STAT_PP",
     STAT_CRIT_CHANCE = "STAT_CRIT_CHANCE",
     STAT_EVAS_CHANCE = "STAT_EVAS_CHANCE",
+    STAT_BASIC_ATTACK = "STAT_BASIC_ATTACK",
 }
 
 /**
@@ -686,6 +691,7 @@ export interface IMobs {
 
 export interface IMobsVariants {
     name: string;
+    description: string;
     units: TUnits;
     rewards: IMobReward[];
 }
@@ -819,6 +825,7 @@ export interface IItem {
     heroClassBonuses?: IItemHeroClassBonus[];
     priceLevel: number;
     nextLevel?: IItem;
+    evolving?: boolean;
 }
 
 export interface IActionTarget {

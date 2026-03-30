@@ -70,7 +70,7 @@ export const itemPeasantPitchfork_3: IItem = {
     level: 3,
     priceLevel: 3,
     heroClasses: [],
-    weaponType: EWeaponItemType.AXE,
+    weaponType: EWeaponItemType.SWORD,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: -4, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 25, valueType: "number", attribute: "basicCritChance" },
@@ -86,7 +86,7 @@ export const itemPeasantPitchfork_2: IItem = {
     level: 2,
     priceLevel: 1,
     heroClasses: [],
-    weaponType: EWeaponItemType.AXE,
+    weaponType: EWeaponItemType.SWORD,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: -2, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 20, valueType: "number", attribute: "basicCritChance" },
@@ -102,7 +102,7 @@ export const itemPeasantPitchfork: IItem = {
     level: 1,
     priceLevel: 1,
     heroClasses: [],
-    weaponType: EWeaponItemType.AXE,
+    weaponType: EWeaponItemType.SWORD,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
     image: IMAGE_ITEM_PEASANTS_PITCHFORK,
     nextLevel: itemPeasantPitchfork_2,
@@ -120,7 +120,10 @@ export const itemGoblinSilverCoin_2: IItem = {
     priceLevel: 2,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 2, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [
+        { type: EItemAfterDuelBonusType.GOLD, value: 2, condition: EItemAfterDuelBonusCondition.WON },
+        { type: EItemAfterDuelBonusType.EXP, value: 3, condition: EItemAfterDuelBonusCondition.LOST },
+    ],
     image: IMAGE_ITEM_GOBLIN_SILVER_COIN,
 };
 
@@ -132,7 +135,10 @@ export const itemGoblinSilverCoin: IItem = {
     priceLevel: 2,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [
+        { type: EItemAfterDuelBonusType.GOLD, value: 1, condition: EItemAfterDuelBonusCondition.WON },
+        { type: EItemAfterDuelBonusType.EXP, value: 2, condition: EItemAfterDuelBonusCondition.LOST },
+    ],
     image: IMAGE_ITEM_GOBLIN_SILVER_COIN,
     nextLevel: itemGoblinSilverCoin_2,
 };
@@ -141,13 +147,16 @@ export const itemGoblinSilverCoin: IItem = {
 
 export const itemGoblinGoldCoin_2: IItem = {
     id: "goblin_gold_coin",
-    name: "Золотая монета",
+    name: "Золотая монета(2)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 3,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 2 }],
+    afterDuelBonuses:[
+        { type: EItemAfterDuelBonusType.GOLD, value: 2 },
+        { type: EItemAfterDuelBonusType.EXP, value: 2, condition: EItemAfterDuelBonusCondition.LOST },
+    ],
     image: IMAGE_ITEM_GOBLIN_GOLD_COIN,
 };
 
@@ -159,7 +168,10 @@ export const itemGoblinGoldCoin: IItem = {
     priceLevel: 3,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1 }],
+    afterDuelBonuses: [
+        { type: EItemAfterDuelBonusType.GOLD, value: 1 },
+        { type: EItemAfterDuelBonusType.EXP, value: 1, condition: EItemAfterDuelBonusCondition.LOST },
+    ],
     image: IMAGE_ITEM_GOBLIN_GOLD_COIN,
     nextLevel: itemGoblinGoldCoin_2,
 };
@@ -176,6 +188,17 @@ export const itemGoblinBoneDagger_2: IItem = {
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
     battleBonuses: [{ type: EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK, value: 1, valueType: "number", status: EStatusType.POISON }],
+    heroClassBonuses: [
+        {
+            heroClass: EHeroClass.MOB, 
+            bonus: { 
+                type: EItemBonusType.ATTRIBUTE, 
+                value: 1, 
+                valueType: "number", 
+                attribute: "basicAttack"
+            }
+        }
+    ],
     image: IMAGE_ITEM_GOBLIN_BONE_DAGGER,
 };
 
@@ -188,6 +211,17 @@ export const itemGoblinBoneDagger: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
+    heroClassBonuses: [
+        {
+            heroClass: EHeroClass.MOB, 
+            battleBonus: { 
+                type: EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK, 
+                value: 1, 
+                valueType: "number", 
+                status: EStatusType.POISON,
+            }
+        }
+    ],
     image: IMAGE_ITEM_GOBLIN_BONE_DAGGER,
     nextLevel: itemGoblinBoneDagger_2,
 };

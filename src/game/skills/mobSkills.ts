@@ -118,3 +118,52 @@ export const goblinApplyShock: IHeroSkillSet = {
     image: IMAGE_SKILL_TEST,
     nextLevel: goblinApplyShock_2,
 };
+
+export const skeletonArmorSelfAndLow: IHeroSkillSet = {
+    id: "attrIncArmorSelfAndLow",
+    name: "+armor all",
+    desc: "Armor Self and low Hp ally [4]",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR],
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: false,
+            attribute: "armor",
+            value: 4,
+            valueType: "number",
+            targetType: ETargetType.LOW_HP_ALLY,
+            ppScale: 20,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "armor",
+            value: 4,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+            ppScale: 20,
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+};
+
+export const fireflySelfPoison: IHeroSkillSet = {
+    id: "fireflySelfPoison",
+    name: "poison self",
+    desc: "Apply poison [1] self",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.WILD],
+    skills: [
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            isBasicAttack: true,
+            status: EStatusType.POISON,
+            value: 1,
+            targetType: ETargetType.SELF,
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+};

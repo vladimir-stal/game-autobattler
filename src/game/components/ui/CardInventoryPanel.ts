@@ -84,7 +84,8 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
             .on("pointerdown", () => {
                 if (cardSlot.card) {
                     //this.selectedCardIndex = index;
-                    this.gameScene.selectCardToMove(cardSlot.card);
+                    if (this.gameScene.cardToMove === undefined)
+                      this.gameScene.selectCardToMove(cardSlot.card);
                 }
             })
             .on("pointerover", () => {

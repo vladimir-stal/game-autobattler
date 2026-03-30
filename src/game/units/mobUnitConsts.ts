@@ -4,13 +4,13 @@ import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobIt
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BARBARIAN,
-    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
+    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 10,
+    basicAttack: 5,
     basicAttackTimes: 1,
-    basicMaxHp: 30,
-    basicHpRegen: 0,
+    basicMaxHp: 20,
+    basicHpRegen: 2,
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 0,
@@ -20,7 +20,7 @@ export const peasantUnit_4: IUnit = {
     id: "PEASANT",
     skills: [],
     items: [],
-    level: 1,
+    level: 4,
     exp: 0,
     mobItems: [
         { item: itemPeasantPitchfork, probability: 20 }, // 20%
@@ -33,7 +33,7 @@ export const peasantUnit_4: IUnit = {
 export const peasantUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WARRIOR,
-    mobHeroClasses: [EHeroClass.WARRIOR],
+    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 1,

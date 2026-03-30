@@ -24,6 +24,7 @@ export const i18n: Ii18n = {
             STAT_MP: "Маг. сила",
             STAT_PP: "Физ. сила",
             STAT_HP_REGEN: "Регенерация",
+            STAT_BASIC_ATTACK: "Базовая атака",
         },
         bonusType: {
             ADDITIONAL_BUFF_TARGET: "Бафф также накладывается\n на случайного союзника,\nкроме начальной цели.",
@@ -102,6 +103,7 @@ export const i18n: Ii18n = {
             [EHeroClass.WARLOCK]: "Колдун",
             [EHeroClass.WITCH]: "Ведьма",
             [EHeroClass.ZEALOT]: "Фанатик",
+            [EHeroClass.MOB]: "Моб",
         },
     },
     units: {
@@ -435,6 +437,7 @@ export const i18n: Ii18n = {
         SUMMON: "МИСТИК",
         WARRIOR: "ВОИН",
         WILD: "ДИКИЙ",
+        MOB: "МОБ",
         //
         ALL: "ВСЕ",
     },
@@ -485,5 +488,8 @@ export const i18n: Ii18n = {
         [ESelectRoomHint.UPGRADE_HERO_TO_MC]: "ВЫБЕРИТЕ МУЛЬТИКЛАС",
         //
         [EItemAfterDuelBonusCondition.WON]: "Победа",
+        [EItemAfterDuelBonusCondition.LOST]: "Поражение",
+        [EItemAfterDuelBonusCondition.IS_HERO]: "Герой",
+        [EItemAfterDuelBonusCondition.IS_MOB]: "Не герой",
     },
 };

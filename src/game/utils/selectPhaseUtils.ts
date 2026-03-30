@@ -22,9 +22,11 @@ import { roomsWithHeroClasses } from "../components/SelectController";
 import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes } from "../heroConsts";
 import { basicWeapons } from "../itemConsts";
+import { itemGoblinBoneDagger, itemGoblinSilverCoin } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
+import { goblinUnit } from "../units/goblinMobUnits";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
 import {
@@ -95,6 +97,7 @@ const sellTypeRoomsWithoutHeroes = [
 ];
 const sellHeroRoom = [ERoomType.HEROES_SELL];
 
+const wordWrapSymbolLimitForCardText = 20;
 //
 //
 //
@@ -118,17 +121,6 @@ export const getRooms = (
         case 0:
             {
                 // GAME START FROM DAY 1 NOW
-                //
-                //
-                // if (hour === 0) {
-                //     return [null, { roomType: ERoomType.HEROES_SELL }, null];
-                // }
-                // if (hour === 1) {
-                //     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                // }
-                // if (hour === 2) {
-                //     return [null, { roomType: ERoomType.DUEL }, null];
-                // }
             }
             break;
         case 1:
@@ -784,12 +776,37 @@ export const getCards = (
                 hintTextType = ESelectCardHint.SELECT_SINGLE_DUNGEON;
 
                 const randomMobs = getMobs(gameScene.selectController.day);
-                const autolevel = Math.floor((1 + gameScene.selectController.day) / 2);
-                //console.log("ERoomType.MOBS", randomMobs);
+                const autolevel = Math.max(1, gameScene.selectController.day - 2);
+                console.log("ERoomType.MOBS", randomMobs);
+
                 cards = randomMobs.map((mobs) => {
-                    const { name, units, rewards } = mobs;
+                    const { name, units, rewards, description } = mobs;
                     const reward = getRandomArrayItem(rewards);
-                    return { mobs: { units: createUnits(units, autolevel), reward }, type: ECardType.MOBS, price: 0, name };
+
+                    var lines = description.split(" ");
+                    var wordwrap = "";
+                    var tw = 0;
+                    lines.forEach((word) => {
+                        if (tw == 0) {
+                            wordwrap += "\n" + word;
+                            tw = word.length;
+                        } else if (tw + word.length + 1 > wordWrapSymbolLimitForCardText) {
+                            wordwrap += "\n" + word;
+                            tw = word.length;
+                        } else {
+                            tw = tw + word.length + 1;
+                            wordwrap += " " + word;
+                        }
+                    });
+                    return {
+                        mobs: {
+                            units: createUnits(units, autolevel),
+                            reward,
+                        },
+                        type: ECardType.MOBS,
+                        price: 0,
+                        name: name + "\n" + wordwrap,
+                    };
                 });
             }
             break;
@@ -812,14 +829,16 @@ export const getCards = (
         // FOR TESTING
         case ERoomType.GIVE_TEST_ITEM:
             {
+                isSingleSelect = false;
+                isSelectRequired = false;
                 // armorMassHp weaponSlotSheath totem5HptoDmg staff5MagicCrit music5AddBuffTarget wand5ShockOnBA
                 //cards = [null, { type: ECardType.ITEM, price: 0, item: wand5ShockOnBA }, null];
                 //cards = [null, { type: ECardType.ITEM, price: 0, item: axe32 }, null];
-                //cards = [null, { type: ECardType.ITEM, price: 0, item: gloves_magic2 }, null];
+                //
                 //cards = [null, { type: ECardType.GOLD, price: 0, value: 2 }, null];
-                cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
+                //cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
-                //cards = [null, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
+                cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:

@@ -3,13 +3,14 @@ import { dagger1, staff1, sword1, totem1 } from "../basicWeaponItemConsts";
 import { basic_boots, basic_exp_bag, basic_hat, basic_pants, basic_ring_damage } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin } from "../mobItemConsts";
+import { skeletonArmorSelfAndLow } from "../skills/mobSkills";
 
 export const skeletonUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.DARK,
-    mobHeroClasses: [EHeroClass.DARK],
+    mobHeroClasses: [EHeroClass.DARK, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
+    attackTargetType: ETargetType.HIGH_ATTACK_ENEMY,
     basicAttack: 4,
     basicAttackTimes: 1,
     basicMaxHp: 10,
@@ -37,7 +38,7 @@ export const skeletonUnit: IUnit = {
 export const skeletonWarriorUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BLACK_KNIGHT,
-    mobHeroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR],
+    mobHeroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 7,
@@ -51,7 +52,7 @@ export const skeletonWarriorUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONWARRIOR,
     id: "SKELETONWARRIOR",
-    skills: [],
+    skills: [skeletonArmorSelfAndLow],
     items: [],
     level: 3,
     exp: 0,
@@ -67,7 +68,7 @@ export const skeletonWarriorUnit: IUnit = {
 export const skeletonMageUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.WARLOCK,
-    mobHeroClasses: [EHeroClass.DARK, EHeroClass.MAGIC],
+    mobHeroClasses: [EHeroClass.DARK, EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.RANDOM_ENEMY,
     basicAttack: 8,
