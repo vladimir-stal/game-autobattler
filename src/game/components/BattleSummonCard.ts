@@ -90,14 +90,12 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     }
 
     renderPanels() {
-        this.turnRect = this.scene.add.rectangle(0, 5, 100, 20, colors.GREY).setOrigin(0, 0);
+        this.turnRect = this.scene.add.rectangle(50, 5, 40, 20, colors.GREY_BLUE).setOrigin(0, 0);
         this.add(this.turnRect);
-        this.actionRect = this.scene.add.rectangle(0, -350, 100, 20, colors.RED).setOrigin(0, 0).setVisible(false);
+        this.actionRect = this.scene.add.rectangle(50, -350, 40, 20, colors.RED).setOrigin(0, 0).setVisible(false);
         this.add(this.actionRect);
         this.actionText = this.scene.add.text(20, -345, "TEXT Text", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
         this.add(this.actionText);
-
-        //
 
         this.actionFlyRect = this.scene.add.rectangle(0, -360, 100, 20, colors.GREY).setOrigin(0, 0); //.setVisible(false);
         this.add(this.actionFlyRect);

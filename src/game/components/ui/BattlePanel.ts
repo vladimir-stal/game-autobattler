@@ -5,9 +5,14 @@ import { BattleUnitCard } from "../BattleUnitCard";
 import { prepareUnitToBattle } from "../../utils/battleUtils";
 import { BattleSummonCard } from "../BattleSummonCard";
 import { GameObjects } from "phaser";
+import { MAX_WIDTH, MIDDLE_WIDTH, MIN_WIDTH } from "./uiPanels";
 
 const mode: "DEV" | "FAST" = "FAST";
-const BATTLECARDWIDTH = 130;
+
+const MIN_DISTANCE_BETWEEN_CARDS = 130;
+const MIDDLE_DISTANCE_BETWEEN_CARDS = 160;
+const MIDDLE_DISTANCE_BETWEEN_CARDS_2 = 145;
+const MAX_DISTANCE_BETWEEN_CARDS = 180;
 
 /** Panel for heroes in duel phase */
 export class BattlePanel extends Phaser.GameObjects.Container {
@@ -21,6 +26,8 @@ export class BattlePanel extends Phaser.GameObjects.Container {
 
     cards: Record<string, BattleUnitCard | BattleSummonCard>;
 
+    battleCards: (BattleUnitCard | null)[]; // to handle screen resizing
+
     currentActionIndex: number;
     currentActiveUnitId: string | undefined;
     record: TBattleRecord;
@@ -31,11 +38,13 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         super(scene, x, y);
         this.gameScene = scene;
         this.cards = {};
+        this.battleCards = [];
         this.setVisible(false);
     }
 
     show(playerUnits: TUnits, enemyUnits: TUnits) {
-        //console.log("enemyUnits", enemyUnits);
+        console.log("playerUnits", playerUnits);
+        console.log("enemyUnits", enemyUnits);
         this.setVisible(true);
 
         this.currentActiveUnitId = undefined;
@@ -46,6 +55,13 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             }
             return prepareUnitToBattle(unit);
         });
+
+        if (this.enemyUnits.length < 4) {
+            for (let i = 0; i < 4 - this.enemyUnits.length; i++) {
+                this.enemyUnits.push(null);
+            }
+        }
+
         this.enemyUnits = enemyUnits.map((unit) => {
             if (!unit) {
                 return null;
@@ -56,36 +72,38 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         this.renderPlayerUnitsPanel();
         this.renderEnemyUnitsPanel();
         this.renderResultPanel();
-        this.renderButtons();
+        //this.renderButtons();
     }
 
     hide() {
         this.setVisible(false);
     }
 
-    renderButtons() {
-        // const skipButton = this.scene.add
-        //     .text(0, -100, "SKIP")
-        //     .setInteractive()
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-        //         skipButton.setColor("#FF7777");
-        //     })
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-        //         skipButton.setColor("#FFFFFF");
-        //     })
-        //     .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        //         console.log("skip click");
-        //         this.skipBattle();
-        //     });
-        // this.add(skipButton);
-    }
+    //renderButtons() {
+    // const skipButton = this.scene.add
+    //     .text(0, -100, "SKIP")
+    //     .setInteractive()
+    //     .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+    //         skipButton.setColor("#FF7777");
+    //     })
+    //     .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
+    //         skipButton.setColor("#FFFFFF");
+    //     })
+    //     .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+    //         console.log("skip click");
+    //         this.skipBattle();
+    //     });
+    // this.add(skipButton);
+    //}
 
-    renderCard(unit: IBattleUnit | null, x: number, y: number, isInverted: boolean) {
+    renderCard(unit: IBattleUnit | null, x: number, y: number, isInverted: boolean, index: number) {
         const card = new BattleUnitCard(this.gameScene, x, y, unit, isInverted);
         this.add(card);
         if (unit) {
             this.cards[unit.id] = card;
         }
+        const battleCardIndex = index + (isInverted ? 4 : 0);
+        this.battleCards[battleCardIndex] = card;
     }
 
     renderEmpty(x: number, y: number) {
@@ -94,96 +112,31 @@ export class BattlePanel extends Phaser.GameObjects.Container {
     }
 
     renderPlayerUnitsPanel() {
-        const screenCenterX = this.gameScene.camera.width / 2;
+        const cardDistance = this.getCardDistance();
         this.playerUnits.forEach((unit, index) => {
-            const x = screenCenterX - (index + 1) * BATTLECARDWIDTH;
+            const x = -(index + 1) * cardDistance - 50;
             const y = 0;
-            this.renderCard(unit, x, y, false);
+            this.renderCard(unit, x, y, false, index);
         });
-        // let x, y;
-        // this.playerUnits.forEach((unit, index) => {
-        //     switch (index) {
-        //         case 0:
-        //             {
-        //                 x = 500;
-        //                 y = 0;
-        //             }
-        //             break;
-        //         case 1:
-        //             {
-        //                 x = 200;
-        //                 y = -200;
-        //             }
-        //             break;
-        //         case 2:
-        //             {
-        //                 x = 200;
-        //                 y = 200;
-        //             }
-        //             break;
-        //         case 3:
-        //             {
-        //                 x = -100;
-        //                 y = 0;
-        //             }
-        //             break;
-        //     }
-        //     //const x = (3 - index) * 200 - 100;
-        //     //const y = 0;
-        //     this.renderCard(unit, x, y, false);
-        // });
     }
 
     renderEnemyUnitsPanel() {
-        const screenCenterX = this.gameScene.camera.width / 2;
+        const cardDistance = this.getCardDistance();
         this.enemyUnits.forEach((unit, index) => {
-            const x = screenCenterX + (index + 1) * BATTLECARDWIDTH;
+            const x = (index + 1) * cardDistance - 50;
             const y = 0;
-            this.renderCard(unit, x, y, true);
+            this.renderCard(unit, x, y, true, index);
         });
-
-        //let x, y;
-        // this.enemyUnits.forEach((unit, index) => {
-        //     switch (index) {
-        //         case 0:
-        //             {
-        //                 x = 900;
-        //                 y = 0;
-        //             }
-        //             break;
-        //         case 1:
-        //             {
-        //                 x = 1200;
-        //                 y = -200;
-        //             }
-        //             break;
-        //         case 2:
-        //             {
-        //                 x = 1200;
-        //                 y = 200;
-        //             }
-        //             break;
-        //         case 3:
-        //             {
-        //                 x = 1500;
-        //                 y = 0;
-        //             }
-        //             break;
-        //     }
-        //     this.renderCard(unit, x, y, true);
-        // });
     }
 
     renderResultPanel() {
-        this.resultRect = this.scene.add
-            .rectangle(this.gameScene.camera.width / 2 - 100, 0, 400, 100, colors.BLACK)
-            .setOrigin(0.5, 0.5)
-            .setVisible(false);
+        this.resultRect = this.scene.add.rectangle(0, 0, 400, 100, colors.BLACK).setOrigin(0.5, 0.5).setVisible(false);
         this.resultRect.setStrokeStyle(1, 0x777777);
         this.add(this.resultRect);
 
         this.resultText = this.scene.add
-            .text(this.gameScene.camera.width / 2 - 100, 0, "", {
+            .text(0, 0, "", {
+                //this.gameScene.camera.width / 2 - 100
                 fontFamily: "Arial Black",
                 fontSize: 40,
                 color: "#dddddd",
@@ -762,5 +715,35 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         this.resultText.setText(this.gameScene.battleController.isBattleWin ? i18n.ui.VICTORY : i18n.ui.DEFEAT);
 
         this.gameScene.topPanel.changeSelectButtonToNext();
+    }
+
+    private getCardDistance() {
+        const { width } = this.gameScene.camera;
+        let cardDistance = MAX_WIDTH;
+        if (width >= MAX_WIDTH) {
+            cardDistance = MAX_DISTANCE_BETWEEN_CARDS;
+        } else if (width >= MIDDLE_WIDTH) {
+            cardDistance = MIDDLE_DISTANCE_BETWEEN_CARDS;
+        } else if (width >= MIN_WIDTH) {
+            cardDistance = MIDDLE_DISTANCE_BETWEEN_CARDS_2;
+        } else {
+            cardDistance = MIN_DISTANCE_BETWEEN_CARDS;
+        }
+        return cardDistance;
+    }
+
+    refreshAfterResize() {
+        const cardDistance = this.getCardDistance();
+
+        this.battleCards.forEach((card, index) => {
+            const playerCard = index < 4;
+            if (playerCard) {
+                const x = -(index + 1) * cardDistance - 50;
+                card.setX(x);
+            } else {
+                const x = (index + 1 - 4) * cardDistance - 50;
+                card.setX(x);
+            }
+        });
     }
 }

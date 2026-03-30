@@ -33,16 +33,16 @@ export class Card extends Phaser.GameObjects.Container {
     }
 
     render() {
-        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0, 0);
+        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK, 0).setOrigin(0.5, 0);
         this.rect.setStrokeStyle(1, 0x777777);
 
-        this.rect.on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-            console.log("CARD ON OVER");
-        });
+        // this.rect.on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
+        //     console.log("CARD ON OVER");
+        // });
 
         this.add(this.rect);
 
-        this.titleText = this.scene.add.text(50, 10, this.title, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
+        this.titleText = this.scene.add.text(0, 10, this.title, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.titleText);
 
         const { type } = this.card;
@@ -97,6 +97,7 @@ export class Card extends Phaser.GameObjects.Container {
         }
 
         this.titleText.setVisible(false);
+        this.rect.setVisible(false);
 
         const itemCard = new ItemCard(this.gameScene, 0, 0, item, this.cardSlot);
         this.add(itemCard);
@@ -125,6 +126,7 @@ export class Card extends Phaser.GameObjects.Container {
         }
 
         this.titleText.setVisible(false);
+        this.rect.setVisible(false);
 
         const skillCard = new SkillCard(this.gameScene, 0, 0, skill, this.cardSlot);
         this.add(skillCard);
@@ -147,7 +149,7 @@ export class Card extends Phaser.GameObjects.Container {
         const title = i18n.ui.GOLD + " " + value;
         this.titleText.setText(title);
 
-        const imageObject = this.gameScene.add.sprite(-20, 180, IMAGE_ITEM_COIN, 0).setOrigin(0, 1);
+        const imageObject = this.gameScene.add.sprite(0, 180, IMAGE_ITEM_COIN, 0).setOrigin(0.5, 1);
         this.add(imageObject);
     }
 

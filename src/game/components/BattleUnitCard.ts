@@ -126,7 +126,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     renderImage(heroClass: EHeroClass, unit: IBattleUnit) {
-        const {unitType, id, heroClassType} = unit;
+        const { unitType, id, heroClassType } = unit;
         const {
             image,
             imageBattle,
@@ -224,7 +224,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     renderSummonCard() {
-        const x = !this.isInverted ? 110 : -115;
+        //const x = !this.isInverted ? 110 : -115;
+        const x = !this.isInverted ? 60 : -65;
         const y = 200;
         this.summonCard = new BattleSummonCard(this.gameScene, x, y, null, this.isInverted).setVisible(false);
         this.add(this.summonCard);
@@ -656,11 +657,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playEffect(unit: IBattleUnit, skill?: IHeroSkill) {
-        
         if (GAME_MODE !== "FULL") {
             return;
         }
-        
+
         const { unitType, heroClass, id } = unit;
         let animation: EEffectAnimationType;
         let animationDelay = 0;
@@ -721,7 +721,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playHealEffect() {
-
         if (GAME_MODE !== "FULL") {
             return;
         }

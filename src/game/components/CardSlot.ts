@@ -55,42 +55,9 @@ export class CardSlot extends Phaser.GameObjects.Container {
             this.rect.setStrokeStyle(0, 0x777777);
         }
 
-        // this.rect
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-        //         //console.log("CARD SLOT ON GAMEOBJECT_POINTER_OVER");
-        //         if (this.card) {
-        //             console.log("card is here", this.card.card.type);
-
-        //             const x = this.isInventory ? this.gameScene.camera.width / 2 - 600 : this.gameScene.camera.width / 2 - 360;
-        //             const y = this.isInventory ? 400 : 200;
-
-        //             switch (this.card.card.type) {
-        //                 case ECardType.ITEM:
-        //                     {
-        //                         this.gameScene.hintPanel.showItem(x + 20 + this.x, y + this.y, this.card.card.item);
-        //                     }
-        //                     break;
-        //                 case ECardType.SKILL:
-        //                     {
-        //                         this.gameScene.hintPanel.showSkill(x + 20 + this.x, y + this.y, this.card.card.skill);
-        //                     }
-        //                     break;
-
-        //                 default: {
-        //                     console.log("cant find card hint for type", this.card.type);
-        //                 }
-        //             }
-        //         }
-        //     })
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-        //         console.log("CARD SLOT  ON GAMEOBJECT_POINTER_OUT");
-        //         this.gameScene.hintPanel.hide();
-        //     });
-
         this.rect.setInteractive().on("pointerdown", () => {
             this.click();
         });
-        // new Phaser.Geom.Rectangle(0, 0, 50, 20), Phaser.Geom.Rectangle.Contains
         this.add(this.rect);
 
         if (card) {
@@ -99,8 +66,6 @@ export class CardSlot extends Phaser.GameObjects.Container {
     }
 
     click() {
-        //console.log("CardSlot POINTer down");
-
         if (!this.isActive) {
             console.log("THIS CARD SLOT IS NOT ACTIVE");
             return;
@@ -112,8 +77,6 @@ export class CardSlot extends Phaser.GameObjects.Container {
         }
 
         const { card, cardSlot } = this.gameScene.cardToMove;
-
-        console.log("select CARD TO MOVE", card.unit?.items.length, card);
 
         const isItemToUnit = card.type === ECardType.ITEM && this.card?.card.type === ECardType.UNIT;
         const isExpToUnit = card.type === ECardType.EXP;
@@ -155,16 +118,12 @@ export class CardSlot extends Phaser.GameObjects.Container {
             return;
         }
 
-        // if (card.type === ECardType.UNIT && card.unit) {
-        //     card.unit = createUnit(card.unit);
-        // }
-
         this.gameScene.finishCardMove();
         this.placeCard(card, cardSlot);
     }
 
     placeCard(card: ICard, previousSlot: CardSlot | undefined) {
-        //console.log("placeCard >>>>", card, card.unit?.items.length);
+        //
         if (this.card) {
             this.card.destroy();
         }
@@ -206,7 +165,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
             return;
         }
 
-        this.card = new Card(this.gameScene, 0, 0, card, this.onBuyPanel, this);
+        this.card = new Card(this.gameScene, 50, 0, card, this.onBuyPanel, this);
         //this.card.cardSlot = this;
         this.add(this.card);
     }

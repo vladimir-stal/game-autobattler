@@ -2,6 +2,7 @@ import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
 import { IMAGE_LEADER_1, IMAGE_LEADER_1_IDLE } from "../../utils/imageLoadUtil";
 import { AnimationType } from "../../../types";
+import { MAX_WIDTH } from "./uiPanels";
 
 /** UI panel for Leader */
 export class LeaderPanel extends Phaser.GameObjects.Container {
@@ -9,6 +10,8 @@ export class LeaderPanel extends Phaser.GameObjects.Container {
     hpText: GameObjects.Text;
     imgWidth: number;
     imgHeight: number;
+
+    imageObject: GameObjects.Sprite;
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -28,14 +31,17 @@ export class LeaderPanel extends Phaser.GameObjects.Container {
     }
 
     renderImage() {
-        const {width} = this.gameScene.camera;
-        const scale = width < 1600 ? width / 1600 : 1;
-        const imageObject = this.gameScene.add.sprite(0, 0, IMAGE_LEADER_1_IDLE, 0).setDisplaySize(400*scale, 400*scale).setOrigin(0, 0);
-        this.imgWidth = imageObject.displayWidth;
-        this.imgHeight = imageObject.displayHeight;
-        imageObject.anims.play(AnimationType.LEADER_1_IDLE);
+        const { width } = this.gameScene.camera;
+        const scale = width < MAX_WIDTH ? width / MAX_WIDTH : 1;
+        this.imageObject = this.gameScene.add
+            .sprite(0, 0, IMAGE_LEADER_1_IDLE, 0)
+            .setDisplaySize(400 * scale, 400 * scale)
+            .setOrigin(0, 0);
+        this.imgWidth = this.imageObject.displayWidth;
+        this.imgHeight = this.imageObject.displayHeight;
+        this.imageObject.anims.play(AnimationType.LEADER_1_IDLE);
 
-        this.add(imageObject);
+        this.add(this.imageObject);
     }
 
     renderHp() {
@@ -51,5 +57,11 @@ export class LeaderPanel extends Phaser.GameObjects.Container {
 
     setHp(value: number) {
         this.hpText.setText("HP: " + value);
+    }
+
+    refreshAfterResize() {
+        const { width } = this.gameScene.camera;
+        const scale = width < MAX_WIDTH ? width / MAX_WIDTH : 1;
+        this.imageObject.setDisplaySize(400 * scale, 400 * scale);
     }
 }

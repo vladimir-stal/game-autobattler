@@ -22,14 +22,9 @@ import { roomsWithHeroClasses } from "../components/SelectController";
 import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes } from "../heroConsts";
 import { basicWeapons } from "../itemConsts";
-import { itemGoblinSilverCoin } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { magicAttack, magicAttack_2 } from "../skills/magicSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
-import { goblinUnit } from "../units/goblinMobUnits";
-import { wolfUnit } from "../units/wolfsMobUnits";
-import { axe32 } from "../weaponItem3Consts";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
 import {

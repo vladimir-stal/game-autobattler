@@ -172,12 +172,19 @@ export class GameScene extends Phaser.Scene {
         this.scale.addListener(
             Scale.Events.RESIZE,
             (gameSize: Structs.Size, baseSize: Structs.Size, displaySize: Structs.Size, previousWidth: number, previousHeight: number) => {
-                //console.log("CAMERA HEIGHT", this.camera.height);
+                console.log("CAMERA: W:", this.camera.width, "H:", this.camera.height);
                 // CAMERA
                 //this.camera.pan(this.mainDude.gameObject.x, this.cameraY, 0, "Sine.easeIn");
                 //this.setCameraY(this.levelController.getLevel());
+                //this.scale.refresh();
             },
         );
+        // this.scale.on("resize", (gameSize) => {
+        //     //this.scale.refresh();
+        //     const { width, height } = gameSize;
+        //     // CRITICAL: Update the camera size so input coordinates align
+        //     this.camera.setSize(width, height);
+        // });
 
         //EventBus.emit(EventType.GET_HOUSE);
 
@@ -238,10 +245,6 @@ export class GameScene extends Phaser.Scene {
             if (!this.cardSlotToUpgrade) {
                 console.log("ERROR! NO CARDSLOT TO REMOVE CARD");
             }
-            //this.cardSlotToUpgrade?.removeCard();
-            //this.cardSlotToUpgrade?.setUnit();
-
-            //this.unitPanel.
             this.cardSlotToUpgrade = undefined;
         }
     }

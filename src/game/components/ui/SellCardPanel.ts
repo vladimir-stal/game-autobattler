@@ -3,10 +3,17 @@ import { GameScene } from "../../scenes/GameScene";
 import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
 import { ECardType, EUnitType } from "../../../types";
+import { MIN_WIDTH } from "./uiPanels";
+
+const borderMaxWidth = 150;
+const borderMiddleWidth = 100;
 
 /** UI panel to store cards */
 export class SellCardPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
+
+    borderRect: GameObjects.Rectangle;
+    sellTtextObject: GameObjects.Text;
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -24,9 +31,10 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
     }
 
     renderBorder() {
-        const rect = this.scene.add.rectangle(0, 0, 150, 150, colors.BLACK).setOrigin(0, 0);
-        rect.setStrokeStyle(1, 0x777777);
-        rect.setInteractive().on("pointerdown", () => {
+        const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        this.borderRect = this.scene.add.rectangle(0, 0, rectWidth, 150, colors.BLACK).setOrigin(0, 0);
+        this.borderRect.setStrokeStyle(1, 0x777777);
+        this.borderRect.setInteractive().on("pointerdown", () => {
             if (!this.gameScene.isCardMoveMode || !this.gameScene.cardToMove || this.gameScene.isCardBuyMode) {
                 console.log("sell card: game is not in card move mode");
                 return;
@@ -63,7 +71,7 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
 
             this.gameScene.bankController.addToBank(price);
         });
-        this.add(rect);
+        this.add(this.borderRect);
     }
 
     handleCardPlaced() {
@@ -78,12 +86,24 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
 
         //this.gameScene.addCardSlot(cardSlot);
 
-        const textObject = this.scene.add.text(30, 60, i18n.ui.SELL, {
-            fontFamily: "Arial Black",
-            fontSize: 18,
-            color: "#888888",
-        });
+        const x = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth / 2 : borderMiddleWidth / 2;
+        this.sellTtextObject = this.scene.add
+            .text(x, 75, i18n.ui.SELL, {
+                fontFamily: "Arial Black",
+                fontSize: 18,
+                color: "#888888",
+            })
+            .setOrigin(0.5);
 
-        this.add(textObject);
+        this.add(this.sellTtextObject);
+    }
+
+    refreshAfterResize() {
+        const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        const rectHeight = 150;
+        this.borderRect.setSize(rectWidth, rectHeight);
+        //
+        const x = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth / 2 : borderMiddleWidth / 2;
+        this.sellTtextObject.setX(x);
     }
 }

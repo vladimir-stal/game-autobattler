@@ -234,7 +234,6 @@ export class SelectController {
                     if (value === undefined) {
                         return;
                     }
-                    //addExp(this.gameScene.units, value);
                     this.gameScene.unitPanel.slots.forEach((sv) => {
                         if (sv.slot.card != null) addExpToUnit(sv.slot.card.card.unit, value);
                     });

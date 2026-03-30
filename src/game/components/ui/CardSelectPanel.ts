@@ -6,9 +6,13 @@ import { colors, i18n } from "../../consts";
 import { GameObjects, Input } from "phaser";
 import { createUnit, generateUnitId } from "../../utils/unitUtils";
 import { getRerollPrice } from "../../utils/selectPhaseUtils";
+import { MIN_WIDTH } from "./uiPanels";
 
 const hintTopY = -50;
 const hintBottomY = 220;
+
+const borderMaxWidth = 720;
+const borderMiddleWidth = 600;
 
 const chooseTypeRooms = [ERoomType.HEROES_SELL, ERoomType.MOBS];
 
@@ -34,6 +38,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     isRerollAvailable: boolean;
     rerollsCount: number;
 
+    borderRect: GameObjects.Rectangle;
     hintText: GameObjects.Text;
     hintTextType: ESelectCardHint;
 
@@ -76,9 +81,10 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderBorder() {
-        const rect = this.scene.add.rectangle(0, 0, 720, 200, colors.BLACK).setOrigin(0, 0);
-        rect.setStrokeStyle(1, 0x777777);
-        this.add(rect);
+        const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        this.borderRect = this.scene.add.rectangle(0, 0, rectWidth, 200, colors.BLACK).setOrigin(0, 0);
+        this.borderRect.setStrokeStyle(1, 0x777777);
+        this.add(this.borderRect);
     }
 
     renderHintPanel() {
@@ -91,7 +97,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderCards() {
-        console.log("CARD SELECT PANEL renderCards", this.cards);
+        //console.log("CARD SELECT PANEL renderCards", this.cards);
         this.cards.forEach((card, i) => {
             if (this.boughtCardIndexes.includes(i)) {
                 return;
@@ -106,16 +112,19 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderCard(index: number, card: ICard) {
-        const cardDistance = this.cards.length > 3 ? 180 : 240;
-        const cardBomponent = new Card(this.gameScene, 75 + index * cardDistance, 0, card, true);
+        const cardX = this.getCardPositionX(index);
+        const cardBomponent = new Card(this.gameScene, cardX, 0, card, true);
         this.add(cardBomponent);
 
         const buttonTitle = chooseTypeRooms.includes(this.roomType) ? i18n.ui.SELECT : card.price > 0 ? i18n.ui.BUY + " " + card.price : i18n.ui.TAKE;
-        const buyCardText = this.scene.add.text(75 + 20 + index * cardDistance, 150, buttonTitle, {
-            fontFamily: "Arial Black",
-            fontSize: 18,
-            color: "#aaffaa",
-        });
+
+        const buyCardText = this.scene.add
+            .text(cardX, 150, buttonTitle, {
+                fontFamily: "Arial Black",
+                fontSize: 18,
+                color: "#aaffaa",
+            })
+            .setOrigin(0.5);
 
         buyCardText
             .setInteractive()
@@ -219,6 +228,45 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         }
     }
 
+    private getCardPositionX(index: number): number {
+        const cardDistance = this.cards.length > 3 ? 180 : 240;
+        const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        let x;
+        if (this.cards.length === 1) {
+            x = this.x;
+        } else if (this.cards.length === 3) {
+            switch (index) {
+                case 0:
+                    x = rectWidth / 2 - cardDistance;
+                    break;
+                case 1:
+                    x = rectWidth / 2;
+                    break;
+                case 2:
+                    x = rectWidth / 2 + cardDistance;
+                    break;
+            }
+        } else if (this.cards.length === 4) {
+            switch (index) {
+                case 0:
+                    x = cardDistance / 2;
+                    break;
+                case 1:
+                    x = rectWidth / 2 - cardDistance / 2;
+                    break;
+                case 2:
+                    x = rectWidth / 2 + cardDistance / 2;
+                    break;
+                case 3:
+                    x = rectWidth - cardDistance / 2;
+                    break;
+            }
+        } else {
+            x = 75 + 20 + index * cardDistance;
+        }
+        return x;
+    }
+
     private checkShowNextRoom(): boolean {
         if (this.isSingleSelect) {
             return true;
@@ -230,5 +278,15 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         console.log("isLastCard", isLastCard, this.cards.length, this.cards.filter((card) => card).length, this.boughtCardIndexes.length);
 
         return isLastCard;
+    }
+
+    refreshAfterResize() {
+        if (!this.visible) {
+            return;
+        }
+        this.render();
+        //const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        //const rectHeight = 200;
+        //this.borderRect.setSize(rectWidth, rectHeight);
     }
 }

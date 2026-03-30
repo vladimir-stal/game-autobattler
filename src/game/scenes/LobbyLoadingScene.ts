@@ -1,7 +1,6 @@
-import { AnimationType, EScene } from "../../types";
-import { ANIMATION_COMPLETE } from "../consts";
-import { Cameras, GameObjects, Scene } from "phaser";
-import { getRandomArrayIndex, getRandomArrayItem } from "../utils/commonUtils";
+import { EScene } from "../../types";
+import { Cameras, GameObjects, Scale, Scene, Scenes, Structs } from "phaser";
+import { getRandomArrayIndex } from "../utils/commonUtils";
 
 //const IMAGE_LOBBY_LOADING = "IMAGE_LOBBY_LOADING";
 //const IMAGE_LOBBY_FOX_SMILE = "IMAGE_LOBBY_FOX_SMILE";
@@ -12,16 +11,22 @@ export class LobbyLoadingScene extends Scene {
     titleText: GameObjects.Text;
     scrollText: GameObjects.Text;
     cameraControls: Cameras.Controls.SmoothedKeyControl;
-    loadingImage: GameObjects.Sprite;
+    //loadingImage: GameObjects.Sprite;
 
     pointer: { x: number; y: number };
 
+    loadingText: GameObjects.Text;
+    descrText: GameObjects.Text;
     hintText: GameObjects.Text;
 
     hints: string[];
     currentHintIndex: number;
 
     timeoutId: number;
+
+    //
+
+    resizeTimeoutId: number;
 
     constructor() {
         super(EScene.LOBBY_LOADING);
@@ -112,11 +117,11 @@ export class LobbyLoadingScene extends Scene {
         //     .setOrigin(0.5, 0.5);
         // this.loadingImage.anims.play(AnimationType.LOBBY_LOADING);
 
-        const text = this.add
+        this.loadingText = this.add
             .text(screenCenterX, screenCenterY - 200, "ЗАГРУЗКА...", { fontFamily: "Arial Black", fontSize: 24, color: "#ffffff" })
             .setOrigin(0.5, 0); //LOADING...
 
-        this.add
+        this.descrText = this.add
             .text(screenCenterX, screenCenterY - 150, "Подождите. Загрузка ресурсов может занять несколько минут.", {
                 fontFamily: "Arial Black",
                 fontSize: 16,
@@ -197,6 +202,13 @@ export class LobbyLoadingScene extends Scene {
         //     });
         // });
 
+        this.scale.addListener(Scale.Events.RESIZE, this.debounceResize);
+
+        this.events.once(Scenes.Events.SHUTDOWN, () => {
+            //this.scale.removeAllListeners(Phaser.Scale.Events.RESIZE);
+            this.scale.removeListener(Phaser.Scale.Events.RESIZE, this.debounceResize, this);
+        });
+
         //setTimeout(() => {
         this.scene.launch(EScene.RESOURCE_LOAD);
         //}, 1000);
@@ -211,6 +223,26 @@ export class LobbyLoadingScene extends Scene {
 
         //EventBus.emit(EventType.JOIN_LOBBY);
     }
+
+    private resize(width: number, height: number) {
+        const screenCenterX = width / 2;
+        const screenCenterY = height / 2;
+
+        this.loadingText.setPosition(screenCenterX, screenCenterY - 200);
+        this.descrText.setPosition(screenCenterX, screenCenterY - 150);
+        this.hintText.setPosition(screenCenterX, screenCenterY);
+    }
+
+    private debounceResize = () => {
+        this.resizeTimeoutId && clearTimeout(this.resizeTimeoutId);
+        if (!this?.cameras?.main) {
+            return;
+        }
+        const { width, height } = this.cameras.main;
+        this.resizeTimeoutId = setTimeout(() => {
+            this.resize(width, height);
+        }, 500);
+    };
 
     changeHint() {
         this.tweens.add({

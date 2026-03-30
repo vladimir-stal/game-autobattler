@@ -35,7 +35,7 @@ export class ItemCard extends Phaser.GameObjects.Container {
         this.rect
             .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
                 const { x, y } = this.getWorldPoint();
-                this.gameScene.hintPanel.showItem(x + 115, y, this.item);
+                this.gameScene.hintPanel.showItem(x + 65, y, this.item);
             })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 this.gameScene.hintPanel.hide();
@@ -49,20 +49,23 @@ export class ItemCard extends Phaser.GameObjects.Container {
 
         this.renderImage();
         this.renderTags();
+        this.renderInfo();
+    }
 
+    renderInfo() {
         const title = i18n.ui.ITEM;
-        this.titleText = this.scene.add.text(30, 5, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" });
+        this.titleText = this.scene.add.text(0, 15, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" }).setOrigin(0.5);
         this.add(this.titleText);
     }
 
     renderBorder() {
-        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0, 0);
+        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0.5, 0);
         this.rect.setStrokeStyle(1, getCardBorderColor(this.item.priceLevel));
     }
 
     renderImage() {
         const { image } = this.item;
-        const imageObject = this.gameScene.add.sprite(-25, 50, image, 0).setDisplaySize(150, 150).setOrigin(0, 0);
+        const imageObject = this.gameScene.add.sprite(0, 50, image, 0).setDisplaySize(150, 150).setOrigin(0.5, 0);
         this.add(imageObject);
     }
 
@@ -77,7 +80,7 @@ export class ItemCard extends Phaser.GameObjects.Container {
         //console.log("heroClasses", heroClasses);
 
         heroClasses.forEach((heroClass, index) => {
-            const x = index * 60;
+            const x = (index - 1) * 60;
             const y = 178;
             const hcTag = new HeroClassTag(this.gameScene, x, y, heroClass);
             this.add(hcTag);

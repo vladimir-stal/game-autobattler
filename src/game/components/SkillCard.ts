@@ -8,7 +8,7 @@ import { colors, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
 import { getCardBorderColor } from "../utils/commonUtils";
 
-/** Card to buy from shop  */
+/** Skill card to buy, move and equip on hero */
 export class SkillCard extends Phaser.GameObjects.Container {
     gameScene: GameScene;
     cardSlot: CardSlot | undefined;
@@ -30,8 +30,15 @@ export class SkillCard extends Phaser.GameObjects.Container {
     }
 
     render() {
-        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0, 0);
-        this.rect.setStrokeStyle(1, getCardBorderColor(this.skill.priceLevel)); //0x777777  green 0x77ee77 , purple 0x7777ee, orange 0xeebb00
+        this.renderBorder();
+        this.renderImage();
+        this.renderInfo();
+        this.renderTags();
+    }
+
+    renderBorder() {
+        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0.5, 0);
+        this.rect.setStrokeStyle(1, getCardBorderColor(this.skill.priceLevel));
 
         this.rect.setInteractive();
         this.rect
@@ -40,21 +47,17 @@ export class SkillCard extends Phaser.GameObjects.Container {
                 this.gameScene.hintPanel.showSkill(x + 115, y, this.skill);
             })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-                //console.log(">>>>>> ON GAMEOBJECT_POINTER_OUT");
                 this.gameScene.hintPanel.hide();
             })
             .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-                //console.log("CLICK ON RECT", this.gameScene.isCardMoveMode, this.cardSlot);
-
                 if (this.gameScene.isCardMoveMode && this.cardSlot) {
-                    //console.log("CLICK CARD SLOT");
                     this.cardSlot.click();
                 }
             });
         this.add(this.rect);
+    }
 
-        this.renderImage();
-
+    renderInfo() {
         if (this.skill.isChained) {
             const chainImage = this.scene.add.image(90, 20, IMAGE_ICON_CHAINED);
             this.add(chainImage);
@@ -64,14 +67,9 @@ export class SkillCard extends Phaser.GameObjects.Container {
             this.add(onStartImage);
         }
 
-        //const chainedText = this.skill.isChained ? " (CHAIN)" : "";
-        const title = i18n.ui.SKILL; //this.skill.name; // + "\n\n" + this.skill.desc;
-        this.titleText = this.scene.add.text(30, 5, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" });
+        const title = i18n.ui.SKILL;
+        this.titleText = this.scene.add.text(0, 5, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" }).setOrigin(0.5);
         this.add(this.titleText);
-        // this.titleText.setText(this.skill.name + chainedText + "\n\n" + this.skill.desc);
-        //this.titleText.setX(10);
-
-        this.renderTags();
     }
 
     renderImage() {
@@ -80,21 +78,7 @@ export class SkillCard extends Phaser.GameObjects.Container {
             return;
         }
 
-        this.image = this.gameScene.add.sprite(0, 25, image).setOrigin(0, 0);
-
-        // this.image
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
-        //         console.log("IMAGE ON GAMEOBJECT_POINTER_OVER");
-        //         this.gameScene.hintPanel.showSkill(this.x, this.y, this.skill);
-        //     })
-        //     .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
-        //         console.log("IMAGE ON GAMEOBJECT_POINTER_OUT");
-        //         this.gameScene.hintPanel.hide();
-        //     })
-        //     .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-        //         console.log("IMAGE ON CLICK");
-        //     });
-
+        this.image = this.gameScene.add.sprite(0, 25, image).setOrigin(0.5, 0);
         this.add(this.image);
     }
 

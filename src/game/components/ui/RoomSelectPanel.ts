@@ -5,12 +5,26 @@ import { getSelectRoomDisplayName, IRoomOptions } from "../../utils/selectPhaseU
 import { roomsWithSingleHeroClass, tripleSetCardTypes } from "../SelectController";
 import { getRandomArrayItems } from "../../utils/commonUtils";
 import { GameObjects } from "phaser";
+import { MIN_WIDTH } from "./uiPanels";
+
+const borderMaxWidth = 800;
+const borderMiddleWidth = 600;
 
 /** UI panel to select next room */
 export class RoomSelectPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
 
+    rooms: ({ roomType: ERoomType; roomOptions?: IRoomOptions } | null)[];
     roomCount: number;
+
+    borderRect: GameObjects.Rectangle;
+    selectButton1: GameObjects.Text;
+    selectButton2: GameObjects.Text;
+    selectButton3: GameObjects.Text;
+
+    roomObjects: ({ titleText: GameObjects.Text; descriptionText: GameObjects.Text; selectButton: GameObjects.Text } | null)[];
+
+    panelWidth: number;
 
     hintText: GameObjects.Text;
     hintTextType: ESelectRoomHint;
@@ -18,13 +32,12 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
         this.gameScene = scene;
-
         this.roomCount = 3;
-
-        //this.show();
     }
 
     show(rooms: ({ roomType: ERoomType; roomOptions?: IRoomOptions } | null)[]) {
+        this.rooms = rooms;
+        this.panelWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
         this.setVisible(true);
         this.removeAll(true);
         this.renderBorder();
@@ -36,14 +49,17 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderBorder() {
-        const rect = this.scene.add.rectangle(0, 0, 800, 100, colors.BLACK).setOrigin(0, 0);
-        rect.setStrokeStyle(2, 0x999999);
-        this.add(rect);
+        const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        this.borderRect = this.scene.add.rectangle(0, 0, rectWidth, 100, colors.BLACK).setOrigin(0, 0);
+        this.borderRect.setStrokeStyle(2, 0x999999);
+        this.add(this.borderRect);
     }
 
     renderRooms(rooms: ({ roomType: ERoomType; roomOptions?: IRoomOptions } | null)[]) {
+        this.roomObjects = [];
         rooms.forEach((room, index) => {
             if (room === null) {
+                this.roomObjects[index] = null;
                 return;
             }
             this.renderRoom(index, room.roomType, room.roomOptions);
@@ -52,6 +68,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
 
     renderRoom(index: number, type: ERoomType, roomOptions?: IRoomOptions) {
         const { heroClasses, boss, autolevel } = roomOptions || {};
+        const roomX = this.getRoomX(index);
 
         // TRIPLE SET ROOM
         //
@@ -64,11 +81,14 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         //
         const title = getSelectRoomDisplayName(type);
         const color = [ERoomType.HEROES_SELL, ERoomType.UPGRADE_SKILL_OR_ITEM, ERoomType.ENCHANCE_SKILL_CHAINED].includes(type) ? "#f0dd8cff" : "#ffffff";
-        const roomText = this.scene.add.text(50 + index * 250, 20, title, {
-            fontFamily: "Arial Black",
-            fontSize: 18,
-            color,
-        });
+        const roomText = this.scene.add
+            .text(roomX, 20, title, {
+                //50 + index * 250
+                fontFamily: "Arial Black",
+                fontSize: 18,
+                color,
+            })
+            .setOrigin(0.5);
         this.add(roomText);
 
         const heroClassesText = heroClasses
@@ -81,19 +101,25 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
 
         const levelAdjustment = autolevel ? autolevel : 0;
 
-        const roomDescriptionText = this.scene.add.text(50 + index * 250, 40, description, {
-            //fontFamily: "Arial Black",
-            fontSize: 12,
-            color: "#dddddd",
-        });
+        const roomDescriptionText = this.scene.add
+            .text(roomX, 40, description, {
+                //index * 250
+                //fontFamily: "Arial Black",
+                fontSize: 12,
+                color: "#dddddd",
+            })
+            .setOrigin(0.5);
         this.add(roomDescriptionText);
 
         const buttonText = type === ERoomType.DUEL ? i18n.ui.START : i18n.ui.SELECT;
-        const selectRoomText = this.scene.add.text(100 + index * 250, 80, buttonText, {
-            fontFamily: "Arial Black",
-            fontSize: 18,
-            color: "#aaffaa",
-        });
+        const selectRoomText = this.scene.add
+            .text(roomX, 80, buttonText, {
+                //index * 250
+                fontFamily: "Arial Black",
+                fontSize: 18,
+                color: "#aaffaa",
+            })
+            .setOrigin(0.5);
 
         selectRoomText
             .setInteractive()
@@ -111,7 +137,32 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
                 selectRoomText.setColor("#AAFFAA");
             });
 
-        this.add(selectRoomText);
+        let selectButton;
+        switch (index) {
+            case 0:
+                {
+                    this.selectButton1 = selectRoomText;
+                    this.add(this.selectButton1);
+                    selectButton = this.selectButton1;
+                }
+                break;
+            case 1:
+                {
+                    this.selectButton2 = selectRoomText;
+                    this.add(this.selectButton2);
+                    selectButton = this.selectButton2;
+                }
+                break;
+            case 2:
+                {
+                    this.selectButton3 = selectRoomText;
+                    this.add(this.selectButton3);
+                    selectButton = this.selectButton3;
+                }
+                break;
+        }
+
+        this.roomObjects[index] = { titleText: roomText, descriptionText: roomDescriptionText, selectButton };
     }
 
     renderHintPanel() {
@@ -121,5 +172,38 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
             this.hintText = this.scene.add.text(350, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
             this.add(this.hintText);
         }
+    }
+
+    private getRoomX(index: number): number {
+        const panelCenterX = this.panelWidth / 2;
+        let roomX = 0;
+        switch (index) {
+            case 0:
+                roomX = panelCenterX - borderMaxWidth / 4; //panelCenterX / 2;
+                break;
+            case 1:
+                roomX = panelCenterX;
+                break;
+            case 2:
+                roomX = panelCenterX + borderMaxWidth / 4; //(panelCenterX * 3) / 2;
+                break;
+        }
+        return roomX;
+    }
+
+    refreshAfterResize() {
+        const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        const rectHeight = 100;
+        this.borderRect.setSize(rectWidth, rectHeight);
+
+        this.panelWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
+        this.roomObjects.forEach((roomObject, index) => {
+            if (!roomObject) {
+                return;
+            }
+            roomObject.titleText.setX(this.getRoomX(index));
+            roomObject.descriptionText.setX(this.getRoomX(index));
+            roomObject.selectButton.setX(this.getRoomX(index));
+        });
     }
 }

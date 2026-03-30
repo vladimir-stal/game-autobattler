@@ -54,11 +54,13 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         rect.setStrokeStyle(1, 0x777777);
         this.add(rect);
 
-        const title = this.scene.add.text(320, -40, i18n.ui.UPGRADE_HERO_TO_MC, {
-            fontFamily: "Arial Black",
-            fontSize: 18,
-            color: "#ffffff",
-        });
+        const title = this.scene.add
+            .text(250, -40, i18n.ui.UPGRADE_HERO_TO_MC, {
+                fontFamily: "Arial Black",
+                fontSize: 18,
+                color: "#ffffff",
+            })
+            .setOrigin(0.5);
         this.add(title);
     }
 
