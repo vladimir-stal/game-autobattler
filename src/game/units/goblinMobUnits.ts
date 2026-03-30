@@ -1,6 +1,6 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType } from "../../types";
 import { i18n } from "../consts";
-import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinSilverCoin } from "../mobItemConsts";
+import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinGoldCoin, itemGoblinSilverCoin } from "../mobItemConsts";
 import { goblinApplyShock, goblinShamanHpRegIncr } from "../skills/mobSkills";
 
 export const weakGoblinUnit: IUnit = {
@@ -30,7 +30,7 @@ export const weakGoblinUnit: IUnit = {
 export const goblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.GLADIATOR,
-    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
+    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 5,
@@ -59,7 +59,7 @@ export const goblinUnit: IUnit = {
 export const goblinShamanUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MAGIC,
-    mobHeroClasses: [EHeroClass.MAGIC],
+    mobHeroClasses: [EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
@@ -88,7 +88,7 @@ export const goblinShamanUnit: IUnit = {
 export const goldGoblin1Unit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BARD,
-    mobHeroClasses: [EHeroClass.BARD],
+    mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 1,
@@ -110,8 +110,9 @@ export const goldGoblin1Unit: IUnit = {
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.GOLD, value: 1 }],
     mobItems: [
         { item: itemCoin, probability: 15 }, // 15%
-        { item: itemGoblinSilverCoin, probability: 17 }, // 15% ~ 15/0.85
+        { item: itemCoin2, probability: 17 }, // 15% ~ 15/0.85
         { item: itemGoblinBoneDagger, probability: 14 }, // 10% ~ 10/(0.85*0.83)
-        // 100*0.85*0.83*0.86 = 60% not to get anything
+        { item: itemGoblinSilverCoin, probability: 49 }, // 30/(0.85*0.83*0.86)
+        { item: itemGoblinGoldCoin, probability: 100 },
     ],
 };

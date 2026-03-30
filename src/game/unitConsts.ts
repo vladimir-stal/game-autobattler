@@ -1,24 +1,26 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardType, EItemAfterDuelBonusType, IMobsVariants } from "../types";
-import { dagger1, shield1, staff1, wand1 } from "./basicWeaponItemConsts";
-import { basic_boots, basic_hat, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen } from "./commonItemConsts";
+import { dagger1, shield1, staff1, wand1, wand1_2 } from "./basicWeaponItemConsts";
+import { basic_boots, basic_exp_bag_2, basic_hat, basic_heal, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen } from "./commonItemConsts";
 import { armor_amulet, hp_amulet } from "./commonItemConsts2";
 
 import {
     itemCoin,
+    itemCoin2,
     itemGoblinBoneDagger,
     itemGoblinGoldCoin,
     itemGoblinSilverCoin,
     itemPeasantPitchfork,
+    itemPeasantPitchfork_2,
     itemSpiritSpear,
     regenMantle,
     spiritArmor,
 } from "./mobItemConsts";
 import { peasantUnit, peasantUnit_4 } from "./units/mobUnitConsts";
-import { warriorSummon, warriorSummon_3 } from "./skills/summonSkillConsts2";
 import { goblinShamanUnit, goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
-import { fireflySummonMob, warriorSummonMob, warriorSummonMob_5 } from "./units/summonMobUnits";
+import { fireflySummonMob, fireflySummonMob_6, warriorSummonMob, warriorSummonMob_3, warriorSummonMob_5 } from "./units/summonMobUnits";
 import { skeletonMageUnit, skeletonUnit, skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
+import { musical31 } from "./weaponItem3Consts";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -61,7 +63,9 @@ export const MC_CLASS_MAX_WEAPON_COUNT = 2;
 export const mobsLvl1: IMobsVariants[] = [
     {
         name: "Peasants",
-        units: [peasantUnit, peasantUnit, null, null],
+        description: "A trio of filthy peasants", // stat 1/3
+        // 1 2 3 attacks ~ 6 dmg, hp 9
+        units: [peasantUnit, peasantUnit, peasantUnit, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
@@ -74,6 +78,8 @@ export const mobsLvl1: IMobsVariants[] = [
     },
     {
         name: "Weak goblins",
+        description: "Two sicky goblins", // stat 2/5 ~ hp 10, dmg~10
+        // (formula: first position lives 2 rounds, second +1 round)
         units: [weakGoblinUnit, weakGoblinUnit, null, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
@@ -86,6 +92,7 @@ export const mobsLvl1: IMobsVariants[] = [
     },
     {
         name: "Spirit warriror",
+        description: "A warrior that is 99% spirit", // stat 2/3 (buffed to 3/9)
         units: [warriorSummonMob, null, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
@@ -98,20 +105,22 @@ export const mobsLvl1: IMobsVariants[] = [
     },
     {
         name: "Fireflies",
-        units: [fireflySummonMob, fireflySummonMob, null, null],
+        description: "A pair of magic moth",
+        units: [fireflySummonMob, fireflySummonMob, null, null], // stat 4/1
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.UNIT, unit: fireflySummonMob, exp: 1 },
             { type: IMobRewardType.ITEM, item: wand1, exp: 1 },
             { type: IMobRewardType.ITEM, item: staff1, exp: 1 },
         ],
     },
     {
         name: "Wolf",
-        units: [wolfUnit, null, null, null],
+        description: "A lone beast in search of red riding hood",
+        units: [wolfUnit, null, null, null], // stat 6/8 (nerfed to 5/8)
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
@@ -126,6 +135,8 @@ export const mobsLvl1: IMobsVariants[] = [
 export const mobsLvl2: IMobsVariants[] = [
     {
         name: "Goblins",
+        description: "Two sicky goblins, but one is healthy", // stat 5/8 + 2/5
+        // (approx 5 dmg/turn) first 2 rounds, second 3 rounds ~ 5+6 = 11 dmg
         units: [goblinUnit, weakGoblinUnit, null, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
@@ -137,7 +148,8 @@ export const mobsLvl2: IMobsVariants[] = [
     },
     {
         name: "Goblin shaman",
-        units: [goblinShamanUnit, null, null],
+        description: "One shaman doing a ritual of good harvest",
+        units: [goblinShamanUnit, null, null], // stat 4/14
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
@@ -147,7 +159,8 @@ export const mobsLvl2: IMobsVariants[] = [
     },
     {
         name: "Skeletons(2)",
-        units: [skeletonUnit, null, null, null],
+        description: "One bone skull soldier",
+        units: [skeletonUnit, null, null, null], // stat 4/10
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
@@ -159,32 +172,50 @@ export const mobsLvl2: IMobsVariants[] = [
     },
     {
         name: "Spirit warrirors(2)",
-        units: [warriorSummon, warriorSummon, warriorSummon],
+        description: "A trio of spiritual soldiers",
+        units: [warriorSummonMob, warriorSummonMob, warriorSummonMob], // 3x 3/9
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.UNIT, unit: warriorSummonMob, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 2 },
         ],
     },
     {
         name: "Wolfs(2)",
-        units: [wolfUnit, wolfUnit, null, null],
+        description: "Around you are two wolves",
+        units: [wolfUnit, wolfUnit, null, null], // stat 5/8 
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
-            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.UNIT, unit: wolfUnit, exp: 2 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 2 },
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 2 },
+        ],
+    },
+    {
+        name: "Fireflies",
+        description: "Swarm of magic moth",
+        units: [fireflySummonMob, fireflySummonMob, fireflySummonMob, fireflySummonMob], // stat 4/1
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: wand1, exp: 2 },
+            { type: IMobRewardType.ITEM, item: staff1, exp: 2 },
+            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_heal, exp: 2 },
         ],
     },
 ];
 export const mobsLvl3: IMobsVariants[] = [
     {
         name: "Skeletons(3)",
-        units: [skeletonUnit, skeletonUnit, null, null],
+        description: "One bone skull soldier and his buddy",
+        units: [skeletonUnit, skeletonUnit, null, null], // stat 4/10
         rewards: [
-            { type: IMobRewardType.GOLD, value: 1, exp: 3 },
+            { type: IMobRewardType.UNIT, unit: skeletonUnit, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 3 },
             { type: IMobRewardType.GOLD, value: 3, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_hat, exp: 3 },
@@ -195,7 +226,8 @@ export const mobsLvl3: IMobsVariants[] = [
     },
     {
         name: "Goblin shaman",
-        units: [goblinShamanUnit, goblinShamanUnit, null],
+        description: "Two shamans want to find a cure for their village",
+        units: [goblinShamanUnit, goblinShamanUnit, null], // stat 4/14
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 3 },
             { type: IMobRewardType.GOLD, value: 2, exp: 3 },
@@ -207,7 +239,8 @@ export const mobsLvl3: IMobsVariants[] = [
     },
     {
         name: "Goblins",
-        units: [weakGoblinUnit, goblinUnit, goblinUnit, goblinUnit],
+        description: "Weak goblin called his three friends",
+        units: [weakGoblinUnit, goblinUnit, goblinUnit, goblinUnit], // stat 5/8 + 2/5
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 3 },
             { type: IMobRewardType.GOLD, value: 2, exp: 3 },
@@ -220,7 +253,8 @@ export const mobsLvl3: IMobsVariants[] = [
     },
     {
         name: "Spirit warrirors(3)",
-        units: [warriorSummon_3, warriorSummon_3, warriorSummon_3],
+        description: "A well known spiritual trio",
+        units: [warriorSummonMob_3, warriorSummonMob_3, warriorSummonMob_3], // stat 5/14 (was 6_10)
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 3 },
             { type: IMobRewardType.GOLD, value: 2, exp: 3 },
@@ -233,13 +267,15 @@ export const mobsLvl3: IMobsVariants[] = [
     },
     {
         name: "Wolfs(3)",
-        units: [strongWolfUnit, null, null, null],
+        description: "Wolf's older brother",
+        units: [strongWolfUnit, null, null, null], // stat 10/18
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 3 },
             { type: IMobRewardType.GOLD, value: 2, exp: 3 },
             { type: IMobRewardType.GOLD, value: 3, exp: 3 },
-            { type: IMobRewardType.ITEM, item: basic_pants, exp: 3 },
+            { type: IMobRewardType.ITEM, item: hp_amulet, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 3 },
+            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 3 },
         ],
     },
 ];
@@ -247,7 +283,8 @@ export const mobsLvl3: IMobsVariants[] = [
 export const mobsLvl4: IMobsVariants[] = [
     {
         name: "Skeletons(4)",
-        units: [skeletonWarriorUnit, skeletonUnit, null, null],
+        description: "One skeleton lieutenant and one private",
+        units: [skeletonWarriorUnit, skeletonUnit, null, null], // stats 7/16 + 4/10
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 4 },
             { type: IMobRewardType.GOLD, value: 3, exp: 4 },
@@ -259,7 +296,8 @@ export const mobsLvl4: IMobsVariants[] = [
     },
     {
         name: "Goblins(4)",
-        units: [goblinShamanUnit, goblinUnit, goblinUnit, goblinUnit],
+        description: "Shaman showing his 3 buddies why no good harvest",
+        units: [goblinShamanUnit, goblinUnit, goblinUnit, goblinUnit], // stats 4/18 + 5/8
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 4 },
             { type: IMobRewardType.GOLD, value: 3, exp: 4 },
@@ -272,7 +310,8 @@ export const mobsLvl4: IMobsVariants[] = [
     },
     {
         name: "Peasants(4)",
-        units: [peasantUnit_4, peasantUnit_4, peasantUnit_4, null],
+        description: "Two not so regular peasants",
+        units: [peasantUnit_4, peasantUnit_4, null, null], // stat 5/20 (was 10/30)
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 4 },
             { type: IMobRewardType.GOLD, value: 3, exp: 4 },
@@ -286,26 +325,27 @@ export const mobsLvl4: IMobsVariants[] = [
 export const mobsLvl5: IMobsVariants[] = [
     {
         name: "Skeletons(5)",
-        units: [skeletonWarriorUnit, skeletonWarriorUnit, skeletonMageUnit],
+        description: "Two warriors and one mage", 
+        units: [skeletonWarriorUnit, skeletonWarriorUnit, skeletonMageUnit], // stat 7/16 + 8/9
         rewards: [
             { type: IMobRewardType.GOLD, value: 3, exp: 5 },
             { type: IMobRewardType.GOLD, value: 4, exp: 5 },
             { type: IMobRewardType.GOLD, value: 5, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_hat, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_boots, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_pants, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_jacket, exp: 5 },
+            { type: IMobRewardType.UNIT, unit: skeletonWarriorUnit, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: skeletonMageUnit, exp: 4 },
             { type: IMobRewardType.ITEM, item: armor_amulet, exp: 5 },
             { type: IMobRewardType.ITEM, item: hp_amulet, exp: 5 },
         ],
     },
     {
         name: "Spirit warriors(5)",
-        units: [warriorSummonMob_5, warriorSummonMob_5],
+        description: "Gang of two spirits",
+        units: [warriorSummonMob_5, warriorSummonMob_5], // stat 12/30
         rewards: [
             { type: IMobRewardType.GOLD, value: 3, exp: 5 },
             { type: IMobRewardType.GOLD, value: 4, exp: 5 },
             { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.UNIT, unit: warriorSummonMob_3, exp: 4 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 5 },
             { type: IMobRewardType.ITEM, item: spiritArmor, exp: 5 },
         ],
@@ -314,16 +354,42 @@ export const mobsLvl5: IMobsVariants[] = [
 export const mobsLvl6: IMobsVariants[] = [
     {
         name: "Skeletons(6)",
+        description: "Two warriors and two mages", 
         units: [skeletonWarriorUnit, skeletonWarriorUnit, skeletonMageUnit, skeletonMageUnit],
         rewards: [
             { type: IMobRewardType.GOLD, value: 4, exp: 5 },
             { type: IMobRewardType.GOLD, value: 5, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_hat, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_boots, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_pants, exp: 5 },
-            { type: IMobRewardType.ITEM, item: basic_jacket, exp: 5 },
+            { type: IMobRewardType.UNIT, unit: skeletonWarriorUnit, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: skeletonMageUnit, exp: 4 },
             { type: IMobRewardType.ITEM, item: armor_amulet, exp: 5 },
             { type: IMobRewardType.ITEM, item: hp_amulet, exp: 5 },
+        ],
+    },
+    {
+        name: "Peasants(6)",
+        description: "Agricultural quartet",
+        units: [peasantUnit_4, peasantUnit_4, peasantUnit_4, peasantUnit_4], // stat 5/20 (was 10/30)
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 4, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.ITEM, item: itemPeasantPitchfork_2, exp: 4 },
+            { type: IMobRewardType.ITEM, item: dagger1, exp: 4 },
+            { type: IMobRewardType.ITEM, item: shield1, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: peasantUnit_4, exp: 4 },
+        ],
+    },
+    {
+        name: "Infernoflies(6)",
+        description: "Fireflies from hell",
+        units: [fireflySummonMob_6, fireflySummonMob_6, fireflySummonMob_6, fireflySummonMob_6], // stat 10/2+8
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 4, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.UNIT, unit: fireflySummonMob_6, exp: 4 },
+            { type: IMobRewardType.ITEM, item: wand1_2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: musical31, exp: 2 },
+            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: basic_exp_bag_2, exp: 2 },
         ],
     },
 ];

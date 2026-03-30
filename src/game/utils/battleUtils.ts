@@ -454,6 +454,17 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
             item.battleBonuses.forEach((bonus) => bonuses.push(bonus));
         }
+        item.heroClassBonuses && item.heroClassBonuses.forEach((hCbonus) => {
+            if (hCbonus.heroClass === unit.heroClass) {
+                if (hCbonus.battleBonus) {
+                    bonuses.push(hCbonus.battleBonus)
+                }
+            } else if (unit.mobHeroClasses && unit.mobHeroClasses.includes(hCbonus.heroClass)) {
+                if (hCbonus.battleBonus) {
+                    bonuses.push(hCbonus.battleBonus)
+                }
+            }
+        });
         return bonuses;
     }, [] as IItemBattleBonus[]);
 

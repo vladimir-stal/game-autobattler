@@ -152,6 +152,9 @@ export interface Ii18n {
         [ESelectRoomHint.UPGRADE_HERO_TO_MC]: string;
         // bonus condition
         [EItemAfterDuelBonusCondition.WON]: string;
+        [EItemAfterDuelBonusCondition.LOST]: string;
+        [EItemAfterDuelBonusCondition.IS_HERO]: string;
+        [EItemAfterDuelBonusCondition.IS_MOB]: string;
     };
 }
 
@@ -178,6 +181,7 @@ export const i18n: Ii18n = {
             STAT_MP: "MP",
             STAT_PP: "PP",
             STAT_HP_REGEN: "STAT_HP_REGEN",
+            STAT_BASIC_ATTACK: "BASIC_ATTACK"
         },
         bonusType: {
             ADDITIONAL_BUFF_TARGET: "ADDITIONAL_BUFF_TARGET",
@@ -554,6 +558,7 @@ export const i18n: Ii18n = {
         SUMMON: "mystic",
         WARRIOR: "war",
         WILD: "wild",
+        MOB: "mob",
         //
         ALL: "all",
     },
@@ -604,5 +609,8 @@ export const i18n: Ii18n = {
         [ESelectRoomHint.UPGRADE_HERO_TO_MC]: "SELECT MULTICLASS",
         //
         [EItemAfterDuelBonusCondition.WON]: "WIN",
+        [EItemAfterDuelBonusCondition.LOST]: "LOSE",
+        [EItemAfterDuelBonusCondition.IS_HERO]: "HERO",
+        [EItemAfterDuelBonusCondition.IS_MOB]: "NON HERO",
     },
 };

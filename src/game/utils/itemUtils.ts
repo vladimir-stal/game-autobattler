@@ -1,4 +1,4 @@
-import { EHeroClass, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem, IItemBonus, IUnit } from "../../types";
+import { EHeroClass, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem, IItemBattleBonus, IItemBonus, IUnit } from "../../types";
 import { axe1 } from "../basicWeaponItemConsts";
 import { gloves_magic2, gloves_priest2, gloves_war2 } from "../commonItemConsts2";
 import {
@@ -31,10 +31,10 @@ export const applyItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => {
                 if (hCbonus.bonus) {
                     applyItemBonus(hCbonus.bonus, unit);
                 }
-                //TODO: apply battle bonuses
-                // if (hCbonus.battleBonus) {
-                //     applyItemBattleBonus(hCbonus.bonus, unit);
-                // }
+            } else if (unit.mobHeroClasses && unit.mobHeroClasses.includes(hCbonus.heroClass)) {
+                if (hCbonus.bonus) {
+                    applyItemBonus(hCbonus.bonus, unit);
+                }
             }
         });
 };
@@ -75,10 +75,10 @@ export const removeItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => 
                 if (hCbonus.bonus) {
                     removeItemBonus(hCbonus.bonus, unit);
                 }
-                //TODO: remove battle bonuses
-                // if (hCbonus.battleBonus) {
-                //     applyItemBattleBonus(hCbonus.bonus, unit);
-                // }
+            } else if (unit.mobHeroClasses && unit.mobHeroClasses.includes(hCbonus.heroClass)) {
+                if (hCbonus.bonus) {
+                    removeItemBonus(hCbonus.bonus, unit);
+                }
             }
         });
 };

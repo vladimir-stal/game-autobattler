@@ -71,11 +71,18 @@ export class HeroClassTag extends Phaser.GameObjects.Container {
                     width = 48;
                 }
                 break;
+            case EHeroClass.MOB:
+                {
+                    rectColor = 0x551133; // bgColor = "#551111";
+                    width = 38;
+                }
+                break;
             case EHeroClass.ALL:
             default: {
                 width = 40;
                 rectColor = 0x5a5a5a; // bgColor = "#0cd1dfff";
             }
+            
         }
 
         const borderRect = this.scene.add.rectangle(-1, -1, width + 2, 19, 0xffffff).setOrigin(0, 0);
