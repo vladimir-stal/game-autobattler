@@ -135,6 +135,10 @@ export class UnitPanel extends Phaser.GameObjects.Container {
             const x = this.getSlotX(index);
             slot.slot.setX(x);
             slot.moveText.setX(x);
+
+            // if (slot.slot.card) {
+            //     slot.slot.card.heroCard?.refreshAfterResize();
+            // }
         });
     }
 
@@ -173,5 +177,11 @@ export class UnitPanel extends Phaser.GameObjects.Container {
             this.currentWidth = resizedWidth;
             this.rerender();
         }
+
+        this.slots.forEach((slot, index) => {
+            if (slot.slot.card) {
+                slot.slot.card.heroCard?.refreshAfterResize();
+            }
+        });
     }
 }

@@ -158,6 +158,7 @@ export enum AnimationType {
     NECROMANCER_BATTLE_IDLE = "NECROMANCER_BATTLE_IDLE",
     NECROMANCER_ATTACK = "NECROMANCER_ATTACK",
     // PALADIN
+    PALADIN_IDLE = "PALADIN_IDLE",
     PALADIN_BATTLE_IDLE = "PALADIN_BATTLE_IDLE",
     PALADIN_ATTACK = "PALADIN_ATTACK",
     PALADIN_MAGIC_SHIELD = "PALADIN_MAGIC_SHIELD",
@@ -707,6 +708,7 @@ export interface ICard {
     value?: number;
     valueType?: TValueType;
     mobs?: { units: TUnits; reward: IMobReward };
+    description?: string;
 }
 
 /**

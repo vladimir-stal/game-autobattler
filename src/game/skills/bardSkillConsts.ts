@@ -79,6 +79,7 @@ export const buffNextBaAll: IHeroSkillSet = {
     ],
     nextLevel: buffNextBaAll_2,
     image: IMAGE_SKILL_BARD_BUFF_1,
+    isChained: true,
 };
 
 // BUFF BA SELF
@@ -158,6 +159,7 @@ export const buffBaSelf: IHeroSkillSet = {
     ],
     nextLevel: buffBaSelf_2,
     image: IMAGE_SKILL_BARD_BUFF_2,
+    isChained: true,
 };
 
 // BUFF PP ALL SKILL

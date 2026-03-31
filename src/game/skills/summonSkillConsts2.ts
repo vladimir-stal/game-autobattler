@@ -203,7 +203,7 @@ export const fireflySummonSkill: IHeroSkillSet = {
 
 // SPARK SUMMON SKILL
 
-export const sparkSummonSkill_3: IHeroSkillSet = {
+export const warriorSummonSkill_3: IHeroSkillSet = {
     id: "warriorSummon",
     //name: "Spark Summon(3)",
     //desc: "Summon magic spark [7,1]",
@@ -222,7 +222,7 @@ export const sparkSummonSkill_3: IHeroSkillSet = {
     image: IMAGE_SKILL_SUMMON_SPIRIT,
 };
 
-export const sparkSummonSkill_2: IHeroSkillSet = {
+export const warriorSummonSkill_2: IHeroSkillSet = {
     id: "warriorSummon",
     //name: "Spark Summon(2)",
     //desc: "Summon magic spark [4,1]",
@@ -238,11 +238,11 @@ export const sparkSummonSkill_2: IHeroSkillSet = {
             summon: warriorSummon_2,
         },
     ],
-    nextLevel: sparkSummonSkill_3,
+    nextLevel: warriorSummonSkill_3,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
 };
 
-export const sparkSummonSkill: IHeroSkillSet = {
+export const warriorSummonSkill: IHeroSkillSet = {
     id: "warriorSummon",
     //name: "Spark Summon",
     //desc: "Summon magic spark [3,1]",
@@ -258,7 +258,7 @@ export const sparkSummonSkill: IHeroSkillSet = {
             summon: warriorSummon,
         },
     ],
-    nextLevel: sparkSummonSkill_2,
+    nextLevel: warriorSummonSkill_2,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
 };
 
@@ -392,7 +392,7 @@ export const buffSummonCritSkill: IHeroSkillSet = {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const summonSkills: THeroSkills = [fireflySummonSkill, sparkSummonSkill];
+export const summonSkills: THeroSkills = [warriorSummonSkill]; //[fireflySummonSkill, warriorSummonSkill];
 
 export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa]);
 

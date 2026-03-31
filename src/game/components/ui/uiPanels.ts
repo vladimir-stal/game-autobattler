@@ -17,7 +17,8 @@ import { SkillCardEnchantPanel } from "./SkillCardEnchantPanel";
 export const MAX_WIDTH = 1550; // max camera width for resizing
 export const MIDDLE_WIDTH = 1400; // middle camera width for resizing
 export const MIN_WIDTH = 1200; // min range camera width for resizing
-export const MAX_HEIGHT = 920;
+export const MAX_HEIGHT = 900;
+export const MIDDLE_HEIGHT = 800;
 
 let resizeTimeoutId: number;
 
@@ -186,13 +187,13 @@ function getRoomSelectPanelPosition(width: number, height: number): { x: number;
 
 function getCardSelectPanelPosition(width: number, height: number): { x: number; y: number } {
     const x = width > MIN_WIDTH ? width / 2 - 360 : width / 2 - 300;
-    const y = -height + 160;
+    const y = height >= MAX_HEIGHT ? -height + 200 : height >= MIDDLE_HEIGHT ? -height + 140 : -height + 100;
     return { x, y };
 }
 
 function getUnitPanelPosition(width: number, height: number): { x: number; y: number } {
     const x = width > MIN_WIDTH ? width / 2 - 360 : width / 2;
-    const y = height > MAX_HEIGHT ? -height + 550 : -350;
+    const y = height >= MAX_HEIGHT ? -height + 550 : height >= MIDDLE_HEIGHT ? -350 : -320;
     return { x, y };
 }
 

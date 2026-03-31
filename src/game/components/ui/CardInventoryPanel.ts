@@ -71,7 +71,7 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
         this.gameScene.addCardSlot(cardSlot);
 
         const moveCardText = this.scene.add
-            .text(x + 20, y + 150, i18n.ui.MOVE, {
+            .text(x, y + 150, i18n.ui.MOVE, {
                 fontFamily: "Arial Black",
                 fontSize: 18,
                 color: "#aaffaa",
@@ -84,8 +84,7 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
             .on("pointerdown", () => {
                 if (cardSlot.card) {
                     //this.selectedCardIndex = index;
-                    if (this.gameScene.cardToMove === undefined)
-                      this.gameScene.selectCardToMove(cardSlot.card);
+                    if (this.gameScene.cardToMove === undefined) this.gameScene.selectCardToMove(cardSlot.card);
                 }
             })
             .on("pointerover", () => {

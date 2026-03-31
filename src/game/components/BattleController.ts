@@ -237,7 +237,6 @@ export class BattleController {
             };
             this.battleRecord.push(skillSetBattleAction);
 
-            
             // TODO: skill set should store isBasicAttack instead of skill
             skillSet.skills.forEach((skill) => {
                 if (skill.condition) {
@@ -249,13 +248,12 @@ export class BattleController {
                     this.performSkill(unit, skill, isPlayer1);
                 }
             });
-            if (skillSet.isChained && recurseDeep<5) {
+            if (skillSet.isChained && recurseDeep < 5) {
                 this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
-                this.performAction(unit, round, isPlayer1, recurseDeep+1);
-            } else {
+                this.performAction(unit, round, isPlayer1, recurseDeep + 1);
+            } else if (skillSet.isBasicAttack || skillSet.isBasicAttack === undefined) {
                 this.performBasicAttack(unit, undefined, isPlayer1);
             }
-
         } else {
             // if there is no skill for the round perform basic attack
             this.performBasicAttack(unit, undefined, isPlayer1);
@@ -368,28 +366,28 @@ export class BattleController {
     }
 
     performBasicAttack(unit: IBattleUnit, skill: IHeroSkill | undefined, isPlayer1: boolean) {
-        if (!skill || skill.isBasicAttack) {
-            if (unit.summon) {
-                this.performActionSummon(unit.summon, isPlayer1);
-                return;
+        //if (!skill || skill.isBasicAttack) {
+        if (unit.summon) {
+            this.performActionSummon(unit.summon, isPlayer1);
+            return;
+        }
+
+        const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
+        const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
+
+        if (unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.BASIC_ATTACK_TWICE)) {
+            this.basicAttack(unit, isPlayer1, 40);
+            this.basicAttack(unit, isPlayer1, 40);
+            for (let i = 0; i < additionalBaTimes; i++) {
+                this.basicAttack(unit, isPlayer1, 40);
             }
-
-            const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
-            const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
-
-            if (unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.BASIC_ATTACK_TWICE)) {
-                this.basicAttack(unit, isPlayer1, 40);
-                this.basicAttack(unit, isPlayer1, 40);
-                for (let i = 0; i < additionalBaTimes; i++) {
-                    this.basicAttack(unit, isPlayer1, 40);
-                }
-            } else {
+        } else {
+            this.basicAttack(unit, isPlayer1);
+            for (let i = 0; i < additionalBaTimes; i++) {
                 this.basicAttack(unit, isPlayer1);
-                for (let i = 0; i < additionalBaTimes; i++) {
-                    this.basicAttack(unit, isPlayer1);
-                }
             }
         }
+        //}
     }
 
     performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {

@@ -189,12 +189,19 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // PALADIN ///////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_PALADIN_BATTLE_IDLE, "assets/sprites/units/mc/paladin/paladin_battle_idle_cut_400.webp", {
-        frameWidth: 400,
-        frameHeight: 400,
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_PALADIN_IDLE, "assets/sprites/units/mc/paladin/paladin_idle_cut_300.png", {
+        frameWidth: 300,
+        frameHeight: 300,
     });
 
     if (GAME_MODE === "FULL") {
+        //
+        scene.load.spritesheet(IMAGE_PALADIN_BATTLE_IDLE, "assets/sprites/units/mc/paladin/paladin_battle_idle_cut_400.webp", {
+            frameWidth: 400,
+            frameHeight: 400,
+        });
+
         scene.load.spritesheet(IMAGE_PALADIN_ATTACK, "assets/sprites/units/mc/paladin/paladin_attack_cut_400.webp", {
             frameWidth: 400,
             frameHeight: 400,

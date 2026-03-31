@@ -129,6 +129,7 @@ export const getRooms = (
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                 } else if (hour === 1) {
                     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                 }
@@ -805,7 +806,9 @@ export const getCards = (
                         },
                         type: ECardType.MOBS,
                         price: 0,
-                        name: name + "\n" + wordwrap,
+                        //name: name + "\n" + wordwrap,
+                        name,
+                        description: wordwrap,
                     };
                 });
             }

@@ -7,6 +7,7 @@ import { UnitCard } from "./UnitCard";
 import { ItemCard } from "./ItemCard";
 import { SkillCard } from "./SkillCard";
 import { IMAGE_ITEM_COIN } from "../utils/load/imageLoadItems";
+import { MobCard } from "./MobCard";
 
 /** Card to buy from shop  */
 export class Card extends Phaser.GameObjects.Container {
@@ -19,6 +20,8 @@ export class Card extends Phaser.GameObjects.Container {
     title: string;
     //upgradeButton: GameObjects.Text;
     onBuyPanel: boolean;
+
+    heroCard: UnitCard | undefined;
 
     constructor(scene: GameScene, x: number, y: number, card: ICard, onBuyPanel: boolean, cardSlot?: CardSlot) {
         super(scene, x, y);
@@ -86,8 +89,8 @@ export class Card extends Phaser.GameObjects.Container {
 
         console.log("--> renderHeroCard", this.card.unit.name, this.card.unit.basicMaxHp);
 
-        const heroCard = new UnitCard(this.gameScene, 0, 0, this, this.card.unit, !this.onBuyPanel, !this.onBuyPanel, this.cardSlot);
-        this.add(heroCard);
+        this.heroCard = new UnitCard(this.gameScene, 0, 0, this, this.card.unit, !this.onBuyPanel, !this.onBuyPanel, this.cardSlot);
+        this.add(this.heroCard);
     }
 
     renderItemCard() {
@@ -133,11 +136,14 @@ export class Card extends Phaser.GameObjects.Container {
     }
 
     renderMobsCard() {
-        const { mobs, name } = this.card;
+        const { mobs, name, description } = this.card;
         if (!mobs || !name) {
             return;
         }
-        this.titleText.setText(name);
+        //this.titleText.setText(name);
+        this.titleText.setVisible(false);
+        const mobCard = new MobCard(this.gameScene, 0, 0, { name, description });
+        this.add(mobCard);
     }
 
     renderGoldCard() {

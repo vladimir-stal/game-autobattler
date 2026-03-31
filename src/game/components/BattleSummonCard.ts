@@ -2,6 +2,7 @@ import { GameObjects } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { ANIMATION_COMPLETE, colors, i18n } from "../consts";
 import {
+    AnimationType,
     EHeroAttackType,
     EHeroClass,
     EStatusType,
@@ -307,7 +308,48 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
     playSkillSet(name: string, animation?: string) {}
 
-    async playAttack(value: number, skill?: IHeroSkill) {}
+    async playAttack(value: number, skill?: IHeroSkill) {
+        this.setAction("ATTACK " + value);
+        //
+        let skillAnimation: string = undefined;
+        if (skill) {
+            if (skill.animation) {
+                skillAnimation = skill.animation;
+            } else {
+                if (skill.attackType === EHeroAttackType.MAGIC) {
+                    skillAnimation = this.magicAttackSkillAnimation;
+                }
+            }
+        }
+        //
+        const attackAnimation = skillAnimation || this.unitAttackAnimation;
+        //console.log("attackAnimation", attackAnimation);
+        if (attackAnimation) {
+            if (attackAnimation === AnimationType.NONE) {
+                return;
+            }
+
+            this.unitImageObject.anims.play(attackAnimation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, this.unitImageObject.anims.currentAnim.duration);
+            });
+        } else {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, 1000);
+            });
+        }
+    }
 
     playHeal() {}
 

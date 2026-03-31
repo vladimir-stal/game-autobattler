@@ -195,7 +195,8 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    scene.load.spritesheet(IMAGE_MASTER_ATTACK_2, "assets/sprites/units/master/master_attack_2_cut_400.webp", {
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_MASTER_ATTACK_2, "assets/sprites/units/master/master_attack_2_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });

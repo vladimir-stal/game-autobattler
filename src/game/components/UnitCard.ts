@@ -30,6 +30,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
     isShowItems: boolean;
     isShowSkills: boolean;
 
+    imageObject: GameObjects.Sprite;
     imgHeight: number;
 
     constructor(scene: GameScene, x: number, y: number, card: Card, unit: IUnit, isShowItems: boolean, isShowSkills: boolean, cardSlot?: CardSlot) {
@@ -110,16 +111,16 @@ export class UnitCard extends Phaser.GameObjects.Container {
         const scale = height < MAX_HEIGHT ? height / MAX_HEIGHT : 1;
         const { image, animation } = this.unit.unitType === EUnitType.HERO ? getHeroImage(this.unit.heroClass) : getUnitImage(this.unit.id);
 
-        const imageObject = this.gameScene.add.sprite(0, 200, image, 0).setOrigin(0.5, 1).setScale(scale); //setDisplaySize(300, 300)
-        this.imgHeight = imageObject.displayHeight;
+        this.imageObject = this.gameScene.add.sprite(0, 200, image, 0).setOrigin(0.5, 1).setScale(scale); //setDisplaySize(300, 300)
+        this.imgHeight = this.imageObject.displayHeight;
         //console.log("DEBUG: dh=" + this.imgHeight + " scale=" + scale + " original_h=" + (this.imgHeight/scale));
         if (animation) {
             //&& GAME_MODE === "FULL"
             //if (this.unit.heroClassType === EHeroClassType.MULTI) {
-            imageObject.anims.play(animation);
+            this.imageObject.anims.play(animation);
             //}
         }
-        this.add(imageObject);
+        this.add(this.imageObject);
     }
 
     renderUpgradeButton() {
@@ -234,6 +235,12 @@ export class UnitCard extends Phaser.GameObjects.Container {
         //console.log("UNIT CARD refersh");
         this.removeAll(true);
         this.render();
+    }
+
+    refreshAfterResize() {
+        const { height } = this.gameScene.camera;
+        const scale = height < MAX_HEIGHT ? height / MAX_HEIGHT : 1;
+        this.imageObject.setScale(scale);
     }
 
     setUnit(unit: IUnit) {
