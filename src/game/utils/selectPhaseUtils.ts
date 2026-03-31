@@ -287,7 +287,9 @@ export const getRooms = (
     const firstRoomHeroClasses = firstRoom !== null && roomsWithHeroClasses.includes(firstRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
     const secondRoomHeroClasses = secondRoom !== null && roomsWithHeroClasses.includes(secondRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
     const thirdRoomHeroClasses = thirdRoom !== null && roomsWithHeroClasses.includes(thirdRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
-
+    // TODO: add bias towards hero classes present in hero party
+    //   ~ e.g. check room hero class, reroll once if no class present in party
+    //   ~ similar reroll action to be made for Tavern / Mercenary room, when hero party is full
     return [
         { roomType: firstRoom, roomOptions: { heroClasses: firstRoomHeroClasses } },
         { roomType: secondRoom, roomOptions: { heroClasses: secondRoomHeroClasses } },
@@ -776,7 +778,7 @@ export const getCards = (
                 hintTextType = ESelectCardHint.SELECT_SINGLE_DUNGEON;
 
                 const randomMobs = getMobs(gameScene.selectController.day);
-                const autolevel = Math.max(1, gameScene.selectController.day - 2);
+                const autolevel = Math.max(1, gameScene.selectController.day - 1);
                 console.log("ERoomType.MOBS", randomMobs);
 
                 cards = randomMobs.map((mobs) => {

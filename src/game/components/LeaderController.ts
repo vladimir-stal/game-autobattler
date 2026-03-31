@@ -50,6 +50,11 @@ export class LeaderController {
     }
 
     selectNextOpponent() {
-        this.nextOpponentId = getRandomArrayItem(this.leaders.filter(({ id, hp }) => id !== 0 && id !== this.nextOpponentId && hp > 0)).id;
+        let filtList = this.leaders.filter(({ id, hp }) => id !== 0 && id !== this.nextOpponentId && hp > 0);
+        if (filtList.length == 0)
+            filtList = this.leaders.filter(({ id, hp }) => id !== 0 && hp > 0);
+        if (filtList.length == 0)
+            filtList = this.leaders.filter(({ id }) => id !== 0);
+        this.nextOpponentId = getRandomArrayItem(filtList).id;
     }
 }

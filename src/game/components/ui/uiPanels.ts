@@ -186,7 +186,7 @@ function getRoomSelectPanelPosition(width: number, height: number): { x: number;
 
 function getCardSelectPanelPosition(width: number, height: number): { x: number; y: number } {
     const x = width > MIN_WIDTH ? width / 2 - 360 : width / 2 - 300;
-    const y = -height + 160;
+    const y = -height + 80; //160
     return { x, y };
 }
 
