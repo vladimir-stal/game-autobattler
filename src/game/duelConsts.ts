@@ -46,6 +46,7 @@ import { levelUpUnit } from "./utils/unitUtils";
 import { axe22, mace21, musical21, musical21_2, scepter22, shield22, sword22_2, totem21, totem22, wand21, wand21_2 } from "./weaponItem2Consts";
 import { weakGoblinUnit } from "./units/goblinMobUnits";
 import { gloves_war2 } from "./commonItemConsts2";
+import { strongWolfUnit } from "./units/wolfsMobUnits";
 
 type TDuelEnemy = Record<number, (IUnit | null)[]>;
 
@@ -136,6 +137,8 @@ levelUpUnit(unit13_5);
 levelUpUnit(unit13_5);
 
 //
+const unit14_6 = createHero(strongWolfUnit);
+levelUpUnit(unit14_6);
 
 /** Duel units for each day */
 export const enemy1: TDuelEnemy = {
@@ -144,8 +147,8 @@ export const enemy1: TDuelEnemy = {
     2: [unit11_2, unit12_2],
     3: [unit11_3, unit12_3],
     4: [unit11_4, unit12_4, unit13_4],
-    5: [unit11_4, unit12_4, unit13_4],
-    6: [],
+    5: [unit11_5, unit12_5, unit13_5],
+    6: [unit11_5, unit12_5, unit13_5, unit14_6],
     7: [],
     8: [],
     9: [],
@@ -558,8 +561,8 @@ unit54_6.skills.push(buffNextBaAll);
 
 /** Enemy 5 - Duel units for each day */
 export const enemy5: TDuelEnemy = {
-    0: [null, applyItems(unit51)],
-    1: [null, applyItems(unit51_1)],
+    0: [applyItems(unit51)],
+    1: [applyItems(unit51_1)],
     2: [applyItems(unit52_2), applyItems(unit51_2)],
     3: [applyItems(unit52_3), applyItems(unit51_3)],
     4: [applyItems(unit52_4), applyItems(unit51_4), applyItems(unit53_4)],

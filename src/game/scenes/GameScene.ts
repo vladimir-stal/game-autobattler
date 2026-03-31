@@ -15,7 +15,7 @@ import { BattleController } from "../components/BattleController";
 import { basicClassHeroes } from "../heroConsts";
 import { SelectController } from "../components/SelectController";
 import { activateSlots } from "../utils/selectPhaseUtils";
-import { addExp, generateUnitId } from "../utils/unitUtils";
+import { addExp, generateUnitId, levelUpUnit, levelUpUnitRandom } from "../utils/unitUtils";
 import { UnitUpgradePanel } from "../components/ui/UnitUpgradePanel";
 import { applyAfterDuelBonuses } from "../utils/afterDuelUtils";
 import { LeaderController } from "../components/LeaderController";
@@ -335,11 +335,19 @@ export class GameScene extends Phaser.Scene {
         //
         const units = this.unitPanel.slots.map((slot) => (slot.slot.card ? slot.slot.card.card.unit || basicClassHeroes[0] : null));
 
-        const enemyUnits: (IUnit | null)[] = getDuelEnemy(this.leaderController.nextOpponentId)[this.selectController.day];
+        const relativeDay = Math.min(6,this.selectController.day);
+        const gamePlusPlusLevelBuff = this.selectController.day - relativeDay;
+        const enemyUnits: (IUnit | null)[] = getDuelEnemy(this.leaderController.nextOpponentId)[relativeDay];
         const unitsCount = enemyUnits.length;
         for (let i = 0; i < 4 - unitsCount; i++) {
             enemyUnits.push(null);
         }
+        if (gamePlusPlusLevelBuff > 0)
+            enemyUnits.forEach(u => {
+                if (u)
+                    for (let j = 0; j<gamePlusPlusLevelBuff; j++)
+                        levelUpUnitRandom(u);
+            });
         this.battlePanel.show(units, enemyUnits);
         // TODO: calculate round count from day and enemies left
         const battleRoundCount = 3; //this.selectController.day + 1;

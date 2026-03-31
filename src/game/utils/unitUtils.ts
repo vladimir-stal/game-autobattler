@@ -31,6 +31,7 @@ const EXP_FOR_LEVEL_BASIC: Record<number, number> = {
     3: 10,
     4: 15,
     5: 20,
+    // (L-1)*5
 };
 
 const EXP_FOR_LEVEL_MC: Record<number, number> = {
@@ -38,6 +39,7 @@ const EXP_FOR_LEVEL_MC: Record<number, number> = {
     3: 25,
     4: 40,
     5: 60,
+    // (L)*15-20  ~10, 25, 40, 55
 };
 
 export const addExp = (units: (IUnit | null)[], expAdd: number) => {
@@ -54,17 +56,22 @@ export const levelUpUnit = (unit: IUnit) => {
     addAttributesOnLevelUp(unit);
 };
 
+export const levelUpUnitRandom = (unit: IUnit) => {
+    unit.level += 1;
+    addAttributesOnLevelUpRandom(unit);
+};
+
 export const addExpToUnit = (unit: IUnit, expAdd: number) => {
     console.log("addExpToUnit", unit.name, expAdd);
     const { level: currentLevel, exp: currentExp, heroClassType } = unit;
 
-    if (currentLevel === MAX_LEVEL) {
-        return;
-    }
+    //if (currentLevel === MAX_LEVEL) {
+    //    return;
+    //}
     if (unit.unitType === EUnitType.HERO) unit.exp = currentExp + expAdd;
     else unit.exp = currentExp + 2 * expAdd; // EXPERIMENTAL
     //console.log("Unit " + unit.name + " now has " + unit.exp + " exp");
-    const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[currentLevel + 1] : EXP_FOR_LEVEL_MC[currentLevel + 1];
+    const nextLevelExp = getUnitNextLevelExp(unit);
     if (unit.exp >= nextLevelExp) {
         levelUpUnit(unit);
     }
@@ -110,6 +117,21 @@ const addAttributesOnLevelUp = (unit: IUnit) => {
         if (attr == 2) unit.basicMaxHp += 2;
         if (attr == 3) unit.basicAttack += 1;
     }
+};
+
+const addAttributesOnLevelUpRandom = (unit: IUnit) => {
+    unit.basicMaxHp += 2;
+    unit.basicArmor += 1;
+    let attr = getRandomIntFromInterval(0, 3);
+    if (attr == 0) unit.basicCritChance += 2;
+    if (attr == 1) unit.basicEvasionChance += 2;
+    if (attr == 2) unit.basicMaxHp += 2;
+    if (attr == 3) unit.basicAttack += 1;
+    attr = getRandomIntFromInterval(0, 3);
+    if (attr == 0) unit.basicMagicPower += 2;
+    if (attr == 1) unit.basicPhysicalPower += 2;
+    if (attr == 2) unit.basicHpRegen += 1;
+    if (attr == 3) unit.basicAttack += 1;
 };
 
 export const generateUnitId = (unit: IUnit) => {
@@ -302,8 +324,11 @@ export const getMaxUnitWeaponCount = (heroClassType: EHeroClassType) => {
 
 export const getUnitNextLevelExp = (unit: IUnit) => {
     const { heroClassType, level } = unit;
-    const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[level + 1] : EXP_FOR_LEVEL_MC[level + 1];
-    return nextLevelExp;
+    //const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[level + 1] : EXP_FOR_LEVEL_MC[level + 1];
+    const nextLevelExp = (heroClassType === EHeroClassType.BASIC) ? 
+        level*5 //   EXP_FOR_LEVEL_BASIC[currentLevel + 1]
+        : (level + 1)*15-20; //    : EXP_FOR_LEVEL_MC[currentLevel + 1];
+    return (level < MAX_LEVEL) ? nextLevelExp : nextLevelExp*2;
 };
 
 /** With some probability add mob item to unit when buying or receiving its card */
