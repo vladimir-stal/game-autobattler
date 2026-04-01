@@ -35,6 +35,7 @@ import {
     IMAGE_ORDER_IDLE_BATTLE_0,
     IMAGE_ORDER_SHIELD_BUFF,
     IMAGE_PRIEST_ATTACK,
+    IMAGE_PRIEST_ATTACK_2,
     IMAGE_PRIEST_DEFEATED,
     IMAGE_PRIEST_HEAL,
     IMAGE_PRIEST_HURT,
@@ -280,7 +281,13 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    scene.load.spritesheet(IMAGE_PRIEST_ATTACK, "assets/sprites/units/priest/priest_spell_1_cut_400.webp", {
+    // scene.load.spritesheet(IMAGE_PRIEST_ATTACK, "assets/sprites/units/priest/priest_spell_1_cut_400.webp", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_PRIEST_ATTACK_2, "assets/sprites/units/priest/priest_holy_sword_cut_2_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });

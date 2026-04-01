@@ -73,6 +73,7 @@ export const IMAGE_ORDER_DEFEATED = "IMAGE_ORDER_DEFEATED";
 export const IMAGE_PRIEST_IDLE = "IMAGE_PRIEST_IDLE";
 export const IMAGE_PRIEST_IDLE_BATTLE = "IMAGE_PRIEST_IDLE_BATTLE";
 export const IMAGE_PRIEST_ATTACK = "IMAGE_PRIEST_ATTACK";
+export const IMAGE_PRIEST_ATTACK_2 = "IMAGE_PRIEST_ATTACK_2";
 export const IMAGE_PRIEST_HEAL = "IMAGE_PRIEST_HEAL";
 export const IMAGE_PRIEST_DEFEATED = "IMAGE_PRIEST_DEFEATED";
 export const IMAGE_PRIEST_HURT = "IMAGE_PRIEST_HURT";
@@ -233,7 +234,7 @@ export function loadImages(scene: Scene) {
     // BASIC HEROES
     loadBasicHeroesImages(scene);
 
-    // BASIC HEROES
+    // EFFECTS
     if (GAME_MODE === "FULL") {
         loadImagesEffects(scene);
     }
@@ -278,9 +279,8 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_FISHMAN, "assets/sprites/units/fishman1.png");
 
     // MC ANIMATION
-    
+
     loadMcHeroesImages(scene);
-   
 
     //
     // LEADERS
@@ -294,7 +294,6 @@ export function loadImages(scene: Scene) {
     // MOBS
 
     loadImagesMobs(scene);
-    
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

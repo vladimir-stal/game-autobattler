@@ -74,6 +74,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     summonTotemAnimation: string | undefined;
     size: number | undefined;
     distance: number | undefined;
+    attackAnimDisance: number | undefined;
 
     isDead: boolean;
 
@@ -142,6 +143,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             distance,
             distanceEnemy,
             size,
+            attackAnimDisance,
         } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(id);
         this.unitImage = imageBattle || image;
         if (GAME_MODE === "FULL" || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
@@ -153,6 +155,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.unitDefeatedAnimation = defeatedAnimation;
             this.magicAttackSkillAnimation = magicAttackSkillAnimation;
             this.summonTotemAnimation = summonTotemAnimation;
+            this.attackAnimDisance = attackAnimDisance;
         }
         this.distance = distance;
         this.size = size;
@@ -451,9 +454,16 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 return;
             }
 
+            const imageX = this.unitImageObject.x;
+            const attackSkillDistance = this.attackAnimDisance || 0;
+            if (attackSkillDistance) {
+                const newImageX = this.isInverted ? imageX - attackSkillDistance : imageX + attackSkillDistance;
+                this.unitImageObject.setX(newImageX);
+            }
+
             this.unitImageObject.anims.play(attackAnimation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
-                //console.log(">> ANIMATION_COMPLETE attach Animation");
+                this.unitImageObject.setX(imageX);
                 if (this.unitAnimation) {
                     this.unitImageObject.anims.play(this.unitAnimation);
                 }

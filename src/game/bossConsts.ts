@@ -56,6 +56,25 @@ const minotaurSkills: THeroSkills = [
             },
         ],
     },
+    {
+        id: "MinotaurEarthquake",
+        name: "Minotaur Earthquake",
+        desc: "Deal damage to all ememies",
+        level: 1,
+        priceLevel: 1,
+        heroClasses: [EHeroClass.WILD],
+        skills: [
+            {
+                type: EHeroSkillType.ATTACK,
+                isBasicAttack: true,
+                value: 5,
+                valueType: "number",
+                targetType: ETargetType.ALL_ENEMIES,
+                attackType: EHeroAttackType.PHYSICAL,
+                animation: AnimationType.BOSS_MINOTAUR_STOMP,
+            },
+        ],
+    },
 ];
 
 export const bossMinotaur: IUnit = {

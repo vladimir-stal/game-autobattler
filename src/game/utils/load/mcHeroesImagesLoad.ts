@@ -60,7 +60,8 @@ export function loadMcHeroesImages(scene: Scene) {
     //
     // ASSASSIN ///////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_ASSASSIN_IDLE, "assets/sprites/units/mc/assassin/assassin_idle_cut_300.webp", {
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_ASSASSIN_IDLE, "assets/sprites/units/mc/assassin/assassin_idle_cut_300.png", {
         frameWidth: 300,
         frameHeight: 300,
     });

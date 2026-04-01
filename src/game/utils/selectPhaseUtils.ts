@@ -25,6 +25,7 @@ import { basicWeapons } from "../itemConsts";
 import { itemGoblinBoneDagger, itemGoblinSilverCoin } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { magicAttack, magicAttack_2 } from "../skills/magicSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
@@ -129,7 +130,6 @@ export const getRooms = (
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                 } else if (hour === 1) {
                     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                 }
@@ -842,8 +842,13 @@ export const getCards = (
                 //
                 //cards = [null, { type: ECardType.GOLD, price: 0, value: 2 }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
-                //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
-                cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
+                cards = [
+                    { type: ECardType.SKILL, price: 0, skill: { ...magicAttack, isChained: true } },
+
+                    { type: ECardType.SKILL, price: 0, skill: magicAttack },
+                    { type: ECardType.SKILL, price: 0, skill: magicAttack },
+                    { type: ECardType.SKILL, price: 0, skill: magicAttack_2 },
+                ];
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:

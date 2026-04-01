@@ -91,6 +91,7 @@ export enum AnimationType {
     PRIEST_IDLE = "PRIEST_IDLE",
     PRIEST_IDLE_BATTLE = "PRIEST_IDLE_BATTLE",
     PRIEST_ATTACK = "PRIEST_ATTACK",
+    PRIEST_ATTACK_2 = "PRIEST_ATTACK_2",
     PRIEST_HEAL = "PRIEST_HEAL",
     PRIEST_DEFEATED = "PRIEST_DEFEATED",
     PRIEST_HURT = "PRIEST_HURT",
@@ -226,6 +227,7 @@ export enum EEffectAnimationType {
     EFFECT_MASTER_ATTACK_2 = "EFFECT_MASTER_ATTACK_2",
     EFFECT_ORDER_ATTACK_2 = "EFFECT_ORDER_ATTACK_2",
     EFFECT_PRIEST_ATTACK = "EFFECT_PRIEST_ATTACK",
+    EFFECT_PRIEST_ATTACK_2 = "EFFECT_PRIEST_ATTACK_2",
     EFFECT_PRIEST_HEAL = "EFFECT_PRIEST_HEAL",
     EFFECT_WARRIOR_ATTACK_2 = "EFFECT_WARRIOR_ATTACK_2",
     EFFECT_WILD_ATTACK = "EFFECT_WILD_ATTACK",
@@ -903,6 +905,8 @@ export interface IDebuff {
  * @constant ppScale % of PP value is added to skill value
  * @constant effectAnimDistance position of effect on enemy
  * @constant effectAnimDistanceInverted position of effect on ally (when skill is casted by enemy)
+ * @constant targetFromType unit to take buff/attr from
+ * @constant targetType unit to apply skill on
  */
 export interface IHeroSkill {
     type: EHeroSkillType;
@@ -933,7 +937,8 @@ export interface IHeroSkill {
 }
 
 /**
- * @property isChained Flag shows if this skill is instantly followed by the next skill
+ * @constant isChained Flag shows if this skill is instantly followed by the next skill
+ * @constant isBasicAttack Flag skillset is followed by basic attack
  */
 export interface IHeroSkillSet {
     id: string;
@@ -949,7 +954,7 @@ export interface IHeroSkillSet {
     image?: string;
     rarity?: number;
     type?: ESkillSetType;
-    isBasicAttack?: boolean; // flag: skill is followed by basic attack
+    isBasicAttack?: boolean;
     priceLevel: number;
     animation?: AnimationType;
 }

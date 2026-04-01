@@ -1,15 +1,7 @@
 import { EHeroClass, EHeroClassType, EItemBonusType, IItem, IUnit } from "../types";
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "./basicHeroConsts";
 import { axe1, mace1, musical1, musical1_2, scepter1, scepter1_2, shield1, staff1, sword1, sword1_2, totem1, wand1, wand1_2 } from "./basicWeaponItemConsts";
-import {
-    basic_boots,
-    basic_exp_bag,
-    basic_hat,
-    basic_hat_2,
-    basic_jacket,
-    basic_pants,
-    basic_ring_damage,
-} from "./commonItemConsts";
+import { basic_boots, basic_exp_bag, basic_hat, basic_hat_2, basic_jacket, basic_pants, basic_ring_damage } from "./commonItemConsts";
 import {
     assasinHero,
     beastMasterHero,
@@ -47,6 +39,7 @@ import { axe22, mace21, musical21, musical21_2, scepter22, shield22, sword22_2, 
 import { weakGoblinUnit } from "./units/goblinMobUnits";
 import { gloves_war2 } from "./commonItemConsts2";
 import { strongWolfUnit } from "./units/wolfsMobUnits";
+import { minstrelSkill } from "./skills/mc/minstrelSkills";
 
 type TDuelEnemy = Record<number, (IUnit | null)[]>;
 
@@ -806,4 +799,32 @@ export const testSamurai: TDuelEnemy = {
     10: [samuraiHero],
 };
 
-export const testDuelEnemies = [testSamurai];
+export const testMinistrel: TDuelEnemy = {
+    1: [beastMasterHero, blackKnightHero, minstrelHero],
+    0: [samuraiHero],
+    2: [samuraiHero],
+    3: [samuraiHero],
+    4: [samuraiHero],
+    5: [samuraiHero],
+    6: [samuraiHero],
+    7: [samuraiHero],
+    8: [samuraiHero],
+    9: [samuraiHero],
+    10: [samuraiHero],
+};
+
+export const testPriest: TDuelEnemy = {
+    1: [priestHero],
+    0: [priestHero],
+    2: [priestHero],
+    3: [samuraiHero],
+    4: [samuraiHero],
+    5: [samuraiHero],
+    6: [samuraiHero],
+    7: [samuraiHero],
+    8: [samuraiHero],
+    9: [samuraiHero],
+    10: [samuraiHero],
+};
+
+export const testDuelEnemies = [testPriest];
