@@ -20,13 +20,14 @@ import { bosses } from "../bossConsts";
 import { CardSlot } from "../components/CardSlot";
 import { roomsWithHeroClasses } from "../components/SelectController";
 import { i18n } from "../consts";
-import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes } from "../heroConsts";
-import { basicWeapons } from "../itemConsts";
+import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes, mcClassHeroes } from "../heroConsts";
+import { basicWeapons, itemsLvl5 } from "../itemConsts";
 import { itemGoblinBoneDagger, itemGoblinSilverCoin } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
+import { dagger21 } from "../weaponItem2Consts";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
 import {
@@ -44,10 +45,12 @@ import {
     getCommonItemsWithTop,
     getHeroClassesItemsWithTop,
     getAllItemTop,
+    getAllHoldingItems,
 } from "./itemUtils";
 import { getMobs } from "./mobsUtils";
 import {
     getAllClassesSkills,
+    getAllHoldingSkills,
     getHeroClassesSkills,
     getHeroClassSkills,
     getMaxUnitSkillCount,
@@ -127,11 +130,14 @@ export const getRooms = (
             {
                 if (hour === 0) {
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
+                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
                 } else if (hour === 1) {
                     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                     //return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
+                //} else if (hour === 3) { // TEST
+                //    return [null, { roomType: ERoomType.SKILLS_SELL }, null];
                 }
                 if (hour === 5) {
                     return [null, { roomType: ERoomType.DUEL }, null];
@@ -229,7 +235,9 @@ export const getRooms = (
         case 5:
             {
                 // on day 5 player can buy hero on hour 0 if he has 2 heroes or less
-                sellRooms = hour === 0 && ownedHeroesCount < 3 ? sellHeroRoom : sellTypeRoomsWithoutHeroes;
+                sellRooms = hour === 1 && ownedHeroesCount < 3 ? sellHeroRoom : sellTypeRoomsWithoutHeroes;
+                // ALTERNATIVE: change this to room that sell legendary-rarity items
+                sellRooms = hour === 0 ? [ERoomType.ITEM_LEGEND_SELL] : sellTypeRoomsWithoutHeroes;
             }
             break;
         case 6:
@@ -283,7 +291,7 @@ export const getRooms = (
 
     const firstRoom = getRandomArrayItem(firstRooms);
     const secondRoom = getRandomArrayItem(secondRooms);
-    const thirdRoom = getRandomArrayItem(thirdRooms);
+    const thirdRoom = (day === 5 && hour === 0) ? ERoomType.TRIPLE_SET : getRandomArrayItem(thirdRooms);
 
     const firstRoomHeroClasses = firstRoom !== null && roomsWithHeroClasses.includes(firstRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
     const secondRoomHeroClasses = secondRoom !== null && roomsWithHeroClasses.includes(secondRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
@@ -515,22 +523,26 @@ export const getCards = (
         case ERoomType.ITEM_SELECT:
             {
                 const topItem = getAllItemTop(day);
-                //console.log("topItem", topItem);
-                const items = [...getXFromAllItems(day, 3), topItem];
+                const holdingItem = getRandomArrayItem(getRandomArrayItems(getAllHoldingItems(gameScene),1,false));
+                const num = (holdingItem) ? 2 : 3;
+                if (holdingItem)
+                    holdingItem.priceLevel++;
+                const items = [...getXFromAllItems(day, num), topItem, holdingItem];
 
                 cards = items.map((item) => {
                     return { item, type: ECardType.ITEM, price: getItemPrice(item) };
                 });
             }
             break;
-        // case ERoomType.ITEMS_SELL:
-        //     {
-        //         // TODO: basic items should be different depending on day
-        //         cards = getRandomArrayItems(basicItems, 3, true).map((item) => {
-        //             return { item, type: ECardType.ITEM, price: getCardPrice(ECardType.ITEM, day, hour) };
-        //         });
-        //     }
-        //     break;
+        case ERoomType.ITEM_LEGEND_SELL:
+            {
+                isSingleSelect = true;
+                const items = getRandomArrayItems(itemsLvl5,3,true);
+                cards = items.map((item) => {
+                    return { item, type: ECardType.ITEM, price: getItemPrice(item) };
+                });
+            }
+            break;
         case ERoomType.ITEM_CLASS_SELL:
             {
                 if (!heroClasses) {
@@ -611,9 +623,12 @@ export const getCards = (
                 isRerollAvailable = true;
 
                 const topLevelSkill = getTopAllClassesSkill(day);
-                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 3, true);
+                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 2, true);
+                const holdingSkill = getRandomArrayItem(getRandomArrayItems(getAllHoldingSkills(gameScene), 1, false));
+                if (holdingSkill)
+                    holdingSkill.priceLevel++;
 
-                cards = [...randomSkills, topLevelSkill].map((skill) => {
+                cards = [...randomSkills, topLevelSkill, holdingSkill].map((skill) => {
                     return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel) };
                 });
             }
@@ -629,8 +644,15 @@ export const getCards = (
 
                     const randomHeroClass = getRandomArrayItem(heroClasses);
                     const topLevelSkill = getTopHeroClassSkill(randomHeroClass, day);
-                    const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), 3, true);
-                    cards = [...skills, topLevelSkill].map((skill) => {
+                    const holdingSkill = getRandomArrayItem(getRandomArrayItems(getAllHoldingSkills(gameScene).filter((skill) => skill.heroClasses.includes(randomHeroClass)),1,false));
+                    const num = (holdingSkill) ? 2 : 3;
+                    if (holdingSkill)
+                        holdingSkill.priceLevel++;
+                    // if no randomHeroClass skills in current party, then holdingSkill is null
+                    // and then 3 random skills instead of 2
+                    const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), num, true);
+
+                    cards = [...skills, topLevelSkill,holdingSkill].map((skill) => {
                         if (!skill) {
                             return null;
                         }
@@ -843,12 +865,16 @@ export const getCards = (
                 //cards = [null, { type: ECardType.GOLD, price: 0, value: 2 }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
-                cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
+                //cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
+                cards = [{ type: ECardType.ITEM, price: 0, item: dagger21 }, { type: ECardType.ITEM, price: 0, item: dagger21 }, { type: ECardType.ITEM, price: 0, item: dagger21 }];
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:
             {
-                cards = [null, { type: ECardType.ITEM, price: 0, item: sword1 }, null];
+                //cards = [null, { type: ECardType.UNIT, price: 0, unit:  }, null];
+                cards = getRandomArrayItems<IUnit>(mcClassHeroes, 3, true).map((unit) => {
+                    return { unit, type: ECardType.UNIT, price: 0 };
+                });
             }
             break;
         default:

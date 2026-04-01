@@ -158,6 +158,7 @@ export const i18n: Ii18n = {
         [ERoomType.ITEM_WEAPON_CLASS_SELL]: "ОРУЖЕЙНЫЙ",
         [ERoomType.ITEM_WEAPON_SELL]: "АРСЕНАЛ",
         [ERoomType.ITEM_COMMON_SELL]: "КУЗНИЦА",
+        [ERoomType.ITEM_LEGEND_SELL]: "ЛЕГЕНДАРКИ",
         //
         [ERoomType.SKILLS_CLASS_SELL]: "БАШНЯ МАГА",
         [ERoomType.SKILLS_SELL]: "ШАТЁР МАГА",

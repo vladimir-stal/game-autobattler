@@ -1,4 +1,4 @@
-import { EHeroClass, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem, IItemBattleBonus, IItemBonus, IUnit } from "../../types";
+import { ECardType, EHeroClass, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem, IItemBattleBonus, IItemBonus, IUnit } from "../../types";
 import { axe1 } from "../basicWeaponItemConsts";
 import { gloves_magic2, gloves_priest2, gloves_war2 } from "../commonItemConsts2";
 import {
@@ -18,6 +18,7 @@ import {
     weaponsLvl4,
     weaponsLvl5,
 } from "../itemConsts";
+import { GameScene } from "../scenes/GameScene";
 import { calculateIncreaseValue } from "./battleUtils";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 
@@ -279,13 +280,38 @@ export const getCommonItemsWithTop = (day: number, count: number): IItem[] => {
             return [...commonItems, topLevelItem];
         }
         default:
-            return [...basicCommonItems, ...commonItemsLvl2, ...commonItemsLvl3];
+            const commonItems = getRandomArrayItems(basicCommonItems, count - 2, true);
+            const topLevelItem2 = getRandomArrayItem(commonItemsLvl2);
+            const topLevelItem3 = getRandomArrayItem(commonItemsLvl3);
+            return [...commonItems, topLevelItem2, topLevelItem3];
     }
 };
 
 export const getXFromAllItems = (day: number, count: number): IItem[] => {
     return getRandomArrayItems(getAllItems(day), count, true);
 };
+
+export const getAllHoldingItems = (gameScene: GameScene): IItem[] => {
+    let list: IItem[] = [];
+    // skills in inventory
+    gameScene.inventoryPanel.slots.forEach(slot => {
+        if (slot && slot.slot && slot.slot.card && slot.slot.card.card && slot.slot.card.card.type === ECardType.ITEM) {
+            list.push(slot.slot.card.card.item);
+        }
+    })
+    gameScene.unitPanel.slots.forEach(slot => {
+        if (
+            slot && slot.slot && slot.slot.card && slot.slot.card.card
+            && slot.slot.card.card.type === ECardType.UNIT
+        ) {
+            slot.slot.card.card.unit.items.forEach(item => {
+                if (item)
+                    list.push(item);
+            })
+        }
+    })
+    return list;
+}
 
 /** Return weapon items for a single hero class */
 export const getHeroClassWeaponItems = (heroClass: EHeroClass, day: number): IItem[] => {

@@ -319,6 +319,7 @@ export const i18n: Ii18n = {
         [ERoomType.SKILLS_CLASS_SELL]: "MAGIC STORE",
         [ERoomType.SKILLS_SELL]: "MAGIC SHOP",
         [ERoomType.UNIT_SELL]: "MERCENARIES",
+        [ERoomType.ITEM_LEGEND_SELL]: "LEGEND ITEMS",
         //
         // CHOISE ROOMS
         //
