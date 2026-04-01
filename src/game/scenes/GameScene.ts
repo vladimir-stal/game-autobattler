@@ -342,10 +342,10 @@ export class GameScene extends Phaser.Scene {
         for (let i = 0; i < 4 - unitsCount; i++) {
             enemyUnits.push(null);
         }
-        if (gamePlusPlusLevelBuff > 0)
-            enemyUnits.forEach(u => {
+        if (this.selectController.day > relativeDay)
+            enemyUnits.forEach((u,i) => {
                 if (u)
-                    for (let j = 0; j<gamePlusPlusLevelBuff; j++)
+                    for (let j = 0; j<(this.selectController.day-u.level+3-i); j++)
                         levelUpUnitRandom(u);
             });
         this.battlePanel.show(units, enemyUnits);

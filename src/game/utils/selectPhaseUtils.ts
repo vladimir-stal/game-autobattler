@@ -804,7 +804,7 @@ export const getCards = (
                 const autolevel = Math.max(1, gameScene.selectController.day - 1);
                 console.log("ERoomType.MOBS", randomMobs);
 
-                cards = randomMobs.map((mobs) => {
+                cards = randomMobs.map((mobs,idx) => {
                     const { name, units, rewards, description } = mobs;
                     const reward = getRandomArrayItem(rewards);
 
@@ -825,14 +825,14 @@ export const getCards = (
                     });
                     return {
                         mobs: {
-                            units: createUnits(units, autolevel),
+                            units: createUnits(units, autolevel+idx),
                             reward,
                         },
                         type: ECardType.MOBS,
                         price: 0,
                         //name: name + "\n" + wordwrap,
                         name,
-                        description: wordwrap,
+                        description: wordwrap + "\nDifficulty ~" + (autolevel+idx),
                     };
                 });
             }
