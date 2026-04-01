@@ -17,6 +17,7 @@ import { HeroClassTag } from "./HeroClassTag";
 import { getWeaponItemHeroClasses } from "../../utils/itemUtils";
 import { IMAGE_ITEM_ARMOR_1 } from "../../utils/load/imageLoadItems";
 
+/** Panel to show information on items and skills on hover */
 export class CardHintPanel extends Phaser.GameObjects.Container {
     text: string;
 

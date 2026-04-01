@@ -48,27 +48,29 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
     render() {
         this.removeAll(true);
         this.renderBorder();
-
-        this.cardSlot = new CardSlot(this.gameScene, 300, 0, undefined, false, false, true, {
-            onCardPlaced: this.handlePlaceCard,
-            onCardTaken: this.handleRemoveCard,
-        });
-        this.add(this.cardSlot);
-        this.gameScene.allCardSlots.push(this.cardSlot);
-
+        this.renderCardSlot();
         this.renderUpgradeButton();
         this.renderMoveButton();
         this.renderHintPanel();
     }
 
+    renderCardSlot() {
+        this.cardSlot = new CardSlot(this.gameScene, -50, 0, undefined, false, false, true, {
+            onCardPlaced: this.handlePlaceCard,
+            onCardTaken: this.handleRemoveCard,
+        });
+        this.add(this.cardSlot);
+        this.gameScene.allCardSlots.push(this.cardSlot);
+    }
+
     renderBorder() {
-        const rect = this.scene.add.rectangle(0, 0, 520, 200, colors.BLACK).setOrigin(0, 0);
+        const rect = this.scene.add.rectangle(0, 0, 520, 200, colors.BLACK).setOrigin(0.5, 0);
         rect.setStrokeStyle(1, 0x777777);
         this.add(rect);
     }
 
     renderMoveButton() {
-        this.moveButton = this.scene.add.text(320, 120, "MOVE", { fontFamily: "Arial Black", fontSize: 18, color: "#aaffaa" }).setVisible(false);
+        this.moveButton = this.scene.add.text(0, 120, "MOVE", { fontFamily: "Arial Black", fontSize: 18, color: "#aaffaa" }).setOrigin(0.5).setVisible(false);
         this.moveButton
             .setInteractive()
             .on("pointerdown", () => {
@@ -87,12 +89,16 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
     }
 
     renderUpgradeButton() {
-        this.upgradeButton = this.scene.add.text(300, 150, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" }).setVisible(false);
+        this.upgradeButton = this.scene.add
+            .text(0, 150, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" })
+            .setOrigin(0.5)
+            .setVisible(false);
 
         this.upgradeButton.setInteractive().on("pointerdown", () => {
             //console.log("UPGRADE UNIT", this.cardSlot.card?.card.type, this.cardSlot.card?.card.item?.name);
 
             if (!this.cardSlot.card?.card) {
+                console.log("SkillEnchantPanel > No card in card slot");
                 return;
             }
 
@@ -101,9 +107,10 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
             const { card } = this.cardSlot.card;
             const { skill } = card;
             if (!skill) {
+                console.log("SkillEnchantPanel > No skill on card");
                 return;
             }
-            if (skill.nextLevel) {
+            if (!skill.isChained) {
                 const newSkill: IHeroSkillSet = { ...skill, isChained: true };
                 this.cardSlot.placeCard({ type: ECardType.SKILL, price: 0, skill: newSkill }, undefined);
                 this.upgradeButton.setVisible(false);
@@ -117,7 +124,7 @@ export class SkillCardEnchantPanel extends Phaser.GameObjects.Container {
     renderHintPanel() {
         const text = i18n.ui.ENHANT_SKILL_CHAINED;
         const y = 220;
-        this.hintText = this.scene.add.text(350, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
+        this.hintText = this.scene.add.text(0, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
         this.add(this.hintText);
     }
 

@@ -92,6 +92,7 @@ export interface IAnimations {
     size?: number;
     distance?: number;
     distanceEnemy?: number;
+    attackAnimDisance?: number;
 }
 
 const basicHeroClasses = [
@@ -203,16 +204,17 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 distance: -50,
                 image: IMAGE_PRIEST_IDLE,
                 animation: AnimationType.PRIEST_IDLE,
-                idleBattleAnimation: AnimationType.PRIEST_IDLE_BATTLE, //PRIEST_IDLE_BATTLE,
-                attackAnimation: AnimationType.PRIEST_ATTACK,
+                idleBattleAnimation: AnimationType.PRIEST_IDLE_BATTLE,
+                attackAnimation: AnimationType.PRIEST_ATTACK_2, //PRIEST_ATTACK
+                attackAnimDisance: 80,
                 healAnimation: AnimationType.PRIEST_HEAL,
                 defeatedAnimation: AnimationType.PRIEST_DEFEATED,
                 hurtAnimation: AnimationType.PRIEST_HURT,
                 //
-                attackEnemyAnimation: EEffectAnimationType.EFFECT_PRIEST_ATTACK,
-                attackEnemyAnimDelay: 500,
-                attackEnemyAnimDistance: { x: -50, y: 150 },
-                attackEnemyAnimDistanceInverted: { x: 230, y: 150 },
+                attackEnemyAnimation: EEffectAnimationType.EFFECT_PRIEST_ATTACK_2, //EEffectAnimationType.EFFECT_PRIEST_ATTACK,
+                attackEnemyAnimDelay: 400, //500,
+                attackEnemyAnimDistance: { x: 20, y: 0 }, //{ x: -50, y: 150 },
+                attackEnemyAnimDistanceInverted: { x: 200, y: 0 }, //{ x: 230, y: 150 },
             };
         case EHeroClass.SUMMON:
             return {

@@ -207,7 +207,7 @@ export const upgradeSkillSet = (skillSet: IHeroSkillSet, skillSet2: IHeroSkillSe
         return skillSet;
     }
 
-    const upgradedSkill = skillSet.nextLevel;
+    const upgradedSkill = { ...skillSet.nextLevel };
 
     upgradedSkill.isActivateOnStart = skillSet.isActivateOnStart || skillSet2.isActivateOnStart;
     upgradedSkill.isChained = skillSet.isChained || skillSet2.isChained;

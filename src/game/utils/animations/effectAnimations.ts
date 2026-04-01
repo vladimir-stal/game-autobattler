@@ -10,6 +10,7 @@ import {
     IMAGE_EFFECT_MASTER_ATTACK_2,
     IMAGE_EFFECT_ORDER_ATTACK_2,
     IMAGE_EFFECT_PRIEST_ATTACK,
+    IMAGE_EFFECT_PRIEST_ATTACK_2,
     IMAGE_EFFECT_PRIEST_HEAL,
     IMAGE_EFFECT_SAMURAI_ATTACK_2,
     IMAGE_EFFECT_WARRIOR_ATTACK_2,
@@ -131,6 +132,21 @@ export function createEffectAnimations(scene: Scene) {
         key: EEffectAnimationType.EFFECT_PRIEST_ATTACK,
         frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_ATTACK, { start: 5, end: 27 }),
         frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_PRIEST_ATTACK_2,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_ATTACK_2, { start: 0, end: 43 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_ATTACK_2, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                //21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                //24, 28, 29, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76,
+                24, 28, 29, 32, 36, 40, 44, 48, 52, 56, 62, 68, 74, 76,
+            ],
+        }),
+        frameRate: 40,
     });
 
     scene.anims.create({

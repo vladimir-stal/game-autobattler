@@ -11,7 +11,7 @@ export const illusionSummon: IUnit = {
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 1,
     basicAttackTimes: 1,
-    basicMaxHp: 50,
+    basicMaxHp: 1,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,

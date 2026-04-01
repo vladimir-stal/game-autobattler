@@ -196,6 +196,7 @@ const getDebuffedAllies = (units: TBattleUnits): IBattleUnit[] => {
 const isAliveUnit = (unit: IBattleUnit | null): unit is IBattleUnit => !!unit && unit.hp > 0;
 
 export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetType: ETargetType, targetUnitId?: string): IBattleUnit[] | null => {
+    //console.log("getAllyTargets", units, targetType, targetUnitId);
     switch (targetType) {
         case ETargetType.BY_UNIT_ID: {
             const targetUnit = units.find((allyUnit) => allyUnit && allyUnit.id === targetUnitId);
@@ -207,7 +208,6 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             return getAllAllySummons(units);
         case ETargetType.ALLY_IN_FRONT: {
             const allyInFront = getAllyTargetInFront(unit.id, units);
-            console.log("ALLY IN FRONT ", allyInFront);
             return [allyInFront];
         }
         case ETargetType.BUFFED_ALLY_RANDOM: {
@@ -454,17 +454,18 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
             item.battleBonuses.forEach((bonus) => bonuses.push(bonus));
         }
-        item.heroClassBonuses && item.heroClassBonuses.forEach((hCbonus) => {
-            if (hCbonus.heroClass === unit.heroClass) {
-                if (hCbonus.battleBonus) {
-                    bonuses.push(hCbonus.battleBonus)
+        item.heroClassBonuses &&
+            item.heroClassBonuses.forEach((hCbonus) => {
+                if (hCbonus.heroClass === unit.heroClass) {
+                    if (hCbonus.battleBonus) {
+                        bonuses.push(hCbonus.battleBonus);
+                    }
+                } else if (unit.mobHeroClasses && unit.mobHeroClasses.includes(hCbonus.heroClass)) {
+                    if (hCbonus.battleBonus) {
+                        bonuses.push(hCbonus.battleBonus);
+                    }
                 }
-            } else if (unit.mobHeroClasses && unit.mobHeroClasses.includes(hCbonus.heroClass)) {
-                if (hCbonus.battleBonus) {
-                    bonuses.push(hCbonus.battleBonus)
-                }
-            }
-        });
+            });
         return bonuses;
     }, [] as IItemBattleBonus[]);
 

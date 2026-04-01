@@ -102,11 +102,17 @@ export function createUIPanels(scene: GameScene) {
     const { x: topPanelX, y: topPanelY } = getTopPanelPosition(width, height);
     scene.topPanel = new TopPanel(scene, topPanelX, topPanelY).setDepth(200);
     fixedContainer.add(scene.topPanel);
-
-    scene.cardUpgradePanel = new CardUpgradetPanel(scene, cardsPanelX, cardsPanelY - 100);
+    fixedContainer.add(scene.leadersPanel);
+    //
+    // CARD UPGRADE PANEL
+    //
+    const { x: upgradePanelX, y: upgradePanelY } = getCardUpgradePanelPosition(width, height);
+    scene.cardUpgradePanel = new CardUpgradetPanel(scene, upgradePanelX, upgradePanelY);
     fixedContainer.add(scene.cardUpgradePanel);
-
-    scene.skillCardEnchantPanel = new SkillCardEnchantPanel(scene, cardsPanelX, cardsPanelY - 100);
+    //
+    // SKILL ENCHANT PANEL
+    //
+    scene.skillCardEnchantPanel = new SkillCardEnchantPanel(scene, upgradePanelX, upgradePanelY);
     fixedContainer.add(scene.skillCardEnchantPanel);
 
     scene.hintPanel = new CardHintPanel(scene, 0, 0).setDepth(500).setVisible(false);
@@ -114,8 +120,6 @@ export function createUIPanels(scene: GameScene) {
 
     // DUEL PHASE ///////////////////////////////////////////////////////////
 
-    //const battlePanelX = scene.camera.width / 2;
-    //const battlePanelY = -scene.camera.height + 400;
     const { x: battlePanelX, y: battlePanelY } = getBattlePanelPosition(width, height);
     scene.battlePanel = new BattlePanel(scene, battlePanelX, battlePanelY);
     fixedContainer.add(scene.battlePanel);
@@ -160,6 +164,8 @@ export function createUIPanels(scene: GameScene) {
 
                 scene.battlePanel.setPosition(...Object.values(getBattlePanelPosition(width, height)));
                 scene.battlePanel.refreshAfterResize();
+
+                scene.cardUpgradePanel.setPosition(...Object.values(getCardUpgradePanelPosition(width, height)));
             }, 100);
         },
     );
@@ -224,5 +230,11 @@ function getInventoryPanelPosition(width: number, height: number): { x: number; 
 function getBattlePanelPosition(width: number, height: number): { x: number; y: number } {
     const x = width / 2;
     const y = -height + 400;
+    return { x, y };
+}
+
+function getCardUpgradePanelPosition(width: number, height: number): { x: number; y: number } {
+    const x = width / 2;
+    const y = -height + 100;
     return { x, y };
 }

@@ -554,6 +554,8 @@ export class BattleController {
             return;
         }
 
+        //console.log("performBuff > ", skill, buff);
+
         // record
         const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff, isStartBattle, skill };
         this.battleRecord.push(buffAction);
@@ -575,7 +577,7 @@ export class BattleController {
                         return;
                     }
 
-                    const targets = getAllyTargets(unit, allyUnits, targetType);
+                    const targets = getAllyTargets(unit, allyUnits, targetType, targetUnitId);
                     if (!targets) {
                         console.log("ERROR! No targets found for buff", buff);
                         return;
@@ -665,7 +667,7 @@ export class BattleController {
             case EBuffType.IGNORE_NEXT_DEBUFF:
             case EBuffType.FIRE_SHIELD:
                 {
-                    const targets = getAllyTargets(unit, allyUnits, targetType);
+                    const targets = getAllyTargets(unit, allyUnits, targetType, targetUnitId);
                     if (!targets) {
                         return;
                     }
@@ -700,7 +702,7 @@ export class BattleController {
             case EBuffType.CHANGE_TARGET_TYPE:
             case EBuffType.BASIC_ATTACK_ADD_TIMES:
                 {
-                    const targets = getAllyTargets(unit, allyUnits, targetType);
+                    const targets = getAllyTargets(unit, allyUnits, targetType, targetUnitId);
                     if (!targets) {
                         return;
                     }
@@ -708,15 +710,18 @@ export class BattleController {
                     if (targets.length === 1) {
                         const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
                         if (isAdditionalTarget) {
-                            console.log("ADDITIONAL_BUFF_TARGET found");
+                            //console.log("ADDITIONAL_BUFF_TARGET found");
                             const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
-                            console.log("additionalTargets", additionalTargets);
+                            //console.log("additionalTargets", additionalTargets);
                             targets.push(additionalTargets[0]);
-                            console.log("targets", targets);
+                            //console.log("targets", targets);
                         }
                     }
 
+                    //console.log(".>>>>targets > ", targets);
+
                     targets.forEach((target) => {
+                        //console.log("...target", target);
                         target.buffs.push(buff);
                         buffAction.buffTargets?.push({ targetId: target.id });
                     });

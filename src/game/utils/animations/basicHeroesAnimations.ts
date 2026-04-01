@@ -34,6 +34,7 @@ import {
     IMAGE_ORDER_IDLE_BATTLE,
     IMAGE_ORDER_SHIELD_BUFF,
     IMAGE_PRIEST_ATTACK,
+    IMAGE_PRIEST_ATTACK_2,
     IMAGE_PRIEST_DEFEATED,
     IMAGE_PRIEST_HEAL,
     IMAGE_PRIEST_HURT,
@@ -668,22 +669,50 @@ export function createBasicHeroesAnimations(scene: Scene) {
         //repeat: -1,
     });
 
+    // scene.anims.create({
+    //     key: AnimationType.PRIEST_ATTACK,
+    //     //frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK, { start: 0, end: 99 }),
+    //     frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK, {
+    //         frames: [
+    //             //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    //             1, 3, 5, 7, 9, 11, 13, 15, 17, 19,
+    //             //
+    //             20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+    //             //20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    //             //41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
+    //             //39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2,
+    //             12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+    //         ],
+    //     }),
+    //     frameRate: 30,
+    //     //repeat: -1,
+    // });
+
     scene.anims.create({
-        key: AnimationType.PRIEST_ATTACK,
-        //frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK, { start: 0, end: 99 }),
-        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK, {
+        key: AnimationType.PRIEST_ATTACK_2,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK_2, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK_2, {
             frames: [
-                //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-                1, 3, 5, 7, 9, 11, 13, 15, 17, 19,
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                //1, 3, 5, 7, 9, 11, 13, 15, 17, 19,
                 //
-                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
-                //20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+                //35, 36, 37, 38, 39,
+                38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 78, 82,
+                //
+                //40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                //
+                //51, 52, 53, 54, 55, 56, 57, 58, 59,
+                //
+                //60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+
                 //41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
                 //39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2,
-                12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+                //
+                //12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
             ],
         }),
-        frameRate: 30,
+        frameRate: 40,
         //repeat: -1,
     });
 

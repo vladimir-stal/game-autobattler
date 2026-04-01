@@ -473,7 +473,7 @@ export const shield22_2: IItem = {
         { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicArmor" },
     ],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE, value: 2, valueType: "number" }],
 };
 
 export const shield22: IItem = {

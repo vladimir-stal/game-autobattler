@@ -13,6 +13,7 @@ export const IMAGE_EFFECT_SAMURAI_ATTACK_2 = "IMAGE_EFFECT_SAMURAI_ATTACK_2";
 export const IMAGE_EFFECT_MASTER_ATTACK_2 = "IMAGE_EFFECT_MASTER_ATTACK_2";
 export const IMAGE_EFFECT_ORDER_ATTACK_2 = "IMAGE_EFFECT_ORDER_ATTACK_2";
 export const IMAGE_EFFECT_PRIEST_ATTACK = "IMAGE_EFFECT_PRIEST_ATTACK";
+export const IMAGE_EFFECT_PRIEST_ATTACK_2 = "IMAGE_EFFECT_PRIEST_ATTACK_2";
 export const IMAGE_EFFECT_PRIEST_HEAL = "IMAGE_EFFECT_PRIEST_HEAL";
 export const IMAGE_EFFECT_DARK_ATTACK = "IMAGE_EFFECT_DARK_ATTACK";
 export const IMAGE_EFFECT_BARD_ATTACK = "IMAGE_EFFECT_BARD_ATTACK";
@@ -60,6 +61,11 @@ export function loadImagesEffects(scene: Scene) {
     scene.load.spritesheet(IMAGE_EFFECT_PRIEST_ATTACK, `${path}priest/priest_attack_2_cut_500.png`, {
         frameWidth: 500,
         frameHeight: 500,
+    });
+    //
+    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_ATTACK_2, `${path}priest/priest_holy_sword_cut_400.png`, {
+        frameWidth: 400,
+        frameHeight: 400,
     });
     //
     scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_cut_400.png`, {
