@@ -10,7 +10,7 @@ import { IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoadItems";
 
 export const crit_amulet_3: IItem = {
     id: "crit_amulet",
-    name: "Crit amulet(3)",
+    name: i18n.items.crit_amulet + "(3)",
     type: EItemType.COMMON,
     level: 3,
     priceLevel: 3,
@@ -22,7 +22,7 @@ export const crit_amulet_3: IItem = {
 
 export const crit_amulet_2: IItem = {
     id: "crit_amulet",
-    name: "Crit amulet(2)",
+    name: i18n.items.crit_amulet + "(2)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 3,
@@ -35,7 +35,7 @@ export const crit_amulet_2: IItem = {
 
 export const crit_amulet: IItem = {
     id: "crit_amulet",
-    name: "Crit amulet",
+    name: i18n.items.crit_amulet,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 3,
@@ -52,7 +52,7 @@ export const crit_amulet: IItem = {
 
 export const evasion_amulet_3: IItem = {
     id: "evasion_amulet",
-    name: "Evasion amulet(3)",
+    name: i18n.items.evasion_amulet + "(3)",
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 3,
@@ -64,7 +64,7 @@ export const evasion_amulet_3: IItem = {
 
 export const evasion_amulet_2: IItem = {
     id: "evasion_amulet",
-    name: "Evasion amulet(2)",
+    name: i18n.items.evasion_amulet + "(2)",
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 3,
@@ -77,7 +77,7 @@ export const evasion_amulet_2: IItem = {
 
 export const evasion_amulet: IItem = {
     id: "evasion_amulet",
-    name: "Evasion amulet",
+    name: i18n.items.evasion_amulet,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 3,

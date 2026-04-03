@@ -39,7 +39,10 @@ import {
     dagger31,
     dagger32,
     mace31,
+    magicBook31,
+    magicSpear31,
     musical31,
+    musical32,
     scepter31,
     shield31,
     shield32,
@@ -103,7 +106,25 @@ export const itemsLvl2 = weaponsLvl2.concat(commonItemsLvl2);
 ////// LVL 3
 
 export const commonItemsLvl3 = [];
-export const weaponsLvl3 = [axe31, axe32, dagger31, dagger32, mace31, musical31, scepter31, shield31, shield32, staff31, sword31, totem31, totem32, wand31];
+export const weaponsLvl3 = [
+    axe31,
+    axe32,
+    dagger31,
+    dagger32,
+    mace31,
+    musical31,
+    musical32,
+    scepter31,
+    shield31,
+    shield32,
+    staff31,
+    sword31,
+    totem31,
+    totem32,
+    wand31,
+    magicBook31,
+    magicSpear31,
+];
 export const itemsLvl3 = weaponsLvl3.concat(commonItemsLvl3);
 
 ////// LVL 4

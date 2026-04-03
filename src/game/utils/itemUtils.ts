@@ -1,4 +1,16 @@
-import { ECardType, EHeroClass, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem, IItemBattleBonus, IItemBonus, IUnit } from "../../types";
+import {
+    ECardType,
+    EHeroClass,
+    EItemBattleBonusType,
+    EItemBonusType,
+    EItemTargetType,
+    EItemType,
+    EWeaponItemType,
+    IItem,
+    IItemBattleBonus,
+    IItemBonus,
+    IUnit,
+} from "../../types";
 import { axe1 } from "../basicWeaponItemConsts";
 import { gloves_magic2, gloves_priest2, gloves_war2 } from "../commonItemConsts2";
 import {
@@ -294,24 +306,20 @@ export const getXFromAllItems = (day: number, count: number): IItem[] => {
 export const getAllHoldingItems = (gameScene: GameScene): IItem[] => {
     let list: IItem[] = [];
     // skills in inventory
-    gameScene.inventoryPanel.slots.forEach(slot => {
-        if (slot && slot.slot && slot.slot.card && slot.slot.card.card && slot.slot.card.card.type === ECardType.ITEM) {
+    gameScene.inventoryPanel.slots.forEach((slot) => {
+        if (slot?.slot?.card?.card?.type === ECardType.ITEM) {
             list.push(slot.slot.card.card.item);
         }
-    })
-    gameScene.unitPanel.slots.forEach(slot => {
-        if (
-            slot && slot.slot && slot.slot.card && slot.slot.card.card
-            && slot.slot.card.card.type === ECardType.UNIT
-        ) {
-            slot.slot.card.card.unit.items.forEach(item => {
-                if (item)
-                    list.push(item);
-            })
+    });
+    gameScene.unitPanel.slots.forEach((slot) => {
+        if (slot?.slot?.card?.card?.type === ECardType.UNIT) {
+            slot.slot.card.card.unit.items.forEach((item) => {
+                if (item) list.push(item);
+            });
         }
-    })
+    });
     return list;
-}
+};
 
 /** Return weapon items for a single hero class */
 export const getHeroClassWeaponItems = (heroClass: EHeroClass, day: number): IItem[] => {
@@ -510,7 +518,7 @@ export const getUnitWeaponCount = (unit: IUnit) => {
     }, 0);
 };
 
-export const getItemPrice = (item: IItem) => {
+export const getItemPrice = (item: IItem, additionalLevel: number = 0) => {
     if (!item) {
         console.log("ERROR! NO item");
         return 0;
@@ -521,5 +529,9 @@ export const getItemPrice = (item: IItem) => {
         return 0;
     }
 
-    return item.priceLevel * 2 + 1;
+    return (item.priceLevel + additionalLevel) * 2 + 1;
+};
+
+export const createItem = (item: IItem): IItem => {
+    return { ...item };
 };

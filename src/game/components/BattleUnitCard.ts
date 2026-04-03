@@ -980,7 +980,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     changeAttribute(attribute: THeroBattleAttribute, value: number) {
-        console.log("CHANGE ATTRIBUTe", attribute, value);
+        //console.log("CHANGE ATTRIBUTe", attribute, value);
         if (!this.unit) {
             return;
         }
@@ -996,12 +996,13 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 break;
             case "armor":
                 {
-                    console.log("CHANGE ARMOR, prev, next", this.unit.armor, this.unit.armor + value);
+                    //console.log("CHANGE ARMOR, prev, next", this.unit.armor, this.unit.armor + value);
                     this.unit.armor += value;
                     if (this.unit.armor < 0) {
                         this.unit.armor = 0;
                     }
                     this.armorText.setText(this.unit.armor + "arm");
+                    this.armorText.setVisible(this.unit.armor > 0);
                 }
                 break;
             case "maxHp":

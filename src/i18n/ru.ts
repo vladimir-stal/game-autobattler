@@ -122,7 +122,8 @@ export const i18n: Ii18n = {
         STRONGWOLF: "Сильный волк",
     },
     items: {
-        //basic
+        // WEAPON
+        // basic
         axe1: "Ржавый топор",
         dagger1: "Ржавый кинжал",
         mace1: "Ржавая булава",
@@ -133,7 +134,8 @@ export const i18n: Ii18n = {
         sword1: "Ржавый меч",
         totem1: "Слабый тотем",
         wand1: "Слабый жезл",
-        //
+        // COMMON
+        // basic
         basic_ring_damage: "Кольцо воина",
         basic_ring_regen: "Кольцо регенерации",
         basic_gold_bag: "Мешок с золотом",
@@ -143,7 +145,10 @@ export const i18n: Ii18n = {
         basic_jacket: "Старая куртка",
         basic_pants: "Старые штаны",
         basic_boots: "Старые ботинки",
-        //
+        // level 2
+        // level 3
+        evasion_amulet: "Амулет крита",
+        crit_amulet: "Амулет уклонения",
     },
     totems: {
         basicWildTotem: "Дикий тотем",

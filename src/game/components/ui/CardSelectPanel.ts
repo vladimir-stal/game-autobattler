@@ -7,6 +7,7 @@ import { GameObjects, Input } from "phaser";
 import { createUnit, generateUnitId } from "../../utils/unitUtils";
 import { getRerollPrice } from "../../utils/selectPhaseUtils";
 import { MIN_WIDTH } from "./uiPanels";
+import { createItem } from "../../utils/itemUtils";
 
 const hintTopY = -50;
 const hintBottomY = 220;
@@ -200,6 +201,8 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
             if (card.type === ECardType.UNIT && card.unit) {
                 card.unit = createUnit(card.unit);
+            } else if (card.type === ECardType.ITEM && card.item) {
+                card.item = createItem(card.item);
             }
 
             this.boughtCardIndexes.push(this.selectedCardIndex);
