@@ -307,12 +307,12 @@ export const getAllHoldingItems = (gameScene: GameScene): IItem[] => {
     let list: IItem[] = [];
     // skills in inventory
     gameScene.inventoryPanel.slots.forEach((slot) => {
-        if (slot && slot.slot && slot.slot.card && slot.slot.card.card && slot.slot.card.card.type === ECardType.ITEM) {
+        if (slot?.slot?.card?.card?.type === ECardType.ITEM) {
             list.push(slot.slot.card.card.item);
         }
     });
     gameScene.unitPanel.slots.forEach((slot) => {
-        if (slot && slot.slot && slot.slot.card && slot.slot.card.card && slot.slot.card.card.type === ECardType.UNIT) {
+        if (slot?.slot?.card?.card?.type === ECardType.UNIT) {
             slot.slot.card.card.unit.items.forEach((item) => {
                 if (item) list.push(item);
             });
@@ -518,7 +518,7 @@ export const getUnitWeaponCount = (unit: IUnit) => {
     }, 0);
 };
 
-export const getItemPrice = (item: IItem) => {
+export const getItemPrice = (item: IItem, additionalLevel: number = 0) => {
     if (!item) {
         console.log("ERROR! NO item");
         return 0;
@@ -529,7 +529,7 @@ export const getItemPrice = (item: IItem) => {
         return 0;
     }
 
-    return item.priceLevel * 2 + 1;
+    return (item.priceLevel + additionalLevel) * 2 + 1;
 };
 
 export const createItem = (item: IItem): IItem => {
