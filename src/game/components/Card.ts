@@ -8,6 +8,8 @@ import { ItemCard } from "./ItemCard";
 import { SkillCard } from "./SkillCard";
 import { IMAGE_ITEM_COIN } from "../utils/load/imageLoadItems";
 import { MobCard } from "./MobCard";
+import { AttributeCard } from "./AttributeCard";
+import { IMAGE_CARD_EXP } from "../utils/imageLoadUtil";
 
 /** Card to buy from shop  */
 export class Card extends Phaser.GameObjects.Container {
@@ -111,6 +113,10 @@ export class Card extends Phaser.GameObjects.Container {
         if (!value) {
             return;
         }
+
+        const imageObject = this.gameScene.add.sprite(0, 80, IMAGE_CARD_EXP, 0).setOrigin(0.5);
+        this.add(imageObject);
+
         this.titleText.setText(i18n.ui.EXP + " " + value);
     }
 
@@ -119,6 +125,10 @@ export class Card extends Phaser.GameObjects.Container {
         if (!value) {
             return;
         }
+
+        const imageObject = this.gameScene.add.sprite(0, 80, IMAGE_CARD_EXP, 0).setOrigin(0.5);
+        this.add(imageObject);
+
         this.titleText.setText(i18n.ui.EXP_PARTY + " " + value);
     }
 
@@ -165,8 +175,8 @@ export class Card extends Phaser.GameObjects.Container {
             return;
         }
 
-        const title = value + " " + i18n.attributes.attribute[attribute];
-        this.titleText.setText(title);
+        const attrCard = new AttributeCard(this.gameScene, 0, 0, { attribute, value });
+        this.add(attrCard);
     }
 
     refresh() {

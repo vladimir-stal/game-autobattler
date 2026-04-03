@@ -133,7 +133,7 @@ export const getRooms = (
                     //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
                 } else if (hour === 1) {
                     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
+                    //return [null, { roomType: ERoomType.ATTRIBUTE_SELECT }, null];
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                     //} else if (hour === 3) { // TEST
@@ -335,8 +335,8 @@ export const getCards = (
                 const randomAttribute3: THeroAttribute = getRandomArrayItem(basicHeroAttributes);
 
                 const attrValue1 = getAttrValue(randomAttribute1, day);
-                const attrValue2 = getAttrValue(randomAttribute1, day) * 2;
-                const attrValue3 = getAttrValue(randomAttribute1, day) * 3;
+                const attrValue2 = getAttrValue(randomAttribute2, day) * 2;
+                const attrValue3 = getAttrValue(randomAttribute3, day) * 3;
                 cards = [
                     { type: ECardType.ATTRIBUTE, value: attrValue1, price: 0, attribute: randomAttribute1 },
                     { type: ECardType.ATTRIBUTE, value: attrValue2, price: 4, attribute: randomAttribute2 },

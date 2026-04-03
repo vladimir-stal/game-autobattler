@@ -228,7 +228,17 @@ export const IMAGE_SKILL_AXE_BUFF = "IMAGE_SKILL_AXE_BUFF";
 export const IMAGE_SKILL_HEAL_1 = "IMAGE_SKILL_HEAL_1";
 export const IMAGE_SKILL_TEST = "IMAGE_SKILL_TEST";
 
-//
+// ATTRIBUTES
+
+export const IMAGE_ATTRIBUTE_EVASION = "IMAGE_ATTRIBUTE_EVASION";
+export const IMAGE_ATTRIBUTE_CRIT_CHANCE = "IMAGE_ATTRIBUTE_CRIT_CHANCE";
+export const IMAGE_ATTRIBUTE_HEALTH = "IMAGE_ATTRIBUTE_HEALTH";
+export const IMAGE_ATTRIBUTE_ARMOR = "IMAGE_ATTRIBUTE_ARMOR";
+export const IMAGE_ATTRIBUTE_REGENERATION = "IMAGE_ATTRIBUTE_REGENERATION";
+export const IMAGE_ATTRIBUTE_MAGIC_POWER = "IMAGE_ATTRIBUTE_MAGIC_POWER";
+export const IMAGE_ATTRIBUTE_PHYSICAL_POWER = "IMAGE_ATTRIBUTE_PHYSICAL_POWER";
+
+export const IMAGE_CARD_EXP = "IMAGE_CARD_EXP";
 
 export function loadImages(scene: Scene) {
     // BASIC HEROES
@@ -352,4 +362,15 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_AXE_BUFF, "assets/sprites/skills/empower_axe.png");
     scene.load.image(IMAGE_SKILL_HEAL_1, "assets/sprites/skills/holy_spell_1.png");
     scene.load.image(IMAGE_SKILL_TEST, "assets/sprites/skills/skills_test.png");
+
+    // ATTRIBUTES
+    scene.load.image(IMAGE_ATTRIBUTE_EVASION, "assets/sprites/attributes/evasion.png");
+    scene.load.image(IMAGE_ATTRIBUTE_CRIT_CHANCE, "assets/sprites/attributes/crit.png");
+    scene.load.image(IMAGE_ATTRIBUTE_HEALTH, "assets/sprites/attributes/health.png");
+    scene.load.image(IMAGE_ATTRIBUTE_ARMOR, "assets/sprites/attributes/armor.png");
+    scene.load.image(IMAGE_ATTRIBUTE_REGENERATION, "assets/sprites/attributes/regen.png");
+    scene.load.image(IMAGE_ATTRIBUTE_MAGIC_POWER, "assets/sprites/attributes/magicPower.png");
+    scene.load.image(IMAGE_ATTRIBUTE_PHYSICAL_POWER, "assets/sprites/attributes/physicalPower.png");
+
+    scene.load.image(IMAGE_CARD_EXP, "assets/sprites/attributes/exp.png");
 }
