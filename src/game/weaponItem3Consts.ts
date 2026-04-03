@@ -16,6 +16,7 @@ import {
     IMAGE_ITEM_MACE_3,
     IMAGE_ITEM_SCEPTER_3,
     IMAGE_ITEM_SHIELD_3,
+    IMAGE_ITEM_SPIRIT_SPEAR,
     IMAGE_ITEM_STAFF_3,
     IMAGE_ITEM_SWORD_3,
     IMAGE_ITEM_TOTEM_3,
@@ -26,8 +27,8 @@ import {
 
 ////// MAGIC BOOKS /////////////////////////////////////////
 
-export const magicBook1_3: IItem = {
-    id: "magicBook1",
+export const magicBook31_3: IItem = {
+    id: "magicBook31",
     name: "Magic book(3)",
     type: EItemType.WEAPON,
     level: 3,
@@ -36,11 +37,11 @@ export const magicBook1_3: IItem = {
     heroClasses: [EHeroClass.MAGIC, EHeroClass.SUMMON, EHeroClass.DARK, EHeroClass.PRIEST],
     weaponType: EWeaponItemType.BOOK,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicMagicPower" }],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 3 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 4 }],
 };
 
-export const magicBook1_2: IItem = {
-    id: "magicBook1",
+export const magicBook31_2: IItem = {
+    id: "magicBook31",
     name: "Magic book(2)",
     type: EItemType.WEAPON,
     level: 2,
@@ -50,11 +51,11 @@ export const magicBook1_2: IItem = {
     weaponType: EWeaponItemType.BOOK,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicMagicPower" }],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 2 }],
-    nextLevel: magicBook1_3,
+    nextLevel: magicBook31_3,
 };
 
-export const magicBook1: IItem = {
-    id: "magicBook1",
+export const magicBook31: IItem = {
+    id: "magicBook31",
     name: "Magic book",
     type: EItemType.WEAPON,
     level: 1,
@@ -64,7 +65,50 @@ export const magicBook1: IItem = {
     weaponType: EWeaponItemType.BOOK,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicMagicPower" }],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1 }],
-    nextLevel: magicBook1_2,
+    nextLevel: magicBook31_2,
+};
+
+////// SPEARS /////////////////////////////////////////
+
+export const magicSpear31_3: IItem = {
+    id: "magicSpear31",
+    name: "Magic spear",
+    type: EItemType.WEAPON,
+    level: 1,
+    priceLevel: 3,
+    image: IMAGE_ITEM_SPIRIT_SPEAR,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MASTER],
+    weaponType: EWeaponItemType.BOOK,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 4 }],
+};
+
+export const magicSpear31_2: IItem = {
+    id: "magicSpear31",
+    name: "Magic spear",
+    type: EItemType.WEAPON,
+    level: 1,
+    priceLevel: 3,
+    image: IMAGE_ITEM_SPIRIT_SPEAR,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MASTER],
+    weaponType: EWeaponItemType.BOOK,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 2 }],
+    nextLevel: magicSpear31_3,
+};
+
+export const magicSpear31: IItem = {
+    id: "magicSpear31",
+    name: "Magic spear",
+    type: EItemType.WEAPON,
+    level: 1,
+    priceLevel: 3,
+    image: IMAGE_ITEM_SPIRIT_SPEAR,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MASTER],
+    weaponType: EWeaponItemType.BOOK,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 1 }],
+    nextLevel: magicSpear31_2,
 };
 
 ////// AXES /////////////////////////////////////////
@@ -411,6 +455,8 @@ export const staff31: IItem = {
 
 ////// MUSICAL  /////////////////////////////////////////
 
+// MUSICAL 31
+
 export const musical31_3: IItem = {
     id: "musical31",
     name: "Lute 31(3)",
@@ -450,6 +496,46 @@ export const musical31: IItem = {
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicMaxHp" }],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 2 }],
     nextLevel: musical31_2,
+};
+
+// MUSICAL 32
+
+export const musical32_3: IItem = {
+    id: "musical32",
+    name: "Lute 32(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 3,
+    image: IMAGE_ITEM_LUTE_1,
+    heroClasses: [],
+    weaponType: EWeaponItemType.MUSICAL,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 26, valueType: "number", attribute: "basicMagicPower" }],
+};
+
+export const musical32_2: IItem = {
+    id: "musical32",
+    name: "Lute 32(2)",
+    type: EItemType.WEAPON,
+    level: 2,
+    priceLevel: 3,
+    image: IMAGE_ITEM_LUTE_1,
+    heroClasses: [],
+    weaponType: EWeaponItemType.MUSICAL,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 14, valueType: "number", attribute: "basicMagicPower" }],
+    nextLevel: musical32_3,
+};
+
+export const musical32: IItem = {
+    id: "musical32",
+    name: "Lute 32",
+    type: EItemType.WEAPON,
+    level: 1,
+    priceLevel: 3,
+    image: IMAGE_ITEM_LUTE_1,
+    heroClasses: [],
+    weaponType: EWeaponItemType.MUSICAL,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicMagicPower" }],
+    nextLevel: musical32_2,
 };
 
 ////// SCEPTERS  /////////////////////////////////////////

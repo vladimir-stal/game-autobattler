@@ -1,4 +1,15 @@
-import { EHeroClass, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem, IItemBattleBonus, IItemBonus, IUnit } from "../../types";
+import {
+    EHeroClass,
+    EItemBattleBonusType,
+    EItemBonusType,
+    EItemTargetType,
+    EItemType,
+    EWeaponItemType,
+    IItem,
+    IItemBattleBonus,
+    IItemBonus,
+    IUnit,
+} from "../../types";
 import { axe1 } from "../basicWeaponItemConsts";
 import { gloves_magic2, gloves_priest2, gloves_war2 } from "../commonItemConsts2";
 import {
@@ -496,4 +507,8 @@ export const getItemPrice = (item: IItem) => {
     }
 
     return item.priceLevel * 2 + 1;
+};
+
+export const createItem = (item: IItem): IItem => {
+    return { ...item };
 };

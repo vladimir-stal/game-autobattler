@@ -43,7 +43,8 @@ export interface Ii18n {
         basicWildTotem: string;
     };
     items: {
-        //basic weapons
+        // WEAPON
+        // basic
         axe1: string;
         dagger1: string;
         mace1: string;
@@ -54,7 +55,8 @@ export interface Ii18n {
         sword1: string;
         totem1: string;
         wand1: string;
-        //basic common
+        // COMMON
+        // basic
         basic_ring_damage: string;
         basic_ring_regen: string;
         basic_gold_bag: string;
@@ -64,6 +66,10 @@ export interface Ii18n {
         basic_jacket: string;
         basic_pants: string;
         basic_boots: string;
+        // level 2
+        // level 3
+        evasion_amulet: string;
+        crit_amulet: string;
         //
     };
     rooms: Partial<Record<ERoomType, string>>;
@@ -182,7 +188,7 @@ export const i18n: Ii18n = {
             STAT_MP: "MP",
             STAT_PP: "PP",
             STAT_HP_REGEN: "STAT_HP_REGEN",
-            STAT_BASIC_ATTACK: "BASIC_ATTACK"
+            STAT_BASIC_ATTACK: "BASIC_ATTACK",
         },
         bonusType: {
             ADDITIONAL_BUFF_TARGET: "ADDITIONAL_BUFF_TARGET",
@@ -282,6 +288,7 @@ export const i18n: Ii18n = {
         basicWildTotem: "Wild Totem",
     },
     items: {
+        // WEAPON
         //basic
         axe1: "Rusty axe",
         dagger1: "Rusty dagger",
@@ -294,6 +301,8 @@ export const i18n: Ii18n = {
         totem1: "Weak totem",
         wand1: "Weak wand",
         //
+        // COMMON
+        // basic
         basic_ring_damage: "Damage ring",
         basic_ring_regen: "Regeneration ring",
         basic_gold_bag: "Old gold bag",
@@ -303,6 +312,10 @@ export const i18n: Ii18n = {
         basic_jacket: "Old jacket",
         basic_pants: "Old pants",
         basic_boots: "Old boots",
+        // level 2
+        // level 3
+        evasion_amulet: "Evasion amulet",
+        crit_amulet: "Crit amulet",
         //
     },
     rooms: {
