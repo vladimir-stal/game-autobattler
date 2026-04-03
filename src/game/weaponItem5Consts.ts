@@ -25,7 +25,7 @@ import { IMAGE_ITEM_DAGGER_1, IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoad
 
 export const dagger5_ba: IItem = {
     id: "dagger5_ba",
-    name: "furry",
+    name: "The Flurry",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,

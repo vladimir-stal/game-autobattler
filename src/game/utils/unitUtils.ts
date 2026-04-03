@@ -344,7 +344,7 @@ export const addMobItem = (unit: IUnit) => {
         //console.log("check item", item.name);
         const isItemAdded = checkProbability(probability);
         if (isItemAdded) {
-            unit.items.push({ ...item });
+            unit.items.push({ ...item, bonuses: [...item.bonuses] });
             //console.log("add item to unit", unit);
             break;
         }

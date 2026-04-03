@@ -147,8 +147,8 @@ export const i18n: Ii18n = {
         basic_boots: "Старые ботинки",
         // level 2
         // level 3
-        evasion_amulet: "Амулет крита",
-        crit_amulet: "Амулет уклонения",
+        evasion_amulet: "Амулет уклонения",
+        crit_amulet: "Амулет крита",
     },
     totems: {
         basicWildTotem: "Дикий тотем",

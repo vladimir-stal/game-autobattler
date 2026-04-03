@@ -12,6 +12,7 @@ import {
     basic_ring_regen,
 } from "./commonItemConsts";
 import { armor_amulet, boots21, gloves_magic2, gloves_priest2, gloves_war2, hat21, hp_amulet, jacket21 } from "./commonItemConsts2";
+import { crit_amulet, evasion_amulet } from "./commonItemConsts3";
 import {
     axe21,
     axe22,
@@ -105,7 +106,7 @@ export const itemsLvl2 = weaponsLvl2.concat(commonItemsLvl2);
 
 ////// LVL 3
 
-export const commonItemsLvl3 = [];
+export const commonItemsLvl3 = [evasion_amulet,crit_amulet];
 export const weaponsLvl3 = [
     axe31,
     axe32,

@@ -26,7 +26,9 @@ export const basic_hat_2: IItem = {
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicArmor" }],
     evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, condition: EItemAfterDuelBonusCondition.WON}],
+    afterDuelBonuses: [
+        { type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, condition: EItemAfterDuelBonusCondition.WON}
+    ],
 };
 
 export const basic_hat: IItem = {
@@ -296,7 +298,7 @@ export const basic_exp_bag: IItem = {
 export const basic_heal_2: IItem = {
     id: "basic_heal",
     //name: "Heal ring(2)",
-    name: i18n.items.basic_heal + "(2)",
+    name: i18n.items.basic_heal + "(max)",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 1,

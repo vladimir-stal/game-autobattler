@@ -171,8 +171,8 @@ export const getHeroClassesSkills = (heroClasses: EHeroClass[], day: number): IH
     return getHeroClassSkills(heroClasses[0], day).concat(getHeroClassSkills(heroClasses[1], day));
 };
 
-export const getSkillPrice = (skillLeveL: number) => {
-    return skillPrices[skillLeveL];
+export const getSkillPrice = (skillLeveL: number, additionalLevel: number = 0) => {
+    return skillPrices[skillLeveL + additionalLevel];
 };
 
 export const getAllHoldingSkills = (gameScene: GameScene): IHeroSkillSet[] => {
