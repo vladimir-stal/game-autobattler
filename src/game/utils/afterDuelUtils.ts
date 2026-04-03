@@ -27,7 +27,7 @@ export const applyAfterDuelBonuses = (gameScene: GameScene, units: TUnits, isBat
         unit.items.forEach((item) => {
             if (item.afterDuelBonuses) {
                 item.afterDuelBonuses.forEach((bonus) => {
-                    if (item.evolving) applyAfterDuelBonusEvolve(gameScene, bonus, item, isBattleWin, unit.unitType === EUnitType.HERO);
+                    if (item.evolving) applyAfterDuelBonusEvolve(gameScene, bonus, item, isBattleWin, unit);
                     else applyAfterDuelBonus(gameScene, bonus, unit, isBattleWin);
                 });
             }
@@ -126,7 +126,7 @@ const evolveBonus = (bonuses: IItemBonus[], attribute: THeroAttribute, value: nu
     }
 };
 
-const applyAfterDuelBonusEvolve = (gameScene: GameScene, bonus: IAfterDuelBonus, item: IItem, isBattleWin: boolean, isUnitHero: boolean) => {
+const applyAfterDuelBonusEvolve = (gameScene: GameScene, bonus: IAfterDuelBonus, item: IItem, isBattleWin: boolean, unit: IUnit) => {
     const { type, value, condition } = bonus;
 
     if (condition === EItemAfterDuelBonusCondition.WON && !isBattleWin) {
@@ -135,10 +135,10 @@ const applyAfterDuelBonusEvolve = (gameScene: GameScene, bonus: IAfterDuelBonus,
     if (condition === EItemAfterDuelBonusCondition.LOST && isBattleWin) {
         return;
     }
-    if (condition === EItemAfterDuelBonusCondition.IS_HERO && !isUnitHero) {
+    if (condition === EItemAfterDuelBonusCondition.IS_HERO && !(unit.unitType === EUnitType.HERO)) {
         return;
     }
-    if (condition === EItemAfterDuelBonusCondition.IS_MOB && isUnitHero) {
+    if (condition === EItemAfterDuelBonusCondition.IS_MOB && (unit.unitType === EUnitType.HERO)) {
         return;
     }
 
@@ -146,6 +146,7 @@ const applyAfterDuelBonusEvolve = (gameScene: GameScene, bonus: IAfterDuelBonus,
         case EItemAfterDuelBonusType.STAT_BASIC_ATTACK:
             {
                 evolveBonus(item.bonuses, "basicAttack", value);
+                unit.basicAttack += value;
             }
             break;
         case EItemAfterDuelBonusType.GOLD:
@@ -156,36 +157,43 @@ const applyAfterDuelBonusEvolve = (gameScene: GameScene, bonus: IAfterDuelBonus,
         case EItemAfterDuelBonusType.STAT_ARMOR:
             {
                 evolveBonus(item.bonuses, "basicArmor", value);
+                unit.basicArmor += value;
             }
             break;
         case EItemAfterDuelBonusType.STAT_MAX_HP:
             {
                 evolveBonus(item.bonuses, "basicMaxHp", value);
+                unit.basicMaxHp += value;
             }
             break;
         case EItemAfterDuelBonusType.STAT_HP_REGEN:
             {
                 evolveBonus(item.bonuses, "basicHpRegen", value);
+                unit.basicHpRegen += value;
             }
             break;
         case EItemAfterDuelBonusType.STAT_CRIT_CHANCE:
             {
                 evolveBonus(item.bonuses, "basicCritChance", value);
+                unit.basicCritChance += value;
             }
             break;
         case EItemAfterDuelBonusType.STAT_EVAS_CHANCE:
             {
                 evolveBonus(item.bonuses, "basicEvasionChance", value);
+                unit.basicEvasionChance += value;
             }
             break;
         case EItemAfterDuelBonusType.STAT_MP:
             {
                 evolveBonus(item.bonuses, "basicMagicPower", value);
+                unit.basicMagicPower += value;
             }
             break;
         case EItemAfterDuelBonusType.STAT_PP:
             {
                 evolveBonus(item.bonuses, "basicPhysicalPower", value);
+                unit.basicPhysicalPower += value;
             }
             break;
         default:

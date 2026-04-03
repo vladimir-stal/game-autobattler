@@ -374,13 +374,20 @@ export class BattleController {
 
         const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
         const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
+        const twiceAttackMods : number[] = [];
+        unit.itemBonuses.filter(ib => ib.type == EItemBattleBonusType.BASIC_ATTACK_TWICE).forEach(ib => {
+            twiceAttackMods.push(ib.value);
+        });
+        twiceAttackMods.sort();
 
-        if (unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.BASIC_ATTACK_TWICE)) {
-            this.basicAttack(unit, isPlayer1, 40);
-            this.basicAttack(unit, isPlayer1, 40);
-            for (let i = 0; i < additionalBaTimes; i++) {
-                this.basicAttack(unit, isPlayer1, 40);
-            }
+        if (twiceAttackMods.length > 0) {
+            // get maximum twice attack mod (last index position)
+            // and perform 2+addBaTimes attacks
+            for (let i = -2; i < additionalBaTimes; i++)
+                this.basicAttack(unit, isPlayer1, twiceAttackMods[twiceAttackMods.length-1]);
+            // perform 1 attack per rest twice attack mods (excluding max mod)
+            for (let j = 0; j < twiceAttackMods.length-1; j++)
+                this.basicAttack(unit, isPlayer1, twiceAttackMods[j]);
         } else {
             this.basicAttack(unit, isPlayer1);
             for (let i = 0; i < additionalBaTimes; i++) {

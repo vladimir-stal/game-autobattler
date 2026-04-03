@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroSkillType, ESkillSetType, EStatusType, ETargetType, IHeroSkillSet } from "../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillSetType, EStatusType, ETargetType, IHeroSkillSet } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
 
@@ -154,7 +154,7 @@ export const fireflySelfPoison: IHeroSkillSet = {
     name: "poison self",
     desc: "Apply poison [1] self",
     level: 1,
-    priceLevel: 1,
+    priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.WILD],
     skills: [
         {
@@ -164,6 +164,55 @@ export const fireflySelfPoison: IHeroSkillSet = {
             value: 1,
             targetType: ETargetType.SELF,
         },
+        {
+            type: EHeroSkillType.BUFF,
+            isBasicAttack: true,
+            buff: {
+                name: "Invulnerable 1",
+                type: EBuffType.DIVINE_SHIELD,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+                value: 1,
+            },
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            isBasicAttack: true,
+            buff: {
+                name: "Invulnerable 2",
+                type: EBuffType.DIVINE_SHIELD,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+                value: 1,
+            },
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            isBasicAttack: true,
+            buff: {
+                name: "Invulnerable 3",
+                type: EBuffType.DIVINE_SHIELD,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+                value: 1,
+            },
+        },
     ],
+    isActivateOnStart: true,
     image: IMAGE_SKILL_TEST,
+};
+
+export const fireflyNoSkill: IHeroSkillSet = {
+    id: "fireflyNoSkill",
+    name: "no skill",
+    desc: "skip casting",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.ALL],
+    skills: [
+        {
+            type: EHeroSkillType.NONE,
+            isBasicAttack: true,
+        },
+    ],
 };

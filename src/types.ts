@@ -301,6 +301,7 @@ export enum ERoomType {
     ITEM_WEAPON_CLASS_RANDOM = "ITEM_WEAPON_CLASS_RANDOM", // get random weapon for specific hero classes
     ITEM_CLASS_SELL = "ITEM_CLASS_SELL", // buy one of 3 random items for specific hero classes
     ITEMS_SELL = "ITEMS_SELL", // buy one of 3 random items (common/weapon or just common ??)
+    ITEM_LEGEND_SELL = "ITEM_LEGEND_SELL",
     MIXED_CLASS_SELECT = "MIXED_CLASS_SELECT", // select 3 item/skill from one basic class
     MOBS = "MOBS", // fight vs mobs
     MOBS_REWARDS = "MOBS_REWARDS",
