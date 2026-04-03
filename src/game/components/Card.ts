@@ -34,6 +34,11 @@ export class Card extends Phaser.GameObjects.Container {
         // }
         this.render();
     }
+    copy() : Card {
+        const cardcopy = this.card;
+        const newcopy = new Card(this.gameScene, this.x, this.y, cardcopy, this.onBuyPanel, this.cardSlot);
+        return newcopy;
+    }
 
     render() {
         this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK, 0).setOrigin(0.5, 0);
