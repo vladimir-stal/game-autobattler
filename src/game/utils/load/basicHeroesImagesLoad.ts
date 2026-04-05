@@ -381,7 +381,8 @@ export function loadBasicHeroesImages(scene: Scene) {
     //
     //
 
-    scene.load.spritesheet(IMAGE_WILD_IDLE, "assets/sprites/units/wild/wild_idle_spritesheet_300_t.webp", {
+    //TODO: webp
+    scene.load.spritesheet(IMAGE_WILD_IDLE, "assets/sprites/units/wild/wild_idle_cut_300.png", {
         frameWidth: 300,
         frameHeight: 300,
     });

@@ -10,16 +10,15 @@ import { getMulticlassSubclasses } from "../utils/heroUtils";
 import { getHeroImage, getUnitImage } from "../utils/imageUtils";
 import { HeroClassTag } from "./ui/HeroClassTag";
 import { IMAGE_ICON_ATTACK, IMAGE_ICON_HEALTH, IMAGE_ICON_SHIELD } from "../utils/imageLoadUtil";
-import { colors, GAME_MODE, i18n } from "../consts";
+import { colors, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
-import { MAX_HEIGHT, MAX_WIDTH } from "./ui/uiPanels";
+import { MAX_HEIGHT } from "./ui/uiPanels";
 
 /** Card to buy from shop  */
 export class UnitCard extends Phaser.GameObjects.Container {
     gameScene: GameScene;
     cardSlot: CardSlot | undefined;
     parentCard: Card;
-    titleText: GameObjects.Text;
     unit: IUnit;
     title: string;
     upgradeButton: GameObjects.Text;
@@ -32,6 +31,14 @@ export class UnitCard extends Phaser.GameObjects.Container {
 
     imageObject: GameObjects.Sprite;
     imgHeight: number;
+
+    titleText: GameObjects.Text;
+    healthText: GameObjects.Text;
+    healthImage: GameObjects.Image;
+    armorText: GameObjects.Text;
+    armorImage: GameObjects.Image;
+    attackText: GameObjects.Text;
+    attackImage: GameObjects.Image;
 
     constructor(scene: GameScene, x: number, y: number, card: Card, unit: IUnit, isShowItems: boolean, isShowSkills: boolean, cardSlot?: CardSlot) {
         super(scene, x, y);
@@ -67,21 +74,21 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.titleText = this.scene.add.text(0, btyp - 40, title, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.titleText);
 
-        const attackText = this.scene.add.text(-33, btyp - 18, basicAttack + "", { fontSize: 12, color: "#dddddd" });
-        this.add(attackText);
-        const attackImage = this.scene.add.image(-40, btyp - 10, IMAGE_ICON_ATTACK).setDisplaySize(20, 20);
-        this.add(attackImage);
+        this.attackText = this.scene.add.text(-33, btyp - 18, basicAttack + "", { fontSize: 12, color: "#dddddd" });
+        this.add(this.attackText);
+        this.attackImage = this.scene.add.image(-40, btyp - 10, IMAGE_ICON_ATTACK).setDisplaySize(20, 20);
+        this.add(this.attackImage);
 
-        const healthText = this.scene.add.text(3, btyp - 18, basicMaxHp + "", { fontSize: 12, color: "#dddddd" });
-        this.add(healthText);
-        const healthImage = this.scene.add.image(-10, btyp - 10, IMAGE_ICON_HEALTH).setDisplaySize(20, 20);
-        this.add(healthImage);
+        this.healthText = this.scene.add.text(3, btyp - 18, basicMaxHp + "", { fontSize: 12, color: "#dddddd" });
+        this.add(this.healthText);
+        this.healthImage = this.scene.add.image(-10, btyp - 10, IMAGE_ICON_HEALTH).setDisplaySize(20, 20);
+        this.add(this.healthImage);
 
         if (basicArmor > 0) {
-            const armorText = this.scene.add.text(35, btyp - 18, basicArmor + "", { fontSize: 12, color: "#dddddd" });
-            this.add(armorText);
-            const armorImage = this.scene.add.image(25, btyp - 10, IMAGE_ICON_SHIELD).setDisplaySize(20, 20);
-            this.add(armorImage);
+            this.armorText = this.scene.add.text(35, btyp - 18, basicArmor + "", { fontSize: 12, color: "#dddddd" });
+            this.add(this.armorText);
+            this.armorImage = this.scene.add.image(25, btyp - 10, IMAGE_ICON_SHIELD).setDisplaySize(20, 20);
+            this.add(this.armorImage);
         }
     }
 
@@ -113,12 +120,9 @@ export class UnitCard extends Phaser.GameObjects.Container {
 
         this.imageObject = this.gameScene.add.sprite(0, 200, image, 0).setOrigin(0.5, 1).setScale(scale); //setDisplaySize(300, 300)
         this.imgHeight = this.imageObject.displayHeight;
-        //console.log("DEBUG: dh=" + this.imgHeight + " scale=" + scale + " original_h=" + (this.imgHeight/scale));
+
         if (animation) {
-            //&& GAME_MODE === "FULL"
-            //if (this.unit.heroClassType === EHeroClassType.MULTI) {
             this.imageObject.anims.play(animation);
-            //}
         }
         this.add(this.imageObject);
     }
@@ -178,12 +182,11 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     showItemSlots() {
-        //|| this.unit.unitType === EUnitType.UNIT || !this.unit.heroClassType
         if (!this.isShowItems) {
             return;
         }
 
-        const itemSlotsCount = this.unit.unitType === EUnitType.HERO ? getMaxUnitItemCount(this.unit.heroClassType) : 1;
+        const itemSlotsCount = this.unit.unitType === EUnitType.HERO ? getMaxUnitItemCount(this.unit.heroClassType!) : 1;
         for (let i = 0; i < itemSlotsCount; i++) {
             const x = (i % 2) * 40 - 50;
             const y = i < 2 ? 230 : 270;
@@ -232,7 +235,6 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     refresh() {
-        //console.log("UNIT CARD refersh");
         this.removeAll(true);
         this.render();
     }
@@ -241,6 +243,17 @@ export class UnitCard extends Phaser.GameObjects.Container {
         const { height } = this.gameScene.camera;
         const scale = height < MAX_HEIGHT ? height / MAX_HEIGHT : 1;
         this.imageObject.setScale(scale);
+        this.imgHeight = this.imageObject.displayHeight;
+
+        const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position
+
+        this.titleText.setY(btyp - 40);
+        this.attackText.setY(btyp - 18);
+        this.attackImage.setY(btyp - 10);
+        this.healthText.setY(btyp - 18);
+        this.healthImage.setY(btyp - 10);
+        this.armorText.setY(btyp - 18);
+        this.armorImage.setY(btyp - 10);
     }
 
     setUnit(unit: IUnit) {

@@ -25,7 +25,7 @@ export class MobCard extends Phaser.GameObjects.Container {
         this.titleText = this.scene.add.text(0, 20, name, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.titleText);
 
-        this.descriptionText = this.scene.add.text(0, 50, description || "", { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
+        this.descriptionText = this.scene.add.text(0, 70, description || "", { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.descriptionText);
     }
 }

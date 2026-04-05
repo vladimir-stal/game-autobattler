@@ -34,7 +34,7 @@ export const tripleSetCardTypes = [
     ECardType.ITEM,
     ECardType.SKILL,
     //ECardType.UNITS,
-    ECardType.EXP_PARTY,
+    //ECardType.EXP_PARTY,
 ];
 
 /** Main select game phase controller  */
@@ -235,7 +235,7 @@ export class SelectController {
                         return;
                     }
                     this.gameScene.unitPanel.slots.forEach((sv) => {
-                        if (sv.slot.card != null) addExpToUnit(sv.slot.card.card.unit, value);
+                        sv.slot.card?.card.unit && addExpToUnit(sv.slot.card.card.unit, value);
                     });
                     this.gameScene.unitPanel.refreshAllCards();
                 }

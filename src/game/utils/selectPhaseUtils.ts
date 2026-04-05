@@ -18,7 +18,8 @@ import {
 
 import { axe1, musical1, scepter1, shield1, staff1, sword1, totem1, wand1 } from "../basicWeaponItemConsts";
 import { bosses } from "../bossConsts";
-import { boots21, hat21, jacket21, pants21, ring_damage2, ring_heal2, ring_regen2 } from "../commonItemConsts2";
+import { basic_boots } from "../commonItemConsts";
+import { boots21, gloves_magic2, hat21, jacket21, pants21, ring_damage2, ring_heal2, ring_regen2 } from "../commonItemConsts2";
 import { crit_amulet, evasion_amulet, summonerMantle3 } from "../commonItemConsts3";
 import { armorMassHp, helmetMassArmor } from "../commonItemConsts4";
 import { CardSlot } from "../components/CardSlot";
@@ -29,6 +30,7 @@ import { basicWeapons, itemsLvl5 } from "../itemConsts";
 import { itemGoblinBoneDagger, itemGoblinSilverCoin, regenMantle, spiritArmor } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { magicAttack } from "../skills/magicSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 
@@ -180,8 +182,8 @@ export const getRooms = (
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                     //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
                 } else if (hour === 1) {
-                    return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
+                    //return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                     //} else if (hour === 3) { // TEST
@@ -430,7 +432,7 @@ export const getCards = (
             break;
         case ERoomType.HEROES_SELL:
             {
-                isSingleSelect = true;
+                isSingleSelect = false; //true;
                 isSelectRequired = initialHeroSelect;
                 isRerollAvailable = !initialHeroSelect;
                 hintTextType = ESelectCardHint.SELECT_SINGLE_HERO;
@@ -897,11 +899,12 @@ export const getCards = (
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
                 //cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
                 cards = [
-                    { type: ECardType.ITEM, price: 0, item: totem5HptoDmg },
-                    { type: ECardType.ITEM, price: 0, item: music5AddBuffTarget },
-                    { type: ECardType.ITEM, price: 0, item: staff5MagicCrit },
-                    { type: ECardType.ITEM, price: 0, item: dagger5_ba },
-                    { type: ECardType.ITEM, price: 0, item: wand5ShockOnBA },
+                    { type: ECardType.ITEM, price: 0, item: basic_boots },
+                    { type: ECardType.ITEM, price: 0, item: basic_boots },
+                    { type: ECardType.ITEM, price: 0, item: gloves_magic2 },
+                    { type: ECardType.ITEM, price: 0, item: gloves_magic2 },
+                    { type: ECardType.SKILL, price: 0, skill: magicAttack },
+                    { type: ECardType.SKILL, price: 0, skill: magicAttack },
                 ];
             }
             break;
@@ -1008,7 +1011,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                     if (slot.isInventory && !slot.isEmpty) {
                         const { type, item: slotItem } = slot.card?.card || {};
                         if (type === ECardType.ITEM && slotItem && slotItem.id === item.id && slotItem.level === item.level && item.nextLevel) {
-                            slot.setIsActive(true);
+                            slot.setIsActive(true, "merge");
                             return;
                         }
                     }
@@ -1121,7 +1124,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                     if (slot.isInventory && !slot.isEmpty) {
                         const { type, skill: slotSkill } = slot.card?.card || {};
                         if (type === ECardType.SKILL && slotSkill && slotSkill.id === skill.id && slotSkill.level === skill.level) {
-                            slot.setIsActive(true);
+                            slot.setIsActive(true, "merge");
                             return;
                         }
                     }

@@ -79,7 +79,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         }
         //
         //
-        const title = getSelectRoomDisplayName(type);
+        const title = getSelectRoomDisplayName(type) || "";
         const color = [ERoomType.HEROES_SELL, ERoomType.UPGRADE_SKILL_OR_ITEM, ERoomType.ENCHANCE_SKILL_CHAINED].includes(type) ? "#f0dd8cff" : "#ffffff";
         const roomText = this.scene.add
             .text(roomX, 20, title, {
@@ -95,6 +95,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
             ? "\n(" + (roomsWithSingleHeroClass.includes(type) ? i18n.tags[heroClasses[0]] : heroClasses?.map((hc) => i18n.tags[hc]).join(", ")) + ")"
             : "";
         const bossDescription = type === ERoomType.BOSS ? "\n" + boss?.name : "";
+        // @ts-expect-error
         const tripleSetTypesDescr = tripleSetTypes ? "\n" + tripleSetTypes.map((tst) => i18n.ui[tst]).join(",") : "";
         const typeText = i18n.roomDescriptions[type] || type;
         const description = typeText + heroClassesText + " " + tripleSetTypesDescr + bossDescription;
@@ -160,6 +161,11 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
                     selectButton = this.selectButton3;
                 }
                 break;
+            default: {
+                this.selectButton2 = selectRoomText;
+                this.add(this.selectButton2);
+                selectButton = this.selectButton2;
+            }
         }
 
         this.roomObjects[index] = { titleText: roomText, descriptionText: roomDescriptionText, selectButton };

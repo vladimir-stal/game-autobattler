@@ -1,10 +1,12 @@
 import {
     ECardType,
     EHeroClass,
+    EHeroClassType,
     EItemBattleBonusType,
     EItemBonusType,
     EItemTargetType,
     EItemType,
+    EUnitType,
     EWeaponItemType,
     ICard,
     IItem,
@@ -34,6 +36,7 @@ import {
 import { GameScene } from "../scenes/GameScene";
 import { calculateIncreaseValue } from "./battleUtils";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
+import { getMulticlassSubclasses } from "./heroUtils";
 
 /** Apply item bonuses to unit (or all units) on equip */
 export const applyItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => {
@@ -41,11 +44,23 @@ export const applyItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => {
     //
     item.heroClassBonuses &&
         item.heroClassBonuses.forEach((hCbonus) => {
-            if (hCbonus.heroClass === unit.heroClass) {
-                if (hCbonus.bonus) {
-                    applyItemBonus(hCbonus.bonus, unit);
+            // hero unit
+            if (unit.unitType === EUnitType.HERO) {
+                // basic heroclass
+                if (unit.heroClassType === EHeroClassType.BASIC) {
+                    if (hCbonus.heroClass === unit.heroClass && hCbonus.bonus) {
+                        applyItemBonus(hCbonus.bonus, unit);
+                    }
                 }
-            } else if (unit.mobHeroClasses && unit.mobHeroClasses.includes(hCbonus.heroClass)) {
+                // multiclass
+                else if (unit.heroClassType === EHeroClassType.MULTI) {
+                    if (getMulticlassSubclasses(unit.heroClass).includes(hCbonus.heroClass) && hCbonus.bonus) {
+                        applyItemBonus(hCbonus.bonus, unit);
+                    }
+                }
+            }
+            // mob unit
+            else if (unit.unitType === EUnitType.UNIT && unit.mobHeroClasses?.includes(hCbonus.heroClass)) {
                 if (hCbonus.bonus) {
                     applyItemBonus(hCbonus.bonus, unit);
                 }

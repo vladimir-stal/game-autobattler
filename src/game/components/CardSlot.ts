@@ -4,6 +4,8 @@ import { colors } from "../consts";
 import { ECardType, ICard, IUnit } from "../../types";
 import { Card } from "./Card";
 
+export type TSlotActiveType = "default" | "merge";
+
 /** Component card can be placed in */
 export class CardSlot extends Phaser.GameObjects.Container {
     gameScene: GameScene;
@@ -12,6 +14,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
     unitRect: GameObjects.Rectangle;
 
     isActive: boolean = false;
+    activeType: TSlotActiveType = "default";
     isEmpty: boolean = true;
     isInventory: boolean; // card slot is located on inventory panel
     isUpgradePanel: boolean; // card slot is located on upgrade panel
@@ -96,6 +99,10 @@ export class CardSlot extends Phaser.GameObjects.Container {
 
         // change unit places
         if (isUnitToUnit) {
+            if (!this.card) {
+                return;
+            }
+
             const currentSlot = this.gameScene.cardToMove.cardSlot;
             const cardToPeplace = this.card.card;
             if (!currentSlot) {
@@ -170,22 +177,19 @@ export class CardSlot extends Phaser.GameObjects.Container {
         this.add(this.card);
     }
 
-    setIsActive(value: boolean) {
+    setIsActive(value: boolean, activeType?: TSlotActiveType) {
         this.isActive = value;
 
-        //console.log("SET ACTIVE", value);
+        const activeColor = activeType ? (activeType === "merge" ? colors.BLUE : colors.GREEN_2) : colors.GREEN_2;
 
         if (this.card && this.card.card.type === ECardType.UNIT) {
-            const color = value ? colors.GREEN_2 : colors.GREY;
-            //console.log("SET ACTIVE UNIT", color);
+            const color = value ? activeColor : colors.GREY;
             this.unitRect.fillColor = color;
             return;
         }
 
-        //this.rect.setVisible(value);
-        const color = value ? colors.GREEN_2 : colors.BLACK;
+        const color = value ? activeColor : colors.BLACK;
         this.rect.fillColor = color;
-        //console.log("setIsActive", value, color);
     }
 
     setUnit(unit: IUnit) {

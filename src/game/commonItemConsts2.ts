@@ -1,12 +1,9 @@
 import { EHeroClass, EItemAfterDuelBonusCondition, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, EItemType, IItem } from "../types";
 import { i18n } from "./consts";
 import {
-    IMAGE_ITEM_ARMOR_1,
     IMAGE_ITEM_ARMOR_2,
-    IMAGE_ITEM_BOOTS_1,
     IMAGE_ITEM_BOOTS_2,
     IMAGE_ITEM_GLOVES_21,
-    IMAGE_ITEM_HELM_1,
     IMAGE_ITEM_HELM_2,
     IMAGE_ITEM_HOLY_GLOVES_1,
     IMAGE_ITEM_MAGIC_GLOVES_1,
@@ -101,6 +98,17 @@ export const hp_amulet: IItem = {
 
 ///////////////////// HELMET
 
+export const hat21_3: IItem = {
+    id: "hat21",
+    name: i18n.items.hat21,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_HELM_2,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 26, valueType: "number", attribute: "basicArmor" }],
+};
+
 export const hat21_2: IItem = {
     id: "hat21",
     name: i18n.items.hat21,
@@ -109,7 +117,8 @@ export const hat21_2: IItem = {
     priceLevel: 2,
     image: IMAGE_ITEM_HELM_2,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicArmor" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 14, valueType: "number", attribute: "basicArmor" }],
+    nextLevel: hat21_3,
 };
 
 export const hat21: IItem = {
@@ -120,11 +129,22 @@ export const hat21: IItem = {
     priceLevel: 2,
     image: IMAGE_ITEM_HELM_2,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicArmor" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicArmor" }],
     nextLevel: hat21_2,
 };
 
 ///////////////////// BOOTS
+
+export const boots21_3: IItem = {
+    id: "boots21",
+    name: i18n.items.boots21,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_BOOTS_2,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 25, valueType: "number", attribute: "basicEvasionChance" }],
+};
 
 export const boots21_2: IItem = {
     id: "boots21",
@@ -135,6 +155,7 @@ export const boots21_2: IItem = {
     image: IMAGE_ITEM_BOOTS_2,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 15, valueType: "number", attribute: "basicEvasionChance" }],
+    nextLevel: boots21_3,
 };
 
 export const boots21: IItem = {
@@ -197,6 +218,17 @@ export const pants21: IItem = {
 
 ///////////////////// ARMOR
 
+export const jacket21_3: IItem = {
+    id: "jacket21",
+    name: i18n.items.jacket21,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_ARMOR_2,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 27, valueType: "number", attribute: "basicMaxHp" }],
+};
+
 export const jacket21_2: IItem = {
     id: "jacket21",
     name: i18n.items.jacket21,
@@ -205,7 +237,8 @@ export const jacket21_2: IItem = {
     priceLevel: 2,
     image: IMAGE_ITEM_ARMOR_2,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicMaxHp" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 15, valueType: "number", attribute: "basicMaxHp" }],
+    nextLevel: jacket21_3,
 };
 
 export const jacket21: IItem = {
@@ -216,7 +249,7 @@ export const jacket21: IItem = {
     priceLevel: 2,
     image: IMAGE_ITEM_ARMOR_2,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicMaxHp" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicMaxHp" }],
     nextLevel: jacket21_2,
 };
 
@@ -224,13 +257,13 @@ export const jacket21: IItem = {
 
 export const gloves_war2_3: IItem = {
     id: "gloves_war2",
-    name: i18n.items.gloves_war2, // name: "Warrior Gloves",
+    name: i18n.items.gloves_war2,
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
     image: IMAGE_ITEM_GLOVES_21,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicArmor" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicArmor" }],
     heroClassBonuses: [
         { heroClass: EHeroClass.WARRIOR, bonus: { type: EItemBonusType.ATTRIBUTE, attribute: "basicPhysicalPower", value: 8, valueType: "number" } },
     ],
@@ -238,7 +271,7 @@ export const gloves_war2_3: IItem = {
 
 export const gloves_war2_2: IItem = {
     id: "gloves_war2",
-    name: i18n.items.gloves_war2, // name: "Warrior Gloves",
+    name: i18n.items.gloves_war2,
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
@@ -253,7 +286,7 @@ export const gloves_war2_2: IItem = {
 
 export const gloves_war2: IItem = {
     id: "gloves_war2",
-    name: i18n.items.gloves_war2, // name: "Warrior Gloves",
+    name: i18n.items.gloves_war2,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 2,
@@ -268,53 +301,79 @@ export const gloves_war2: IItem = {
 
 // GLOVES PRIEST /////////////////////
 
+export const gloves_priest2_3: IItem = {
+    id: "gloves_priest2",
+    name: i18n.items.gloves_priest2,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_HOLY_GLOVES_1,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicArmor" }],
+    heroClassBonuses: [{ heroClass: EHeroClass.PRIEST, battleBonus: { type: EItemBattleBonusType.HEAL_INCREASE, value: 5, valueType: "number" } }],
+};
+
 export const gloves_priest2_2: IItem = {
     id: "gloves_priest2",
-    name: i18n.items.gloves_priest2, // name: "Priest Gloves",
+    name: i18n.items.gloves_priest2,
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
     image: IMAGE_ITEM_HOLY_GLOVES_1,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicArmor" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicArmor" }],
     heroClassBonuses: [{ heroClass: EHeroClass.PRIEST, battleBonus: { type: EItemBattleBonusType.HEAL_INCREASE, value: 3, valueType: "number" } }],
+    nextLevel: gloves_priest2_3,
 };
 
 export const gloves_priest2: IItem = {
     id: "gloves_priest2",
-    name: i18n.items.gloves_priest2, // name: "Priest Gloves",
+    name: i18n.items.gloves_priest2,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 2,
     image: IMAGE_ITEM_HOLY_GLOVES_1,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicArmor" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicArmor" }],
     heroClassBonuses: [{ heroClass: EHeroClass.PRIEST, battleBonus: { type: EItemBattleBonusType.HEAL_INCREASE, value: 2, valueType: "number" } }],
     nextLevel: gloves_priest2_2,
 };
 
 // GLOVES MAGIC /////////////////////
 
+export const gloves_magic2_3: IItem = {
+    id: "gloves_magic2",
+    name: i18n.items.gloves_magic2,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_MAGIC_GLOVES_1,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicArmor" }],
+    heroClassBonuses: [{ heroClass: EHeroClass.MAGIC, bonus: { type: EItemBonusType.ATTRIBUTE, attribute: "basicMagicPower", value: 4, valueType: "number" } }],
+};
+
 export const gloves_magic2_2: IItem = {
     id: "gloves_magic2",
-    name: i18n.items.gloves_magic2, //name: "Mage Gloves",
+    name: i18n.items.gloves_magic2,
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 2,
     image: IMAGE_ITEM_MAGIC_GLOVES_1,
-    heroClasses: [], //[EHeroClass.MAGIC],
+    heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicArmor" }],
     heroClassBonuses: [{ heroClass: EHeroClass.MAGIC, bonus: { type: EItemBonusType.ATTRIBUTE, attribute: "basicMagicPower", value: 2, valueType: "number" } }],
+    nextLevel: gloves_magic2_3,
 };
 
 export const gloves_magic2: IItem = {
     id: "gloves_magic2",
-    name: i18n.items.gloves_magic2, //name: "Mage Gloves",
+    name: i18n.items.gloves_magic2,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 2,
     image: IMAGE_ITEM_MAGIC_GLOVES_1,
-    heroClasses: [], //[EHeroClass.MAGIC],
+    heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicArmor" }],
     heroClassBonuses: [{ heroClass: EHeroClass.MAGIC, bonus: { type: EItemBonusType.ATTRIBUTE, attribute: "basicMagicPower", value: 1, valueType: "number" } }],
     nextLevel: gloves_magic2_2,
@@ -323,6 +382,18 @@ export const gloves_magic2: IItem = {
 ///////////////////// RINGS ///
 
 // HEAL RING ///////////////////////
+
+export const ring_heal2_3: IItem = {
+    id: "ring_heal2",
+    name: i18n.items.ring_heal2,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_RING_HEAL_2,
+    heroClasses: [],
+    bonuses: [],
+    battleBonuses: [{ type: EItemBattleBonusType.HEAL_INCREASE, value: 8, valueType: "number" }],
+};
 
 export const ring_heal2_2: IItem = {
     id: "ring_heal2",
@@ -333,8 +404,8 @@ export const ring_heal2_2: IItem = {
     image: IMAGE_ITEM_RING_HEAL_2,
     heroClasses: [],
     bonuses: [],
-    battleBonuses: [{ type: EItemBattleBonusType.HEAL_INCREASE, value: 3, valueType: "number" }],
-    //nextLevel: ring_heal2_3,
+    battleBonuses: [{ type: EItemBattleBonusType.HEAL_INCREASE, value: 5, valueType: "number" }],
+    nextLevel: ring_heal2_3,
 };
 
 export const ring_heal2: IItem = {
@@ -352,6 +423,22 @@ export const ring_heal2: IItem = {
 
 // ATTACK RING /////////////////////
 
+export const ring_damage2_3: IItem = {
+    id: "ring_damage2",
+    name: i18n.items.ring_damage2,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_RING_ATTACK_2,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
+    evolving: true,
+    afterDuelBonuses: [
+        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1 },
+        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON },
+    ],
+};
+
 export const ring_damage2_2: IItem = {
     id: "ring_damage2",
     name: i18n.items.ring_damage2,
@@ -363,7 +450,7 @@ export const ring_damage2_2: IItem = {
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
     evolving: true,
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
-    //nextLevel: ring_damage2_3,
+    nextLevel: ring_damage2_3,
 };
 
 export const ring_damage2: IItem = {
@@ -380,6 +467,22 @@ export const ring_damage2: IItem = {
 
 // REGEN RING /////////////////////
 
+export const ring_regen2_3: IItem = {
+    id: "ring_regen2",
+    name: i18n.items.ring_regen2,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_RING_REGEN_2,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicHpRegen" }],
+    evolving: true,
+    afterDuelBonuses: [
+        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1 },
+        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, condition: EItemAfterDuelBonusCondition.WON },
+    ],
+};
+
 export const ring_regen2_2: IItem = {
     id: "ring_regen2",
     name: i18n.items.ring_regen2,
@@ -391,7 +494,7 @@ export const ring_regen2_2: IItem = {
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicHpRegen" }],
     evolving: true,
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
-    //nextLevel: ring_regen2_3,
+    nextLevel: ring_regen2_3,
 };
 
 export const ring_regen2: IItem = {

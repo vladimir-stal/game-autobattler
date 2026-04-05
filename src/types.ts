@@ -322,7 +322,7 @@ export enum ERoomType {
 
 export enum ECardType {
     ATTRIBUTE = "ATTRIBUTE",
-    BUFF = "BUFF",
+    //BUFF = "BUFF",
     EXP = "EXP",
     EXP_PARTY = "EXP_PARTY",
     GOLD = "GOLD",
