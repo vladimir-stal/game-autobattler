@@ -4,6 +4,7 @@ import {
     EItemAfterDuelBonusType,
     EItemBattleBonusType,
     EItemBonusType,
+    EItemTargetType,
     ERoomType,
     ESelectCardHint,
     ESelectRoomHint,
@@ -67,9 +68,45 @@ export interface Ii18n {
         basic_pants: string;
         basic_boots: string;
         // level 2
+        // COMMON
+        ring_heal2: string;
+        ring_damage2: string;
+        ring_regen2: string;
+        gloves_war2: string;
+        gloves_priest2: string;
+        gloves_magic2: string;
+        pants21: string;
+        jacket21: string;
+        boots21: string;
+        hat21: string;
+        hp_amulet: string;
+        armor_amulet: string;
         // level 3
+        magicBook31: string;
+        magicSpear31: string;
+        axe31: string;
+        axe32: string;
+        dagger31: string;
+        dagger32: string;
+        mace31: string;
+        sword31: string;
+        staff31: string;
+        musical31: string;
+        musical32: string;
+        scepter31: string;
+        shield31: string;
+        shield32: string;
+        totem31: string;
+        totem32: string;
+        wand31: string;
+        // COMMON
         evasion_amulet: string;
         crit_amulet: string;
+        summonerMantle3: string;
+        // level 4
+        // COMMON
+        armorMassHp: string;
+        helmetMassArmor: string;
         //
     };
     rooms: Partial<Record<ERoomType, string>>;
@@ -162,6 +199,8 @@ export interface Ii18n {
         [EItemAfterDuelBonusCondition.LOST]: string;
         [EItemAfterDuelBonusCondition.IS_HERO]: string;
         [EItemAfterDuelBonusCondition.IS_MOB]: string;
+        // bonus target
+        [EItemTargetType.ALL_ALLIES]: string;
     };
 }
 
@@ -303,19 +342,55 @@ export const i18n: Ii18n = {
         //
         // COMMON
         // basic
-        basic_ring_damage: "Damage ring",
-        basic_ring_regen: "Regeneration ring",
+        basic_ring_damage: "Broken damage ring",
+        basic_ring_regen: "Broken regeneration ring",
         basic_gold_bag: "Old gold bag",
         basic_exp_ring: "Experience ring",
-        basic_heal: "Priest ring",
+        basic_heal: "Broken priest ring",
         basic_hat: "Old hat",
         basic_jacket: "Old jacket",
         basic_pants: "Old pants",
         basic_boots: "Old boots",
         // level 2
+        // COMMON
+        ring_heal2: "Priest ring",
+        ring_damage2: "Damage ring",
+        ring_regen2: "Regeneration ring",
+        gloves_war2: "Warrior gloves",
+        gloves_priest2: "Priest gloves",
+        gloves_magic2: "Mage gloves",
+        pants21: "Pants 2.1",
+        jacket21: "Jacket 2.1",
+        boots21: "Boots 2.1",
+        hat21: "Helmet 2.1",
+        hp_amulet: "Health amulet",
+        armor_amulet: "Armor amulet",
         // level 3
+        magicBook31: "Magic book",
+        magicSpear31: "Magic spear",
+        axe31: "Woodcutter's axe",
+        axe32: "Bloody axe",
+        dagger31: "Rogue knife",
+        dagger32: "Steel dagger",
+        mace31: "Big mace",
+        sword31: "Steel sword",
+        staff31: "Fire staff",
+        musical31: "Lute 3.1",
+        musical32: "Lute 3.2",
+        scepter31: "Scepter 3.1",
+        shield31: "Shield 3.1",
+        shield32: "Shield 3.2",
+        totem31: "Totem 3.1",
+        totem32: "Totem 3.2",
+        wand31: "Wand 3.1",
+        // COMMON
         evasion_amulet: "Evasion amulet",
         crit_amulet: "Crit amulet",
+        summonerMantle3: "Summoner cape",
+        // level 4
+        // COMMON
+        armorMassHp: "Hp aura chest",
+        helmetMassArmor: "Armor aura helmet",
         //
     },
     rooms: {
@@ -628,5 +703,7 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.LOST]: "LOSE",
         [EItemAfterDuelBonusCondition.IS_HERO]: "HERO",
         [EItemAfterDuelBonusCondition.IS_MOB]: "NON HERO",
+        //
+        [EItemTargetType.ALL_ALLIES]: "for all",
     },
 };

@@ -10,9 +10,9 @@ export function getRandomArrayIndex(array: unknown[]) {
 
 /** Get random array item. */
 export function getRandomArrayItem<T>(array: T[]) {
-    if (array.length === 0) {
-        return null;
-    }
+    // if (array.length === 0) {
+    //     return null;
+    // }
     return array[getRandomArrayIndex(array)];
 }
 

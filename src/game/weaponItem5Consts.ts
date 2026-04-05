@@ -9,7 +9,15 @@ import {
     EWeaponItemType,
     IItem,
 } from "../types";
-import { IMAGE_ITEM_DAGGER_1, IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoadItems";
+import {
+    IMAGE_ITEM_DAGGER_1,
+    IMAGE_ITEM_DAGGER_5,
+    IMAGE_ITEM_MUSIC_5,
+    IMAGE_ITEM_POTION_1,
+    IMAGE_ITEM_STAFF_5,
+    IMAGE_ITEM_TOTEM_5,
+    IMAGE_ITEM_WAND_5,
+} from "./utils/load/imageLoadItems";
 
 ////////////////////////  LEVEL 4 WEAPONS /////////////////////////////////////////
 
@@ -25,11 +33,11 @@ import { IMAGE_ITEM_DAGGER_1, IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoad
 
 export const dagger5_ba: IItem = {
     id: "dagger5_ba",
-    name: "furry",
+    name: "flurry",
     type: EItemType.WEAPON,
     level: 1,
-    priceLevel: 2,
-    image: IMAGE_ITEM_DAGGER_1,
+    priceLevel: 5,
+    image: IMAGE_ITEM_DAGGER_5,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [],
@@ -52,7 +60,7 @@ export const staff5MagicCrit: IItem = {
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 15, valueType: "number", attribute: "basicMagicPower" }],
     battleBonuses: [{ type: EItemBattleBonusType.CRIT_WITH_MAGIC, value: 100, valueType: "percent" }],
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_STAFF_5,
 };
 
 ////// MUSICAL  /////////////////////////////////////////
@@ -67,7 +75,7 @@ export const music5AddBuffTarget: IItem = {
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [],
     battleBonuses: [{ type: EItemBattleBonusType.ADDITIONAL_BUFF_TARGET, value: 1, valueType: "number" }],
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_MUSIC_5,
 };
 
 ////// SCEPTERS  /////////////////////////////////////////
@@ -97,7 +105,7 @@ export const totem5HptoDmg: IItem = {
         { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicPhysicalPower" },
     ],
     battleBonuses: [{ type: EItemBattleBonusType.INCREASE_TOTAL_DAMAGE_FROM_HP, value: 50, valueType: "percent" }],
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_TOTEM_5,
 };
 
 ////// WANDS  /////////////////////////////////////////
@@ -112,5 +120,5 @@ export const wand5ShockOnBA: IItem = {
     weaponType: EWeaponItemType.WAND,
     bonuses: [],
     battleBonuses: [{ type: EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK, value: 1, valueType: "number", status: EStatusType.SHOCK }],
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_WAND_5,
 };

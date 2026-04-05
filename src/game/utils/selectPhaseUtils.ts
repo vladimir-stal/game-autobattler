@@ -15,19 +15,61 @@ import {
     IUnit,
     THeroAttribute,
 } from "../../types";
-import { sword1 } from "../basicWeaponItemConsts";
+import { axe1, musical1, scepter1, shield1, staff1, sword1, totem1, wand1 } from "../basicWeaponItemConsts";
 import { bosses } from "../bossConsts";
+import { boots21, hat21, jacket21, pants21, ring_damage2, ring_heal2, ring_regen2 } from "../commonItemConsts2";
+import { crit_amulet, evasion_amulet, summonerMantle3 } from "../commonItemConsts3";
+import { armorMassHp, helmetMassArmor } from "../commonItemConsts4";
 import { CardSlot } from "../components/CardSlot";
 import { roomsWithHeroClasses } from "../components/SelectController";
 import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes, mcClassHeroes } from "../heroConsts";
 import { basicWeapons, itemsLvl5 } from "../itemConsts";
-import { itemGoblinBoneDagger, itemGoblinSilverCoin } from "../mobItemConsts";
+import { itemGoblinBoneDagger, itemGoblinSilverCoin, regenMantle, spiritArmor } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
-import { dagger21 } from "../weaponItem2Consts";
+import {
+    axe21,
+    axe22,
+    dagger21,
+    mace21,
+    mace22,
+    musical21,
+    scepter21,
+    scepter22,
+    shield21,
+    shield22,
+    staff21,
+    staff22,
+    sword21,
+    sword22,
+    totem21,
+    totem22,
+    wand21,
+    wand22,
+} from "../weaponItem2Consts";
+import {
+    axe31,
+    axe32,
+    dagger31,
+    dagger32,
+    mace31,
+    magicBook31,
+    magicSpear31,
+    musical31,
+    musical32,
+    scepter31,
+    shield31,
+    shield32,
+    staff31,
+    sword31,
+    totem31,
+    totem32,
+    wand31,
+} from "../weaponItem3Consts";
+import { dagger5_ba, music5AddBuffTarget, staff5MagicCrit, totem5HptoDmg, wand5ShockOnBA } from "../weaponItem5Consts";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
 import {
@@ -133,7 +175,7 @@ export const getRooms = (
                     //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
                 } else if (hour === 1) {
                     return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                    //return [null, { roomType: ERoomType.ATTRIBUTE_SELECT }, null];
+                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
                     //} else if (hour === 3) { // TEST
@@ -313,7 +355,7 @@ export const getCards = (
     hour: number,
     heroClasses?: EHeroClass[],
     tripleSetTypes?: ECardType[],
-): { cards: (ICard | null)[]; isSingleSelect: boolean; isSelectRequired: boolean; isRerollAvailable: boolean; hintTextType: ESelectCardHint } => {
+): { cards: (ICard | null)[]; isSingleSelect: boolean; isSelectRequired: boolean; isRerollAvailable: boolean; hintTextType?: ESelectCardHint } => {
     console.log("GET CARDS", roomType, heroClasses);
     const initialHeroSelect = day === 1 && hour === 0;
     let isSingleSelect = false;
@@ -870,9 +912,11 @@ export const getCards = (
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
                 //cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
                 cards = [
-                    { type: ECardType.ITEM, price: 0, item: dagger21 },
-                    { type: ECardType.ITEM, price: 0, item: dagger21 },
-                    { type: ECardType.ITEM, price: 0, item: dagger21 },
+                    { type: ECardType.ITEM, price: 0, item: totem5HptoDmg },
+                    { type: ECardType.ITEM, price: 0, item: music5AddBuffTarget },
+                    { type: ECardType.ITEM, price: 0, item: staff5MagicCrit },
+                    { type: ECardType.ITEM, price: 0, item: dagger5_ba },
+                    { type: ECardType.ITEM, price: 0, item: wand5ShockOnBA },
                 ];
             }
             break;
@@ -930,7 +974,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
             return;
         }
 
-        if (gameScene.cardToMove.cardSlot === slot) {
+        if (gameScene.cardToMove?.cardSlot === slot) {
             return;
         }
 
@@ -1054,7 +1098,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                             return;
                         }
 
-                        const weaponHeroClasses = getWeaponItemHeroClasses(item.weaponType);
+                        const weaponHeroClasses = item.heroClasses.length > 0 ? item.heroClasses : getWeaponItemHeroClasses(item.weaponType);
                         if (heroClassType === EHeroClassType.BASIC) {
                             if (weaponHeroClasses.includes(heroClass)) {
                                 slot.setIsActive(true);
@@ -1156,7 +1200,7 @@ export const getMobRewardCard = (reward: IMobReward): ICard => {
             return { price: 0, type: ECardType.ITEM, item };
         }
         case IMobRewardType.UNIT: {
-            const rewardUnit = copyUnit(unit);
+            const rewardUnit = copyUnit(unit!);
             addMobItem(rewardUnit);
             return { price: 0, type: ECardType.UNIT, unit: rewardUnit };
         }

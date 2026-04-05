@@ -11,7 +11,23 @@ import {
     basic_ring_damage,
     basic_ring_regen,
 } from "./commonItemConsts";
-import { armor_amulet, boots21, gloves_magic2, gloves_priest2, gloves_war2, hat21, hp_amulet, jacket21 } from "./commonItemConsts2";
+import {
+    armor_amulet,
+    boots21,
+    gloves_magic2,
+    gloves_priest2,
+    gloves_war2,
+    hat21,
+    hp_amulet,
+    jacket21,
+    pants21,
+    ring_damage2,
+    ring_heal2,
+    ring_regen2,
+} from "./commonItemConsts2";
+import { crit_amulet, evasion_amulet, summonerMantle3 } from "./commonItemConsts3";
+import { armorMassHp, helmetMassArmor } from "./commonItemConsts4";
+import { weaponSlotSheath } from "./commonItemConsts5";
 import {
     axe21,
     axe22,
@@ -77,7 +93,20 @@ export const basicItems = basicCommonItems.concat(basicWeapons);
 
 ////// LVL 2
 
-export const commonItemsLvl2 = [hat21, boots21, jacket21, gloves_war2, gloves_magic2, gloves_priest2, armor_amulet, hp_amulet];
+export const commonItemsLvl2 = [
+    hat21,
+    boots21,
+    jacket21,
+    pants21,
+    gloves_war2,
+    gloves_magic2,
+    gloves_priest2,
+    armor_amulet,
+    hp_amulet,
+    ring_heal2,
+    ring_damage2,
+    ring_regen2,
+];
 
 export const weaponsLvl2 = [
     axe21,
@@ -105,7 +134,7 @@ export const itemsLvl2 = weaponsLvl2.concat(commonItemsLvl2);
 
 ////// LVL 3
 
-export const commonItemsLvl3 = [];
+export const commonItemsLvl3 = [evasion_amulet, crit_amulet, summonerMantle3];
 export const weaponsLvl3 = [
     axe31,
     axe32,
@@ -129,13 +158,13 @@ export const itemsLvl3 = weaponsLvl3.concat(commonItemsLvl3);
 
 ////// LVL 4
 
-export const commonItemsLvl4 = [hat21, boots21, jacket21, gloves_war2]; // TODO: change
-export const weaponsLvl4 = [totem41]; // TODO: change
+export const commonItemsLvl4 = [armorMassHp, helmetMassArmor];
+export const weaponsLvl4 = [totem41];
 export const itemsLvl4 = weaponsLvl4.concat(commonItemsLvl4);
 
 ////// LVL 5 (LEGENDARY)
 
-export const commonItemsLvl5 = [hat21, boots21, jacket21, gloves_war2]; // TODO: change
+export const commonItemsLvl5 = [weaponSlotSheath];
 export const weaponsLvl5 = [dagger5_ba, staff5MagicCrit, music5AddBuffTarget, totem5HptoDmg, wand5ShockOnBA];
 export const itemsLvl5 = weaponsLvl5.concat(commonItemsLvl5);
 

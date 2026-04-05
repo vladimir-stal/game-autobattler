@@ -30,6 +30,20 @@ export class ItemCard extends Phaser.GameObjects.Container {
 
     render() {
         this.renderBorder();
+        this.renderImage();
+        this.renderTags();
+        this.renderInfo();
+    }
+
+    renderInfo() {
+        const title = i18n.ui.ITEM;
+        this.titleText = this.scene.add.text(0, 15, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" }).setOrigin(0.5);
+        this.add(this.titleText);
+    }
+
+    renderBorder() {
+        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0.5, 0);
+        this.rect.setStrokeStyle(1, getCardBorderColor(this.item.priceLevel));
 
         this.rect.setInteractive();
         this.rect
@@ -46,26 +60,11 @@ export class ItemCard extends Phaser.GameObjects.Container {
                 }
             });
         this.add(this.rect);
-
-        this.renderImage();
-        this.renderTags();
-        this.renderInfo();
-    }
-
-    renderInfo() {
-        const title = i18n.ui.ITEM;
-        this.titleText = this.scene.add.text(0, 15, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" }).setOrigin(0.5);
-        this.add(this.titleText);
-    }
-
-    renderBorder() {
-        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0.5, 0);
-        this.rect.setStrokeStyle(1, getCardBorderColor(this.item.priceLevel));
     }
 
     renderImage() {
         const { image } = this.item;
-        const imageObject = this.gameScene.add.sprite(0, 50, image, 0).setDisplaySize(150, 150).setOrigin(0.5, 0);
+        const imageObject = this.gameScene.add.sprite(0, 100, image).setOrigin(0.5, 0.5); //.setDisplaySize(150, 150)
         this.add(imageObject);
     }
 

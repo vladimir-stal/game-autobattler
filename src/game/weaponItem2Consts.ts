@@ -1,15 +1,24 @@
 import { EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
 import {
-    IMAGE_ITEM_AXE_2,
+    IMAGE_ITEM_AXE_21,
+    IMAGE_ITEM_AXE_22,
     IMAGE_ITEM_DAGGER_2,
+    IMAGE_ITEM_DAGGER_21,
     IMAGE_ITEM_LUTE_2,
     IMAGE_ITEM_MACE_2,
+    IMAGE_ITEM_MACE_21,
     IMAGE_ITEM_SCEPTER_2,
+    IMAGE_ITEM_SCEPTER_21,
     IMAGE_ITEM_SHIELD_2,
+    IMAGE_ITEM_SHIELD_21,
     IMAGE_ITEM_STAFF_2,
+    IMAGE_ITEM_STAFF_21,
     IMAGE_ITEM_SWORD_2,
+    IMAGE_ITEM_SWORD_21,
     IMAGE_ITEM_TOTEM_2,
+    IMAGE_ITEM_TOTEM_21,
     IMAGE_ITEM_WAND_2,
+    IMAGE_ITEM_WAND_21,
 } from "./utils/load/imageLoadItems";
 
 ////////////////////////  LEVEL 2 WEAPONS /////////////////////////////////////////
@@ -24,7 +33,7 @@ export const axe21_3: IItem = {
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 4,
-    image: IMAGE_ITEM_AXE_2,
+    image: IMAGE_ITEM_AXE_22,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
@@ -37,7 +46,7 @@ export const axe21_2: IItem = {
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_AXE_2,
+    image: IMAGE_ITEM_AXE_22,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
@@ -51,7 +60,7 @@ export const axe21: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_AXE_2,
+    image: IMAGE_ITEM_AXE_22,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
@@ -61,17 +70,29 @@ export const axe21: IItem = {
 
 // AXE 22
 
+export const axe22_3: IItem = {
+    id: "axe22",
+    name: "Axe 2.2(2)",
+    type: EItemType.WEAPON,
+    level: 2,
+    priceLevel: 2,
+    image: IMAGE_ITEM_AXE_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.AXE,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+};
+
 export const axe22_2: IItem = {
     id: "axe22",
     name: "Axe 2.2(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_AXE_2,
+    image: IMAGE_ITEM_AXE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    //battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING, value: 1, valueType: "number" }],
+    nextLevel: axe22_3,
 };
 
 export const axe22: IItem = {
@@ -80,11 +101,10 @@ export const axe22: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_AXE_2,
+    image: IMAGE_ITEM_AXE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    //battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING, value: 1, valueType: "number" }],
     nextLevel: axe22_2,
 };
 
@@ -92,17 +112,31 @@ export const axe22: IItem = {
 
 // DAGGER 21
 
+export const dagger21_3: IItem = {
+    id: "dagger21",
+    name: "Dagger 2.1(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_DAGGER_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.DAGGER,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+};
+
 export const dagger21_2: IItem = {
     id: "dagger21",
     name: "Dagger 2.1(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_DAGGER_2,
+    image: IMAGE_ITEM_DAGGER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
     battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    nextLevel: dagger21_3,
 };
 
 export const dagger21: IItem = {
@@ -111,7 +145,7 @@ export const dagger21: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_DAGGER_2,
+    image: IMAGE_ITEM_DAGGER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
@@ -120,6 +154,18 @@ export const dagger21: IItem = {
 };
 
 // DAGGER 22
+
+export const dagger22_3: IItem = {
+    id: "dagger22",
+    name: "Dagger 2.2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_DAGGER_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.DAGGER,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
+};
 
 export const dagger22_2: IItem = {
     id: "dagger22",
@@ -131,7 +177,7 @@ export const dagger22_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
-    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    nextLevel: dagger22_3,
 };
 
 export const dagger22: IItem = {
@@ -144,7 +190,6 @@ export const dagger22: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
-    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
     nextLevel: dagger22_2,
 };
 
@@ -152,17 +197,31 @@ export const dagger22: IItem = {
 
 // MACE 21
 
+export const mace21_3: IItem = {
+    id: "mace21",
+    name: "Mace 2.1(2)",
+    type: EItemType.WEAPON,
+    level: 2,
+    priceLevel: 2,
+    image: IMAGE_ITEM_MACE_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.MACE,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR, value: 2, valueType: "number" }],
+};
+
 export const mace21_2: IItem = {
     id: "mace21",
     name: "Mace 2.1(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_MACE_2,
+    image: IMAGE_ITEM_MACE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
     battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR, value: 1, valueType: "number" }],
+    nextLevel: mace21_3,
 };
 
 export const mace21: IItem = {
@@ -171,7 +230,7 @@ export const mace21: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_MACE_2,
+    image: IMAGE_ITEM_MACE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
@@ -180,6 +239,19 @@ export const mace21: IItem = {
 };
 
 // MACE 22
+
+export const mace22_3: IItem = {
+    id: "mace22",
+    name: "Mace 2.2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_MACE_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.MACE,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON, value: 4, valueType: "number" }],
+};
 
 export const mace22_2: IItem = {
     id: "mace22",
@@ -191,7 +263,8 @@ export const mace22_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON, value: 2, valueType: "number" }],
+    nextLevel: mace22_3,
 };
 
 export const mace22: IItem = {
@@ -212,6 +285,19 @@ export const mace22: IItem = {
 
 // SWORD 21
 
+export const sword21_3: IItem = {
+    id: "sword21",
+    name: "Sword 2.1(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_SWORD_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.SWORD,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_HP, value: 3, valueType: "number" }],
+};
+
 export const sword21_2: IItem = {
     id: "sword21",
     name: "Sword 2.1(2)",
@@ -223,6 +309,7 @@ export const sword21_2: IItem = {
     weaponType: EWeaponItemType.SWORD,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
     battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_HP, value: 1, valueType: "number" }],
+    nextLevel: sword21_3,
 };
 
 export const sword21: IItem = {
@@ -241,17 +328,29 @@ export const sword21: IItem = {
 
 // SWORD 22
 
+export const sword22_3: IItem = {
+    id: "sword22",
+    name: "Sword 2.2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_SWORD_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.SWORD,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicAttack" }],
+};
+
 export const sword22_2: IItem = {
     id: "sword22",
     name: "Sword 2.2(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_SWORD_2,
+    image: IMAGE_ITEM_SWORD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SWORD,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    //battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_HP, value: 1, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" }],
+    nextLevel: sword22_3,
 };
 
 export const sword22: IItem = {
@@ -260,17 +359,29 @@ export const sword22: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_SWORD_2,
+    image: IMAGE_ITEM_SWORD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SWORD,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
-    //battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_HP, value: 1, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
     nextLevel: sword22_2,
 };
 
 ////// STAFFS  /////////////////////////////////////////
 
 // STAFF 21
+
+export const staff21_3: IItem = {
+    id: "staff21",
+    name: "Staff 2.1(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_STAFF_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.STAFF,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 4, valueType: "number" }],
+};
 
 export const staff21_2: IItem = {
     id: "staff21",
@@ -282,7 +393,8 @@ export const staff21_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 2, valueType: "number" }],
+    nextLevel: staff21_3,
 };
 
 export const staff21: IItem = {
@@ -301,17 +413,31 @@ export const staff21: IItem = {
 
 // STAFF 22
 
+export const staff22_3: IItem = {
+    id: "staff22",
+    name: "Staff 2.2(2)",
+    type: EItemType.WEAPON,
+    level: 2,
+    priceLevel: 2,
+    image: IMAGE_ITEM_STAFF_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.STAFF,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_MAGIC_DAMAGE, value: 4, valueType: "number" }],
+};
+
 export const staff22_2: IItem = {
     id: "staff22",
     name: "Staff 2.2(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_STAFF_2,
+    image: IMAGE_ITEM_STAFF_21,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_MAGIC_DAMAGE, value: 1, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_MAGIC_DAMAGE, value: 2, valueType: "number" }],
+    nextLevel: staff22_3,
 };
 
 export const staff22: IItem = {
@@ -320,7 +446,7 @@ export const staff22: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_STAFF_2,
+    image: IMAGE_ITEM_STAFF_21,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
@@ -332,6 +458,22 @@ export const staff22: IItem = {
 
 // MUSICAL 21
 
+export const musical21_3: IItem = {
+    id: "musical21",
+    name: "Lute 2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_LUTE_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.MUSICAL,
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicMaxHp" },
+        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicMagicPower" },
+    ],
+};
+
 export const musical21_2: IItem = {
     id: "musical21",
     name: "Lute 2(2)",
@@ -342,9 +484,10 @@ export const musical21_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicMaxHp" },
-        { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 9, valueType: "number", attribute: "basicMaxHp" },
+        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
     ],
+    nextLevel: musical21_3,
 };
 
 export const musical21: IItem = {
@@ -358,7 +501,7 @@ export const musical21: IItem = {
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicMaxHp" },
-        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" },
     ],
     nextLevel: musical21_2,
 };
@@ -367,17 +510,31 @@ export const musical21: IItem = {
 
 // SCEPTER 21
 
+export const scepter21_3: IItem = {
+    id: "scepter21",
+    name: "Scepter 2.1(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_SCEPTER_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.SCEPTER,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.HEAL_INCREASE, value: 5, valueType: "number" }],
+};
+
 export const scepter21_2: IItem = {
     id: "scepter21",
     name: "Scepter 2.1(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_SCEPTER_2,
+    image: IMAGE_ITEM_SCEPTER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SCEPTER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.HEAL_INCREASE, value: 2, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.HEAL_INCREASE, value: 3, valueType: "number" }],
+    nextLevel: scepter21_3,
 };
 
 export const scepter21: IItem = {
@@ -386,7 +543,7 @@ export const scepter21: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_SCEPTER_2,
+    image: IMAGE_ITEM_SCEPTER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SCEPTER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
@@ -395,6 +552,19 @@ export const scepter21: IItem = {
 };
 
 // SCEPTER 22
+
+export const scepter22_3: IItem = {
+    id: "scepter22",
+    name: "Scepter 2.2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_SCEPTER_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.SCEPTER,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON, value: 4, valueType: "number" }],
+};
 
 export const scepter22_2: IItem = {
     id: "scepter22",
@@ -406,7 +576,8 @@ export const scepter22_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.SCEPTER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON, value: 2, valueType: "number" }],
+    nextLevel: scepter22_3,
 };
 
 export const scepter22: IItem = {
@@ -427,6 +598,21 @@ export const scepter22: IItem = {
 
 // SHIELD 21
 
+export const shield21_3: IItem = {
+    id: "shield21",
+    name: "Shield 2.1(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_SHIELD_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.SHIELD,
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 18, valueType: "number", attribute: "basicArmor" },
+    ],
+};
+
 export const shield21_2: IItem = {
     id: "shield21",
     name: "Shield 2.1(2)",
@@ -437,8 +623,8 @@ export const shield21_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
-        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicArmor" },
+        { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicArmor" },
     ],
 };
 
@@ -453,12 +639,28 @@ export const shield21: IItem = {
     weaponType: EWeaponItemType.SHIELD,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" },
-        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicArmor" },
+        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicArmor" },
     ],
     nextLevel: shield21_2,
 };
 
 // SHIELD 22
+
+export const shield22_3: IItem = {
+    id: "shield22",
+    name: "Shield 2.2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_SHIELD_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.SHIELD,
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicArmor" },
+    ],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE, value: 5, valueType: "number" }],
+};
 
 export const shield22_2: IItem = {
     id: "shield22",
@@ -466,7 +668,7 @@ export const shield22_2: IItem = {
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_SHIELD_2,
+    image: IMAGE_ITEM_SHIELD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
     bonuses: [
@@ -474,6 +676,7 @@ export const shield22_2: IItem = {
         { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicArmor" },
     ],
     battleBonuses: [{ type: EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE, value: 2, valueType: "number" }],
+    nextLevel: shield22_3,
 };
 
 export const shield22: IItem = {
@@ -482,7 +685,7 @@ export const shield22: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_SHIELD_2,
+    image: IMAGE_ITEM_SHIELD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
     bonuses: [
@@ -497,19 +700,35 @@ export const shield22: IItem = {
 
 // TOTEM 21
 
+export const totem21_3: IItem = {
+    id: "totem21",
+    name: "Totem 2.1(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_TOTEM_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.TOTEM,
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicHpRegen" },
+    ],
+};
+
 export const totem21_2: IItem = {
     id: "totem21",
     name: "Totem 2.1(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_TOTEM_2,
+    image: IMAGE_ITEM_TOTEM_21,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicHpRegen" },
     ],
+    nextLevel: totem21_3,
 };
 
 export const totem21: IItem = {
@@ -518,7 +737,7 @@ export const totem21: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_TOTEM_2,
+    image: IMAGE_ITEM_TOTEM_21,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [
@@ -529,6 +748,19 @@ export const totem21: IItem = {
 };
 
 // TOTEM 22
+
+export const totem22_3: IItem = {
+    id: "totem22",
+    name: "Totem 2.2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_TOTEM_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.TOTEM,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 4, valueType: "number" }],
+};
 
 export const totem22_2: IItem = {
     id: "totem22",
@@ -541,6 +773,7 @@ export const totem22_2: IItem = {
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
     battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 2, valueType: "number" }],
+    nextLevel: totem22_3,
 };
 
 export const totem22: IItem = {
@@ -561,6 +794,19 @@ export const totem22: IItem = {
 
 // WAND 21
 
+export const wand21_3: IItem = {
+    id: "wand21",
+    name: "Wand 2.1(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_WAND_2,
+    heroClasses: [],
+    weaponType: EWeaponItemType.WAND,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+};
+
 export const wand21_2: IItem = {
     id: "wand21",
     name: "Wand 2.1(2)",
@@ -572,6 +818,7 @@ export const wand21_2: IItem = {
     weaponType: EWeaponItemType.WAND,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
     battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    nextLevel: wand21_3,
 };
 
 export const wand21: IItem = {
@@ -590,13 +837,25 @@ export const wand21: IItem = {
 
 // WAND 22
 
+export const wand22_3: IItem = {
+    id: "wand22",
+    name: "Wand 2.2(3)",
+    type: EItemType.WEAPON,
+    level: 3,
+    priceLevel: 2,
+    image: IMAGE_ITEM_WAND_21,
+    heroClasses: [],
+    weaponType: EWeaponItemType.WAND,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 11, valueType: "number", attribute: "basicAttack" }],
+};
+
 export const wand22_2: IItem = {
     id: "wand22",
     name: "Wand 2.2(2)",
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 2,
-    image: IMAGE_ITEM_WAND_2,
+    image: IMAGE_ITEM_WAND_21,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 7, valueType: "number", attribute: "basicAttack" }],
@@ -608,7 +867,7 @@ export const wand22: IItem = {
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
-    image: IMAGE_ITEM_WAND_2,
+    image: IMAGE_ITEM_WAND_21,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],

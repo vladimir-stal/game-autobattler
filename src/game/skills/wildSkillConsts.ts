@@ -191,12 +191,13 @@ export const attrDescArmor_3: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
     ],
+    image: IMAGE_SKILL_TEST,
 };
 
 export const attrDescArmor_2: IHeroSkillSet = {
     id: "attrDescArmor",
     name: "-armor(2)",
-    desc: "Break [10] armor to first enemy",
+    desc: "Break [14] armor to first enemy",
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.WILD],
@@ -204,12 +205,13 @@ export const attrDescArmor_2: IHeroSkillSet = {
         {
             type: EHeroSkillType.ATTRIBUTE_DECREASE,
             isBasicAttack: true,
-            value: 10, //TODO MP: add MP to armor decrease
+            value: 14, //TODO MP: add MP to armor decrease
             valueType: "number",
             attribute: "armor",
             targetType: ETargetType.FIRST_ENEMY,
         },
     ],
+    image: IMAGE_SKILL_TEST,
     nextLevel: attrDescArmor_3,
 };
 
@@ -230,6 +232,7 @@ export const attrDescArmor: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
     ],
+    image: IMAGE_SKILL_TEST,
     nextLevel: attrDescArmor_2,
 };
 

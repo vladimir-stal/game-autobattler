@@ -372,5 +372,6 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_ATTRIBUTE_MAGIC_POWER, "assets/sprites/attributes/magicPower.png");
     scene.load.image(IMAGE_ATTRIBUTE_PHYSICAL_POWER, "assets/sprites/attributes/physicalPower.png");
 
-    scene.load.image(IMAGE_CARD_EXP, "assets/sprites/attributes/exp.png");
+    //scene.load.image(IMAGE_CARD_EXP, "assets/sprites/attributes/exp.png");
+    scene.load.image(IMAGE_CARD_EXP, "assets/sprites/exp.png");
 }

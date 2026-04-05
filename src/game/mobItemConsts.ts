@@ -153,7 +153,7 @@ export const itemGoblinGoldCoin_2: IItem = {
     priceLevel: 3,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses:[
+    afterDuelBonuses: [
         { type: EItemAfterDuelBonusType.GOLD, value: 2 },
         { type: EItemAfterDuelBonusType.EXP, value: 2, condition: EItemAfterDuelBonusCondition.LOST },
     ],
@@ -190,14 +190,14 @@ export const itemGoblinBoneDagger_2: IItem = {
     battleBonuses: [{ type: EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK, value: 1, valueType: "number", status: EStatusType.POISON }],
     heroClassBonuses: [
         {
-            heroClass: EHeroClass.MOB, 
-            bonus: { 
-                type: EItemBonusType.ATTRIBUTE, 
-                value: 1, 
-                valueType: "number", 
-                attribute: "basicAttack"
-            }
-        }
+            heroClass: EHeroClass.MOB,
+            bonus: {
+                type: EItemBonusType.ATTRIBUTE,
+                value: 1,
+                valueType: "number",
+                attribute: "basicAttack",
+            },
+        },
     ],
     image: IMAGE_ITEM_GOBLIN_BONE_DAGGER,
 };
@@ -213,14 +213,14 @@ export const itemGoblinBoneDagger: IItem = {
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
     heroClassBonuses: [
         {
-            heroClass: EHeroClass.MOB, 
-            battleBonus: { 
-                type: EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK, 
-                value: 1, 
-                valueType: "number", 
+            heroClass: EHeroClass.MOB,
+            battleBonus: {
+                type: EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK,
+                value: 1,
+                valueType: "number",
                 status: EStatusType.POISON,
-            }
-        }
+            },
+        },
     ],
     image: IMAGE_ITEM_GOBLIN_BONE_DAGGER,
     nextLevel: itemGoblinBoneDagger_2,
@@ -236,7 +236,7 @@ export const regenMantle_2: IItem = {
     priceLevel: 1,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 2 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 2, condition: EItemAfterDuelBonusCondition.WON }],
     image: IMAGE_ITEM_REGEN_MANTLE,
 };
 
@@ -248,7 +248,7 @@ export const regenMantle: IItem = {
     priceLevel: 1,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
     image: IMAGE_ITEM_REGEN_MANTLE,
     nextLevel: regenMantle_2,
 };

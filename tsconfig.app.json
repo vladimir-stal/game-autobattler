@@ -16,6 +16,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    "strictPropertyInitialization": false, //TODO: change to true
+
     /* Linting */
     //"strict": true,
     //"noUnusedLocals": true,

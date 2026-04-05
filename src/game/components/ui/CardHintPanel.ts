@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import { EHeroClass, EHeroClassType, EItemBonusType, EItemType, IHeroSkillSet, IItem, IUnit } from "../../../types";
+import { EHeroClass, EHeroClassType, EItemBonusType, EItemTargetType, EItemType, IHeroSkillSet, IItem, IUnit } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { GameScene } from "../../scenes/GameScene";
 import {
@@ -156,7 +156,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         //this.itemImageBorder.setStrokeStyle(1, 0x777777);
         //this.add(this.itemImageBorder);
 
-        this.itemImage = this.scene.add.image(25, 150, IMAGE_ITEM_ARMOR_1, 0).setDisplaySize(150, 150).setOrigin(0, 0).setVisible(false);
+        this.itemImage = this.scene.add.image(25, 150, IMAGE_ITEM_ARMOR_1).setDisplaySize(150, 150).setOrigin(0, 0).setVisible(false);
         this.add(this.itemImage);
 
         // item tags
@@ -273,7 +273,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         if (isFromHero) {
             const { image } = skillSet;
 
-            this.skillImage.setTexture(image);
+            image && this.skillImage.setTexture(image);
             this.skillImage.setVisible(true);
 
             // tags
@@ -300,9 +300,10 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.hideSkillFields();
         this.hideUnitFields();
 
-        const { name, battleBonuses, bonuses, heroClassBonuses, afterDuelBonuses } = item;
+        const { name, level, battleBonuses, bonuses, heroClassBonuses, afterDuelBonuses } = item;
 
-        this.titleText.setText(name);
+        const itemLevel = level > 1 ? ` (${level})` : "";
+        this.titleText.setText(name + itemLevel);
 
         //
 
@@ -320,7 +321,11 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         const attrsText =
             bonuses?.reduce((text, bonus) => {
-                text += i18n.attributes.attribute[bonus.attribute] + " " + bonus.value + "\n";
+                const { attribute, value, targetType } = bonus;
+                if (attribute) {
+                    const targetText = targetType === EItemTargetType.ALL_ALLIES ? " " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
+                    text += i18n.attributes.attribute[attribute] + " " + value + targetText + "\n";
+                }
                 return text;
             }, "") || "";
 
@@ -344,7 +349,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
                     }
                     if (bonus.bonus) {
                         const bonusType =
-                            bonus.bonus.type === EItemBonusType.ATTRIBUTE
+                            bonus.bonus.type === EItemBonusType.ATTRIBUTE && bonus.bonus.attribute
                                 ? i18n.attributes.attribute[bonus.bonus.attribute]
                                 : i18n.attributes.itemBonusType[bonus.bonus.type];
                         text += bonusType + " " + bonus.bonus.value;

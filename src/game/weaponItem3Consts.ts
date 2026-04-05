@@ -8,18 +8,25 @@ import {
     EWeaponItemType,
     IItem,
 } from "../types";
+import { i18n } from "./consts";
 import {
     IMAGE_ITEM_AXE_3,
+    IMAGE_ITEM_AXE_RED,
     IMAGE_ITEM_BOOK_MAGIC,
     IMAGE_ITEM_DAGGER_3,
+    IMAGE_ITEM_DAGGER_31,
     IMAGE_ITEM_LUTE_1,
     IMAGE_ITEM_MACE_3,
+    IMAGE_ITEM_MUSIC_31,
+    IMAGE_ITEM_MUSIC_32,
     IMAGE_ITEM_SCEPTER_3,
     IMAGE_ITEM_SHIELD_3,
+    IMAGE_ITEM_SHIELD_31,
     IMAGE_ITEM_SPIRIT_SPEAR,
-    IMAGE_ITEM_STAFF_3,
+    IMAGE_ITEM_STAFF_31,
     IMAGE_ITEM_SWORD_3,
     IMAGE_ITEM_TOTEM_3,
+    IMAGE_ITEM_TOTEM_31,
     IMAGE_ITEM_WAND_3,
 } from "./utils/load/imageLoadItems";
 
@@ -29,7 +36,7 @@ import {
 
 export const magicBook31_3: IItem = {
     id: "magicBook31",
-    name: "Magic book(3)",
+    name: i18n.items.magicBook31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -42,7 +49,7 @@ export const magicBook31_3: IItem = {
 
 export const magicBook31_2: IItem = {
     id: "magicBook31",
-    name: "Magic book(2)",
+    name: i18n.items.magicBook31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -56,7 +63,7 @@ export const magicBook31_2: IItem = {
 
 export const magicBook31: IItem = {
     id: "magicBook31",
-    name: "Magic book",
+    name: i18n.items.magicBook31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -72,26 +79,26 @@ export const magicBook31: IItem = {
 
 export const magicSpear31_3: IItem = {
     id: "magicSpear31",
-    name: "Magic spear",
+    name: i18n.items.magicSpear31,
     type: EItemType.WEAPON,
-    level: 1,
+    level: 3,
     priceLevel: 3,
     image: IMAGE_ITEM_SPIRIT_SPEAR,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MASTER],
-    weaponType: EWeaponItemType.BOOK,
+    weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 4 }],
 };
 
 export const magicSpear31_2: IItem = {
     id: "magicSpear31",
-    name: "Magic spear",
+    name: i18n.items.magicSpear31,
     type: EItemType.WEAPON,
-    level: 1,
+    level: 2,
     priceLevel: 3,
     image: IMAGE_ITEM_SPIRIT_SPEAR,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MASTER],
-    weaponType: EWeaponItemType.BOOK,
+    weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 2 }],
     nextLevel: magicSpear31_3,
@@ -99,13 +106,13 @@ export const magicSpear31_2: IItem = {
 
 export const magicSpear31: IItem = {
     id: "magicSpear31",
-    name: "Magic spear",
+    name: i18n.items.magicSpear31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
     image: IMAGE_ITEM_SPIRIT_SPEAR,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MASTER],
-    weaponType: EWeaponItemType.BOOK,
+    weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 1 }],
     nextLevel: magicSpear31_2,
@@ -117,7 +124,7 @@ export const magicSpear31: IItem = {
 
 export const axe31_3: IItem = {
     id: "axe31",
-    name: "Axe 3.1(3)",
+    name: i18n.items.axe31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -130,7 +137,7 @@ export const axe31_3: IItem = {
 
 export const axe31_2: IItem = {
     id: "axe31",
-    name: "Axe 3.1(2)",
+    name: i18n.items.axe31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -144,7 +151,7 @@ export const axe31_2: IItem = {
 
 export const axe31: IItem = {
     id: "axe31",
-    name: "Axe 3.1",
+    name: i18n.items.axe31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -160,11 +167,11 @@ export const axe31: IItem = {
 
 export const axe32_3: IItem = {
     id: "axe32",
-    name: "Axe 3.2(3)",
+    name: i18n.items.axe32,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_AXE_3,
+    image: IMAGE_ITEM_AXE_RED,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 9, valueType: "number", attribute: "basicAttack" }],
@@ -176,11 +183,11 @@ export const axe32_3: IItem = {
 
 export const axe32_2: IItem = {
     id: "axe32",
-    name: "Axe 3.2(2)",
+    name: i18n.items.axe32,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_AXE_3,
+    image: IMAGE_ITEM_AXE_RED,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 7, valueType: "number", attribute: "basicAttack" }],
@@ -193,11 +200,11 @@ export const axe32_2: IItem = {
 
 export const axe32: IItem = {
     id: "axe32",
-    name: "Axe 3.2",
+    name: i18n.items.axe32,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_AXE_3,
+    image: IMAGE_ITEM_AXE_RED,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
@@ -214,11 +221,11 @@ export const axe32: IItem = {
 
 export const dagger31_3: IItem = {
     id: "dagger31",
-    name: "Dagger 3.1(3)",
+    name: i18n.items.dagger31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_DAGGER_3,
+    image: IMAGE_ITEM_DAGGER_31,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [
@@ -229,11 +236,11 @@ export const dagger31_3: IItem = {
 
 export const dagger31_2: IItem = {
     id: "dagger31",
-    name: "Dagger 3.1(2)",
+    name: i18n.items.dagger31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_DAGGER_3,
+    image: IMAGE_ITEM_DAGGER_31,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [
@@ -245,11 +252,11 @@ export const dagger31_2: IItem = {
 
 export const dagger31: IItem = {
     id: "dagger31",
-    name: "Dagger 3.1",
+    name: i18n.items.dagger31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_DAGGER_3,
+    image: IMAGE_ITEM_DAGGER_31,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [
@@ -263,7 +270,7 @@ export const dagger31: IItem = {
 
 export const dagger32_3: IItem = {
     id: "dagger32",
-    name: "Dagger 3.2(3)",
+    name: i18n.items.dagger32,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -271,12 +278,13 @@ export const dagger32_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
+    evolving: true,
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 3 }],
 };
 
 export const dagger32_2: IItem = {
     id: "dagger32",
-    name: "Dagger 3.2(2)",
+    name: i18n.items.dagger32,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -284,13 +292,14 @@ export const dagger32_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
+    evolving: true,
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 2 }],
     nextLevel: dagger32_3,
 };
 
 export const dagger32: IItem = {
     id: "dagger32",
-    name: "Dagger 3.2",
+    name: i18n.items.dagger32,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -298,6 +307,7 @@ export const dagger32: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
+    evolving: true,
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 1 }],
     nextLevel: dagger32_2,
 };
@@ -308,7 +318,7 @@ export const dagger32: IItem = {
 
 export const mace31_3: IItem = {
     id: "mace31",
-    name: "Mace 3.1(3)",
+    name: i18n.items.mace31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -316,7 +326,7 @@ export const mace31_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicPhysicalPower" },
         { type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicMagicPower" },
     ],
@@ -324,7 +334,7 @@ export const mace31_3: IItem = {
 
 export const mace31_2: IItem = {
     id: "mace31",
-    name: "Mace 3.1(2)",
+    name: i18n.items.mace31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -332,7 +342,7 @@ export const mace31_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicPhysicalPower" },
         { type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicMagicPower" },
     ],
@@ -341,7 +351,7 @@ export const mace31_2: IItem = {
 
 export const mace31: IItem = {
     id: "mace31",
-    name: "Mace 3.1",
+    name: i18n.items.mace31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -349,7 +359,7 @@ export const mace31: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicPhysicalPower" },
         { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicMagicPower" },
     ],
@@ -363,7 +373,7 @@ export const mace31: IItem = {
 
 export const sword31_3: IItem = {
     id: "sword31",
-    name: "Sword 3.1(3)",
+    name: i18n.items.sword31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -378,7 +388,7 @@ export const sword31_3: IItem = {
 
 export const sword31_2: IItem = {
     id: "sword31",
-    name: "Sword 3.1(2)",
+    name: i18n.items.sword31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -394,7 +404,7 @@ export const sword31_2: IItem = {
 
 export const sword31: IItem = {
     id: "sword31",
-    name: "Sword 3.1",
+    name: i18n.items.sword31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -414,24 +424,24 @@ export const sword31: IItem = {
 
 export const staff31_3: IItem = {
     id: "staff31",
-    name: "Staff 3.1(3)",
+    name: i18n.items.staff31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_STAFF_3,
+    image: IMAGE_ITEM_STAFF_31,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 3, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 4, valueType: "number" }],
 };
 
 export const staff31_2: IItem = {
     id: "staff31",
-    name: "Staff 3.1(2)",
+    name: i18n.items.staff31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_STAFF_3,
+    image: IMAGE_ITEM_STAFF_31,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
@@ -441,11 +451,11 @@ export const staff31_2: IItem = {
 
 export const staff31: IItem = {
     id: "staff31",
-    name: "Staff 3.1",
+    name: i18n.items.staff31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_STAFF_3,
+    image: IMAGE_ITEM_STAFF_31,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
@@ -459,11 +469,11 @@ export const staff31: IItem = {
 
 export const musical31_3: IItem = {
     id: "musical31",
-    name: "Lute 31(3)",
+    name: i18n.items.musical31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_LUTE_1,
+    image: IMAGE_ITEM_MUSIC_31,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicMaxHp" }],
@@ -472,11 +482,11 @@ export const musical31_3: IItem = {
 
 export const musical31_2: IItem = {
     id: "musical31",
-    name: "Lute 31(2)",
+    name: i18n.items.musical31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_LUTE_1,
+    image: IMAGE_ITEM_MUSIC_31,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicMaxHp" }],
@@ -486,11 +496,11 @@ export const musical31_2: IItem = {
 
 export const musical31: IItem = {
     id: "musical31",
-    name: "Lute 31",
+    name: i18n.items.musical31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_LUTE_1,
+    image: IMAGE_ITEM_MUSIC_31,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicMaxHp" }],
@@ -502,11 +512,11 @@ export const musical31: IItem = {
 
 export const musical32_3: IItem = {
     id: "musical32",
-    name: "Lute 32(3)",
+    name: i18n.items.musical32,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_LUTE_1,
+    image: IMAGE_ITEM_MUSIC_32,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 26, valueType: "number", attribute: "basicMagicPower" }],
@@ -514,11 +524,11 @@ export const musical32_3: IItem = {
 
 export const musical32_2: IItem = {
     id: "musical32",
-    name: "Lute 32(2)",
+    name: i18n.items.musical32,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_LUTE_1,
+    image: IMAGE_ITEM_MUSIC_32,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 14, valueType: "number", attribute: "basicMagicPower" }],
@@ -527,11 +537,11 @@ export const musical32_2: IItem = {
 
 export const musical32: IItem = {
     id: "musical32",
-    name: "Lute 32",
+    name: i18n.items.musical32,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_LUTE_1,
+    image: IMAGE_ITEM_MUSIC_32,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicMagicPower" }],
@@ -544,7 +554,7 @@ export const musical32: IItem = {
 
 export const scepter31_3: IItem = {
     id: "scepter31",
-    name: "Scepter 3.1(3)",
+    name: i18n.items.scepter31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -559,7 +569,7 @@ export const scepter31_3: IItem = {
 
 export const scepter31_2: IItem = {
     id: "scepter31",
-    name: "Scepter 3.1(2)",
+    name: i18n.items.scepter31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -575,7 +585,7 @@ export const scepter31_2: IItem = {
 
 export const scepter31: IItem = {
     id: "scepter31",
-    name: "Scepter 3.1",
+    name: i18n.items.scepter31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -595,7 +605,7 @@ export const scepter31: IItem = {
 
 export const shield31_3: IItem = {
     id: "shield31",
-    name: "Shield 3.1(3)",
+    name: i18n.items.shield31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -607,7 +617,7 @@ export const shield31_3: IItem = {
 
 export const shield31_2: IItem = {
     id: "shield31",
-    name: "Shield 3.1(2)",
+    name: i18n.items.shield31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -620,7 +630,7 @@ export const shield31_2: IItem = {
 
 export const shield31: IItem = {
     id: "shield31",
-    name: "Shield 3.1",
+    name: i18n.items.shield31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -635,11 +645,11 @@ export const shield31: IItem = {
 
 export const shield32_3: IItem = {
     id: "shield32",
-    name: "Shield 3.2(3)",
+    name: i18n.items.shield32,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_SHIELD_3,
+    image: IMAGE_ITEM_SHIELD_31,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicArmor" }],
@@ -648,11 +658,11 @@ export const shield32_3: IItem = {
 
 export const shield32_2: IItem = {
     id: "shield32",
-    name: "Shield 3.2(2)",
+    name: i18n.items.shield32,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_SHIELD_3,
+    image: IMAGE_ITEM_SHIELD_31,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicArmor" }],
@@ -662,11 +672,11 @@ export const shield32_2: IItem = {
 
 export const shield32: IItem = {
     id: "shield32",
-    name: "Shield 3.2",
+    name: i18n.items.shield32,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_SHIELD_3,
+    image: IMAGE_ITEM_SHIELD_31,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicArmor" }],
@@ -680,7 +690,7 @@ export const shield32: IItem = {
 
 export const totem31_3: IItem = {
     id: "totem31",
-    name: "Totem 3.1(3)",
+    name: i18n.items.totem31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -688,12 +698,12 @@ export const totem31_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 7, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.TOTEM_INCREASE_VALUE, value: 3, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.TOTEM_INCREASE_VALUE, value: 5, valueType: "number" }],
 };
 
 export const totem31_2: IItem = {
     id: "totem31",
-    name: "Totem 3.1(2)",
+    name: i18n.items.totem31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -707,7 +717,7 @@ export const totem31_2: IItem = {
 
 export const totem31: IItem = {
     id: "totem31",
-    name: "Totem 3.1",
+    name: i18n.items.totem31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
@@ -723,11 +733,11 @@ export const totem31: IItem = {
 
 export const totem32_3: IItem = {
     id: "totem32",
-    name: "Totem 3.2(3)",
+    name: i18n.items.totem32,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_TOTEM_3,
+    image: IMAGE_ITEM_TOTEM_31,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicHpRegen" }],
@@ -736,11 +746,11 @@ export const totem32_3: IItem = {
 
 export const totem32_2: IItem = {
     id: "totem32",
-    name: "Totem 3.2(2)",
+    name: i18n.items.totem32,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_TOTEM_3,
+    image: IMAGE_ITEM_TOTEM_31,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicHpRegen" }],
@@ -750,11 +760,11 @@ export const totem32_2: IItem = {
 
 export const totem32: IItem = {
     id: "totem32",
-    name: "Totem 3.2",
+    name: i18n.items.totem32,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_TOTEM_3,
+    image: IMAGE_ITEM_TOTEM_31,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicHpRegen" }],
@@ -768,7 +778,7 @@ export const totem32: IItem = {
 
 export const wand31_3: IItem = {
     id: "wand31",
-    name: "Wand 3.1(3)",
+    name: i18n.items.wand31,
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 3,
@@ -781,7 +791,7 @@ export const wand31_3: IItem = {
 
 export const wand31_2: IItem = {
     id: "wand31",
-    name: "Wand 3.1(2)",
+    name: i18n.items.wand31,
     type: EItemType.WEAPON,
     level: 2,
     priceLevel: 3,
@@ -795,7 +805,7 @@ export const wand31_2: IItem = {
 
 export const wand31: IItem = {
     id: "wand31",
-    name: "Wand 3.1",
+    name: i18n.items.wand31,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 3,

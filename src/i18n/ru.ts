@@ -1,4 +1,4 @@
-import { EHeroClass, EItemAfterDuelBonusCondition, ERoomType, ESelectCardHint, ESelectRoomHint } from "../types";
+import { EHeroClass, EItemAfterDuelBonusCondition, EItemTargetType, ERoomType, ESelectCardHint, ESelectRoomHint } from "../types";
 import { Ii18n } from "./en";
 
 export const i18n: Ii18n = {
@@ -30,11 +30,11 @@ export const i18n: Ii18n = {
             ADDITIONAL_BUFF_TARGET: "Бафф также накладывается\n на случайного союзника,\nкроме начальной цели.",
             APPLY_STATUS_ON_BASIC_ATTACK: "Накладывает статус при базовой атаке",
             //APPLY_POISON_ON_HIT: "Накладывает яд при базовой атаке",
-            BASIC_ATTACK_TWICE: "Атакует дважды",
+            BASIC_ATTACK_TWICE: "Атакует дважды, но снижает\n урон атаки до %",
             BASIC_ONCE_IN_TWO_TURNS: "атакует одинр раз в 2 хода",
             CRIT_EVERY_TWO_TURNS: "Критический удар каждые 2 хода",
-            CRIT_INCR_NONCRIT_DECR: "Увеличивает критический удар",
-            CRIT_WITH_MAGIC: "Магические атаки могут быть критическими",
+            CRIT_INCR_NONCRIT_DECR: "Увеличивает урон критической атаки,\nно уменьшает обычный урон на %",
+            CRIT_WITH_MAGIC: "Магические атаки могут\nбыть критическими",
             HEAL_INCREASE: "Увеливает лечение",
             INCREASE_DAMAGE_TO_ARMOR: "Увеливает урон по броне",
             INCREASE_DAMAGE_TO_BLEEDING: "Увеливает урон по целям с кровотоком",
@@ -136,19 +136,55 @@ export const i18n: Ii18n = {
         wand1: "Слабый жезл",
         // COMMON
         // basic
-        basic_ring_damage: "Кольцо воина",
-        basic_ring_regen: "Кольцо регенерации",
+        basic_ring_damage: "Сломанное кольцо воина",
+        basic_ring_regen: "Сломанное кольцо друида",
         basic_gold_bag: "Мешок с золотом",
         basic_exp_ring: "Кольцо опыта",
-        basic_heal: "Кольцо жреца",
+        basic_heal: "Сломанное кольцо жреца",
         basic_hat: "Старый шлем",
-        basic_jacket: "Старая куртка",
+        basic_jacket: "Старый нагрудник",
         basic_pants: "Старые штаны",
         basic_boots: "Старые ботинки",
         // level 2
+        // COMMON
+        ring_heal2: "Кольцо жреца",
+        ring_damage2: "Кольцо воина",
+        ring_regen2: "Кольцо друида",
+        gloves_war2: "Перчатки воина",
+        gloves_priest2: "Перчатки жреца",
+        gloves_magic2: "Перчатки мага",
+        pants21: "Качественные штаны",
+        jacket21: "Нагрудник",
+        boots21: "Качественные ботинки",
+        hat21: "Шлем",
+        hp_amulet: "Амулет здоровья",
+        armor_amulet: "Амулет брони",
         // level 3
-        evasion_amulet: "Амулет крита",
-        crit_amulet: "Амулет уклонения",
+        magicBook31: "Книга магии",
+        magicSpear31: "Волшебное копье",
+        axe31: "Секира дровосека",
+        axe32: "Кровавый топор",
+        dagger31: "Нож проныры",
+        dagger32: "Стальной кинжал",
+        mace31: "Молот",
+        sword31: "Стальной меч",
+        staff31: "Посох огня",
+        musical31: "Флейта здоровья",
+        musical32: "Магическая скрипка",
+        scepter31: "Скипетр жреца",
+        shield31: "Дубовый щит",
+        shield32: "Круглый щит",
+        totem31: "Тотем шамана",
+        totem32: "Тотем регенерации",
+        wand31: "Магический жезл",
+        // COMMON
+        evasion_amulet: "Амулет уклонения",
+        crit_amulet: "Амулет крита",
+        summonerMantle3: "Накидка мистика",
+        // level 4
+        // COMMON
+        armorMassHp: "Аура здоровья",
+        helmetMassArmor: "Аура брони",
     },
     totems: {
         basicWildTotem: "Дикий тотем",
@@ -497,5 +533,7 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.LOST]: "Поражение",
         [EItemAfterDuelBonusCondition.IS_HERO]: "Герой",
         [EItemAfterDuelBonusCondition.IS_MOB]: "Не герой",
+        //
+        [EItemTargetType.ALL_ALLIES]: "для всех союзников",
     },
 };

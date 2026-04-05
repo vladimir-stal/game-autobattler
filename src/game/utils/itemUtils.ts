@@ -66,7 +66,7 @@ const applyItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
                     const newAttrValue = unit[attribute] + calculateIncreaseValue(unit[attribute], value, valueType);
                     unit[attribute] = newAttrValue;
                 } else if (targetType === EItemTargetType.ALL_ALLIES) {
-                    units.forEach((u) => {
+                    units?.forEach((u) => {
                         const newAttrValue = u[attribute] + calculateIncreaseValue(u[attribute], value, valueType);
                         u[attribute] = newAttrValue;
                     });
@@ -111,7 +111,7 @@ const removeItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
                     const newAttrValue = unit[attribute] - calculateIncreaseValue(unit[attribute], value, valueType);
                     unit[attribute] = newAttrValue;
                 } else if (targetType === EItemTargetType.ALL_ALLIES) {
-                    units.forEach((u) => {
+                    units?.forEach((u) => {
                         if (!u) {
                             return;
                         }
@@ -129,15 +129,18 @@ const removeItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
     }
 };
 
-export const getWeaponItemHeroClasses = (itemType: EWeaponItemType): EHeroClass[] => {
+export const getWeaponItemHeroClasses = (itemType: EWeaponItemType | undefined): EHeroClass[] => {
     switch (itemType) {
+        // common
+        case EWeaponItemType.DAGGER:
+            return [EHeroClass.ALL];
+        case EWeaponItemType.BOOK:
+            return [EHeroClass.MAGIC, EHeroClass.SUMMON, EHeroClass.DARK, EHeroClass.PRIEST];
+        case EWeaponItemType.SPEAR:
+            return [EHeroClass.WARRIOR, EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MASTER];
+        // for 2 classes
         case EWeaponItemType.AXE:
             return [EHeroClass.WILD, EHeroClass.MASTER];
-        case EWeaponItemType.BOOK:
-            return [EHeroClass.ALL];
-        case EWeaponItemType.DAGGER:
-            //return [EHeroClass.BARD];
-            return [EHeroClass.ALL];
         case EWeaponItemType.MACE:
             return [EHeroClass.PRIEST, EHeroClass.ORDER];
         case EWeaponItemType.MUSICAL:
@@ -308,12 +311,12 @@ export const getAllHoldingItems = (gameScene: GameScene): IItem[] => {
     // skills in inventory
     gameScene.inventoryPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.ITEM) {
-            list.push(slot.slot.card.card.item);
+            slot.slot.card.card.item && list.push(slot.slot.card.card.item);
         }
     });
     gameScene.unitPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.UNIT) {
-            slot.slot.card.card.unit.items.forEach((item) => {
+            slot?.slot?.card?.card?.unit?.items.forEach((item) => {
                 if (item) list.push(item);
             });
         }
@@ -340,7 +343,7 @@ export const getHeroClassWeaponItemTop = (heroClass: EHeroClass, day: number): I
     switch (day) {
         case 0:
         case 1:
-            return getRandomArrayItem(basicWeaponItemsByClass[heroClass]);
+            return getRandomArrayItem(basicWeaponItemsByClass[heroClass]!);
         case 2:
         default: {
             const weaponType = getRandomArrayItem(getHeroClassWeaponTypes(heroClass));

@@ -1,6 +1,6 @@
-import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
+import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem } from "../types";
 import { i18n } from "./consts";
-import { IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoadItems";
+import { IMAGE_ITEM_AMULET_CRIT_3, IMAGE_ITEM_AMULET_EVASION_3, IMAGE_ITEM_POTION_1, IMAGE_ITEM_SUMMONER_MANTLE_3 } from "./utils/load/imageLoadItems";
 
 ////// COMMON ITEMS LEVEL 3 /////////////////////////////////////////////////
 
@@ -10,23 +10,23 @@ import { IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoadItems";
 
 export const crit_amulet_3: IItem = {
     id: "crit_amulet",
-    name: i18n.items.crit_amulet + "(3)",
+    name: i18n.items.crit_amulet,
     type: EItemType.COMMON,
     level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_AMULET_CRIT_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 4 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 5 }],
 };
 
 export const crit_amulet_2: IItem = {
     id: "crit_amulet",
-    name: i18n.items.crit_amulet + "(2)",
+    name: i18n.items.crit_amulet,
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_AMULET_CRIT_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 3 }],
@@ -39,7 +39,7 @@ export const crit_amulet: IItem = {
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_AMULET_CRIT_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 2 }],
@@ -52,23 +52,23 @@ export const crit_amulet: IItem = {
 
 export const evasion_amulet_3: IItem = {
     id: "evasion_amulet",
-    name: i18n.items.evasion_amulet + "(3)",
+    name: i18n.items.evasion_amulet,
     type: EItemType.COMMON,
-    level: 1,
+    level: 3,
     priceLevel: 3,
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_AMULET_EVASION_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 4 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 5 }],
 };
 
 export const evasion_amulet_2: IItem = {
     id: "evasion_amulet",
-    name: i18n.items.evasion_amulet + "(2)",
+    name: i18n.items.evasion_amulet,
     type: EItemType.COMMON,
-    level: 1,
+    level: 2,
     priceLevel: 3,
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_AMULET_EVASION_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 3 }],
@@ -81,7 +81,7 @@ export const evasion_amulet: IItem = {
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 3,
-    image: IMAGE_ITEM_POTION_1,
+    image: IMAGE_ITEM_AMULET_EVASION_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
     afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 2 }],
@@ -89,5 +89,31 @@ export const evasion_amulet: IItem = {
 };
 
 //
-// ???
+// EVASION MANTLE
 //
+
+export const summonerMantle3_2: IItem = {
+    id: "regen_mantle",
+    name: i18n.items.summonerMantle3,
+    type: EItemType.COMMON,
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 15, valueType: "number", attribute: "basicMaxHp" }],
+    heroClassBonuses: [{ heroClass: EHeroClass.SUMMON, battleBonus: { type: EItemBattleBonusType.INCREASE_SUMMON_HP, value: 15, valueType: "number" } }],
+    image: IMAGE_ITEM_SUMMONER_MANTLE_3,
+    //nextLevel: summonerMantle3_2,
+};
+
+export const summonerMantle3: IItem = {
+    id: "regen_mantle",
+    name: i18n.items.summonerMantle3,
+    type: EItemType.COMMON,
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicMaxHp" }],
+    heroClassBonuses: [{ heroClass: EHeroClass.SUMMON, battleBonus: { type: EItemBattleBonusType.INCREASE_SUMMON_HP, value: 10, valueType: "number" } }],
+    image: IMAGE_ITEM_SUMMONER_MANTLE_3,
+    nextLevel: summonerMantle3_2,
+};
