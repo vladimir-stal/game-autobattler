@@ -8,9 +8,9 @@ export class MobCard extends Phaser.GameObjects.Container {
     titleText: GameObjects.Text;
     descriptionText: GameObjects.Text;
 
-    options: { name: string; description: string };
+    options: { name: string; description?: string };
 
-    constructor(scene: GameScene, x: number, y: number, options: { name: string; description: string }) {
+    constructor(scene: GameScene, x: number, y: number, options: { name: string; description?: string }) {
         super(scene, x, y);
         this.options = options;
         this.render();
@@ -25,7 +25,7 @@ export class MobCard extends Phaser.GameObjects.Container {
         this.titleText = this.scene.add.text(0, 20, name, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.titleText);
 
-        this.descriptionText = this.scene.add.text(0, 50, description, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
+        this.descriptionText = this.scene.add.text(0, 50, description || "", { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.descriptionText);
     }
 }

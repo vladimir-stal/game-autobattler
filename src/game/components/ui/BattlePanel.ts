@@ -684,7 +684,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         this.cards[this.currentActiveUnitId].setIsActive(false);
                     }
                     this.currentActiveUnitId = unitId;
-                    this.cards[unitId].setIsActive(true);
+                    this.cards[unitId]?.setIsActive(true);
 
                     if (mode === "FAST") {
                         this.playNextAction();

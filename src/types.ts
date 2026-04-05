@@ -673,7 +673,8 @@ export enum EItemTargetType {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type TValueType = "number" | "percent";
+export type TValueType = "number" | "percent" | "evolvedNumber" | "evolvedPercent";
+// evolvedNumber is used for items with evolve mechanics; acts the same way as "number", but is carried over to upgraded item
 
 export type TUnits = (IUnit | null)[];
 

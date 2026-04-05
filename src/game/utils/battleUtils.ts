@@ -128,7 +128,7 @@ export const getHighestStatusTarget = (units: TBattleUnits, statusType: EStatusT
     return units.reduce(
         (result, unit) => {
             if (unit && unit.hp > 0) {
-                const statusValue = unit.statuses.find((status) => status.type === statusType).value || 0;
+                const statusValue = unit.statuses.find((status) => status.type === statusType)?.value || 0;
 
                 if (!result.unit) {
                     return { unit, statusValue };
@@ -352,9 +352,9 @@ export const getAllyTotems = (unit: IBattleUnit, units: TBattleUnits, targetType
 };
 
 export const calculateBuffValue = (initialValue: number, buff: IBuff, unit: IBattleUnit) => {
-    if (buff.valueType === "number") {
+    if (buff.valueType === "number" || buff.valueType === "evolvedNumber") {
         return buff.value;
-    } else if (buff.valueType === "percent") {
+    } else if (buff.valueType === "percent" || buff.valueType === "evolvedPercent") {
         const initValue = buff.valueFrom ? unit[buff.valueFrom] : initialValue;
         let buffValue = Math.floor((initValue * buff.value) / 100);
         return buffValue;
@@ -368,9 +368,9 @@ export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, de
     const { value, valueType, mpScale, ppScale } = debuff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-    if (valueType === "number") {
+    if (valueType === "number" || valueType === "evolvedNumber") {
         return value + mpScaleValue + ppScaleValue;
-    } else if (valueType === "percent") {
+    } else if (valueType === "percent" || valueType === "evolvedPercent") {
         const debuffValue = Math.floor((initialValue * value) / 100);
         return (debuffValue || 1) + mpScaleValue + ppScaleValue;
     }
@@ -378,9 +378,9 @@ export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, de
 };
 
 export const calculateIncreaseValue = (initialValue: number, increaseValue: number, increaseType: TValueType, percentOfValue?: number) => {
-    if (increaseType === "number") {
+    if (increaseType === "number" || increaseType === "evolvedNumber" ) {
         return increaseValue;
-    } else if (increaseType === "percent") {
+    } else if (increaseType === "percent" || increaseType === "evolvedPercent") {
         const initValue = percentOfValue !== undefined ? percentOfValue : initialValue;
         let incValue = Math.floor((initValue * increaseValue) / 100);
         return incValue;

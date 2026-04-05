@@ -285,7 +285,6 @@ export const basic_exp_bag_2: IItem = {
 
 export const basic_exp_bag: IItem = {
     id: "basic_exp_ring",
-    //name: "Exp ring",
     name: i18n.items.basic_exp_ring,
     type: EItemType.COMMON,
     level: 1,
@@ -304,7 +303,6 @@ export const basic_exp_bag: IItem = {
 
 export const basic_heal_2: IItem = {
     id: "basic_heal",
-    //name: "Heal ring(2)",
     name: i18n.items.basic_heal,
     type: EItemType.COMMON,
     level: 2,
@@ -317,7 +315,6 @@ export const basic_heal_2: IItem = {
 
 export const basic_heal: IItem = {
     id: "basic_heal",
-    //name: "Heal ring",
     name: i18n.items.basic_heal,
     type: EItemType.COMMON,
     level: 1,

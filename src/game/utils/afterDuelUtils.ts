@@ -110,18 +110,16 @@ const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit:
 
 const evolveBonus = (bonuses: IItemBonus[], attribute: THeroAttribute, value: number) => {
     let found = false;
-    bonuses.forEach((b) => {
-        if (b.attribute === attribute && !(b.valueType === "percent") && !(b.targetType === EItemTargetType.ALL_ALLIES)) {
-            b.value += value;
-            found = true;
-        }
-    });
+    bonuses.filter((b) => (b.attribute === attribute && b.valueType === "evolvedNumber")).forEach((b) => {
+        b.value += value;
+        found = true;
+    })
     if (!found) {
         bonuses.push({
             type: EItemBonusType.ATTRIBUTE,
             value: value,
             attribute: attribute,
-            valueType: "number",
+            valueType: "evolvedNumber",
         });
     }
 };

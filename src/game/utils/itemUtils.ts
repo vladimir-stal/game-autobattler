@@ -6,6 +6,7 @@ import {
     EItemTargetType,
     EItemType,
     EWeaponItemType,
+    ICard,
     IItem,
     IItemBattleBonus,
     IItemBonus,
@@ -497,8 +498,11 @@ export const upgradeItem = (item: IItem): IItem => {
         console.log("NO NEXT LEVEL ITEM FOR ITEM", item.name);
         return item;
     }
-
-    return item.nextLevel;
+    const nextCopy = createItem(item.nextLevel);
+    if (item.evolving) {
+        nextCopy.bonuses.push(...item.bonuses.filter((b) => b.valueType === "evolvedNumber"));
+    }
+    return nextCopy;
 };
 
 // export const generateWeaponItem = (itemTemplate: IItem, level: number): IItem => {
@@ -536,5 +540,25 @@ export const getItemPrice = (item: IItem, additionalLevel: number = 0) => {
 };
 
 export const createItem = (item: IItem): IItem => {
-    return { ...item };
+    return { ...item, bonuses: [...item.bonuses] };
+};
+
+export const genShopItemCards = (items: IItem[], lastItemPriceUp: boolean = false): (ICard | null)[] => {
+    return items.map((item, index) => {
+        if (!item) {
+            return null;
+        } else {
+            const price = getItemPrice(item, lastItemPriceUp && index === items.length - 1 ? 1 : 0);
+            const shopItem = createItem(item);
+            return { item: shopItem, type: ECardType.ITEM, price };
+        }
+    });
+};
+
+export const genShopItemSingleCard = (item: IItem | undefined, freePrice: boolean = false): ICard | null => {
+    if (!item) {
+        return null;
+    }
+    const shopItem = createItem(item);
+    return { item: shopItem, type: ECardType.ITEM, price: freePrice ? 0 : getItemPrice(shopItem) };
 };

@@ -15,6 +15,7 @@ import {
     IUnit,
     THeroAttribute,
 } from "../../types";
+
 import { axe1, musical1, scepter1, shield1, staff1, sword1, totem1, wand1 } from "../basicWeaponItemConsts";
 import { bosses } from "../bossConsts";
 import { boots21, hat21, jacket21, pants21, ring_damage2, ring_heal2, ring_regen2 } from "../commonItemConsts2";
@@ -30,6 +31,7 @@ import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
+
 import {
     axe21,
     axe22,
@@ -70,6 +72,7 @@ import {
     wand31,
 } from "../weaponItem3Consts";
 import { dagger5_ba, music5AddBuffTarget, staff5MagicCrit, totem5HptoDmg, wand5ShockOnBA } from "../weaponItem5Consts";
+
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
 import {
@@ -88,6 +91,9 @@ import {
     getHeroClassesItemsWithTop,
     getAllItemTop,
     getAllHoldingItems,
+    createItem,
+    genShopItemCards,
+    genShopItemSingleCard,
 } from "./itemUtils";
 import { getMobs } from "./mobsUtils";
 import {
@@ -446,7 +452,7 @@ export const getCards = (
                 hintTextType = ESelectCardHint.TAKE_ITEM;
 
                 const item = getRandomArrayItem(getAllItems(day));
-                cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
+                cards = [null, genShopItemSingleCard(item, true), null];
             }
             break;
         case ERoomType.ITEM_COMMON_RANDOM:
@@ -456,7 +462,7 @@ export const getCards = (
                 hintTextType = ESelectCardHint.TAKE_ITEM;
 
                 const item = getRandomArrayItem(getCommonItems(day));
-                cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
+                cards = [null, genShopItemSingleCard(item, true), null];
             }
             break;
         case ERoomType.ITEM_WEAPON_SELL:
@@ -465,9 +471,8 @@ export const getCards = (
                 isSelectRequired = false;
                 isRerollAvailable = true;
 
-                cards = getRandomArrayItems(getWeaponItems(day), 4, true).map((item) => {
-                    return { item, type: ECardType.ITEM, price: getItemPrice(item) };
-                });
+                const items = getRandomArrayItems(getWeaponItems(day), 4, true);
+                cards = genShopItemCards(items);
             }
             break;
         case ERoomType.ITEM_COMMON_SELL:
@@ -476,13 +481,8 @@ export const getCards = (
                 isSelectRequired = false;
                 isRerollAvailable = true;
 
-                // cards = getRandomArrayItems(getCommonItems(day), 4, true).map((item) => {
-                //     return { item, type: ECardType.ITEM, price: getItemPrice(item) };
-                // });
-
-                cards = getCommonItemsWithTop(day, 4).map((item) => {
-                    return { item, type: ECardType.ITEM, price: getItemPrice(item) };
-                });
+                const items = getCommonItemsWithTop(day, 4);
+                cards = genShopItemCards(items);
             }
             break;
         case ERoomType.ITEM_WEAPON_CLASS_SELL:
@@ -493,9 +493,8 @@ export const getCards = (
                 if (!heroClasses) {
                     cards = [];
                 } else {
-                    cards = getRandomArrayItems(getHeroClassesWeaponItems(heroClasses, day), 3, true).map((item) => {
-                        return { item, type: ECardType.ITEM, price: getItemPrice(item) };
-                    });
+                    const items = getRandomArrayItems(getHeroClassesWeaponItems(heroClasses, day), 3, true);
+                    cards = genShopItemCards(items);
                 }
             }
             break;
@@ -524,7 +523,7 @@ export const getCards = (
                     cards = [];
                 } else {
                     const item = getRandomArrayItem(getHeroClassesItems(heroClasses, day));
-                    cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
+                    cards = [null, genShopItemSingleCard(item, true), null];
                 }
             }
             break;
@@ -558,7 +557,7 @@ export const getCards = (
                         item = basicWeapons.find((item) => item.weaponType === randomWeaponType);
                     }
 
-                    cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
+                    cards = [null, genShopItemSingleCard(item, true), null];
                 }
             }
             break;
@@ -569,19 +568,14 @@ export const getCards = (
                 const num = holdingItem ? 2 : 3;
                 const items = [...getXFromAllItems(day, num), topItem, holdingItem];
 
-                cards = items.map((item, index) => {
-                    const price = getItemPrice(item, holdingItem && index === items.length - 1 ? 1 : 0);
-                    return { item, type: ECardType.ITEM, price };
-                });
+                cards = genShopItemCards(items, !!holdingItem);
             }
             break;
         case ERoomType.ITEM_LEGEND_SELL:
             {
                 isSingleSelect = true;
                 const items = getRandomArrayItems(itemsLvl5, 3, true);
-                cards = items.map((item) => {
-                    return { item, type: ECardType.ITEM, price: getItemPrice(item) };
-                });
+                cards = genShopItemCards(items);
             }
             break;
         case ERoomType.ITEM_CLASS_SELL:
@@ -593,12 +587,7 @@ export const getCards = (
                     //const items = getRandomArrayItems(getHeroClassesItems(heroClasses, day), 4, true);
                     const items = getHeroClassesItemsWithTop(heroClasses, day, 4);
                     //console.log(items);
-                    cards = items.map((item) => {
-                        if (!item) {
-                            return null;
-                        }
-                        return { item, type: ECardType.ITEM, price: getItemPrice(item) };
-                    });
+                    cards = genShopItemCards(items);
                 }
             }
             break;
@@ -629,7 +618,7 @@ export const getCards = (
                         } else if (isSkillSet(itemOrSkill)) {
                             return { type: ECardType.SKILL, price: getSkillPrice(itemOrSkill.priceLevel), skill: itemOrSkill };
                         } else {
-                            return { type: ECardType.ITEM, item: itemOrSkill, price: getItemPrice(itemOrSkill) };
+                            return genShopItemSingleCard(itemOrSkill);
                         }
                     });
                 }
@@ -664,12 +653,14 @@ export const getCards = (
                 isRerollAvailable = true;
 
                 const topLevelSkill = getTopAllClassesSkill(day);
-                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 2, true);
-                const holdingSkill = getRandomArrayItem(getRandomArrayItems(getAllHoldingSkills(gameScene), 1, false));
-                if (holdingSkill) holdingSkill.priceLevel++;
+                const holdingSkill = getRandomArrayItem(getAllHoldingSkills(gameScene));
+                const num = holdingSkill ? 2 : 3;
+                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), num, true);
+                const skills = [...randomSkills, topLevelSkill, holdingSkill];
 
-                cards = [...randomSkills, topLevelSkill, holdingSkill].map((skill) => {
-                    return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel) };
+                cards = skills.map((skill, index) => {
+                    const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
+                    return { skill, type: ECardType.SKILL, price: price };
                 });
             }
             break;
@@ -684,24 +675,18 @@ export const getCards = (
 
                     const randomHeroClass = getRandomArrayItem(heroClasses);
                     const topLevelSkill = getTopHeroClassSkill(randomHeroClass, day);
-                    const holdingSkill = getRandomArrayItem(
-                        getRandomArrayItems(
-                            getAllHoldingSkills(gameScene).filter((skill) => skill.heroClasses.includes(randomHeroClass)),
-                            1,
-                            false,
-                        ),
-                    );
+                    const holdingSkill = getRandomArrayItem(getAllHoldingSkills(gameScene).filter((skill) => skill.heroClasses.includes(randomHeroClass)));
                     const num = holdingSkill ? 2 : 3;
-                    if (holdingSkill) holdingSkill.priceLevel++;
                     // if no randomHeroClass skills in current party, then holdingSkill is null
                     // and then 3 random skills instead of 2
                     const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), num, true);
 
-                    cards = [...skills, topLevelSkill, holdingSkill].map((skill) => {
+                    cards = [...skills, topLevelSkill, holdingSkill].map((skill, index) => {
                         if (!skill) {
                             return null;
                         }
-                        return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel) };
+                        const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
+                        return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel, price) };
                     });
                 }
             }
@@ -788,7 +773,7 @@ export const getCards = (
                                 {
                                     const randomCurrentHeroClass = getRandomArrayItem(getCurrentHeroClasses(gameScene));
                                     const item = getRandomArrayItem(getHeroClassItems(randomCurrentHeroClass, day));
-                                    cards.push({ item, type: ECardType.ITEM, price: 0 });
+                                    cards.push(genShopItemSingleCard(item, true));
                                 }
                                 break;
                             case ECardType.UNIT:
@@ -1022,7 +1007,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                     // PLACE ON THE SAME ITEM IN INVENTORY TO UPGRADE
                     if (slot.isInventory && !slot.isEmpty) {
                         const { type, item: slotItem } = slot.card?.card || {};
-                        if (type === ECardType.ITEM && slotItem && slotItem.id === item.id && slotItem.level === item.level) {
+                        if (type === ECardType.ITEM && slotItem && slotItem.id === item.id && slotItem.level === item.level && item.nextLevel) {
                             slot.setIsActive(true);
                             return;
                         }

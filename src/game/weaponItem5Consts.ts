@@ -33,7 +33,7 @@ import {
 
 export const dagger5_ba: IItem = {
     id: "dagger5_ba",
-    name: "flurry",
+    name: "The Flurry",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 5,
