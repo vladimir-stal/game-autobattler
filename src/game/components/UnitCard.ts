@@ -84,11 +84,17 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.healthImage = this.scene.add.image(-10, btyp - 10, IMAGE_ICON_HEALTH).setDisplaySize(20, 20);
         this.add(this.healthImage);
 
+        this.armorText = this.scene.add.text(35, btyp - 18, basicArmor + "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.armorText);
+        this.armorImage = this.scene.add
+            .image(25, btyp - 10, IMAGE_ICON_SHIELD)
+            .setDisplaySize(20, 20)
+            .setVisible(false);
+        this.add(this.armorImage);
+
         if (basicArmor > 0) {
-            this.armorText = this.scene.add.text(35, btyp - 18, basicArmor + "", { fontSize: 12, color: "#dddddd" });
-            this.add(this.armorText);
-            this.armorImage = this.scene.add.image(25, btyp - 10, IMAGE_ICON_SHIELD).setDisplaySize(20, 20);
-            this.add(this.armorImage);
+            this.armorText.setVisible(true);
+            this.armorImage.setVisible(true);
         }
     }
 

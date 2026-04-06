@@ -263,9 +263,17 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         switch (type) {
             case EBattleActionType.ATTACK:
                 {
+                    if (value === undefined) {
+                        return;
+                    }
+
                     action.targets?.forEach((target) => {
                         const { damageValue, targetId, armorValue, isEvasion } = target;
                         const { unit } = this.cards[unitId];
+                        if (!unit || damageValue === undefined) {
+                            return;
+                        }
+
                         this.cards[targetId].playEffect(unit, skill);
                         setTimeout(() => {
                             this.cards[targetId].playTakeDamage(damageValue, armorValue || 0, { status, isCrit, isEvasion });
@@ -281,9 +289,16 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                 break;
             case EBattleActionType.ATTRIBUTE_INCREASE:
                 {
+                    if (value === undefined || !attribute) {
+                        return;
+                    }
+
                     if (targets) {
                         targets.forEach((target) => {
                             const { targetId, value, attribute } = target;
+                            if (value === undefined || !attribute) {
+                                return;
+                            }
                             setTimeout(() => {
                                 this.cards[targetId].playAttrIncreaseTarget(value, attribute);
                             }, 1500);
@@ -313,6 +328,9 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     if (targets) {
                         targets.forEach((target) => {
                             const { targetId, value, attribute } = target;
+                            if (value === undefined || !attribute) {
+                                return;
+                            }
                             setTimeout(() => {
                                 this.cards[targetId].playAttrDecreaseTarget(value, attribute);
                             }, 1500);
@@ -602,7 +620,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         return;
                     }
 
-                    this.cards[unitId].playTakeDamage(value, armorValue, { status, skill });
+                    this.cards[unitId].playTakeDamage(value, armorValue || 0, { status, skill });
 
                     if (mode === "FAST") {
                         setTimeout(() => {
@@ -736,6 +754,9 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         const cardDistance = this.getCardDistance();
 
         this.battleCards.forEach((card, index) => {
+            if (!card) {
+                return;
+            }
             const playerCard = index < 4;
             if (playerCard) {
                 const x = -(index + 1) * cardDistance - 50;

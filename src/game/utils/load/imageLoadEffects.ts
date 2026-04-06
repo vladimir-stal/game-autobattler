@@ -68,7 +68,8 @@ export function loadImagesEffects(scene: Scene) {
         frameHeight: 400,
     });
     //
-    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_cut_400.png`, {
+    //scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_cut_400.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_2_cut_400.png`, {
         frameWidth: 400,
         frameHeight: 400,
     });

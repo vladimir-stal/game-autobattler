@@ -31,6 +31,7 @@ import { itemGoblinBoneDagger, itemGoblinSilverCoin, regenMantle, spiritArmor } 
 import { GameScene } from "../scenes/GameScene";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
+import { healFirst } from "../skills/priestSkillConsts";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 
@@ -182,9 +183,10 @@ export const getRooms = (
                     return [null, { roomType: ERoomType.HEROES_SELL }, null];
                     //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
                 } else if (hour === 1) {
-                    //return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
+                    return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
                 } else if (hour === 2) {
+                    //return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
                     //} else if (hour === 3) { // TEST
                     //    return [null, { roomType: ERoomType.SKILLS_SELL }, null];
@@ -899,12 +901,9 @@ export const getCards = (
                 //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
                 //cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
                 cards = [
-                    { type: ECardType.ITEM, price: 0, item: basic_boots },
-                    { type: ECardType.ITEM, price: 0, item: basic_boots },
-                    { type: ECardType.ITEM, price: 0, item: gloves_magic2 },
-                    { type: ECardType.ITEM, price: 0, item: gloves_magic2 },
-                    { type: ECardType.SKILL, price: 0, skill: magicAttack },
-                    { type: ECardType.SKILL, price: 0, skill: magicAttack },
+                    { type: ECardType.SKILL, price: 0, skill: healFirst },
+                    { type: ECardType.SKILL, price: 0, skill: healFirst },
+                    { type: ECardType.SKILL, price: 0, skill: healFirst },
                 ];
             }
             break;

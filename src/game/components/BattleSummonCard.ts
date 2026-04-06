@@ -212,6 +212,10 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     }
 
     renderTotemImage() {
+        if (!this.totem) {
+            return;
+        }
+
         const totemImage = this.scene.add.sprite(0, -200, IMAGE_TOTEM_ATTACK).setOrigin(0, 1).setDepth(-1); //.setDisplaySize(150, 269);
 
         const { idleBattleAnimation } = getTotemImage(this.totem.id);
@@ -258,7 +262,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     flyActionPanel(colorPanel: GameObjects.Rectangle, textPanel: GameObjects.Text, color?: number) {
         //console.log("flyActionPanel", color);
         colorPanel.setY(-360);
-        colorPanel.fillColor = color;
+        if (color) colorPanel.fillColor = color;
         colorPanel.setAlpha(1);
 
         //colorPanel.setFillStyle(this.actionRect.fillColor, 1);
@@ -311,7 +315,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     async playAttack(value: number, skill?: IHeroSkill) {
         this.setAction("ATTACK " + value);
         //
-        let skillAnimation: string = undefined;
+        let skillAnimation: string | undefined = undefined;
         if (skill) {
             if (skill.animation) {
                 skillAnimation = skill.animation;
@@ -340,7 +344,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(0);
-                }, this.unitImageObject.anims.currentAnim.duration);
+                }, this.unitImageObject.anims.currentAnim?.duration || 0);
             });
         } else {
             return new Promise((resolve, reject) => {
@@ -518,10 +522,13 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
     addBuff(buff: IBuff, buffTatget: IActionBuffTarget) {
         const { isExisting, value } = buffTatget;
+        if (value === undefined) {
+            return;
+        }
         //
         if (isExisting) {
             const currentBuff = this.buffs.find((b) => b.type === buff.type);
-            if (currentBuff) {
+            if (currentBuff && value !== undefined) {
                 currentBuff.totalValue = value;
                 currentBuff.value = value;
                 this.renderBuffs();

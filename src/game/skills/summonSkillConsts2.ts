@@ -1,4 +1,16 @@
-import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, EUnitType, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
+import {
+    EBuffTimeType,
+    EBuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    EUnitType,
+    IHeroSkillSet,
+    IUnit,
+    THeroSkills,
+} from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
 
@@ -392,7 +404,7 @@ export const buffSummonCritSkill: IHeroSkillSet = {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const summonSkills: THeroSkills = [warriorSummonSkill]; //[fireflySummonSkill, warriorSummonSkill];
+export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill];
 
 export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa]);
 

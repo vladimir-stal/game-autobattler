@@ -4,7 +4,7 @@ import { i18n as i18n_ru } from "../i18n/ru";
 export const LANG: "eng" | "ru" = "ru";
 export const i18n = i18n_ru; //LANG === "eng" ? i18n_eng : i18n_ru;
 
-export const GAME_MODE: "NO_ANIMATIONS" | "FULL" = "NO_ANIMATIONS"; //"NO_ANIMATIONS";
+export const GAME_MODE: "NO_ANIMATIONS" | "FULL" = "FULL"; //"NO_ANIMATIONS";
 
 export const IMAGE_LOBBY_FOX_SMILE = "IMAGE_LOBBY_FOX_SMILE";
 export const IMAGE_LOBBY_LOADING = "IMAGE_LOBBY_LOADING";
@@ -23,6 +23,7 @@ export const colors = {
     WHITE: 0x999999,
     GREY_HOVER: 0x888888,
     GREEN_HOVER: 0x22aa22,
+    PURPLE: 0x990099,
     RED: 0xcc4444,
     WHITE_HOVER: 0xbbbbbb,
 };

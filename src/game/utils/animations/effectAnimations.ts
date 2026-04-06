@@ -151,7 +151,7 @@ export function createEffectAnimations(scene: Scene) {
 
     scene.anims.create({
         key: EEffectAnimationType.EFFECT_PRIEST_HEAL,
-        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_HEAL, { start: 0, end: 37 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_HEAL, { start: 0, end: 87 }), // 0 37
         // frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_HEAL, {
         //     frames: [
         //         1, 3, 5, 7, 9, 13, 17,
