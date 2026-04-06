@@ -255,13 +255,13 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.add(this.titleText);
         this.titleText.setText(this.title);
 
-        this.hpText = this.scene.add.text(80, -110, hp + "/" + maxHp + "", { fontSize: 12, color: "#dddddd" });
+        this.hpText = this.scene.add.text(15, -110, hp + "/" + maxHp + "", { fontSize: 12, color: "#ddffdd" });
         this.add(this.hpText);
 
-        this.attackText = this.scene.add.text(-21, -110, basicAttack + " A", { fontSize: 12, color: "#dddddd" });
+        this.attackText = this.scene.add.text(-15, -110, "A"+basicAttack, { fontSize: 12, color: "#ffdddd" });
         this.add(this.attackText);
 
-        this.armorText = this.scene.add.text(120, -110, armor + "arm", { fontSize: 12, color: "#dddddd" });
+        this.armorText = this.scene.add.text(55, -110, armor + "arm", { fontSize: 12, color: "#ddddff" });
         this.armorText.setVisible(armor > 0);
         this.add(this.armorText);
 
@@ -1022,7 +1022,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                     if (this.unit.attack < 0) {
                         this.unit.attack = 0;
                     }
-                    this.attackText.setText(this.unit.attack + " attack");
+                    this.attackText.setText("A"+this.unit.attack);
                 }
                 break;
             case "armor":

@@ -3,7 +3,7 @@ import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet
 export const beastMasterSkill_3: IHeroSkillSet = {
     id: "BeastmasterCrows",
     name: "Beastmaster crows(3)",
-    desc: "Summon crow",
+    desc: "Summon crow (totem)",
     level: 3,
     priceLevel: 4,
     heroClasses: [EHeroClass.BEAST_MASTER],
@@ -46,7 +46,7 @@ export const beastMasterSkill_3: IHeroSkillSet = {
 export const beastMasterSkill_2: IHeroSkillSet = {
     id: "BeastmasterCrows",
     name: "Beastmaster crows(2)",
-    desc: "Summon crow",
+    desc: "Summon crow (totem)",
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.BEAST_MASTER],
@@ -83,7 +83,7 @@ export const beastMasterSkill_2: IHeroSkillSet = {
 export const beastMasterSkill: IHeroSkillSet = {
     id: "BeastmasterCrows",
     name: "Beastmaster crow",
-    desc: "Summon crow",
+    desc: "Summon crow (totem)",
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.BEAST_MASTER],

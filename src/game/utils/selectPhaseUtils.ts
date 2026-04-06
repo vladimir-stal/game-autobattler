@@ -15,6 +15,7 @@ import {
     IUnit,
     THeroAttribute,
 } from "../../types";
+import { summonHero } from "../basicHeroConsts";
 
 import { axe1, musical1, scepter1, shield1, staff1, sword1, totem1, wand1 } from "../basicWeaponItemConsts";
 import { bosses } from "../bossConsts";
@@ -33,6 +34,7 @@ import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { healFirst } from "../skills/priestSkillConsts";
 import { fireflySummonSkill } from "../skills/summonSkillConsts2";
+import { warriorSummonSkill } from "../skills/summonSkillConsts2";
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 
@@ -181,13 +183,12 @@ export const getRooms = (
         case 1:
             {
                 if (hour === 0) {
-                    return [null, { roomType: ERoomType.HEROES_SELL }, null];
-                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
+                    //return [null, { roomType: ERoomType.HEROES_SELL }, null];
+                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
                 } else if (hour === 1) {
                     //return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                     return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
                 } else if (hour === 2) {
-                    //return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
                     //} else if (hour === 3) { // TEST
                     //    return [null, { roomType: ERoomType.SKILLS_SELL }, null];
@@ -905,15 +906,17 @@ export const getCards = (
                     { type: ECardType.SKILL, price: 0, skill: fireflySummonSkill },
                     { type: ECardType.SKILL, price: 0, skill: fireflySummonSkill },
                     { type: ECardType.SKILL, price: 0, skill: fireflySummonSkill },
+                    //{ type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true }},
+                    //{ type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true }},
                 ];
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:
             {
-                //cards = [null, { type: ECardType.UNIT, price: 0, unit:  }, null];
-                cards = getRandomArrayItems<IUnit>(mcClassHeroes, 3, true).map((unit) => {
-                    return { unit, type: ECardType.UNIT, price: 0 };
-                });
+                cards = [null, { type: ECardType.UNIT, price: 0, unit: summonHero }, null];
+                //cards = getRandomArrayItems<IUnit>(mcClassHeroes, 3, true).map((unit) => {
+                //    return { unit, type: ECardType.UNIT, price: 0 };
+                //});
             }
             break;
         default:

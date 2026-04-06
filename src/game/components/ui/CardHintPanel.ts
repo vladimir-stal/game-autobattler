@@ -16,6 +16,7 @@ import {
 import { HeroClassTag } from "./HeroClassTag";
 import { getWeaponItemHeroClasses } from "../../utils/itemUtils";
 import { IMAGE_ITEM_ARMOR_1 } from "../../utils/load/imageLoadItems";
+import { substituteSummonDescription } from "../../utils/skillUtils2";
 
 /** Panel to show information on items and skills on hover */
 export class CardHintPanel extends Phaser.GameObjects.Container {
@@ -250,7 +251,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         // = i18n.ui.INCOME + ": " + income;
         this.titleText.setText(name);
         this.descrText.setVisible(true);
-        this.descrText.setText(desc);
+        this.descrText.setText(substituteSummonDescription(skillSet));
 
         this.enchancedOnStartIcon.setVisible(false);
         this.enchancedChainedIcon.setVisible(false);

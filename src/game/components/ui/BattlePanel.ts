@@ -274,15 +274,17 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                 break;
             case EBattleActionType.ATTRIBUTE_INCREASE:
                 {
+                    console.log("Attr Increase:",targets);
                     if (targets) {
                         targets.forEach((target) => {
                             const { targetId, value, attribute } = target;
                             if (value === undefined || !attribute) {
                                 return;
+                            } else {
+                                setTimeout(() => {
+                                    this.cards[targetId].playAttrIncreaseTarget(value, attribute);
+                                }, 1500);
                             }
-                            setTimeout(() => {
-                                this.cards[targetId].playAttrIncreaseTarget(value, attribute);
-                            }, 1500);
                         });
                     } else {
                         if (!attribute || value === undefined || !targetId) {

@@ -351,11 +351,11 @@ export const getAllyTotems = (unit: IBattleUnit, units: TBattleUnits, targetType
     }
 };
 
-export const calculateBuffValue = (initialValue: number, buff: IBuff, unit: IBattleUnit) => {
+export const calculateBuffValue = (initialValue: number, buff: IBuff, target: IBattleUnit) => {
     if (buff.valueType === "number" || buff.valueType === "evolvedNumber") {
         return buff.value;
     } else if (buff.valueType === "percent" || buff.valueType === "evolvedPercent") {
-        const initValue = buff.valueFrom ? unit[buff.valueFrom] : initialValue;
+        const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
         let buffValue = Math.floor((initValue * buff.value) / 100);
         return buffValue;
     }
@@ -828,6 +828,12 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return unit.magicPower > unit.physicalPower;
         case ESkillCondition.PP_IS_HIGHER_THAN_MP:
             return unit.physicalPower > unit.magicPower;
+        case ESkillCondition.HAS_SUMMON:
+            return (!!unit.summon);
+        case ESkillCondition.HAS_NO_SUMMON_OR_TOTEM:
+            return !(!!unit.summon || !!unit.totem);
+        case ESkillCondition.HAS_TOTEM:
+            return (!!unit.totem);
     }
 };
 

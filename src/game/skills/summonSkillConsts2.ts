@@ -1,18 +1,20 @@
 import {
+    AnimationType,
     EBuffTimeType,
     EBuffType,
     EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
-    ESkillCondition,
     ETargetType,
     EUnitType,
+    IHeroSkill,
     IHeroSkillSet,
     IUnit,
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { skillsetSummon } from "../utils/skillUtils2";
 
 // SUMMON UNITS
 
@@ -45,7 +47,7 @@ export const fireflySummon_2: IUnit = {
     heroClass: EHeroClass.WARRIOR,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 4,
+    basicAttack: 5,
     basicAttackTimes: 1,
     basicMaxHp: 1,
     basicHpRegen: 0,
@@ -54,7 +56,7 @@ export const fireflySummon_2: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.units.FIREFLY + "(2)",
+    name: i18n.units.FIREFLY,
     id: "FIREFLYSUMMON",
     skills: [],
     items: [],
@@ -67,7 +69,7 @@ export const fireflySummon_3: IUnit = {
     heroClass: EHeroClass.WARRIOR,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 7,
+    basicAttack: 8,
     basicAttackTimes: 1,
     basicMaxHp: 1,
     basicHpRegen: 0,
@@ -76,7 +78,7 @@ export const fireflySummon_3: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.units.FIREFLY + "(3)",
+    name: i18n.units.FIREFLY,
     id: "FIREFLYSUMMON",
     skills: [],
     items: [],
@@ -115,14 +117,14 @@ export const warriorSummon_2: IUnit = {
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 3,
     basicAttackTimes: 1,
-    basicMaxHp: 4,
+    basicMaxHp: 5,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.units.WARRIORSUMMON + "(2)",
+    name: i18n.units.WARRIORSUMMON,
     id: "WARRIORSUMMON",
     skills: [],
     items: [],
@@ -144,7 +146,7 @@ export const warriorSummon_3: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.units.WARRIORSUMMON + "(3)",
+    name: i18n.units.WARRIORSUMMON,
     id: "WARRIORSUMMON",
     skills: [],
     items: [],
@@ -163,14 +165,9 @@ export const fireflySummonSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: fireflySummon_3,
-        },
-    ],
+    skills: skillsetSummon(fireflySummon_3,4,35,35,0,1), // summon 8/1,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
+    animation: AnimationType.SUMMON_SPELL,
 };
 
 export const fireflySummonSkill_2: IHeroSkillSet = {
@@ -182,15 +179,10 @@ export const fireflySummonSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: fireflySummon_2,
-        },
-    ],
+    skills: skillsetSummon(fireflySummon_2,2,35,35,0,1), // summon 5/1,
     nextLevel: fireflySummonSkill_3,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
+    animation: AnimationType.SUMMON_SPELL,
 };
 
 export const fireflySummonSkill: IHeroSkillSet = {
@@ -202,18 +194,13 @@ export const fireflySummonSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: fireflySummon,
-        },
-    ],
+    skills: skillsetSummon(fireflySummon,1,35,35,0,1), // summon 3/1,
     nextLevel: fireflySummonSkill_2,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
+    animation: AnimationType.SUMMON_SPELL,
 };
 
-// SPARK SUMMON SKILL
+// WAAAaahRIOR SUMMON SKILL
 
 export const warriorSummonSkill_3: IHeroSkillSet = {
     id: "warriorSummon",
@@ -224,14 +211,9 @@ export const warriorSummonSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: warriorSummon_3,
-        },
-    ],
+    skills:skillsetSummon(warriorSummon_3,2,35,20,3,3), // summon 6/10
     image: IMAGE_SKILL_SUMMON_SPIRIT,
+    animation: AnimationType.SUMMON_SPELL,
 };
 
 export const warriorSummonSkill_2: IHeroSkillSet = {
@@ -240,38 +222,26 @@ export const warriorSummonSkill_2: IHeroSkillSet = {
     //desc: "Summon magic spark [4,1]",
     name: i18n.skills.basic.sparkSummon.name + "(2)",
     desc: i18n.skills.basic.sparkSummon.desc2,
-    level: 1,
+    level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: warriorSummon_2,
-        },
-    ],
+    skills: skillsetSummon(warriorSummon_2,1,35,20,2,2), // summon 3/5
     nextLevel: warriorSummonSkill_3,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
+    animation: AnimationType.SUMMON_SPELL,
 };
 
 export const warriorSummonSkill: IHeroSkillSet = {
     id: "warriorSummon",
-    //name: "Spark Summon",
-    //desc: "Summon magic spark [3,1]",
     name: i18n.skills.basic.sparkSummon.name,
     desc: i18n.skills.basic.sparkSummon.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: warriorSummon,
-        },
-    ],
+    skills: skillsetSummon(warriorSummon,1,35,20,1,1),// summon 2/3
     nextLevel: warriorSummonSkill_2,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
+    animation: AnimationType.SUMMON_SPELL,
 };
 
 // INCREASE CURRENT SUMMON BA SKILL
