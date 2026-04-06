@@ -828,6 +828,12 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return unit.magicPower > unit.physicalPower;
         case ESkillCondition.PP_IS_HIGHER_THAN_MP:
             return unit.physicalPower > unit.magicPower;
+        case ESkillCondition.HAS_SUMMON:
+            return (!!unit.summon);
+        case ESkillCondition.HAS_NO_SUMMON_OR_TOTEM:
+            return !(!!unit.summon || !!unit.totem);
+        case ESkillCondition.HAS_TOTEM:
+            return (!!unit.totem);
     }
 };
 

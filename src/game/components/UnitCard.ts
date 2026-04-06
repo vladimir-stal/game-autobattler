@@ -252,8 +252,8 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.attackImage.setY(btyp - 10);
         this.healthText.setY(btyp - 18);
         this.healthImage.setY(btyp - 10);
-        this.armorText.setY(btyp - 18);
-        this.armorImage.setY(btyp - 10);
+        this.armorText?.setY(btyp - 18);
+        this.armorImage?.setY(btyp - 10);
     }
 
     setUnit(unit: IUnit) {

@@ -1117,6 +1117,9 @@ export class BattleController {
         }
 
         // TODO: apply bonuses instead if summon already exists
+        // --> bonuses will be checked & applied in summon skill
+        //     by adding condition HAS_SUMMON
+        //     and normal summoning with condition HAS_NO_SUMMON_OR_TOTEM
         if (unit.summon) {
             console.log("summon already exists !");
             return;
@@ -1265,6 +1268,9 @@ export class BattleController {
             // if there is no skill for the round perform basic attack
             this.performBasicAttack(summonUnit, undefined, isPlayer1);
         }
+        // remove TILL_NEXT_BA buffs and debuffs
+        this.removeBuffs(summonUnit, EBuffTimeType.TILL_NEXT_BA);
+        this.removeDebuffs(summonUnit, EBuffTimeType.TILL_NEXT_BA);
     }
 
     /** Calculate basic attack damage from offensive buffs and debuffs and perform an attack */

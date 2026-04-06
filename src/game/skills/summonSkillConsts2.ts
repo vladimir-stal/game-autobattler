@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, EUnitType, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
+import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
 
@@ -103,7 +103,7 @@ export const warriorSummon_2: IUnit = {
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 3,
     basicAttackTimes: 1,
-    basicMaxHp: 4,
+    basicMaxHp: 5,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,
@@ -201,7 +201,63 @@ export const fireflySummonSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_SUMMON_FIREFLY,
 };
 
-// SPARK SUMMON SKILL
+// WAAAaahRIOR SUMMON SKILL
+const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: number, atkMpScale: number, hpPure: number, armorPure: number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "hp",
+            value: hpPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            isBasicAttack: true,
+            value: hpPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "armor",
+            value: armorPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "attack",
+            value: atkPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            isBasicAttack: true,
+            buff: {
+                name: "+atk",
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "attack",
+                value: atkPercent,
+                valueType: "percent",
+                targetType: ETargetType.SUMMON_CURRENT,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                mpScale: atkMpScale,
+            },
+            condition: ESkillCondition.HAS_SUMMON,
+        },
+        {
+            type: EHeroSkillType.SUMMON,
+            isBasicAttack: true,
+            summon: summon,
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+    ];
+};
 
 export const warriorSummonSkill_3: IHeroSkillSet = {
     id: "warriorSummon",
@@ -212,13 +268,7 @@ export const warriorSummonSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: warriorSummon_3,
-        },
-    ],
+    skills:skillsetSummon(warriorSummon_3,2,35,20,3,3), // summon 6/10
     image: IMAGE_SKILL_SUMMON_SPIRIT,
 };
 
@@ -228,36 +278,22 @@ export const warriorSummonSkill_2: IHeroSkillSet = {
     //desc: "Summon magic spark [4,1]",
     name: i18n.skills.basic.sparkSummon.name + "(2)",
     desc: i18n.skills.basic.sparkSummon.desc2,
-    level: 1,
+    level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: warriorSummon_2,
-        },
-    ],
+    skills: skillsetSummon(warriorSummon_2,1,35,20,2,2), // summon 3/5
     nextLevel: warriorSummonSkill_3,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
 };
 
 export const warriorSummonSkill: IHeroSkillSet = {
     id: "warriorSummon",
-    //name: "Spark Summon",
-    //desc: "Summon magic spark [3,1]",
     name: i18n.skills.basic.sparkSummon.name,
     desc: i18n.skills.basic.sparkSummon.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: warriorSummon,
-        },
-    ],
+    skills: skillsetSummon(warriorSummon,1,35,20,1,1),// summon 2/3
     nextLevel: warriorSummonSkill_2,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
 };
