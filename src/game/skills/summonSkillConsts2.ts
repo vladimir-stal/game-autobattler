@@ -1,22 +1,19 @@
-<<<<<<< HEAD
-import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
-=======
 import {
     EBuffTimeType,
     EBuffType,
     EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
-    ESkillCondition,
     ETargetType,
     EUnitType,
+    IHeroSkill,
     IHeroSkillSet,
     IUnit,
     THeroSkills,
 } from "../../types";
->>>>>>> main
 import { i18n } from "../consts";
 import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { skillsetSummon } from "../utils/skillUtils";
 
 // SUMMON UNITS
 
@@ -49,7 +46,7 @@ export const fireflySummon_2: IUnit = {
     heroClass: EHeroClass.WARRIOR,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 4,
+    basicAttack: 5,
     basicAttackTimes: 1,
     basicMaxHp: 1,
     basicHpRegen: 0,
@@ -71,7 +68,7 @@ export const fireflySummon_3: IUnit = {
     heroClass: EHeroClass.WARRIOR,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 7,
+    basicAttack: 8,
     basicAttackTimes: 1,
     basicMaxHp: 1,
     basicHpRegen: 0,
@@ -167,13 +164,7 @@ export const fireflySummonSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: fireflySummon_3,
-        },
-    ],
+    skills: skillsetSummon(fireflySummon_3,4,35,35,0,1), // summon 8/1,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
 };
 
@@ -186,13 +177,7 @@ export const fireflySummonSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: fireflySummon_2,
-        },
-    ],
+    skills: skillsetSummon(fireflySummon_2,2,35,35,0,1), // summon 5/1,
     nextLevel: fireflySummonSkill_3,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
 };
@@ -206,74 +191,12 @@ export const fireflySummonSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: fireflySummon,
-        },
-    ],
+    skills: skillsetSummon(fireflySummon,1,35,35,0,1), // summon 3/1,
     nextLevel: fireflySummonSkill_2,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
 };
 
 // WAAAaahRIOR SUMMON SKILL
-const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: number, atkMpScale: number, hpPure: number, armorPure: number):IHeroSkill[] => {
-    return [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "hp",
-            value: hpPure,
-            valueType: "number",
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
-            value: hpPure,
-            valueType: "number",
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "armor",
-            value: armorPure,
-            valueType: "number",
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "attack",
-            value: atkPure,
-            valueType: "number",
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "+atk",
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "attack",
-                value: atkPercent,
-                valueType: "percent",
-                targetType: ETargetType.SUMMON_CURRENT,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                mpScale: atkMpScale,
-            },
-            condition: ESkillCondition.HAS_SUMMON,
-        },
-        {
-            type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
-            summon: summon,
-            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
-        },
-    ];
-};
 
 export const warriorSummonSkill_3: IHeroSkillSet = {
     id: "warriorSummon",
