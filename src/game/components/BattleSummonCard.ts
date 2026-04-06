@@ -312,8 +312,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
     playSkillSet(name: string, animation?: string) {}
 
-    async playAttack(value: number, skill?: IHeroSkill) {
-        this.setAction("ATTACK " + value);
+    async playAttack(value?: number, skill?: IHeroSkill) {
+        this.setAction("ATTACK " + (value || ""));
         //
         let skillAnimation: string | undefined = undefined;
         if (skill) {
@@ -401,14 +401,14 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         this.changeAttribute(attribute, -value);
     }
 
-    playAttrIncrease(value: number, attribute: THeroBattleAttribute, skill?: IHeroSkill) {
+    playAttrIncrease(skill?: IHeroSkill) {
         //this.setAction(attribute + " +" + value);
         //this.changeAttribute(attribute, value);
     }
 
-    playAttrDecrease(value: number, attribute: THeroBattleAttribute) {
-        this.setAction(attribute + " -" + value);
-        this.changeAttribute(attribute, -value);
+    playAttrDecrease(skill?: IHeroSkill) {
+        //this.setAction(attribute + " -" + value);
+        //this.changeAttribute(attribute, -value);
     }
 
     playEffect() {}
