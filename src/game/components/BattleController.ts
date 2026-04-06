@@ -481,6 +481,7 @@ export class BattleController {
     performAttrIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { value, valueType, valueFrom, attribute, targetType, mpScale, ppScale } = skill;
         if (!value || !valueType || !attribute || !targetType) {
+            console.log("performAttrIncrease RETURN 1");
             return;
         }
 
@@ -488,6 +489,7 @@ export class BattleController {
 
         const targets = getAllyTargets(unit, allyUnits, targetType);
         if (!targets) {
+            console.log("performAttrIncrease RETURN 2");
             return;
         }
 
@@ -497,8 +499,6 @@ export class BattleController {
             targets: [],
             skill,
             isStartBattle,
-            //value: skill?.value,
-            //attribute: skill?.attribute,
         };
         this.battleRecord.push(battleAction);
 
@@ -551,6 +551,7 @@ export class BattleController {
 
     performBuff(unit: IBattleUnit, skill: IHeroSkill, buff: IBuff | undefined, isPlayer1: boolean, isStartBattle?: boolean) {
         if (!buff) {
+            console.log("performBuff RETURN 1");
             return;
         }
 
@@ -569,6 +570,7 @@ export class BattleController {
             case EBuffType.TOTAL_DAMAGE_INCREASE:
                 {
                     if (type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK && !statusType) {
+                        console.log("performBuff RETURN 2");
                         return;
                     }
 
@@ -618,11 +620,13 @@ export class BattleController {
             case EBuffType.ATTRIBUTE_INCREASE:
                 {
                     if (!attribute) {
+                        console.log("performBuff RETURN 1");
                         return;
                     }
 
                     const targets = getAllyTargets(unit, allyUnits, targetType, targetUnitId);
                     if (!targets) {
+                        console.log("performBuff RETURN 2");
                         return;
                     }
                     if (targets.length === 1) {
@@ -638,7 +642,10 @@ export class BattleController {
 
                     targets.forEach((target) => {
                         // calculate buff value and add to unit attribute
-                        const buffValue = calculateBuffValue(unit[attribute], buff, target);
+                        console.log("DEBUG calc buff value",)
+                        const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+                        const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+                        const buffValue = calculateBuffValue(target[attribute], buff, target) + mpScaleValue + ppScaleValue;
                         target[attribute] += buffValue;
 
                         const existingBuff = getExistingBuff(target, buff);
@@ -1603,6 +1610,7 @@ export class BattleController {
             this.battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
             // if summon dies remove it from parent unit
             if (parentUnit) {
+                console.log("SUMMON is DED!", parentUnit.summon);
                 parentUnit.summon = undefined;
             }
         }

@@ -401,14 +401,54 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         this.changeAttribute(attribute, -value);
     }
 
-    playAttrIncrease(skill?: IHeroSkill) {
-        //this.setAction(attribute + " +" + value);
-        //this.changeAttribute(attribute, value);
+    async playAttrIncrease(skill?: IHeroSkill) {
+        if (!skill) {
+            return;
+        }
+
+        const animation = skill?.animation || this.unitBuffAnimation;
+        if (animation) {
+            this.unitImageObject.anims.play(animation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                //console.log(">> ANIMATION_COMPLETE attrinc Animation");
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            const animDuration = this.unitImageObject.anims.duration;
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, animDuration);
+            });
+        }
     }
 
-    playAttrDecrease(skill?: IHeroSkill) {
-        //this.setAction(attribute + " -" + value);
-        //this.changeAttribute(attribute, -value);
+    async playAttrDecrease(skill?: IHeroSkill) {
+        if (!skill) {
+            return;
+        }
+
+        const animation = skill?.animation || this.unitBuffAnimation;
+        if (animation) {
+            this.unitImageObject.anims.play(animation);
+            this.unitImageObject.on(ANIMATION_COMPLETE, () => {
+                //console.log(">> ANIMATION_COMPLETE attrinc Animation");
+                if (this.unitAnimation) {
+                    this.unitImageObject.anims.play(this.unitAnimation);
+                }
+                this.unitImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            const animDuration = this.unitImageObject.anims.duration;
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, animDuration);
+            });
+        }
     }
 
     playEffect() {}
