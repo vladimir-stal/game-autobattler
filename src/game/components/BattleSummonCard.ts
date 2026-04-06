@@ -54,6 +54,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     title: string;
 
     unitImageObject: GameObjects.Sprite;
+    unitImageDeathAnimationObject: GameObjects.Sprite; // image to play summon death animation independent
     unitImage: string;
     unitAnimation: string | undefined;
     unitAttackAnimation: string | undefined;
@@ -116,30 +117,39 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         }
 
         const { basicAttack, hp, maxHp, heroClass, name, armor, items, level } = this.unit;
-        this.title = name + "(" + level + ")";
 
-        this.titleText = this.scene.add.text(10, -330, this.title, { fontSize: 12, color: "#dddddd" });
-        this.add(this.titleText);
+        // first time => create all objects
+        if (!this.titleText) {
+            this.title = name + "(" + level + ")";
 
-        this.hpText = this.scene.add.text(60, -310, hp + "/" + maxHp + "", { fontSize: 12, color: "#dddddd" });
-        this.add(this.hpText);
+            this.titleText = this.scene.add.text(10, -330, this.title, { fontSize: 12, color: "#dddddd" });
+            this.add(this.titleText);
 
-        this.attackText = this.scene.add.text(10, -310, basicAttack + " A", { fontSize: 12, color: "#dddddd" });
-        this.add(this.attackText);
+            this.hpText = this.scene.add.text(60, -310, hp + "/" + maxHp + "", { fontSize: 12, color: "#dddddd" });
+            this.add(this.hpText);
 
-        this.armorText = this.scene.add.text(90, -310, armor + " arm", { fontSize: 12, color: "#dddddd" });
-        this.armorText.setVisible(armor > 0);
-        this.add(this.armorText);
+            this.attackText = this.scene.add.text(10, -310, basicAttack + " A", { fontSize: 12, color: "#dddddd" });
+            this.add(this.attackText);
 
-        this.renderUnitImage(this.unit.heroClass, this.unit.unitType, this.unit.id);
+            this.armorText = this.scene.add.text(90, -310, armor + " arm", { fontSize: 12, color: "#dddddd" });
+            this.armorText.setVisible(armor > 0);
+            this.add(this.armorText);
+
+            this.renderUnitImage();
+        } else {
+            // objects created => set visible and set proper content
+            this.titleText.setVisible(true);
+            this.hpText.setVisible(true);
+            this.attackText.setVisible(true);
+            this.armorText.setVisible(armor > 0);
+            this.renderUnitImage();
+        }
     }
 
     renderTotem() {
         if (!this.totem) {
             return;
         }
-
-        console.log("renderTotem", this.totem);
 
         const { name } = this.totem;
 
@@ -149,8 +159,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         this.renderTotemImage();
     }
 
-    renderUnitImage(heroClass: EHeroClass, unitType: EUnitType, unitId: string) {
-        console.log("RENDER SUMMON UNIT IMAGE", heroClass, unitType, unitId);
+    renderUnitImage() {
+        const { heroClass, unitType, id: unitId } = this.unit || {};
 
         const {
             image,
@@ -168,7 +178,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
             distance,
             distanceEnemy,
             size,
-        } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(unitId);
+        } = unitType === EUnitType.HERO ? getHeroImage(heroClass!) : getUnitImage(unitId!);
+
         this.unitImage = imageBattle || image;
         this.unitAnimation = idleBattleAnimation || animation;
         this.unitAttackAnimation = attackAnimation;
@@ -183,20 +194,24 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         this.size = size;
         const displaySize = this.size || 300;
 
-        console.log("getUnitImage:", getUnitImage(unitId));
-
         const x = -100 + (this.distance || 0) + (distanceEnemy && this.isInverted ? distanceEnemy : 0);
 
-        //console.log(">>> renderImage", displaySize);
-        this.unitImageObject = this.gameScene.add
-            .sprite(x, 0, this.unitImage, 0)
-            .setOrigin(0, 1)
-            .setDisplaySize(displaySize, displaySize)
-            .setFlipX(this.isInverted)
-            .setDepth(100);
+        // first time => create image object
+        if (!this.unitImageObject) {
+            this.unitImageObject = this.gameScene.add
+                .sprite(x, 0, this.unitImage, 0)
+                .setOrigin(0, 1)
+                .setDisplaySize(displaySize, displaySize)
+                .setFlipX(this.isInverted)
+                .setDepth(100);
+
+            this.add(this.unitImageObject);
+        } else {
+            // object created => set visible and change content
+            this.unitImageObject.setTexture(this.unitImage).setDisplaySize(displaySize, displaySize).setVisible(true);
+        }
 
         if (this.appearAnimation) {
-            console.log("appearAnimation FOUND");
             this.unitImageObject.anims.play(this.appearAnimation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 if (this.unitAnimation) {
@@ -205,10 +220,32 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
                 this.unitImageObject.removeListener(ANIMATION_COMPLETE);
             });
         } else if (this.unitAnimation) {
-            console.log("unitAnimation FOUND");
             this.unitImageObject.anims.play(this.unitAnimation);
         }
-        this.add(this.unitImageObject);
+    }
+
+    renderUnitDeathImage() {
+        if (!this.unitDefeatedAnimation) {
+            return;
+        }
+
+        const { x } = this.unitImageObject;
+        const displaySize = this.size || 300;
+
+        if (!this.unitImageDeathAnimationObject) {
+            this.unitImageDeathAnimationObject = this.gameScene.add
+                .sprite(x, 0, this.unitImage, 0)
+                .setOrigin(0, 1)
+                .setDisplaySize(displaySize, displaySize)
+                .setFlipX(this.isInverted)
+                .setDepth(100)
+                .setVisible(false);
+
+            this.add(this.unitImageDeathAnimationObject);
+        } else {
+            // object created => set visible and change content
+            this.unitImageDeathAnimationObject.setTexture(this.unitImage).setDisplaySize(displaySize, displaySize).setVisible(false);
+        }
     }
 
     renderTotemImage() {
@@ -221,7 +258,6 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         const { idleBattleAnimation } = getTotemImage(this.totem.id);
 
         if (idleBattleAnimation) {
-            console.log("IDLE BATTLE ANIMATION IS HERE");
             totemImage.anims.play(idleBattleAnimation);
         }
 
@@ -252,15 +288,10 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     }
 
     flyAction(color?: number) {
-        //console.log("flyAction", color);
-        //if (!this.actionFlyRect.visible) {
-        //console.log("flyAction 1");
         this.flyActionPanel(this.actionFlyRect, this.actionFlyText, color);
-        //}
     }
 
     flyActionPanel(colorPanel: GameObjects.Rectangle, textPanel: GameObjects.Text, color?: number) {
-        //console.log("flyActionPanel", color);
         colorPanel.setY(-360);
         if (color) colorPanel.fillColor = color;
         colorPanel.setAlpha(1);
@@ -327,7 +358,6 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         }
         //
         const attackAnimation = skillAnimation || this.unitAttackAnimation;
-        //console.log("attackAnimation", attackAnimation);
         if (attackAnimation) {
             if (attackAnimation === AnimationType.NONE) {
                 return;
@@ -418,23 +448,33 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     playDead() {
         this.isDead = true;
         this.setAction(i18n.ui.DEAD, colors.RED);
-        //this.actionText.setVisible(true);
-        //this.actionRect.fillColor = colors.BLACK;
+
+        this.titleText.setVisible(false);
+        this.hpText.setVisible(false);
+        this.attackText.setVisible(false);
+        this.armorText.setVisible(false);
+        this.unitImageObject.setVisible(false);
+
+        this.unit = null;
+
+        this.renderUnitDeathImage();
 
         const animation = this.unitDefeatedAnimation;
         if (animation) {
-            this.unitImageObject.anims.play(animation);
-
-            setTimeout(() => {
-                this.setVisible(false);
-                this.clearUnit();
-            }, this.unitImageObject.anims.duration);
-        } else {
-            setTimeout(() => {
-                this.setVisible(false);
-                this.clearUnit();
-            }, 500);
+            this.unitImageDeathAnimationObject.setVisible(true);
+            this.unitImageDeathAnimationObject.anims.play(animation);
         }
+
+        setTimeout(
+            () => {
+                this.unitImageDeathAnimationObject.setVisible(false);
+                // new summon was not created while animation not finished
+                if (this.isDead) {
+                    this.setVisible(false);
+                }
+            },
+            animation ? this.unitImageDeathAnimationObject.anims.duration : 500,
+        );
     }
 
     resetActionPanel() {
@@ -490,8 +530,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     }
 
     setUnit(unit: IBattleUnit) {
-        console.log(">>> SET UNIT!");
         this.unit = unit;
+        this.isDead = false;
         this.renderUnit();
     }
 
@@ -510,14 +550,14 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     }
 
     clearUnit() {
-        console.log(">>> CLEAR UNIT!");
         this.unit = null;
-        this.titleText.destroy();
-        this.hpText.destroy();
-        this.armorText.destroy();
-        this.attackText.destroy();
+        this.setVisible(false);
+        //this.titleText.destroy();
+        //this.hpText.destroy();
+        //this.armorText.destroy();
+        //this.attackText.destroy();
         //
-        this.unitImageObject.destroy();
+        //this.unitImageObject.destroy();
     }
 
     addBuff(buff: IBuff, buffTatget: IActionBuffTarget) {

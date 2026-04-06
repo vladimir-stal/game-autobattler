@@ -11,6 +11,7 @@ import {
     IMAGE_BOSS_MINOTAUR_STOMP,
 } from "../imageLoadUtil";
 import {
+    IMAGE_FIREFLY_ATTACK,
     IMAGE_FIREFLY_BATTLE_IDLE,
     IMAGE_FIREFLY_DEFEATED,
     IMAGE_GOBLIN_1_ATTACK,
@@ -239,6 +240,13 @@ export function createMobAnimations(scene: Scene) {
         // }),
         frameRate: 20,
         repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_ATTACK, { start: 0, end: 108 }),
+        frameRate: 40,
+        //repeat: -1,
     });
 
     scene.anims.create({

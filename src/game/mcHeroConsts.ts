@@ -96,7 +96,7 @@ export const paladinHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.PALADIN,
+    name: i18n.heroes.PALADIN,
     id: "PALADIN",
     skills: paladinSkills,
     passiveSkill: {
@@ -123,7 +123,7 @@ export const barbarianHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.BARBARIAN,
+    name: i18n.heroes.BARBARIAN,
     id: "BARBARIAN",
     skills: barbarianSkills,
     passiveSkill: {
@@ -150,7 +150,7 @@ export const knightHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.KNIGHT,
+    name: i18n.heroes.KNIGHT,
     id: "KNIGHT",
     skills: knightSkills,
     passiveSkill: {
@@ -177,7 +177,7 @@ export const heraldHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.HERALD,
+    name: i18n.heroes.HERALD,
     id: "HERALD",
     skills: heraldSkills,
     passiveSkill: {
@@ -204,7 +204,7 @@ export const shamanHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.SHAMAN,
+    name: i18n.heroes.SHAMAN,
     id: "SHAMAN",
     skills: shamanSkills,
     passiveSkill: {
@@ -231,7 +231,7 @@ export const samuraiHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.SAMURAI,
+    name: i18n.heroes.SAMURAI,
     id: "SAMURAI",
     skills: samuraiSkills,
     passiveSkill: {
@@ -258,7 +258,7 @@ export const necromancerHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.NECROMANCER,
+    name: i18n.heroes.NECROMANCER,
     id: "NECROMANCER",
     skills: necromancerSkills,
     passiveSkill: {
@@ -285,7 +285,7 @@ export const beastMasterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.BEAST_MASTER,
+    name: i18n.heroes.BEAST_MASTER,
     id: "BEAST_MASTER",
     skills: beastMasterSkills,
     passiveSkill: {
@@ -312,7 +312,7 @@ export const gladiatorHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.GLADIATOR,
+    name: i18n.heroes.GLADIATOR,
     id: "GLADIATOR",
     skills: gladiatorSkills,
     passiveSkill: {
@@ -339,7 +339,7 @@ export const warlockHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.WARLOCK,
+    name: i18n.heroes.WARLOCK,
     id: "WARLOCK",
     skills: warlockSkills,
     passiveSkill: {
@@ -366,7 +366,7 @@ export const runecasterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.RUNECASTER,
+    name: i18n.heroes.RUNECASTER,
     id: "RUNECASTER",
     skills: runecasterSkills,
     passiveSkill: {
@@ -393,7 +393,7 @@ export const commanderHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.COMMANDER,
+    name: i18n.heroes.COMMANDER,
     id: "COMMANDER",
     skills: commanderSkills,
     passiveSkill: {
@@ -420,7 +420,7 @@ export const doomsayerHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.DOOMSAYER,
+    name: i18n.heroes.DOOMSAYER,
     id: "DOOMSAYER",
     skills: doomsayerSkills,
     passiveSkill: {
@@ -447,7 +447,7 @@ export const minstrelHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.MINSTREL,
+    name: i18n.heroes.MINSTREL,
     id: "MINSTREL",
     skills: minstrelSkills,
     passiveSkill: {
@@ -474,7 +474,7 @@ export const magicBardHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.MAGIC_BARD,
+    name: i18n.heroes.MAGIC_BARD,
     id: "MAGICBARD",
     skills: magicBardSkills,
     passiveSkill: {
@@ -501,7 +501,7 @@ export const duelistHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.DUELIST,
+    name: i18n.heroes.DUELIST,
     id: "DUELIST",
     skills: duelistSkills,
     passiveSkill: {
@@ -528,7 +528,7 @@ export const mimicHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.MIMIC,
+    name: i18n.heroes.MIMIC,
     id: "MIMIC",
     skills: mimicSkills,
     passiveSkill: {
@@ -555,7 +555,7 @@ export const forestSpiritHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.FOREST_SPIRIT,
+    name: i18n.heroes.FOREST_SPIRIT,
     id: "FORESTSPIRIT",
     skills: forestSpititSkills,
     passiveSkill: {
@@ -582,7 +582,7 @@ export const oracleHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.ORACLE,
+    name: i18n.heroes.ORACLE,
     id: "ORACLE",
     skills: oracleSkills,
     passiveSkill: {
@@ -609,7 +609,7 @@ export const shadowMasterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.SHADOW_MASTER,
+    name: i18n.heroes.SHADOW_MASTER,
     id: "SHADOW_MASTER",
     skills: shadowMasterSkills,
     passiveSkill: {
@@ -636,7 +636,7 @@ export const druidHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.DRUID,
+    name: i18n.heroes.DRUID,
     id: "DRUID",
     skills: druidSkills,
     passiveSkill: {
@@ -663,7 +663,7 @@ export const battleMageHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 2,
-    name: i18n.heroes.mc.BATTLE_MAGE,
+    name: i18n.heroes.BATTLE_MAGE,
     id: "BATTLE_MAGE",
     skills: battleMageSkills,
     passiveSkill: {
@@ -690,7 +690,7 @@ export const sorcererHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 3,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.SORCERER,
+    name: i18n.heroes.SORCERER,
     id: "SORCERER",
     skills: sorcererSkills,
     passiveSkill: {
@@ -717,7 +717,7 @@ export const assasinHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.ASSASSIN,
+    name: i18n.heroes.ASSASSIN,
     id: "ASSASSIN",
     skills: assassinSkills,
     passiveSkill: {
@@ -744,7 +744,7 @@ export const inquisitorHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.INQUISITOR,
+    name: i18n.heroes.INQUISITOR,
     id: "INQUISITOR",
     skills: inquisitorSkills,
     passiveSkill: {
@@ -771,7 +771,7 @@ export const witchHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.WITCH,
+    name: i18n.heroes.WITCH,
     id: "WITCH",
     skills: witchSkills,
     passiveSkill: {
@@ -798,7 +798,7 @@ export const monkHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.MONK,
+    name: i18n.heroes.MONK,
     id: "MONK",
     skills: monkSkills,
     passiveSkill: {
@@ -826,7 +826,7 @@ export const hunterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 2,
-    name: i18n.heroes.mc.HUNTER,
+    name: i18n.heroes.HUNTER,
     id: "HUNTER",
     skills: hunterSkills,
     passiveSkill: {
@@ -854,7 +854,7 @@ export const predatorHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.PREDATOR,
+    name: i18n.heroes.PREDATOR,
     id: "PREDATOR",
     skills: predatorSkills,
     passiveSkill: {
@@ -881,7 +881,7 @@ export const bladedancerHero: IUnit = {
     basicEvasionChance: 5,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.BLADEDANCER,
+    name: i18n.heroes.BLADEDANCER,
     id: "BLADEDANCER",
     skills: bladedancerSkills,
     passiveSkill: {
@@ -908,7 +908,7 @@ export const alchemistHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.ALCHEMIST,
+    name: i18n.heroes.ALCHEMIST,
     id: "ALCHEMIST",
     skills: alchemistSkills,
     passiveSkill: {
@@ -935,7 +935,7 @@ export const zealotHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 2,
-    name: i18n.heroes.mc.ZEALOT,
+    name: i18n.heroes.ZEALOT,
     id: "ZEALOT",
     skills: zealotSkills,
     passiveSkill: {
@@ -962,7 +962,7 @@ export const exorcistHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.EXORCIST,
+    name: i18n.heroes.EXORCIST,
     id: "EXORCIST",
     skills: exorcistSkills,
     passiveSkill: {
@@ -989,7 +989,7 @@ export const illusionistHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.ILLUSIONIST,
+    name: i18n.heroes.ILLUSIONIST,
     id: "ILLUSIONIST",
     skills: illusionistSkills,
     passiveSkill: {
@@ -1016,7 +1016,7 @@ export const blackKnightHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 2,
-    name: i18n.heroes.mc.BLACK_KNIGHT,
+    name: i18n.heroes.BLACK_KNIGHT,
     id: "BLACK_KNIGHT",
     skills: blackKnightSkills,
     passiveSkill: {
@@ -1043,7 +1043,7 @@ export const bishopHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 4,
     basicPhysicalPower: 0,
-    name: i18n.heroes.mc.BISHOP,
+    name: i18n.heroes.BISHOP,
     id: "BISHOP",
     skills: bishopSkills,
     passiveSkill: {

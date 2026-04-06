@@ -422,7 +422,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 //distanceEnemy: -40,
                 image: IMAGE_FIREFLY_BATTLE_IDLE,
                 idleBattleAnimation: AnimationType.MOB_FIREFLY_BATTLE_IDLE,
-                //attackAnimation: AnimationType.MOB_SKELETON_ATTACK,
+                attackAnimation: AnimationType.MOB_FIREFLY_ATTACK,
                 defeatedAnimation: AnimationType.MOB_FIREFLY_DEFEATED,
                 appearAnimation: AnimationType.MOB_FIREFLY_APPEAR,
             };

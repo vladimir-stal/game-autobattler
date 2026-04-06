@@ -39,6 +39,7 @@ export const IMAGE_PEASANT_ATTACK = "IMAGE_PEASANT_ATTACK";
 
 export const IMAGE_FIREFLY_BATTLE_IDLE = "IMAGE_FIREFLY_BATTLE_IDLE";
 export const IMAGE_FIREFLY_DEFEATED = "IMAGE_FIREFLY_DEFEATED";
+export const IMAGE_FIREFLY_ATTACK = "IMAGE_FIREFLY_ATTACK";
 
 export const IMAGE_SUMMONKNIHGT_BATTLE_IDLE = "IMAGE_SUMMONKNIHGT_BATTLE_IDLE";
 export const IMAGE_SUMMONKNIHGT_ATTACK = "IMAGE_SUMMONKNIHGT_ATTACK";
@@ -132,6 +133,11 @@ export function loadImagesMobs(scene: Scene) {
     });
 
     scene.load.spritesheet(IMAGE_FIREFLY_DEFEATED, path + "firefly/firefly_defeated_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    //TODO: webp
+    scene.load.spritesheet(IMAGE_FIREFLY_ATTACK, path + "firefly/firefly_attack_1_cut_300.png", {
         frameWidth: 300,
         frameHeight: 300,
     });

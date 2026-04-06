@@ -61,7 +61,7 @@ export const goblinShamanUnit: IUnit = {
     heroClass: EHeroClass.MAGIC,
     mobHeroClasses: [EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
+    attackTargetType: ETargetType.MARKED_ENEMY,
     basicAttack: 4,
     basicAttackTimes: 1,
     basicMaxHp: 14,

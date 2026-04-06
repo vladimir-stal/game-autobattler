@@ -487,9 +487,15 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     async playHeal(value: number): Promise<number> {
         this.setAction("HEAL " + value, colors.GREEN);
         if (this.unitHealAnimation) {
+            if (this.unitHealAnimation === AnimationType.NONE) {
+                return new Promise((resolve) => {
+                    resolve(0);
+                });
+            }
+
             this.unitImageObject.anims.play(this.unitHealAnimation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
-                console.log(">> ANIMATION_COMPLETE heal Animation");
+                //console.log(">> ANIMATION_COMPLETE heal Animation");
                 if (this.unitAnimation) {
                     this.unitImageObject.anims.play(this.unitAnimation);
                 }
@@ -573,6 +579,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
         const animation = skill?.animation || this.unitBuffAnimation;
         if (animation) {
+            if (animation === AnimationType.NONE) {
+                return;
+            }
+
             this.unitImageObject.anims.play(animation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 //console.log(">> ANIMATION_COMPLETE buff Animation");
@@ -596,6 +606,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
         const animation = skill?.animation || this.unitBuffAnimation;
         if (animation) {
+            if (animation === AnimationType.NONE) {
+                return;
+            }
+
             this.unitImageObject.anims.play(animation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 //console.log(">> ANIMATION_COMPLETE buff Animation");
@@ -623,6 +637,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
         const animation = skill?.animation || this.unitBuffAnimation;
         if (animation) {
+            if (animation === AnimationType.NONE) {
+                return;
+            }
             this.unitImageObject.anims.play(animation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 //console.log(">> ANIMATION_COMPLETE attrinc Animation");
@@ -648,6 +665,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
         const animation = skill?.animation || this.unitBuffAnimation;
         if (animation) {
+            if (animation === AnimationType.NONE) {
+                return;
+            }
+
             this.unitImageObject.anims.play(animation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 //console.log(">> ANIMATION_COMPLETE attrinc Animation");
@@ -823,6 +844,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     removeSummon() {
+        console.log("Unitcard REmove summon");
         this.summonCard.setVisible(false);
         this.summonCard.removeUnit();
     }

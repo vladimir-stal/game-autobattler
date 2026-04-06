@@ -404,7 +404,7 @@ export const buffSummonCritSkill: IHeroSkillSet = {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill];
+export const summonSkills: THeroSkills = [fireflySummonSkill]; //[fireflySummonSkill, warriorSummonSkill];
 
 export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa]);
 

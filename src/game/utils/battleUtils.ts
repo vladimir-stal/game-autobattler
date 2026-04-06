@@ -378,7 +378,7 @@ export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, de
 };
 
 export const calculateIncreaseValue = (initialValue: number, increaseValue: number, increaseType: TValueType, percentOfValue?: number) => {
-    if (increaseType === "number" || increaseType === "evolvedNumber" ) {
+    if (increaseType === "number" || increaseType === "evolvedNumber") {
         return increaseValue;
     } else if (increaseType === "percent" || increaseType === "evolvedPercent") {
         const initValue = percentOfValue !== undefined ? percentOfValue : initialValue;
@@ -835,9 +835,9 @@ export const calculateDamageBonuses = (
     unit: IBattleUnit,
     attackType: EHeroAttackType,
     initialDamage: number,
-    mpScale: number,
-    ppScale: number,
     isCritAllowed: boolean,
+    mpScale?: number,
+    ppScale?: number,
 ) => {
     //
     let attackDamage = initialDamage;

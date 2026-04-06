@@ -374,18 +374,16 @@ export class BattleController {
 
         const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
         const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
-        const twiceAttackMods = unit.itemBonuses.filter(ib => ib.type == EItemBattleBonusType.BASIC_ATTACK_TWICE).map(ib => ib.value);
-        twiceAttackMods.sort((a,b) => b - a);
+        const twiceAttackMods = unit.itemBonuses.filter((ib) => ib.type == EItemBattleBonusType.BASIC_ATTACK_TWICE).map((ib) => ib.value);
+        twiceAttackMods.sort((a, b) => b - a);
         //console.log("DEBUG: twice attacks: " + twiceAttackMods.join(", "));
 
         if (twiceAttackMods.length > 0) {
             // get maximum twice attack mod (first index position)
             // and perform 2+addBaTimes attacks
-            for (let i = -2; i < additionalBaTimes; i++)
-                this.basicAttack(unit, isPlayer1, twiceAttackMods[0]);
+            for (let i = -2; i < additionalBaTimes; i++) this.basicAttack(unit, isPlayer1, twiceAttackMods[0]);
             // perform 1 attack per rest twice attack mods (excluding max mod)
-            for (let j = 1; j < twiceAttackMods.length; j++)
-                this.basicAttack(unit, isPlayer1, twiceAttackMods[j]);
+            for (let j = 1; j < twiceAttackMods.length; j++) this.basicAttack(unit, isPlayer1, twiceAttackMods[j]);
         } else {
             this.basicAttack(unit, isPlayer1);
             for (let i = 0; i < additionalBaTimes; i++) {
@@ -416,7 +414,7 @@ export class BattleController {
         }
 
         // calculate attack damage
-        const { attackDamage, isCrit } = calculateDamageBonuses(unit, attackType, value, mpScale, ppScale, isCritAllowed);
+        const { attackDamage, isCrit } = calculateDamageBonuses(unit, attackType, value, isCritAllowed, mpScale, ppScale);
 
         // calculate attack damage according to items bonuses
         // const bonusType =
@@ -511,7 +509,7 @@ export class BattleController {
             target[attribute] += increaseValue;
             //console.log(">>>>", increaseValue, target[attribute]);
             //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
-            battleAction.targets.push({ targetId: target.id, attribute, value: increaseValue });
+            battleAction.targets?.push({ targetId: target.id, attribute, value: increaseValue });
         });
     }
 
@@ -583,11 +581,8 @@ export class BattleController {
                     if (targets.length === 1) {
                         const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
                         if (isAdditionalTarget) {
-                            //console.log("ADDITIONAL_BUFF_TARGET found");
                             const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
-                            //console.log("additionalTargets", additionalTargets);
-                            targets.push(additionalTargets[0]);
-                            //console.log("targets", targets);
+                            additionalTargets && targets.push(additionalTargets[0]);
                         }
                     }
 
@@ -595,7 +590,7 @@ export class BattleController {
                     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
                     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
-                    const initValue = type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK ? calculateBuffValue(unit[attribute], buff, unit) : value;
+                    const initValue = type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK ? calculateBuffValue(unit[attribute!], buff, unit) : value;
                     const buffValue = initValue + mpScaleValue + ppScaleValue;
 
                     //console.log("BUFF >>>", type, buffValue, mpScaleValue);
@@ -604,7 +599,9 @@ export class BattleController {
                         const existingBuff = getExistingBuff(target, buff);
                         if (existingBuff) {
                             existingBuff.value += buffValue;
-                            existingBuff.totalValue += buffValue;
+                            if (existingBuff.totalValue) {
+                                existingBuff.totalValue += buffValue;
+                            }
                             buffAction.buffTargets?.push({ targetId: target.id, value: existingBuff.totalValue, isExisting: true });
                         } else {
                             target.buffs.push({ ...buff, value: buffValue, totalValue: buffValue });
@@ -626,11 +623,8 @@ export class BattleController {
                     if (targets.length === 1) {
                         const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
                         if (isAdditionalTarget) {
-                            console.log("ADDITIONAL_BUFF_TARGET found");
                             const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
-                            console.log("additionalTargets", additionalTargets);
-                            targets.push(additionalTargets[0]);
-                            console.log("targets", targets);
+                            additionalTargets && targets.push(additionalTargets[0]);
                         }
                     }
 
@@ -644,7 +638,9 @@ export class BattleController {
                         // save buff with calculated total value to unit buffs
                         if (existingBuff) {
                             existingBuff.value += buffValue;
-                            existingBuff.totalValue += buffValue;
+                            if (existingBuff.totalValue) {
+                                existingBuff.totalValue += buffValue;
+                            }
                         } else {
                             target.buffs.push({ ...buff, totalValue: buffValue });
                         }
@@ -1298,7 +1294,7 @@ export class BattleController {
             isCritAllowed = !!isCritWithMagic;
         }
 
-        let { attackDamage, isCrit } = calculateDamageBonuses(unit, unit.attackType, unit.attack, 0, 0, isCritAllowed);
+        let { attackDamage, isCrit } = calculateDamageBonuses(unit, unit.attackType, unit.attack, isCritAllowed, 0, 0);
 
         // calculate basic attack damage according to buffs and debuffs
         //unit.buffs.forEach((buff) => {
