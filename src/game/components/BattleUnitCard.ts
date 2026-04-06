@@ -433,8 +433,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
     }
 
-    async playAttack(value: number, skill?: IHeroSkill) {
-        this.setAction("ATTACK " + value);
+    async playAttack(value?: number, skill?: IHeroSkill) {
+        this.setAction("ATTACK " + (value || ""));
         //
         let skillAnimation: string | undefined = undefined;
         if (skill) {
@@ -614,7 +614,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
     }
 
-    async playAttrIncrease(value: number, attribute: THeroBattleAttribute, skill?: IHeroSkill) {
+    async playAttrIncrease(skill?: IHeroSkill) {
         //this.setAction("ATTR INC");
 
         if (!skill) {
@@ -641,7 +641,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
     }
 
-    async playAttrDecrease(value: number, attribute: THeroBattleAttribute, skill?: IHeroSkill) {
+    async playAttrDecrease(skill?: IHeroSkill) {
         if (!skill) {
             return;
         }
