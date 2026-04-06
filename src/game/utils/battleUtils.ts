@@ -77,7 +77,7 @@ export const getFirstThreeTargets = (units: TBattleUnits): IBattleUnit[] => {
     return result;
 };
 
-export const getAllyTargetInFront = (unitId: string, units: TBattleUnits): IBattleUnit => {
+export const getAllyTargetInFront = (unitId: string, units: TBattleUnits): IBattleUnit | null => {
     const unitIndex = units.findIndex((unit) => unit && unit.hp > 0 && unit.id === unitId);
     if (unitIndex === -1) {
         return null;
@@ -125,21 +125,23 @@ export const getHighestAttributeTarget = (units: TBattleUnits, attr: THeroBattle
 };
 
 export const getHighestStatusTarget = (units: TBattleUnits, statusType: EStatusType): IBattleUnit | null => {
-    return units.reduce(
-        (result, unit) => {
-            if (unit && unit.hp > 0) {
-                const statusValue = unit.statuses.find((status) => status.type === statusType)?.value || 0;
-
-                if (!result.unit) {
-                    return { unit, statusValue };
-                }
-
-                return statusValue > result.statusValue ? { unit, statusValue } : result;
-            }
+    const initial: { unit: IBattleUnit | null; statusValue: number } = { unit: null, statusValue: 0 };
+    return units.reduce((result, unit) => {
+        if (!unit) {
             return result;
-        },
-        { unit: null, statusValue: 0 },
-    ).unit;
+        }
+
+        if (unit && unit.hp > 0) {
+            const statusValue = unit.statuses.find((status) => status.type === statusType)?.value || 0;
+
+            if (!result.unit) {
+                return { unit, statusValue };
+            }
+
+            return statusValue > result.statusValue ? { unit, statusValue } : result;
+        }
+        return result;
+    }, initial).unit;
 };
 
 export const getLowHpTarget = (units: TBattleUnits): IBattleUnit | null => {
@@ -200,7 +202,7 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
     switch (targetType) {
         case ETargetType.BY_UNIT_ID: {
             const targetUnit = units.find((allyUnit) => allyUnit && allyUnit.id === targetUnitId);
-            return [targetUnit];
+            return targetUnit ? [targetUnit] : null;
         }
         case ETargetType.ALL_ALLIES:
             return units.filter((unit) => isAliveUnit(unit));
@@ -208,7 +210,7 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             return getAllAllySummons(units);
         case ETargetType.ALLY_IN_FRONT: {
             const allyInFront = getAllyTargetInFront(unit.id, units);
-            return [allyInFront];
+            return allyInFront ? [allyInFront] : null;
         }
         case ETargetType.BUFFED_ALLY_RANDOM: {
             return [getRandomArrayItem(getBuffedAllies(units))];
@@ -239,7 +241,8 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             return [getRandomArrayItem(units.filter((unit) => unit !== null))];
         }
         case ETargetType.RANDOM_ALLY_EXCEPT_ID: {
-            return [getRandomArrayItem(units.filter((unit) => unit !== null && unit.id !== targetUnitId))];
+            const target = getRandomArrayItem(units.filter((unit) => unit !== null && unit.id !== targetUnitId));
+            return target ? [] : null;
         }
         case ETargetType.SELF:
             return [unit];
@@ -255,8 +258,8 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
     switch (targetType) {
         case ETargetType.BY_UNIT_ID: {
             const targetUnit = units.find((enemyUnit) => enemyUnit && enemyUnit.id === targetUnitId);
-            console.log("getOpponentTargets >>>> BY_UNIT_ID >>>> targetUnit = ", targetUnit);
-            return [targetUnit];
+            //console.log("getOpponentTargets >>>> BY_UNIT_ID >>>> targetUnit = ", targetUnit);
+            return targetUnit ? [targetUnit] : null;
         }
         case ETargetType.ALL_ENEMIES:
             return units.filter((unit) => isAliveUnit(unit));
@@ -328,10 +331,10 @@ export const getTargets = (
             console.log("ERROR! getTargets >>> targetType BY_UNIT_ID and targetUnitId is not provided");
             return [];
         }
-        console.log("getTargets >>> BY_UNIT_ID >>> ", targetUnitId);
-        console.log("allUnits >>> ", allyUnits.concat(enemyUnits));
+        //console.log("getTargets >>> BY_UNIT_ID >>> ", targetUnitId);
+        //console.log("allUnits >>> ", allyUnits.concat(enemyUnits));
         const unitById = allyUnits.concat(enemyUnits).find((unit) => unit && (unit.id === targetUnitId || unit.summon?.id === targetUnitId));
-        return [unitById];
+        return unitById ? [unitById] : null;
     }
 
     return allyTargets.includes(targetType) ? getAllyTargets(unit, allyUnits, targetType) : getOpponentTargets(enemyUnits, targetType, debuffType);
@@ -431,13 +434,15 @@ export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, b
         return;
     }
 
-    if (currentBuff.totalValue + value <= 0) {
+    if (currentBuff.totalValue && currentBuff.totalValue + value <= 0) {
         removeBuff(unit, buff, battleRecord);
         return;
     }
 
     currentBuff.value += value;
-    currentBuff.totalValue += value;
+    if (currentBuff.totalValue) {
+        currentBuff.totalValue += value;
+    }
 
     battleRecord.push({
         unitId: unit.id,
@@ -677,7 +682,9 @@ export const applyDebuff = (target: IBattleUnit, debuff: IDebuff, debuffAction: 
             case EDebuffType.MARK_BLADEDANCER:
                 {
                     existingDebuff.value += 1;
-                    existingDebuff.totalValue += 1;
+                    if (existingDebuff.totalValue) {
+                        existingDebuff.totalValue += 1;
+                    }
                     //debuffAction.value = existingDebuff.totalValue;
                     //console.log("debuffAction >>>>", debuffAction);
                     debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingDebuff.totalValue });
@@ -803,19 +810,22 @@ export const getExistingBuff = (unit: IBattleUnit, buff: IBuff) => {
     });
 };
 
-export const prepareUniqueSummonToBattle = (unit: IBattleUnit, summon: IBattleUnit) => {
+export const prepareUniqueSummonToBattle = (unit: IBattleUnit): void => {
+    if (!unit.summon) {
+        return;
+    }
     // check unique summon types
     if (unit.summon.id.startsWith("ILLUSIONSUMMON")) {
         unit.skills.forEach((skill) => {
             if (skill.isMcSkill) {
-                unit.summon.skills.push(noBasicAttackSkill);
+                unit.summon?.skills.push(noBasicAttackSkill);
                 return;
             }
             if (skill.type === ESkillSetType.MAGIC_ATTACK) {
-                unit.summon.skills.push({ ...skill, isBasicAttack: false });
+                unit.summon?.skills.push({ ...skill, isBasicAttack: false });
                 return;
             }
-            unit.summon.skills.push(noBasicAttackSkill);
+            unit.summon?.skills.push(noBasicAttackSkill);
         });
     }
 };
@@ -829,11 +839,11 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
         case ESkillCondition.PP_IS_HIGHER_THAN_MP:
             return unit.physicalPower > unit.magicPower;
         case ESkillCondition.HAS_SUMMON:
-            return (!!unit.summon);
+            return !!unit.summon;
         case ESkillCondition.HAS_NO_SUMMON_OR_TOTEM:
             return !(!!unit.summon || !!unit.totem);
         case ESkillCondition.HAS_TOTEM:
-            return (!!unit.totem);
+            return !!unit.totem;
     }
 };
 

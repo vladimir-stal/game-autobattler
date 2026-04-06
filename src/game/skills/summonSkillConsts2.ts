@@ -7,7 +7,6 @@ import {
     EHeroSkillType,
     ETargetType,
     EUnitType,
-    IHeroSkill,
     IHeroSkillSet,
     IUnit,
     THeroSkills,
@@ -165,7 +164,7 @@ export const fireflySummonSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: skillsetSummon(fireflySummon_3,4,35,35,0,1), // summon 8/1,
+    skills: skillsetSummon(fireflySummon_3, 4, 35, 35, 0, 1), // summon 8/1,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
     animation: AnimationType.SUMMON_SPELL,
 };
@@ -179,7 +178,7 @@ export const fireflySummonSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: skillsetSummon(fireflySummon_2,2,35,35,0,1), // summon 5/1,
+    skills: skillsetSummon(fireflySummon_2, 2, 35, 35, 0, 1), // summon 5/1,
     nextLevel: fireflySummonSkill_3,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
     animation: AnimationType.SUMMON_SPELL,
@@ -194,7 +193,7 @@ export const fireflySummonSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: skillsetSummon(fireflySummon,1,35,35,0,1), // summon 3/1,
+    skills: skillsetSummon(fireflySummon, 1, 35, 35, 0, 1), // summon 3/1,
     nextLevel: fireflySummonSkill_2,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
     animation: AnimationType.SUMMON_SPELL,
@@ -211,7 +210,7 @@ export const warriorSummonSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills:skillsetSummon(warriorSummon_3,2,35,20,3,3), // summon 6/10
+    skills: skillsetSummon(warriorSummon_3, 2, 35, 20, 3, 3), // summon 6/10
     image: IMAGE_SKILL_SUMMON_SPIRIT,
     animation: AnimationType.SUMMON_SPELL,
 };
@@ -225,7 +224,7 @@ export const warriorSummonSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: skillsetSummon(warriorSummon_2,1,35,20,2,2), // summon 3/5
+    skills: skillsetSummon(warriorSummon_2, 1, 35, 20, 2, 2), // summon 3/5
     nextLevel: warriorSummonSkill_3,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
     animation: AnimationType.SUMMON_SPELL,
@@ -238,7 +237,7 @@ export const warriorSummonSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
-    skills: skillsetSummon(warriorSummon,1,35,20,1,1),// summon 2/3
+    skills: skillsetSummon(warriorSummon, 1, 35, 20, 1, 1), // summon 2/3
     nextLevel: warriorSummonSkill_2,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
     animation: AnimationType.SUMMON_SPELL,

@@ -183,8 +183,8 @@ export const getRooms = (
         case 1:
             {
                 if (hour === 0) {
-                    //return [null, { roomType: ERoomType.HEROES_SELL }, null];
-                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
+                    return [null, { roomType: ERoomType.HEROES_SELL }, null];
+                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
                 } else if (hour === 1) {
                     //return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                     return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];

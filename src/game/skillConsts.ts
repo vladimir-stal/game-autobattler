@@ -1,4 +1,3 @@
-import { EHeroClass, EHeroSkillType, THeroSkills } from "../types";
 import { bardSkills, bardSkills_2, bardSkills_3 } from "./skills/bardSkillConsts";
 import { noBasicAttackSkill } from "./skills/commonSkillConsts";
 import { darkSkills, darkSkills_2, darkSkills_3 } from "./skills/darkSkillConsts";
@@ -11,7 +10,7 @@ import { warriorSkills, warriorSkills_2, warriorSkills_3 } from "./skills/warrio
 import { wildSkills, wildSkills_2, wildSkills_3 } from "./skills/wildSkillConsts";
 
 export const BASIC_CLASS_MAX_SKILL_COUNT = 2;
-export const MC_CLASS_MAX_SKILL_COUNT = 4; // or 3?
+export const MC_CLASS_MAX_SKILL_COUNT = 4;
 
 export const SKILL_MAX_LEVEL = 3;
 

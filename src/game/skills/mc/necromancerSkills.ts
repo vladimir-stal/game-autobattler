@@ -3,18 +3,18 @@ import { i18n } from "../../consts";
 import { skeletonUnit, skeletonWarriorUnit } from "../../units/skeletonsMobUnits";
 import { skillsetSummon } from "../../utils/skillUtils2";
 
-const buffSummonRegen = (regen:number): IHeroSkill => {
+const buffSummonRegen = (regen: number): IHeroSkill => {
     return {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                isBasicAttack: false,
-                attribute: "hpRegen",
-                value: regen,
-                valueType: "number",
-                targetType: ETargetType.SUMMON_CURRENT,
-                condition: ESkillCondition.HAS_SUMMON,
-                animation: AnimationType.NONE,
-            };
-}
+        type: EHeroSkillType.ATTRIBUTE_INCREASE,
+        isBasicAttack: false,
+        attribute: "hpRegen",
+        value: regen,
+        valueType: "number",
+        targetType: ETargetType.SUMMON_CURRENT,
+        condition: ESkillCondition.HAS_SUMMON,
+        animation: AnimationType.NONE,
+    };
+};
 
 export const necromancerSkill_3: IHeroSkillSet = {
     id: "NecromancerSkeleton",
@@ -25,21 +25,21 @@ export const necromancerSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.NECROMANCER],
     isMcSkill: true,
-    skills: [buffSummonRegen(3), ...skillsetSummon(skeletonUnit,3,50,50,8,7)],
+    skills: [buffSummonRegen(3), ...skillsetSummon(skeletonUnit, 3, 50, 50, 8, 7)],
     isActivateOnStart: true,
 };
 
 export const necromancerSkill_2: IHeroSkillSet = {
     id: "NecromancerSkeleton",
     name: "Necromancer skeleton",
-    desc: "Summon a skeleton warrior [stats]", 
+    desc: "Summon a skeleton warrior [stats]",
     // was skeleton warrior [stats] = [7,16]
     // now skeleton [stats] = [4,10] ~> 6+2,15+5
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.NECROMANCER],
     isMcSkill: true,
-    skills: [buffSummonRegen(2), ...skillsetSummon(skeletonUnit,2,35,50,5,5)],
+    skills: [buffSummonRegen(2), ...skillsetSummon(skeletonUnit, 2, 35, 50, 5, 5)],
     isActivateOnStart: true,
     nextLevel: necromancerSkill_3,
 };
@@ -53,7 +53,7 @@ export const necromancerSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.NECROMANCER],
     isMcSkill: true,
-    skills: [buffSummonRegen(1), ...skillsetSummon(skeletonUnit,1,20,50,3,3)], 
+    skills: [buffSummonRegen(1), ...skillsetSummon(skeletonUnit, 1, 20, 50, 3, 3)],
     isActivateOnStart: true,
     nextLevel: necromancerSkill_2,
 };

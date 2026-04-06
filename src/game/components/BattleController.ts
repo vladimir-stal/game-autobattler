@@ -636,7 +636,7 @@ export class BattleController {
 
                     targets.forEach((target) => {
                         // calculate buff value and add to unit attribute
-                        console.log("DEBUG calc buff value",)
+                        console.log("DEBUG calc buff value");
                         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
                         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
                         const buffValue = calculateBuffValue(target[attribute], buff, target) + mpScaleValue + ppScaleValue;
@@ -679,7 +679,7 @@ export class BattleController {
                     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
                     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
-                    const buffValue = calculateBuffValue(unit[attribute], buff, unit) + mpScaleValue + ppScaleValue;
+                    const buffValue = (attribute ? calculateBuffValue(unit[attribute], buff, unit) : 0) + mpScaleValue + ppScaleValue;
 
                     targets.forEach((target) => {
                         //console.log("BUFF >> FIRE_SHIELD >>>", target, buffValue, mpScaleValue);
@@ -687,7 +687,9 @@ export class BattleController {
                         // save buff with calculated total value to unit buffs
                         if (existingBuff) {
                             existingBuff.value += buffValue;
-                            existingBuff.totalValue += buffValue;
+                            if (existingBuff.totalValue) {
+                                existingBuff.totalValue += buffValue;
+                            }
                         } else {
                             target.buffs.push({ ...buff, value: buffValue, totalValue: buffValue });
                         }
@@ -713,18 +715,12 @@ export class BattleController {
                     if (targets.length === 1) {
                         const isAdditionalTarget = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.ADDITIONAL_BUFF_TARGET);
                         if (isAdditionalTarget) {
-                            //console.log("ADDITIONAL_BUFF_TARGET found");
                             const additionalTargets = getAllyTargets(unit, allyUnits, ETargetType.RANDOM_ALLY_EXCEPT_ID, targets[0].id);
-                            //console.log("additionalTargets", additionalTargets);
-                            targets.push(additionalTargets[0]);
-                            //console.log("targets", targets);
+                            additionalTargets && targets.push(additionalTargets[0]);
                         }
                     }
 
-                    //console.log(".>>>>targets > ", targets);
-
                     targets.forEach((target) => {
-                        //console.log("...target", target);
                         target.buffs.push(buff);
                         buffAction.buffTargets?.push({ targetId: target.id });
                     });
@@ -748,7 +744,7 @@ export class BattleController {
         //console.log("performBuffValueIncrease > get buff from", targets);
 
         // check if at least one buffed ally found
-        if (!targets[0]) {
+        if (!targets?.[0]) {
             console.log("performBuffValueIncrease > no buff to copy found");
             return;
         }
@@ -761,7 +757,7 @@ export class BattleController {
                 return;
             }
 
-            const addValue = calculateIncreaseValue(buff.totalValue, value, valueType);
+            const addValue = calculateIncreaseValue(buff.totalValue || 0, value, valueType);
             buff.value = addValue;
             buff.valueType = "number";
             buff.targetType = ETargetType.BY_UNIT_ID;
@@ -794,7 +790,7 @@ export class BattleController {
         const targets = getAllyTargets(unit, allyUnits, targetFromType);
 
         // check if at least one buffed ally found
-        if (!targets[0]) {
+        if (!targets?.[0]) {
             console.log("performBuffCopy > no buff to copy found");
             return;
         }
@@ -1067,10 +1063,10 @@ export class BattleController {
                 //const antihealDebuff = target.debuffs[antihealDebuffIndex];
                 //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
                 // record
-                const attackRecord = { unitId: target.id, type: EBattleActionType.ATTACK, value: finalHeal, targets: [] };
+                const attackRecord: IBattleAction = { unitId: target.id, type: EBattleActionType.ATTACK, value: finalHeal, targets: [] };
                 this.battleRecord.push(attackRecord);
                 const recordTarget = { targetId: target.id, isEvasion: false };
-                attackRecord.targets?.push(recordTarget);
+                attackRecord?.targets?.push(recordTarget);
                 //
                 this.takeDamage(target, finalHeal, undefined, recordTarget);
                 //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
@@ -1133,7 +1129,7 @@ export class BattleController {
         unit.summon = prepareSummonToBattle(summon);
 
         // check unique summon types
-        prepareUniqueSummonToBattle(unit, unit.summon);
+        prepareUniqueSummonToBattle(unit);
 
         const summonBonuses = unit.itemBonuses.filter((bonus) => summonItemBattleBonuses.includes(bonus.type));
         summonBonuses.forEach((bonus) => {
@@ -1297,7 +1293,8 @@ export class BattleController {
 
         // find attack target
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
-        const targets = getOpponentTargets(opponentUnits, summon ? summon.attackTargetType : targetType, unit.basicAttackMarkType);
+        const opponentTargetType = summon ? summon.attackTargetType : targetType || ETargetType.FIRST_ENEMY;
+        const targets = getOpponentTargets(opponentUnits, opponentTargetType, unit.basicAttackMarkType);
         if (!targets) {
             return;
         }
@@ -1400,8 +1397,9 @@ export class BattleController {
                 applyDebuff(finalTarget, debuff, debuffAction);
 
                 const bladedancerMark = finalTarget.debuffs.find((debuff) => debuff.type === EDebuffType.MARK_BLADEDANCER);
-
-                attackDamage += bladedancerMark.totalValue;
+                if (bladedancerMark && bladedancerMark.totalValue) {
+                    attackDamage += bladedancerMark.totalValue;
+                }
             }
 
             //

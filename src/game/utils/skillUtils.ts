@@ -1,4 +1,19 @@
-import { EBuffTimeType, EBuffType, ECardType, EHeroClass, EHeroClassType, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IItem, IUnit, THeroSkills } from "../../types";
+import {
+    AnimationType,
+    EBuffTimeType,
+    EBuffType,
+    ECardType,
+    EHeroClass,
+    EHeroClassType,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IItem,
+    IUnit,
+    THeroSkills,
+} from "../../types";
 import { GameScene } from "../scenes/GameScene";
 import {
     allBasicClassesSkills,
@@ -178,24 +193,20 @@ export const getSkillPrice = (skillLeveL: number, additionalLevel: number = 0) =
 export const getAllHoldingSkills = (gameScene: GameScene): IHeroSkillSet[] => {
     let list: IHeroSkillSet[] = [];
     // skills in inventory
-    gameScene.inventoryPanel.slots.forEach(slot => {
-        if (slot && slot.slot && slot.slot.card && slot.slot.card.card && slot.slot.card.card.type === ECardType.SKILL) {
-            list.push(slot.slot.card.card.skill);
+    gameScene.inventoryPanel.slots.forEach((slot) => {
+        if (slot.slot?.card?.card.type === ECardType.SKILL) {
+            slot.slot.card.card.skill && list.push(slot.slot.card.card.skill);
         }
-    })
-    gameScene.unitPanel.slots.forEach(slot => {
-        if (
-            slot && slot.slot && slot.slot.card && slot.slot.card.card
-            && slot.slot.card.card.type === ECardType.UNIT
-        ) {
-            slot.slot.card.card.unit.skills.forEach(skill => {
-                if (skill)
-                    list.push(skill);
-            })
+    });
+    gameScene.unitPanel.slots.forEach((slot) => {
+        if (slot.slot?.card?.card.type === ECardType.UNIT) {
+            slot.slot?.card?.card?.unit?.skills.forEach((skill) => {
+                if (skill) list.push(skill);
+            });
         }
-    })
+    });
     return list;
-}
+};
 
 export const upgradeSkillSet = (skillSet: IHeroSkillSet, skillSet2: IHeroSkillSet): IHeroSkillSet => {
     if (skillSet.level === SKILL_MAX_LEVEL) {

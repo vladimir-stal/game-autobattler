@@ -1,12 +1,22 @@
-import { AnimationType, EBuffTimeType, EBuffType, EEffectAnimationType, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IUnit } from "../../types";
+import {
+    AnimationType,
+    EBuffTimeType,
+    EBuffType,
+    EEffectAnimationType,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IUnit,
+} from "../../types";
 /*
     this file is similar to skillUtil.ts but doesn't refer to skillConsts.ts
     if a function from here is moved to skillUtil.ts - it would create
     circular reference and game will fail to load
 */
 
-
-export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: number, atkMpScale: number, hpPure: number, armorPure: number):IHeroSkill[] => {
+export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: number, atkMpScale: number, hpPure: number, armorPure: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
@@ -73,12 +83,21 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
 };
 
 export const substituteSummonDescription = (skillset: IHeroSkillSet): string => {
-    const s = skillset.desc.split("[stats]");
-    if (s.length > 1) {
-        const unit = skillset.skills.find(sk => sk.type === EHeroSkillType.SUMMON).summon;
-        const atk = unit.basicAttack ? unit.basicAttack : "?";
-        const hp = unit.basicMaxHp ? unit.basicMaxHp : "?";
-        return s.join("["+atk+","+hp+"]");
-    } else
-        return skillset.desc;
-}
+    // const s = skillset.desc.split("[stats]");
+    // if (s.length > 1) {
+    //     const unit = skillset.skills.find(sk => sk.type === EHeroSkillType.SUMMON).summon;
+    //     const atk = unit.basicAttack ? unit.basicAttack : "?";
+    //     const hp = unit.basicMaxHp ? unit.basicMaxHp : "?";
+    //     return s.join("["+atk+","+hp+"]");
+    // } else
+    //     return skillset.desc;
+
+    const { desc, skills } = skillset;
+    if (desc.includes("[stats]")) {
+        const { summon } = skills.find((sk) => sk.type === EHeroSkillType.SUMMON) || {};
+        const atk = summon?.basicAttack || "?";
+        const hp = summon?.basicMaxHp || "?";
+        return desc.replace("[stats]", "[" + atk + "," + hp + "]");
+    }
+    return desc;
+};
