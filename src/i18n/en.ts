@@ -551,16 +551,16 @@ export const i18n: Ii18n = {
             //
             fireflySummon: {
                 name: "Firefly Summon",
-                desc3: "Summon magic creature [$stats]",
-                desc2: "Summon magic creature [$stats]",
-                desc1: "Summon magic creature [$stats]",
+                desc3: "Summon magic creature [stats]",
+                desc2: "Summon magic creature [stats]",
+                desc1: "Summon magic creature [stats]",
             },
             sparkSummon: {
                 name: "Summon spirit warrior",
 
-                desc1: "Summon spirit warrior [$stats]",
-                desc2: "Summon spirit warrior [$stats]",
-                desc3: "Summon spirit warrior [$stats]",
+                desc1: "Summon spirit warrior [stats]",
+                desc2: "Summon spirit warrior [stats]",
+                desc3: "Summon spirit warrior [stats]",
             },
             //
             // WARRIOR

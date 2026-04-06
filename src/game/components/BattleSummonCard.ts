@@ -121,13 +121,13 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         this.titleText = this.scene.add.text(10, -330, this.title, { fontSize: 12, color: "#dddddd" });
         this.add(this.titleText);
 
-        this.hpText = this.scene.add.text(60, -310, hp + "/" + maxHp + "", { fontSize: 12, color: "#dddddd" });
+        this.hpText = this.scene.add.text(45, -310, hp + "/" + maxHp + "", { fontSize: 12, color: "#ddffdd" });
         this.add(this.hpText);
 
-        this.attackText = this.scene.add.text(10, -310, basicAttack + " A", { fontSize: 12, color: "#dddddd" });
+        this.attackText = this.scene.add.text(15, -310, "A"+basicAttack, { fontSize: 12, color: "#ffdddd" });
         this.add(this.attackText);
 
-        this.armorText = this.scene.add.text(90, -310, armor + " arm", { fontSize: 12, color: "#dddddd" });
+        this.armorText = this.scene.add.text(80, -310, armor + "arm", { fontSize: 12, color: "#ddddff" });
         this.armorText.setVisible(armor > 0);
         this.add(this.armorText);
 
@@ -478,7 +478,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         if (this.unit.armor < 0) {
             this.unit.armor = 0;
         }
-        this.armorText.setText(this.unit.armor + " armor");
+        this.armorText.setText(this.unit.armor + "arm");
     }
 
     summonUnit(unit: IUnit) {
@@ -560,15 +560,23 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
             case "attack":
                 {
                     this.unit.attack += value;
-                    this.attackText.setText(this.unit.attack + " attack");
+                    this.attackText.setText("A"+this.unit.attack);
                 }
                 break;
             case "armor":
                 {
-                    this.unit.armor += value;
-                    this.armorText.setText(this.unit.armor + " armor");
+                    this.changeArmor(value);
                 }
                 break;
+            case "hp":
+                {
+                    this.changeHp(value);
+                }
+            case "maxHp":
+                {
+                    this.unit.maxHp += value;
+                    this.changeHp(value);
+                }
         }
     }
 

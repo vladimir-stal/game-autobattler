@@ -290,9 +290,9 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             case EBattleActionType.ATTRIBUTE_INCREASE:
                 {
                     if (value === undefined || !attribute) {
+                        this.playNextAction();
                         return;
                     }
-
                     if (targets) {
                         targets.forEach((target) => {
                             const { targetId, value, attribute } = target;
@@ -312,9 +312,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                             this.cards[targetId].playAttrIncreaseTarget(value, attribute);
                         }, 1500);
                     }
-
                     await this.cards[unitId].playAttrIncrease(value, attribute, skill);
-
                     this.playNextAction();
                 }
                 break;

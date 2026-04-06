@@ -227,6 +227,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 summonTotemAnimation: AnimationType.SUMMON_SPELL,
                 defeatedAnimation: AnimationType.SUMMON_DEFEATED,
                 hurtAnimation: AnimationType.SUMMON_HURT,
+                buffAnimation: AnimationType.SUMMON_SPELL, // TODO: change to summon animation
             };
         case EHeroClass.WARRIOR:
             return {

@@ -497,6 +497,8 @@ export class BattleController {
             targets: [],
             skill,
             isStartBattle,
+            //value: skill?.value,
+            //attribute: skill?.attribute,
         };
         this.battleRecord.push(battleAction);
 
@@ -505,7 +507,7 @@ export class BattleController {
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
         targets.forEach((target) => {
-            //console.log("INCR ATTR TARGET", attribute, target);
+            console.log("INCR ATTR TARGET", attribute, target);
             const increaseValue = calculateIncreaseValue(target[attribute], value, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
 
             target[attribute] += increaseValue;
