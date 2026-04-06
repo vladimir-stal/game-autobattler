@@ -180,7 +180,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
     setIsActive(value: boolean, activeType?: TSlotActiveType) {
         this.isActive = value;
 
-        const activeColor = activeType ? (activeType === "merge" ? colors.BLUE : colors.GREEN_2) : colors.GREEN_2;
+        const activeColor = activeType ? (activeType === "merge" ? colors.PURPLE : colors.GREEN_2) : colors.GREEN_2;
 
         if (this.card && this.card.card.type === ECardType.UNIT) {
             const color = value ? activeColor : colors.GREY;

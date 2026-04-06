@@ -814,7 +814,7 @@ export const testMinistrel: TDuelEnemy = {
 };
 
 export const testPriest: TDuelEnemy = {
-    1: [priestHero],
+    1: [{ ...priestHero, skills: [healFirst, healFirst, healFirst, healFirst] }],
     0: [priestHero],
     2: [priestHero],
     3: [samuraiHero],

@@ -183,6 +183,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             };
         case EHeroClass.ORDER:
             return {
+                distance: -20,
                 distanceEnemy: -40,
                 //size: 380,
                 image: IMAGE_ORDER_IDLE,

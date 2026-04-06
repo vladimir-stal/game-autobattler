@@ -338,7 +338,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     flyActionPanel(colorPanel: GameObjects.Rectangle, textPanel: GameObjects.Text, color?: number) {
         //console.log("flyActionPanel", color);
         colorPanel.setY(-160);
-        colorPanel.fillColor = color;
+        if (color) colorPanel.fillColor = color;
         colorPanel.setAlpha(1);
 
         //colorPanel.setFillStyle(this.actionRect.fillColor, 1);
@@ -407,7 +407,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
         if (animation) {
             // TODO: add other types of animation
-            let animationType: string = undefined;
+            let animationType: string | undefined = undefined;
             if (animation === AnimationType.UNIT_ATTACK) {
                 animationType = this.magicAttackSkillAnimation;
             }
@@ -428,7 +428,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             return new Promise((resolve) => {
                 setTimeout(() => {
                     resolve(0);
-                }, this.unitImageObject.anims.currentAnim.duration);
+                }, this.unitImageObject.anims.currentAnim?.duration || 0);
             });
         }
     }
@@ -436,7 +436,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     async playAttack(value: number, skill?: IHeroSkill) {
         this.setAction("ATTACK " + value);
         //
-        let skillAnimation: string = undefined;
+        let skillAnimation: string | undefined = undefined;
         if (skill) {
             if (skill.animation) {
                 skillAnimation = skill.animation;
@@ -473,7 +473,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(0);
-                }, this.unitImageObject.anims.currentAnim.duration);
+                }, this.unitImageObject.anims.currentAnim?.duration || 0);
             });
         } else {
             return new Promise((resolve, reject) => {
@@ -499,7 +499,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve(0);
-                }, this.unitImageObject.anims.currentAnim.duration);
+                }, this.unitImageObject.anims.currentAnim?.duration || 0);
             });
         } else {
             return 0;
@@ -672,7 +672,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
 
         const { unitType, heroClass, id } = unit;
-        let animation: EEffectAnimationType;
+        let animation: EEffectAnimationType | undefined;
         let animationDelay = 0;
         let attackEnemyAnimDistanceX = 0;
         let attackEnemyAnimDistanceY = 0;
@@ -736,9 +736,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
 
         const animation = EEffectAnimationType.EFFECT_PRIEST_HEAL;
-        const animationDelay = 800;
-        let attackEnemyAnimDistanceX = 100;
-        const attackEnemyAnimDistanceY = 0;
+        const animationDelay = 500;
+        let healAnimDistanceX = this.isInverted ? 100 : 150;
+        let healAnimDistanceY = 100;
 
         if (!animation) {
             return;
@@ -748,22 +748,22 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             const initialX = this.effectImageObject.x;
             const initialY = this.effectImageObject.y;
             //console.log("initial X", initialX);
-            if (attackEnemyAnimDistanceX !== 0) {
-                this.effectImageObject.setX(initialX + attackEnemyAnimDistanceX);
+            if (healAnimDistanceX !== 0) {
+                this.effectImageObject.setX(initialX + healAnimDistanceX);
                 //console.log("changed X", this.effectImageObject.x);
             }
-            if (attackEnemyAnimDistanceY !== 0) {
-                this.effectImageObject.setY(initialY + attackEnemyAnimDistanceY);
-            }
+            //if (attackEnemyAnimDistanceY !== 0) {
+            this.effectImageObject.setY(initialY + healAnimDistanceY);
+            //}
             this.effectImageObject.setVisible(true);
             this.effectImageObject.anims.play(animation);
             this.effectImageObject.on(ANIMATION_COMPLETE, () => {
                 this.effectImageObject.setVisible(false);
-                if (attackEnemyAnimDistanceX !== 0) {
+                if (healAnimDistanceX !== 0) {
                     this.effectImageObject.setX(initialX);
                     //console.log("restored X", this.effectImageObject.x);
                 }
-                if (attackEnemyAnimDistanceY !== 0) {
+                if (healAnimDistanceY !== 0) {
                     this.effectImageObject.setY(initialY);
                     //console.log("restored X", this.effectImageObject.x);
                 }
@@ -808,7 +808,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 setTimeout(() => {
                     //this.summonCard.setVisible(true);
                     resolve(this.summonCard);
-                }, this.unitImageObject.anims.currentAnim.duration);
+                }, this.unitImageObject.anims.currentAnim?.duration || 0);
             });
         } else {
             return new Promise<BattleSummonCard>((resolve, reject) => {
@@ -850,7 +850,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 setTimeout(() => {
                     this.summonCard.setVisible(true);
                     resolve(this.summonCard);
-                }, this.unitImageObject.anims.currentAnim.duration);
+                }, this.unitImageObject.anims.currentAnim?.duration || 0);
             });
         } else {
             this.summonCard.setVisible(true);
@@ -924,6 +924,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.setAction("BUFF " + buff.name);
         const { isExisting, value } = buffTatget;
         //
+        if (!value) {
+            return;
+        }
+        //
         if (isExisting) {
             const currentBuff = this.buffs.find((b) => b.type === buff.type);
             if (currentBuff) {
@@ -940,6 +944,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     changeBuffValue(buff: IBuff, buffTatget: IActionBuffTarget) {
         const { isExisting, value } = buffTatget;
+        //
+        if (!value) {
+            return;
+        }
+        //
         if (isExisting) {
             const currentBuff = this.buffs.find((b) => b.type === buff.type);
             if (currentBuff) {
