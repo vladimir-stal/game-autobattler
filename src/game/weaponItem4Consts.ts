@@ -1,13 +1,11 @@
 import {
-    EHeroClass,
-    EItemAfterDuelBonusCondition,
-    EItemAfterDuelBonusType,
     EItemBattleBonusType,
     EItemBonusType,
     EItemType,
     EWeaponItemType,
     IItem,
 } from "../types";
+import { i18n } from "./consts";
 import { IMAGE_ITEM_TOTEM_3 } from "./utils/load/imageLoadItems";
 
 ////////////////////////  LEVEL 4 WEAPONS /////////////////////////////////////////
@@ -50,10 +48,10 @@ import { IMAGE_ITEM_TOTEM_3 } from "./utils/load/imageLoadItems";
 
 export const totem41_3: IItem = {
     id: "totem41",
-    name: "Totem 4.1(2)",
+    name: i18n.items.totem41, // "Toxic totem",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 4,
+    priceLevel: 6,
     image: IMAGE_ITEM_TOTEM_3,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
@@ -63,10 +61,10 @@ export const totem41_3: IItem = {
 
 export const totem41_2: IItem = {
     id: "totem41",
-    name: "Totem 4.1(2)",
+    name: i18n.items.totem41,
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 4,
+    priceLevel: 5,
     image: IMAGE_ITEM_TOTEM_3,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
@@ -77,7 +75,7 @@ export const totem41_2: IItem = {
 
 export const totem41: IItem = {
     id: "totem41",
-    name: "Totem 4.1",
+    name: i18n.items.totem41,
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 4,

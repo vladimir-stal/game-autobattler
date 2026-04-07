@@ -54,6 +54,14 @@ export const addExp = (units: (IUnit | null)[], expAdd: number) => {
 export const levelUpUnit = (unit: IUnit) => {
     unit.level += 1;
     addAttributesOnLevelUp(unit);
+    // mc skill up
+    if (unit.unitType === EUnitType.HERO && unit.heroClassType === EHeroClassType.MULTI) {
+        unit.skills.forEach((sk, idx) => {
+            if (sk.isMcSkill && sk.nextLevel) {
+                unit.skills[idx] = sk.nextLevel;
+            }
+        });
+    }
 };
 
 export const levelUpUnitRandom = (unit: IUnit) => {

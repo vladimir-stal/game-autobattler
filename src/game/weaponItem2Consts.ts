@@ -1,4 +1,5 @@
 import { EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
+import { i18n } from "./consts";
 import {
     IMAGE_ITEM_AXE_21,
     IMAGE_ITEM_AXE_22,
@@ -29,7 +30,7 @@ import {
 
 export const axe21_3: IItem = {
     id: "axe21",
-    name: "Axe 2.1(3)",
+    name: i18n.items.axe21, //"Rending axe",
     type: EItemType.WEAPON,
     level: 3,
     priceLevel: 4,
@@ -42,10 +43,10 @@ export const axe21_3: IItem = {
 
 export const axe21_2: IItem = {
     id: "axe21",
-    name: "Axe 2.1(2)",
+    name: i18n.items.axe21, //"Rending axe",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_AXE_22,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
@@ -56,7 +57,7 @@ export const axe21_2: IItem = {
 
 export const axe21: IItem = {
     id: "axe21",
-    name: "Axe 2.1",
+    name: i18n.items.axe21, //"Rending axe",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -72,10 +73,10 @@ export const axe21: IItem = {
 
 export const axe22_3: IItem = {
     id: "axe22",
-    name: "Axe 2.2(2)",
+    name: i18n.items.axe22, //"Mighty axe",
     type: EItemType.WEAPON,
-    level: 2,
-    priceLevel: 2,
+    level: 3,
+    priceLevel: 4,
     image: IMAGE_ITEM_AXE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
@@ -84,10 +85,10 @@ export const axe22_3: IItem = {
 
 export const axe22_2: IItem = {
     id: "axe22",
-    name: "Axe 2.2(2)",
+    name: i18n.items.axe22, //"Mighty axe",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_AXE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
@@ -97,7 +98,7 @@ export const axe22_2: IItem = {
 
 export const axe22: IItem = {
     id: "axe22",
-    name: "Axe 2.2",
+    name: i18n.items.axe22, //"Mighty axe",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -114,10 +115,10 @@ export const axe22: IItem = {
 
 export const dagger21_3: IItem = {
     id: "dagger21",
-    name: "Dagger 2.1(3)",
+    name: i18n.items.dagger21, //"Swift dagger",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_DAGGER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
@@ -127,10 +128,10 @@ export const dagger21_3: IItem = {
 
 export const dagger21_2: IItem = {
     id: "dagger21",
-    name: "Dagger 2.1(2)",
+    name: i18n.items.dagger21, //"Swift dagger",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_DAGGER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
@@ -141,7 +142,7 @@ export const dagger21_2: IItem = {
 
 export const dagger21: IItem = {
     id: "dagger21",
-    name: "Dagger 2.1",
+    name: i18n.items.dagger21, //"Swift dagger",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -157,10 +158,10 @@ export const dagger21: IItem = {
 
 export const dagger22_3: IItem = {
     id: "dagger22",
-    name: "Dagger 2.2(3)",
+    name: i18n.items.dagger22, //"Mighty dagger",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_DAGGER_2,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
@@ -169,10 +170,10 @@ export const dagger22_3: IItem = {
 
 export const dagger22_2: IItem = {
     id: "dagger22",
-    name: "Dagger 2.2(2)",
+    name: i18n.items.dagger22, //"Mighty dagger",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_DAGGER_2,
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
@@ -182,7 +183,7 @@ export const dagger22_2: IItem = {
 
 export const dagger22: IItem = {
     id: "dagger22",
-    name: "Dagger 2.2",
+    name: i18n.items.dagger22, //"Mighty dagger",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -199,10 +200,10 @@ export const dagger22: IItem = {
 
 export const mace21_3: IItem = {
     id: "mace21",
-    name: "Mace 2.1(2)",
+    name: i18n.items.mace21, //"Shattering mace",
     type: EItemType.WEAPON,
-    level: 2,
-    priceLevel: 2,
+    level: 3,
+    priceLevel: 4,
     image: IMAGE_ITEM_MACE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
@@ -212,10 +213,10 @@ export const mace21_3: IItem = {
 
 export const mace21_2: IItem = {
     id: "mace21",
-    name: "Mace 2.1(2)",
+    name: i18n.items.mace21, //"Shattering mace",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_MACE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
@@ -226,7 +227,7 @@ export const mace21_2: IItem = {
 
 export const mace21: IItem = {
     id: "mace21",
-    name: "Mace 2.1",
+    name: i18n.items.mace21, //"Shattering mace",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -242,10 +243,10 @@ export const mace21: IItem = {
 
 export const mace22_3: IItem = {
     id: "mace22",
-    name: "Mace 2.2(3)",
+    name: i18n.items.mace22, //"Purifying mace",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_MACE_2,
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
@@ -255,10 +256,10 @@ export const mace22_3: IItem = {
 
 export const mace22_2: IItem = {
     id: "mace22",
-    name: "Mace 2.2(2)",
+    name: i18n.items.mace22, //"Purifying mace",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_MACE_2,
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
@@ -269,7 +270,7 @@ export const mace22_2: IItem = {
 
 export const mace22: IItem = {
     id: "mace22",
-    name: "Mace 2.2",
+    name: i18n.items.mace22, //"Purifying mace",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -287,10 +288,10 @@ export const mace22: IItem = {
 
 export const sword21_3: IItem = {
     id: "sword21",
-    name: "Sword 2.1(3)",
+    name: i18n.items.sword21, //"Slaying sword",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_SWORD_2,
     heroClasses: [],
     weaponType: EWeaponItemType.SWORD,
@@ -300,10 +301,10 @@ export const sword21_3: IItem = {
 
 export const sword21_2: IItem = {
     id: "sword21",
-    name: "Sword 2.1(2)",
+    name: i18n.items.sword21, //"Slaying sword",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_SWORD_2,
     heroClasses: [],
     weaponType: EWeaponItemType.SWORD,
@@ -314,7 +315,7 @@ export const sword21_2: IItem = {
 
 export const sword21: IItem = {
     id: "sword21",
-    name: "Sword 2.1",
+    name: i18n.items.sword21, //"Slaying sword",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -330,10 +331,10 @@ export const sword21: IItem = {
 
 export const sword22_3: IItem = {
     id: "sword22",
-    name: "Sword 2.2(3)",
+    name: i18n.items.sword22, //"Mighty sword",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_SWORD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SWORD,
@@ -342,10 +343,10 @@ export const sword22_3: IItem = {
 
 export const sword22_2: IItem = {
     id: "sword22",
-    name: "Sword 2.2(2)",
+    name: i18n.items.sword22, //"Mighty sword",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_SWORD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SWORD,
@@ -355,7 +356,7 @@ export const sword22_2: IItem = {
 
 export const sword22: IItem = {
     id: "sword22",
-    name: "Sword 2.2",
+    name: i18n.items.sword22, //"Mighty sword",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -372,10 +373,10 @@ export const sword22: IItem = {
 
 export const staff21_3: IItem = {
     id: "staff21",
-    name: "Staff 2.1(3)",
+    name: i18n.items.staff21, //"Summoners staff",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_STAFF_2,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
@@ -385,10 +386,10 @@ export const staff21_3: IItem = {
 
 export const staff21_2: IItem = {
     id: "staff21",
-    name: "Staff 2.1(2)",
+    name: i18n.items.staff21, //"Summoners staff",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_STAFF_2,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
@@ -399,7 +400,7 @@ export const staff21_2: IItem = {
 
 export const staff21: IItem = {
     id: "staff21",
-    name: "Staff 2.1",
+    name: i18n.items.staff21, //"Summoners staff",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -415,10 +416,10 @@ export const staff21: IItem = {
 
 export const staff22_3: IItem = {
     id: "staff22",
-    name: "Staff 2.2(2)",
+    name: i18n.items.staff22, //"Wizards staff",
     type: EItemType.WEAPON,
-    level: 2,
-    priceLevel: 2,
+    level: 3,
+    priceLevel: 4,
     image: IMAGE_ITEM_STAFF_21,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
@@ -428,10 +429,10 @@ export const staff22_3: IItem = {
 
 export const staff22_2: IItem = {
     id: "staff22",
-    name: "Staff 2.2(2)",
+    name: i18n.items.staff22, //"Wizards staff",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_STAFF_21,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
@@ -442,7 +443,7 @@ export const staff22_2: IItem = {
 
 export const staff22: IItem = {
     id: "staff22",
-    name: "Staff 2.2",
+    name: i18n.items.staff22, //"Wizards staff",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -460,10 +461,10 @@ export const staff22: IItem = {
 
 export const musical21_3: IItem = {
     id: "musical21",
-    name: "Lute 2(3)",
+    name: i18n.items.musical21, //"Fine lute",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_LUTE_2,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
@@ -476,10 +477,10 @@ export const musical21_3: IItem = {
 
 export const musical21_2: IItem = {
     id: "musical21",
-    name: "Lute 2(2)",
+    name: i18n.items.musical21, //"Fine lute",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_LUTE_2,
     heroClasses: [],
     weaponType: EWeaponItemType.MUSICAL,
@@ -492,7 +493,7 @@ export const musical21_2: IItem = {
 
 export const musical21: IItem = {
     id: "musical21",
-    name: "Lute 2",
+    name: i18n.items.musical21, //"Fine lute",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -512,10 +513,10 @@ export const musical21: IItem = {
 
 export const scepter21_3: IItem = {
     id: "scepter21",
-    name: "Scepter 2.1(3)",
+    name: i18n.items.scepter21, //"Healers scepter",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_SCEPTER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SCEPTER,
@@ -525,10 +526,10 @@ export const scepter21_3: IItem = {
 
 export const scepter21_2: IItem = {
     id: "scepter21",
-    name: "Scepter 2.1(2)",
+    name: i18n.items.scepter21, //"Healers scepter",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_SCEPTER_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SCEPTER,
@@ -539,7 +540,7 @@ export const scepter21_2: IItem = {
 
 export const scepter21: IItem = {
     id: "scepter21",
-    name: "Scepter 2.1",
+    name: i18n.items.scepter21, //"Healers scepter",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -555,10 +556,10 @@ export const scepter21: IItem = {
 
 export const scepter22_3: IItem = {
     id: "scepter22",
-    name: "Scepter 2.2(3)",
+    name: i18n.items.scepter22, //"Purifying scepter",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_SCEPTER_2,
     heroClasses: [],
     weaponType: EWeaponItemType.SCEPTER,
@@ -568,10 +569,10 @@ export const scepter22_3: IItem = {
 
 export const scepter22_2: IItem = {
     id: "scepter22",
-    name: "Scepter 2.2(2)",
+    name: i18n.items.scepter22, //"Purifying scepter",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_SCEPTER_2,
     heroClasses: [],
     weaponType: EWeaponItemType.SCEPTER,
@@ -582,7 +583,7 @@ export const scepter22_2: IItem = {
 
 export const scepter22: IItem = {
     id: "scepter22",
-    name: "Scepter 2.2",
+    name: i18n.items.scepter22, //"Purifying scepter",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -600,10 +601,10 @@ export const scepter22: IItem = {
 
 export const shield21_3: IItem = {
     id: "shield21",
-    name: "Shield 2.1(3)",
+    name: i18n.items.shield21, //"Hard shield",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_SHIELD_2,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
@@ -615,10 +616,10 @@ export const shield21_3: IItem = {
 
 export const shield21_2: IItem = {
     id: "shield21",
-    name: "Shield 2.1(2)",
+    name: i18n.items.shield21, //"Hard shield",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_SHIELD_2,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
@@ -630,7 +631,7 @@ export const shield21_2: IItem = {
 
 export const shield21: IItem = {
     id: "shield21",
-    name: "Shield 2.1",
+    name: i18n.items.shield21, //"Hard shield",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -648,10 +649,10 @@ export const shield21: IItem = {
 
 export const shield22_3: IItem = {
     id: "shield22",
-    name: "Shield 2.2(3)",
+    name: i18n.items.shield22, //"Champions shield",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_SHIELD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
@@ -664,10 +665,10 @@ export const shield22_3: IItem = {
 
 export const shield22_2: IItem = {
     id: "shield22",
-    name: "Shield 2.2(2)",
+    name: i18n.items.shield22, //"Champions shield",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_SHIELD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SHIELD,
@@ -681,7 +682,7 @@ export const shield22_2: IItem = {
 
 export const shield22: IItem = {
     id: "shield22",
-    name: "Shield 2.2",
+    name: i18n.items.shield22, //"Champions shield",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -702,10 +703,10 @@ export const shield22: IItem = {
 
 export const totem21_3: IItem = {
     id: "totem21",
-    name: "Totem 2.1(3)",
+    name: i18n.items.totem21, //"Verdant totem",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_TOTEM_21,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
@@ -717,10 +718,10 @@ export const totem21_3: IItem = {
 
 export const totem21_2: IItem = {
     id: "totem21",
-    name: "Totem 2.1(2)",
+    name: i18n.items.totem21, //"Verdant totem",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_TOTEM_21,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
@@ -733,7 +734,7 @@ export const totem21_2: IItem = {
 
 export const totem21: IItem = {
     id: "totem21",
-    name: "Totem 2.1",
+    name: i18n.items.totem21, //"Verdant totem",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -751,10 +752,10 @@ export const totem21: IItem = {
 
 export const totem22_3: IItem = {
     id: "totem22",
-    name: "Totem 2.2(3)",
+    name: i18n.items.totem22, //"Poisoners totem",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_TOTEM_2,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
@@ -764,10 +765,10 @@ export const totem22_3: IItem = {
 
 export const totem22_2: IItem = {
     id: "totem22",
-    name: "Totem 2.2(2)",
+    name: i18n.items.totem22, //"Poisoners totem",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_TOTEM_2,
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
@@ -778,7 +779,7 @@ export const totem22_2: IItem = {
 
 export const totem22: IItem = {
     id: "totem22",
-    name: "Totem 2.2",
+    name: i18n.items.totem22, //"Poisoners totem",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -796,34 +797,34 @@ export const totem22: IItem = {
 
 export const wand21_3: IItem = {
     id: "wand21",
-    name: "Wand 2.1(3)",
+    name: i18n.items.wand21, //"Swift wand",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_WAND_2,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 60, valueType: "percent" }],
 };
 
 export const wand21_2: IItem = {
     id: "wand21",
-    name: "Wand 2.1(2)",
+    name: i18n.items.wand21, //"Swift wand",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_WAND_2,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 50, valueType: "percent" }],
     nextLevel: wand21_3,
 };
 
 export const wand21: IItem = {
     id: "wand21",
-    name: "Wand 2.1",
+    name: i18n.items.wand21, //"Swift wand",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
@@ -839,10 +840,10 @@ export const wand21: IItem = {
 
 export const wand22_3: IItem = {
     id: "wand22",
-    name: "Wand 2.2(3)",
+    name: i18n.items.wand22, //"Wand 2.2(3)",
     type: EItemType.WEAPON,
     level: 3,
-    priceLevel: 2,
+    priceLevel: 4,
     image: IMAGE_ITEM_WAND_21,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
@@ -851,10 +852,10 @@ export const wand22_3: IItem = {
 
 export const wand22_2: IItem = {
     id: "wand22",
-    name: "Wand 2.2(2)",
+    name: i18n.items.wand22, //"Power wand",
     type: EItemType.WEAPON,
     level: 2,
-    priceLevel: 2,
+    priceLevel: 3,
     image: IMAGE_ITEM_WAND_21,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
@@ -863,7 +864,7 @@ export const wand22_2: IItem = {
 
 export const wand22: IItem = {
     id: "wand22",
-    name: "Wand 2.2",
+    name: i18n.items.wand22, //"Power wand",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 2,
