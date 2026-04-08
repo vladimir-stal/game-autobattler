@@ -454,7 +454,6 @@ export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, b
 
 export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
     const { basicArmor, basicMaxHp, basicAttack, basicHpRegen, basicEvasionChance, basicCritChance, basicMagicPower, basicPhysicalPower, items } = unit;
-    //console.log("prepareUnitToBattle", unit);
     const itemBonuses: IItemBattleBonus[] = items.reduce((bonuses, item) => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
             item.battleBonuses.forEach((bonus) => bonuses.push(bonus));

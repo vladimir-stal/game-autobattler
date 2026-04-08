@@ -41,6 +41,14 @@ export interface Ii18n {
         basicWildTotem: string;
     };
     items: {
+        coin: string;
+        peasantPitchfork: string;
+        goblin_silver_coin: string;
+        goblin_gold_coin: string;
+        goblinBoneDagger: string;
+        regen_mantle: string;
+        spiritArmor: string;
+        spiritSpear: string;
         wand22: string;
         wand21: string;
         totem22: string;
@@ -223,6 +231,7 @@ export interface Ii18n {
         [EItemAfterDuelBonusCondition.IS_MOB]: string;
         // bonus target
         [EItemTargetType.ALL_ALLIES]: string;
+        COIN_SELL: string;
     };
 }
 
@@ -276,6 +285,7 @@ export const i18n: Ii18n = {
             STATUS_POISON_APPLY_INCREASE: "STATUS_POISON_APPLY_INCREASE",
             SUMMON_INCREASE_DAMAGE: "SUMMON_INCREASE_DAMAGE",
             TOTEM_INCREASE_VALUE: "TOTEM_INCREASE_VALUE",
+            CAST_SKILL_X_ROUND: "Once per combat, applies effect at the\nend of round"
         },
         itemBonusType: { ATTRIBUTE: "ATTRIBUTE", ITEM_WEAPON_SLOT: "ITEM_WEAPON_SLOT" },
     },
@@ -437,6 +447,15 @@ export const i18n: Ii18n = {
         totem22: "Poisoners totem",
         wand21: "Swift wand",
         wand22: "Power wand",
+        // mob items
+        spiritSpear: "Spirit Spear",
+        spiritArmor: "Spirit Armor",
+        regen_mantle: "Mantle of regeneration",
+        goblinBoneDagger: "Bone dagger",
+        goblin_gold_coin: "Gold coin",
+        goblin_silver_coin: "Silver coin",
+        peasantPitchfork: "Pitchfork",
+        coin: "The Coin",
     },
     rooms: {
         //
@@ -486,7 +505,7 @@ export const i18n: Ii18n = {
         [ERoomType.TRIPLE_SET]: "DUNGEON",
         [ERoomType.SKILLS_SELL_ENHANCED]: "ENHANCED SKILLS",
         [ERoomType.UPGRADE_SKILL_OR_ITEM]: "UPGRADE",
-        [ERoomType.ENCHANCE_SKILL_CHAINED]: "ENHANE",
+        [ERoomType.ENCHANCE_SKILL_CHAINED]: "ENHANCE",
         //
     },
     roomDescriptions: {},
@@ -750,5 +769,6 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.IS_MOB]: "NON HERO",
         //
         [EItemTargetType.ALL_ALLIES]: "for all",
+        COIN_SELL: "Collect to increase its\nprice, or sell it for",
     },
 };

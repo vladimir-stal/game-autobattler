@@ -21,7 +21,7 @@ import { axe1, musical1, scepter1, shield1, staff1, sword1, totem1, wand1 } from
 import { bosses } from "../bossConsts";
 import { basic_boots } from "../commonItemConsts";
 import { boots21, gloves_magic2, hat21, jacket21, pants21, ring_damage2, ring_heal2, ring_regen2 } from "../commonItemConsts2";
-import { crit_amulet, evasion_amulet, summonerMantle3 } from "../commonItemConsts3";
+import { crit_amulet, evasion_amulet, scrollSkillArmor, summonerMantle3 } from "../commonItemConsts3";
 import { armorMassHp, helmetMassArmor } from "../commonItemConsts4";
 import { CardSlot } from "../components/CardSlot";
 import { roomsWithHeroClasses } from "../components/SelectController";
@@ -80,6 +80,7 @@ import {
 import { dagger5_ba, music5AddBuffTarget, staff5MagicCrit, totem5HptoDmg, wand5ShockOnBA } from "../weaponItem5Consts";
 
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
+import { customHeroSelectRoom, customStartingItemsRoom, debugHeroSelectRoom, debugStartingItemsRoom } from "./debugUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
 import {
     getXFromAllItems,
@@ -113,7 +114,7 @@ import {
     getTopHeroClassSkill,
     isSkillSet,
 } from "./skillUtils";
-import { addMobItem, copyUnit, createUnits, getMaxUnitItemCount, getMaxUnitWeaponCount, getRandomUnitForRandom, getRandomUnitForSell } from "./unitUtils";
+import { addMobItem, copyUnit, createUnits, getMaxUnitItemCount, getMaxUnitWeaponCount, getRandomUnitForRandom, getRandomUnitForSell, getUnitCardPrice } from "./unitUtils";
 
 //TODO: add rooms for potions - temporary boost for duel, exp in bottle - can be applied to any hero
 
@@ -183,15 +184,17 @@ export const getRooms = (
         case 1:
             {
                 if (hour === 0) {
-                    return [null, { roomType: ERoomType.HEROES_SELL }, null];
-                    //return [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null];
+                    return debugHeroSelectRoom ? 
+                        [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null] : 
+                        [null, { roomType: ERoomType.HEROES_SELL }, null];
+                        // Go change in debugUtils.ts for custom room
                 } else if (hour === 1) {
-                    //return [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                    return [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null];
+                    return debugStartingItemsRoom ? 
+                        [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null] : 
+                        [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                        // Go change in debugUtils.ts for custom room
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.MOBS }, null];
-                    //} else if (hour === 3) { // TEST
-                    //    return [null, { roomType: ERoomType.SKILLS_SELL }, null];
                 }
                 if (hour === 5) {
                     return [null, { roomType: ERoomType.DUEL }, null];
@@ -894,29 +897,14 @@ export const getCards = (
             {
                 isSingleSelect = false;
                 isSelectRequired = false;
-                // armorMassHp weaponSlotSheath totem5HptoDmg staff5MagicCrit music5AddBuffTarget wand5ShockOnBA
-                //cards = [null, { type: ECardType.ITEM, price: 0, item: wand5ShockOnBA }, null];
-                //cards = [null, { type: ECardType.ITEM, price: 0, item: axe32 }, null];
-                //
-                //cards = [null, { type: ECardType.GOLD, price: 0, value: 2 }, null];
-                //cards = [null, { type: ECardType.SKILL, price: 0, skill: noBasicAttackSkill }, null];
-                //cards = [null, { type: ECardType.SKILL, price: 0, skill: magicAttack }, null];
-                //cards = [{ type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger }, { type: ECardType.UNIT, price: 0, unit: goblinUnit }, null];
-                cards = [
-                    { type: ECardType.SKILL, price: 0, skill: fireflySummonSkill },
-                    { type: ECardType.SKILL, price: 0, skill: fireflySummonSkill },
-                    { type: ECardType.SKILL, price: 0, skill: fireflySummonSkill },
-                    //{ type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true }},
-                    //{ type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true }},
-                ];
+                cards = customStartingItemsRoom();
+                // Go change in debugUtils.ts
             }
             break;
         case ERoomType.GIVE_TEST_ITEM_2:
             {
-                cards = [null, { type: ECardType.UNIT, price: 0, unit: summonHero }, null];
-                //cards = getRandomArrayItems<IUnit>(mcClassHeroes, 3, true).map((unit) => {
-                //    return { unit, type: ECardType.UNIT, price: 0 };
-                //});
+                cards = customHeroSelectRoom();
+                // Go change in debugUtils.ts
             }
             break;
         default:
@@ -938,23 +926,6 @@ const getCardPrice = (type: ECardType, day: number, hour: number) => {
             return 0;
         }
     }
-};
-
-const getUnitCardPrice = (unit: IUnit, day: number, hour: number) => {
-    const initialHeroSelect = day === 0 && hour === 0;
-    if (initialHeroSelect) {
-        return 0;
-    }
-
-    if (unit.unitType === EUnitType.UNIT) {
-        return unit.level * 3 + 1;
-    }
-
-    if (unit.unitType === EUnitType.HERO) {
-        return 3 + unit.level;
-    }
-
-    return 0;
 };
 
 /** Highlight slots or cards to be a target for another selected card (move, add item, add attribute, heal, ...) */

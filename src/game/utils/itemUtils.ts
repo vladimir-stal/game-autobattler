@@ -555,7 +555,7 @@ export const getItemPrice = (item: IItem, additionalLevel: number = 0) => {
         return 0;
     }
 
-    return (item.priceLevel + additionalLevel) * 2 + 1;
+    return (item.priceLevel + additionalLevel + item.level) * 2 - 1;
 };
 
 export const createItem = (item: IItem): IItem => {

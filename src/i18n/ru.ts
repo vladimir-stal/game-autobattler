@@ -50,6 +50,7 @@ export const i18n: Ii18n = {
             STATUS_POISON_APPLY_INCREASE: "Увеливает накладываемый яд",
             SUMMON_INCREASE_DAMAGE: "Увеливает урон призыва",
             TOTEM_INCREASE_VALUE: "Увеливает урон тотема",
+            CAST_SKILL_X_ROUND: "Раз за бой, срабатывает эффект\nв конце раунда",
         },
         itemBonusType: { ATTRIBUTE: "АТРИБУТ", ITEM_WEAPON_SLOT: "Дополнительный слот для оружия" },
     },
@@ -206,6 +207,15 @@ export const i18n: Ii18n = {
         totem22: "Тотем отравителя",
         wand21: "Быстрый жезл",
         wand22: "Жезл мощи",
+        // mob items
+        spiritSpear: "Копье паров спирта :)",
+        spiritArmor: "Броня паров спирта :)",
+        regen_mantle: "Мантия регенерации",
+        goblinBoneDagger: "Костяной кинжал",
+        goblin_gold_coin: "Золотая монета",
+        goblin_silver_coin: "Серебряная монета",
+        peasantPitchfork: "Крестьянские вилы",
+        coin: "Монета",
     },
     totems: {
         basicWildTotem: "Дикий тотем",
@@ -556,5 +566,6 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.IS_MOB]: "Не герой",
         //
         [EItemTargetType.ALL_ALLIES]: "для всех союзников",
+        COIN_SELL: "Собери чтобы увеличить ее\nценность, или продай за",
     },
 };

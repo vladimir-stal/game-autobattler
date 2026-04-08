@@ -4,6 +4,9 @@ import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
 import { ECardType, EUnitType } from "../../../types";
 import { MIN_WIDTH } from "./uiPanels";
+import { getItemPrice } from "../../utils/itemUtils";
+import { getSkillPrice } from "../../utils/skillUtils";
+import { getUnitCardPrice } from "../../utils/unitUtils";
 
 const borderMaxWidth = 150;
 const borderMiddleWidth = 100;
@@ -51,19 +54,22 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
             switch (card.type) {
                 case ECardType.ITEM:
                     {
-                        price = card.item.level || 0;
+                        //price = card.item.level || 0;
+                        price = Math.floor((getItemPrice(card.item)+1)/2);
                     }
                     break;
                 case ECardType.SKILL:
                     {
-                        price = card.skill.level || 0;
+                        //price = card.skill.level || 0;
+                        price = Math.floor((getSkillPrice(card.skill.priceLevel)+1)/2);
                     }
                     break;
                 case ECardType.UNIT:
                     {
                         if (card.unit) {
-                            const { unitType, level } = card.unit;
-                            price = unitType === EUnitType.HERO ? level : 1;
+                            //const { unitType, level } = card.unit;
+                            //price = unitType === EUnitType.HERO ? level : 1;
+                            price = Math.floor((getUnitCardPrice(card.unit, 24, 7)+1)/2);
                         }
                     }
                     break;

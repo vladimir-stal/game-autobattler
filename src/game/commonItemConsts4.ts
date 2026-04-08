@@ -8,6 +8,17 @@ import { IMAGE_ITEM_ARMOR_41, IMAGE_ITEM_HELMET_41 } from "./utils/load/imageLoa
 // MASS HP ARMOR
 //
 
+export const armorMassHp_3: IItem = {
+    id: "armorMassHp",
+    name: i18n.items.armorMassHp,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 4,
+    image: IMAGE_ITEM_ARMOR_41,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 23, valueType: "number", attribute: "basicMaxHp", targetType: EItemTargetType.ALL_ALLIES }],
+};
+
 export const armorMassHp_2: IItem = {
     id: "armorMassHp",
     name: i18n.items.armorMassHp,
@@ -16,8 +27,10 @@ export const armorMassHp_2: IItem = {
     priceLevel: 4,
     image: IMAGE_ITEM_ARMOR_41,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 20, valueType: "number", attribute: "basicMaxHp", targetType: EItemTargetType.ALL_ALLIES }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 15, valueType: "number", attribute: "basicMaxHp", targetType: EItemTargetType.ALL_ALLIES }],
+    nextLevel: armorMassHp_3,
 };
+
 
 export const armorMassHp: IItem = {
     id: "armorMassHp",
@@ -35,6 +48,17 @@ export const armorMassHp: IItem = {
 // MASS ARMOR HELMET
 //
 
+export const helmetMassArmor_3: IItem = {
+    id: "helmetMassArmor",
+    name: i18n.items.helmetMassArmor,
+    type: EItemType.COMMON,
+    level: 3,
+    priceLevel: 4,
+    image: IMAGE_ITEM_HELMET_41,
+    heroClasses: [],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 26, valueType: "number", attribute: "basicArmor", targetType: EItemTargetType.ALL_ALLIES }],
+};
+
 export const helmetMassArmor_2: IItem = {
     id: "helmetMassArmor",
     name: i18n.items.helmetMassArmor,
@@ -43,8 +67,8 @@ export const helmetMassArmor_2: IItem = {
     priceLevel: 4,
     image: IMAGE_ITEM_HELMET_41,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 20, valueType: "number", attribute: "basicArmor", targetType: EItemTargetType.ALL_ALLIES }],
-    //nextLevel: helmetMassArmor_2,
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 17, valueType: "number", attribute: "basicArmor", targetType: EItemTargetType.ALL_ALLIES }],
+    nextLevel: helmetMassArmor_3,
 };
 
 export const helmetMassArmor: IItem = {
@@ -55,6 +79,6 @@ export const helmetMassArmor: IItem = {
     priceLevel: 4,
     image: IMAGE_ITEM_HELMET_41,
     heroClasses: [],
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicArmor", targetType: EItemTargetType.ALL_ALLIES }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 11, valueType: "number", attribute: "basicArmor", targetType: EItemTargetType.ALL_ALLIES }],
     nextLevel: helmetMassArmor_2,
 };
