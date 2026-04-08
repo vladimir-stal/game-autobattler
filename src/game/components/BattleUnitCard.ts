@@ -1113,6 +1113,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
 
         this.renderStatuses();
+
+        this.statusPanels[this.statusPanels.length - 1].playAddStatusTarget();
     }
 
     removeStatus(statusType: EStatusType) {

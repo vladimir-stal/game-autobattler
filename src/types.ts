@@ -237,6 +237,7 @@ export enum EEffectAnimationType {
     // UI
     EFFECT_UI_BUFF_0 = "EFFECT_UI_BUFF_0",
     EFFECT_UI_BUFF_2 = "EFFECT_UI_BUFF_2",
+    EFFECT_UI_STATUS_SHOCK_0 = "EFFECT_UI_STATUS_SHOCK_0",
 }
 
 export interface Player {

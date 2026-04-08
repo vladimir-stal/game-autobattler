@@ -162,7 +162,7 @@ export const createUnits = (unitTemplates: TUnits, autolevel: number = -1): TUni
         if (!unit) {
             return null;
         }
-        return createUnit(unit, null, autolevel);
+        return createUnit(unit, undefined, autolevel);
     });
 };
 
@@ -333,10 +333,11 @@ export const getMaxUnitWeaponCount = (heroClassType: EHeroClassType) => {
 export const getUnitNextLevelExp = (unit: IUnit) => {
     const { heroClassType, level } = unit;
     //const nextLevelExp = heroClassType === EHeroClassType.BASIC ? EXP_FOR_LEVEL_BASIC[level + 1] : EXP_FOR_LEVEL_MC[level + 1];
-    const nextLevelExp = (heroClassType === EHeroClassType.BASIC) ? 
-        level*5 //   EXP_FOR_LEVEL_BASIC[currentLevel + 1]
-        : (level + 1)*15-20; //    : EXP_FOR_LEVEL_MC[currentLevel + 1];
-    return (level < MAX_LEVEL) ? nextLevelExp : nextLevelExp*2;
+    const nextLevelExp =
+        heroClassType === EHeroClassType.BASIC
+            ? level * 5 //   EXP_FOR_LEVEL_BASIC[currentLevel + 1]
+            : (level + 1) * 15 - 20; //    : EXP_FOR_LEVEL_MC[currentLevel + 1];
+    return level < MAX_LEVEL ? nextLevelExp : nextLevelExp * 2;
 };
 
 /** With some probability add mob item to unit when buying or receiving its card */

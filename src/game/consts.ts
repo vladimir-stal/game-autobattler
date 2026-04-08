@@ -16,6 +16,7 @@ export const SOUND_MAIN_MENU_CHANGE_SCENE = "SOUND_MAIN_MENU_CHANGE_SCENE";
 export const colors = {
     BLACK: 0x000000,
     BLUE: 0x333399,
+    BLUE_LIGHT: 0x66ccff,
     GREY: 0x666666,
     GREY_BLUE: 0x6688aa,
     GREEN: 0x339933,
@@ -23,6 +24,7 @@ export const colors = {
     WHITE: 0x999999,
     GREY_HOVER: 0x888888,
     GREEN_HOVER: 0x22aa22,
+    ORANGE: 0xff9966,
     PURPLE: 0x990099,
     RED: 0xcc4444,
     WHITE_HOVER: 0xbbbbbb,

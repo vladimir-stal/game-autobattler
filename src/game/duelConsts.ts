@@ -26,7 +26,7 @@ import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import { phycisalAttackSkill } from "./skills/commonSkillConsts";
 import { magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
-import { magicAttack } from "./skills/magicSkillConsts";
+import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
 import { buffNextBaIgnoreArmorSelf, buffNextBaXSelf } from "./skills/masterSkillConsts";
 import { attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2 } from "./skills/priestSkillConsts";
@@ -827,4 +827,18 @@ export const testPriest: TDuelEnemy = {
     10: [samuraiHero],
 };
 
-export const testDuelEnemies = [testPriest];
+export const testDark: TDuelEnemy = {
+    1: [{ ...darkHero, skills: [poisonRandom, applyShock, applyBurn] }],
+    0: [darkHero],
+    2: [darkHero],
+    3: [darkHero],
+    4: [darkHero],
+    5: [darkHero],
+    6: [darkHero],
+    7: [darkHero],
+    8: [darkHero],
+    9: [darkHero],
+    10: [darkHero],
+};
+
+export const testDuelEnemies = [testDark];
