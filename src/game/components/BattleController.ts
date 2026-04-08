@@ -1702,6 +1702,7 @@ export class BattleController {
             }
             return indexesToRemove;
         }, [] as number[]);
+        debuffToRemoveIndexes.sort((a,b) => b - a);
         debuffToRemoveIndexes.forEach((index) => removeDebuff(unit, unit, index, this.battleRecord));
     }
 

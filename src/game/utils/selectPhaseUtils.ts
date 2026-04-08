@@ -755,7 +755,7 @@ export const getCards = (
                                     cards.push({ type: ECardType.EXP, value: Math.floor(day / 3) + getExpValue(day), price: 0 });
                                 }
                                 break;
-                            case ECardType.EXP_PARTY:
+                            case ECardType.EXP_PARTY: // disabled
                                 {
                                     cards.push({ type: ECardType.EXP_PARTY, value: getExpValue(day), price: 0 });
                                 }
@@ -774,14 +774,14 @@ export const getCards = (
                                 break;
                             case ECardType.SKILL:
                                 {
-                                    const randomCurrentHeroClass = getRandomArrayItem(getCurrentHeroClasses(gameScene));
+                                    const randomCurrentHeroClass = heroClasses ? heroClasses.pop() : getRandomArrayItem(getCurrentHeroClasses(gameScene));
                                     const randomSkill = getRandomArrayItem(getHeroClassSkills(randomCurrentHeroClass, day));
                                     cards.push({ price: 0, type: ECardType.SKILL, skill: randomSkill });
                                 }
                                 break;
                             case ECardType.ITEM:
                                 {
-                                    const randomCurrentHeroClass = getRandomArrayItem(getCurrentHeroClasses(gameScene));
+                                    const randomCurrentHeroClass = heroClasses ? heroClasses.pop() : getRandomArrayItem(getCurrentHeroClasses(gameScene));
                                     const item = getRandomArrayItem(getHeroClassItems(randomCurrentHeroClass, day));
                                     cards.push(genShopItemSingleCard(item, true));
                                 }
@@ -804,7 +804,7 @@ export const getCards = (
                 isSelectRequired = false;
                 hintTextType = ESelectCardHint.TAKE_REWARD;
 
-                const randomUnit = { ...getRandomUnitForRandom(day) };
+                const randomUnit = copyUnit({ ...getRandomUnitForRandom(day) });
                 addMobItem(randomUnit);
 
                 cards = [null, { unit: randomUnit, type: ECardType.UNIT, price: 0 }, null];
@@ -816,13 +816,13 @@ export const getCards = (
                 isSelectRequired = false;
                 hintTextType = ESelectCardHint.SELECT_SINGLE;
 
-                const unit1 = { ...getRandomUnitForSell(day - 1) };
+                const unit1 = copyUnit({ ...getRandomUnitForSell(day - 1) });
                 addMobItem(unit1);
 
-                const unit2 = { ...getRandomUnitForSell(day) };
+                const unit2 = copyUnit({ ...getRandomUnitForSell(day) });
                 addMobItem(unit2);
 
-                const unit3 = { ...getRandomUnitForSell(day + 1) };
+                const unit3 = copyUnit({ ...getRandomUnitForSell(day + 1) });
                 addMobItem(unit3);
 
                 const randomUnits = [unit1, unit2, unit3];
@@ -1279,7 +1279,9 @@ export const getIncome = (day: number) => {
  * @returns list of basic classes for player's current heroes (two basic classes for multiclass hero)
  */
 export const getCurrentHeroClasses = (gameScene: GameScene) => {
-    const allHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
+    //gameScene.units
+    console.log("-= Units =-",gameScene.unitPanel.getUnits());
+    const allHeroClasses = gameScene.unitPanel.getUnits().reduce((heroClasses, unit) => {
         if (unit.unitType === EUnitType.HERO && !heroClasses.includes(unit.heroClass)) {
             if (unit.heroClassType === EHeroClassType.BASIC) {
                 heroClasses.push(unit.heroClass);

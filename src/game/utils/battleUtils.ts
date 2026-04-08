@@ -708,7 +708,7 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
     const debuff = target.debuffs[debuffIndex];
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.DEBUFF_REMOVE, value: debuffIndex, debuff });
 
-    const { type, attribute, totalValue } = debuff;
+    const { type, attribute, totalValue } = debuff; // undefined?
     switch (type) {
         case EDebuffType.ATTRIBUTE_DECREASE:
             {

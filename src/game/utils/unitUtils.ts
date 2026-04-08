@@ -376,8 +376,13 @@ export const addMobItem = (unit: IUnit) => {
     }
 };
 
-export const copyUnit = (unit: IUnit): IUnit => {
+export const copyUnit = (unit: IUnit, copyItems: boolean = false): IUnit => {
     const copy: IUnit = { ...unit };
-    copy.items = [];
+    if (copyItems)
+        copy.items = { ...unit.items};
+    else
+        copy.items = [];
+    copy.addedAttributes = [];
+    copy.afterDuelBonuses = [];
     return copy;
 };
