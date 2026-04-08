@@ -469,7 +469,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
         case "WEAKGOBLIN":
             return {
                 distance: -30,
-                distanceEnemy: -60,
+                distanceEnemy: -30,
                 image: IMAGE_GOBLIN_1,
                 idleBattleAnimation: AnimationType.MOB_GOBLIN_1_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_GOBLIN_1_ATTACK,

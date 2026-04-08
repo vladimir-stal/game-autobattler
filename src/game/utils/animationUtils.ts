@@ -6,9 +6,11 @@ import { IMAGE_LEADER_1_IDLE } from "./imageLoadUtil";
 import { createTotemAnimations } from "./animations/totemAnimations";
 import { createBasicHeroesAnimations } from "./animations/basicHeroesAnimations";
 import { createEffectAnimations } from "./animations/effectAnimations";
+import { createUIEffectAnimations } from "./animations/effectUIAnimations";
 
 export function createAnimations(scene: Scene) {
     createEffectAnimations(scene);
+    createUIEffectAnimations(scene);
     //
     createBasicHeroesAnimations(scene);
     //

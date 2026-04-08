@@ -234,6 +234,9 @@ export enum EEffectAnimationType {
     EFFECT_WILD_ATTACK = "EFFECT_WILD_ATTACK",
     // MC
     EFFECT_SAMURAI_ATTACK_2 = "EFFECT_SAMURAI_ATTACK_2",
+    // UI
+    EFFECT_UI_BUFF_0 = "EFFECT_UI_BUFF_0",
+    EFFECT_UI_BUFF_2 = "EFFECT_UI_BUFF_2",
 }
 
 export interface Player {

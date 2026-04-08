@@ -6,6 +6,7 @@ import { loadMcHeroesImages } from "./load/mcHeroesImagesLoad";
 import { loadImagesEffects } from "./load/imageLoadEffects";
 import { loadImagesItems } from "./load/imageLoadItems";
 import { GAME_MODE } from "../consts";
+import { loadImagesUIEffects } from "./load/imageLoadUIEffects";
 
 // UNITS
 
@@ -248,6 +249,7 @@ export function loadImages(scene: Scene) {
     if (GAME_MODE === "FULL") {
         loadImagesEffects(scene);
     }
+    loadImagesUIEffects(scene);
 
     //
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    //

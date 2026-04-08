@@ -16,7 +16,6 @@ import {
     IHeroSkill,
     IStatus,
     ITotem,
-    IUnit,
     THeroBattleAttribute,
 } from "../../types";
 import { BattleSummonCard } from "./BattleSummonCard";
@@ -25,6 +24,7 @@ import { BattleDebuffCard } from "./BattleDebuffCard";
 import { getHeroImage, getUnitImage } from "../utils/imageUtils";
 import { BattleStatusCard } from "./BattleStatusCard";
 import { IMAGE_EFFECT_LIGHTNING_1 } from "../utils/load/imageLoadEffects";
+import { IMAGE_EFFECT_UI_BUFF_0 } from "../utils/load/imageLoadUIEffects";
 
 /** Card to show unit in battle  */
 export class BattleUnitCard extends Phaser.GameObjects.Container {
@@ -78,6 +78,12 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     isDead: boolean;
 
+    //
+
+    uiEffectImageObject: GameObjects.Sprite;
+
+    //
+
     constructor(scene: GameScene, x: number, y: number, unit: IBattleUnit | null, isInverted: boolean) {
         super(scene, x, y);
         this.isInverted = isInverted;
@@ -93,10 +99,19 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.renderEffectImage();
         }
         this.renderPanels();
+        this.renderUIEffects();
     }
 
-    //проверить как работают эффекты master, samurai, magic
-    //добавить эффекты для order dark summon
+    renderUIEffects() {
+        this.uiEffectImageObject = this.gameScene.add
+            .sprite(0, 0, IMAGE_EFFECT_UI_BUFF_0)
+            .setOrigin(0.5, 0.5)
+            //.setDisplaySize(displaySize, displaySize)
+            //.setFlipX(this.isInverted)
+            .setDepth(200)
+            .setVisible(false);
+        this.add(this.uiEffectImageObject);
+    }
 
     renderEffectImage() {
         //
@@ -258,7 +273,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.hpText = this.scene.add.text(15, -110, hp + "/" + maxHp + "", { fontSize: 12, color: "#ddffdd" });
         this.add(this.hpText);
 
-        this.attackText = this.scene.add.text(-15, -110, "A"+basicAttack, { fontSize: 12, color: "#ffdddd" });
+        this.attackText = this.scene.add.text(-15, -110, "A" + basicAttack, { fontSize: 12, color: "#ffdddd" });
         this.add(this.attackText);
 
         this.armorText = this.scene.add.text(55, -110, armor + "arm", { fontSize: 12, color: "#ddddff" });
@@ -280,9 +295,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.buffPanels = [];
 
         this.buffs.forEach((buff, index) => {
-            // if (this.buffPanels[index]) {
-            //     return;
-            // }
             const buffCard = new BattleBuffCard(this.gameScene, 40 * index, -180, buff);
             this.add(buffCard);
             this.buffPanels.push(buffCard);
@@ -804,6 +816,24 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
     }
 
+    /** Play animation of buff icon appearing on the buff icons bar */
+    // TODO: ?? do we need to move animation into BattleBuffCard ?
+    // playAddBuffTarget(index: number) {
+    //     //if (GAME_MODE === "FULL") {
+    //     const x = 40 * index + 10;
+    //     const y = -175;
+    //     this.uiEffectImageObject.setPosition(x, y);
+
+    //     const animation = EEffectAnimationType.EFFECT_UI_BUFF_0;
+    //     this.uiEffectImageObject.setVisible(true);
+    //     this.uiEffectImageObject.anims.play(animation);
+    //     this.uiEffectImageObject.on(ANIMATION_COMPLETE, () => {
+    //         this.uiEffectImageObject.setVisible(false);
+    //         this.uiEffectImageObject.removeListener(ANIMATION_COMPLETE);
+    //     });
+    //     //}
+    // }
+
     async summonUnit(unit: IBattleUnit, skill?: IHeroSkill): Promise<BattleSummonCard> {
         this.setAction("SUMMON " + unit.name);
 
@@ -944,24 +974,27 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     addBuff(buff: IBuff, buffTatget: IActionBuffTarget) {
         this.setAction("BUFF " + buff.name);
-        const { isExisting, value } = buffTatget;
+        const { isExisting, value: buffTargetValue } = buffTatget;
         //
-        if (!value) {
-            return;
-        }
+        // TODO: check value is added to record
+        const value = buffTargetValue || buff.value || 1;
         //
         if (isExisting) {
             const currentBuff = this.buffs.find((b) => b.type === buff.type);
             if (currentBuff) {
                 currentBuff.totalValue = value;
-                currentBuff.value = value;
+                if (value) {
+                    currentBuff.value = value;
+                }
                 this.renderBuffs();
             }
-            return;
+        } else {
+            this.buffs.push({ ...buff, value, totalValue: value });
+            this.renderBuffs();
         }
 
-        this.buffs.push({ ...buff, value, totalValue: value });
-        this.renderBuffs();
+        this.buffPanels[this.buffPanels.length - 1].playAddBuffTarget();
+        //this.playAddBuffTarget(this.buffs.length - 1);
     }
 
     changeBuffValue(buff: IBuff, buffTatget: IActionBuffTarget) {
@@ -1022,7 +1055,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                     if (this.unit.attack < 0) {
                         this.unit.attack = 0;
                     }
-                    this.attackText.setText("A"+this.unit.attack);
+                    this.attackText.setText("A" + this.unit.attack);
                 }
                 break;
             case "armor":
