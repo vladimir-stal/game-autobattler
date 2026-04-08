@@ -172,7 +172,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
         const item = this.unit.items[index];
         const isAllUnitsBonus = item.bonuses.find((bonus) => bonus.targetType === EItemTargetType.ALL_ALLIES);
 
-        const { units } = this.gameScene;
+        const units = this.gameScene.unitPanel.getUnits();
         removeItemFromUnit(this.unit, index, units);
 
         if (isAllUnitsBonus) {

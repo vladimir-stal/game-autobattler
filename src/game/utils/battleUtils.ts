@@ -3,11 +3,13 @@ import {
     EBuffType,
     EDebuffType,
     EHeroAttackType,
+    EHeroClassType,
     EItemBattleBonusType,
     ESkillCondition,
     ESkillSetType,
     EStatusType,
     ETargetType,
+    EUnitType,
     IBattleAction,
     IBattleUnit,
     IBuff,
@@ -24,6 +26,7 @@ import {
 import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
+import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
 import { generateId, generateUnitId } from "./unitUtils";
 
 export const getFirstTarget = (units: TBattleUnits) => {
@@ -461,9 +464,11 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
         }
         item.heroClassBonuses &&
             item.heroClassBonuses.forEach((hCbonus) => {
-                if (hCbonus.heroClass === unit.heroClass) {
-                    if (hCbonus.battleBonus) {
-                        bonuses.push(hCbonus.battleBonus);
+                if (unit.unitType === EUnitType.HERO) {
+                    if (checkUnitBasicClass(unit, hCbonus.heroClass)) {
+                        if (hCbonus.battleBonus) {
+                            bonuses.push(hCbonus.battleBonus);
+                        }
                     }
                 } else if (unit.mobHeroClasses && unit.mobHeroClasses.includes(hCbonus.heroClass)) {
                     if (hCbonus.battleBonus) {

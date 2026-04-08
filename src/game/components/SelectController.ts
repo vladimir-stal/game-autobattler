@@ -308,7 +308,8 @@ export class SelectController {
 
                     const { unit } = targetCard.card;
                     const { items } = unit;
-                    const { units } = this.gameScene;
+
+                    const units = this.gameScene.unitPanel.getUnits();
 
                     applyItemBonuses(card.item, unit, units);
 

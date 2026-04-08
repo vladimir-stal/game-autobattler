@@ -1137,7 +1137,9 @@ export class BattleController {
             if (type === EItemBattleBonusType.INCREASE_SUMMON_ATTACK) {
                 unit.summon!.attack += calculateIncreaseValue(unit.summon!.attack, value, valueType);
             } else if (type === EItemBattleBonusType.INCREASE_SUMMON_HP) {
-                unit.summon!.maxHp += calculateIncreaseValue(unit.summon!.maxHp, value, valueType);
+                const addHpValue = calculateIncreaseValue(unit.summon!.maxHp, value, valueType);
+                unit.summon!.maxHp += addHpValue;
+                unit.summon!.hp += addHpValue;
             }
         });
 
