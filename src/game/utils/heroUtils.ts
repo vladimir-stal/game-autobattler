@@ -1,4 +1,4 @@
-import { EHeroClass, EUnitType, IUnit } from "../../types";
+import { EHeroClass, EHeroClassType, EUnitType, IUnit } from "../../types";
 import {
     alchemistHero,
     assasinHero,
@@ -321,4 +321,16 @@ export const getMulticlassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] =
         default:
             return [EHeroClass.BARD, EHeroClass.BARD];
     }
+};
+
+/**
+ * @returns flag if [unit] contains [heroClass] as basic class
+ */
+export const checkUnitBasicClass = (unit: IUnit, heroClass: EHeroClass): boolean => {
+    if (unit.heroClassType === EHeroClassType.BASIC) {
+        return heroClass === unit.heroClass;
+    } else if (unit.heroClassType === EHeroClassType.MULTI) {
+        return getMulticlassSubclasses(unit.heroClass).includes(heroClass);
+    }
+    return false;
 };

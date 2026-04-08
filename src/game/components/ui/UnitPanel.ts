@@ -125,7 +125,7 @@ export class UnitPanel extends Phaser.GameObjects.Container {
     refreshAllCards() {
         this.slots.forEach((slot) => {
             if (!slot.slot.isEmpty) {
-                slot.slot.card.refresh();
+                slot.slot?.card?.refresh();
             }
         });
     }
@@ -142,10 +142,14 @@ export class UnitPanel extends Phaser.GameObjects.Container {
         });
     }
 
+    getUnits(): IUnit[] {
+        return this.slots.filter((slot) => slot.slot?.card?.card.unit).map((slot) => slot.slot!.card!.card.unit!);
+    }
+
     private getSlotX(index: number) {
         const { width } = this.gameScene.camera;
         const distance = width >= MIN_WIDTH ? slotDistanceMax : slotDistanceMiddle;
-        let x;
+        let x = 0;
         if (this.currentWidth === MIN_WIDTH) {
             switch (index) {
                 case 0:

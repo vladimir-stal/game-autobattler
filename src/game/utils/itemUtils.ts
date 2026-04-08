@@ -324,19 +324,19 @@ export const getXFromAllItems = (day: number, count: number): IItem[] => {
 
 export const getAllHoldingItems = (gameScene: GameScene): IItem[] => {
     let list: IItem[] = [];
-    // skills in inventory
+    // items in inventory
+    // TODO: remove 5 lvl items from list
+    // TODO: ?? if item is 3rd level dont need to copy it!
     gameScene.inventoryPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.ITEM) {
             const item = slot.slot.card.card.item;
-            if (item)
-                item.previousLevel ? list.push(item.previousLevel) : list.push(item);
+            if (item) item.previousLevel ? list.push(item.previousLevel) : list.push(item);
         }
     });
     gameScene.unitPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.UNIT) {
             slot?.slot?.card?.card?.unit?.items.forEach((item) => {
-                if (item)
-                    item.previousLevel ? list.push(item.previousLevel) : list.push(item);
+                if (item) item.previousLevel ? list.push(item.previousLevel) : list.push(item);
             });
         }
     });

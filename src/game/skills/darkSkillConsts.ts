@@ -5,14 +5,14 @@ import {
     EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
+    ESkillCondition,
     EStatusType,
     ETargetType,
     IHeroSkillSet,
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_MAGIC_MISSILES, IMAGE_SKILL_POISON } from "../utils/imageLoadUtil";
-import { stealPPorMPSkill } from "./commonSkill3Consts";
+import { IMAGE_SKILL_MAGIC_MISSILES, IMAGE_SKILL_POISON, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
 import { removeBuffSkill } from "./commonSkillConsts";
 
 // DEBUFF NEXT BA
@@ -255,6 +255,193 @@ export const magicAttackX3: IHeroSkillSet = {
             animation: AnimationType.NONE,
         },
         {
+            isBasicAttack: false,
+            type: EHeroSkillType.ATTACK,
+            value: 2,
+            targetType: ETargetType.RANDOM_ENEMY,
+            attackType: EHeroAttackType.MAGIC,
+            animation: AnimationType.NONE,
+        },
+    ],
+    nextLevel: magicAttackX3_2,
+    image: IMAGE_SKILL_MAGIC_MISSILES,
+    animation: AnimationType.UNIT_ATTACK,
+};
+
+//
+// STEAL MP/PP - Steal MP,PP from highest MP or PP enemy, depending of your highest attr
+//
+
+export const stealPPorMPSkill_3: IHeroSkillSet = {
+    id: "stealPPorMPSkill",
+    //name: i18n.skills.basic.shieldAttackSkill.name,
+    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
+    name: "Steal power(3)",
+    desc: "Steal [12] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.DARK],
+    skills: [
+        {
+            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            isBasicAttack: false,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "magicPower",
+            value: 12,
+            valueType: "number",
+            targetType: ETargetType.HIGH_MP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: true,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "magicPower",
+            value: 12,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+        //
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: false,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "physicalPower",
+            value: 12,
+            valueType: "number",
+            targetType: ETargetType.HIGH_PP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: true,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "physicalPower",
+            value: 12,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+};
+
+export const stealPPorMPSkill_2: IHeroSkillSet = {
+    id: "stealPPorMPSkill",
+    //name: i18n.skills.basic.shieldAttackSkill.name,
+    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
+    name: "Steal power(2)",
+    desc: "Steal [8] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.DARK],
+    skills: [
+        {
+            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            isBasicAttack: false,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "magicPower",
+            value: 8,
+            valueType: "number",
+            targetType: ETargetType.HIGH_MP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: true,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "magicPower",
+            value: 8,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+        //
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: false,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "physicalPower",
+            value: 8,
+            valueType: "number",
+            targetType: ETargetType.HIGH_PP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: true,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "physicalPower",
+            value: 8,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+    ],
+    nextLevel: stealPPorMPSkill_3,
+    image: IMAGE_SKILL_TEST,
+};
+
+export const stealPPorMPSkill: IHeroSkillSet = {
+    id: "stealPPorMPSkill",
+    //name: i18n.skills.basic.shieldAttackSkill.name,
+    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
+    name: "Steal power",
+    desc: "Steal [4] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.DARK],
+    skills: [
+        {
+            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            isBasicAttack: false,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "magicPower",
+            value: 4,
+            valueType: "number",
+            targetType: ETargetType.HIGH_MP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: true,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "magicPower",
+            value: 4,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+        //
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: false,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "physicalPower",
+            value: 4,
+            valueType: "number",
+            targetType: ETargetType.HIGH_PP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            isBasicAttack: true,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "physicalPower",
+            value: 4,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+    ],
+    nextLevel: stealPPorMPSkill_2,
+    image: IMAGE_SKILL_TEST,
+};
+
+//
+// MAGIC RAIN - creates magic missiles which count depends on MP
+//
+
+//TODO: implement
+export const magicRain: IHeroSkillSet = {
+    id: "magicRain",
+    name: i18n.skills.basic.magicAttackX3.name,
+    desc: i18n.skills.basic.magicAttackX3.desc1,
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.DARK],
+    skills: [
+        {
+            // TODO: REPEAT THIS SKILL DEPENDING ON MP
             isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
             value: 2,

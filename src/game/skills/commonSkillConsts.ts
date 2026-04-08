@@ -197,7 +197,7 @@ export const removeBuffSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 2,
     rarity: 2,
-    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
@@ -228,7 +228,7 @@ export const removeBuffSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 2,
     rarity: 2,
-    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
@@ -254,7 +254,7 @@ export const removeBuffSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 2,
     rarity: 2,
-    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {
             type: EHeroSkillType.BUFF_REMOVE,

@@ -274,7 +274,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                 break;
             case EBattleActionType.ATTRIBUTE_INCREASE:
                 {
-                    console.log("Attr Increase:",targets);
+                    console.log("Attr Increase:", targets);
                     if (targets) {
                         targets.forEach((target) => {
                             const { targetId, value, attribute } = target;
