@@ -1,7 +1,4 @@
 import {
-    EHeroClass,
-    EItemAfterDuelBonusCondition,
-    EItemAfterDuelBonusType,
     EItemBattleBonusType,
     EItemBonusType,
     EItemType,
@@ -9,11 +6,10 @@ import {
     EWeaponItemType,
     IItem,
 } from "../types";
+import { i18n } from "./consts";
 import {
-    IMAGE_ITEM_DAGGER_1,
     IMAGE_ITEM_DAGGER_5,
     IMAGE_ITEM_MUSIC_5,
-    IMAGE_ITEM_POTION_1,
     IMAGE_ITEM_STAFF_5,
     IMAGE_ITEM_TOTEM_5,
     IMAGE_ITEM_WAND_5,
@@ -33,7 +29,7 @@ import {
 
 export const dagger5_ba: IItem = {
     id: "dagger5_ba",
-    name: "The Flurry",
+    name: i18n.items.dagger5, // "The Flurry",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 5,
@@ -52,7 +48,7 @@ export const dagger5_ba: IItem = {
 
 export const staff5MagicCrit: IItem = {
     id: "staff5MagicCrit",
-    name: "Crit Staff",
+    name: i18n.items.staff5, //"The Volcano",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 5,
@@ -67,7 +63,7 @@ export const staff5MagicCrit: IItem = {
 
 export const music5AddBuffTarget: IItem = {
     id: "music5AddBuffTarget",
-    name: "Double buff",
+    name: i18n.items.music5, //"The Chorus",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 5,
@@ -94,7 +90,7 @@ export const music5AddBuffTarget: IItem = {
 
 export const totem5HptoDmg: IItem = {
     id: "totem5HptoDmg",
-    name: "Totem of wealth",
+    name: i18n.items.totem5, //"The Titan",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 5,
@@ -112,7 +108,7 @@ export const totem5HptoDmg: IItem = {
 
 export const wand5ShockOnBA: IItem = {
     id: "wand5ShockOnBA",
-    name: "Shock wand",
+    name: i18n.items.wand5, //"The Thunder",
     type: EItemType.WEAPON,
     level: 1,
     priceLevel: 5,

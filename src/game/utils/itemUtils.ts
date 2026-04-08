@@ -327,13 +327,16 @@ export const getAllHoldingItems = (gameScene: GameScene): IItem[] => {
     // skills in inventory
     gameScene.inventoryPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.ITEM) {
-            slot.slot.card.card.item && list.push(slot.slot.card.card.item);
+            const item = slot.slot.card.card.item;
+            if (item)
+                item.previousLevel ? list.push(item.previousLevel) : list.push(item);
         }
     });
     gameScene.unitPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.UNIT) {
             slot?.slot?.card?.card?.unit?.items.forEach((item) => {
-                if (item) list.push(item);
+                if (item)
+                    item.previousLevel ? list.push(item.previousLevel) : list.push(item);
             });
         }
     });
@@ -514,6 +517,7 @@ export const upgradeItem = (item: IItem): IItem => {
         return item;
     }
     const nextCopy = createItem(item.nextLevel);
+    nextCopy.previousLevel = item;
     if (item.evolving) {
         nextCopy.bonuses.push(...item.bonuses.filter((b) => b.valueType === "evolvedNumber"));
     }

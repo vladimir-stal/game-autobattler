@@ -1,4 +1,4 @@
-import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardType, EItemAfterDuelBonusType, IMobsVariants } from "../types";
+import { IMobRewardType, IMobsVariants } from "../types";
 import { dagger1, shield1, staff1, wand1, wand1_2 } from "./basicWeaponItemConsts";
 import { basic_boots, basic_exp_bag_2, basic_hat, basic_heal, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen } from "./commonItemConsts";
 import { armor_amulet, hp_amulet } from "./commonItemConsts2";
@@ -28,35 +28,6 @@ export const MOB_MAX_ITEM_COUNT = 1;
 
 export const BASIC_CLASS_MAX_WEAPON_COUNT = 1;
 export const MC_CLASS_MAX_WEAPON_COUNT = 2;
-
-// export const soldierUnit: IUnit = {
-//     unitType: EUnitType.UNIT,
-//     heroClass: EHeroClass.WARRIOR,
-//     attackType: EHeroAttackType.PHYSICAL,
-//     attackTargetType: ETargetType.FIRST_ENEMY,
-//     basicAttack: 8,
-//     basicAttackTimes: 1,
-//     basicMaxHp: 10,
-//     basicHpRegen: 0,
-//     basicArmor: 0,
-//     basicCritChance: 0,
-//     basicEvasionChance: 0,
-//     basicMagicPower: 0,
-//     basicPhysicalPower: 0,
-//     //name: "Soldier",
-//     name: i18n.units.SOLDIER,
-//     id: "SOLDIER",
-//     skills: [],
-//     items: [],
-//     level: 5,
-//     exp: 0,
-// };
-
-//
-//
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-//
 
 // TODO: add system percentage for reward to appear
 

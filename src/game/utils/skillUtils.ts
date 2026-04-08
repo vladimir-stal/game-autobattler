@@ -1,16 +1,8 @@
 import {
-    AnimationType,
-    EBuffTimeType,
-    EBuffType,
     ECardType,
     EHeroClass,
     EHeroClassType,
-    EHeroSkillType,
-    ESkillCondition,
-    ETargetType,
-    IHeroSkill,
     IHeroSkillSet,
-    IItem,
     IUnit,
     THeroSkills,
 } from "../../types";
@@ -192,16 +184,21 @@ export const getSkillPrice = (skillLeveL: number, additionalLevel: number = 0) =
 
 export const getAllHoldingSkills = (gameScene: GameScene): IHeroSkillSet[] => {
     let list: IHeroSkillSet[] = [];
+    // excluding MC skills
     // skills in inventory
     gameScene.inventoryPanel.slots.forEach((slot) => {
         if (slot.slot?.card?.card.type === ECardType.SKILL) {
-            slot.slot.card.card.skill && list.push(slot.slot.card.card.skill);
+            const sk = slot.slot.card.card.skill;
+            if (sk && !sk.isMcSkill) 
+                sk.previousLevel ? list.push(sk.previousLevel) : list.push(sk);
         }
     });
+    // skills equipped
     gameScene.unitPanel.slots.forEach((slot) => {
         if (slot.slot?.card?.card.type === ECardType.UNIT) {
             slot.slot?.card?.card?.unit?.skills.forEach((skill) => {
-                if (skill) list.push(skill);
+                if (skill && !skill.isMcSkill) 
+                    skill.previousLevel ? list.push(skill.previousLevel) : list.push(skill);
             });
         }
     });
@@ -219,6 +216,7 @@ export const upgradeSkillSet = (skillSet: IHeroSkillSet, skillSet2: IHeroSkillSe
     }
 
     const upgradedSkill = { ...skillSet.nextLevel };
+    upgradedSkill.previousLevel = skillSet;
 
     upgradedSkill.isActivateOnStart = skillSet.isActivateOnStart || skillSet2.isActivateOnStart;
     upgradedSkill.isChained = skillSet.isChained || skillSet2.isChained;

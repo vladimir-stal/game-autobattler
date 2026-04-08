@@ -41,6 +41,31 @@ export interface Ii18n {
         basicWildTotem: string;
     };
     items: {
+        wand22: string;
+        wand21: string;
+        totem22: string;
+        totem21: string;
+        shield22: string;
+        shield21: string;
+        scepter22: string;
+        scepter21: string;
+        musical21: string;
+        staff22: string;
+        staff21: string;
+        sword22: string;
+        sword21: string;
+        mace22: string;
+        mace21: string;
+        dagger22: string;
+        dagger21: string;
+        axe22: string;
+        axe21: string;
+        wand5: string;
+        totem5: string;
+        music5: string;
+        staff5: string;
+        dagger5: string;
+        totem41: string;
         // WEAPON
         // basic
         axe1: string;
@@ -362,23 +387,23 @@ export const i18n: Ii18n = {
         hp_amulet: "Health amulet",
         armor_amulet: "Armor amulet",
         // level 3
-        magicBook31: "Magic book",
-        magicSpear31: "Magic spear",
+        magicBook31: "Tome of power",
+        magicSpear31: "Spear of might",
         axe31: "Woodcutter's axe",
         axe32: "Bloody axe",
         dagger31: "Rogue knife",
-        dagger32: "Steel dagger",
-        mace31: "Big mace",
-        sword31: "Steel sword",
+        dagger32: "Masters dagger",
+        mace31: "Hammer of heroes",
+        sword31: "Elegant sword",
         staff31: "Fire staff",
-        musical31: "Lute 3.1",
-        musical32: "Lute 3.2",
-        scepter31: "Scepter 3.1",
-        shield31: "Shield 3.1",
-        shield32: "Shield 3.2",
-        totem31: "Totem 3.1",
-        totem32: "Totem 3.2",
-        wand31: "Wand 3.1",
+        musical31: "Flute of vigor",
+        musical32: "Tempest violin",
+        scepter31: "Priests scepter",
+        shield31: "Oak shield",
+        shield32: "Bear shield",
+        totem31: "Totem of totems",
+        totem32: "Regeneration totem",
+        wand31: "Wand of magic",
         // COMMON
         evasion_amulet: "Evasion amulet",
         crit_amulet: "Crit amulet",
@@ -387,7 +412,31 @@ export const i18n: Ii18n = {
         // COMMON
         armorMassHp: "Hp aura chest",
         helmetMassArmor: "Armor aura helmet",
-        //
+        totem41: "Toxic totem",
+        dagger5: "The Flurry",
+        wand5: "The Thunder",
+        totem5: "The Titan",
+        music5: "The Chorus",
+        staff5: "The Volcano",
+        axe21: "Rending axe",
+        axe22: "Mighty axe",
+        dagger21: "Swift dagger",
+        dagger22: "Mighty dagger",
+        mace21: "Shattering mace",
+        mace22: "Purifying mace",
+        sword21: "Slaying sword",
+        sword22: "Mighty sword",
+        staff21: "Summoners staff",
+        staff22: "Wizards staff",
+        musical21: "Fine lute",
+        scepter21: "Healers scepter",
+        scepter22: "Purifying scepter",
+        shield21: "Hard shield",
+        shield22: "Champions shield",
+        totem21: "Verdant totem",
+        totem22: "Poisoners totem",
+        wand21: "Swift wand",
+        wand22: "Power wand",
     },
     rooms: {
         //

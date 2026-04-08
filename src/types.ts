@@ -838,6 +838,7 @@ export interface IItem {
     heroClassBonuses?: IItemHeroClassBonus[];
     priceLevel: number;
     nextLevel?: IItem;
+    previousLevel?: IItem;
     evolving?: boolean;
 }
 
@@ -957,6 +958,7 @@ export interface IHeroSkillSet {
     heroClasses: EHeroClass[];
     skills: IHeroSkill[];
     nextLevel?: IHeroSkillSet;
+    previousLevel?: IHeroSkillSet;
     isMcSkill?: boolean;
     isChained?: boolean;
     isActivateOnStart?: boolean;
