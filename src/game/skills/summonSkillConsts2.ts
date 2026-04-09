@@ -12,7 +12,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_SUMMON_SWORD, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 import { buffSummonCritSkill } from "./commonSkill3Consts";
 
@@ -263,6 +263,7 @@ export const incrSummonBa_3: IHeroSkillSet = {
             mpScale: 100,
         },
     ],
+    image: IMAGE_SKILL_SUMMON_SWORD,
 };
 
 export const incrSummonBa_2: IHeroSkillSet = {
@@ -282,6 +283,7 @@ export const incrSummonBa_2: IHeroSkillSet = {
             mpScale: 70,
         },
     ],
+    image: IMAGE_SKILL_SUMMON_SWORD,
     nextLevel: incrSummonBa_3,
 };
 
@@ -303,19 +305,85 @@ export const incrSummonBa: IHeroSkillSet = {
             targetType: ETargetType.SUMMON_CURRENT,
         },
     ],
+    image: IMAGE_SKILL_SUMMON_SWORD,
     nextLevel: incrSummonBa_2,
 };
 
 //
 
 //
-// BUFF SUMMON CRIT CHANCE
+// INCREASE CURRENT SUMMON ARMOR SKILL
 //
+
+export const incrSummonArmor_3: IHeroSkillSet = {
+    id: "incrSummonArmor",
+    name: "Increase summon armor",
+    desc: "Increase current summon basic attack damage [8]+[MP]",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "armor",
+            value: 8,
+            valueType: "number",
+            mpScale: 100,
+            targetType: ETargetType.SUMMON_CURRENT,
+        },
+    ],
+    image: IMAGE_SKILL_SUMMON_SWORD,
+};
+
+export const incrSummonArmor_2: IHeroSkillSet = {
+    id: "incrSummonArmor",
+    name: "Increase summon armor",
+    desc: "Increase current summon basic attack damage [8]+[MP*75%]",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "armor",
+            value: 8,
+            valueType: "number",
+            mpScale: 75,
+            targetType: ETargetType.SUMMON_CURRENT,
+        },
+    ],
+    image: IMAGE_SKILL_SUMMON_SWORD,
+    nextLevel: incrSummonArmor_3,
+};
+
+export const incrSummonArmor: IHeroSkillSet = {
+    id: "incrSummonArmor",
+    name: "Increase summon armor",
+    desc: "Increase current summon armor [8]+[MP*50%]",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "armor",
+            value: 8,
+            valueType: "number",
+            mpScale: 50,
+            targetType: ETargetType.SUMMON_CURRENT,
+        },
+    ],
+    image: IMAGE_SKILL_SUMMON_SWORD,
+    nextLevel: incrSummonArmor_2,
+};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill];
 
-export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa]);
+export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa, incrSummonArmor]);
 
 export const summonSkills_3: THeroSkills = summonSkills_2.concat([buffSummonCritSkill]);

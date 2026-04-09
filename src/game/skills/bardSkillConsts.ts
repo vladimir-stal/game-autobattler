@@ -1,6 +1,12 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2, IMAGE_SKILL_KNIGHT_MAGIC, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_BARD_BUFF_1,
+    IMAGE_SKILL_BARD_BUFF_2,
+    IMAGE_SKILL_KNIGHT_MAGIC,
+    IMAGE_SKILL_PRIEST_SCROLL,
+    IMAGE_SKILL_TEST,
+} from "../utils/load/skillImagesLoad";
 
 // BUFF NEXT BA ALL
 
@@ -329,7 +335,7 @@ export const outHealBuffSkill_2: IHeroSkillSet = {
         },
     ],
     // nextLevel: outHealBuffSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_PRIEST_SCROLL,
 };
 
 export const outHealBuffSkill: IHeroSkillSet = {
@@ -357,7 +363,7 @@ export const outHealBuffSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: outHealBuffSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_PRIEST_SCROLL,
 };
 
 //

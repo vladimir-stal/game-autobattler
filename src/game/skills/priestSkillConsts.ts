@@ -1,6 +1,6 @@
 import { EEffectAnimationType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_HEAL_1 } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_HEAL_1, IMAGE_SKILL_HEAL_2 } from "../utils/load/skillImagesLoad";
 import { outHealBuffSkill } from "./bardSkillConsts";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
 import { removeDebuffSkill } from "./commonSkillConsts";
@@ -162,7 +162,7 @@ export const healLowHpSkill_3: IHeroSkillSet = {
             mpScale: 100,
         },
     ],
-    image: IMAGE_SKILL_HEAL_1,
+    image: IMAGE_SKILL_HEAL_2,
 };
 
 export const healLowHpSkill_2: IHeroSkillSet = {
@@ -182,7 +182,7 @@ export const healLowHpSkill_2: IHeroSkillSet = {
         },
     ],
     nextLevel: healLowHpSkill_3,
-    image: IMAGE_SKILL_HEAL_1,
+    image: IMAGE_SKILL_HEAL_2,
 };
 
 export const healLowHpSkill: IHeroSkillSet = {
@@ -202,7 +202,7 @@ export const healLowHpSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: healLowHpSkill_2,
-    image: IMAGE_SKILL_HEAL_1,
+    image: IMAGE_SKILL_HEAL_2,
 };
 
 //

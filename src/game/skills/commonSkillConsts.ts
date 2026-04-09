@@ -117,7 +117,7 @@ export const removeDebuffSkill_3: IHeroSkillSet = {
     desc: i18n.skills.common.removeDebuff.desc1,
     level: 3,
     priceLevel: 2,
-    rarity: 2,
+    //rarity: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
     skills: [
         {
@@ -148,7 +148,7 @@ export const removeDebuffSkill_2: IHeroSkillSet = {
     desc: i18n.skills.common.removeDebuff.desc1,
     level: 2,
     priceLevel: 2,
-    rarity: 2,
+    //rarity: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
     skills: [
         {
@@ -174,7 +174,7 @@ export const removeDebuffSkill: IHeroSkillSet = {
     desc: i18n.skills.common.removeDebuff.desc1,
     level: 1,
     priceLevel: 2,
-    rarity: 2,
+    //rarity: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
     skills: [
         {
@@ -196,7 +196,7 @@ export const removeBuffSkill_3: IHeroSkillSet = {
     desc: i18n.skills.common.removeBuff.desc1,
     level: 3,
     priceLevel: 2,
-    rarity: 2,
+    //rarity: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {
@@ -227,7 +227,7 @@ export const removeBuffSkill_2: IHeroSkillSet = {
     desc: i18n.skills.common.removeBuff.desc1,
     level: 2,
     priceLevel: 2,
-    rarity: 2,
+    //rarity: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {
@@ -253,7 +253,7 @@ export const removeBuffSkill: IHeroSkillSet = {
     desc: i18n.skills.common.removeBuff.desc1,
     level: 1,
     priceLevel: 2,
-    rarity: 2,
+    //rarity: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {

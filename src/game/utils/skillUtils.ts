@@ -1,11 +1,4 @@
-import {
-    ECardType,
-    EHeroClass,
-    EHeroClassType,
-    IHeroSkillSet,
-    IUnit,
-    THeroSkills,
-} from "../../types";
+import { ECardType, EHeroClass, EHeroClassType, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
 import { GameScene } from "../scenes/GameScene";
 import {
     allBasicClassesSkills,
@@ -189,16 +182,14 @@ export const getAllHoldingSkills = (gameScene: GameScene): IHeroSkillSet[] => {
     gameScene.inventoryPanel.slots.forEach((slot) => {
         if (slot.slot?.card?.card.type === ECardType.SKILL) {
             const sk = slot.slot.card.card.skill;
-            if (sk && !sk.isMcSkill) 
-                sk.previousLevel ? list.push(sk.previousLevel) : list.push(sk);
+            if (sk && !sk.isMcSkill) sk.previousLevel ? list.push(sk.previousLevel) : list.push(sk);
         }
     });
     // skills equipped
     gameScene.unitPanel.slots.forEach((slot) => {
         if (slot.slot?.card?.card.type === ECardType.UNIT) {
             slot.slot?.card?.card?.unit?.skills.forEach((skill) => {
-                if (skill && !skill.isMcSkill) 
-                    skill.previousLevel ? list.push(skill.previousLevel) : list.push(skill);
+                if (skill && !skill.isMcSkill) skill.previousLevel ? list.push(skill.previousLevel) : list.push(skill);
             });
         }
     });
@@ -270,19 +261,3 @@ export const getTopAllClassesSkill = (day: number) => {
 
     return getRandomArrayItem(allSkills.filter((skill) => skill.priceLevel === topPriceLevel));
 };
-
-// export const getSkillColor = (skillRarity?: number) => {
-//     const rarity = skillRarity || 1;
-//     switch (rarity) {
-//         case 1:
-//             return 0x777777; // gey
-//         case 2:
-//             return 0x77ee77; // green
-//         case 3:
-//             return 0x777777; // blue/purple
-//         case 4:
-//             return 0xeebb00; // orange
-//         case 5:
-//             return 0xeebb00; //orange
-//     }
-// };

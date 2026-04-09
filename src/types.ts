@@ -966,7 +966,7 @@ export interface IHeroSkillSet {
     isChained?: boolean;
     isActivateOnStart?: boolean;
     image?: string;
-    rarity?: number;
+    //rarity?: number;
     type?: ESkillSetType;
     isBasicAttack?: boolean;
     priceLevel: number;

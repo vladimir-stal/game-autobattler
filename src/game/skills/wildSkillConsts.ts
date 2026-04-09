@@ -1,6 +1,13 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_NATURE_SHIELD, IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST, IMAGE_SKILL_TOTEM_1, IMAGE_SKILL_VINES_ARMOR } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_NATURE_SHIELD,
+    IMAGE_SKILL_REGEN,
+    IMAGE_SKILL_TEST,
+    IMAGE_SKILL_TOTEM_1,
+    IMAGE_SKILL_TOTEM_EMPOWER_2,
+    IMAGE_SKILL_VINES_ARMOR,
+} from "../utils/load/skillImagesLoad";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
 import { removeBuffSkill } from "./commonSkillConsts";
 
@@ -258,7 +265,7 @@ export const incrTotemValueSkill_2: IHeroSkillSet = {
             mpScale: 40,
         },
     ],
-    image: IMAGE_SKILL_NATURE_SHIELD,
+    image: IMAGE_SKILL_TOTEM_EMPOWER_2,
     //nextLevel: incrTotemValueSkill_2,
 };
 
@@ -282,7 +289,7 @@ export const incrTotemValueSkill: IHeroSkillSet = {
             mpScale: 20,
         },
     ],
-    image: IMAGE_SKILL_NATURE_SHIELD,
+    image: IMAGE_SKILL_TOTEM_EMPOWER_2,
     nextLevel: incrTotemValueSkill_2,
 };
 
