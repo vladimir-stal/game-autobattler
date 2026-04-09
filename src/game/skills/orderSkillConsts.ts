@@ -1,7 +1,7 @@
 import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { removeDebuff } from "../utils/battleUtils";
-import { IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_BATTLE, IMAGE_SKILL_KNIGHT, IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { shieldAttackSkill } from "./commonSkill3Consts";
 import { removeDebuffSkill } from "./commonSkillConsts";
 
@@ -159,7 +159,7 @@ export const attrArmorAll_3: IHeroSkillSet = {
             ppScale: 65,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_BATTLE,
 };
 
 export const attrArmorAll_2: IHeroSkillSet = {
@@ -180,7 +180,7 @@ export const attrArmorAll_2: IHeroSkillSet = {
             ppScale: 35,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_BATTLE,
     nextLevel: attrArmorAll_3,
 };
 
@@ -202,7 +202,7 @@ export const attrArmorAll: IHeroSkillSet = {
             ppScale: 20,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_BATTLE,
     nextLevel: attrArmorAll_2,
 };
 
@@ -228,7 +228,7 @@ export const attrArmorBigSelf_2: IHeroSkillSet = {
         },
     ],
     //nextLevel: attrArmorBigSelf_2,
-    image: IMAGE_SKILL_SHIELD_BUFF_1,
+    image: IMAGE_SKILL_KNIGHT,
 };
 
 export const attrArmorBigSelf: IHeroSkillSet = {
@@ -251,7 +251,7 @@ export const attrArmorBigSelf: IHeroSkillSet = {
         },
     ],
     nextLevel: attrArmorBigSelf_2,
-    image: IMAGE_SKILL_SHIELD_BUFF_1,
+    image: IMAGE_SKILL_KNIGHT,
 };
 
 export const orderSkills: THeroSkills = [attrArmorSelf, attrAttackSelf];

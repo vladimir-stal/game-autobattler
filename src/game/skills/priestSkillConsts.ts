@@ -3,6 +3,7 @@ import { i18n } from "../consts";
 import { IMAGE_SKILL_HEAL_1 } from "../utils/load/skillImagesLoad";
 import { outHealBuffSkill } from "./bardSkillConsts";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
+import { removeDebuffSkill } from "./commonSkillConsts";
 
 // HEAL SELF
 
@@ -208,6 +209,6 @@ export const healLowHpSkill: IHeroSkillSet = {
 
 export const priestSkills: THeroSkills = [healSelf, healFirst];
 
-export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill]);
+export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill, removeDebuffSkill]);
 
 export const priestSkills_3: THeroSkills = priestSkills_2.concat([outHealBuffSkill, increaseMaxHpSkill]);

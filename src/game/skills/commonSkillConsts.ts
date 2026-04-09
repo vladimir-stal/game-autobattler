@@ -1,6 +1,6 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_PHYS_ATTACK, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_MAGIC_HAND, IMAGE_SKILL_PHYS_ATTACK, IMAGE_SKILL_TEST, IMAGE_SKILL_YELLOW_FLAME } from "../utils/load/skillImagesLoad";
 
 ////////////// COMMON SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
 
@@ -139,7 +139,7 @@ export const removeDebuffSkill_3: IHeroSkillSet = {
             attackType: EHeroAttackType.PHYSICAL,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_YELLOW_FLAME,
 };
 
 export const removeDebuffSkill_2: IHeroSkillSet = {
@@ -165,7 +165,7 @@ export const removeDebuffSkill_2: IHeroSkillSet = {
         },
     ],
     nextLevel: removeDebuffSkill_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_YELLOW_FLAME,
 };
 
 export const removeDebuffSkill: IHeroSkillSet = {
@@ -185,7 +185,7 @@ export const removeDebuffSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: removeDebuffSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_YELLOW_FLAME,
 };
 
 // REMOVE BUFF
@@ -218,7 +218,7 @@ export const removeBuffSkill_3: IHeroSkillSet = {
             attackType: EHeroAttackType.PHYSICAL,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MAGIC_HAND,
 };
 
 export const removeBuffSkill_2: IHeroSkillSet = {
@@ -244,7 +244,7 @@ export const removeBuffSkill_2: IHeroSkillSet = {
         },
     ],
     nextLevel: removeBuffSkill_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MAGIC_HAND,
 };
 
 export const removeBuffSkill: IHeroSkillSet = {
@@ -264,5 +264,5 @@ export const removeBuffSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: removeBuffSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MAGIC_HAND,
 };

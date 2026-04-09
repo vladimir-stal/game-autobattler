@@ -1,7 +1,7 @@
 import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
-import { buffSelfMPorPP } from "./commonSkill3Consts";
+import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
 import { phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA
@@ -335,4 +335,4 @@ export const warriorSkills: THeroSkills = [debuffWorthyFoe, buffNextBa];
 
 export const warriorSkills_2: THeroSkills = warriorSkills.concat([buffNextBaTimes]);
 
-export const warriorSkills_3: THeroSkills = warriorSkills_2.concat([buffSelfMPorPP]);
+export const warriorSkills_3: THeroSkills = warriorSkills_2.concat([buffSelfMPorPP, shieldAttackSkill]);

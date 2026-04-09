@@ -1,6 +1,12 @@
 import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkillSet } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_KNIGHT_SHIELD,
+    IMAGE_SKILL_MAGIC_FIGHT,
+    IMAGE_SKILL_POISON_FLOWER,
+    IMAGE_SKILL_RAGE,
+    IMAGE_SKILL_TEST,
+} from "../utils/load/skillImagesLoad";
 
 ////////////// COMMON LEVEL 3 SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
 
@@ -52,7 +58,7 @@ export const shieldAttackSkill_2: IHeroSkillSet = {
         },
     ],
     nextLevel: shieldAttackSkill_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_KNIGHT_SHIELD,
 };
 
 export const shieldAttackSkill: IHeroSkillSet = {
@@ -77,7 +83,7 @@ export const shieldAttackSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: shieldAttackSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_KNIGHT_SHIELD,
 };
 
 // BUFF MP or PP depending on which attr is highest
@@ -146,7 +152,7 @@ export const buffSelfMPorPP_2: IHeroSkillSet = {
         },
     ],
     //nextLevel: buffSelfMPorPP_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MAGIC_FIGHT,
 };
 
 export const buffSelfMPorPP: IHeroSkillSet = {
@@ -213,7 +219,7 @@ export const buffSelfMPorPP: IHeroSkillSet = {
         },
     ],
     nextLevel: buffSelfMPorPP_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MAGIC_FIGHT,
 };
 
 //
@@ -251,7 +257,7 @@ export const increaseMaxHpSkill_2: IHeroSkillSet = {
         },
     ],
     //nextLevel: increaseMaxHpSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_POISON_FLOWER,
 };
 
 export const increaseMaxHpSkill: IHeroSkillSet = {
@@ -285,7 +291,7 @@ export const increaseMaxHpSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: increaseMaxHpSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_POISON_FLOWER,
 };
 
 //
@@ -318,7 +324,7 @@ export const buffSummonCritSkill_2: IHeroSkillSet = {
         },
     ],
     //nextLevel: buffSummonCritSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_RAGE,
 };
 
 export const buffSummonCritSkill: IHeroSkillSet = {
@@ -347,5 +353,5 @@ export const buffSummonCritSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: buffSummonCritSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_RAGE,
 };

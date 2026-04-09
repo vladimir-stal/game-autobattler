@@ -1,6 +1,6 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2, IMAGE_SKILL_KNIGHT_MAGIC, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 
 // BUFF NEXT BA ALL
 
@@ -185,7 +185,7 @@ export const buffPPAll_3: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_BARD_BUFF_1,
+    image: IMAGE_SKILL_KNIGHT_MAGIC,
 };
 
 export const buffPPAll_2: IHeroSkillSet = {
@@ -212,7 +212,7 @@ export const buffPPAll_2: IHeroSkillSet = {
         },
     ],
     nextLevel: buffPPAll_3,
-    image: IMAGE_SKILL_BARD_BUFF_1,
+    image: IMAGE_SKILL_KNIGHT_MAGIC,
 };
 
 export const buffPPAll: IHeroSkillSet = {
@@ -239,7 +239,7 @@ export const buffPPAll: IHeroSkillSet = {
         },
     ],
     nextLevel: buffPPAll_2,
-    image: IMAGE_SKILL_BARD_BUFF_1,
+    image: IMAGE_SKILL_KNIGHT_MAGIC,
 };
 
 // TOTAL DAMAGE BUFF (LEVEL 3) /////////////////////////////////////////////////////////////////////////

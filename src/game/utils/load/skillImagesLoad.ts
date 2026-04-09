@@ -25,6 +25,25 @@ export const IMAGE_SKILL_TEST = "IMAGE_SKILL_TEST";
 export const IMAGE_SKILL_DARK_21 = "IMAGE_SKILL_DARK_21";
 export const IMAGE_SKILL_DARK_22 = "IMAGE_SKILL_DARK_22";
 
+export const IMAGE_SKILL_BATTLE = "IMAGE_SKILL_BATTLE"; //battle
+export const IMAGE_SKILL_DRAGON_FIRE = "IMAGE_SKILL_DRAGON_FIRE"; //dragon_fire
+export const IMAGE_SKILL_POISON_FLOWER = "IMAGE_SKILL_POISON_FLOWER"; //flower_poison
+export const IMAGE_SKILL_KNIGHT = "IMAGE_SKILL_KNIGHT"; //knight
+export const IMAGE_SKILL_KNIGHT_MAGIC = "IMAGE_SKILL_KNIGHT_MAGIC"; // knight_magic
+export const IMAGE_SKILL_KNIGHT_SHIELD = "IMAGE_SKILL_KNIGHT_SHIELD"; // knight_shield
+export const IMAGE_SKILL_MAGIC_FIGHT = "IMAGE_SKILL_MAGIC_FIGHT"; //magic_fight
+export const IMAGE_SKILL_MAGIC_HAND = "IMAGE_SKILL_MAGIC_HAND"; //magic_hand
+export const IMAGE_SKILL_DARK_MISSILES_RAIN = "IMAGE_SKILL_DARK_MISSILES_RAIN"; // missiles_rain
+export const IMAGE_SKILL_NATURE_SHIELD = "IMAGE_SKILL_NATURE_SHIELD"; // nature_shield
+export const IMAGE_SKILL_RAGE = "IMAGE_SKILL_RAGE"; // rage
+export const IMAGE_SKILL_SHOCK_HAND = "IMAGE_SKILL_SHOCK_HAND"; //shock_hand
+export const IMAGE_SKILL_SKULL_KNIFE = "IMAGE_SKILL_SKULL_KNIFE"; //skull_knife
+export const IMAGE_SKILL_SKULLS = "IMAGE_SKILL_SKULLS"; //skulls
+export const IMAGE_SKILL_VINES_ARMOR = "IMAGE_SKILL_VINES_ARMOR"; // vines_armor
+export const IMAGE_SKILL_WARLOCK_SPELL = "IMAGE_SKILL_WARLOCK_SPELL"; // warlock_spell
+export const IMAGE_SKILL_YELLOW_EXPLOSION = "IMAGE_SKILL_YELLOW_EXPLOSION"; // yellow_explosion
+export const IMAGE_SKILL_YELLOW_FLAME = "IMAGE_SKILL_YELLOW_FLAME";
+
 const prefix = "assets/sprites/skills/";
 
 export function loadSkillImages(scene: Scene) {
@@ -52,4 +71,23 @@ export function loadSkillImages(scene: Scene) {
     // LEVEL 2
     scene.load.image(IMAGE_SKILL_DARK_21, prefix + "2/dark_21.png");
     scene.load.image(IMAGE_SKILL_DARK_22, prefix + "2/dark_22.png");
+
+    scene.load.image(IMAGE_SKILL_BATTLE, prefix + "2/battle.png"); //
+    scene.load.image(IMAGE_SKILL_DRAGON_FIRE, prefix + "2/dragon_fire.png"); //
+    scene.load.image(IMAGE_SKILL_POISON_FLOWER, prefix + "2/flower_poison.png"); //
+    scene.load.image(IMAGE_SKILL_KNIGHT, prefix + "2/knight.png"); //
+    scene.load.image(IMAGE_SKILL_KNIGHT_MAGIC, prefix + "2/knight_magic.png");
+    scene.load.image(IMAGE_SKILL_KNIGHT_SHIELD, prefix + "2/knight_shield.png"); //
+    scene.load.image(IMAGE_SKILL_MAGIC_FIGHT, prefix + "2/magic_fight.png"); //
+    scene.load.image(IMAGE_SKILL_MAGIC_HAND, prefix + "2/magic_hand.png"); //
+    scene.load.image(IMAGE_SKILL_DARK_MISSILES_RAIN, prefix + "2/missiles_rain.png");
+    scene.load.image(IMAGE_SKILL_NATURE_SHIELD, prefix + "2/nature_shield.png"); //
+    scene.load.image(IMAGE_SKILL_RAGE, prefix + "2/rage.png"); //
+    scene.load.image(IMAGE_SKILL_SHOCK_HAND, prefix + "2/shock_hand.png"); //
+    scene.load.image(IMAGE_SKILL_SKULL_KNIFE, prefix + "2/skull_knife.png"); //
+    scene.load.image(IMAGE_SKILL_SKULLS, prefix + "2/skulls.png");
+    scene.load.image(IMAGE_SKILL_VINES_ARMOR, prefix + "2/vines_armor.png"); //
+    scene.load.image(IMAGE_SKILL_WARLOCK_SPELL, prefix + "2/warlock_spell.png");
+    scene.load.image(IMAGE_SKILL_YELLOW_EXPLOSION, prefix + "2/yellow_explosion.png"); //
+    scene.load.image(IMAGE_SKILL_YELLOW_FLAME, prefix + "2/yellow_flame.png"); //
 }

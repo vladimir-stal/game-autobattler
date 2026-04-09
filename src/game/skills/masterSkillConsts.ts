@@ -1,6 +1,6 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_SKULL_KNIFE, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { buffSummonCritSkill } from "./commonSkill3Consts";
 import { phycisalAttackSkill } from "./commonSkillConsts";
 
@@ -218,7 +218,7 @@ export const buffNextBaBeCritSelf_3: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_SKULL_KNIFE,
 };
 
 export const buffNextBaBeCritSelf_2: IHeroSkillSet = {
@@ -257,7 +257,7 @@ export const buffNextBaBeCritSelf_2: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_SKULL_KNIFE,
     nextLevel: buffNextBaBeCritSelf_3,
 };
 
@@ -284,7 +284,7 @@ export const buffNextBaBeCritSelf: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_SKULL_KNIFE,
     nextLevel: buffNextBaBeCritSelf_2,
 };
 

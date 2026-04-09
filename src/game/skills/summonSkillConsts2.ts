@@ -14,6 +14,7 @@ import {
 import { i18n } from "../consts";
 import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
+import { buffSummonCritSkill } from "./commonSkill3Consts";
 
 // SUMMON UNITS
 
@@ -311,70 +312,10 @@ export const incrSummonBa: IHeroSkillSet = {
 // BUFF SUMMON CRIT CHANCE
 //
 
-//TODO: remove and use from commonSkill3Consts
-
-export const buffSummonCritSkill_2: IHeroSkillSet = {
-    id: "buffSummonCritSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Crit summon(2)",
-    desc: "Buff summon crit\nchance [5]+[30%xMP]",
-    level: 2,
-    priceLevel: 3,
-    heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
-    skills: [
-        {
-            isBasicAttack: true,
-            type: EHeroSkillType.BUFF,
-            buff: {
-                name: "Crit",
-                targetType: ETargetType.SUMMON_CURRENT,
-                timeType: EBuffTimeType.DUEL,
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "critChance",
-                value: 5,
-                valueType: "number",
-                mpScale: 30,
-            },
-        },
-    ],
-    //nextLevel: buffSummonCritSkill_2,
-    image: IMAGE_SKILL_TEST,
-};
-
-export const buffSummonCritSkill: IHeroSkillSet = {
-    id: "buffSummonCritSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Crit summon",
-    desc: "Buff summon crit\nchance [5]+[20%xMP]",
-    level: 1,
-    priceLevel: 3,
-    heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
-    skills: [
-        {
-            isBasicAttack: true,
-            type: EHeroSkillType.BUFF,
-            buff: {
-                name: "Crit",
-                targetType: ETargetType.SUMMON_CURRENT,
-                timeType: EBuffTimeType.DUEL,
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "critChance",
-                value: 5,
-                valueType: "number",
-                mpScale: 20,
-            },
-        },
-    ],
-    nextLevel: buffSummonCritSkill_2,
-    image: IMAGE_SKILL_TEST,
-};
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const summonSkills: THeroSkills = [fireflySummonSkill]; //[fireflySummonSkill, warriorSummonSkill];
+export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill];
 
 export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa]);
 
-export const summonSkills_3: THeroSkills = summonSkills_2.concat([buffSummonCritSkill]); // buffSummonCritSkill
+export const summonSkills_3: THeroSkills = summonSkills_2.concat([buffSummonCritSkill]);

@@ -11,7 +11,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_BURN, IMAGE_SKILL_LIGHTNING, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_BURN, IMAGE_SKILL_DRAGON_FIRE, IMAGE_SKILL_LIGHTNING, IMAGE_SKILL_SHOCK_HAND, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP } from "./commonSkill3Consts";
 
 // MAGIC ATTACK
@@ -168,7 +168,7 @@ export const magicAttackAll_3: IHeroSkillSet = {
             mpScale: 60,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_DRAGON_FIRE,
 };
 
 export const magicAttackAll_2: IHeroSkillSet = {
@@ -190,7 +190,7 @@ export const magicAttackAll_2: IHeroSkillSet = {
         },
     ],
     nextLevel: magicAttackAll_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_DRAGON_FIRE,
 };
 
 export const magicAttackAll: IHeroSkillSet = {
@@ -212,7 +212,7 @@ export const magicAttackAll: IHeroSkillSet = {
         },
     ],
     nextLevel: magicAttackAll_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_DRAGON_FIRE,
 };
 
 ////////////////////////////////////////// APPLY SHOCK TO 1 ENEMY
@@ -234,7 +234,7 @@ export const applyShock_3: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_SHOCK_HAND,
 };
 
 export const applyShock_2: IHeroSkillSet = {
@@ -254,7 +254,7 @@ export const applyShock_2: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_SHOCK_HAND,
     nextLevel: applyShock_3,
 };
 
@@ -275,7 +275,7 @@ export const applyShock: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_SHOCK_HAND,
     nextLevel: applyShock_2,
 };
 

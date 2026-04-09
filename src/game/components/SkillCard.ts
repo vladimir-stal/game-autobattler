@@ -30,14 +30,14 @@ export class SkillCard extends Phaser.GameObjects.Container {
     }
 
     render() {
-        this.renderBorder();
         this.renderImage();
+        this.renderBorder();
         this.renderInfo();
         this.renderTags();
     }
 
     renderBorder() {
-        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0.5, 0);
+        this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK, 0).setOrigin(0.5, 0);
         this.rect.setStrokeStyle(1, getCardBorderColor(this.skill.priceLevel));
 
         this.rect.setInteractive();
@@ -78,7 +78,7 @@ export class SkillCard extends Phaser.GameObjects.Container {
             return;
         }
 
-        this.image = this.gameScene.add.sprite(0, 25, image).setOrigin(0.5, 0);
+        this.image = this.gameScene.add.sprite(0, 5, image).setOrigin(0.5, 0);
         this.add(this.image);
     }
 
