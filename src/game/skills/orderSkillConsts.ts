@@ -1,7 +1,7 @@
 import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { removeDebuff } from "../utils/battleUtils";
-import { IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { shieldAttackSkill } from "./commonSkill3Consts";
 import { removeDebuffSkill } from "./commonSkillConsts";
 

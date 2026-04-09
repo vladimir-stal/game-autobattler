@@ -1,7 +1,6 @@
 import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkillSet } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_PHYS_ATTACK, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
-import { fireflySummon } from "./summonSkillConsts2";
+import { IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 
 ////////////// COMMON LEVEL 3 SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
 

@@ -1,6 +1,6 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 
 // BUFF NEXT BA ALL
 

@@ -1,6 +1,6 @@
 import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_TEST, IMAGE_SKILL_WORTHY_FOE } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_TEST, IMAGE_SKILL_WORTHY_FOE } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP } from "./commonSkill3Consts";
 import { phycisalAttackSkill } from "./commonSkillConsts";
 

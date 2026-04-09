@@ -12,7 +12,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 
 // SUMMON UNITS

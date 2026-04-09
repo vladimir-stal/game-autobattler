@@ -21,8 +21,8 @@ export const debugStartingItemsRoom = true;
     let cards: (ICard | null)[] = [];
 */
 
-export const customHeroSelectRoom = (): ICard[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: masterHero }, null];;
+export const customHeroSelectRoom = (): (ICard | null)[] => {
+    return [null, { type: ECardType.UNIT, price: 0, unit: warriorHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {

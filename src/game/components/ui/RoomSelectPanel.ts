@@ -68,7 +68,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderRoom(index: number, type: ERoomType, roomOptions?: IRoomOptions) {
-        const { heroClasses, boss, autolevel } = roomOptions || {heroClasses: [], boss: undefined, autolevel: undefined};
+        const { heroClasses, boss, autolevel } = roomOptions || { heroClasses: [], boss: undefined, autolevel: undefined };
         const roomX = this.getRoomX(index);
 
         // TRIPLE SET ROOM
@@ -78,11 +78,14 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
             tripleSetTypes = [];
             const chc = getCurrentHeroClasses(this.gameScene);
             const lbh = this.gameScene.unitPanel.lastBoughtHero;
-            // bugfix: after buying new hero, this room was generated before hero was put into unitPanel
-            //         so, newly bouht hero class is saved into unitPanel.lastBoughtHero and used here
-            const lbhclasses = getMulticlassSubclasses(lbh) || [lbh];
-            lbhclasses.forEach(c => chc.push(c));
+            if (lbh) {
+                const lbhclasses = getMulticlassSubclasses(lbh) || [lbh];
+                lbhclasses.forEach((c) => chc.push(c));
+            }
             //console.log("-= DEBUG =-",chc);
+            if (!heroClasses) {
+                return;
+            }
             heroClasses.push(getRandomArrayItem(chc));
             heroClasses.push(getRandomArrayItem(chc));
             getRandomArrayItems(tripleSetCardTypes, 3, true).forEach((cardType) => tripleSetTypes?.push(cardType));
@@ -101,9 +104,10 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
             .setOrigin(0.5);
         this.add(roomText);
 
-        const heroClassesText = (heroClasses && heroClasses.length > 0)
-            ? "\n(" + (roomsWithSingleHeroClass.includes(type) ? i18n.tags[heroClasses[0]] : heroClasses?.map((hc) => i18n.tags[hc]).join(", ")) + ")"
-            : "";
+        const heroClassesText =
+            heroClasses && heroClasses.length > 0
+                ? "\n(" + (roomsWithSingleHeroClass.includes(type) ? i18n.tags[heroClasses[0]] : heroClasses?.map((hc) => i18n.tags[hc]).join(", ")) + ")"
+                : "";
         const bossDescription = type === ERoomType.BOSS ? "\n" + boss?.name : "";
         // @ts-expect-error
         const tripleSetTypesDescr = tripleSetTypes ? "\n" + tripleSetTypes.map((tst) => i18n.ui[tst]).join(",") : "";
