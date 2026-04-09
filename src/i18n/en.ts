@@ -143,6 +143,8 @@ export interface Ii18n {
     roomDescriptions: Partial<Record<ERoomType, string>>;
     skills: {
         basic: {
+            feintAttack: any;
+            magicRain: any;
             buffBaNextBaAll: TSkillI18n;
             buffBaSelf: TSkillI18n;
             buffPpAll: TSkillI18n;
@@ -547,6 +549,12 @@ export const i18n: Ii18n = {
                 desc2: "Deal [3] magic damage \nto random enemy 3 times",
                 desc3: "Deal [4] magic damage \nto random enemy 3 times",
             },
+            magicRain: {
+                name: "Magic rain",
+                desc1: "Deal [2] magic damage \nto random enemy [1+MP*40%] times",
+                desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
+                desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
+            },
             //
             // MASTER
             //
@@ -555,6 +563,12 @@ export const i18n: Ii18n = {
                 desc1: "Multiply x[1.4] self next basic attack",
                 desc2: "Multiply x[1.6] self next basic attack",
                 desc3: "Multiply x[1.8] self next basic attack",
+            },
+            feintAttack: {
+                name: "Feint attack",
+                desc1: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*20%]",
+                desc2: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*30%]",
+                desc3: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*40%]",
             },
             //
             // MAGIC

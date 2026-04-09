@@ -562,6 +562,7 @@ export enum EHeroSkillType {
     TOTEM = "TOTEM", // summon a totem to the battle
     TOTEM_REMOVE = "TOTEM_REMOVE", // remove one random totem from an enemy unit
     TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE",
+    REPEATING_SKILL = "REPEATING_SKILL",
 }
 
 export enum EStatusType {
@@ -636,6 +637,8 @@ export enum ETargetType {
     RANDOM_ENEMY = "RANDOM_ENEMY",
     SECOND_ENEMY = "SECOND_ENEMY",
     SUMMON_CURRENT = "SUMMON_CURRENT",
+    DEBUFFED_ENEMY_RANDOM = "DEBUFFED_ENEMY_RANDOM",
+    BUFFED_ENEMY_RANDOM = "BUFFED_ENEMY_RANDOM",
     // COMMON
     BY_UNIT_ID = "BY_UNIT_ID",
 }
@@ -940,6 +943,7 @@ export interface IHeroSkill {
     markType?: EDebuffType;
     mpScale?: number;
     ppScale?: number;
+    childSkill?: IHeroSkill;
     //
     animation?: AnimationType;
     condition?: ESkillCondition;

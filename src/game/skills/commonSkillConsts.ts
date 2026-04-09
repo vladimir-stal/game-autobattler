@@ -200,21 +200,21 @@ export const removeBuffSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {
-            type: EHeroSkillType.DEBUFF_REMOVE,
+            type: EHeroSkillType.BUFF_REMOVE,
             isBasicAttack: false,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
+            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
-            type: EHeroSkillType.DEBUFF_REMOVE,
+            type: EHeroSkillType.BUFF_REMOVE,
             isBasicAttack: false,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
+            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
-            type: EHeroSkillType.DEBUFF_REMOVE,
+            type: EHeroSkillType.BUFF_REMOVE,
             isBasicAttack: true,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
+            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
     ],
@@ -231,15 +231,15 @@ export const removeBuffSkill_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
     skills: [
         {
-            type: EHeroSkillType.DEBUFF_REMOVE,
+            type: EHeroSkillType.BUFF_REMOVE,
             isBasicAttack: false,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
+            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
-            type: EHeroSkillType.DEBUFF_REMOVE,
+            type: EHeroSkillType.BUFF_REMOVE,
             isBasicAttack: true,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
+            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
     ],
@@ -259,7 +259,7 @@ export const removeBuffSkill: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF_REMOVE,
             isBasicAttack: true,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
+            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
     ],

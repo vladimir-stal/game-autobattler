@@ -78,6 +78,8 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
             tripleSetTypes = [];
             const chc = getCurrentHeroClasses(this.gameScene);
             const lbh = this.gameScene.unitPanel.lastBoughtHero;
+            // bugfix: after buying new hero, this room was generated before hero was put into unitPanel
+            //         so, newly bouht hero class is saved into unitPanel.lastBoughtHero and used here
             const lbhclasses = getMulticlassSubclasses(lbh) || [lbh];
             lbhclasses.forEach(c => chc.push(c));
             //console.log("-= DEBUG =-",chc);

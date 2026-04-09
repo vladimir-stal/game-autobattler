@@ -203,6 +203,10 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                 card.unit = createUnit(card.unit);
                 if (card.unit.unitType === EUnitType.HERO)
                     this.gameScene.unitPanel.lastBoughtHero = card.unit.heroClass;
+                    // bugfix: 
+                    //   after buying new hero, new room is generated before hero was put into unitPanel
+                    //   so, newly bouht hero class is saved into unitPanel.lastBoughtHero
+
             } else if (card.type === ECardType.ITEM && card.item) {
                 card.item = createItem(card.item);
             }

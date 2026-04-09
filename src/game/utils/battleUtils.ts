@@ -315,7 +315,12 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const secondTarget = getSecondTarget(units);
             return secondTarget ? [secondTarget] : null;
         }
-
+        case ETargetType.BUFFED_ENEMY_RANDOM: {
+            return [getRandomArrayItem(getBuffedAllies(units))];
+        }
+        case ETargetType.DEBUFFED_ENEMY_RANDOM: {
+            return [getRandomArrayItem(getDebuffedAllies(units))];
+        }
         default:
             return null;
     }

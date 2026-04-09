@@ -229,6 +229,8 @@ export const IMAGE_SKILL_SWORD_BUFF_2 = "IMAGE_SKILL_SWORD_BUFF_2";
 export const IMAGE_SKILL_AXE_BUFF = "IMAGE_SKILL_AXE_BUFF";
 export const IMAGE_SKILL_HEAL_1 = "IMAGE_SKILL_HEAL_1";
 export const IMAGE_SKILL_TEST = "IMAGE_SKILL_TEST";
+export const IMAGE_SKILL_WORTHY_FOE = "IMAGE_SKILL_WORTHY_FOE";
+export const IMAGE_FEINT_ATTACK = "IMAGE_FEINT_ATTACK";
 
 // ATTRIBUTES
 
@@ -366,6 +368,9 @@ export function loadImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_AXE_BUFF, "assets/sprites/skills/empower_axe.png");
     scene.load.image(IMAGE_SKILL_HEAL_1, "assets/sprites/skills/holy_spell_1.png");
     scene.load.image(IMAGE_SKILL_TEST, "assets/sprites/skills/skills_test.png");
+
+    scene.load.image(IMAGE_SKILL_WORTHY_FOE, "assets/sprites/skills/worthy_foe.png");
+    scene.load.image(IMAGE_FEINT_ATTACK, "assets/sprites/skills/feint_attack.png");
 
     // ATTRIBUTES
     scene.load.image(IMAGE_ATTRIBUTE_EVASION, "assets/sprites/attributes/evasion.png");

@@ -55,6 +55,7 @@ import {
     takeStatusDamage,
 } from "../utils/battleUtils";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomIntFromInterval } from "../utils/commonUtils";
+import { calculateSkillValue } from "../utils/skillUtils";
 import { performTotemSkill } from "../utils/totemBattleUtils";
 
 const slotCount = 4;
@@ -370,6 +371,15 @@ export class BattleController {
                 break;
             case EHeroSkillType.TOTEM_INCREASE_VALUE:
                 this.performTotemIncreaseValue(unit, skill, isPlayer1, isStartBattle);
+                break;
+            case EHeroSkillType.REPEATING_SKILL:
+                if (skill.childSkill) {
+                    const count = Math.min(calculateSkillValue(skill, unit),20);
+                    console.log("REPEATING_SKILL x" + count);
+                    for (let i = 0; i < count; i++) {
+                        this.performSkill(unit,skill.childSkill,isPlayer1,isStartBattle);
+                    }
+                }
                 break;
             case EHeroSkillType.NONE:
                 {

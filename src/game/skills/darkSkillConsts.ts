@@ -2,6 +2,7 @@ import {
     AnimationType,
     EBuffTimeType,
     EDebuffType,
+    EEffectAnimationType,
     EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
@@ -169,24 +170,21 @@ export const magicAttackX3_3: IHeroSkillSet = {
     skills: [
         {
             isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 4,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-        },
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 4,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-        },
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 4,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: 3, // how many repeats, can be calculated
+            targetType: ETargetType.SELF, // not used
+            animation: AnimationType.UNIT_ATTACK,
+            childSkill: {
+                isBasicAttack: false,
+                type: EHeroSkillType.ATTACK,
+                value: 4,
+                targetType: ETargetType.RANDOM_ENEMY,
+                attackType: EHeroAttackType.MAGIC,
+                animation: AnimationType.NONE,
+                effectAnimationType: EEffectAnimationType.EFFECT_DARK_ATTACK,
+                effectAnimationDelay: 250,
+                // TODO: fix animation & animations delays
+            },
         },
     ],
     image: IMAGE_SKILL_MAGIC_MISSILES,
@@ -204,24 +202,21 @@ export const magicAttackX3_2: IHeroSkillSet = {
     skills: [
         {
             isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 3,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-        },
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 3,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-        },
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 3,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: 3, // how many repeats, can be calculated
+            targetType: ETargetType.SELF, // not used
+            animation: AnimationType.UNIT_ATTACK,
+            childSkill: {
+                isBasicAttack: false,
+                type: EHeroSkillType.ATTACK,
+                value: 3,
+                targetType: ETargetType.RANDOM_ENEMY,
+                attackType: EHeroAttackType.MAGIC,
+                animation: AnimationType.NONE,
+                effectAnimationType: EEffectAnimationType.EFFECT_DARK_ATTACK,
+                effectAnimationDelay: 250,
+                // TODO: fix animation & animations delays
+            },
         },
     ],
     nextLevel: magicAttackX3_3,
@@ -240,27 +235,21 @@ export const magicAttackX3: IHeroSkillSet = {
     skills: [
         {
             isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 2,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-            animation: AnimationType.NONE,
-        },
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 2,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-            animation: AnimationType.NONE,
-        },
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 2,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-            animation: AnimationType.NONE,
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: 3, // how many repeats, can be calculated
+            targetType: ETargetType.SELF, // not used
+            animation: AnimationType.UNIT_ATTACK,
+            childSkill: {
+                isBasicAttack: false,
+                type: EHeroSkillType.ATTACK,
+                value: 2,
+                targetType: ETargetType.RANDOM_ENEMY,
+                attackType: EHeroAttackType.MAGIC,
+                animation: AnimationType.NONE,
+                effectAnimationType: EEffectAnimationType.EFFECT_DARK_ATTACK,
+                effectAnimationDelay: 250,
+                // TODO: fix animation & animations delays
+            },
         },
     ],
     nextLevel: magicAttackX3_2,
@@ -431,26 +420,100 @@ export const stealPPorMPSkill: IHeroSkillSet = {
 // MAGIC RAIN - creates magic missiles which count depends on MP
 //
 
-//TODO: implement
+export const magicRain_3: IHeroSkillSet = {
+    id: "magicRain",
+    name: i18n.skills.basic.magicRain.name,
+    desc: i18n.skills.basic.magicRain.desc3,
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.DARK],
+    skills: [
+        {
+            isBasicAttack: false,
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: 3, // how many repeats, can be calculated (max 20)
+            targetType: ETargetType.SELF, // not used
+            animation: AnimationType.UNIT_ATTACK,
+            mpScale: 60,
+            childSkill: {
+                isBasicAttack: false,
+                type: EHeroSkillType.ATTACK,
+                value: 2,
+                targetType: ETargetType.RANDOM_ENEMY,
+                attackType: EHeroAttackType.MAGIC,
+                animation: AnimationType.NONE,
+                effectAnimationType: EEffectAnimationType.EFFECT_DARK_ATTACK,
+                effectAnimationDelay: 250,
+                // TODO: fix animation & animations delays
+            },
+        },
+    ],
+    image: IMAGE_SKILL_MAGIC_MISSILES,
+    animation: AnimationType.UNIT_ATTACK,
+};
+
+export const magicRain_2: IHeroSkillSet = {
+    id: "magicRain",
+    name: i18n.skills.basic.magicRain.name,
+    desc: i18n.skills.basic.magicRain.desc2,
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.DARK],
+    skills: [
+        {
+            isBasicAttack: false,
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: 2, // how many repeats, can be calculated (max 20)
+            targetType: ETargetType.SELF, // not used
+            animation: AnimationType.UNIT_ATTACK,
+            mpScale: 50,
+            childSkill: {
+                isBasicAttack: false,
+                type: EHeroSkillType.ATTACK,
+                value: 2,
+                targetType: ETargetType.RANDOM_ENEMY,
+                attackType: EHeroAttackType.MAGIC,
+                animation: AnimationType.NONE,
+                effectAnimationType: EEffectAnimationType.EFFECT_DARK_ATTACK,
+                effectAnimationDelay: 250,
+                // TODO: fix animation & animations delays
+            },
+        },
+    ],
+    nextLevel: magicRain_3,
+    image: IMAGE_SKILL_MAGIC_MISSILES,
+    animation: AnimationType.UNIT_ATTACK,
+};
+
 export const magicRain: IHeroSkillSet = {
     id: "magicRain",
-    name: i18n.skills.basic.magicAttackX3.name,
-    desc: i18n.skills.basic.magicAttackX3.desc1,
+    name: i18n.skills.basic.magicRain.name,
+    desc: i18n.skills.basic.magicRain.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
-            // TODO: REPEAT THIS SKILL DEPENDING ON MP
             isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 2,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-            animation: AnimationType.NONE,
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: 1, // how many repeats, can be calculated (max 20)
+            targetType: ETargetType.SELF, // not used
+            animation: AnimationType.UNIT_ATTACK,
+            mpScale: 40,
+            childSkill: {
+                isBasicAttack: false,
+                type: EHeroSkillType.ATTACK,
+                value: 2,
+                targetType: ETargetType.RANDOM_ENEMY,
+                attackType: EHeroAttackType.MAGIC,
+                animation: AnimationType.NONE,
+                effectAnimationType: EEffectAnimationType.EFFECT_DARK_ATTACK,
+                effectAnimationDelay: 250,
+                // TODO: fix animation & animations delays
+            },
         },
     ],
-    nextLevel: magicAttackX3_2,
+    nextLevel: magicRain_2,
     image: IMAGE_SKILL_MAGIC_MISSILES,
     animation: AnimationType.UNIT_ATTACK,
 };
@@ -459,4 +522,4 @@ export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];
 
 export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, removeBuffSkill]);
 
-export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill]);
+export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill,magicRain]);
