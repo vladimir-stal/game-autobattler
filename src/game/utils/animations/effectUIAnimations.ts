@@ -2,7 +2,7 @@
 
 import { Scene } from "phaser";
 import { EEffectAnimationType } from "../../../types";
-import { IMAGE_EFFECT_UI_BUFF_0, IMAGE_EFFECT_UI_BUFF_2 } from "../load/imageLoadUIEffects";
+import { IMAGE_EFFECT_UI_BUFF_0, IMAGE_EFFECT_UI_BUFF_2, IMAGE_EFFECT_UI_STATUS_SHOCK_0 } from "../load/imageLoadUIEffects";
 
 //
 
@@ -18,6 +18,15 @@ export function createUIEffectAnimations(scene: Scene) {
         key: EEffectAnimationType.EFFECT_UI_BUFF_2,
         frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_UI_BUFF_2, { start: 0, end: 30 }),
         frameRate: 20,
+    });
+    //
+    // STATUSES
+    //
+    // SHOCK
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_UI_STATUS_SHOCK_0,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_UI_STATUS_SHOCK_0, { start: 0, end: 25 }),
+        frameRate: 50,
     });
 }
 

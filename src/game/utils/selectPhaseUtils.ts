@@ -15,7 +15,7 @@ import {
     IUnit,
     THeroAttribute,
 } from "../../types";
-import { magicHero, orderHero, summonHero } from "../basicHeroConsts";
+import { bardHero, magicHero, orderHero, summonHero } from "../basicHeroConsts";
 
 import { axe1, musical1, scepter1, shield1, staff1, sword1, totem1, wand1 } from "../basicWeaponItemConsts";
 import { bosses } from "../bossConsts";
@@ -32,6 +32,7 @@ import { itemGoblinBoneDagger, itemGoblinSilverCoin, regenMantle, spiritArmor } 
 import { GameScene } from "../scenes/GameScene";
 import { buffNextBaAll } from "../skills/bardSkillConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { poisonRandom } from "../skills/darkSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { healFirst } from "../skills/priestSkillConsts";
 import { fireflySummonSkill } from "../skills/summonSkillConsts2";
@@ -195,6 +196,7 @@ export const getRooms = (
                         [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                         // Go change in debugUtils.ts for custom room
                 } else if (hour === 2) {
+                    return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
                 }
                 if (hour === 5) {

@@ -192,6 +192,7 @@ export const IMAGE_TOTEM_ATTACK = "IMAGE_TOTEM_ATTACK";
 export const IMAGE_STATUS_POISON = "IMAGE_STATUS_POISON";
 export const IMAGE_STATUS_BLEED = "IMAGE_STATUS_BLEED";
 export const IMAGE_STATUS_BURN = "IMAGE_STATUS_BURN";
+export const IMAGE_STATUS_SHOCK = "IMAGE_STATUS_SHOCK";
 
 export const IMAGE_ICON_ATTACK = "IMAGE_ICON_ATTACK";
 export const IMAGE_ICON_HEALTH = "IMAGE_ICON_HEALTH";
@@ -328,9 +329,10 @@ export function loadImages(scene: Scene) {
 
     // STATUSES
 
-    //scene.load.image(IMAGE_STATUS_POISON, "assets/sprites/poison_icon.png");
-    //scene.load.image(IMAGE_STATUS_BLEED, "assets/sprites/bleed_icon.png");
-    //scene.load.image(IMAGE_STATUS_BURN, "assets/sprites/burn_icon.png");
+    scene.load.image(IMAGE_STATUS_POISON, "assets/sprites/icons/poison_icon.png");
+    scene.load.image(IMAGE_STATUS_BLEED, "assets/sprites/icons/blood_icon.png");
+    scene.load.image(IMAGE_STATUS_BURN, "assets/sprites/icons/burn_icon.png");
+    scene.load.image(IMAGE_STATUS_SHOCK, "assets/sprites/icons/shock_icon.png");
 
     scene.load.image(IMAGE_ICON_ATTACK, "assets/sprites/icons/sword.png");
     scene.load.image(IMAGE_ICON_HEALTH, "assets/sprites/icons/heart.png");

@@ -803,10 +803,15 @@ export const getStatusItemBonusType = (status: EStatusType) => {
 };
 
 export const getExistingBuff = (unit: IBattleUnit, buff: IBuff) => {
-    const { type, attribute } = buff;
+    const { type, attribute, timeType } = buff;
 
     return unit.buffs.find((existingBuff) => {
-        if (type === EBuffType.ATTRIBUTE_INCREASE && existingBuff.type === EBuffType.ATTRIBUTE_INCREASE && attribute === existingBuff.attribute) {
+        if (
+            type === EBuffType.ATTRIBUTE_INCREASE &&
+            existingBuff.type === EBuffType.ATTRIBUTE_INCREASE &&
+            attribute === existingBuff.attribute &&
+            timeType === existingBuff.timeType
+        ) {
             return true;
         }
 
