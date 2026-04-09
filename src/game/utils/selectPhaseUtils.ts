@@ -177,6 +177,7 @@ export const getRooms = (
 ): ({ roomType: ERoomType; roomOptions?: IRoomOptions } | null)[] => {
     //console.log("GETROOMS");
     //prevRooms.forEach((prevroom) => console.log(">>  " + prevroom));
+    //console.log("-= debug =- getRooms ",day,hour,prevRooms,ownedHeroesCount);
     switch (day) {
         case 0:
             {
@@ -198,9 +199,6 @@ export const getRooms = (
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
-                }
-                if (hour === 5) {
-                    return [null, { roomType: ERoomType.DUEL }, null];
                 }
             }
             break;
@@ -356,9 +354,7 @@ export const getRooms = (
     const firstRoomHeroClasses = firstRoom !== null && roomsWithHeroClasses.includes(firstRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
     const secondRoomHeroClasses = secondRoom !== null && roomsWithHeroClasses.includes(secondRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
     const thirdRoomHeroClasses = thirdRoom !== null && roomsWithHeroClasses.includes(thirdRoom) ? getRandomArrayItems(BASIC_CLASSES, 2, true) : undefined;
-    // TODO: add bias towards hero classes present in hero party
-    //   ~ e.g. check room hero class, reroll once if no class present in party
-    //   ~ similar reroll action to be made for Tavern / Mercenary room, when hero party is full
+
     return [
         { roomType: firstRoom, roomOptions: { heroClasses: firstRoomHeroClasses } },
         { roomType: secondRoom, roomOptions: { heroClasses: secondRoomHeroClasses } },

@@ -1,5 +1,5 @@
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, EHeroClass, ERoomType, ESelectCardHint, ICard } from "../../../types";
+import { ECardType, EHeroClass, ERoomType, ESelectCardHint, EUnitType, ICard } from "../../../types";
 import { getRandomArrayItem } from "../../utils/commonUtils";
 import { Card } from "../Card";
 import { colors, i18n } from "../../consts";
@@ -201,6 +201,8 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
             if (card.type === ECardType.UNIT && card.unit) {
                 card.unit = createUnit(card.unit);
+                if (card.unit.unitType === EUnitType.HERO)
+                    this.gameScene.unitPanel.lastBoughtHero = card.unit.heroClass;
             } else if (card.type === ECardType.ITEM && card.item) {
                 card.item = createItem(card.item);
             }

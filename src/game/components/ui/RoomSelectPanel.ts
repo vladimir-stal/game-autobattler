@@ -6,6 +6,7 @@ import { roomsWithSingleHeroClass, tripleSetCardTypes } from "../SelectControlle
 import { getRandomArrayItem, getRandomArrayItems } from "../../utils/commonUtils";
 import { GameObjects } from "phaser";
 import { MIN_WIDTH } from "./uiPanels";
+import { getMulticlassSubclasses } from "../../utils/heroUtils";
 
 const borderMaxWidth = 800;
 const borderMiddleWidth = 600;
@@ -76,9 +77,12 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         if (type === ERoomType.TRIPLE_SET) {
             tripleSetTypes = [];
             const chc = getCurrentHeroClasses(this.gameScene);
-            console.log("-= DEBUG =-",chc);
+            const lbh = this.gameScene.unitPanel.lastBoughtHero;
+            const lbhclasses = getMulticlassSubclasses(lbh) || [lbh];
+            lbhclasses.forEach(c => chc.push(c));
+            //console.log("-= DEBUG =-",chc);
             heroClasses.push(getRandomArrayItem(chc));
-            heroClasses.push(getRandomArrayItem(getCurrentHeroClasses(this.gameScene)));
+            heroClasses.push(getRandomArrayItem(chc));
             getRandomArrayItems(tripleSetCardTypes, 3, true).forEach((cardType) => tripleSetTypes?.push(cardType));
         }
         //
