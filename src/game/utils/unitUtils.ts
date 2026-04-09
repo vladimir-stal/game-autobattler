@@ -291,6 +291,23 @@ export const getRandomUnitForRandom = (day: number) => {
     }
 };
 
+export const getUnitCardPrice = (unit: IUnit, day: number, hour: number) => {
+    const initialHeroSelect = day === 0 && hour === 0;
+    if (initialHeroSelect) {
+        return 0;
+    }
+
+    if (unit.unitType === EUnitType.UNIT) {
+        return unit.level * 3 + 1;
+    }
+
+    if (unit.unitType === EUnitType.HERO) {
+        return 3 + unit.level;
+    }
+
+    return 0;
+};
+
 export const getClassSkills = (heroClass: EHeroClass): IHeroSkillSet[] => {
     switch (heroClass) {
         case EHeroClass.BARD:
@@ -360,8 +377,13 @@ export const addMobItem = (unit: IUnit) => {
     }
 };
 
-export const copyUnit = (unit: IUnit): IUnit => {
+export const copyUnit = (unit: IUnit, copyItems: boolean = false): IUnit => {
     const copy: IUnit = { ...unit };
-    copy.items = [];
+    if (copyItems)
+        copy.items = { ...unit.items};
+    else
+        copy.items = [];
+    copy.addedAttributes = [];
+    copy.afterDuelBonuses = [];
     return copy;
 };

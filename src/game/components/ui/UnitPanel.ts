@@ -1,6 +1,6 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, ICard, IUnit } from "../../../types";
+import { ECardType, EHeroClass, ICard, IUnit } from "../../../types";
 import { CardSlot } from "../CardSlot";
 import { colors, i18n } from "../../consts";
 import { MAX_WIDTH, MIN_WIDTH } from "./uiPanels";
@@ -13,6 +13,7 @@ export class UnitPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
     currentWidth: number;
     slotCount: number;
+    lastBoughtHero?: EHeroClass;
 
     //borderRect: GameObjects.Rectangle;
 

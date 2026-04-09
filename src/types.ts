@@ -509,6 +509,7 @@ export enum EItemBattleBonusType {
     STATUS_BURN_APPLY_INCREASE = "STATUS_BURN_APPLY_INCREASE",
     STATUS_POISON_APPLY_INCREASE = "STATUS_POISON_APPLY_INCREASE",
     STATUS_BLEED_APPLY_INCREASE = "STATUS_BLEED_APPLY_INCREASE",
+    CAST_SKILL_X_ROUND = "CAST_SKILL_X_ROUND",
 }
 
 export enum EBattleActionType {
@@ -817,6 +818,7 @@ export interface IItemBattleBonus {
     value: number;
     valueType: TValueType;
     status?: EStatusType;
+    relatedSkill?: IHeroSkillSet;
 }
 
 export interface IItemHeroClassBonus {

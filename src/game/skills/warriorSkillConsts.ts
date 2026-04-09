@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP } from "./commonSkill3Consts";
@@ -20,7 +20,7 @@ export const buffNextBa_3: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "+8 next ba",
+                name: "+6 next ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 6,
@@ -48,7 +48,7 @@ export const buffNextBa_2: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "+6 next ba",
+                name: "+5 next ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 5,
@@ -168,9 +168,170 @@ export const buffNextBaTimes: IHeroSkillSet = {
     nextLevel: buffNextBaTimes_2,
 };
 
+export const debuffWorthyFoe_3: IHeroSkillSet = {
+    id: "debuffWorthyFoe",
+    name: "Worthy foe",
+    desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*65%]\nmake it vulnerable [3]",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR],
+    skills: [
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "-2 next ba",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: 2,
+                valueType: "number",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                ppScale: 65,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "vulnerable",
+                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
+                value: 3,
+                valueType: "number",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            isBasicAttack: true,
+            buff: {
+                name: "duel",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                changeTargetTypeTo: ETargetType.HIGH_ATTACK_ENEMY,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+};
+
+export const debuffWorthyFoe_2: IHeroSkillSet = {
+    id: "debuffWorthyFoe",
+    name: "Worthy foe",
+    desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*50%]\nmake it vulnerable [2]",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR],
+    skills: [
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "-2 next ba",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: 2,
+                valueType: "number",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                ppScale: 50,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "vulnerable",
+                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
+                value: 2,
+                valueType: "number",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            isBasicAttack: true,
+            buff: {
+                name: "duel",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                changeTargetTypeTo: ETargetType.HIGH_ATTACK_ENEMY,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+    nextLevel: debuffWorthyFoe_3,
+};
+
+export const debuffWorthyFoe: IHeroSkillSet = {
+    id: "debuffWorthyFoe",
+    name: "Worthy foe",
+    desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*35%]\nmake it vulnerable [1]",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR],
+    skills: [
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "-2 next ba",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: 2,
+                valueType: "number",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                ppScale: 35,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "vulnerable",
+                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            isBasicAttack: true,
+            buff: {
+                name: "duel",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                changeTargetTypeTo: ETargetType.HIGH_ATTACK_ENEMY,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+    ],
+    image: IMAGE_SKILL_TEST,
+    nextLevel: debuffWorthyFoe_2,
+};
+
 //
 
-export const warriorSkills: THeroSkills = [phycisalAttackSkill, buffNextBa];
+export const warriorSkills: THeroSkills = [debuffWorthyFoe, buffNextBa];
 
 export const warriorSkills_2: THeroSkills = warriorSkills.concat([buffNextBaTimes]);
 

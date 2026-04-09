@@ -457,7 +457,6 @@ export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, b
 
 export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
     const { basicArmor, basicMaxHp, basicAttack, basicHpRegen, basicEvasionChance, basicCritChance, basicMagicPower, basicPhysicalPower, items } = unit;
-    //console.log("prepareUnitToBattle", unit);
     const itemBonuses: IItemBattleBonus[] = items.reduce((bonuses, item) => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
             item.battleBonuses.forEach((bonus) => bonuses.push(bonus));
@@ -709,7 +708,7 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
     const debuff = target.debuffs[debuffIndex];
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.DEBUFF_REMOVE, value: debuffIndex, debuff });
 
-    const { type, attribute, totalValue } = debuff;
+    const { type, attribute, totalValue } = debuff; // undefined?
     switch (type) {
         case EDebuffType.ATTRIBUTE_DECREASE:
             {

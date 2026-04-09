@@ -1,11 +1,12 @@
 import { GameScene } from "../../scenes/GameScene";
 import { ECardType, EHeroClass, ERoomType, ESelectRoomHint } from "../../../types";
 import { colors, i18n } from "../../consts";
-import { getSelectRoomDisplayName, IRoomOptions } from "../../utils/selectPhaseUtils";
+import { getCurrentHeroClasses, getSelectRoomDisplayName, IRoomOptions } from "../../utils/selectPhaseUtils";
 import { roomsWithSingleHeroClass, tripleSetCardTypes } from "../SelectController";
-import { getRandomArrayItems } from "../../utils/commonUtils";
+import { getRandomArrayItem, getRandomArrayItems } from "../../utils/commonUtils";
 import { GameObjects } from "phaser";
 import { MIN_WIDTH } from "./uiPanels";
+import { getMulticlassSubclasses } from "../../utils/heroUtils";
 
 const borderMaxWidth = 800;
 const borderMiddleWidth = 600;
@@ -67,7 +68,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderRoom(index: number, type: ERoomType, roomOptions?: IRoomOptions) {
-        const { heroClasses, boss, autolevel } = roomOptions || {};
+        const { heroClasses, boss, autolevel } = roomOptions || {heroClasses: [], boss: undefined, autolevel: undefined};
         const roomX = this.getRoomX(index);
 
         // TRIPLE SET ROOM
@@ -75,6 +76,13 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         let tripleSetTypes: ECardType[] | undefined = undefined;
         if (type === ERoomType.TRIPLE_SET) {
             tripleSetTypes = [];
+            const chc = getCurrentHeroClasses(this.gameScene);
+            const lbh = this.gameScene.unitPanel.lastBoughtHero;
+            const lbhclasses = getMulticlassSubclasses(lbh) || [lbh];
+            lbhclasses.forEach(c => chc.push(c));
+            //console.log("-= DEBUG =-",chc);
+            heroClasses.push(getRandomArrayItem(chc));
+            heroClasses.push(getRandomArrayItem(chc));
             getRandomArrayItems(tripleSetCardTypes, 3, true).forEach((cardType) => tripleSetTypes?.push(cardType));
         }
         //
@@ -91,7 +99,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
             .setOrigin(0.5);
         this.add(roomText);
 
-        const heroClassesText = heroClasses
+        const heroClassesText = (heroClasses && heroClasses.length > 0)
             ? "\n(" + (roomsWithSingleHeroClass.includes(type) ? i18n.tags[heroClasses[0]] : heroClasses?.map((hc) => i18n.tags[hc]).join(", ")) + ")"
             : "";
         const bossDescription = type === ERoomType.BOSS ? "\n" + boss?.name : "";

@@ -319,7 +319,7 @@ export const getMulticlassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] =
         case EHeroClass.ZEALOT:
             return [EHeroClass.DARK, EHeroClass.ORDER];
         default:
-            return [EHeroClass.BARD, EHeroClass.BARD];
+            return undefined;
     }
 };
 

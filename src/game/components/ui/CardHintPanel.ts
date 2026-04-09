@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import { EHeroClass, EHeroClassType, EItemBonusType, EItemTargetType, EItemType, IHeroSkillSet, IItem, IUnit } from "../../../types";
+import { EHeroClass, EHeroClassType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, IHeroSkillSet, IItem, IUnit } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { GameScene } from "../../scenes/GameScene";
 import {
@@ -14,7 +14,7 @@ import {
     IMAGE_ICON_SHIELD,
 } from "../../utils/imageLoadUtil";
 import { HeroClassTag } from "./HeroClassTag";
-import { getWeaponItemHeroClasses } from "../../utils/itemUtils";
+import { getItemPrice, getWeaponItemHeroClasses } from "../../utils/itemUtils";
 import { IMAGE_ITEM_ARMOR_1 } from "../../utils/load/imageLoadItems";
 import { substituteSummonDescription } from "../../utils/skillUtils2";
 
@@ -310,13 +310,19 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         const bonusesText =
             battleBonuses?.reduce((text, bonus) => {
-                text += i18n.attributes.bonusType[bonus.type] + " " + bonus.value + "\n";
+                if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND)
+                    text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill.name + ")\n"
+                else
+                    text += i18n.attributes.bonusType[bonus.type] + " " + bonus.value + "\n";
                 return text;
             }, "") || "";
         if (bonusesText) {
             this.bonusTextObject.setText(bonusesText);
             this.bonusTextObject.setVisible(true);
-        } else {
+        } else if (item.id === "coin") {
+            this.bonusTextObject.setText(i18n.ui.COIN_SELL + " " + getItemPrice(item));
+            this.bonusTextObject.setVisible(true);
+        }else {
             this.bonusTextObject.setVisible(false);
         }
 
