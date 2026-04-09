@@ -1,6 +1,6 @@
 import { EEffectAnimationType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_HEAL_1 } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_HEAL_1 } from "../utils/load/skillImagesLoad";
 import { outHealBuffSkill } from "./bardSkillConsts";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
 

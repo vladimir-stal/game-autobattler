@@ -2,7 +2,7 @@
 
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, EUnitType, IHeroSkillSet, IUnit, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
-import { IMAGE_SKILL_SUMMON_FIREFLY } from "../../utils/imageLoadUtil";
+import { IMAGE_SKILL_SUMMON_FIREFLY } from "../../utils/load/skillImagesLoad";
 
 export const illusionSummon: IUnit = {
     unitType: EUnitType.UNIT,

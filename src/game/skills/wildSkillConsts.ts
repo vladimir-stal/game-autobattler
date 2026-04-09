@@ -1,6 +1,6 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST, IMAGE_SKILL_TOTEM_1 } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST, IMAGE_SKILL_TOTEM_1 } from "../utils/load/skillImagesLoad";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
 import { removeBuffSkill } from "./commonSkillConsts";
 

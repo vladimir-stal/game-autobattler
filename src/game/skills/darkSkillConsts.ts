@@ -12,7 +12,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_MAGIC_MISSILES, IMAGE_SKILL_POISON, IMAGE_SKILL_TEST } from "../utils/imageLoadUtil";
+import { IMAGE_SKILL_DARK_21, IMAGE_SKILL_DARK_22, IMAGE_SKILL_MAGIC_MISSILES, IMAGE_SKILL_POISON, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { removeBuffSkill } from "./commonSkillConsts";
 
 // DEBUFF NEXT BA
@@ -40,6 +40,7 @@ export const debuffBaNextBaAll_3: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_DARK_21,
 };
 
 export const debuffBaNextBaAll_2: IHeroSkillSet = {
@@ -65,6 +66,7 @@ export const debuffBaNextBaAll_2: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_DARK_21,
     nextLevel: debuffBaNextBaAll_3,
 };
 
@@ -91,6 +93,7 @@ export const debuffBaNextBaAll: IHeroSkillSet = {
             },
         },
     ],
+    image: IMAGE_SKILL_DARK_21,
     nextLevel: debuffBaNextBaAll_2,
 };
 
@@ -320,7 +323,7 @@ export const stealPPorMPSkill_3: IHeroSkillSet = {
             targetType: ETargetType.SELF,
         },
     ],
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_DARK_22,
 };
 
 export const stealPPorMPSkill_2: IHeroSkillSet = {
@@ -371,8 +374,8 @@ export const stealPPorMPSkill_2: IHeroSkillSet = {
             targetType: ETargetType.SELF,
         },
     ],
+    image: IMAGE_SKILL_DARK_22,
     nextLevel: stealPPorMPSkill_3,
-    image: IMAGE_SKILL_TEST,
 };
 
 export const stealPPorMPSkill: IHeroSkillSet = {
@@ -423,8 +426,8 @@ export const stealPPorMPSkill: IHeroSkillSet = {
             targetType: ETargetType.SELF,
         },
     ],
+    image: IMAGE_SKILL_DARK_22,
     nextLevel: stealPPorMPSkill_2,
-    image: IMAGE_SKILL_TEST,
 };
 
 //
