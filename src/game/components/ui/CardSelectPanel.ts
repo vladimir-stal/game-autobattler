@@ -41,7 +41,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
     borderRect: GameObjects.Rectangle;
     hintText: GameObjects.Text;
-    hintTextType: ESelectCardHint;
+    hintTextType: ESelectCardHint | undefined;
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -201,8 +201,8 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
             if (card.type === ECardType.UNIT && card.unit) {
                 card.unit = createUnit(card.unit);
-                if (card.unit.unitType === EUnitType.HERO)
-                    this.gameScene.unitPanel.lastBoughtHero = card.unit.heroClass;
+                // TODO: remove the hack when find why unitPanel set units after new select room is rendered
+                if (card.unit.unitType === EUnitType.HERO) this.gameScene.unitPanel.lastBoughtHero = card.unit.heroClass;
             } else if (card.type === ECardType.ITEM && card.item) {
                 card.item = createItem(card.item);
             }
@@ -236,7 +236,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     private getCardPositionX(index: number): number {
         const cardDistance = this.cards.length > 3 ? 180 : 240;
         const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
-        let x;
+        let x = 0;
         if (this.cards.length === 1) {
             x = this.x;
         } else if (this.cards.length === 3) {

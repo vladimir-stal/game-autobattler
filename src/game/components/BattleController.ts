@@ -262,19 +262,24 @@ export class BattleController {
         this.executeAfterAction(unit, isPlayer1);
 
         // items with CAST_SKILL_X_ROUND - use skill in the item
-        unit.itemBonuses.filter(ib => ib.type === EItemBattleBonusType.CAST_SKILL_X_ROUND && ib.value === round && ib.relatedSkill).forEach(ib => {
-            const itemSkillSet = ib.relatedSkill;
-            itemSkillSet.skills.forEach((skill) => {
-                if (skill.condition) {
-                    const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
-                    if (isConditionFulfilled) {
+        unit.itemBonuses
+            .filter((ib) => ib.type === EItemBattleBonusType.CAST_SKILL_X_ROUND && ib.value === round && ib.relatedSkill)
+            .forEach((ib) => {
+                const itemSkillSet = ib.relatedSkill;
+                if (!itemSkillSet) {
+                    return;
+                }
+                itemSkillSet.skills.forEach((skill) => {
+                    if (skill.condition) {
+                        const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
+                        if (isConditionFulfilled) {
+                            this.performSkill(unit, skill, isPlayer1);
+                        }
+                    } else {
                         this.performSkill(unit, skill, isPlayer1);
                     }
-                } else {
-                    this.performSkill(unit, skill, isPlayer1);
-                }
+                });
             });
-        })
     }
 
     /** Execute all after action activities every round:
@@ -1702,7 +1707,7 @@ export class BattleController {
             }
             return indexesToRemove;
         }, [] as number[]);
-        debuffToRemoveIndexes.sort((a,b) => b - a);
+        debuffToRemoveIndexes.sort((a, b) => b - a);
         debuffToRemoveIndexes.forEach((index) => removeDebuff(unit, unit, index, this.battleRecord));
     }
 

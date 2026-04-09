@@ -116,7 +116,16 @@ import {
     getTopHeroClassSkill,
     isSkillSet,
 } from "./skillUtils";
-import { addMobItem, copyUnit, createUnits, getMaxUnitItemCount, getMaxUnitWeaponCount, getRandomUnitForRandom, getRandomUnitForSell, getUnitCardPrice } from "./unitUtils";
+import {
+    addMobItem,
+    copyUnit,
+    createUnits,
+    getMaxUnitItemCount,
+    getMaxUnitWeaponCount,
+    getRandomUnitForRandom,
+    getRandomUnitForSell,
+    getUnitCardPrice,
+} from "./unitUtils";
 
 //TODO: add rooms for potions - temporary boost for duel, exp in bottle - can be applied to any hero
 
@@ -187,15 +196,13 @@ export const getRooms = (
         case 1:
             {
                 if (hour === 0) {
-                    return debugHeroSelectRoom ? 
-                        [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null] : 
-                        [null, { roomType: ERoomType.HEROES_SELL }, null];
-                        // Go change in debugUtils.ts for custom room
+                    return debugHeroSelectRoom ? [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null] : [null, { roomType: ERoomType.HEROES_SELL }, null];
+                    // Go change in debugUtils.ts for custom room
                 } else if (hour === 1) {
-                    return debugStartingItemsRoom ? 
-                        [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null] : 
-                        [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
-                        // Go change in debugUtils.ts for custom room
+                    return debugStartingItemsRoom
+                        ? [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null]
+                        : [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
+                    // Go change in debugUtils.ts for custom room
                 } else if (hour === 2) {
                     return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
@@ -773,15 +780,19 @@ export const getCards = (
                             case ECardType.SKILL:
                                 {
                                     const randomCurrentHeroClass = heroClasses ? heroClasses.pop() : getRandomArrayItem(getCurrentHeroClasses(gameScene));
-                                    const randomSkill = getRandomArrayItem(getHeroClassSkills(randomCurrentHeroClass, day));
-                                    cards.push({ price: 0, type: ECardType.SKILL, skill: randomSkill });
+                                    if (randomCurrentHeroClass) {
+                                        const randomSkill = getRandomArrayItem(getHeroClassSkills(randomCurrentHeroClass, day));
+                                        cards.push({ price: 0, type: ECardType.SKILL, skill: randomSkill });
+                                    }
                                 }
                                 break;
                             case ECardType.ITEM:
                                 {
                                     const randomCurrentHeroClass = heroClasses ? heroClasses.pop() : getRandomArrayItem(getCurrentHeroClasses(gameScene));
-                                    const item = getRandomArrayItem(getHeroClassItems(randomCurrentHeroClass, day));
-                                    cards.push(genShopItemSingleCard(item, true));
+                                    if (randomCurrentHeroClass) {
+                                        const item = getRandomArrayItem(getHeroClassItems(randomCurrentHeroClass, day));
+                                        cards.push(genShopItemSingleCard(item, true));
+                                    }
                                 }
                                 break;
                             case ECardType.UNIT:
@@ -1278,7 +1289,7 @@ export const getIncome = (day: number) => {
  */
 export const getCurrentHeroClasses = (gameScene: GameScene) => {
     //gameScene.units
-    console.log("-= Units =-",gameScene.unitPanel.getUnits());
+    console.log("-= Units =-", gameScene.unitPanel.getUnits());
     const allHeroClasses = gameScene.unitPanel.getUnits().reduce((heroClasses, unit) => {
         if (unit.unitType === EUnitType.HERO && !heroClasses.includes(unit.heroClass)) {
             if (unit.heroClassType === EHeroClassType.BASIC) {
