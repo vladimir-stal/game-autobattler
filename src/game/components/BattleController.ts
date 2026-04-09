@@ -55,6 +55,7 @@ import {
     takeStatusDamage,
 } from "../utils/battleUtils";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomIntFromInterval } from "../utils/commonUtils";
+import { calculateSkillValue } from "../utils/skillUtils";
 import { performTotemSkill } from "../utils/totemBattleUtils";
 
 const slotCount = 4;
@@ -110,6 +111,7 @@ export class BattleController {
                 name: skillSet.name,
                 animation: skillSet.animation,
             };
+            unit.customNumber = 0;
             this.battleRecord.push(skillSetBattleAction);
 
             skillSet.skills.forEach((skill) => {
@@ -237,6 +239,7 @@ export class BattleController {
             };
             this.battleRecord.push(skillSetBattleAction);
 
+            unit.customNumber = 0;
             // TODO: skill set should store isBasicAttack instead of skill
             skillSet.skills.forEach((skill) => {
                 if (skill.condition) {
@@ -269,6 +272,7 @@ export class BattleController {
                 if (!itemSkillSet) {
                     return;
                 }
+                unit.customNumber = 0;
                 itemSkillSet.skills.forEach((skill) => {
                     if (skill.condition) {
                         const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
@@ -375,6 +379,18 @@ export class BattleController {
                 break;
             case EHeroSkillType.TOTEM_INCREASE_VALUE:
                 this.performTotemIncreaseValue(unit, skill, isPlayer1, isStartBattle);
+                break;
+            case EHeroSkillType.REPEATING_SKILL:
+                if (skill.childSkill) {
+                    const count = Math.min(calculateSkillValue(skill, unit),20);
+                    console.log("REPEATING_SKILL x" + count);
+                    for (let i = 0; i < count; i++) {
+                        this.performSkill(unit,skill.childSkill,isPlayer1,isStartBattle);
+                    }
+                }
+                break;
+            case EHeroSkillType.CALCULATE_NUMBER:
+                this.performCustomCalculation(unit,skill,isPlayer1,isStartBattle);
                 break;
             case EHeroSkillType.NONE:
                 {
@@ -834,7 +850,7 @@ export class BattleController {
      * @param unit who applies status
      */
     performApplyStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { status, targetType, targetUnitId, value, mpScale, ppScale } = skill;
+        const { status, targetType, targetUnitId, value, mpScale, ppScale, valueFrom, valueType } = skill;
         if (!status || !targetType || value === undefined) {
             return;
         }
@@ -851,8 +867,10 @@ export class BattleController {
         // check scaling from MP and PP
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+        const baseValue = (!valueType || valueType === "number" || valueType === "evolvedNumber") ? value :
+            Math.floor(unit[valueFrom]*value/100);
 
-        let finalValue = value + mpScaleValue + ppScaleValue;
+        let finalValue = baseValue + mpScaleValue + ppScaleValue;
 
         const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
         if (itemBonus) {
@@ -1022,7 +1040,7 @@ export class BattleController {
     }
 
     performHeal(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { targetType, value, mpScale, ppScale } = skill;
+        const { targetType, value, mpScale, ppScale, valueType, valueFrom } = skill;
         if (!targetType || !value) {
             console.log("NO TARGET TYPE OR VALUE");
             return;
@@ -1038,7 +1056,10 @@ export class BattleController {
         // calculate outgoing heal value
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-        let finalHeal = value + mpScaleValue + ppScaleValue;
+        const baseValue = (!valueType || valueType === "number" || valueType === "evolvedNumber") ?
+            value : Math.floor(unit[valueFrom]*value/100);
+        //console.log("Heal base value ",baseValue,value,valueType,valueFrom);
+        let finalHeal = baseValue + mpScaleValue + ppScaleValue;
 
         // calculate outgoing heal value accordint to buffs and debuffs
         unit.buffs.forEach((buff) => {
@@ -1253,6 +1274,45 @@ export class BattleController {
         });
     }
 
+    performCustomCalculation(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+        const { targetType, value } = skill;
+        if (!targetType || value === undefined) {
+            console.log("NO TARGET TYPE OR VALUE");
+            return;
+        }
+
+        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
+        const targets = getAllyTargets(unit, allyUnits, targetType);
+        if (!targets) {
+            console.log("NO TARGET FOUND");
+            return;
+        }
+
+        if (skill.status){
+            targets.forEach(t => {
+                const v = t.statuses?.find(s => s.type === skill.status);
+                !!v && (unit.customNumber += v.value);
+            });
+        } else if (skill.attribute) {
+            targets.forEach(t => {
+                unit.customNumber += t[skill.attribute];
+            })
+        } else if (skill.valueType === "number" || skill.valueType === "evolvedNumber") {
+            unit.customNumber = skill.value;
+        } else if ((skill.valueType === "percent" || skill.valueType === "evolvedPercent") && skill.valueFrom) {
+            targets.forEach(t => {
+                const v = Math.floor(skill.value * t[skill.valueFrom] / 100);
+                unit.customNumber += v;
+            })
+        } else if ((skill.valueType === "percent" || skill.valueType === "evolvedPercent")) {
+            unit.customNumber = Math.floor(skill.value * unit.customNumber / 100);
+        }else {
+            console.log("Error. Wrong calculation arguments.",skill);
+            return;
+        }
+        //console.log("-= Calculate ", unit.customNumber, skill);
+    }
+
     /** Summonned unit performs a skill or basic attack */
     performActionSummon(summonUnit: IBattleUnit, isPlayer1: boolean) {
         const skillIndex = summonUnit.currentSkillIndex;
@@ -1273,6 +1333,7 @@ export class BattleController {
             };
             this.battleRecord.push(skillSetBattleAction);
 
+            summonUnit.customNumber = 0;
             // TODO: skill set should store isBasicAttack instead of skill
             skillSet.skills.forEach((skill) => {
                 this.performSkill(summonUnit, skill, isPlayer1);

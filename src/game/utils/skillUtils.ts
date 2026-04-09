@@ -1,4 +1,5 @@
-import { ECardType, EHeroClass, EHeroClassType, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
+import { ECardType, EHeroClass, EHeroClassType, IBattleUnit, IHeroSkill, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
+
 import { GameScene } from "../scenes/GameScene";
 import {
     allBasicClassesSkills,
@@ -18,6 +19,7 @@ import { priestSkills, priestSkills_2, priestSkills_3 } from "../skills/priestSk
 import { summonSkills, summonSkills_2, summonSkills_3 } from "../skills/summonSkillConsts2";
 import { warriorSkills, warriorSkills_2, warriorSkills_3 } from "../skills/warriorSkillConsts";
 import { wildSkills, wildSkills_2, wildSkills_3 } from "../skills/wildSkillConsts";
+import { calculateIncreaseValue } from "./battleUtils";
 import { getRandomArrayItem } from "./commonUtils";
 
 export const getMaxUnitSkillCount = (heroClassType: EHeroClassType) => {
@@ -260,4 +262,12 @@ export const getTopAllClassesSkill = (day: number) => {
     }
 
     return getRandomArrayItem(allSkills.filter((skill) => skill.priceLevel === topPriceLevel));
+};
+
+export const calculateSkillValue = (skill: IHeroSkill, caster: IBattleUnit): number => {
+    const { value, valueType, valueFrom, mpScale, ppScale } = skill;
+    const mpScaleValue = mpScale ? Math.floor((mpScale * caster.magicPower) / 100) : 0;
+    const ppScaleValue = ppScale ? Math.floor((ppScale * caster.physicalPower) / 100) : 0;
+    const percentFrom = valueFrom ? caster[valueFrom] : undefined;
+    return calculateIncreaseValue(0, value || 0, valueType || "number", percentFrom) + mpScaleValue + ppScaleValue;
 };

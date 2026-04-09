@@ -143,6 +143,9 @@ export interface Ii18n {
     roomDescriptions: Partial<Record<ERoomType, string>>;
     skills: {
         basic: {
+            phycNBleed: TSkillI18n;
+            feintAttack: TSkillI18n;
+            magicRain: TSkillI18n;
             buffBaNextBaAll: TSkillI18n;
             buffBaSelf: TSkillI18n;
             buffPpAll: TSkillI18n;
@@ -547,6 +550,12 @@ export const i18n: Ii18n = {
                 desc2: "Deal [3] magic damage \nto random enemy 3 times",
                 desc3: "Deal [4] magic damage \nto random enemy 3 times",
             },
+            magicRain: {
+                name: "Magic rain",
+                desc1: "Deal [2] magic damage \nto random enemy [1+MP*40%] times",
+                desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
+                desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
+            },
             //
             // MASTER
             //
@@ -555,6 +564,12 @@ export const i18n: Ii18n = {
                 desc1: "Multiply x[1.4] self next basic attack",
                 desc2: "Multiply x[1.6] self next basic attack",
                 desc3: "Multiply x[1.8] self next basic attack",
+            },
+            feintAttack: {
+                name: "Feint attack",
+                desc1: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*20%]",
+                desc2: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*30%]",
+                desc3: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*40%]",
             },
             //
             // MAGIC
@@ -576,9 +591,15 @@ export const i18n: Ii18n = {
             //
             phycAttack: {
                 name: "Phys Attack",
-                desc1: "Deal [4] physical damage to first enemy",
-                desc2: "Deal [6] physical damage to first enemy",
-                desc3: "Deal [6]+[PPx50%] physical damage to first enemy",
+                desc1: "Deal [4+PPx35%] physical\ndamage to first enemy",
+                desc2: "Deal [5+PPx50%] physical\ndamage to first enemy",
+                desc3: "Deal [6+PPx65%] physical\ndamage to first enemy",
+            },
+            phycNBleed: {
+                name: "PhysNBleed Attack",
+                desc1: "Deal [2+PPx35%] physical\ndamage to first enemy\nand apply [1] bleed",
+                desc2: "Deal [2+PPx50%] physical\ndamage to first enemy\nand apply [2] bleed",
+                desc3: "Deal [2+PPx65%] physical\ndamage to first enemy\nand apply [3] bleed",
             },
             //
             // ORDER

@@ -315,7 +315,12 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const secondTarget = getSecondTarget(units);
             return secondTarget ? [secondTarget] : null;
         }
-
+        case ETargetType.BUFFED_ENEMY_RANDOM: {
+            return [getRandomArrayItem(getBuffedAllies(units))];
+        }
+        case ETargetType.DEBUFFED_ENEMY_RANDOM: {
+            return [getRandomArrayItem(getDebuffedAllies(units))];
+        }
         default:
             return null;
     }
@@ -489,6 +494,7 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
         evasionChance: basicEvasionChance,
         magicPower: basicMagicPower,
         physicalPower: basicPhysicalPower,
+        customNumber: 0,
         //
         buffs: [],
         debuffs: [],
@@ -853,6 +859,8 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return !(!!unit.summon || !!unit.totem);
         case ESkillCondition.HAS_TOTEM:
             return !!unit.totem;
+        case ESkillCondition.CUSTOM_NUMBER_NOT_ZERO:
+            return !!unit.customNumber;
     }
 };
 

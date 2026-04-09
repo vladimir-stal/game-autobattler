@@ -562,6 +562,8 @@ export enum EHeroSkillType {
     TOTEM = "TOTEM", // summon a totem to the battle
     TOTEM_REMOVE = "TOTEM_REMOVE", // remove one random totem from an enemy unit
     TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE",
+    REPEATING_SKILL = "REPEATING_SKILL",
+    CALCULATE_NUMBER = "CALCULATE_NUMBER", // modify IBattleUnit.customNumber
 }
 
 export enum EStatusType {
@@ -636,6 +638,8 @@ export enum ETargetType {
     RANDOM_ENEMY = "RANDOM_ENEMY",
     SECOND_ENEMY = "SECOND_ENEMY",
     SUMMON_CURRENT = "SUMMON_CURRENT",
+    DEBUFFED_ENEMY_RANDOM = "DEBUFFED_ENEMY_RANDOM",
+    BUFFED_ENEMY_RANDOM = "BUFFED_ENEMY_RANDOM",
     // COMMON
     BY_UNIT_ID = "BY_UNIT_ID",
 }
@@ -669,6 +673,7 @@ export enum ESkillCondition {
     HAS_SUMMON = "HAS_SUMMON",
     HAS_TOTEM = "HAS_TOTEM",
     HAS_NO_SUMMON_OR_TOTEM = "HAS_NO_SUMMON_OR_TOTEM",
+    CUSTOM_NUMBER_NOT_ZERO = "CUSTOM_NUMBER_NOT_ZERO",
 }
 
 /**
@@ -769,7 +774,7 @@ export type THeroAttribute = keyof Pick<
 
 export type THeroBattleAttribute = keyof Pick<
     IBattleUnit,
-    "attack" | "armor" | "hpRegen" | "critChance" | "evasionChance" | "magicPower" | "physicalPower" | "hp" | "maxHp"
+    "attack" | "armor" | "hpRegen" | "critChance" | "evasionChance" | "magicPower" | "physicalPower" | "hp" | "maxHp" | "customNumber"
 >;
 
 export interface IStatus {
@@ -787,6 +792,7 @@ export interface IBattleUnit extends IUnit {
     physicalPower: number;
     critChance: number;
     evasionChance: number;
+    customNumber: number; // for tricky skill calculations
     //
     isSummon: boolean;
     buffs: IBuff[];
@@ -940,6 +946,7 @@ export interface IHeroSkill {
     markType?: EDebuffType;
     mpScale?: number;
     ppScale?: number;
+    childSkill?: IHeroSkill;
     //
     animation?: AnimationType;
     condition?: ESkillCondition;

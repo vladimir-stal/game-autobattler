@@ -159,6 +159,7 @@ export const buffBaSelf: IHeroSkillSet = {
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.DUEL,
+                // similar to Order attrAttackSelf, but potential synergy with copy buff effects
             },
         },
     ],
