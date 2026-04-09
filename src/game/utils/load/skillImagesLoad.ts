@@ -22,6 +22,8 @@ export const IMAGE_SKILL_TEST = "IMAGE_SKILL_TEST";
 
 export const IMAGE_SKILL_WORTHY_FOE = "IMAGE_SKILL_WORTHY_FOE";
 export const IMAGE_FEINT_ATTACK = "IMAGE_FEINT_ATTACK";
+export const IMAGE_OVERCOME = "IMAGE_OVERCOME";
+export const IMAGE_FIREFLY_SELF_POISON = "IMAGE_FIREFLY_SELF_POISON";
 
 // LEVEL 2
 
@@ -54,6 +56,8 @@ export function loadSkillImages(scene: Scene) {
 
     scene.load.image(IMAGE_SKILL_WORTHY_FOE, "assets/sprites/skills/worthy_foe.png");
     scene.load.image(IMAGE_FEINT_ATTACK, "assets/sprites/skills/feint_attack.png");
+    scene.load.image(IMAGE_OVERCOME, "assets/sprites/skills/overcome.png");
+    scene.load.image(IMAGE_FIREFLY_SELF_POISON, "assets/sprites/skills/firefly_self_poison.png");
 
     //
     // LEVEL 2

@@ -494,6 +494,7 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
         evasionChance: basicEvasionChance,
         magicPower: basicMagicPower,
         physicalPower: basicPhysicalPower,
+        customNumber: 0,
         //
         buffs: [],
         debuffs: [],
@@ -858,6 +859,8 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return !(!!unit.summon || !!unit.totem);
         case ESkillCondition.HAS_TOTEM:
             return !!unit.totem;
+        case ESkillCondition.CUSTOM_NUMBER_NOT_ZERO:
+            return !!unit.customNumber;
     }
 };
 

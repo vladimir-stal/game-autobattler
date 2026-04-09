@@ -1,6 +1,6 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillSetType, EStatusType, ETargetType, IHeroSkillSet } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_FIREFLY_SELF_POISON, IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 
 // GOBLIN SHAMAN /////////////////////////////////////////////// GOBLIN SHAMAN
 
@@ -199,7 +199,7 @@ export const fireflySelfPoison: IHeroSkillSet = {
         },
     ],
     isActivateOnStart: true,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_FIREFLY_SELF_POISON,
 };
 
 export const fireflyNoSkill: IHeroSkillSet = {

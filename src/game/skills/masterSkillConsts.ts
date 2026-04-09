@@ -87,6 +87,79 @@ export const buffNextBaXSelf: IHeroSkillSet = {
 
 // Feint
 
+export const feintAttack_3: IHeroSkillSet = {
+    id: "feintAttack",
+    name: i18n.skills.basic.feintAttack.name,
+    desc: i18n.skills.basic.feintAttack.desc3,
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER],
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: false,
+            value: 35,
+            valueFrom: "attack",
+            valueType: "percent",
+            attribute: "armor",
+            animation: AnimationType.NONE,
+            targetType: ETargetType.SELF,
+            ppScale: 40,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "-atk",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: 35,
+                valueType: "percent",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+    ],
+    image: IMAGE_FEINT_ATTACK,
+};
+
+export const feintAttack_2: IHeroSkillSet = {
+    id: "feintAttack",
+    name: i18n.skills.basic.feintAttack.name,
+    desc: i18n.skills.basic.feintAttack.desc2,
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER],
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: false,
+            value: 35,
+            valueFrom: "attack",
+            valueType: "percent",
+            attribute: "armor",
+            animation: AnimationType.NONE,
+            targetType: ETargetType.SELF,
+            ppScale: 30,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            isBasicAttack: true,
+            debuff: {
+                name: "-atk",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: 35,
+                valueType: "percent",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+    ],
+    nextLevel: feintAttack_3,
+    image: IMAGE_FEINT_ATTACK,
+};
+
 export const feintAttack: IHeroSkillSet = {
     id: "feintAttack",
     name: i18n.skills.basic.feintAttack.name,
@@ -120,7 +193,7 @@ export const feintAttack: IHeroSkillSet = {
             },
         },
     ],
-    //nextLevel: buffNextBaXSelf_2,
+    nextLevel: feintAttack_2,
     image: IMAGE_FEINT_ATTACK,
 };
 
