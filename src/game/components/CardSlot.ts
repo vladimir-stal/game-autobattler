@@ -1,10 +1,10 @@
 import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { colors } from "../consts";
+import { colors, i18n } from "../consts";
 import { ECardType, ICard, IUnit } from "../../types";
 import { Card } from "./Card";
 
-export type TSlotActiveType = "default" | "merge";
+export type TSlotActiveType = "default" | "merge" | "equip";
 
 /** Component card can be placed in */
 export class CardSlot extends Phaser.GameObjects.Container {
@@ -12,6 +12,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
     onBuyPanel: boolean; // card slot is located on select card panel
     rect: GameObjects.Rectangle;
     unitRect: GameObjects.Rectangle;
+    equipTextObject: GameObjects.Text;
 
     isActive: boolean = false;
     activeType: TSlotActiveType = "default";
@@ -66,6 +67,16 @@ export class CardSlot extends Phaser.GameObjects.Container {
         if (card) {
             this.renderCard(card);
         }
+
+        this.equipTextObject = this.scene.add
+            .text(50, 60, i18n.ui.EQUIP, {
+                fontFamily: "Arial Black",
+                fontSize: 18,
+                color: "#aaffaa",
+            })
+            .setOrigin(0.5, 0.5)
+            .setVisible(false);
+        this.add(this.equipTextObject);
     }
 
     click() {
@@ -175,12 +186,29 @@ export class CardSlot extends Phaser.GameObjects.Container {
         this.card = new Card(this.gameScene, 50, 0, card, this.onBuyPanel, this);
         //this.card.cardSlot = this;
         this.add(this.card);
+
+        this.bringToTop(this.equipTextObject);
     }
 
     setIsActive(value: boolean, activeType?: TSlotActiveType) {
+        console.log("SLOT SET ACTIVVE", value, activeType);
         this.isActive = value;
 
-        const activeColor = activeType ? (activeType === "merge" ? colors.PURPLE : colors.GREEN_2) : colors.GREEN_2;
+        let activeColor = colors.GREEN_2;
+        if (activeType) {
+            switch (activeType) {
+                case "merge":
+                    activeColor = colors.PURPLE;
+                    break;
+                case "equip":
+                case "default":
+                default:
+                    activeColor = colors.GREEN_2;
+                    break;
+            }
+        }
+
+        this.equipTextObject.setVisible(value && activeType === "equip");
 
         if (this.card && this.card.card.type === ECardType.UNIT) {
             const color = value ? activeColor : colors.GREY;

@@ -243,7 +243,8 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 500,
     });
 
-    scene.load.spritesheet(IMAGE_ORDER_ATTACK_2, "assets/sprites/units/order/order_attack_2_cut_500.webp", {
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_ORDER_ATTACK_2, "assets/sprites/units/order/order_attack_2_cut_500.png", {
         frameWidth: 500,
         frameHeight: 375,
     });

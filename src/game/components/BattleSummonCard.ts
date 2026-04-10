@@ -157,7 +157,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
         const { name } = this.totem;
 
-        this.titleText = this.scene.add.text(10, -330, name, { fontSize: 12, color: "#dddddd" });
+        this.titleText = this.scene.add.text(0, -330, name, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5, 0);
         this.add(this.titleText);
 
         this.renderTotemImage();

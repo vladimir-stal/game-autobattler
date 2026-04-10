@@ -202,7 +202,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
             if (card.type === ECardType.UNIT && card.unit) {
                 card.unit = createUnit(card.unit);
                 // TODO: remove the hack when find why unitPanel set units after new select room is rendered
-                if (card.unit.unitType === EUnitType.HERO) this.gameScene.unitPanel.lastBoughtHero = card.unit.heroClass;
+                if (card.unit.unitType === EUnitType.HERO) this.gameScene.unitPanel.lastBoughtHeroClass = card.unit.heroClass;
             } else if (card.type === ECardType.ITEM && card.item) {
                 card.item = createItem(card.item);
             }

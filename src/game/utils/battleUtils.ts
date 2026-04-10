@@ -216,10 +216,12 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             return allyInFront ? [allyInFront] : null;
         }
         case ETargetType.BUFFED_ALLY_RANDOM: {
-            return [getRandomArrayItem(getBuffedAllies(units))];
+            const buffedAllies = getBuffedAllies(units);
+            return buffedAllies?.length ? [getRandomArrayItem(buffedAllies)] : null;
         }
         case ETargetType.DEBUFFED_ALLY_RANDOM: {
-            return [getRandomArrayItem(getDebuffedAllies(units))];
+            const debuffedAllies = getDebuffedAllies(units);
+            return debuffedAllies?.length ? [getRandomArrayItem(debuffedAllies)] : null;
         }
         case ETargetType.FIRST_ALLY: {
             const firstTarget = getFirstTarget(units);

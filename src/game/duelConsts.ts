@@ -12,7 +12,7 @@ import {
     heraldHero,
     hunterHero,
     knightHero,
-    magicBardHero,
+    jesterHero,
     minstrelHero,
     monkHero,
     necromancerHero,
@@ -299,7 +299,7 @@ unit33_3.skills = [...unit33_2.skills];
 
 // 4
 
-const unit31_4 = createHero(magicBardHero);
+const unit31_4 = createHero(jesterHero);
 unit31_4.items = [musical1_2, basic_hat];
 unit31_4.skills = unit31_4.skills.concat([...unit31_3.skills]);
 

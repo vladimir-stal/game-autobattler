@@ -22,7 +22,7 @@ import { hunterSkills } from "./skills/mc/hunterSkills";
 import { illusionistSkills } from "./skills/mc/illusionistSkills";
 import { inquisitorSkills } from "./skills/mc/inquisitorSkills";
 import { knightSkills } from "./skills/mc/knightSkills";
-import { magicBardSkills } from "./skills/mc/magicBardSkills";
+import { jesterSkills } from "./skills/mc/magicBardSkills";
 import { mimicSkills } from "./skills/mc/mimicSkills";
 import { minstrelSkills } from "./skills/mc/minstrelSkills";
 import { monkSkills } from "./skills/mc/monkSkills";
@@ -460,7 +460,7 @@ export const minstrelHero: IUnit = {
 };
 
 // MAGICBARD = JESTER (magic + bard)
-export const magicBardHero: IUnit = {
+export const jesterHero: IUnit = {
     heroClass: EHeroClass.MAGIC_BARD,
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -476,7 +476,7 @@ export const magicBardHero: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.heroes.MAGIC_BARD,
     id: "MAGICBARD",
-    skills: magicBardSkills,
+    skills: jesterSkills,
     passiveSkill: {
         desc: "<EMPTY>",
     },

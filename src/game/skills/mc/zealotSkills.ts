@@ -42,13 +42,16 @@
 //TODO: add this debuff as common for dark
 
 import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 // TODO: add scaling from mp? add value if heal < value => debuff is not removed
 
 export const zealotSkill_2: IHeroSkillSet = {
     id: "ZealotDebuff",
-    name: "Antiheal(2)",
-    desc: "Curse first enemy with\nantiheal which transforms next incoming\nheal into damage",
+    //name: "Antiheal(2)",
+    //desc: "Curse first enemy with\nantiheal which transforms next incoming\nheal into damage",
+    name: i18n.skills.mc.zealotSkill.name,
+    desc: i18n.skills.mc.zealotSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.ZEALOT],
@@ -71,8 +74,10 @@ export const zealotSkill_2: IHeroSkillSet = {
 
 export const zealotSkill: IHeroSkillSet = {
     id: "ZealotDebuff",
-    name: "Antiheal",
-    desc: "Curse first enemy with\nantiheal which transforms next incoming\nheal into damage",
+    //name: "Antiheal",
+    //desc: "Curse first enemy with\nantiheal which transforms next incoming\nheal into damage",
+    name: i18n.skills.mc.zealotSkill.name,
+    desc: i18n.skills.mc.zealotSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.ZEALOT],

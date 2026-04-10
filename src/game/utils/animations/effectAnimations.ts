@@ -22,7 +22,7 @@ import {
 export function createEffectAnimations(scene: Scene) {
     scene.anims.create({
         key: EEffectAnimationType.EFFECT_LIGHTNING_1,
-        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_LIGHTNING_1, { start: 0, end: 119 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_LIGHTNING_1, { start: 0, end: 65 }), //119
         // frames: scene.anims.generateFrameNumbers(IMAGE_TOTEM_ATTACK, {
         //     frames: [
         //         0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 20, 21, 22, 23, 24, 25,
@@ -44,7 +44,7 @@ export function createEffectAnimations(scene: Scene) {
 
     scene.anims.create({
         key: EEffectAnimationType.EFFECT_BARD_ATTACK,
-        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_BARD_ATTACK, { start: 0, end: 54 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_BARD_ATTACK, { start: 0, end: 32 }), //54
         // frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_BARD_ATTACK, {
         //     frames: [
         //         //0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3,

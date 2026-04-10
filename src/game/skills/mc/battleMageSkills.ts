@@ -1,4 +1,5 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 // {
 //         id: "BattlemageDebuff",
@@ -25,8 +26,10 @@ import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet
 
 export const battleMageSkill: IHeroSkillSet = {
     id: "BattlemageAttack",
-    name: "Multi attack",
-    desc: "Attack random enemy with physical damage.\nAttack random enemy with magical damage.",
+    //name: "Multi attack",
+    //desc: "Attack random enemy with physical damage.\nAttack random enemy with magical damage.",
+    name: i18n.skills.mc.battleMageSkill.name,
+    desc: i18n.skills.mc.battleMageSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.BATTLE_MAGE],

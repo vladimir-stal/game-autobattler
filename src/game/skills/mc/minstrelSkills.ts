@@ -1,9 +1,12 @@
 import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const minstrelSkill_2: IHeroSkillSet = {
-    id: "MagicBardBuff",
-    name: "Double buff(2)",
-    desc: "Tripls value of a random buff on ally",
+    id: "minstrelBuff",
+    //name: "Double buff(2)",
+    //desc: "Tripls value of a random buff on ally",
+    name: i18n.skills.mc.minstrelSkill.name,
+    desc: i18n.skills.mc.minstrelSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.MINSTREL],
@@ -21,9 +24,11 @@ export const minstrelSkill_2: IHeroSkillSet = {
 };
 
 export const minstrelSkill: IHeroSkillSet = {
-    id: "MagicBardBuff",
-    name: "Double buff",
-    desc: "Doubles value of a random buff on ally",
+    id: "minstrelBuff",
+    //name: "Double buff",
+    //desc: "Doubles value of a random buff on ally",
+    name: i18n.skills.mc.minstrelSkill.name,
+    desc: i18n.skills.mc.minstrelSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.MINSTREL],

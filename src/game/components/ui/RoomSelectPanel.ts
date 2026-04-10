@@ -1,12 +1,12 @@
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, EHeroClass, ERoomType, ESelectRoomHint } from "../../../types";
+import { ECardType, EHeroClass, EHeroClassType, ERoomType, ESelectRoomHint, IUnit } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { getCurrentHeroClasses, getSelectRoomDisplayName, IRoomOptions } from "../../utils/selectPhaseUtils";
 import { roomsWithSingleHeroClass, tripleSetCardTypes } from "../SelectController";
 import { getRandomArrayItem, getRandomArrayItems } from "../../utils/commonUtils";
 import { GameObjects } from "phaser";
 import { MIN_WIDTH } from "./uiPanels";
-import { getMulticlassSubclasses } from "../../utils/heroUtils";
+import { checkHeroClassIsBasic, getMulticlassSubclasses } from "../../utils/heroUtils";
 
 const borderMaxWidth = 800;
 const borderMiddleWidth = 600;
@@ -77,9 +77,9 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         if (type === ERoomType.TRIPLE_SET) {
             tripleSetTypes = [];
             const chc = getCurrentHeroClasses(this.gameScene);
-            const lbh = this.gameScene.unitPanel.lastBoughtHero;
+            const lbh = this.gameScene.unitPanel.lastBoughtHeroClass;
             if (lbh) {
-                const lbhclasses = getMulticlassSubclasses(lbh) || [lbh];
+                const lbhclasses = checkHeroClassIsBasic(lbh) ? [lbh] : getMulticlassSubclasses(lbh);
                 lbhclasses.forEach((c) => chc.push(c));
             }
             //console.log("-= DEBUG =-",chc);

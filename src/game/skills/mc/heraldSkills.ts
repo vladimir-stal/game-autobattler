@@ -1,9 +1,12 @@
 import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const heraldSkill_2: IHeroSkillSet = {
     id: "HeraldHorn",
-    name: "Herald horn",
-    desc: "Armor all allies [4]+[200%xPP]",
+    //name: "Herald horn",
+    //desc: "Armor all allies [4]+[200%xPP]",
+    name: i18n.skills.mc.heraldSkill.name,
+    desc: i18n.skills.mc.heraldSkill.desc2,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.HERALD],
@@ -23,8 +26,10 @@ export const heraldSkill_2: IHeroSkillSet = {
 
 export const heraldSkill: IHeroSkillSet = {
     id: "HeraldHorn",
-    name: "Herald horn",
-    desc: "Armor all allies [4]+[PP]",
+    //name: "Herald horn",
+    //desc: "Armor all allies [4]+[PP]",
+    name: i18n.skills.mc.heraldSkill.name,
+    desc: i18n.skills.mc.heraldSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.HERALD],

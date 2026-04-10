@@ -1,9 +1,12 @@
 import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const warlockSkill_2: IHeroSkillSet = {
     id: "WarlockCurse",
-    name: "Warlock curse(2)",
-    desc: "Debuff highest attack enemy\n -[20]% basic attack damage.\n Apply [4]+[MP] poison.",
+    //name: "Warlock curse(2)",
+    //desc: "Debuff highest attack enemy\n -[20]% basic attack damage.\n Apply [4]+[MP] poison.",
+    name: i18n.skills.mc.warlockSkill.name,
+    desc: i18n.skills.mc.warlockSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.WARLOCK],
@@ -26,7 +29,7 @@ export const warlockSkill_2: IHeroSkillSet = {
             type: EHeroSkillType.STATUS_APPLY,
             isBasicAttack: true,
             status: EStatusType.POISON,
-            value: 4, //TODO MP: use unit MP
+            value: 1,
             targetType: ETargetType.HIGH_ATTACK_ENEMY,
             mpScale: 100,
         },
@@ -35,8 +38,10 @@ export const warlockSkill_2: IHeroSkillSet = {
 
 export const warlockSkill: IHeroSkillSet = {
     id: "WarlockCurse",
-    name: "Warlock curse",
-    desc: "Debuff highest attack enemy\n -[20]% basic attack damage.\n Apply [4]+[MPx50%] poison.",
+    //name: "Warlock curse",
+    //desc: "Debuff highest attack enemy\n -[20]% basic attack damage.\n Apply [4]+[MPx50%] poison.",
+    name: i18n.skills.mc.warlockSkill.name,
+    desc: i18n.skills.mc.warlockSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.WARLOCK],
@@ -59,7 +64,7 @@ export const warlockSkill: IHeroSkillSet = {
             type: EHeroSkillType.STATUS_APPLY,
             isBasicAttack: true,
             status: EStatusType.POISON,
-            value: 4, //TODO MP: use unit MP
+            value: 1,
             targetType: ETargetType.HIGH_ATTACK_ENEMY,
             mpScale: 50,
         },

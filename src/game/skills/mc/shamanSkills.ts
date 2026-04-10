@@ -3,8 +3,8 @@ import { i18n } from "../../consts";
 
 export const shamanSkill_3: IHeroSkillSet = {
     id: "shamanTotemEmpower",
-    name: "Empower all totems(3)",
-    desc: "Increase all totems values by [1]+[MP]",
+    name: i18n.skills.mc.shamanTotemEmpower.name,
+    desc: i18n.skills.mc.shamanTotemEmpower.desc2,
     level: 3,
     priceLevel: 4,
     heroClasses: [EHeroClass.SHAMAN],
@@ -23,8 +23,8 @@ export const shamanSkill_3: IHeroSkillSet = {
 
 export const shamanSkill_2: IHeroSkillSet = {
     id: "shamanTotemEmpower",
-    name: "Empower all totems(2)",
-    desc: "Increase all totems values by [1]+[MP*70%]",
+    name: i18n.skills.mc.shamanTotemEmpower.name,
+    desc: i18n.skills.mc.shamanTotemEmpower.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.SHAMAN],
@@ -44,10 +44,8 @@ export const shamanSkill_2: IHeroSkillSet = {
 
 export const shamanSkill: IHeroSkillSet = {
     id: "shamanTotemEmpower",
-    //name: "Empower all totems",
     name: i18n.skills.mc.shamanTotemEmpower.name,
-    //desc: "Increase all totems values by [1]",
-    desc: i18n.skills.mc.shamanTotemEmpower.desc1, //"Increase all totems values by [1]+[MP*50%]",
+    desc: i18n.skills.mc.shamanTotemEmpower.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.SHAMAN],

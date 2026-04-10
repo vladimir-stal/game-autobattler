@@ -1,4 +1,5 @@
 import { EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 // export const druidSkill_2: IHeroSkillSet = {
 //     id: "DruidBurn",
@@ -41,10 +42,14 @@ import { EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, TH
 
 //TODO: how to improve skill with level? more targets?
 
+// TODO: make times depend on MP!
+
 export const druidSkill_2: IHeroSkillSet = {
     id: "DruidShock",
-    name: "Chain lightning(2)",
-    desc: "Apply [1] shock to\nrandom enemy 3 times",
+    //name: "Chain lightning(2)",
+    //desc: "Apply [1] shock to\nrandom enemy 3 times",
+    name: i18n.skills.mc.druidSkill.name,
+    desc: i18n.skills.mc.druidSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.DRUID],
@@ -83,8 +88,10 @@ export const druidSkill_2: IHeroSkillSet = {
 
 export const druidSkill: IHeroSkillSet = {
     id: "DruidShock",
-    name: "Chain lightning",
-    desc: "Apply [1] shock to\nrandom enemy 3 times",
+    //name: "Chain lightning",
+    //desc: "Apply [1] shock to\nrandom enemy 3 times",
+    name: i18n.skills.mc.druidSkill.name,
+    desc: i18n.skills.mc.druidSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.DRUID],

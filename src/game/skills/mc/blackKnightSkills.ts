@@ -1,9 +1,12 @@
-import { AnimationType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const blackKnightSkill: IHeroSkillSet = {
     id: "blackKnightShield",
-    name: "Black shield",
-    desc: "Deflect next enemy skill\n back to the owner",
+    //name: "Black shield",
+    //desc: "Deflect next enemy skill\n back to the owner",
+    name: i18n.skills.mc.blackKnightSkill.name,
+    desc: i18n.skills.mc.blackKnightSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.BLACK_KNIGHT],

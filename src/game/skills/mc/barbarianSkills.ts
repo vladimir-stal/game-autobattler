@@ -1,9 +1,12 @@
 import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const barbarianSkill: IHeroSkillSet = {
     id: "BarbarianShout",
-    name: "Barbarian shout",
-    desc: "Add hp regen value to self next basic attack",
+    //name: "Barbarian shout",
+    //desc: "Add hp regen value to self next basic attack",
+    name: i18n.skills.mc.barbarianSkill.name,
+    desc: i18n.skills.mc.barbarianSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.BARBARIAN],

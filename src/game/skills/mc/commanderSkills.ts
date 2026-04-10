@@ -1,9 +1,12 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const commanderSkill_2: IHeroSkillSet = {
     id: "CommanderHorn",
-    name: "Commander horn(2)",
-    desc: "Increase all summons\nbasic attackdamage [2]+[MPx70%]",
+    //name: "Commander horn(2)",
+    //desc: "Increase all summons\nbasic attackdamage [2]+[MPx70%]",
+    name: i18n.skills.mc.commanderSkill.name,
+    desc: i18n.skills.mc.commanderSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.COMMANDER],
@@ -23,8 +26,10 @@ export const commanderSkill_2: IHeroSkillSet = {
 
 export const commanderSkill: IHeroSkillSet = {
     id: "CommanderHorn",
-    name: "Commander horn",
-    desc: "Increase all summons\nbasic attackdamage [2]+[MPx50%]",
+    //name: "Commander horn",
+    //desc: "Increase all summons\nbasic attackdamage [2]+[MPx50%]",
+    name: i18n.skills.mc.commanderSkill.name,
+    desc: i18n.skills.mc.commanderSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.COMMANDER],

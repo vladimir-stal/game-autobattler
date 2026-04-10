@@ -1,4 +1,5 @@
 import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 // [
 //     {
@@ -13,8 +14,10 @@ import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ET
 
 export const predatorSkill_2: IHeroSkillSet = {
     id: "PredatorMark",
-    name: "Predator mark",
-    desc: "Mark low hp enemy\nand decrease physical resistance -[40]%.\nTarget marked enemy with basic attacks.",
+    //name: "Predator mark",
+    //desc: "Mark low hp enemy\nand decrease physical resistance -[40]%.\nTarget marked enemy with basic attacks.",
+    name: i18n.skills.mc.predatorSkill.name,
+    desc: i18n.skills.mc.predatorSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.PREDATOR],
@@ -37,8 +40,10 @@ export const predatorSkill_2: IHeroSkillSet = {
 
 export const predatorSkill: IHeroSkillSet = {
     id: "PredatorMark",
-    name: "Predator mark",
-    desc: "Mark low hp enemy\nand decrease physical resistance -[20]%.\nTarget marked enemy with basic attacks.",
+    //name: "Predator mark",
+    //desc: "Mark low hp enemy\nand decrease physical resistance -[20]%.\nTarget marked enemy with basic attacks.",
+    name: i18n.skills.mc.predatorSkill.name,
+    desc: i18n.skills.mc.predatorSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.PREDATOR],

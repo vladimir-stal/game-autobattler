@@ -67,12 +67,13 @@ export function loadMcHeroesImages(scene: Scene) {
     });
 
     if (GAME_MODE === "FULL") {
-        scene.load.spritesheet(IMAGE_ASSASSIN_BATTLE_IDLE, "assets/sprites/units/mc/assassin/assassin_battle_idle_cut_400_8bit.webp", {
+        // TODO: webp
+        scene.load.spritesheet(IMAGE_ASSASSIN_BATTLE_IDLE, "assets/sprites/units/mc/assassin/assassin_battle_idle_cut_400.png", {
             frameWidth: 400,
             frameHeight: 400,
         });
-
-        scene.load.spritesheet(IMAGE_ASSASSIN_ATTACK, "assets/sprites/units/mc/assassin/assassin_attack_cut_400_8bit.webp", {
+        // TODO: webp
+        scene.load.spritesheet(IMAGE_ASSASSIN_ATTACK, "assets/sprites/units/mc/assassin/assassin_attack_cut_400.png", {
             frameWidth: 400,
             frameHeight: 400,
         });

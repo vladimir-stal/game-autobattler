@@ -1019,10 +1019,10 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                             }
 
                             if (item.type === EItemType.COMMON) {
-                                slot.setIsActive(true);
+                                slot.setIsActive(true, "equip");
                             } else {
                                 if (item.heroClasses.includes(EHeroClass.ALL) || item.weaponType === EWeaponItemType.DAGGER) {
-                                    slot.setIsActive(true);
+                                    slot.setIsActive(true, "equip");
                                     return;
                                 }
                                 const weaponHeroClasses = getWeaponItemHeroClasses(item.weaponType);
@@ -1033,7 +1033,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                                     return weaponHeroClasses.includes(mobHeroClass);
                                 });
                                 if (mobHeroClassFits) {
-                                    slot.setIsActive(true);
+                                    slot.setIsActive(true, "equip");
                                 }
                             }
 
@@ -1057,7 +1057,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         //}
 
                         if (item.type === EItemType.COMMON) {
-                            slot.setIsActive(true);
+                            slot.setIsActive(true, "equip");
                             return;
                         }
 
@@ -1066,19 +1066,19 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         }
 
                         if (item.heroClasses.includes(EHeroClass.ALL) || item.weaponType === EWeaponItemType.DAGGER) {
-                            slot.setIsActive(true);
+                            slot.setIsActive(true, "equip");
                             return;
                         }
 
                         const weaponHeroClasses = item.heroClasses.length > 0 ? item.heroClasses : getWeaponItemHeroClasses(item.weaponType);
                         if (heroClassType === EHeroClassType.BASIC) {
                             if (weaponHeroClasses.includes(heroClass)) {
-                                slot.setIsActive(true);
+                                slot.setIsActive(true, "equip");
                             }
                         } else {
                             const heroSubclasses = getMulticlassSubclasses(heroClass);
                             if (weaponHeroClasses.includes(heroSubclasses[0]) || weaponHeroClasses.includes(heroSubclasses[1])) {
-                                slot.setIsActive(true);
+                                slot.setIsActive(true, "equip");
                             }
                         }
                     }
@@ -1135,18 +1135,18 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         }
 
                         if (skill.heroClasses.includes(EHeroClass.ALL)) {
-                            slot.setIsActive(true);
+                            slot.setIsActive(true, "equip");
                         } else if (heroClassType === EHeroClassType.BASIC) {
                             if (skill.heroClasses.includes(heroClass)) {
-                                slot.setIsActive(true);
+                                slot.setIsActive(true, "equip");
                             }
                         } else {
                             if (skill.heroClasses.includes(heroClass)) {
-                                slot.setIsActive(true);
+                                slot.setIsActive(true, "equip");
                             } else {
                                 const heroSubclasses = getMulticlassSubclasses(heroClass);
                                 if (skill.heroClasses.includes(heroSubclasses[0]) || skill.heroClasses.includes(heroSubclasses[1])) {
-                                    slot.setIsActive(true);
+                                    slot.setIsActive(true, "equip");
                                 }
                             }
                         }

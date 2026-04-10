@@ -19,7 +19,7 @@ import {
     illusionistHero,
     inquisitorHero,
     knightHero,
-    magicBardHero,
+    jesterHero,
     mimicHero,
     minstrelHero,
     monkHero,
@@ -37,6 +37,18 @@ import {
     witchHero,
     zealotHero,
 } from "../mcHeroConsts";
+
+const BASIC_HERO_CLASSES = [
+    EHeroClass.BARD,
+    EHeroClass.DARK,
+    EHeroClass.MAGIC,
+    EHeroClass.MASTER,
+    EHeroClass.ORDER,
+    EHeroClass.PRIEST,
+    EHeroClass.SUMMON,
+    EHeroClass.WARRIOR,
+    EHeroClass.WILD,
+];
 
 const multiclasses: Record<string, EHeroClass> = {
     [EHeroClass.BARD + "_" + EHeroClass.DARK]: EHeroClass.DOOMSAYER,
@@ -125,7 +137,7 @@ export const getMcHeroByClass = (heroClass: EHeroClass): IUnit => {
     let unit;
     switch (heroClass) {
         case EHeroClass.MAGIC_BARD:
-            unit = magicBardHero;
+            unit = jesterHero;
             break;
         case EHeroClass.DUELIST:
             unit = duelistHero;
@@ -319,8 +331,15 @@ export const getMulticlassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] =
         case EHeroClass.ZEALOT:
             return [EHeroClass.DARK, EHeroClass.ORDER];
         default:
-            return undefined;
+            return [EHeroClass.BARD, EHeroClass.BARD];
     }
+};
+
+/**
+ * @returns flag if [heroClass] is basic
+ */
+export const checkHeroClassIsBasic = (heroClass: EHeroClass): boolean => {
+    return BASIC_HERO_CLASSES.includes(heroClass);
 };
 
 /**

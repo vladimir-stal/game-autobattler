@@ -382,15 +382,15 @@ export class BattleController {
                 break;
             case EHeroSkillType.REPEATING_SKILL:
                 if (skill.childSkill) {
-                    const count = Math.min(calculateSkillValue(skill, unit),20);
+                    const count = Math.min(calculateSkillValue(skill, unit), 20);
                     console.log("REPEATING_SKILL x" + count);
                     for (let i = 0; i < count; i++) {
-                        this.performSkill(unit,skill.childSkill,isPlayer1,isStartBattle);
+                        this.performSkill(unit, skill.childSkill, isPlayer1, isStartBattle);
                     }
                 }
                 break;
             case EHeroSkillType.CALCULATE_NUMBER:
-                this.performCustomCalculation(unit,skill,isPlayer1,isStartBattle);
+                this.performCustomCalculation(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.NONE:
                 {
@@ -867,8 +867,8 @@ export class BattleController {
         // check scaling from MP and PP
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-        const baseValue = (!valueType || valueType === "number" || valueType === "evolvedNumber") ? value :
-            Math.floor(unit[valueFrom]*value/100);
+        const baseValue =
+            !valueType || valueType === "number" || valueType === "evolvedNumber" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0;
 
         let finalValue = baseValue + mpScaleValue + ppScaleValue;
 
@@ -1026,7 +1026,10 @@ export class BattleController {
             return;
         }
 
+        console.log("targets >>>>", targets);
+
         targets.forEach((target) => {
+            console.log("target >>>>", target);
             if (target.debuffs.length === 0) {
                 return;
             }
@@ -1056,8 +1059,8 @@ export class BattleController {
         // calculate outgoing heal value
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-        const baseValue = (!valueType || valueType === "number" || valueType === "evolvedNumber") ?
-            value : Math.floor(unit[valueFrom]*value/100);
+        const baseValue =
+            !valueType || valueType === "number" || valueType === "evolvedNumber" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0;
         //console.log("Heal base value ",baseValue,value,valueType,valueFrom);
         let finalHeal = baseValue + mpScaleValue + ppScaleValue;
 
@@ -1288,26 +1291,34 @@ export class BattleController {
             return;
         }
 
-        if (skill.status){
-            targets.forEach(t => {
-                const v = t.statuses?.find(s => s.type === skill.status);
+        if (skill.status) {
+            targets.forEach((t) => {
+                const v = t.statuses?.find((s) => s.type === skill.status);
                 !!v && (unit.customNumber += v.value);
             });
         } else if (skill.attribute) {
-            targets.forEach(t => {
-                unit.customNumber += t[skill.attribute];
-            })
+            targets.forEach((t) => {
+                if (skill.attribute) {
+                    unit.customNumber += t[skill.attribute];
+                }
+            });
         } else if (skill.valueType === "number" || skill.valueType === "evolvedNumber") {
-            unit.customNumber = skill.value;
+            if (skill.value) {
+                unit.customNumber = skill.value;
+            }
         } else if ((skill.valueType === "percent" || skill.valueType === "evolvedPercent") && skill.valueFrom) {
-            targets.forEach(t => {
-                const v = Math.floor(skill.value * t[skill.valueFrom] / 100);
-                unit.customNumber += v;
-            })
-        } else if ((skill.valueType === "percent" || skill.valueType === "evolvedPercent")) {
-            unit.customNumber = Math.floor(skill.value * unit.customNumber / 100);
-        }else {
-            console.log("Error. Wrong calculation arguments.",skill);
+            targets.forEach((t) => {
+                if (skill.value && skill.valueFrom) {
+                    const v = Math.floor((skill.value * t[skill.valueFrom]) / 100);
+                    unit.customNumber += v;
+                }
+            });
+        } else if (skill.valueType === "percent" || skill.valueType === "evolvedPercent") {
+            if (skill.value) {
+                unit.customNumber = Math.floor((skill.value * unit.customNumber) / 100);
+            }
+        } else {
+            console.log("Error. Wrong calculation arguments.", skill);
             return;
         }
         //console.log("-= Calculate ", unit.customNumber, skill);

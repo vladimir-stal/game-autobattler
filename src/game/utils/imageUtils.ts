@@ -95,18 +95,6 @@ export interface IAnimations {
     attackAnimDisance?: number;
 }
 
-const basicHeroClasses = [
-    EHeroClass.BARD,
-    EHeroClass.DARK,
-    EHeroClass.MAGIC,
-    EHeroClass.MASTER,
-    EHeroClass.ORDER,
-    EHeroClass.PRIEST,
-    EHeroClass.SUMMON,
-    EHeroClass.WARRIOR,
-    EHeroClass.WILD,
-];
-
 export function getHeroImage(heroClass: EHeroClass): IAnimations {
     //
     switch (heroClass) {
@@ -220,6 +208,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.SUMMON:
             return {
                 distance: -40,
+                distanceEnemy: -10,
                 image: IMAGE_SUMMON_IDLE,
                 animation: AnimationType.SUMMON_IDLE,
                 idleBattleAnimation: AnimationType.SUMMON_IDLE_BATTLE, //SUMMON_IDLE_BATTLE
@@ -274,6 +263,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             return { image: IMAGE_ALHEMIST };
         case EHeroClass.ASSASSIN:
             return {
+                distance: -30,
                 image: IMAGE_ASSASSIN_IDLE,
                 animation: AnimationType.ASSASSIN_IDLE,
                 idleBattleAnimation: AnimationType.ASSASSIN_BATTLE_IDLE,

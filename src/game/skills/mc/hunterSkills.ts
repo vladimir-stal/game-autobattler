@@ -1,9 +1,12 @@
 import { EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const hunterSkill_2: IHeroSkillSet = {
     id: "HunterMark",
-    name: "Hunter mark(2)",
-    desc: "Mark second enemy and\ndecrease physical resistance -[20]%\nTarget basic attacks to marked enemy",
+    //name: "Hunter mark(2)",
+    //desc: "Mark second enemy and\ndecrease physical resistance -[20]%\nTarget basic attacks to marked enemy",
+    name: i18n.skills.mc.hunterSkill.name,
+    desc: i18n.skills.mc.hunterSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.HUNTER],
@@ -26,8 +29,10 @@ export const hunterSkill_2: IHeroSkillSet = {
 
 export const hunterSkill: IHeroSkillSet = {
     id: "HunterMark",
-    name: "Hunter mark",
-    desc: "Mark second enemy and\ndecrease physical resistance -[10]%\nTarget basic attacks to marked enemy",
+    //name: "Hunter mark",
+    //desc: "Mark second enemy and\ndecrease physical resistance -[10]%\nTarget basic attacks to marked enemy",
+    name: i18n.skills.mc.hunterSkill.name,
+    desc: i18n.skills.mc.hunterSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.HUNTER],

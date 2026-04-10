@@ -1,9 +1,12 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const assassinSkill_2: IHeroSkillSet = {
     id: "AssassinPoisonBlade",
-    name: "Poison blade(2)",
-    desc: "Apply poison [2] on basic attack.\nTarget lowest hp enemy on next basic attack.",
+    //name: "Poison blade(2)",
+    //desc: "Apply poison [2] on basic attack.\nTarget lowest hp enemy on next basic attack.",
+    name: i18n.skills.mc.assassinSkill.name,
+    desc: i18n.skills.mc.assassinSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.ASSASSIN],
@@ -41,8 +44,10 @@ export const assassinSkill_2: IHeroSkillSet = {
 
 export const assassinSkill: IHeroSkillSet = {
     id: "AssassinPoisonBlade",
-    name: "Poison blade",
-    desc: "Apply poison [1] on basic attack.\nTarget lowest hp enemy on next basic attack.",
+    //name: "Poison blade",
+    //desc: "Apply poison [1] on basic attack.\nTarget lowest hp enemy on next basic attack.",
+    name: i18n.skills.mc.assassinSkill.name,
+    desc: i18n.skills.mc.assassinSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.ASSASSIN],

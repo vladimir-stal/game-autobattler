@@ -525,4 +525,4 @@ export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];
 
 export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, removeBuffSkill]);
 
-export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill,magicRain]);
+export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill, magicRain]);

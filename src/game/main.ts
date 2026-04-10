@@ -20,7 +20,10 @@ const config: Phaser.Types.Core.GameConfig = {
     parent: "game-container",
     backgroundColor: "000000", //"#028af8",
     scale: {
-        mode: Scale.ScaleModes.RESIZE,
+        mode: Phaser.Scale.RESIZE, //Scale.ScaleModes.RESIZE,
+        parent: "game-container",
+        width: "100%",
+        height: "100%",
         //autoCenter: Scale.Center.CENTER_BOTH,
     },
     physics: {

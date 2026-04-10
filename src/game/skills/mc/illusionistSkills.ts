@@ -28,10 +28,10 @@ export const illusionSummon: IUnit = {
 
 export const illusionistSkill: IHeroSkillSet = {
     id: "illusionSummonSkill",
-    name: "Illusion",
-    desc: "Summon magic illusion that\n repeats magic skills",
-    //name: i18n.skills.basic.fireflySummon.name,
-    //desc: i18n.skills.basic.fireflySummon.desc1,
+    //name: "Illusion",
+    //desc: "Summon magic illusion that\n repeats magic skills",
+    name: i18n.skills.mc.illusionistSkill.name,
+    desc: i18n.skills.mc.illusionistSkill.desc1,
     isMcSkill: true,
     level: 1,
     priceLevel: 4,
@@ -43,7 +43,6 @@ export const illusionistSkill: IHeroSkillSet = {
             summon: illusionSummon,
         },
     ],
-    //nextLevel: fireflySummonSkill_2,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
 };
 

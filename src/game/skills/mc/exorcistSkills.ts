@@ -1,9 +1,12 @@
 import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const exorcistSkill_2: IHeroSkillSet = {
     id: "ExorcistClear",
-    name: "Exorcist clear(2)",
-    desc: "Remove a summon and remove a totem\n from enemies",
+    //name: "Exorcist clear(2)",
+    //desc: "Remove a summon and remove a totem\n from enemies",
+    name: i18n.skills.mc.exorcistSkill.name,
+    desc: i18n.skills.mc.exorcistSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.EXORCIST],
@@ -25,8 +28,10 @@ export const exorcistSkill_2: IHeroSkillSet = {
 
 export const exorcistSkill: IHeroSkillSet = {
     id: "ExorcistClear",
-    name: "Exorcist clear",
-    desc: "Remove a summon and remove a totem\n from enemies",
+    //name: "Exorcist clear",
+    //desc: "Remove a summon and remove a totem\n from enemies",
+    name: i18n.skills.mc.exorcistSkill.name,
+    desc: i18n.skills.mc.exorcistSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.EXORCIST],

@@ -18,8 +18,10 @@ const buffSummonRegen = (regen: number): IHeroSkill => {
 
 export const necromancerSkill_3: IHeroSkillSet = {
     id: "NecromancerSkeleton",
-    name: "Necromancer skeleton",
-    desc: "Summon a skeleton champion [stats]",
+    //name: "Necromancer skeleton",
+    //desc: "Summon a skeleton champion [stats]",
+    name: i18n.skills.mc.necromancerSkill.name,
+    desc: i18n.skills.mc.necromancerSkill.desc3,
     // skeleton [stats] = [4,10] ~> 7+3,18+7
     level: 3,
     priceLevel: 4,
@@ -31,8 +33,10 @@ export const necromancerSkill_3: IHeroSkillSet = {
 
 export const necromancerSkill_2: IHeroSkillSet = {
     id: "NecromancerSkeleton",
-    name: "Necromancer skeleton",
-    desc: "Summon a skeleton warrior [stats]",
+    //name: "Necromancer skeleton",
+    //desc: "Summon a skeleton warrior [stats]",
+    name: i18n.skills.mc.necromancerSkill.name,
+    desc: i18n.skills.mc.necromancerSkill.desc2,
     // was skeleton warrior [stats] = [7,16]
     // now skeleton [stats] = [4,10] ~> 6+2,15+5
     level: 2,
@@ -46,8 +50,10 @@ export const necromancerSkill_2: IHeroSkillSet = {
 
 export const necromancerSkill: IHeroSkillSet = {
     id: "NecromancerSkeleton",
-    name: "Necromancer skeleton",
-    desc: "Summon a skeleton [stats]",
+    //name: "Necromancer skeleton",
+    //desc: "Summon a skeleton [stats]",
+    name: i18n.skills.mc.necromancerSkill.name,
+    desc: i18n.skills.mc.necromancerSkill.desc1,
     // skeleton [stats] = [4,10] ~> 5+1,13+3
     level: 1,
     priceLevel: 4,

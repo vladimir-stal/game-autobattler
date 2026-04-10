@@ -1,4 +1,5 @@
 import {
+    EHeroAttackType,
     EHeroClass,
     EItemAfterDuelBonusCondition,
     EItemAfterDuelBonusType,
@@ -10,6 +11,7 @@ import {
     ESelectRoomHint,
     THeroAttribute,
 } from "../types";
+import { SKILLS_EN } from "./skills_en";
 
 type TSkillI18n = Record<number | "name" | "desc1" | "desc2" | "desc3", string>;
 
@@ -142,45 +144,50 @@ export interface Ii18n {
     rooms: Partial<Record<ERoomType, string>>;
     roomDescriptions: Partial<Record<ERoomType, string>>;
     skills: {
-        basic: {
-            phycNBleed: TSkillI18n;
-            feintAttack: TSkillI18n;
-            magicRain: TSkillI18n;
-            buffBaNextBaAll: TSkillI18n;
-            buffBaSelf: TSkillI18n;
-            buffPpAll: TSkillI18n;
-            buffNextBaX: TSkillI18n;
-            phycAttack: TSkillI18n;
-            attrIncArmorSelf: TSkillI18n;
-            attrAttackSelf: TSkillI18n;
-            magicAttack: TSkillI18n;
-            applyBurn: TSkillI18n;
-            attrIncrHpReg: TSkillI18n;
-            totemAttack: TSkillI18n;
-            poisonRandom: TSkillI18n;
-            magicAttackX3: TSkillI18n;
-            buffNextBa: TSkillI18n;
-            healFirst: TSkillI18n;
-            healSelf: TSkillI18n;
-            fireflySummon: TSkillI18n;
-            sparkSummon: TSkillI18n;
-        };
-        level2: {
-            // magic
-            applyShock: TSkillI18n;
-        };
-        common: {
-            removeBuff: TSkillI18n;
-            removeDebuff: TSkillI18n;
-        };
-        mobs: {
-            goblinShamanHpRegIncr: TSkillI18n;
-        };
-        mc: {
-            DivineShield: TSkillI18n;
-            BarbarianShout: TSkillI18n;
-            shamanTotemEmpower: TSkillI18n;
-        };
+        basic: Record<string, TSkillI18n>;
+        level2: Record<string, TSkillI18n>;
+        common: Record<string, TSkillI18n>;
+        mobs: Record<string, TSkillI18n>;
+        mc: Record<string, TSkillI18n>;
+        // basic: {
+        //     phycNBleed: TSkillI18n;
+        //     feintAttack: TSkillI18n;
+        //     magicRain: TSkillI18n;
+        //     buffBaNextBaAll: TSkillI18n;
+        //     buffBaSelf: TSkillI18n;
+        //     buffPpAll: TSkillI18n;
+        //     buffNextBaX: TSkillI18n;
+        //     phycAttack: TSkillI18n;
+        //     attrIncArmorSelf: TSkillI18n;
+        //     attrAttackSelf: TSkillI18n;
+        //     magicAttack: TSkillI18n;
+        //     applyBurn: TSkillI18n;
+        //     attrIncrHpReg: TSkillI18n;
+        //     totemAttack: TSkillI18n;
+        //     poisonRandom: TSkillI18n;
+        //     magicAttackX3: TSkillI18n;
+        //     buffNextBa: TSkillI18n;
+        //     healFirst: TSkillI18n;
+        //     healSelf: TSkillI18n;
+        //     fireflySummon: TSkillI18n;
+        //     sparkSummon: TSkillI18n;
+        // };
+        // level2: {
+        //     // magic
+        //     applyShock: TSkillI18n;
+        // };
+        // common: {
+        //     removeBuff: TSkillI18n;
+        //     removeDebuff: TSkillI18n;
+        // };
+        // mobs: {
+        //     goblinShamanHpRegIncr: TSkillI18n;
+        // };
+        // mc: {
+        //     DivineShield: TSkillI18n;
+        //     BarbarianShout: TSkillI18n;
+        //     shamanTotemEmpower: TSkillI18n;
+        // };
     };
     tags: Partial<Record<EHeroClass, string>>;
     ui: {
@@ -192,6 +199,7 @@ export interface Ii18n {
         SELECT: string;
         SKIP: string;
         START: string;
+        EQUIP: string;
         GOLD: string;
         INCOME: string;
         DAY: string;
@@ -211,6 +219,10 @@ export interface Ii18n {
         ATTRIBUTE: string;
         CHAINED_SKILL: string;
         ON_START_SKILL: string;
+        NO_BA_SKILL: string;
+        //
+        [EHeroAttackType.MAGIC]: string;
+        [EHeroAttackType.PHYSICAL]: string;
         //
         DEAD: string;
         VICTORY: string;
@@ -241,13 +253,13 @@ export interface Ii18n {
 export const i18n: Ii18n = {
     attributes: {
         attribute: {
-            basicArmor: "basicArmor",
+            basicArmor: "armor",
             basicAttack: "basicAttack",
             basicCritChance: "basicCritChance",
             basicEvasionChance: "basicEvasionChance",
             basicHpRegen: "basicHpRegen",
             basicMagicPower: "basicMagicPower",
-            basicMaxHp: "basicMaxHp",
+            basicMaxHp: "health",
             basicPhysicalPower: "basicPhysicalPower",
         },
         afterDuelBonusesText: "Get after each duel:",
@@ -288,7 +300,7 @@ export const i18n: Ii18n = {
             STATUS_POISON_APPLY_INCREASE: "STATUS_POISON_APPLY_INCREASE",
             SUMMON_INCREASE_DAMAGE: "SUMMON_INCREASE_DAMAGE",
             TOTEM_INCREASE_VALUE: "TOTEM_INCREASE_VALUE",
-            CAST_SKILL_X_ROUND: "Once per combat, applies effect at the\nend of round"
+            CAST_SKILL_X_ROUND: "Once per combat, applies effect at the\nend of round",
         },
         itemBonusType: { ATTRIBUTE: "ATTRIBUTE", ITEM_WEAPON_SLOT: "ITEM_WEAPON_SLOT" },
     },
@@ -512,217 +524,218 @@ export const i18n: Ii18n = {
         //
     },
     roomDescriptions: {},
-    skills: {
-        basic: {
-            //
-            // BARD
-            //
-            buffBaNextBaAll: {
-                name: "Buff BA all",
-                desc1: "Buff next basic attack for [2] damage for all allies",
-                desc2: "Buff next basic attack for [3] damage for all allies",
-                desc3: "Buff next basic attack for [4] damage for all allies",
-            },
-            buffBaSelf: {
-                name: "Buff self BA",
-                desc1: "Buff self basic attack [1]",
-                desc2: "Buff self basic attack [2]",
-                desc3: "Buff self basic attack [3]",
-            },
-            buffPpAll: {
-                name: "Buff PP all",
-                desc1: "Buff Physical power \n[1]+[MP*50%] all allies",
-                desc2: "Buff Physical power \n[1]+[MP*70%] all allies",
-                desc3: "Buff Physical power \n[1]+[MP] all allies",
-            },
-            //
-            // DARK
-            //
-            poisonRandom: {
-                name: "Posion random",
-                desc1: "Poison [3] random enemy",
-                desc2: "Poison [4] random enemy",
-                desc3: "Poison [6] random enemy",
-            },
-            magicAttackX3: {
-                name: "Magic missiles",
-                desc1: "Deal [2] magic damage \nto random enemy 3 times",
-                desc2: "Deal [3] magic damage \nto random enemy 3 times",
-                desc3: "Deal [4] magic damage \nto random enemy 3 times",
-            },
-            magicRain: {
-                name: "Magic rain",
-                desc1: "Deal [2] magic damage \nto random enemy [1+MP*40%] times",
-                desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
-                desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
-            },
-            //
-            // MASTER
-            //
-            buffNextBaX: {
-                name: "Next BAx buff",
-                desc1: "Multiply x[1.4] self next basic attack",
-                desc2: "Multiply x[1.6] self next basic attack",
-                desc3: "Multiply x[1.8] self next basic attack",
-            },
-            feintAttack: {
-                name: "Feint attack",
-                desc1: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*20%]",
-                desc2: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*30%]",
-                desc3: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*40%]",
-            },
-            //
-            // MAGIC
-            //
-            magicAttack: {
-                name: "Magic Attack",
-                desc1: "Deal [5] magic damage to first enemy",
-                desc2: "Deal [7] magic damage to first enemy",
-                desc3: "Deal [9] magic damage to first enemy",
-            },
-            applyBurn: {
-                name: "Apply Burn",
-                desc1: "Apply [3] burn on the first enemy",
-                desc2: "Apply [4] burn on the first enemy",
-                desc3: "Apply [6] burn on the first enemy",
-            },
-            //
-            // MASTER + WARRIOR
-            //
-            phycAttack: {
-                name: "Phys Attack",
-                desc1: "Deal [4+PPx35%] physical\ndamage to first enemy",
-                desc2: "Deal [5+PPx50%] physical\ndamage to first enemy",
-                desc3: "Deal [6+PPx65%] physical\ndamage to first enemy",
-            },
-            phycNBleed: {
-                name: "PhysNBleed Attack",
-                desc1: "Deal [2+PPx35%] physical\ndamage to first enemy\nand apply [1] bleed",
-                desc2: "Deal [2+PPx50%] physical\ndamage to first enemy\nand apply [2] bleed",
-                desc3: "Deal [2+PPx65%] physical\ndamage to first enemy\nand apply [3] bleed",
-            },
-            //
-            // ORDER
-            //
-            attrIncArmorSelf: {
-                name: "Armor self",
-                desc1: "Armor self [3]",
-                desc2: "Armor self [5]",
-                desc3: "Armor self [8]",
-            },
-            attrAttackSelf: {
-                name: "Incr Attack self",
-                desc1: "Increase self attack [1]",
-                desc2: "Increase self attack [2]",
-                desc3: "Increase self attack [3]",
-            },
-            //
-            // PRIEST
-            //
-            healFirst: {
-                name: "Heal first",
-                desc1: "Heal [3 +35% MP] first ally",
-                desc2: "Heal [5 +50% MP] first ally",
-                desc3: "Heal [7 +65% MP] first ally",
-            },
-            healSelf: {
-                name: "Heal self",
-                desc3: "Heal [8 +65% MP] self",
-                desc2: "Heal [6 +50% MP] self",
-                desc1: "Heal [4 +35% MP] self",
-            },
-            //
-            // SUMMON
-            //
-            fireflySummon: {
-                name: "Firefly Summon",
-                desc3: "Summon magic creature [stats]",
-                desc2: "Summon magic creature [stats]",
-                desc1: "Summon magic creature [stats]",
-            },
-            sparkSummon: {
-                name: "Summon spirit warrior",
+    skills: SKILLS_EN,
+    // skills: {
+    //     basic: {
+    //         //
+    //         // BARD
+    //         //
+    //         buffBaNextBaAll: {
+    //             name: "Buff BA all",
+    //             desc1: "Buff next basic attack for [2] damage for all allies",
+    //             desc2: "Buff next basic attack for [3] damage for all allies",
+    //             desc3: "Buff next basic attack for [4] damage for all allies",
+    //         },
+    //         buffBaSelf: {
+    //             name: "Buff self BA",
+    //             desc1: "Buff self basic attack [1]",
+    //             desc2: "Buff self basic attack [2]",
+    //             desc3: "Buff self basic attack [3]",
+    //         },
+    //         buffPpAll: {
+    //             name: "Buff PP all",
+    //             desc1: "Buff Physical power \n[1]+[MP*50%] all allies",
+    //             desc2: "Buff Physical power \n[1]+[MP*70%] all allies",
+    //             desc3: "Buff Physical power \n[1]+[MP] all allies",
+    //         },
+    //         //
+    //         // DARK
+    //         //
+    //         poisonRandom: {
+    //             name: "Posion random",
+    //             desc1: "Poison [3] random enemy",
+    //             desc2: "Poison [4] random enemy",
+    //             desc3: "Poison [6] random enemy",
+    //         },
+    //         magicAttackX3: {
+    //             name: "Magic missiles",
+    //             desc1: "Deal [2] magic damage \nto random enemy 3 times",
+    //             desc2: "Deal [3] magic damage \nto random enemy 3 times",
+    //             desc3: "Deal [4] magic damage \nto random enemy 3 times",
+    //         },
+    //         magicRain: {
+    //             name: "Magic rain",
+    //             desc1: "Deal [2] magic damage \nto random enemy [1+MP*40%] times",
+    //             desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
+    //             desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
+    //         },
+    //         //
+    //         // MASTER
+    //         //
+    //         buffNextBaX: {
+    //             name: "Next BAx buff",
+    //             desc1: "Multiply x[1.4] self next basic attack",
+    //             desc2: "Multiply x[1.6] self next basic attack",
+    //             desc3: "Multiply x[1.8] self next basic attack",
+    //         },
+    //         feintAttack: {
+    //             name: "Feint attack",
+    //             desc1: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*20%]",
+    //             desc2: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*30%]",
+    //             desc3: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*40%]",
+    //         },
+    //         //
+    //         // MAGIC
+    //         //
+    //         magicAttack: {
+    //             name: "Magic Attack",
+    //             desc1: "Deal [5] magic damage to first enemy",
+    //             desc2: "Deal [7] magic damage to first enemy",
+    //             desc3: "Deal [9] magic damage to first enemy",
+    //         },
+    //         applyBurn: {
+    //             name: "Apply Burn",
+    //             desc1: "Apply [3] burn on the first enemy",
+    //             desc2: "Apply [4] burn on the first enemy",
+    //             desc3: "Apply [6] burn on the first enemy",
+    //         },
+    //         //
+    //         // MASTER + WARRIOR
+    //         //
+    //         phycAttack: {
+    //             name: "Phys Attack",
+    //             desc1: "Deal [4+PPx35%] physical\ndamage to first enemy",
+    //             desc2: "Deal [5+PPx50%] physical\ndamage to first enemy",
+    //             desc3: "Deal [6+PPx65%] physical\ndamage to first enemy",
+    //         },
+    //         phycNBleed: {
+    //             name: "PhysNBleed Attack",
+    //             desc1: "Deal [2+PPx35%] physical\ndamage to first enemy\nand apply [1] bleed",
+    //             desc2: "Deal [2+PPx50%] physical\ndamage to first enemy\nand apply [2] bleed",
+    //             desc3: "Deal [2+PPx65%] physical\ndamage to first enemy\nand apply [3] bleed",
+    //         },
+    //         //
+    //         // ORDER
+    //         //
+    //         attrIncArmorSelf: {
+    //             name: "Armor self",
+    //             desc1: "Armor self [3]",
+    //             desc2: "Armor self [5]",
+    //             desc3: "Armor self [8]",
+    //         },
+    //         attrAttackSelf: {
+    //             name: "Incr Attack self",
+    //             desc1: "Increase self attack [1]",
+    //             desc2: "Increase self attack [2]",
+    //             desc3: "Increase self attack [3]",
+    //         },
+    //         //
+    //         // PRIEST
+    //         //
+    //         healFirst: {
+    //             name: "Heal first",
+    //             desc1: "Heal [3 +35% MP] first ally",
+    //             desc2: "Heal [5 +50% MP] first ally",
+    //             desc3: "Heal [7 +65% MP] first ally",
+    //         },
+    //         healSelf: {
+    //             name: "Heal self",
+    //             desc3: "Heal [8 +65% MP] self",
+    //             desc2: "Heal [6 +50% MP] self",
+    //             desc1: "Heal [4 +35% MP] self",
+    //         },
+    //         //
+    //         // SUMMON
+    //         //
+    //         fireflySummon: {
+    //             name: "Firefly Summon",
+    //             desc3: "Summon magic creature [stats]",
+    //             desc2: "Summon magic creature [stats]",
+    //             desc1: "Summon magic creature [stats]",
+    //         },
+    //         sparkSummon: {
+    //             name: "Summon spirit warrior",
 
-                desc1: "Summon spirit warrior [stats]",
-                desc2: "Summon spirit warrior [stats]",
-                desc3: "Summon spirit warrior [stats]",
-            },
-            //
-            // WARRIOR
-            //
-            buffNextBa: {
-                name: "Next BA+ buff",
-                desc1: "Buff [4] self next basic attack",
-                desc2: "Buff [6] self next basic attack",
-                desc3: "Buff [8] self next basic attack",
-            },
-            //
-            // WILD
-            //
-            attrIncrHpReg: {
-                name: "Wild regen",
-                desc1: "Increase self hp regen [1]",
-                desc2: "Increase self hp regen [2]",
-                desc3: "Increase self hp regen [3]",
-            },
-            totemAttack: {
-                name: "Wild totem",
-                desc1: "Summon totem that deals \n[1] damage to random enemy",
-                desc2: "Summon totem that deals \n[2] damage to random enemy",
-                desc3: "Summon totem that deals \n[3] damage to random enemy",
-            },
-        },
-        level2: {
-            applyShock: {
-                name: "Apply Shock",
-                desc1: "Apply [1] shock to the first enemy",
-                desc2: "Apply [1] shock to the first enemy",
-                desc3: "Apply [1] shock to the first enemy",
-            },
-        },
-        common: {
-            removeBuff: {
-                name: "Remove buff",
-                desc1: "Remove [1] buff from enemy",
-                desc2: "Remove [2] buffs from enemy",
-                desc3: "Remove [3] buffs from enemy",
-            },
-            removeDebuff: {
-                name: "Remove debuff",
-                desc1: "Remove [1] debuff from ally",
-                desc2: "Remove [2] debuffs from ally",
-                desc3: "Remove [3] debuff from ally",
-            },
-        },
-        mc: {
-            BarbarianShout: {
-                name: "Barbarian Shout",
-                desc1: "Add hp regen value to self next basic attack",
-                desc2: "Add hp regen value to self next basic attack",
-                desc3: "Add hp regen value to self next basic attack",
-            },
-            DivineShield: {
-                name: "Divine shield",
-                desc1: "Shield self with magic, protecting from first attack",
-                desc2: "Shield self with magic, protecting from first attack",
-                desc3: "Shield self with magic, protecting from first attack",
-            },
-            shamanTotemEmpower: {
-                name: "Empower all totems",
-                desc1: "Increase all totems value by [1]+[MP*50%]",
-                desc2: "Increase all totems value by [1]+[MP*70%]",
-                desc3: "Increase all totems value by [1]+[MP]",
-            },
-        },
-        mobs: {
-            goblinShamanHpRegIncr: {
-                name: "Increase regen all",
-                desc1: "Increase regeneration [2] for all allies",
-                desc2: "Increase regeneration [4] for all allies",
-                desc3: "Increase regeneration [8] for all allies",
-            },
-        },
-    },
+    //             desc1: "Summon spirit warrior [stats]",
+    //             desc2: "Summon spirit warrior [stats]",
+    //             desc3: "Summon spirit warrior [stats]",
+    //         },
+    //         //
+    //         // WARRIOR
+    //         //
+    //         buffNextBa: {
+    //             name: "Next BA+ buff",
+    //             desc1: "Buff [4] self next basic attack",
+    //             desc2: "Buff [6] self next basic attack",
+    //             desc3: "Buff [8] self next basic attack",
+    //         },
+    //         //
+    //         // WILD
+    //         //
+    //         attrIncrHpReg: {
+    //             name: "Wild regen",
+    //             desc1: "Increase self hp regen [1]",
+    //             desc2: "Increase self hp regen [2]",
+    //             desc3: "Increase self hp regen [3]",
+    //         },
+    //         totemAttack: {
+    //             name: "Wild totem",
+    //             desc1: "Summon totem that deals \n[1] damage to random enemy",
+    //             desc2: "Summon totem that deals \n[2] damage to random enemy",
+    //             desc3: "Summon totem that deals \n[3] damage to random enemy",
+    //         },
+    //     },
+    //     level2: {
+    //         applyShock: {
+    //             name: "Apply Shock",
+    //             desc1: "Apply [1] shock to the first enemy",
+    //             desc2: "Apply [1] shock to the first enemy",
+    //             desc3: "Apply [1] shock to the first enemy",
+    //         },
+    //     },
+    //     common: {
+    //         removeBuff: {
+    //             name: "Remove buff",
+    //             desc1: "Remove [1] buff from enemy",
+    //             desc2: "Remove [2] buffs from enemy",
+    //             desc3: "Remove [3] buffs from enemy",
+    //         },
+    //         removeDebuff: {
+    //             name: "Remove debuff",
+    //             desc1: "Remove [1] debuff from ally",
+    //             desc2: "Remove [2] debuffs from ally",
+    //             desc3: "Remove [3] debuff from ally",
+    //         },
+    //     },
+    //     mc: {
+    //         BarbarianShout: {
+    //             name: "Barbarian Shout",
+    //             desc1: "Add hp regen value to self next basic attack",
+    //             desc2: "Add hp regen value to self next basic attack",
+    //             desc3: "Add hp regen value to self next basic attack",
+    //         },
+    //         DivineShield: {
+    //             name: "Divine shield",
+    //             desc1: "Shield self with magic, protecting from first attack",
+    //             desc2: "Shield self with magic, protecting from first attack",
+    //             desc3: "Shield self with magic, protecting from first attack",
+    //         },
+    //         shamanTotemEmpower: {
+    //             name: "Empower all totems",
+    //             desc1: "Increase all totems value by [1]+[MP*50%]",
+    //             desc2: "Increase all totems value by [1]+[MP*70%]",
+    //             desc3: "Increase all totems value by [1]+[MP]",
+    //         },
+    //     },
+    //     mobs: {
+    //         goblinShamanHpRegIncr: {
+    //             name: "Increase regen all",
+    //             desc1: "Increase regeneration [2] for all allies",
+    //             desc2: "Increase regeneration [4] for all allies",
+    //             desc3: "Increase regeneration [8] for all allies",
+    //         },
+    //     },
+    // },
     tags: {
         BARD: "bard",
         DARK: "dark",
@@ -746,6 +759,7 @@ export const i18n: Ii18n = {
         MOVE: "MOVE",
         SELECT: "SELECT",
         SKIP: "SKIP",
+        EQUIP: "EQUIP",
         GOLD: "GOLD",
         INCOME: "INCOME",
         DAY: "DAY",
@@ -758,6 +772,9 @@ export const i18n: Ii18n = {
         NEXT: "NEXT",
         SELECT_UPGRADE: "SELECT UPGRADE",
         //
+        [EHeroAttackType.MAGIC]: "magic",
+        [EHeroAttackType.PHYSICAL]: "phys",
+        //
         ATTRIBUTE: "ATTRIBUTE",
         SKILL: "SKILL",
         ITEM: "ITEM",
@@ -765,6 +782,7 @@ export const i18n: Ii18n = {
         EXP_PARTY: "EXP ALL",
         CHAINED_SKILL: "CHAINED SKILL",
         ON_START_SKILL: "DUEL START SKILL",
+        NO_BA_SKILL: "Not followed by basic attack",
         //
         DEAD: "DEAD",
         VICTORY: "VICTORY",

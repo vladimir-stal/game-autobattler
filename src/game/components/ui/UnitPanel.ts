@@ -13,7 +13,7 @@ export class UnitPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
     currentWidth: number;
     slotCount: number;
-    lastBoughtHero?: EHeroClass;
+    lastBoughtHeroClass?: EHeroClass;
 
     //borderRect: GameObjects.Rectangle;
 

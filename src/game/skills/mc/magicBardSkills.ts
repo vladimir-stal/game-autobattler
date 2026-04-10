@@ -1,9 +1,12 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
-export const magicBardSkill_2: IHeroSkillSet = {
+export const jesterSkill_2: IHeroSkillSet = {
     id: "MagicBardBuff",
-    name: "Fire fists(2)",
-    desc: "Apply [1]+[70%xMP] burn\non basic attacks",
+    //name: "Fire fists(2)",
+    //desc: "Apply [1]+[70%xMP] burn\non basic attacks",
+    name: i18n.skills.mc.jesterSkill.name,
+    desc: i18n.skills.mc.jesterSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.MAGIC_BARD],
@@ -26,10 +29,12 @@ export const magicBardSkill_2: IHeroSkillSet = {
     ],
 };
 
-export const magicBardSkill: IHeroSkillSet = {
+export const jesterSkill: IHeroSkillSet = {
     id: "MagicBardBuff",
-    name: "Fire fists",
-    desc: "Apply [1]+[50%xMP] burn\non basic attacks",
+    //name: "Fire fists",
+    //desc: "Apply [1]+[50%xMP] burn\non basic attacks",
+    name: i18n.skills.mc.jesterSkill.name,
+    desc: i18n.skills.mc.jesterSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.MAGIC_BARD],
@@ -50,7 +55,7 @@ export const magicBardSkill: IHeroSkillSet = {
             },
         },
     ],
-    nextLevel: magicBardSkill_2,
+    nextLevel: jesterSkill_2,
 };
 
-export const magicBardSkills: THeroSkills = [magicBardSkill];
+export const jesterSkills: THeroSkills = [jesterSkill];

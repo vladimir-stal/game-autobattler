@@ -55,7 +55,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         this.add(rect);
 
         const title = this.scene.add
-            .text(250, -40, i18n.ui.UPGRADE_HERO_TO_MC, {
+            .text(400, -40, i18n.ui.UPGRADE_HERO_TO_MC, {
                 fontFamily: "Arial Black",
                 fontSize: 18,
                 color: "#ffffff",

@@ -28,6 +28,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     enchancedChainedIcon: GameObjects.Image;
     enchancedOnStartIcon: GameObjects.Image;
     enchancedText: GameObjects.Text;
+    noBAText: GameObjects.Text;
     skillImage: GameObjects.Image;
     skillContainer: GameObjects.Container;
     // item
@@ -43,27 +44,35 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     // unit
     hpIcon: GameObjects.Image;
     hpText: GameObjects.Text;
+    hpDescrText: GameObjects.Text;
     //
     armorIcon: GameObjects.Image;
     armorText: GameObjects.Text;
+    armorDescrText: GameObjects.Text;
     //
     attackIcon: GameObjects.Image;
     attackText: GameObjects.Text;
+    attackDescrText: GameObjects.Text;
     //
     regenIcon: GameObjects.Image;
     regenText: GameObjects.Text;
+    regenDescrText: GameObjects.Text;
     //
     mpIcon: GameObjects.Image;
     mpText: GameObjects.Text;
+    mpDescrText: GameObjects.Text;
     //
     ppIcon: GameObjects.Image;
     ppText: GameObjects.Text;
+    ppDescrText: GameObjects.Text;
     //
     critIcon: GameObjects.Image;
     critText: GameObjects.Text;
+    critDescrText: GameObjects.Text;
     //
     evasionIcon: GameObjects.Image;
     evasionText: GameObjects.Text;
+    evasionDescrText: GameObjects.Text;
     //
     activeSkillText: GameObjects.Text;
     passiveSkillText: GameObjects.Text;
@@ -122,6 +131,14 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
             .setVisible(false);
         this.add(this.enchancedText);
 
+        this.noBAText = this.scene.add
+            .text(35, 190, i18n.ui.NO_BA_SKILL, {
+                fontSize: 12,
+                color: "#ffffff",
+            })
+            .setVisible(false);
+        this.add(this.noBAText);
+
         this.enchancedChainedIcon = this.scene.add.image(5, 170, IMAGE_ICON_CHAINED).setOrigin(0, 0).setVisible(false);
         this.add(this.enchancedChainedIcon);
 
@@ -152,11 +169,6 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.add(this.afterDuelBonusesTextObject);
 
         // item image
-
-        //this.itemImageBorder = this.scene.add.rectangle(250, 0, 250, 300, colors.BLACK).setOrigin(0, 0).setVisible(false);
-        //this.itemImageBorder.setStrokeStyle(1, 0x777777);
-        //this.add(this.itemImageBorder);
-
         this.itemImage = this.scene.add.image(25, 150, IMAGE_ITEM_ARMOR_1).setDisplaySize(150, 150).setOrigin(0, 0).setVisible(false);
         this.add(this.itemImage);
 
@@ -165,73 +177,85 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.itemContainer = this.scene.add.container(0, 0).setVisible(false);
         this.add(this.itemContainer);
 
-        // this.hcTag1 = new HeroClassTag(this.scene as GameScene, 0, 200, EHeroClass.ALL).setVisible(false);
-        // this.add(this.hcTag1);
-
-        // this.hcTag2 = new HeroClassTag(this.scene as GameScene, 40, 200, EHeroClass.ALL).setVisible(false);
-        // this.add(this.hcTag2);
-
         //
         //
         // UNIT //////////////////////////////////////////////////////////////// UNIT
         //
         //
 
-        this.hpText = this.scene.add.text(47, 32, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.hpText = this.scene.add.text(42, 32, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.hpText);
-        this.hpIcon = this.scene.add.image(40, 40, IMAGE_ICON_HEALTH).setDisplaySize(20, 20).setVisible(false);
+        this.hpIcon = this.scene.add.image(35, 40, IMAGE_ICON_HEALTH).setDisplaySize(20, 20).setVisible(false);
         this.add(this.hpIcon);
+        this.hpDescrText = this.scene.add.text(70, 32, i18n.attributes.attribute.basicMaxHp, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.hpDescrText);
 
-        this.armorText = this.scene.add.text(90, 32, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.armorText = this.scene.add.text(45, 52, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.armorText);
-        this.armorIcon = this.scene.add.image(80, 40, IMAGE_ICON_SHIELD).setDisplaySize(20, 20).setVisible(false);
+        this.armorIcon = this.scene.add.image(35, 60, IMAGE_ICON_SHIELD).setDisplaySize(20, 20).setVisible(false);
         this.add(this.armorIcon);
+        this.armorDescrText = this.scene.add.text(70, 52, i18n.attributes.attribute.basicArmor, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.armorDescrText);
 
-        this.attackText = this.scene.add.text(47, 52, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.attackText = this.scene.add.text(42, 72, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.attackText);
-        this.attackIcon = this.scene.add.image(40, 60, IMAGE_ICON_ATTACK).setDisplaySize(20, 20).setVisible(false);
+        this.attackIcon = this.scene.add.image(35, 80, IMAGE_ICON_ATTACK).setDisplaySize(20, 20).setVisible(false);
         this.add(this.attackIcon);
+        this.attackDescrText = this.scene.add.text(90, 72, i18n.attributes.attribute.basicAttack, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.attackDescrText);
 
         //
 
-        this.regenText = this.scene.add.text(120, 32, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.regenText = this.scene.add.text(45, 172, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.regenText);
-        this.regenIcon = this.scene.add.image(110, 40, IMAGE_ICON_REGEN).setDisplaySize(20, 20).setVisible(false);
+        this.regenIcon = this.scene.add.image(35, 180, IMAGE_ICON_REGEN).setDisplaySize(20, 20).setVisible(false);
         this.add(this.regenIcon);
+        this.regenDescrText = this.scene.add.text(70, 172, i18n.attributes.attribute.basicHpRegen, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.regenDescrText);
 
         //
 
-        this.mpText = this.scene.add.text(50, 72, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.mpText = this.scene.add.text(45, 112, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.mpText);
-        this.mpIcon = this.scene.add.image(40, 80, IMAGE_ICON_MP).setDisplaySize(20, 20).setVisible(false);
+        this.mpIcon = this.scene.add.image(35, 120, IMAGE_ICON_MP).setDisplaySize(20, 20).setVisible(false);
         this.add(this.mpIcon);
+        this.mpDescrText = this.scene.add.text(70, 112, i18n.attributes.attribute.basicMagicPower, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.mpDescrText);
 
         //
 
-        this.ppText = this.scene.add.text(92, 72, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.ppText = this.scene.add.text(45, 132, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.ppText);
-        this.ppIcon = this.scene.add.image(80, 80, IMAGE_ICON_PP).setDisplaySize(20, 20).setVisible(false);
+        this.ppIcon = this.scene.add.image(35, 140, IMAGE_ICON_PP).setDisplaySize(20, 20).setVisible(false);
         this.add(this.ppIcon);
+        this.ppDescrText = this.scene.add.text(70, 132, i18n.attributes.attribute.basicPhysicalPower, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.ppDescrText);
 
         //
 
-        this.critText = this.scene.add.text(90, 52, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.critText = this.scene.add.text(45, 92, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.critText);
-        this.critIcon = this.scene.add.image(80, 60, IMAGE_ICON_CRIT).setDisplaySize(20, 20).setVisible(false);
+        this.critIcon = this.scene.add.image(35, 100, IMAGE_ICON_CRIT).setDisplaySize(20, 20).setVisible(false);
         this.add(this.critIcon);
+        this.critDescrText = this.scene.add.text(75, 92, i18n.attributes.attribute.basicCritChance, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.critDescrText);
 
         //
 
-        this.evasionText = this.scene.add.text(50, 92, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.evasionText = this.scene.add.text(45, 152, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.evasionText);
-        this.evasionIcon = this.scene.add.image(40, 100, IMAGE_ICON_EVASION).setDisplaySize(20, 20).setVisible(false);
+        this.evasionIcon = this.scene.add.image(35, 160, IMAGE_ICON_EVASION).setDisplaySize(20, 20).setVisible(false);
         this.add(this.evasionIcon);
+        this.evasionDescrText = this.scene.add
+            .text(70, 152, i18n.attributes.attribute.basicEvasionChance, { fontSize: 12, color: "#dddddd" })
+            .setVisible(false);
+        this.add(this.evasionDescrText);
 
         // unit skills
 
-        this.activeSkillText = this.scene.add.text(10, 140, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.activeSkillText = this.scene.add.text(10, 200, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.activeSkillText);
-        this.passiveSkillText = this.scene.add.text(10, 220, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.passiveSkillText = this.scene.add.text(10, 270, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.passiveSkillText);
         this.baTypeText = this.scene.add.text(10, 260, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.baTypeText);
@@ -246,9 +270,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         this.show(x, y);
 
-        const { desc, name, isChained, isActivateOnStart } = skillSet;
+        const { desc, name, isChained, isActivateOnStart, isBasicAttack } = skillSet;
 
-        // = i18n.ui.INCOME + ": " + income;
         this.titleText.setText(name);
         this.descrText.setVisible(true);
         this.descrText.setText(substituteSummonDescription(skillSet));
@@ -259,7 +282,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         if (isActivateOnStart) {
             this.enchancedOnStartIcon.setVisible(true);
-            this.enchancedText.setText("triggers before battle");
+            this.enchancedText.setText(i18n.ui.ON_START_SKILL);
             this.enchancedText.setVisible(true);
         }
 
@@ -271,13 +294,22 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         //
 
+        this.noBAText.setVisible(isBasicAttack === false);
+
+        //
+
         if (isFromHero) {
-            const { image } = skillSet;
+            const { image, isMcSkill } = skillSet;
 
             image && this.skillImage.setTexture(image);
-            this.skillImage.setVisible(true);
+            image && this.skillImage.setVisible(true);
 
             // tags
+
+            if (isMcSkill) {
+                // do not show tags on mc skill
+                return;
+            }
 
             this.skillContainer.removeAll(true);
             this.skillContainer.setVisible(true);
@@ -311,9 +343,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         const bonusesText =
             battleBonuses?.reduce((text, bonus) => {
                 if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND)
-                    text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill.name + ")\n"
-                else
-                    text += i18n.attributes.bonusType[bonus.type] + " " + bonus.value + "\n";
+                    text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill?.name || "" + ")\n";
+                else text += i18n.attributes.bonusType[bonus.type] + " " + bonus.value + "\n";
                 return text;
             }, "") || "";
         if (bonusesText) {
@@ -322,7 +353,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         } else if (item.id === "coin") {
             this.bonusTextObject.setText(i18n.ui.COIN_SELL + " " + getItemPrice(item));
             this.bonusTextObject.setVisible(true);
-        }else {
+        } else {
             this.bonusTextObject.setVisible(false);
         }
 
@@ -425,40 +456,54 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         this.hpIcon.setVisible(true);
         this.hpText.setVisible(true);
+        this.hpDescrText.setVisible(true);
+
         this.attackIcon.setVisible(true);
         this.attackText.setVisible(true);
+        this.attackDescrText.setVisible(true);
+
         this.mpText.setVisible(true);
         this.mpIcon.setVisible(true);
+        this.mpDescrText.setVisible(true);
+
         this.ppText.setVisible(true);
         this.ppIcon.setVisible(true);
+        this.ppDescrText.setVisible(true);
+
         this.evasionIcon.setVisible(true);
         this.evasionText.setVisible(true);
+        this.evasionDescrText.setVisible(true);
+
         this.critIcon.setVisible(true);
         this.critText.setVisible(true);
+        this.critDescrText.setVisible(true);
 
         const { basicAttack, basicMaxHp, name, basicArmor, basicHpRegen, basicMagicPower, basicPhysicalPower, basicCritChance, basicEvasionChance } = unit;
 
         this.titleText.setText(name);
         this.hpText.setText(basicMaxHp + "");
-        this.attackText.setText(basicAttack + "");
+        this.attackText.setText(basicAttack + "(" + i18n.ui[unit.attackType] + ")");
 
-        if (basicArmor > 0) {
-            this.armorText.setVisible(true);
-            this.armorIcon.setVisible(true);
-            this.armorText.setText(basicArmor + "");
-        } else {
-            this.armorText.setVisible(false);
-            this.armorIcon.setVisible(false);
-        }
+        //if (basicArmor > 0) {
+        this.armorText.setVisible(true);
+        this.armorIcon.setVisible(true);
+        this.armorDescrText.setVisible(true);
+        this.armorText.setText(basicArmor + "");
+        // } else {
+        //     this.armorText.setVisible(false);
+        //     this.armorIcon.setVisible(false);
+        //     this.armorDescrText.setVisible(false);
+        // }
 
-        if (basicHpRegen > 0) {
-            this.regenText.setVisible(true);
-            this.regenIcon.setVisible(true);
-            this.regenText.setText(basicHpRegen + "");
-        } else {
-            this.regenText.setVisible(false);
-            this.regenIcon.setVisible(false);
-        }
+        //if (basicHpRegen > 0) {
+        this.regenText.setVisible(true);
+        this.regenIcon.setVisible(true);
+        this.regenDescrText.setVisible(true);
+        this.regenText.setText(basicHpRegen + "");
+        // } else {
+        //     this.regenText.setVisible(false);
+        //     this.regenIcon.setVisible(false);
+        // }
 
         this.mpText.setText(basicMagicPower + "");
         this.ppText.setText(basicPhysicalPower + "");
@@ -478,8 +523,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
             } else {
                 this.passiveSkillText.setVisible(false);
             }
-            this.baTypeText.setVisible(true);
-            this.baTypeText.setText("Basic attack: " + unit.attackType);
+            //this.baTypeText.setVisible(true);
+            //this.baTypeText.setText("Basic attack: " + unit.attackType);
         } else {
             this.activeSkillText.setVisible(false);
             this.passiveSkillText.setVisible(false);
@@ -488,9 +533,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     }
 
     show(x: number, y: number) {
-        //console.log("show!", x, y);
         this.setVisible(true);
-        //console.log("hint panel coordites", this.x, this.y);
         this.setX(x);
         this.setY(y);
     }
@@ -506,6 +549,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.enchancedText.setVisible(false);
         this.skillContainer.setVisible(false);
         this.skillImage.setVisible(false);
+        this.noBAText.setVisible(false);
     }
 
     hideItemFields() {
@@ -520,27 +564,35 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     hideUnitFields() {
         this.hpText.setVisible(false);
         this.hpIcon.setVisible(false);
+        this.hpDescrText.setVisible(false);
 
         this.armorText.setVisible(false);
         this.armorIcon.setVisible(false);
+        this.armorDescrText.setVisible(false);
 
         this.attackText.setVisible(false);
         this.attackIcon.setVisible(false);
+        this.attackDescrText.setVisible(false);
 
         this.regenText.setVisible(false);
         this.regenIcon.setVisible(false);
+        this.regenDescrText.setVisible(false);
 
         this.mpText.setVisible(false);
         this.mpIcon.setVisible(false);
+        this.mpDescrText.setVisible(false);
 
         this.ppText.setVisible(false);
         this.ppIcon.setVisible(false);
+        this.ppDescrText.setVisible(false);
 
         this.critText.setVisible(false);
         this.critIcon.setVisible(false);
+        this.critDescrText.setVisible(false);
 
         this.evasionText.setVisible(false);
         this.evasionIcon.setVisible(false);
+        this.evasionDescrText.setVisible(false);
 
         this.passiveSkillText.setVisible(false);
         this.activeSkillText.setVisible(false);

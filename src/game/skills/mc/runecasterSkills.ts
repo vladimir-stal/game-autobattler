@@ -1,9 +1,12 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { i18n } from "../../consts";
 
 export const runecasterSkill_2: IHeroSkillSet = {
     id: "runecasterFireShield",
-    name: "Fire shield(2)",
-    desc: "Shield self with magic\nfirewhich burns every\nattacker [1]+[70%xMP]",
+    //name: "Fire shield(2)",
+    //desc: "Shield self with magic\nfirewhich burns every\nattacker [1]+[70%xMP]",
+    name: i18n.skills.mc.runecasterSkill.name,
+    desc: i18n.skills.mc.runecasterSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.RUNECASTER],
@@ -26,8 +29,10 @@ export const runecasterSkill_2: IHeroSkillSet = {
 
 export const runecasterSkill: IHeroSkillSet = {
     id: "runecasterFireShield",
-    name: "Fire shield",
-    desc: "Shield self with magic\nfirewhich burns every\nattacker [1]+[50%xMP]",
+    //name: "Fire shield",
+    //desc: "Shield self with magic\nfirewhich burns every\nattacker [1]+[50%xMP]",
+    name: i18n.skills.mc.runecasterSkill.name,
+    desc: i18n.skills.mc.runecasterSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.RUNECASTER],

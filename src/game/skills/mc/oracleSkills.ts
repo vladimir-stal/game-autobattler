@@ -3,10 +3,10 @@ import { i18n } from "../../consts";
 
 export const oracleSkill_2: IHeroSkillSet = {
     id: "warningWhisper",
-    //name: i18n.skills.mc.DivineShield.name,
-    //desc: i18n.skills.mc.DivineShield.desc1,
-    name: "Warning whisper(2)",
-    desc: "Evade next 2 basic attacks.\nRemove next debuff.",
+    //name: "Warning whisper(2)",
+    //desc: "Evade next 2 basic attacks.\nRemove next debuff.",
+    name: i18n.skills.mc.oracleSkill.name,
+    desc: i18n.skills.mc.oracleSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.ORACLE],
@@ -41,10 +41,10 @@ export const oracleSkill_2: IHeroSkillSet = {
 
 export const oracleSkill: IHeroSkillSet = {
     id: "DestinyWhisper",
-    //name: i18n.skills.mc.DivineShield.name,
-    //desc: i18n.skills.mc.DivineShield.desc1,
-    name: "Destiny whisper",
-    desc: "Evade next basic attack.\nRemove next debuff.",
+    //name: "Destiny whisper",
+    //desc: "Evade next basic attack.\nRemove next debuff.",
+    name: i18n.skills.mc.oracleSkill.name,
+    desc: i18n.skills.mc.oracleSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.ORACLE],
