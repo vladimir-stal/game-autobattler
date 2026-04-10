@@ -20,7 +20,6 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
     return [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             attribute: "maxHp",
             value: hpPure,
             valueType: "number",
@@ -30,7 +29,6 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
         },
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: false,
             value: hpPure,
             valueType: "number",
             targetType: ETargetType.SUMMON_CURRENT,
@@ -39,7 +37,6 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
         },
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             attribute: "armor",
             value: armorPure,
             valueType: "number",
@@ -50,7 +47,6 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
 
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             attribute: "attack",
             value: atkPure,
             valueType: "number",
@@ -60,7 +56,6 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
         },
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "+atk",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -75,7 +70,6 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
         },
         {
             type: EHeroSkillType.SUMMON,
-            isBasicAttack: true,
             summon: summon,
             condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
         },
@@ -98,6 +92,21 @@ export const substituteSummonDescription = (skillset: IHeroSkillSet): string => 
         const atk = summon?.basicAttack || "?";
         const hp = summon?.basicMaxHp || "?";
         return desc.replace("[stats]", "[" + atk + "," + hp + "]");
+    }
+    if (desc.includes("[stats1]")) {
+        const allsummons = skills.filter(sk => sk.type === EHeroSkillType.SUMMON || (sk.childSkill && sk.childSkill.type === EHeroSkillType.SUMMON))
+                .map(sk => {
+                    if (sk.type === EHeroSkillType.SUMMON)
+                        return sk.summon;
+                    else
+                        return sk.childSkill.summon; 
+                });
+        allsummons.forEach((summon,index) => {
+            const atk = summon?.basicAttack || "?";
+            const hp = summon?.basicMaxHp || "?";
+            desc.replace("[stats"+(index+1)+"]", "[" + atk + "," + hp + "]");
+        })
+        return desc;
     }
     return desc;
 };

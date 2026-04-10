@@ -7,8 +7,8 @@ import { attrDescArmor } from "../skills/wildSkillConsts";
 import { fireflySummonMob_6 } from "../units/summonMobUnits";
 import { dagger22 } from "../weaponItem2Consts";
 
-export const debugHeroSelectRoom = true;
-export const debugStartingItemsRoom = true;
+export const debugHeroSelectRoom = false;
+export const debugStartingItemsRoom = false;
 
 /*
     let isSingleSelect = false;

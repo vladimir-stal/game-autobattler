@@ -127,6 +127,7 @@ export class BattleController {
         this.roundCount = roundCount;
         this.isTillDeath = isTillDeath;
         this.prepareToBattle();
+        console.log("-= Pre battle =-",this.player1BattleUnits,this.player2BattleUnits);
         //
         this.battleRecord = [];
 
@@ -174,20 +175,26 @@ export class BattleController {
     }
 
     prepareToBattle() {
-        this.player1BattleUnits = this.player1Units.map((unit) => {
+        const player1NumberOfHeroes = this.player1Units.filter(u => !!u).length;
+        const player2NumberOfHeroes = this.player2Units.filter(u => !!u).length;
+        //console.log("Party size",player1NumberOfHeroes,player2NumberOfHeroes);
+        
+        this.player1BattleUnits = this.player1Units.map((unit, index) => {
             if (!unit) {
                 return null;
-            }
-
-            return prepareUnitToBattle(unit);
+            }            
+            const frontRow = (player1NumberOfHeroes <= 2 && index === 0) || (player1NumberOfHeroes > 2 && index <= 1);
+            //console.log("Unit",unit," index",index," front",frontRow);
+            return prepareUnitToBattle(unit, !frontRow);
         });
 
-        this.player2BattleUnits = this.player2Units.map((unit) => {
+        this.player2BattleUnits = this.player2Units.map((unit,index) => {
             if (!unit) {
                 return null;
             }
-
-            return prepareUnitToBattle(unit);
+            const frontRow = (player2NumberOfHeroes <= 2 && index === 0) || (player2NumberOfHeroes > 2 && index <= 1);
+            //console.log("Unit",unit," index",index," front",frontRow);
+            return prepareUnitToBattle(unit, !frontRow);
         });
 
         //console.log(">>>>>>>>>>>>>>> prepareToBattle");
@@ -1167,7 +1174,7 @@ export class BattleController {
             return;
         }
 
-        unit.summon = prepareSummonToBattle(summon);
+        unit.summon = prepareSummonToBattle(summon, unit.isBackRowPosition);
 
         // check unique summon types
         prepareUniqueSummonToBattle(unit);

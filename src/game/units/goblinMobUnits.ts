@@ -1,7 +1,7 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType } from "../../types";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinGoldCoin, itemGoblinSilverCoin } from "../mobItemConsts";
-import { goblinApplyShock, goblinShamanHpRegIncr } from "../skills/mobSkills";
+import { fireflyNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff } from "../skills/mobSkills";
 
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
@@ -85,7 +85,7 @@ export const goblinShamanUnit: IUnit = {
     ],
 };
 
-export const goldGoblin1Unit: IUnit = {
+export const goldGoblin1Unit: IUnit = { // Rewards and shop variant (NOT FOR COMBAT)
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BARD,
     mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
@@ -115,4 +115,29 @@ export const goldGoblin1Unit: IUnit = {
         { item: itemGoblinSilverCoin, probability: 49 }, // 30/(0.85*0.83*0.86)
         { item: itemGoblinGoldCoin, probability: 100 },
     ],
+};
+
+export const goldGoblinBattleUnit: IUnit = { // combat variant
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.BARD,
+    mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
+    attackType: EHeroAttackType.MAGIC,
+    attackTargetType: ETargetType.RANDOM_ENEMY,
+    basicAttack: 2,
+    basicAttackTimes: 2,
+    basicMaxHp: 5,
+    basicHpRegen: 0,
+    basicArmor: 10,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: i18n.units.GOLDGOBLIN1, //name: "Goblin trader"
+    id: "GOLDGOBLIN1",
+    skills: [fireflyNoSkill,goldGoblinBuff,fireflyNoSkill,goldGoblinBuff],
+    items: [],
+    level: 3,
+    exp: 0,
+    afterDuelBonuses: [],
+    mobItems: [],
 };

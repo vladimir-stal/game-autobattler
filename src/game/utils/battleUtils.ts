@@ -48,6 +48,7 @@ export const emptyBattleUnit: IBattleUnit = {
     maxHp: 0,
     physicalPower: 0,
     statuses: [],
+    isBackRowPosition: false,
 }
 
 export const getFirstTarget = (units: TBattleUnits) => {
@@ -481,7 +482,7 @@ export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, b
     });
 };
 
-export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
+export const prepareUnitToBattle = (unit: IUnit, backrow:boolean = false): IBattleUnit => {
     const { basicArmor, basicMaxHp, basicAttack, basicHpRegen, basicEvasionChance, basicCritChance, basicMagicPower, basicPhysicalPower, items } = unit;
     const itemBonuses: IItemBattleBonus[] = items.reduce((bonuses, item) => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
@@ -516,6 +517,7 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
         magicPower: basicMagicPower,
         physicalPower: basicPhysicalPower,
         customNumber: 0,
+        isBackRowPosition: backrow,
         //
         buffs: [],
         debuffs: [],
@@ -529,8 +531,8 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
     };
 };
 
-export const prepareSummonToBattle = (unit: IUnit): IBattleUnit => {
-    const summon = prepareUnitToBattle(unit);
+export const prepareSummonToBattle = (unit: IUnit, backrow:boolean = true): IBattleUnit => {
+    const summon = prepareUnitToBattle(unit, backrow);
     summon.isSummon = true;
     generateUnitId(summon);
     return summon;
@@ -885,6 +887,10 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return !!unit.totem;
         case ESkillCondition.CUSTOM_NUMBER_NOT_ZERO:
             return !!unit.customNumber;
+        case ESkillCondition.IN_BACK_ROW:
+            return unit.isBackRowPosition;
+        case ESkillCondition.IN_FRONT_ROW:
+            return !unit.isBackRowPosition;
     }
 };
 

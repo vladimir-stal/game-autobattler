@@ -1,6 +1,6 @@
 import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillSetType, EStatusType, ETargetType, IHeroSkillSet } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_FIREFLY_SELF_POISON, IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_FIREFLY_SELF_POISON, IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 
 // GOBLIN SHAMAN /////////////////////////////////////////////// GOBLIN SHAMAN
 
@@ -187,10 +187,43 @@ export const fireflyNoSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.ALL],
+    isBasicAttack: true,
     skills: [
         {
             type: EHeroSkillType.NONE,
-            isBasicAttack: true,
         },
     ],
+};
+
+export const goldGoblinBuff: IHeroSkillSet = {
+    id: "goldGoblinBuff",
+    name: i18n.skills.basic.buffBaNextBaAll.name,
+    desc: i18n.skills.basic.buffBaNextBaAll.desc1,
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.BARD],
+    isBasicAttack: true,
+    isActivateOnStart: true,
+    skills: [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "+1 next ba",
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "attack",
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.ALL_ALLIES,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "armor",
+            value: 1,
+            valueType: "number",
+            targetType: ETargetType.ALL_ALLIES,
+        },
+    ],
+    image: IMAGE_SKILL_BARD_BUFF_1,
 };

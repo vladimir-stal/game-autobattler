@@ -149,8 +149,10 @@ export const getRooms = (
                         : [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                     // Go change in debugUtils.ts for custom room
                 } else if (hour === 2) {
-                    return [null, { roomType: ERoomType.DUEL }, null];
+                    //return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
+                } else if (hour === 5) {
+                    return [null, { roomType: ERoomType.DUEL }, null];
                 }
             }
             break;
@@ -1002,7 +1004,8 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         //}
 
                         if (item.type === EItemType.COMMON) {
-                            slot.setIsActive(true);
+                            if (!item.heroClasses.includes(EHeroClass.MOB))
+                                slot.setIsActive(true);
                             return;
                         }
 
@@ -1011,7 +1014,8 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         }
 
                         if (item.heroClasses.includes(EHeroClass.ALL) || item.weaponType === EWeaponItemType.DAGGER) {
-                            slot.setIsActive(true);
+                            if (!item.heroClasses.includes(EHeroClass.MOB))
+                                slot.setIsActive(true);
                             return;
                         }
 

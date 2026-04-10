@@ -666,6 +666,10 @@ export enum ESkillSetType {
     MIXED = "MIXED",
 }
 
+/**
+ * @constant IN_BACK_ROW Caster of this skill positioned last (2-3 heroes) or last 2 (4 heroes)
+ * @constant IN_FRONT_ROW Caster of this skill positioned first (1-2 hero) or first 2 (3-4 heroes)
+ */
 export enum ESkillCondition {
     PP_IS_HIGHER_THAN_MP = "PP_IS_HIGHER_THAN_MP",
     MP_IS_HIGHER_THAN_PP = "MP_IS_HIGHER_THAN_PP",
@@ -674,6 +678,8 @@ export enum ESkillCondition {
     HAS_TOTEM = "HAS_TOTEM",
     HAS_NO_SUMMON_OR_TOTEM = "HAS_NO_SUMMON_OR_TOTEM",
     CUSTOM_NUMBER_NOT_ZERO = "CUSTOM_NUMBER_NOT_ZERO",
+    IN_BACK_ROW = "IN_BACK_ROW",
+    IN_FRONT_ROW = "IN_FRONT_ROW",
 }
 
 /**
@@ -793,6 +799,7 @@ export interface IBattleUnit extends IUnit {
     critChance: number;
     evasionChance: number;
     customNumber: number; // for tricky skill calculations
+    isBackRowPosition: boolean;
     //
     isSummon: boolean;
     buffs: IBuff[];
