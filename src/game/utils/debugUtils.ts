@@ -1,9 +1,11 @@
 import { ECardType, ICard } from "../../types";
-import { darkHero, masterHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
+import { darkHero, masterHero, orderHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { dagger1 } from "../basicWeaponItemConsts";
-import { statusesIntoHeal } from "../skills/commonSkillConsts";
+import { nextBAArea, statusesIntoHeal } from "../skills/commonSkillConsts";
 import { fireflySelfPoison } from "../skills/mobSkills";
 import { attrDescArmor } from "../skills/wildSkillConsts";
+import { fireflySummonMob_6 } from "../units/summonMobUnits";
+import { dagger22 } from "../weaponItem2Consts";
 
 export const debugHeroSelectRoom = true;
 export const debugStartingItemsRoom = true;
@@ -18,14 +20,14 @@ export const debugStartingItemsRoom = true;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        { type: ECardType.SKILL, price: 0, skill: attrDescArmor },
-        { type: ECardType.SKILL, price: 0, skill: statusesIntoHeal },
-        { type: ECardType.SKILL, price: 0, skill: fireflySelfPoison },
-        { type: ECardType.ITEM, price: 0, item: dagger1 },
+        { type: ECardType.SKILL, price: 0, skill: nextBAArea },
+        { type: ECardType.SKILL, price: 0, skill: nextBAArea },
+        { type: ECardType.ITEM, price: 0, item: dagger22 },
+        { type: ECardType.UNIT, price: 0, unit: fireflySummonMob_6}
     ];
 };

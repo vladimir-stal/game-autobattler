@@ -322,7 +322,7 @@ export class BattleController {
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         if (totem) {
             totem.skills.forEach((skill) => {
-                performTotemSkill(unit, totem, skill, allyUnits, opponentUnits, this.battleRecord);
+                performTotemSkill(unit, totem, skill, allyUnits, opponentUnits, this.battleRecord, this);
             });
         }
     }
@@ -705,6 +705,7 @@ export class BattleController {
             case EBuffType.EVADE:
             case EBuffType.IGNORE_NEXT_DEBUFF:
             case EBuffType.FIRE_SHIELD:
+            case EBuffType.DIVINE_SHIELD:
                 {
                     const targets = getAllyTargets(unit, allyUnits, targetType, targetUnitId);
                     if (!targets) {
@@ -733,8 +734,7 @@ export class BattleController {
                         buffAction.buffTargets?.push({ targetId: target.id, isExisting: !!existingBuff, value: buffValue });
                     });
                 }
-                break;
-            case EBuffType.DIVINE_SHIELD:
+                break;            
             case EBuffType.ANTISKILL_SHIELD:
             case EBuffType.DARK_HEAL:
             case EBuffType.BLADEDANCE:
@@ -1534,7 +1534,7 @@ export class BattleController {
         const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
         if (divineShield) {
             this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-            removeBuff(target, divineShield, this.battleRecord);
+            changeBuffValue(target,divineShield,-1,this.battleRecord);
             //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
             return;
         }
@@ -1608,8 +1608,8 @@ export class BattleController {
                 isEvasion = true;
                 finalDamageValue = Math.floor(finalDamageValue * EVASION_MODIFIER);
                 recordTarget.isEvasion = true;
-            } else if (unit.evasionChance > 0) {
-                if (getRandomIntFromInterval(0, 100) <= unit.evasionChance) {
+            } else if (target.evasionChance > 0) {
+                if (getRandomIntFromInterval(0, 100) <= target.evasionChance) {
                     isEvasion = true;
                     finalDamageValue = Math.floor(finalDamageValue * EVASION_MODIFIER);
                     recordTarget.isEvasion = true;

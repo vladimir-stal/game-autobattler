@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroClassType, EUnitType, IHeroSkill, IHeroSkillSet, IUnit, THeroAttribute, TUnits } from "../../types";
+import { EHeroAttackType, EHeroClass, EHeroClassType, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IUnit, THeroAttribute, TUnits } from "../../types";
 import { basicClassHeroesByLevel } from "../heroConsts";
 import { basicCommonItems, basicWeapons } from "../itemConsts";
 import { bardSkills } from "../skills/bardSkillConsts";
@@ -41,6 +41,30 @@ const EXP_FOR_LEVEL_MC: Record<number, number> = {
     5: 60,
     // (L)*15-20  ~10, 25, 40, 55
 };
+
+export const emptyUnit: IUnit = {
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.ALL,
+    mobHeroClasses: [],
+    attackType: EHeroAttackType.PHYSICAL,
+    attackTargetType: ETargetType.SELF,
+    basicAttack: 0,
+    basicAttackTimes: 0,
+    basicMaxHp: 0,
+    basicHpRegen: 0,
+    basicArmor: 0,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: "Mr.Nobody",
+    id: "emptyUnit",
+    skills: [],
+    items: [],
+    level: 1,
+    exp: 0,
+    mobItems: [],
+}
 
 export const addExp = (units: (IUnit | null)[], expAdd: number) => {
     units.forEach((unit) => {

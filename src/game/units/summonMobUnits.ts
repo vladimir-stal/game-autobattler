@@ -98,7 +98,7 @@ export const warriorSummonMob: IUnit = {
 export const fireflySummonMob: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.SUMMON,
-    mobHeroClasses: [EHeroClass.SUMMON],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
@@ -127,7 +127,7 @@ export const fireflySummonMob: IUnit = {
 export const fireflySummonMob_6: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.SUMMON,
-    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WILD],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.FIRST_TWO_ENEMIES,
     basicAttack: 8,

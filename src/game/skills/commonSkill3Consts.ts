@@ -112,7 +112,7 @@ export const buffSelfMPorPP_2: IHeroSkillSet = {
             },
         },
         {
-            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
             isBasicAttack: false,
             type: EHeroSkillType.BUFF,
             buff: {
@@ -179,7 +179,7 @@ export const buffSelfMPorPP: IHeroSkillSet = {
             },
         },
         {
-            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
             isBasicAttack: false,
             type: EHeroSkillType.BUFF,
             buff: {
@@ -204,7 +204,7 @@ export const buffSelfMPorPP: IHeroSkillSet = {
                 value: 3,
             },
         },
-        {
+        { // TODO: fix this, because after buffing MP at previous stem this step condition will be skipped
             condition: ESkillCondition.MP_IS_EQUALS_PP,
             isBasicAttack: false,
             type: EHeroSkillType.BUFF,

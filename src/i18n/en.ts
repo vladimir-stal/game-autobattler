@@ -143,6 +143,7 @@ export interface Ii18n {
     roomDescriptions: Partial<Record<ERoomType, string>>;
     skills: {
         basic: {
+            nextBAArea: TSkillI18n;
             phycNBleed: TSkillI18n;
             feintAttack: TSkillI18n;
             magicRain: TSkillI18n;
@@ -600,6 +601,12 @@ export const i18n: Ii18n = {
                 desc1: "Deal [2+PPx35%] physical\ndamage to first enemy\nand apply [1] bleed",
                 desc2: "Deal [2+PPx50%] physical\ndamage to first enemy\nand apply [2] bleed",
                 desc3: "Deal [2+PPx65%] physical\ndamage to first enemy\nand apply [3] bleed",
+            },
+            nextBAArea: {
+                name: "Cleave",
+                desc1: "Reduce next basic attack\nby [35%] but it hits first\n2 eneimes",
+                desc2: "Reduce next basic attack\nby [20%] but it hits first\n2 eneimes",
+                desc3: "Next basic attack hits\nfirst 2 eneimes",
             },
             //
             // ORDER

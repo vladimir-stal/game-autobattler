@@ -1,6 +1,6 @@
-import { AnimationType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet } from "../../types";
+import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_MAGIC_HAND, IMAGE_SKILL_PHYS_ATTACK, IMAGE_SKILL_TEST, IMAGE_SKILL_YELLOW_FLAME, IMAGE_OVERCOME } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_MAGIC_HAND, IMAGE_SKILL_PHYS_ATTACK, IMAGE_SKILL_TEST, IMAGE_SKILL_YELLOW_FLAME, IMAGE_SKILL_OVERCOME, IMAGE_SKILL_CLEAVE } from "../utils/load/skillImagesLoad";
 
 ////////////// COMMON SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
 
@@ -17,9 +17,9 @@ export const noBasicAttackSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.NONE,
-            isBasicAttack: false,
         },
     ],
+    isBasicAttack: false,
     isChained: true,
     image: IMAGE_SKILL_TEST,
 };
@@ -54,7 +54,6 @@ export const noBasicAttackSkill: IHeroSkillSet = {
 const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] => {
     return [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.CALCULATE_NUMBER,
             value: 0, // sets battleUnit.customNumber = 0
             valueType: "number",
@@ -62,7 +61,6 @@ const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] 
             animation: AnimationType.NONE,
         },
         {
-            isBasicAttack: false,
             type: EHeroSkillType.CALCULATE_NUMBER,
             status: status, // summs number of status stacks into battleUnit.customNumber
             value: 1, // not used
@@ -71,7 +69,6 @@ const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] 
             animation: AnimationType.NONE,
         },
         {
-            isBasicAttack: false,
             type: EHeroSkillType.STATUS_APPLY,
             status: status,
             value: -percent, // multiply battleUnit.customNumber by negative %percent
@@ -82,7 +79,6 @@ const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] 
             condition: ESkillCondition.CUSTOM_NUMBER_NOT_ZERO,
         },
         {
-            isBasicAttack: false,
             type: EHeroSkillType.HEAL,
             value: percent, // multiply battleUnit.customNumber by positive %percent
             valueFrom: "customNumber",
@@ -107,7 +103,7 @@ export const statusesIntoHeal_2: IHeroSkillSet = {
         ...overcomeSkillStack(EStatusType.POISON, 65),
         ...overcomeSkillStack(EStatusType.SHOCK, 65),
     ],
-    image: IMAGE_OVERCOME,
+    image: IMAGE_SKILL_OVERCOME,
 };
 
 export const statusesIntoHeal: IHeroSkillSet = {
@@ -123,7 +119,7 @@ export const statusesIntoHeal: IHeroSkillSet = {
         ...overcomeSkillStack(EStatusType.POISON, 50),
         ...overcomeSkillStack(EStatusType.SHOCK, 50),
     ],
-    image: IMAGE_OVERCOME,
+    image: IMAGE_SKILL_OVERCOME,
     nextLevel: statusesIntoHeal_2,
 };
 
@@ -137,7 +133,6 @@ export const attackWithBleedSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.BLEED,
             value: 3,
@@ -145,7 +140,6 @@ export const attackWithBleedSkill_3: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
             value: 2,
             targetType: ETargetType.FIRST_ENEMY,
@@ -165,7 +159,6 @@ export const attackWithBleedSkill_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.BLEED,
             value: 2,
@@ -173,7 +166,6 @@ export const attackWithBleedSkill_2: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
             value: 2,
             targetType: ETargetType.FIRST_ENEMY,
@@ -194,7 +186,6 @@ export const attackWithBleedSkill: IHeroSkillSet = {
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.BLEED,
             value: 1,
@@ -202,7 +193,6 @@ export const attackWithBleedSkill: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
         },
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
             value: 2,
             targetType: ETargetType.FIRST_ENEMY,
@@ -225,7 +215,6 @@ export const phycisalAttackSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
             value: 6,
             targetType: ETargetType.FIRST_ENEMY,
@@ -245,7 +234,6 @@ export const phycisalAttackSkill_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
             value: 5,
             targetType: ETargetType.FIRST_ENEMY,
@@ -266,7 +254,6 @@ export const phycisalAttackSkill: IHeroSkillSet = {
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
             value: 4,
             targetType: ETargetType.FIRST_ENEMY,
@@ -277,6 +264,108 @@ export const phycisalAttackSkill: IHeroSkillSet = {
     //isChained: true,
     nextLevel: phycisalAttackSkill_2,
     image: IMAGE_SKILL_PHYS_ATTACK,
+};
+
+// FRONTAL CLEAVE
+export const nextBAArea_3: IHeroSkillSet = {
+    id: "nextBAArea",
+    name: i18n.skills.basic.nextBAArea.name,
+    desc: i18n.skills.basic.nextBAArea.desc3,
+    // reduce next ba by [35%/20%/0%] but next ba target first 2 eneimes
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
+    skills: [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "cleave",
+                targetType: ETargetType.SELF,
+                value: 1,
+                valueType: "number",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
+            }
+        },
+    ],
+    image: IMAGE_SKILL_CLEAVE,
+};
+
+export const nextBAArea_2: IHeroSkillSet = {
+    id: "nextBAArea",
+    name: i18n.skills.basic.nextBAArea.name,
+    desc: i18n.skills.basic.nextBAArea.desc2,
+    // reduce next ba by [35%/20%/0%] but next ba target first 2 eneimes
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
+    skills: [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "-atk",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: 20,
+                valueType: "percent",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "cleave",
+                targetType: ETargetType.SELF,
+                value: 1,
+                valueType: "number",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
+            }
+        },
+    ],
+    nextLevel: nextBAArea_3,
+    image: IMAGE_SKILL_CLEAVE,
+};
+
+export const nextBAArea: IHeroSkillSet = {
+    id: "nextBAArea",
+    name: i18n.skills.basic.nextBAArea.name,
+    desc: i18n.skills.basic.nextBAArea.desc1,
+    // reduce next ba by [35%/20%/0%] but next ba target first 2 eneimes
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
+    skills: [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "-atk",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: 35,
+                valueType: "percent",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "cleave",
+                targetType: ETargetType.SELF,
+                value: 1,
+                valueType: "number",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
+            }
+        },
+    ],
+    nextLevel: nextBAArea_2,
+    image: IMAGE_SKILL_CLEAVE,
 };
 
 // REMOVE DEBUFF
@@ -292,19 +381,16 @@ export const removeDebuffSkill_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
-            isBasicAttack: false,
             targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
-            isBasicAttack: false,
             targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
-            isBasicAttack: true,
             targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
@@ -323,13 +409,11 @@ export const removeDebuffSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
-            isBasicAttack: false,
             targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
-            isBasicAttack: true,
             targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
@@ -349,7 +433,6 @@ export const removeDebuffSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF_REMOVE,
-            isBasicAttack: true,
             targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
@@ -371,19 +454,16 @@ export const removeBuffSkill_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF_REMOVE,
-            isBasicAttack: false,
             targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
             type: EHeroSkillType.BUFF_REMOVE,
-            isBasicAttack: false,
             targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
             type: EHeroSkillType.BUFF_REMOVE,
-            isBasicAttack: true,
             targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
@@ -402,13 +482,11 @@ export const removeBuffSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF_REMOVE,
-            isBasicAttack: false,
             targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
         {
             type: EHeroSkillType.BUFF_REMOVE,
-            isBasicAttack: true,
             targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
@@ -428,7 +506,6 @@ export const removeBuffSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF_REMOVE,
-            isBasicAttack: true,
             targetType: ETargetType.BUFFED_ENEMY_RANDOM,
             attackType: EHeroAttackType.PHYSICAL,
         },
@@ -436,3 +513,5 @@ export const removeBuffSkill: IHeroSkillSet = {
     nextLevel: removeBuffSkill_2,
     image: IMAGE_SKILL_MAGIC_HAND,
 };
+
+export const multiclassSkills1 = [phycisalAttackSkill,statusesIntoHeal,attackWithBleedSkill,nextBAArea];

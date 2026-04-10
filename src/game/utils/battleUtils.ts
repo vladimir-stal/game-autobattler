@@ -3,6 +3,7 @@ import {
     EBuffType,
     EDebuffType,
     EHeroAttackType,
+    EHeroClass,
     EHeroClassType,
     EItemBattleBonusType,
     ESkillCondition,
@@ -27,7 +28,27 @@ import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
-import { generateId, generateUnitId } from "./unitUtils";
+import { emptyUnit, generateId, generateUnitId } from "./unitUtils";
+
+export const emptyBattleUnit: IBattleUnit = {
+    ...emptyUnit,
+    armor: 0,
+    attack: 0,
+    buffs: [],
+    critChance: 0,
+    currentSkillIndex: 0,
+    customNumber: 0,
+    debuffs: [],
+    evasionChance: 0,
+    hp: 0,
+    hpRegen: 0,
+    isSummon: false,
+    itemBonuses: [],
+    magicPower: 0,
+    maxHp: 0,
+    physicalPower: 0,
+    statuses: [],
+}
 
 export const getFirstTarget = (units: TBattleUnits) => {
     return units.find((unit) => unit && unit.hp > 0) || null;
@@ -553,14 +574,17 @@ export const calculateUnitsAfterBattle = (battleUnits: (IBattleUnit | null)[]): 
     });
 };
 
-/** Calculate final damage according to target unit defense, buffs and debuffs */
+/** Calculate final damage according to target unit defense, buffs and debuffs 
+ *    used only for Totems
+*/
 export const dealDamage = (target: IBattleUnit, damageValue: number, damageType: EHeroAttackType, battleRecord: TBattleRecord) => {
     let finalDamageValue = damageValue;
     // check if divine shield is active
     const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
     if (divineShield) {
         battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-        removeBuff(target, divineShield, battleRecord);
+        changeBuffValue(target,divineShield,-1,battleRecord);
+        //removeBuff(target, divineShield, battleRecord);
         return;
     }
 

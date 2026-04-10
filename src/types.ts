@@ -929,7 +929,7 @@ export interface IDebuff {
  */
 export interface IHeroSkill {
     type: EHeroSkillType;
-    isBasicAttack: boolean;
+    isBasicAttack?: boolean;
     attackType?: EHeroAttackType;
     attribute?: THeroBattleAttribute;
     buff?: IBuff;
