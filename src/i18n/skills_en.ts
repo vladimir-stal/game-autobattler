@@ -36,6 +36,12 @@ export const SKILLS_EN = {
             desc2: "Deal [3] magic damage \nto random enemy 3 times",
             desc3: "Deal [4] magic damage \nto random enemy 3 times",
         },
+        magicRain: {
+            name: "Magic rain",
+            desc1: "Deal [2] magic damage \nto random enemy [1+MP*40%] times",
+            desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
+            desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
+        },
         //
         // MASTER
         //
@@ -44,6 +50,12 @@ export const SKILLS_EN = {
             desc1: "Multiply x[1.4] self next basic attack",
             desc2: "Multiply x[1.6] self next basic attack",
             desc3: "Multiply x[1.8] self next basic attack",
+        },
+        feintAttack: {
+            name: "Feint attack",
+            desc1: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*20%]",
+            desc2: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*30%]",
+            desc3: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*40%]",
         },
         //
         // MAGIC
@@ -65,9 +77,21 @@ export const SKILLS_EN = {
         //
         phycAttack: {
             name: "Phys Attack",
-            desc1: "Deal [4] physical damage to first enemy",
-            desc2: "Deal [6] physical damage to first enemy",
-            desc3: "Deal [6]+[PPx50%] physical damage to first enemy",
+            desc1: "Deal [4+PPx35%] physical\ndamage to first enemy",
+            desc2: "Deal [5+PPx50%] physical\ndamage to first enemy",
+            desc3: "Deal [6+PPx65%] physical\ndamage to first enemy",
+        },
+        phycNBleed: {
+            name: "PhysNBleed Attack",
+            desc1: "Deal [2+PPx35%] physical\ndamage to first enemy\nand apply [1] bleed",
+            desc2: "Deal [2+PPx50%] physical\ndamage to first enemy\nand apply [2] bleed",
+            desc3: "Deal [2+PPx65%] physical\ndamage to first enemy\nand apply [3] bleed",
+        },
+        nextBAArea: {
+            name: "Cleave",
+            desc1: "Reduce next basic attack\nby [35%] but it hits first\n2 eneimes",
+            desc2: "Reduce next basic attack\nby [20%] but it hits first\n2 eneimes",
+            desc3: "Next basic attack hits\nfirst 2 eneimes",
         },
         //
         // ORDER
