@@ -3,6 +3,7 @@ import {
     EBuffType,
     EDebuffType,
     EHeroAttackType,
+    EHeroClass,
     EHeroClassType,
     EItemBattleBonusType,
     ESkillCondition,
@@ -27,7 +28,28 @@ import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
-import { generateId, generateUnitId } from "./unitUtils";
+import { emptyUnit, generateId, generateUnitId } from "./unitUtils";
+
+export const emptyBattleUnit: IBattleUnit = {
+    ...emptyUnit,
+    armor: 0,
+    attack: 0,
+    buffs: [],
+    critChance: 0,
+    currentSkillIndex: 0,
+    customNumber: 0,
+    debuffs: [],
+    evasionChance: 0,
+    hp: 0,
+    hpRegen: 0,
+    isSummon: false,
+    itemBonuses: [],
+    magicPower: 0,
+    maxHp: 0,
+    physicalPower: 0,
+    statuses: [],
+    isBackRowPosition: false,
+}
 
 export const getFirstTarget = (units: TBattleUnits) => {
     return units.find((unit) => unit && unit.hp > 0) || null;
@@ -462,7 +484,7 @@ export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, b
     });
 };
 
-export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
+export const prepareUnitToBattle = (unit: IUnit, backrow:boolean = false): IBattleUnit => {
     const { basicArmor, basicMaxHp, basicAttack, basicHpRegen, basicEvasionChance, basicCritChance, basicMagicPower, basicPhysicalPower, items } = unit;
     const itemBonuses: IItemBattleBonus[] = items.reduce((bonuses, item) => {
         if (item.battleBonuses && item.battleBonuses?.length > 0) {
@@ -497,6 +519,7 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
         magicPower: basicMagicPower,
         physicalPower: basicPhysicalPower,
         customNumber: 0,
+        isBackRowPosition: backrow,
         //
         buffs: [],
         debuffs: [],
@@ -510,8 +533,8 @@ export const prepareUnitToBattle = (unit: IUnit): IBattleUnit => {
     };
 };
 
-export const prepareSummonToBattle = (unit: IUnit): IBattleUnit => {
-    const summon = prepareUnitToBattle(unit);
+export const prepareSummonToBattle = (unit: IUnit, backrow:boolean = true): IBattleUnit => {
+    const summon = prepareUnitToBattle(unit, backrow);
     summon.isSummon = true;
     generateUnitId(summon);
     return summon;
@@ -555,14 +578,17 @@ export const calculateUnitsAfterBattle = (battleUnits: (IBattleUnit | null)[]): 
     });
 };
 
-/** Calculate final damage according to target unit defense, buffs and debuffs */
+/** Calculate final damage according to target unit defense, buffs and debuffs 
+ *    used only for Totems
+*/
 export const dealDamage = (target: IBattleUnit, damageValue: number, damageType: EHeroAttackType, battleRecord: TBattleRecord) => {
     let finalDamageValue = damageValue;
     // check if divine shield is active
     const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
     if (divineShield) {
         battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-        removeBuff(target, divineShield, battleRecord);
+        changeBuffValue(target,divineShield,-1,battleRecord);
+        //removeBuff(target, divineShield, battleRecord);
         return;
     }
 
@@ -863,6 +889,10 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return !!unit.totem;
         case ESkillCondition.CUSTOM_NUMBER_NOT_ZERO:
             return !!unit.customNumber;
+        case ESkillCondition.IN_BACK_ROW:
+            return unit.isBackRowPosition;
+        case ESkillCondition.IN_FRONT_ROW:
+            return !unit.isBackRowPosition;
     }
 };
 

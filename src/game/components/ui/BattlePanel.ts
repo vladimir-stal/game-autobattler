@@ -48,12 +48,15 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         this.setVisible(true);
 
         this.currentActiveUnitId = undefined;
+        const player1NumberOfHeroes = playerUnits.filter(u => !!u).length;
+        const player2NumberOfHeroes = enemyUnits.filter(u => !!u).length;
 
-        this.playerUnits = playerUnits.map((unit) => {
+        this.playerUnits = playerUnits.map((unit,index) => {
             if (!unit) {
                 return null;
             }
-            return prepareUnitToBattle(unit);
+            const frontRow = (player1NumberOfHeroes <= 2 && index === 0) || (player1NumberOfHeroes > 2 && index <= 1);
+            return prepareUnitToBattle(unit, !frontRow);
         });
 
         if (this.enemyUnits.length < 4) {
@@ -62,12 +65,14 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             }
         }
 
-        this.enemyUnits = enemyUnits.map((unit) => {
+        this.enemyUnits = enemyUnits.map((unit,index) => {
             if (!unit) {
                 return null;
             }
-            return prepareUnitToBattle(unit);
+            const frontRow = (player2NumberOfHeroes <= 2 && index === 0) || (player2NumberOfHeroes > 2 && index <= 1);
+            return prepareUnitToBattle(unit, !frontRow);
         });
+        console.log("BattlePanel check",this.playerUnits,this.enemyUnits);
         this.removeAll(true);
         this.renderPlayerUnitsPanel();
         this.renderEnemyUnitsPanel();

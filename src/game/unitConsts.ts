@@ -16,7 +16,7 @@ import {
     spiritArmor,
 } from "./mobItemConsts";
 import { peasantUnit, peasantUnit_4 } from "./units/mobUnitConsts";
-import { goblinShamanUnit, goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
+import { goblinShamanUnit, goblinUnit, goldGoblin1Unit, goldGoblinBattleUnit, weakGoblinUnit } from "./units/goblinMobUnits";
 import { fireflySummonMob, fireflySummonMob_6, warriorSummonMob, warriorSummonMob_3, warriorSummonMob_5 } from "./units/summonMobUnits";
 import { skeletonMageUnit, skeletonUnit, skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
@@ -129,7 +129,7 @@ export const mobsLvl2: IMobsVariants[] = [
         ],
     },
     {
-        name: "Skeletons(2)",
+        name: "Skeleton(2)",
         description: "One bone skull soldier",
         units: [skeletonUnit, null, null, null], // stat 4/10
         rewards: [
@@ -210,8 +210,8 @@ export const mobsLvl3: IMobsVariants[] = [
     },
     {
         name: "Goblins",
-        description: "Weak goblin called his three friends",
-        units: [weakGoblinUnit, goblinUnit, goblinUnit, goblinUnit], // stat 5/8 + 2/5
+        description: "Weak goblin called his two friends",
+        units: [weakGoblinUnit, goblinUnit, goblinUnit, null], // stat 5/8 + 2/5
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 3 },
             { type: IMobRewardType.GOLD, value: 2, exp: 3 },
@@ -292,6 +292,20 @@ export const mobsLvl4: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: peasantUnit, exp: 4 },
         ],
     },
+    {
+        name: "Infernofly(4)",
+        description: "Firefly from hell",
+        units: [fireflySummonMob_6, null, null, null], // stat 10/2+8
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: fireflySummonMob_6, exp: 3 },
+            { type: IMobRewardType.ITEM, item: wand1_2, exp: 3 },
+            { type: IMobRewardType.ITEM, item: musical31, exp: 3 },
+            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 3 },
+            { type: IMobRewardType.ITEM, item: basic_exp_bag_2, exp: 3 },
+        ],
+    },
 ];
 export const mobsLvl5: IMobsVariants[] = [
     {
@@ -319,6 +333,20 @@ export const mobsLvl5: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: warriorSummonMob_3, exp: 4 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 5 },
             { type: IMobRewardType.ITEM, item: spiritArmor, exp: 5 },
+        ],
+    },
+    {
+        name: "Goblins(5)",
+        description: "Goblin regiment",
+        units: [goblinShamanUnit, weakGoblinUnit, goblinUnit, goldGoblinBattleUnit], // stats 4/18 + 5/8
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 4, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.UNIT, unit: goblinShamanUnit, exp: 4 },
+            { type: IMobRewardType.ITEM, item: itemGoblinSilverCoin, exp: 5 },
+            { type: IMobRewardType.ITEM, item: itemGoblinGoldCoin, exp: 5 },
+            { type: IMobRewardType.ITEM, item: itemGoblinBoneDagger, exp: 5 },
+            { type: IMobRewardType.UNIT, unit: goldGoblin1Unit, exp: 4 },
         ],
     },
 ];
@@ -357,10 +385,10 @@ export const mobsLvl6: IMobsVariants[] = [
             { type: IMobRewardType.GOLD, value: 4, exp: 5 },
             { type: IMobRewardType.GOLD, value: 5, exp: 5 },
             { type: IMobRewardType.UNIT, unit: fireflySummonMob_6, exp: 4 },
-            { type: IMobRewardType.ITEM, item: wand1_2, exp: 2 },
-            { type: IMobRewardType.ITEM, item: musical31, exp: 2 },
-            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 2 },
-            { type: IMobRewardType.ITEM, item: basic_exp_bag_2, exp: 2 },
+            { type: IMobRewardType.ITEM, item: wand1_2, exp: 4 },
+            { type: IMobRewardType.ITEM, item: musical31, exp: 4 },
+            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 4 },
+            { type: IMobRewardType.ITEM, item: basic_exp_bag_2, exp: 4 },
         ],
     },
 ];

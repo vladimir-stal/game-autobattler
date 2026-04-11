@@ -15,71 +15,16 @@ import {
     IUnit,
     THeroAttribute,
 } from "../../types";
-import { bardHero, magicHero, orderHero, summonHero } from "../basicHeroConsts";
 
-import { axe1, musical1, scepter1, shield1, staff1, sword1, totem1, wand1 } from "../basicWeaponItemConsts";
 import { bosses } from "../bossConsts";
-import { basic_boots } from "../commonItemConsts";
-import { boots21, gloves_magic2, hat21, jacket21, pants21, ring_damage2, ring_heal2, ring_regen2 } from "../commonItemConsts2";
-import { crit_amulet, evasion_amulet, scrollSkillArmor, summonerMantle3 } from "../commonItemConsts3";
-import { armorMassHp, helmetMassArmor } from "../commonItemConsts4";
 import { CardSlot } from "../components/CardSlot";
 import { roomsWithHeroClasses } from "../components/SelectController";
 import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes, mcClassHeroes } from "../heroConsts";
 import { basicWeapons, itemsLvl5 } from "../itemConsts";
-import { itemGoblinBoneDagger, itemGoblinSilverCoin, regenMantle, spiritArmor } from "../mobItemConsts";
 import { GameScene } from "../scenes/GameScene";
-import { buffNextBaAll } from "../skills/bardSkillConsts";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { poisonRandom } from "../skills/darkSkillConsts";
-import { magicAttack } from "../skills/magicSkillConsts";
-import { healFirst } from "../skills/priestSkillConsts";
-import { fireflySummonSkill } from "../skills/summonSkillConsts2";
-import { warriorSummonSkill } from "../skills/summonSkillConsts2";
-import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
-import { goblinUnit, weakGoblinUnit } from "../units/goblinMobUnits";
 
-import {
-    axe21,
-    axe22,
-    dagger21,
-    mace21,
-    mace22,
-    musical21,
-    scepter21,
-    scepter22,
-    shield21,
-    shield22,
-    staff21,
-    staff22,
-    sword21,
-    sword22,
-    totem21,
-    totem22,
-    wand21,
-    wand22,
-} from "../weaponItem2Consts";
-import {
-    axe31,
-    axe32,
-    dagger31,
-    dagger32,
-    mace31,
-    magicBook31,
-    magicSpear31,
-    musical31,
-    musical32,
-    scepter31,
-    shield31,
-    shield32,
-    staff31,
-    sword31,
-    totem31,
-    totem32,
-    wand31,
-} from "../weaponItem3Consts";
-import { dagger5_ba, music5AddBuffTarget, staff5MagicCrit, totem5HptoDmg, wand5ShockOnBA } from "../weaponItem5Consts";
+import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { customHeroSelectRoom, customStartingItemsRoom, debugHeroSelectRoom, debugStartingItemsRoom } from "./debugUtils";
@@ -204,8 +149,10 @@ export const getRooms = (
                         : [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                     // Go change in debugUtils.ts for custom room
                 } else if (hour === 2) {
-                    return [null, { roomType: ERoomType.DUEL }, null];
+                    //return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
+                } else if (hour === 5) {
+                    return [null, { roomType: ERoomType.DUEL }, null];
                 }
             }
             break;
@@ -701,7 +648,7 @@ export const getCards = (
                             return null;
                         }
                         const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
-                        return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel, price) };
+                        return { skill, type: ECardType.SKILL, price: price };
                     });
                 }
             }
@@ -1057,7 +1004,8 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         //}
 
                         if (item.type === EItemType.COMMON) {
-                            slot.setIsActive(true, "equip");
+                            if (!item.heroClasses.includes(EHeroClass.MOB)) slot.setIsActive(true, "equip");
+
                             return;
                         }
 
@@ -1066,7 +1014,9 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
                         }
 
                         if (item.heroClasses.includes(EHeroClass.ALL) || item.weaponType === EWeaponItemType.DAGGER) {
-                            slot.setIsActive(true, "equip");
+                            if (!item.heroClasses.includes(EHeroClass.MOB)) {
+                                slot.setIsActive(true, "equip");
+                            }
                             return;
                         }
 

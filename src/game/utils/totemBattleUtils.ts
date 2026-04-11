@@ -1,5 +1,7 @@
-import { EBattleActionType, EHeroSkillType, EItemBattleBonusType, IBattleUnit, IHeroSkill, ITotem, TBattleRecord, TBattleUnits } from "../../types";
-import { calculateIncreaseValue, dealDamage, getAllyTargets, getOpponentTargets } from "./battleUtils";
+import { EBattleActionType, EHeroAttackType, EHeroSkillType, EItemBattleBonusType, IBattleUnit, IHeroSkill, ITotem, TBattleRecord, TBattleUnits } from "../../types";
+import { BattleController } from "../components/BattleController";
+import { calculateIncreaseValue, emptyBattleUnit, getAllyTargets, getOpponentTargets } from "./battleUtils";
+import { emptyUnit } from "./unitUtils";
 
 export const performTotemSkill = (
     unit: IBattleUnit,
@@ -7,7 +9,8 @@ export const performTotemSkill = (
     skill: IHeroSkill,
     allyUnits: (IBattleUnit | null)[],
     opponentUnits: (IBattleUnit | null)[],
-    battleRecord: TBattleRecord
+    battleRecord: TBattleRecord,
+    battleController: BattleController,
 ) => {
     let totemValueBonus = 0;
 
@@ -21,7 +24,7 @@ export const performTotemSkill = (
 
     switch (skill.type) {
         case EHeroSkillType.ATTACK:
-            performTotemAttack(unit, totem, skill, opponentUnits, totemValueBonus, battleRecord);
+            performTotemAttack(unit, totem, skill, opponentUnits, totemValueBonus, battleController);
             break;
         case EHeroSkillType.ATTRIBUTE_INCREASE:
             performTotemAttrIncrease(unit, totem, skill, allyUnits, totemValueBonus, battleRecord);
@@ -52,7 +55,7 @@ const performTotemAttack = (
     skill: IHeroSkill,
     opponentUnits: TBattleUnits,
     totemValueBonus: number,
-    battleRecord: TBattleRecord
+    battleController: BattleController,
 ) => {
     const { targetType, value, attackType } = skill;
     if (!targetType || !attackType || value === undefined) {
@@ -85,9 +88,17 @@ const performTotemAttack = (
             finalTarget = target.summon;
         }
         // record
-        battleRecord.push({ unitId: totem.id, targetId: finalTarget.id, type: EBattleActionType.ATTACK, value: attackDamage });
+        //battleRecord.push({ unitId: totem.id, targetId: finalTarget.id, type: EBattleActionType.ATTACK, value: attackDamage });
         //
-        dealDamage(finalTarget, attackDamage, skill.attackType!, battleRecord);
+        //dealDamage(finalTarget, attackDamage, skill.attackType!, battleRecord);
+        battleController.dealDamage(
+            emptyBattleUnit,
+            finalTarget,
+            attackDamage,
+            skill.attackType!,
+            undefined,
+            { unitId: totem.id, targetId: finalTarget.id, type: EBattleActionType.ATTACK, value: attackDamage },
+        );
     });
 };
 
