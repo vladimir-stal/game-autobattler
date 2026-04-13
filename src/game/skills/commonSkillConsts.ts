@@ -1,6 +1,26 @@
-import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet } from "../../types";
+import {
+    AnimationType,
+    EBuffTimeType,
+    EBuffType,
+    EDebuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+} from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_MAGIC_HAND, IMAGE_SKILL_PHYS_ATTACK, IMAGE_SKILL_TEST, IMAGE_SKILL_YELLOW_FLAME, IMAGE_SKILL_OVERCOME, IMAGE_SKILL_CLEAVE } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_MAGIC_HAND,
+    IMAGE_SKILL_PHYS_ATTACK,
+    IMAGE_SKILL_TEST,
+    IMAGE_SKILL_YELLOW_FLAME,
+    IMAGE_SKILL_OVERCOME,
+    IMAGE_SKILL_CLEAVE,
+} from "../utils/load/skillImagesLoad";
 
 ////////////// COMMON SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
 
@@ -92,8 +112,10 @@ const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] 
 
 export const statusesIntoHeal_2: IHeroSkillSet = {
     id: "statusesIntoHeal",
-    name: "Overcome",
-    desc: "Remove [65%] stacks of\nevery status, heal same\namount",
+    //name: "Overcome",
+    //desc: "Remove [65%] stacks of\nevery status, heal same\namount",
+    name: i18n.skills.basic.statusesIntoHeal.name,
+    desc: i18n.skills.basic.statusesIntoHeal.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
@@ -108,8 +130,10 @@ export const statusesIntoHeal_2: IHeroSkillSet = {
 
 export const statusesIntoHeal: IHeroSkillSet = {
     id: "statusesIntoHeal",
-    name: "Overcome",
-    desc: "Remove [50%] stacks of\nevery status, heal same\namount",
+    //name: "Overcome",
+    //desc: "Remove [50%] stacks of\nevery status, heal same\namount",
+    name: i18n.skills.basic.statusesIntoHeal.name,
+    desc: i18n.skills.basic.statusesIntoHeal.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
@@ -208,7 +232,7 @@ export const attackWithBleedSkill: IHeroSkillSet = {
 
 export const phycisalAttackSkill_3: IHeroSkillSet = {
     id: "phycAttack",
-    name: i18n.skills.basic.phycAttack.name + "(3)",
+    name: i18n.skills.basic.phycAttack.name,
     desc: i18n.skills.basic.phycAttack.desc3,
     level: 3,
     priceLevel: 1,
@@ -227,7 +251,7 @@ export const phycisalAttackSkill_3: IHeroSkillSet = {
 
 export const phycisalAttackSkill_2: IHeroSkillSet = {
     id: "phycAttack",
-    name: i18n.skills.basic.phycAttack.name + "(2)",
+    name: i18n.skills.basic.phycAttack.name,
     desc: i18n.skills.basic.phycAttack.desc2,
     level: 2,
     priceLevel: 1,
@@ -286,7 +310,7 @@ export const nextBAArea_3: IHeroSkillSet = {
                 type: EBuffType.CHANGE_TARGET_TYPE,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
                 changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
-            }
+            },
         },
     ],
     image: IMAGE_SKILL_CLEAVE,
@@ -323,7 +347,7 @@ export const nextBAArea_2: IHeroSkillSet = {
                 type: EBuffType.CHANGE_TARGET_TYPE,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
                 changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
-            }
+            },
         },
     ],
     nextLevel: nextBAArea_3,
@@ -361,7 +385,7 @@ export const nextBAArea: IHeroSkillSet = {
                 type: EBuffType.CHANGE_TARGET_TYPE,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
                 changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
-            }
+            },
         },
     ],
     nextLevel: nextBAArea_2,
@@ -514,4 +538,4 @@ export const removeBuffSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_MAGIC_HAND,
 };
 
-export const multiclassSkills1 = [phycisalAttackSkill,statusesIntoHeal,attackWithBleedSkill,nextBAArea];
+export const multiclassSkills1 = [phycisalAttackSkill, statusesIntoHeal, attackWithBleedSkill, nextBAArea];

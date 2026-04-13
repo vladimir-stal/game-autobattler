@@ -191,7 +191,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
     }
 
     setIsActive(value: boolean, activeType?: TSlotActiveType) {
-        console.log("SLOT SET ACTIVVE", value, activeType);
+        //console.log("SLOT SET ACTIVVE", value, activeType);
         this.isActive = value;
 
         let activeColor = colors.GREEN_2;

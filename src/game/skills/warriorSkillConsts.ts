@@ -1,6 +1,6 @@
 import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_WORTHY_FOE } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_RAGE, IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_WORTHY_FOE } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
 
 // BUFF NEXT BA
@@ -9,7 +9,7 @@ export const buffNextBa_3: IHeroSkillSet = {
     id: "buffNextBa",
     //name: "Next BA+ buff(3)",
     //desc: "Buff [8] self next basic attack",
-    name: i18n.skills.basic.buffNextBa.name + "(3)",
+    name: i18n.skills.basic.buffNextBa.name,
     desc: i18n.skills.basic.buffNextBa.desc3,
     level: 3,
     priceLevel: 1,
@@ -26,18 +26,18 @@ export const buffNextBa_3: IHeroSkillSet = {
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 65,
+                ppScale: 50,
             },
         },
     ],
-    image: IMAGE_SKILL_SWORD_BUFF_2,
+    image: IMAGE_SKILL_RAGE,
 };
 
 export const buffNextBa_2: IHeroSkillSet = {
     id: "buffNextBa",
     //name: "Next BA+ buff(2)",
     //desc: "Buff [6] self next basic attack",
-    name: i18n.skills.basic.buffNextBa.name + "(2)",
+    name: i18n.skills.basic.buffNextBa.name,
     desc: i18n.skills.basic.buffNextBa.desc2,
     level: 2,
     priceLevel: 1,
@@ -54,12 +54,12 @@ export const buffNextBa_2: IHeroSkillSet = {
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 50,
+                ppScale: 30,
             },
         },
     ],
     nextLevel: buffNextBa_3,
-    image: IMAGE_SKILL_SWORD_BUFF_2,
+    image: IMAGE_SKILL_RAGE,
 };
 
 export const buffNextBa: IHeroSkillSet = {
@@ -83,12 +83,12 @@ export const buffNextBa: IHeroSkillSet = {
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 35,
+                //ppScale: 35,
             },
         },
     ],
     nextLevel: buffNextBa_2,
-    image: IMAGE_SKILL_SWORD_BUFF_2,
+    image: IMAGE_SKILL_RAGE,
 };
 
 // BUFF NEXT BA +1 TIME
@@ -169,8 +169,10 @@ export const buffNextBaTimes: IHeroSkillSet = {
 
 export const debuffWorthyFoe_3: IHeroSkillSet = {
     id: "debuffWorthyFoe",
-    name: "Worthy foe",
-    desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*65%]\nmake it vulnerable [3]",
+    //name: "Worthy foe",
+    //desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*65%]\nmake it vulnerable [3]",
+    name: i18n.skills.basic.debuffWorthyFoe.name,
+    desc: i18n.skills.basic.debuffWorthyFoe.desc3,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
@@ -222,8 +224,10 @@ export const debuffWorthyFoe_3: IHeroSkillSet = {
 
 export const debuffWorthyFoe_2: IHeroSkillSet = {
     id: "debuffWorthyFoe",
-    name: "Worthy foe",
-    desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*50%]\nmake it vulnerable [2]",
+    //name: "Worthy foe",
+    //desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*50%]\nmake it vulnerable [2]",
+    name: i18n.skills.basic.debuffWorthyFoe.name,
+    desc: i18n.skills.basic.debuffWorthyFoe.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
@@ -276,8 +280,10 @@ export const debuffWorthyFoe_2: IHeroSkillSet = {
 
 export const debuffWorthyFoe: IHeroSkillSet = {
     id: "debuffWorthyFoe",
-    name: "Worthy foe",
-    desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*35%]\nmake it vulnerable [1]",
+    //name: "Worthy foe",
+    //desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*35%]\nmake it vulnerable [1]",
+    name: i18n.skills.basic.debuffWorthyFoe.name,
+    desc: i18n.skills.basic.debuffWorthyFoe.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
@@ -293,7 +299,7 @@ export const debuffWorthyFoe: IHeroSkillSet = {
                 valueType: "number",
                 targetType: ETargetType.HIGH_ATTACK_ENEMY,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 35,
+                //ppScale: 35,
             },
             animation: AnimationType.NONE,
         },

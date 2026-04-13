@@ -20,8 +20,10 @@ import { removeBuffSkill } from "./commonSkillConsts";
 
 export const debuffBaNextBaAll_3: IHeroSkillSet = {
     id: "debuffBaNextBa",
-    name: "-BA Debuff all(3)",
-    desc: "Debuff next basic attack [1]+[MP] all enemies",
+    //name: "-BA Debuff all(3)",
+    //desc: "Debuff next basic attack [1]+[MP] all enemies",
+    name: i18n.skills.basic.debuffBaNextBaAll.name,
+    desc: i18n.skills.basic.debuffBaNextBaAll.desc3,
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
@@ -46,8 +48,10 @@ export const debuffBaNextBaAll_3: IHeroSkillSet = {
 
 export const debuffBaNextBaAll_2: IHeroSkillSet = {
     id: "debuffBaNextBa",
-    name: "-BA Debuff all(2)",
-    desc: "Debuff next basic attack [1]+[MP*70%] all enemies",
+    //name: "-BA Debuff all(2)",
+    //desc: "Debuff next basic attack [1]+[MP*70%] all enemies",
+    name: i18n.skills.basic.debuffBaNextBaAll.name,
+    desc: i18n.skills.basic.debuffBaNextBaAll.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.DARK],
@@ -73,8 +77,10 @@ export const debuffBaNextBaAll_2: IHeroSkillSet = {
 
 export const debuffBaNextBaAll: IHeroSkillSet = {
     id: "debuffBaNextBa",
-    name: "-BA Debuff all",
-    desc: "Debuff next basic attack [1]+[MP*50%] all enemies",
+    //name: "-BA Debuff all",
+    //desc: "Debuff next basic attack [1]+[MP*50%] all enemies",
+    name: i18n.skills.basic.debuffBaNextBaAll.name,
+    desc: i18n.skills.basic.debuffBaNextBaAll.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK],
@@ -102,7 +108,7 @@ export const debuffBaNextBaAll: IHeroSkillSet = {
 
 export const poisonRandom_3: IHeroSkillSet = {
     id: "poisonRandom",
-    name: i18n.skills.basic.poisonRandom.name + "(3)",
+    name: i18n.skills.basic.poisonRandom.name,
     desc: i18n.skills.basic.poisonRandom.desc3,
     level: 3,
     priceLevel: 1,
@@ -121,7 +127,7 @@ export const poisonRandom_3: IHeroSkillSet = {
 
 export const poisonRandom_2: IHeroSkillSet = {
     id: "poisonRandom",
-    name: i18n.skills.basic.poisonRandom.name + "(2)",
+    name: i18n.skills.basic.poisonRandom.name,
     desc: i18n.skills.basic.poisonRandom.desc2,
     level: 2,
     priceLevel: 1,
@@ -165,7 +171,7 @@ export const magicAttackX3_3: IHeroSkillSet = {
     id: "magicAttackX3",
     //name: "Magic Attack x3(3)",
     //desc: "Deal [4] magic damage to random enemy 3 times",
-    name: i18n.skills.basic.magicAttackX3.name + "(3)",
+    name: i18n.skills.basic.magicAttackX3.name,
     desc: i18n.skills.basic.magicAttackX3.desc3,
     level: 3,
     priceLevel: 1,
@@ -197,7 +203,7 @@ export const magicAttackX3_2: IHeroSkillSet = {
     id: "magicAttackX3",
     //name: "Magic Attack x3(2)",
     //desc: "Deal [3] magic damage to random enemy 3 times",
-    name: i18n.skills.basic.magicAttackX3.name + "(2)",
+    name: i18n.skills.basic.magicAttackX3.name,
     desc: i18n.skills.basic.magicAttackX3.desc2,
     level: 2,
     priceLevel: 1,
@@ -266,10 +272,10 @@ export const magicAttackX3: IHeroSkillSet = {
 
 export const stealPPorMPSkill_3: IHeroSkillSet = {
     id: "stealPPorMPSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Steal power(3)",
-    desc: "Steal [12] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+    name: i18n.skills.level3.stealPPorMPSkill.name,
+    desc: i18n.skills.level3.stealPPorMPSkill.desc3,
+    //name: "Steal power(3)",
+    //desc: "Steal [12] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
@@ -317,10 +323,10 @@ export const stealPPorMPSkill_3: IHeroSkillSet = {
 
 export const stealPPorMPSkill_2: IHeroSkillSet = {
     id: "stealPPorMPSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Steal power(2)",
-    desc: "Steal [8] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+    name: i18n.skills.level3.stealPPorMPSkill.name,
+    desc: i18n.skills.level3.stealPPorMPSkill.desc2,
+    //name: "Steal power(2)",
+    //desc: "Steal [8] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
@@ -369,10 +375,10 @@ export const stealPPorMPSkill_2: IHeroSkillSet = {
 
 export const stealPPorMPSkill: IHeroSkillSet = {
     id: "stealPPorMPSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Steal power",
-    desc: "Steal [4] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+    name: i18n.skills.level3.stealPPorMPSkill.name,
+    desc: i18n.skills.level3.stealPPorMPSkill.desc1,
+    //name: "Steal power",
+    //desc: "Steal [4] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],

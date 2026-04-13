@@ -81,7 +81,7 @@ export function loadSkillImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_TEST, "assets/sprites/skills/skills_test.png");
 
     scene.load.image(IMAGE_SKILL_WORTHY_FOE, "assets/sprites/skills/worthy_foe.png");
-    scene.load.image(IMAGE_FEINT_ATTACK, "assets/sprites/skills/feint_attack.png");
+    //scene.load.image(IMAGE_FEINT_ATTACK, "assets/sprites/skills/feint_attack.png");
     scene.load.image(IMAGE_SKILL_OVERCOME, "assets/sprites/skills/overcome.png");
     scene.load.image(IMAGE_FIREFLY_SELF_POISON, "assets/sprites/skills/firefly_self_poison.png");
     scene.load.image(IMAGE_SKILL_CLEAVE, "assets/sprites/skills/cleave.png");

@@ -51,31 +51,6 @@ export interface Ii18n {
         regen_mantle: string;
         spiritArmor: string;
         spiritSpear: string;
-        wand22: string;
-        wand21: string;
-        totem22: string;
-        totem21: string;
-        shield22: string;
-        shield21: string;
-        scepter22: string;
-        scepter21: string;
-        musical21: string;
-        staff22: string;
-        staff21: string;
-        sword22: string;
-        sword21: string;
-        mace22: string;
-        mace21: string;
-        dagger22: string;
-        dagger21: string;
-        axe22: string;
-        axe21: string;
-        wand5: string;
-        totem5: string;
-        music5: string;
-        staff5: string;
-        dagger5: string;
-        totem41: string;
         // WEAPON
         // basic
         axe1: string;
@@ -100,6 +75,26 @@ export interface Ii18n {
         basic_pants: string;
         basic_boots: string;
         // level 2
+        // WEAPON
+        wand22: string;
+        wand21: string;
+        totem22: string;
+        totem21: string;
+        shield22: string;
+        shield21: string;
+        scepter22: string;
+        scepter21: string;
+        musical21: string;
+        staff22: string;
+        staff21: string;
+        sword22: string;
+        sword21: string;
+        mace22: string;
+        mace21: string;
+        dagger22: string;
+        dagger21: string;
+        axe22: string;
+        axe21: string;
         // COMMON
         ring_heal2: string;
         ring_damage2: string;
@@ -136,16 +131,27 @@ export interface Ii18n {
         crit_amulet: string;
         summonerMantle3: string;
         // level 4
+        // WEAPON
+        totem41: string;
         // COMMON
         armorMassHp: string;
         helmetMassArmor: string;
-        //
+        // level 5
+        wand5: string;
+        totem5: string;
+        music5: string;
+        staff5: string;
+        dagger5: string;
+        // COMMON
+        weaponSlotSheath: string;
     };
     rooms: Partial<Record<ERoomType, string>>;
     roomDescriptions: Partial<Record<ERoomType, string>>;
     skills: {
         basic: Record<string, TSkillI18n>;
         level2: Record<string, TSkillI18n>;
+        level3: Record<string, TSkillI18n>;
+        level4: Record<string, TSkillI18n>;
         common: Record<string, TSkillI18n>;
         mobs: Record<string, TSkillI18n>;
         mc: Record<string, TSkillI18n>;
@@ -359,6 +365,26 @@ export const i18n: Ii18n = {
         basic_pants: "Old pants",
         basic_boots: "Old boots",
         // level 2
+        // WEAPON
+        axe21: "Rending axe",
+        axe22: "Mighty axe",
+        dagger21: "Swift dagger",
+        dagger22: "Mighty dagger",
+        mace21: "Shattering mace",
+        mace22: "Purifying mace",
+        sword21: "Slaying sword",
+        sword22: "Mighty sword",
+        staff21: "Summoners staff",
+        staff22: "Wizards staff",
+        musical21: "Fine lute",
+        scepter21: "Healers scepter",
+        scepter22: "Purifying scepter",
+        shield21: "Hard shield",
+        shield22: "Champions shield",
+        totem21: "Verdant totem",
+        totem22: "Poisoners totem",
+        wand21: "Swift wand",
+        wand22: "Power wand",
         // COMMON
         ring_heal2: "Priest ring",
         ring_damage2: "Damage ring",
@@ -395,34 +421,20 @@ export const i18n: Ii18n = {
         crit_amulet: "Crit amulet",
         summonerMantle3: "Summoner cape",
         // level 4
+        // WEAPON
+        totem41: "Toxic totem",
         // COMMON
         armorMassHp: "Hp aura chest",
         helmetMassArmor: "Armor aura helmet",
-        totem41: "Toxic totem",
+        // level 5
+        // WEAPON
         dagger5: "The Flurry",
         wand5: "The Thunder",
         totem5: "The Titan",
         music5: "The Chorus",
         staff5: "The Volcano",
-        axe21: "Rending axe",
-        axe22: "Mighty axe",
-        dagger21: "Swift dagger",
-        dagger22: "Mighty dagger",
-        mace21: "Shattering mace",
-        mace22: "Purifying mace",
-        sword21: "Slaying sword",
-        sword22: "Mighty sword",
-        staff21: "Summoners staff",
-        staff22: "Wizards staff",
-        musical21: "Fine lute",
-        scepter21: "Healers scepter",
-        scepter22: "Purifying scepter",
-        shield21: "Hard shield",
-        shield22: "Champions shield",
-        totem21: "Verdant totem",
-        totem22: "Poisoners totem",
-        wand21: "Swift wand",
-        wand22: "Power wand",
+        // COMMON
+        weaponSlotSheath: "Weapon sheath",
         // mob items
         spiritSpear: "Spirit Spear",
         spiritArmor: "Spirit Armor",

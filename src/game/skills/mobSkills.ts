@@ -6,7 +6,7 @@ import { IMAGE_FIREFLY_SELF_POISON, IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_REGEN, 
 
 export const goblinShamanHpRegIncr_2: IHeroSkillSet = {
     id: "goblinShamanHpRegIncr",
-    name: i18n.skills.mobs.goblinShamanHpRegIncr.name + "(2)",
+    name: i18n.skills.mobs.goblinShamanHpRegIncr.name,
     desc: i18n.skills.mobs.goblinShamanHpRegIncr.desc2,
     level: 2,
     priceLevel: 1,
@@ -59,7 +59,7 @@ export const goblinShamanHpRegIncr: IHeroSkillSet = {
 
 export const goblinApplyShock_3: IHeroSkillSet = {
     id: "applyShock",
-    name: i18n.skills.level2.applyShock.name + "(3)",
+    name: i18n.skills.level2.applyShock.name,
     desc: i18n.skills.level2.applyShock.desc1,
     level: 3,
     priceLevel: 2,
@@ -79,7 +79,7 @@ export const goblinApplyShock_3: IHeroSkillSet = {
 
 export const goblinApplyShock_2: IHeroSkillSet = {
     id: "applyShock",
-    name: i18n.skills.level2.applyShock.name + "(2)",
+    name: i18n.skills.level2.applyShock.name,
     desc: i18n.skills.level2.applyShock.desc1,
     level: 2,
     priceLevel: 2,

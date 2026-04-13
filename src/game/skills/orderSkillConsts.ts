@@ -9,7 +9,7 @@ import { removeDebuffSkill } from "./commonSkillConsts";
 
 export const attrArmorSelf_3: IHeroSkillSet = {
     id: "attrIncArmorSelf",
-    name: i18n.skills.basic.attrIncArmorSelf.name + "(3)",
+    name: i18n.skills.basic.attrIncArmorSelf.name,
     desc: i18n.skills.basic.attrIncArmorSelf.desc3,
     level: 3,
     priceLevel: 2,
@@ -30,7 +30,7 @@ export const attrArmorSelf_3: IHeroSkillSet = {
 
 export const attrArmorSelf_2: IHeroSkillSet = {
     id: "attrIncArmorSelf",
-    name: i18n.skills.basic.attrIncArmorSelf.name + "(2)",
+    name: i18n.skills.basic.attrIncArmorSelf.name,
     desc: i18n.skills.basic.attrIncArmorSelf.desc2,
     level: 2,
     priceLevel: 1,
@@ -76,7 +76,7 @@ export const attrArmorSelf: IHeroSkillSet = {
 
 export const attrAttackSelf_3: IHeroSkillSet = {
     id: "attrAttackSelf",
-    name: i18n.skills.basic.attrAttackSelf.name + "(3)",
+    name: i18n.skills.basic.attrAttackSelf.name,
     desc: i18n.skills.basic.attrAttackSelf.desc3,
     level: 3,
     priceLevel: 1,
@@ -97,7 +97,7 @@ export const attrAttackSelf_3: IHeroSkillSet = {
 
 export const attrAttackSelf_2: IHeroSkillSet = {
     id: "attrAttackSelf",
-    name: i18n.skills.basic.attrAttackSelf.name + "(2)",
+    name: i18n.skills.basic.attrAttackSelf.name,
     desc: i18n.skills.basic.attrAttackSelf.desc2,
     level: 2,
     priceLevel: 1,

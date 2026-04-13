@@ -485,8 +485,9 @@ export const wand1_3: IItem = {
     image: IMAGE_ITEM_WAND_1,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 60, valueType: "percent" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 60, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_MAGIC_DAMAGE, value: 1, valueType: "number" }],
 };
 
 export const wand1_2: IItem = {
@@ -500,7 +501,8 @@ export const wand1_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 50, valueType: "percent" }],
+    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 50, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_MAGIC_DAMAGE, value: 1, valueType: "number" }],
     nextLevel: wand1_3,
 };
 
@@ -514,7 +516,8 @@ export const wand1: IItem = {
     image: IMAGE_ITEM_WAND_1,
     heroClasses: [],
     weaponType: EWeaponItemType.WAND,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicAttack" }],
+    //battleBonuses: [{ type: EItemBattleBonusType.BASIC_ATTACK_TWICE, value: 40, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_MAGIC_DAMAGE, value: 1, valueType: "number" }],
     nextLevel: wand1_2,
 };

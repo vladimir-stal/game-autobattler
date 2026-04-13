@@ -18,7 +18,7 @@ import { buffSelfMPorPP } from "./commonSkill3Consts";
 
 export const magicAttack_3: IHeroSkillSet = {
     id: "magicAttack",
-    name: i18n.skills.basic.magicAttack.name + "(3)",
+    name: i18n.skills.basic.magicAttack.name,
     desc: i18n.skills.basic.magicAttack.desc3, //"Deal [5] magic damage to first enemy",
     level: 3,
     priceLevel: 1,
@@ -38,8 +38,8 @@ export const magicAttack_3: IHeroSkillSet = {
 
 export const magicAttack_2: IHeroSkillSet = {
     id: "magicAttack",
-    name: i18n.skills.basic.magicAttack.name + "(2)",
-    desc: i18n.skills.basic.magicAttack.desc2, //"Deal [5] magic damage to first enemy",
+    name: i18n.skills.basic.magicAttack.name,
+    desc: i18n.skills.basic.magicAttack.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC],
@@ -60,7 +60,7 @@ export const magicAttack_2: IHeroSkillSet = {
 export const magicAttack: IHeroSkillSet = {
     id: "magicAttack",
     name: i18n.skills.basic.magicAttack.name,
-    desc: i18n.skills.basic.magicAttack.desc1, //"Deal [5] magic damage to first enemy",
+    desc: i18n.skills.basic.magicAttack.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC],
@@ -85,8 +85,8 @@ export const magicAttack: IHeroSkillSet = {
 
 export const applyBurn_3: IHeroSkillSet = {
     id: "applyBurn",
-    name: i18n.skills.basic.applyBurn.name + "(3)",
-    desc: i18n.skills.basic.applyBurn.desc3, //"Apply [3] burn on the first enemy",
+    name: i18n.skills.basic.applyBurn.name,
+    desc: i18n.skills.basic.applyBurn.desc3,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC],
@@ -105,8 +105,8 @@ export const applyBurn_3: IHeroSkillSet = {
 
 export const applyBurn_2: IHeroSkillSet = {
     id: "applyBurn",
-    name: i18n.skills.basic.applyBurn.name + "(2)",
-    desc: i18n.skills.basic.applyBurn.desc2, //"Apply [3] burn on the first enemy",
+    name: i18n.skills.basic.applyBurn.name,
+    desc: i18n.skills.basic.applyBurn.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC],
@@ -127,7 +127,7 @@ export const applyBurn_2: IHeroSkillSet = {
 export const applyBurn: IHeroSkillSet = {
     id: "applyBurn",
     name: i18n.skills.basic.applyBurn.name,
-    desc: i18n.skills.basic.applyBurn.desc1, //"Apply [3] burn on the first enemy",
+    desc: i18n.skills.basic.applyBurn.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC],
@@ -152,8 +152,10 @@ export const applyBurn: IHeroSkillSet = {
 
 export const magicAttackAll_3: IHeroSkillSet = {
     id: "magicAttackAll",
-    name: "Magic Attack All(3)",
-    desc: "Deal [1]+[MP] magic damage to all enemies",
+    //name: "Magic Attack All(3)",
+    //desc: "Deal [1]+[MP] magic damage to all enemies",
+    name: i18n.skills.level2.magicAttackAll.name,
+    desc: i18n.skills.level2.magicAttackAll.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
@@ -173,8 +175,10 @@ export const magicAttackAll_3: IHeroSkillSet = {
 
 export const magicAttackAll_2: IHeroSkillSet = {
     id: "magicAttackAll",
-    name: "Magic Attack All(2)",
-    desc: "Deal [1]+[MP*70%] magic damage to all enemies",
+    //name: "Magic Attack All(2)",
+    //desc: "Deal [1]+[MP*70%] magic damage to all enemies",
+    name: i18n.skills.level2.magicAttackAll.name,
+    desc: i18n.skills.level2.magicAttackAll.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
@@ -195,8 +199,10 @@ export const magicAttackAll_2: IHeroSkillSet = {
 
 export const magicAttackAll: IHeroSkillSet = {
     id: "magicAttackAll",
-    name: "Magic Attack All",
-    desc: "Deal [1]+[MP*50%] magic damage to all enemies",
+    // name: "Magic Attack All",
+    //desc: "Deal [1]+[MP*50%] magic damage to all enemies",
+    name: i18n.skills.level2.magicAttackAll.name,
+    desc: i18n.skills.level2.magicAttackAll.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
@@ -219,8 +225,8 @@ export const magicAttackAll: IHeroSkillSet = {
 
 export const applyShock_3: IHeroSkillSet = {
     id: "applyShock",
-    name: i18n.skills.level2.applyShock.name + "(3)",
-    desc: i18n.skills.level2.applyShock.desc1,
+    name: i18n.skills.level2.applyShock.name,
+    desc: i18n.skills.level2.applyShock.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
@@ -239,8 +245,8 @@ export const applyShock_3: IHeroSkillSet = {
 
 export const applyShock_2: IHeroSkillSet = {
     id: "applyShock",
-    name: i18n.skills.level2.applyShock.name + "(2)",
-    desc: i18n.skills.level2.applyShock.desc1,
+    name: i18n.skills.level2.applyShock.name,
+    desc: i18n.skills.level2.applyShock.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],

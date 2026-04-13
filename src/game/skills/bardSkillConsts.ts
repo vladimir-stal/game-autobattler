@@ -12,7 +12,7 @@ import {
 
 export const buffNextBaAll_3: IHeroSkillSet = {
     id: "buffBaNextBaAll",
-    name: i18n.skills.basic.buffBaNextBaAll.name + "(3)",
+    name: i18n.skills.basic.buffBaNextBaAll.name,
     desc: i18n.skills.basic.buffBaNextBaAll.desc3, //"Buff next basic attack for [2] damage for all allies",
     level: 3,
     priceLevel: 1,
@@ -37,7 +37,7 @@ export const buffNextBaAll_3: IHeroSkillSet = {
 
 export const buffNextBaAll_2: IHeroSkillSet = {
     id: "buffBaNextBaAll",
-    name: i18n.skills.basic.buffBaNextBaAll.name + "(2)",
+    name: i18n.skills.basic.buffBaNextBaAll.name,
     desc: i18n.skills.basic.buffBaNextBaAll.desc2, //"Buff next basic attack for [2] damage for all allies",
     level: 2,
     priceLevel: 1,
@@ -91,7 +91,7 @@ export const buffNextBaAll: IHeroSkillSet = {
 
 export const buffBaSelf_3: IHeroSkillSet = {
     id: "buffBaSelf",
-    name: i18n.skills.basic.buffBaSelf.name + "(3)",
+    name: i18n.skills.basic.buffBaSelf.name,
     desc: i18n.skills.basic.buffBaSelf.desc3, //"Buff self basic attack [1]",
     level: 3,
     priceLevel: 1,
@@ -116,7 +116,7 @@ export const buffBaSelf_3: IHeroSkillSet = {
 
 export const buffBaSelf_2: IHeroSkillSet = {
     id: "buffBaSelf",
-    name: i18n.skills.basic.buffBaSelf.name + "(2)",
+    name: i18n.skills.basic.buffBaSelf.name,
     desc: i18n.skills.basic.buffBaSelf.desc2, //"Buff self basic attack [1]",
     level: 2,
     priceLevel: 1,
@@ -171,8 +171,8 @@ export const buffBaSelf: IHeroSkillSet = {
 
 export const buffPPAll_3: IHeroSkillSet = {
     id: "buffPpAll",
-    name: i18n.skills.basic.buffPpAll.name + "(3)",
-    desc: i18n.skills.basic.buffPpAll.desc3, //"Buff Physical power \n[1]+[MP*50%] all allies",
+    name: i18n.skills.basic.level2.name,
+    desc: i18n.skills.basic.level2.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
@@ -197,8 +197,8 @@ export const buffPPAll_3: IHeroSkillSet = {
 
 export const buffPPAll_2: IHeroSkillSet = {
     id: "buffPpAll",
-    name: i18n.skills.basic.buffPpAll.name + "(2)",
-    desc: i18n.skills.basic.buffPpAll.desc2, //"Buff Physical power \n[1]+[MP*50%] all allies",
+    name: i18n.skills.basic.level2.name,
+    desc: i18n.skills.basic.level2.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
@@ -224,8 +224,8 @@ export const buffPPAll_2: IHeroSkillSet = {
 
 export const buffPPAll: IHeroSkillSet = {
     id: "buffPpAll",
-    name: i18n.skills.basic.buffPpAll.name,
-    desc: i18n.skills.basic.buffPpAll.desc1, //"Buff Physical power \n[1]+[MP*50%] all allies",
+    name: i18n.skills.level2.buffPpAll.name,
+    desc: i18n.skills.level2.buffPpAll.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
@@ -253,10 +253,10 @@ export const buffPPAll: IHeroSkillSet = {
 
 export const buffTotalDmgSkill_2: IHeroSkillSet = {
     id: "buffTotalDmgSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Total damage(2)",
-    desc: "Buff total damage\n([10]+[60%xMP])% ally in front",
+    name: i18n.skills.level3.buffTotalDmgSkill.name,
+    desc: i18n.skills.level3.buffTotalDmgSkill.desc2,
+    //name: "Total damage(2)",
+    //desc: "Buff total damage\n ([10]+[60%xMP])% ally in front",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.BARD],
@@ -281,10 +281,10 @@ export const buffTotalDmgSkill_2: IHeroSkillSet = {
 
 export const buffTotalDmgSkill: IHeroSkillSet = {
     id: "buffTotalDmgSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Total damage",
-    desc: "Buff total damage\n([10]+[40%xMP])% ally in front",
+    //name: "Total damage",
+    //desc: "Buff total damage\n([10]+[40%xMP])% ally in front",
+    name: i18n.skills.level3.buffTotalDmgSkill.name,
+    desc: i18n.skills.level3.buffTotalDmgSkill.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.BARD],

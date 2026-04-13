@@ -15,12 +15,6 @@ export const SKILLS_EN = {
             desc2: "Buff self basic attack [2]",
             desc3: "Buff self basic attack [3]",
         },
-        buffPpAll: {
-            name: "Buff PP all",
-            desc1: "Buff Physical power \n[1]+[MP*50%] all allies",
-            desc2: "Buff Physical power \n[1]+[MP*70%] all allies",
-            desc3: "Buff Physical power \n[1]+[MP] all allies",
-        },
         //
         // DARK
         //
@@ -53,9 +47,9 @@ export const SKILLS_EN = {
         },
         feintAttack: {
             name: "Feint attack",
-            desc1: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*20%]",
-            desc2: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*30%]",
-            desc3: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*40%]",
+            desc1: "Reduce self basic attack\nby 35% and gain same armor\namount",
+            desc2: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*20%]",
+            desc3: "Reduce self basic attack\nby 35% and gain same armor\namount plus [PP*30%]",
         },
         //
         // MAGIC
@@ -92,6 +86,15 @@ export const SKILLS_EN = {
             desc1: "Reduce next basic attack\nby [35%] but it hits first\n2 eneimes",
             desc2: "Reduce next basic attack\nby [20%] but it hits first\n2 eneimes",
             desc3: "Next basic attack hits\nfirst 2 eneimes",
+        },
+        //
+        // MASTER + WILD
+        //
+        statusesIntoHeal: {
+            name: "Overcome",
+            desc1: "Remove [50%] stacks of\nevery status, heal same\namount",
+            desc2: "Remove [65%] stacks of\nevery status, heal same\namount",
+            desc3: "Remove [80%] stacks of\nevery status, heal same\namount",
         },
         //
         // ORDER
@@ -145,8 +148,14 @@ export const SKILLS_EN = {
         buffNextBa: {
             name: "Next BA+ buff",
             desc1: "Buff [4] self next basic attack",
-            desc2: "Buff [6] self next basic attack",
-            desc3: "Buff [8] self next basic attack",
+            desc2: "Buff [6]+[PPx30%] self next basic attack",
+            desc3: "Buff [8]+[PPx30%] self next basic attack",
+        },
+        debuffWorthyFoe: {
+            name: "Worthy foe",
+            desc1: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2]\nmake it vulnerable [1]",
+            desc2: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PPx35%]\nmake it vulnerable [2]",
+            desc3: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PPx50%]\nmake it vulnerable [3]",
         },
         //
         // WILD
@@ -171,7 +180,70 @@ export const SKILLS_EN = {
             desc2: "Apply [1] shock to the first enemy",
             desc3: "Apply [1] shock to the first enemy",
         },
+        buffNextBaBeCritSelf: {
+            name: "Full effort",
+            desc1: "Next basic attack is a crit",
+            desc2: "Next basic attack is a crit\n and increse damage [2]",
+            desc3: "Next basic attack is a crit\n and increse damage [5]",
+        },
+        debuffBaNextBaAll: {
+            name: "Weakness",
+            desc1: "Debuff next basic attack [1]+[MP*50%] all enemies",
+            desc2: "Debuff next basic attack [1]+[MP*70%] all enemies",
+            desc3: "Debuff next basic attack [1]+[MP] all enemies",
+        },
+        magicAttackAll: {
+            name: "Magic Attack All",
+            desc1: "Deal [1]+[MP*20%] magic damage to all enemies",
+            desc2: "Deal [1]+[MP*40%] magic damage to all enemies",
+            desc3: "Deal [1]+[MP*60%] magic damage to all enemies",
+        },
+        buffPpAll: {
+            name: "Buff PP all",
+            desc1: "Buff Physical power \n[1]+[MP*50%] all allies",
+            desc2: "Buff Physical power \n[1]+[MP*70%] all allies",
+            desc3: "Buff Physical power \n[1]+[MP] all allies",
+        },
     },
+    level3: {
+        buffSelfMPorPP: {
+            name: "Strong link",
+            desc1: "Buff self MP or PP [6]\ndepending on which\nattribute is highest",
+            desc2: "Buff self MP or PP [12]\ndepending on which\nattribute is highest",
+            desc3: "Buff self MP or PP [20]\ndepending on which\nattribute is highest",
+        },
+        buffSummonCritSkill: {
+            name: "Serious danger",
+            desc1: "Buff summon crit\nchance [5]+[20%xMP]",
+            desc2: "Buff summon crit\nchance [5]+[30%xMP]",
+            desc3: "Buff summon crit\nchance [5]+[50%xMP]",
+        },
+        buffTotalDmgSkill: {
+            name: "Total damage",
+            desc1: "Buff total damage\n([10]+[40%xMP])% ally in front",
+            desc2: "Buff total damage\n ([10]+[60%xMP])% ally in front",
+            desc3: "Buff total damage\n ([10]+[80%xMP])% ally in front",
+        },
+        increaseMaxHpSkill: {
+            name: "Nature grow",
+            desc1: "Increase [5]+[20%xMP]+[20%xPP]\nself max hp and\nheal same amount",
+            desc2: "Increase [5]+[30%xMP]+[30%xPP]\nself max hp and\nheal same amount",
+            desc3: "Increase [5]+[40%xMP]+[40%xPP]\nself max hp and\nheal same amount",
+        },
+        shieldAttackSkill: {
+            name: "Shield bash",
+            desc1: "Deal [20%xArmor] to first enemy",
+            desc2: "Deal [30%xArmor] to first enemy",
+            desc3: "Deal [50%xArmor] to first enemy",
+        },
+        stealPPorMPSkill: {
+            name: "Steal power",
+            desc1: "Steal [4] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+            desc2: "Steal [8] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+            desc3: "Steal [12] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+        },
+    },
+    level4: {},
     common: {
         removeBuff: {
             name: "Remove buff",

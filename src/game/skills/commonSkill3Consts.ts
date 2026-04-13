@@ -14,10 +14,10 @@ import {
 
 export const shieldAttackSkill_3: IHeroSkillSet = {
     id: "shieldAttackSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Shield bash(3)",
-    desc: "Deal [50%xArmor] to first enemy",
+    name: i18n.skills.level3.shieldAttackSkill.name,
+    desc: i18n.skills.level3.shieldAttackSkill.desc3,
+    //name: "Shield bash(3)",
+    //desc: "Deal [50%xArmor] to first enemy",
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
@@ -38,10 +38,10 @@ export const shieldAttackSkill_3: IHeroSkillSet = {
 
 export const shieldAttackSkill_2: IHeroSkillSet = {
     id: "shieldAttackSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Shield bash(2)",
-    desc: "Deal [30%xArmor] to first enemy",
+    name: i18n.skills.level3.shieldAttackSkill.name,
+    desc: i18n.skills.level3.shieldAttackSkill.desc2,
+    //name: "Shield bash(2)",
+    //desc: "Deal [30%xArmor] to first enemy",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
@@ -63,10 +63,10 @@ export const shieldAttackSkill_2: IHeroSkillSet = {
 
 export const shieldAttackSkill: IHeroSkillSet = {
     id: "shieldAttackSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Shield bash",
-    desc: "Deal [20%xArmor] to first enemy",
+    name: i18n.skills.level3.shieldAttackSkill.name,
+    desc: i18n.skills.level3.shieldAttackSkill.desc1,
+    //name: "Shield bash",
+    //desc: "Deal [20%xArmor] to first enemy",
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
@@ -90,10 +90,10 @@ export const shieldAttackSkill: IHeroSkillSet = {
 
 export const buffSelfMPorPP_2: IHeroSkillSet = {
     id: "buffSelfMPorPP",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Buff power(2)",
-    desc: "Buff self MP or PP [12]\ndepending on which\nattribute is highest",
+    name: i18n.skills.basic.buffSelfMPorPP.name,
+    desc: i18n.skills.basic.buffSelfMPorPP.desc2,
+    //name: "Buff power(2)",
+    //desc: "Buff self MP or PP [12]\ndepending on which\nattribute is highest",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.MAGIC, EHeroClass.WARRIOR],
@@ -157,10 +157,10 @@ export const buffSelfMPorPP_2: IHeroSkillSet = {
 
 export const buffSelfMPorPP: IHeroSkillSet = {
     id: "buffSelfMPorPP",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Buff power",
-    desc: "Buff self MP or PP [6]\ndepending on which\nattribute is highest",
+    name: i18n.skills.basic.buffSelfMPorPP.name,
+    desc: i18n.skills.basic.buffSelfMPorPP.desc1,
+    //name: "Buff power",
+    //desc: "Buff self MP or PP [6]\ndepending on which\nattribute is highest",
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.MAGIC, EHeroClass.WARRIOR],
@@ -204,7 +204,8 @@ export const buffSelfMPorPP: IHeroSkillSet = {
                 value: 3,
             },
         },
-        { // TODO: fix this, because after buffing MP at previous stem this step condition will be skipped
+        {
+            // TODO: fix this, because after buffing MP at previous stem this step condition will be skipped
             condition: ESkillCondition.MP_IS_EQUALS_PP,
             isBasicAttack: false,
             type: EHeroSkillType.BUFF,
@@ -228,10 +229,10 @@ export const buffSelfMPorPP: IHeroSkillSet = {
 
 export const increaseMaxHpSkill_2: IHeroSkillSet = {
     id: "increaseMaxHpSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Nature grow(2)",
-    desc: "Increase [5]+[30%xMP]+[30%xPP]\nself max hp and\nheal same amount",
+    name: i18n.skills.basic.increaseMaxHpSkill.name,
+    desc: i18n.skills.basic.increaseMaxHpSkill.desc2,
+    //name: "Nature grow(2)",
+    //desc: "Increase [5]+[30%xMP]+[30%xPP]\nself max hp and\nheal same amount",
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD, EHeroClass.PRIEST],
@@ -262,10 +263,10 @@ export const increaseMaxHpSkill_2: IHeroSkillSet = {
 
 export const increaseMaxHpSkill: IHeroSkillSet = {
     id: "increaseMaxHpSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Nature grow",
-    desc: "Increase [5]+[20%xMP]+[20%xPP]\nself max hp and\nheal same amount",
+    name: i18n.skills.basic.increaseMaxHpSkill.name,
+    desc: i18n.skills.basic.increaseMaxHpSkill.desc1,
+    //name: "Nature grow",
+    //desc: "Increase [5]+[20%xMP]+[20%xPP]\nself max hp and\nheal same amount",
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD, EHeroClass.PRIEST],
@@ -300,10 +301,10 @@ export const increaseMaxHpSkill: IHeroSkillSet = {
 
 export const buffSummonCritSkill_2: IHeroSkillSet = {
     id: "buffSummonCritSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Crit summon(2)",
-    desc: "Buff summon crit\nchance [5]+[30%xMP]",
+    name: i18n.skills.basic.buffSummonCritSkill.name,
+    desc: i18n.skills.basic.buffSummonCritSkill.desc2,
+    //name: "Crit summon(2)",
+    //desc: "Buff summon crit\nchance [5]+[30%xMP]",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
@@ -329,10 +330,10 @@ export const buffSummonCritSkill_2: IHeroSkillSet = {
 
 export const buffSummonCritSkill: IHeroSkillSet = {
     id: "buffSummonCritSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    name: "Crit summon",
-    desc: "Buff summon crit\nchance [5]+[20%xMP]",
+    name: i18n.skills.basic.buffSummonCritSkill.name,
+    desc: i18n.skills.basic.buffSummonCritSkill.desc1,
+    //name: "Crit summon",
+    //desc: "Buff summon crit\nchance [5]+[20%xMP]",
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],

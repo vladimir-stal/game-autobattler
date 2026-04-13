@@ -270,9 +270,9 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         this.show(x, y);
 
-        const { desc, name, isChained, isActivateOnStart, isBasicAttack } = skillSet;
+        const { name, level, isChained, isActivateOnStart, isBasicAttack } = skillSet;
 
-        this.titleText.setText(name);
+        this.titleText.setText(name + " (" + level + ")");
         this.descrText.setVisible(true);
         this.descrText.setText(substituteSummonDescription(skillSet));
 
