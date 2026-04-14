@@ -223,6 +223,7 @@ export const i18n: Ii18n = {
         goblin_silver_coin: "Серебряная монета",
         peasantPitchfork: "Крестьянские вилы",
         coin: "Монета",
+        coin_description: "Собери чтобы увеличить ее\nценность, или продай за ",
     },
     totems: {
         basicWildTotem: "Дикий тотем",
@@ -388,6 +389,5 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.IS_MOB]: "Не герой",
         //
         [EItemTargetType.ALL_ALLIES]: "для всех союзников",
-        COIN_SELL: "Собери чтобы увеличить ее\nценность, или продай за",
     },
 };

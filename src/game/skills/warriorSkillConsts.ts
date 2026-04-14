@@ -1,6 +1,6 @@
 import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_RAGE, IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_WORTHY_FOE } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
 
 // BUFF NEXT BA
@@ -225,7 +225,7 @@ export const debuffWorthyFoe_3: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_WORTHY_FOE,
+    image: IMAGE_SKILL_DUEL,
 };
 
 export const debuffWorthyFoe_2: IHeroSkillSet = {
@@ -280,7 +280,7 @@ export const debuffWorthyFoe_2: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_WORTHY_FOE,
+    image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_3,
 };
 
@@ -336,7 +336,7 @@ export const debuffWorthyFoe: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_WORTHY_FOE,
+    image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_2,
 };
 

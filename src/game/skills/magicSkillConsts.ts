@@ -11,7 +11,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_BURN, IMAGE_SKILL_DRAGON_FIRE, IMAGE_SKILL_LIGHTNING, IMAGE_SKILL_SHOCK_HAND, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_BURN, IMAGE_SKILL_DRAGON_FIRE, IMAGE_SKILL_LIGHTNING, IMAGE_SKILL_SHOCK_HAND } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP } from "./commonSkill3Consts";
 
 // MAGIC ATTACK

@@ -10,7 +10,7 @@ export const skeletonUnit: IUnit = {
     heroClass: EHeroClass.DARK,
     mobHeroClasses: [EHeroClass.DARK, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.HIGH_ATTACK_ENEMY,
+    attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 4,
     basicAttackTimes: 1,
     basicMaxHp: 10,

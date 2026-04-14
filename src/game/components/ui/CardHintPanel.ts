@@ -332,26 +332,29 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.hideSkillFields();
         this.hideUnitFields();
 
-        const { name, level, battleBonuses, bonuses, heroClassBonuses, afterDuelBonuses } = item;
+        const { name, level, battleBonuses, bonuses, heroClassBonuses, afterDuelBonuses, desc } = item;
 
         const itemLevel = level > 1 ? ` (${level})` : "";
         this.titleText.setText(name + itemLevel);
 
         //
 
+        // TODO: move description out of bonusesText
+
         const bonusesText =
-            battleBonuses?.reduce((text, bonus) => {
+            (desc ? desc + "\n" : "") +
+            (battleBonuses?.reduce((text, bonus) => {
                 if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND)
                     text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill?.name || "" + ")\n";
                 else text += i18n.attributes.bonusType[bonus.type] + " " + bonus.value + "\n";
                 return text;
-            }, "") || "";
+            }, "") || "");
         if (bonusesText) {
             this.bonusTextObject.setText(bonusesText);
             this.bonusTextObject.setVisible(true);
-        } else if (item.id === "coin") {
-            this.bonusTextObject.setText(i18n.ui.COIN_SELL + " " + getItemPrice(item));
-            this.bonusTextObject.setVisible(true);
+            //} else if (item.id === "coin") {
+            //    this.bonusTextObject.setText(i18n.ui.COIN_SELL + " " + getItemPrice(item));
+            //    this.bonusTextObject.setVisible(true);
         } else {
             this.bonusTextObject.setVisible(false);
         }

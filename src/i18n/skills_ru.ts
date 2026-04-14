@@ -64,9 +64,9 @@ export const SKILLS_RU = {
         //
         magicAttack: {
             name: "Магическая атака",
-            desc1: `Наносит [color=${colors.MAGIC_ATTACK}][5] магического \nурона[/color первому врагу`,
-            desc2: `Наносит [color=${colors.MAGIC_ATTACK}][7] магического \nурона[/color первому врагу`,
-            desc3: `Наносит [color=${colors.MAGIC_ATTACK}][9] магического \nурона[/color первому врагу`,
+            desc1: `Наносит [color=${colors.MAGIC_ATTACK}][5] магического \nурона[/color] первому врагу`,
+            desc2: `Наносит [color=${colors.MAGIC_ATTACK}][7] магического \nурона[/color] первому врагу`,
+            desc3: `Наносит [color=${colors.MAGIC_ATTACK}][9] магического \nурона[/color] первому врагу`,
         },
         applyBurn: {
             name: "Пламя",
@@ -183,9 +183,9 @@ export const SKILLS_RU = {
     level2: {
         applyShock: {
             name: "Шок",
-            desc1: `Накладывает [color=${colors.SHOCK}][1] шок \nна первого врага`,
-            desc2: `Накладывает [color=${colors.SHOCK}][2] шок \nна первого врага`,
-            desc3: `Накладывает [color=${colors.SHOCK}][3] шок \nна первого врага`,
+            desc1: `Накладывает [color=${colors.SHOCK}][1] шок[/color]\nна первого врага`,
+            desc2: `Накладывает [color=${colors.SHOCK}][2] шок[/color]\nна первого врага`,
+            desc3: `Накладывает [color=${colors.SHOCK}][3] шок[/color]\nна первого врага`,
         },
         attrDescArmor: {
             name: "Захват лоз",
@@ -376,9 +376,9 @@ export const SKILLS_RU = {
         },
         druidSkill: {
             name: "Цепная молния",
-            desc1: "Накладывает шок [1] на\nслучайного врага 3 раза",
-            desc2: "Накладывает шок [1] на\nслучайного врага 4 раза",
-            desc3: "Накладывает шок [1] на\nслучайного врага 5 раза",
+            desc1: `Накладывает [color=${colors.SHOCK}]шок [1][/color] на\nслучайного врага 3 раза`,
+            desc2: `Накладывает [color=${colors.SHOCK}]шок [1][/color] на\nслучайного врага 4 раза`,
+            desc3: `Накладывает [color=${colors.SHOCK}]шок [1][/color] на\nслучайного врага 5 раза`,
         },
         duelistSkill: {
             name: "Нечестная дуэль",

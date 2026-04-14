@@ -856,6 +856,8 @@ export interface IItem {
     nextLevel?: IItem;
     previousLevel?: IItem;
     evolving?: boolean;
+    desc?: string;
+    sellPrice?: number;
 }
 
 export interface IActionTarget {

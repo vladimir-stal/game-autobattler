@@ -16,10 +16,10 @@ import { i18n } from "../consts";
 import {
     IMAGE_SKILL_MAGIC_HAND,
     IMAGE_SKILL_PHYS_ATTACK,
-    IMAGE_SKILL_TEST,
     IMAGE_SKILL_YELLOW_FLAME,
-    IMAGE_SKILL_OVERCOME,
     IMAGE_SKILL_CLEAVE,
+    IMAGE_SKILL_CHAIN,
+    IMAGE_SKILL_CLEAR,
 } from "../utils/load/skillImagesLoad";
 
 ////////////// COMMON SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ export const noBasicAttackSkill: IHeroSkillSet = {
     ],
     isBasicAttack: false,
     isChained: true,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_CHAIN,
 };
 
 // ONLY BASIC ATTACK
@@ -127,7 +127,7 @@ export const statusesIntoHeal_2: IHeroSkillSet = {
         ...overcomeSkillStack(EStatusType.POISON, 65),
         ...overcomeSkillStack(EStatusType.SHOCK, 65),
     ],
-    image: IMAGE_SKILL_OVERCOME,
+    image: IMAGE_SKILL_CLEAR,
 };
 
 export const statusesIntoHeal: IHeroSkillSet = {
@@ -145,7 +145,7 @@ export const statusesIntoHeal: IHeroSkillSet = {
         ...overcomeSkillStack(EStatusType.POISON, 50),
         ...overcomeSkillStack(EStatusType.SHOCK, 50),
     ],
-    image: IMAGE_SKILL_OVERCOME,
+    image: IMAGE_SKILL_CLEAR,
     nextLevel: statusesIntoHeal_2,
 };
 

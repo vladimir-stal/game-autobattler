@@ -44,6 +44,7 @@ export interface Ii18n {
     };
     items: {
         coin: string;
+        coin_description: string;
         peasantPitchfork: string;
         goblin_silver_coin: string;
         goblin_gold_coin: string;
@@ -214,7 +215,6 @@ export interface Ii18n {
         [EItemAfterDuelBonusCondition.IS_MOB]: string;
         // bonus target
         [EItemTargetType.ALL_ALLIES]: string;
-        COIN_SELL: string;
     };
 }
 
@@ -445,6 +445,7 @@ export const i18n: Ii18n = {
         goblin_silver_coin: "Silver coin",
         peasantPitchfork: "Pitchfork",
         coin: "The Coin",
+        coin_description: "Collect to increase its\nprice, or sell it for ",
     },
     rooms: {
         //
@@ -572,6 +573,5 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.IS_MOB]: "NON HERO",
         //
         [EItemTargetType.ALL_ALLIES]: "for all",
-        COIN_SELL: "Collect to increase its\nprice, or sell it for",
     },
 };
