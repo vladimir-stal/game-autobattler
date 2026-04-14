@@ -29,8 +29,10 @@ import {
 
 export const noBasicAttackSkill: IHeroSkillSet = {
     id: "noBasicAttack",
-    name: "No basic attack",
-    desc: "Perform no basic attack",
+    //name: "No basic attack",
+    //desc: "Perform no basic attack",
+    name: i18n.skills.level2.noBasicAttackSkill.name,
+    desc: i18n.skills.level2.noBasicAttackSkill.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.ALL],

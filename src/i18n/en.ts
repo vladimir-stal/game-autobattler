@@ -167,6 +167,7 @@ export interface Ii18n {
         SKIP: string;
         START: string;
         EQUIP: string;
+        APPLY: string;
         GOLD: string;
         INCOME: string;
         DAY: string;
@@ -522,6 +523,7 @@ export const i18n: Ii18n = {
         SELECT: "SELECT",
         SKIP: "SKIP",
         EQUIP: "EQUIP",
+        APPLY: "APPLY",
         GOLD: "GOLD",
         INCOME: "INCOME",
         DAY: "DAY",

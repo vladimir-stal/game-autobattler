@@ -340,6 +340,7 @@ export const i18n: Ii18n = {
         SELECT: "ВЫБРАТЬ",
         SKIP: "ПРОПУСТИТЬ",
         EQUIP: "ЭКИПИРОВАТЬ",
+        APPLY: "ПРИМЕНИТЬ",
         INCOME: "ДОХОД",
         DAY: "ДЕНЬ",
         HOUR: "ЧАС",

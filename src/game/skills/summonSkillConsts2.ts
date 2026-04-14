@@ -248,8 +248,10 @@ export const warriorSummonSkill: IHeroSkillSet = {
 
 export const incrSummonBa_3: IHeroSkillSet = {
     id: "incrSummonBa",
-    name: "Increase summon attack(3)",
-    desc: "Increase current summon basic attack damage [1]+[MP]",
+    //name: "Increase summon attack(3)",
+    //desc: "Increase current summon basic attack damage [1]+[MP]",
+    name: i18n.skills.level2.incrSummonBa.name,
+    desc: i18n.skills.level2.incrSummonBa.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
@@ -268,8 +270,10 @@ export const incrSummonBa_3: IHeroSkillSet = {
 
 export const incrSummonBa_2: IHeroSkillSet = {
     id: "incrSummonBa",
-    name: "Increase summon attack(2)",
-    desc: "Increase current summon basic attack damage [1]+[MP*70%]",
+    //name: "Increase summon attack(2)",
+    //desc: "Increase current summon basic attack damage [1]+[MP*70%]",
+    name: i18n.skills.level2.incrSummonBa.name,
+    desc: i18n.skills.level2.incrSummonBa.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
@@ -289,8 +293,10 @@ export const incrSummonBa_2: IHeroSkillSet = {
 
 export const incrSummonBa: IHeroSkillSet = {
     id: "incrSummonBa",
-    name: "Increase summon attack",
-    desc: "Increase current summon basic attack damage [1]+[MP*50%]",
+    //name: "Increase summon attack",
+    //desc: "Increase current summon basic attack damage [1]+[MP*50%]",
+    name: i18n.skills.level2.incrSummonBa.name,
+    desc: i18n.skills.level2.incrSummonBa.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
@@ -317,8 +323,10 @@ export const incrSummonBa: IHeroSkillSet = {
 
 export const incrSummonArmor_3: IHeroSkillSet = {
     id: "incrSummonArmor",
-    name: "Increase summon armor",
-    desc: "Increase current summon basic attack damage [8]+[MP]",
+    //name: "Increase summon armor",
+    //desc: "Increase current summon basic attack damage [8]+[MP]",
+    name: i18n.skills.level2.incrSummonArmor.name,
+    desc: i18n.skills.level2.incrSummonArmor.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
@@ -338,8 +346,10 @@ export const incrSummonArmor_3: IHeroSkillSet = {
 
 export const incrSummonArmor_2: IHeroSkillSet = {
     id: "incrSummonArmor",
-    name: "Increase summon armor",
-    desc: "Increase current summon basic attack damage [8]+[MP*75%]",
+    //name: "Increase summon armor",
+    //desc: "Increase current summon basic attack damage [8]+[MP*75%]",
+    name: i18n.skills.level2.incrSummonArmor.name,
+    desc: i18n.skills.level2.incrSummonArmor.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
@@ -360,8 +370,10 @@ export const incrSummonArmor_2: IHeroSkillSet = {
 
 export const incrSummonArmor: IHeroSkillSet = {
     id: "incrSummonArmor",
-    name: "Increase summon armor",
-    desc: "Increase current summon armor [8]+[MP*50%]",
+    //name: "Increase summon armor",
+    //desc: "Increase current summon armor [8]+[MP*50%]",
+    name: i18n.skills.level2.incrSummonArmor.name,
+    desc: i18n.skills.level2.incrSummonArmor.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],

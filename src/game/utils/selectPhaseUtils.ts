@@ -903,7 +903,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
             case ECardType.EXP:
                 {
                     if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT && slot.card?.card.unit?.unitType === EUnitType.HERO) {
-                        slot.setIsActive(true);
+                        slot.setIsActive(true, "apply");
                     }
                 }
                 break;

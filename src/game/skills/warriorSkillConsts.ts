@@ -95,8 +95,10 @@ export const buffNextBa: IHeroSkillSet = {
 
 export const buffNextBaTimes_3: IHeroSkillSet = {
     id: "buffNextBaTimes",
-    name: "Next BA +2 time buff(3)",
-    desc: "Next basic attack has +[2] time",
+    //name: "Next BA +2 time buff(3)",
+    //desc: "Next basic attack has +[2] time",
+    name: i18n.skills.level2.buffNextBaTimes.name,
+    desc: i18n.skills.level2.buffNextBaTimes.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
@@ -119,8 +121,10 @@ export const buffNextBaTimes_3: IHeroSkillSet = {
 
 export const buffNextBaTimes_2: IHeroSkillSet = {
     id: "buffNextBaTimes",
-    name: "Next BA +1 time buff(2)",
-    desc: "Next basic attack has +[1] time",
+    //name: "Next BA +1 time buff(2)",
+    //desc: "Next basic attack has +[1] time",
+    name: i18n.skills.level2.buffNextBaTimes.name,
+    desc: i18n.skills.level2.buffNextBaTimes.desc2,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
@@ -144,8 +148,10 @@ export const buffNextBaTimes_2: IHeroSkillSet = {
 
 export const buffNextBaTimes: IHeroSkillSet = {
     id: "buffNextBaTimes",
-    name: "Next BA +1 time buff",
-    desc: "Next basic attack has +[1] time",
+    //name: "Next BA +1 time buff",
+    //desc: "Next basic attack has +[1] time",
+    name: i18n.skills.level2.buffNextBaTimes.name,
+    desc: i18n.skills.level2.buffNextBaTimes.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],

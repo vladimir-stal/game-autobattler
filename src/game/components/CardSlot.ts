@@ -4,7 +4,7 @@ import { colors, i18n } from "../consts";
 import { ECardType, ICard, IUnit } from "../../types";
 import { Card } from "./Card";
 
-export type TSlotActiveType = "default" | "merge" | "equip";
+export type TSlotActiveType = "default" | "merge" | "equip" | "apply";
 
 /** Component card can be placed in */
 export class CardSlot extends Phaser.GameObjects.Container {
@@ -208,7 +208,13 @@ export class CardSlot extends Phaser.GameObjects.Container {
             }
         }
 
-        this.equipTextObject.setVisible(value && activeType === "equip");
+        //this.equipTextObject.setVisible(value && activeType === "equip" || activeType === "apply");
+        if ((value && activeType === "equip") || activeType === "apply") {
+            this.equipTextObject.setText(activeType === "equip" ? i18n.ui.EQUIP : i18n.ui.APPLY);
+            this.equipTextObject.setVisible(true);
+        } else {
+            this.equipTextObject.setVisible(false);
+        }
 
         if (this.card && this.card.card.type === ECardType.UNIT) {
             const color = value ? activeColor : colors.GREY;

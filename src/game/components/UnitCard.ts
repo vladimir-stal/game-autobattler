@@ -136,7 +136,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderUpgradeButton() {
         const { level, unitType, heroClassType } = this.unit;
 
-        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 3;
+        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC; // && level > 3;
         this.upgradeButton = this.scene.add
             .text(0, 120, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" })
             .setOrigin(0.5)

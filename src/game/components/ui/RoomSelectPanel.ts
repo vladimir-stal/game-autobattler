@@ -11,6 +11,8 @@ import { checkHeroClassIsBasic, getMulticlassSubclasses } from "../../utils/hero
 const borderMaxWidth = 800;
 const borderMiddleWidth = 600;
 
+const HIDE_HERO_CLASSES_ROOMS = [ERoomType.TRIPLE_SET];
+
 /** UI panel to select next room */
 export class RoomSelectPanel extends Phaser.GameObjects.Container {
     gameScene: GameScene;
@@ -105,7 +107,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         this.add(roomText);
 
         const heroClassesText =
-            heroClasses && heroClasses.length > 0
+            heroClasses && heroClasses.length > 0 && !HIDE_HERO_CLASSES_ROOMS.includes(type)
                 ? "\n(" + (roomsWithSingleHeroClass.includes(type) ? i18n.tags[heroClasses[0]] : heroClasses?.map((hc) => i18n.tags[hc]).join(", ")) + ")"
                 : "";
         const bossDescription = type === ERoomType.BOSS ? "\n" + boss?.name : "";
