@@ -571,6 +571,7 @@ export enum EStatusType {
     BURN = "BURN",
     POISON = "POISON",
     SHOCK = "SHOCK",
+    RADIATE = "RADIATE",
 }
 
 export enum EBuffType {
@@ -589,6 +590,7 @@ export enum EBuffType {
     EVADE = "EVADE", // evade next N basic attacks
     IGNORE_NEXT_DEBUFF = "IGNORE_NEXT_DEBUFF",
     OUTGOING_HEAL = "OUTGOING_HEAL",
+    OVERHEAL_TO_DAMAGE = "OVERHEAL_TO_DAMAGE", // Every heal beyond maxHp apply RADIATE status on [changeTargetTypeTo] targets
 }
 
 export enum EDebuffType {
@@ -602,11 +604,13 @@ export enum EDebuffType {
     MAGIC_RESIST_DECREASE = "MAGIC_RESIST_DECREASE", // decrease hero magic resist
     PHYSICAL_RESIST_DECREASE = "PHYSICAL_RESIST_DECREASE", // decrease hero physical resist
     DISABLE_SKILL = "DISABLE_SKILL", // enemy next skill is not performed
+    BLIND = "BLIND", // enemy attacks have their target evasion chance +X
 }
 
 export enum EBuffTimeType {
     DUEL = "DUEL",
     TILL_NEXT_BA = "TILL_NEXT_BA",
+    DURATION = "DURATION",
 }
 
 export enum ETargetType {
@@ -910,6 +914,7 @@ export interface IBuff {
     changeTargetTypeTo?: ETargetType;
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
+    duration?: number;
 }
 
 export interface IDebuff {
@@ -923,6 +928,7 @@ export interface IDebuff {
     totalValue?: number; // total value is calculated in battle
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
+    duration?: number;
 }
 
 /**

@@ -1,5 +1,6 @@
 import {
     EBattleActionType,
+    EBuffTimeType,
     EBuffType,
     EDebuffType,
     EHeroAttackType,
@@ -25,9 +26,11 @@ import {
     TValueType,
 } from "../../types";
 import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
+import { BattleController } from "../components/BattleController";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
+import { getHeroClassesWeaponItems } from "./itemUtils";
 import { emptyUnit, generateId, generateUnitId } from "./unitUtils";
 
 export const emptyBattleUnit: IBattleUnit = {
@@ -386,13 +389,16 @@ export const getAllyTotems = (unit: IBattleUnit, units: TBattleUnits, targetType
     }
 };
 
-export const calculateBuffValue = (initialValue: number, buff: IBuff, target: IBattleUnit) => {
-    if (buff.valueType === "number" || buff.valueType === "evolvedNumber") {
-        return buff.value;
-    } else if (buff.valueType === "percent" || buff.valueType === "evolvedPercent") {
-        const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
-        let buffValue = Math.floor((initValue * buff.value) / 100);
-        return buffValue;
+export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff: IBuff) => {
+    const { value, valueType, mpScale, ppScale } = buff;
+    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+    if (valueType === "number" || valueType === "evolvedNumber") {
+        return value + mpScaleValue + ppScaleValue;
+    } else if (valueType === "percent" || valueType === "evolvedPercent") {
+        //const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
+        let buffValue = Math.floor((initialValue * value) / 100);
+        return (buffValue || 1)  + mpScaleValue + ppScaleValue;
     }
     return 0;
 };
@@ -456,6 +462,28 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
             break;
     }
     battleRecord.push({ unitId: unit.id, type: EBattleActionType.BUFF_REMOVED, buff });
+};
+
+export const removeDebuffSimple = (unit: IBattleUnit, debuff: IDebuff, battleRecord: TBattleRecord) => {
+    const index = unit.debuffs.findIndex((b) => b === debuff);
+    if (index !== -1) {
+        unit.buffs.splice(index, 1);
+    }
+
+    const { type, attribute, totalValue } = debuff;
+    switch (type) {
+        case EDebuffType.ATTRIBUTE_DECREASE:
+            {
+                // decrease attribute back
+                if (!attribute || totalValue === undefined) {
+                    return;
+                }
+                unit[attribute] += totalValue;
+                battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: totalValue });
+            }
+            break;
+    }
+    battleRecord.push({ unitId: unit.id, type: EBattleActionType.DEBUFF_REMOVE, debuff });
 };
 
 export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, battleRecord: TBattleRecord) => {
@@ -580,6 +608,7 @@ export const calculateUnitsAfterBattle = (battleUnits: (IBattleUnit | null)[]): 
 
 /** Calculate final damage according to target unit defense, buffs and debuffs 
  *    used only for Totems
+ *    see also BattleController.dealDamage() for regular damage dealing
 */
 export const dealDamage = (target: IBattleUnit, damageValue: number, damageType: EHeroAttackType, battleRecord: TBattleRecord) => {
     let finalDamageValue = damageValue;
@@ -692,8 +721,16 @@ export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statu
         battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp, status: statusType });
     }
 
-    // remove BURN after damage
+    // remove(edited) *reduce BURN after damage
     if (statusType === EStatusType.BURN) {
+        // change from removeStatus() to reduceStacks
+        //removeStatus(target, target, statusType, battleRecord);
+        reduceStatus(target,target,statusType,Math.floor(damageValue/2)+1,battleRecord);
+    }
+    // remove RADIATE after damage
+    // radiate status is from Overheal trigger
+    //   see BattleController.performHeal()
+    if (statusType === EStatusType.RADIATE) {
         removeStatus(target, target, statusType, battleRecord);
     }
 
@@ -708,13 +745,38 @@ export const removeStatus = (unit: IBattleUnit, target: IBattleUnit, statusType:
     target.statuses = target.statuses.filter((status) => status.type !== statusType);
 };
 
-export const applyDebuff = (target: IBattleUnit, debuff: IDebuff, debuffAction: IBattleAction) => {
+export const reduceStatus = (
+    unit: IBattleUnit,
+    target: IBattleUnit,
+    statusType: EStatusType,
+    value: number,
+    battleRecord: TBattleRecord,
+    isStartBattle?: boolean,
+) => {
+    const existingStatus = target.statuses.find((st) => st.type === statusType);
+    battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_REMOVE, status: statusType, value, isStartBattle: isStartBattle });
+
+    if (existingStatus) {
+        const existingStatusValue = existingStatus.value;
+        existingStatus.value -= value;
+        /* deal damage in case of SHOCK status
+        if (statusType === EStatusType.SHOCK) {
+            takeStatusDamage(target, existingStatusValue, EStatusType.SHOCK, battleRecord);
+        }*/
+        if (existingStatus.value <= 0)
+            removeStatus(unit,target,statusType,battleRecord,isStartBattle);
+        return;
+    }
+    target.statuses.push({ type: statusType, value });
+};
+
+export const applyDebuff = (target: IBattleUnit, debuff: IDebuff, debuffAction: IBattleAction, caster?: IBattleUnit, battleCtrl?:BattleController) => {
     //
     // if same debuff already on target, dont apply new one, but empower existing one instead
-    const existingDebuff = target.debuffs.find((dbf) => dbf.type === debuff.type);
+    const existingDebuff = target.debuffs.find((dbf) => (dbf.type === debuff.type) && (dbf.attribute === debuff.attribute) && (dbf.timeType === debuff.timeType));
 
     if (existingDebuff) {
-        console.log("existing debuff found", target.id, debuff.type);
+        console.log("existing debuff found", target.id, debuff.type, debuff.attribute, debuff.timeType);
         // TODO: empower existing debuff
         switch (debuff.type) {
             case EDebuffType.MARK_BLADEDANCER:
@@ -723,18 +785,79 @@ export const applyDebuff = (target: IBattleUnit, debuff: IDebuff, debuffAction: 
                     if (existingDebuff.totalValue) {
                         existingDebuff.totalValue += 1;
                     }
-                    //debuffAction.value = existingDebuff.totalValue;
-                    //console.log("debuffAction >>>>", debuffAction);
                     debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingDebuff.totalValue });
                 }
                 break;
-            default: {
+            case EDebuffType.ATTRIBUTE_DECREASE:
+                // caster & battleCtrl should be defined
+                //const initValue = debuff.valueFrom ? target[debuff.valueFrom] : target[debuff.attribute];
+                const newValue = calculateDebuffValue(caster || target, target[debuff.attribute], debuff);
+                const oldValue = existingDebuff.totalValue;
+                if (debuff.timeType === EBuffTimeType.DURATION) {
+                    //existingDebuff.totalValue = Math.max(newValue, oldValue);
+                    existingDebuff.duration += debuff.duration;
+                    const diff = (newValue - oldValue);
+                    const ta = Math.min(diff,target[debuff.attribute]);
+                    if (diff > 0) {
+                        target[debuff.attribute] -= ta;
+                        existingDebuff.totalValue += ta;
+                        battleCtrl &&
+                        battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_DECREASE,
+                            attribute: debuff.attribute,
+                            value: ta,
+                        });
+                    }
+                } else {
+                    const ta = Math.min(newValue,target[debuff.attribute]);
+                    existingDebuff.totalValue += ta;
+                    target[debuff.attribute] -= ta;
+                    battleCtrl &&
+                    battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_DECREASE,
+                            attribute: debuff.attribute,
+                            value: ta,
+                        });
+                }
                 debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true });
+                break;
+            default: {
+                const initValue = debuff.attribute ? target[debuff.attribute] : 100;
+                const newValue = calculateDebuffValue(caster || target, initValue, debuff);
+                const oldValue = existingDebuff.totalValue;
+                if (debuff.timeType === EBuffTimeType.DURATION) {
+                    existingDebuff.totalValue = Math.max(newValue, oldValue);
+                    existingDebuff.duration += debuff.duration;
+                } else {
+                    existingDebuff.totalValue += newValue;
+                }
+                debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingDebuff.totalValue });
             }
         }
     } else {
-        target.debuffs.push({ ...debuff });
-        debuffAction.buffTargets?.push({ targetId: target.id });
+        const initValue = debuff.attribute ? target[debuff.attribute] : 100;
+        const debuffValue = calculateDebuffValue(caster || target, initValue, debuff);
+        if (debuff.type === EDebuffType.ATTRIBUTE_DECREASE) {
+            const ta = Math.min(debuffValue,target[debuff.attribute]);
+            // do not decrease attribute below 0
+            // so when debuff is removed, attribute won't become
+            // more than it was initially 
+            target[debuff.attribute] -= ta;
+            battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_DECREASE,
+                            attribute: debuff.attribute,
+                            value: ta,
+                        });
+            target.debuffs.push({ ...debuff, totalValue: ta });
+        } else
+            target.debuffs.push({ ...debuff, totalValue: debuffValue });
+        debuffAction.buffTargets?.push({ targetId: target.id, value: debuffValue });
     }
 };
 
@@ -765,6 +888,77 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
 
     target.debuffs = target.debuffs.filter((_, index) => index !== debuffIndex);
 };
+
+export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleAction, caster?: IBattleUnit, battleCtrl?:BattleController) => {
+    const existingBuff = target.buffs.find((bf) => (bf.type === buff.type) && (bf.attribute === buff.attribute) && (bf.timeType === buff.timeType));
+    if (existingBuff) {
+        console.log("existing buff found", target.id, buff.type, buff.attribute, buff.timeType);
+        if (buff.type === EBuffType.ATTRIBUTE_INCREASE) {
+                // caster & battleCtrl should be defined
+                const initValue = buff.valueFrom ? target[buff.valueFrom] : target[buff.attribute];
+                const newValue = calculateBuffValue(caster || target, initValue, buff);
+                const oldValue = existingBuff.totalValue;
+                if (buff.timeType === EBuffTimeType.DURATION) {
+                    existingBuff.totalValue = Math.max(newValue, oldValue);
+                    existingBuff.duration += buff.duration;
+                    const diff = (newValue - oldValue);
+                    if (diff > 0) {
+                        target[buff.attribute] += diff;
+                        battleCtrl &&
+                        battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_INCREASE,
+                            attribute: buff.attribute,
+                            value: diff,
+                        });
+                    }
+                } else {
+                    existingBuff.totalValue += newValue;
+                    target[buff.attribute] += newValue;
+                    battleCtrl &&
+                    battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_INCREASE,
+                            attribute: buff.attribute,
+                            value: newValue,
+                        });
+                }
+                buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingBuff.totalValue });
+        } else {
+            const initValue = buff.valueFrom ? 
+                target[buff.valueFrom] : 
+                (buff.attribute ? target[buff.attribute] : 100);
+            const newValue = calculateBuffValue(caster || target, initValue, buff);
+            const oldValue = existingBuff.totalValue;
+            if (buff.timeType === EBuffTimeType.DURATION) {
+                existingBuff.totalValue = Math.max(newValue, oldValue);
+                existingBuff.duration += buff.duration;
+            } else {
+                existingBuff.totalValue += newValue;
+            }
+            buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingBuff.totalValue });
+        }
+    } else {
+        const initValue = buff.valueFrom ? 
+                target[buff.valueFrom] : 
+                (buff.attribute ? target[buff.attribute] : 100);
+        const buffValue = calculateBuffValue(caster || target, initValue, buff);
+        if (buff.type === EBuffType.ATTRIBUTE_INCREASE) {
+            target[buff.attribute] -= buffValue;
+            battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_INCREASE,
+                            attribute: buff.attribute,
+                            value: buffValue,
+                        });
+        }
+        target.buffs.push({ ...buff, totalValue: buffValue });
+        buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });
+    }
+}
 
 export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
     const unitHp = unit.hp;
