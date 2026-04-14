@@ -4,6 +4,7 @@ import { darkHero, masterHero, orderHero, priestHero, summonHero, warriorHero, w
 import { dagger1 } from "../basicWeaponItemConsts";
 import { assasinHero } from "../mcHeroConsts";
 import { nextBAArea, removeDebuffSkill, statusesIntoHeal } from "../skills/commonSkillConsts";
+import { poisonRandom } from "../skills/darkSkillConsts";
 import { fireflySelfPoison } from "../skills/mobSkills";
 import { attrDescArmor } from "../skills/wildSkillConsts";
 import { fireflySummonMob_6 } from "../units/summonMobUnits";

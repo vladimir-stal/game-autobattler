@@ -94,18 +94,17 @@ export const substituteSummonDescription = (skillset: IHeroSkillSet): string => 
         return desc.replace("[stats]", "[" + atk + "," + hp + "]");
     }
     if (desc.includes("[stats1]")) {
-        const allsummons = skills.filter(sk => sk.type === EHeroSkillType.SUMMON || (sk.childSkill && sk.childSkill.type === EHeroSkillType.SUMMON))
-                .map(sk => {
-                    if (sk.type === EHeroSkillType.SUMMON)
-                        return sk.summon;
-                    else
-                        return sk.childSkill.summon; 
-                });
-        allsummons.forEach((summon,index) => {
+        const allSummons = skills
+            .filter((sk) => sk.type === EHeroSkillType.SUMMON || sk.childSkill?.type === EHeroSkillType.SUMMON)
+            .map((sk) => {
+                if (sk.type === EHeroSkillType.SUMMON) return sk.summon;
+                else return sk.childSkill?.summon;
+            });
+        allSummons.forEach((summon, index) => {
             const atk = summon?.basicAttack || "?";
             const hp = summon?.basicMaxHp || "?";
-            desc.replace("[stats"+(index+1)+"]", "[" + atk + "," + hp + "]");
-        })
+            desc.replace("[stats" + (index + 1) + "]", "[" + atk + "," + hp + "]");
+        });
         return desc;
     }
     return desc;

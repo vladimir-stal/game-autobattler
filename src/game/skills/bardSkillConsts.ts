@@ -171,8 +171,8 @@ export const buffBaSelf: IHeroSkillSet = {
 
 export const buffPPAll_3: IHeroSkillSet = {
     id: "buffPpAll",
-    name: i18n.skills.basic.level2.name,
-    desc: i18n.skills.basic.level2.desc3,
+    name: i18n.skills.level2.buffPpAll.name,
+    desc: i18n.skills.level2.buffPpAll.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
@@ -197,8 +197,8 @@ export const buffPPAll_3: IHeroSkillSet = {
 
 export const buffPPAll_2: IHeroSkillSet = {
     id: "buffPpAll",
-    name: i18n.skills.basic.level2.name,
-    desc: i18n.skills.basic.level2.desc2,
+    name: i18n.skills.level2.buffPpAll.name,
+    desc: i18n.skills.level2.buffPpAll.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],

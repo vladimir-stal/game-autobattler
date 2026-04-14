@@ -17,6 +17,7 @@ import { HeroClassTag } from "./HeroClassTag";
 import { getItemPrice, getWeaponItemHeroClasses } from "../../utils/itemUtils";
 import { IMAGE_ITEM_ARMOR_1 } from "../../utils/load/imageLoadItems";
 import { substituteSummonDescription } from "../../utils/skillUtils2";
+import BBCodeText from "phaser3-rex-plugins/plugins/gameobjects/tagtext/bbcodetext/BBCodeText";
 
 /** Panel to show information on items and skills on hover */
 export class CardHintPanel extends Phaser.GameObjects.Container {
@@ -24,7 +25,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
     titleText: GameObjects.Text;
     // skill
-    descrText: GameObjects.Text;
+    descrText: BBCodeText;
     enchancedChainedIcon: GameObjects.Image;
     enchancedOnStartIcon: GameObjects.Image;
     enchancedText: GameObjects.Text;
@@ -89,9 +90,6 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         rect.setStrokeStyle(1, 0x777777);
         this.add(rect);
 
-        //const textObject = this.scene.add.text(0, 0, this.text).setOrigin(0, 0);
-        //this.add(textObject);
-
         this.titleText = this.scene.add.text(40, 10, "", {
             fontFamily: "Arial Black",
             fontSize: 14,
@@ -113,7 +111,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         //
 
-        this.descrText = this.scene.add.text(20, 40, "", {
+        this.descrText = this.scene.add.rexBBCodeText(20, 40, "", {
+            //this.scene.add.text(20, 40, "", {
             //fontFamily: "Arial Black",
             fontSize: 12,
             color: "#ffffff",
@@ -272,8 +271,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         const { name, level, isChained, isActivateOnStart, isBasicAttack } = skillSet;
 
-        this.titleText.setText(name + " (" + level + ")");
         this.descrText.setVisible(true);
+        this.titleText.setText(name + (level > 1 ? " (" + level + ")" : ""));
         this.descrText.setText(substituteSummonDescription(skillSet));
 
         this.enchancedOnStartIcon.setVisible(false);
