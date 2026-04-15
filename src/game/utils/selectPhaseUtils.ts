@@ -643,11 +643,12 @@ export const getCards = (
                     // and then 3 random skills instead of 2
                     const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), num, true);
 
-                    cards = [...skills, topLevelSkill, holdingSkill].map((skill, index) => {
+                    const allSkills = [...skills, topLevelSkill, holdingSkill];
+                    cards = allSkills.map((skill, index) => {
                         if (!skill) {
                             return null;
                         }
-                        const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
+                        const price = getSkillPrice(skill.priceLevel, holdingSkill && index === allSkills.length - 1 ? 1 : 0);
                         return { skill, type: ECardType.SKILL, price: price };
                     });
                 }
@@ -903,7 +904,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
             case ECardType.EXP:
                 {
                     if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT && slot.card?.card.unit?.unitType === EUnitType.HERO) {
-                        slot.setIsActive(true);
+                        slot.setIsActive(true, "apply");
                     }
                 }
                 break;

@@ -21,7 +21,7 @@ export const axe1_3: IItem = {
     //name: "Axe(2)",
     name: i18n.items.axe1,
     type: EItemType.WEAPON,
-    level: 2,
+    level: 3,
     priceLevel: 1,
     image: IMAGE_ITEM_AXE_1,
     heroClasses: [],
@@ -277,7 +277,7 @@ export const shield1_3: IItem = {
     //name: "Shield(2)",
     name: i18n.items.shield1,
     type: EItemType.WEAPON,
-    level: 2,
+    level: 3,
     priceLevel: 1,
     image: IMAGE_ITEM_SHIELD_1,
     heroClasses: [],
@@ -327,10 +327,9 @@ export const shield1: IItem = {
 
 export const staff1_3: IItem = {
     id: "staff1",
-    //name: "Staff(2)",
     name: i18n.items.staff1,
     type: EItemType.WEAPON,
-    level: 2,
+    level: 3,
     priceLevel: 1,
     image: IMAGE_ITEM_STAFF_1,
     heroClasses: [],
@@ -343,7 +342,6 @@ export const staff1_3: IItem = {
 
 export const staff1_2: IItem = {
     id: "staff1",
-    //name: "Staff(2)",
     name: i18n.items.staff1,
     type: EItemType.WEAPON,
     level: 2,
@@ -360,7 +358,6 @@ export const staff1_2: IItem = {
 
 export const staff1: IItem = {
     id: "staff1",
-    //name: "Staff",
     name: i18n.items.staff1,
     type: EItemType.WEAPON,
     level: 1,
@@ -378,7 +375,7 @@ export const sword1_3: IItem = {
     //name: "Sword(2)",
     name: i18n.items.sword1,
     type: EItemType.WEAPON,
-    level: 2,
+    level: 3,
     priceLevel: 1,
     heroClasses: [],
     image: IMAGE_ITEM_SWORD_1,
@@ -426,7 +423,7 @@ export const totem1_3: IItem = {
     //name: "Totem(2)",
     name: i18n.items.totem1,
     type: EItemType.WEAPON,
-    level: 1,
+    level: 3,
     priceLevel: 1,
     image: IMAGE_ITEM_TOTEM_1,
     heroClasses: [],

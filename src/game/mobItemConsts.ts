@@ -27,10 +27,12 @@ import {
 
 export const itemCoin3: IItem = {
     id: "coin",
-    name: i18n.items.coin, // "Монета(3)",
+    name: i18n.items.coin,
+    desc: i18n.items.coin_description + "8",
     type: EItemType.COMMON,
-    level: 10,
-    priceLevel: 3, // calculated cost = (3+10)*2-1 = 25 ; sell cost = (25+1)/2 = 13
+    level: 3,
+    priceLevel: 1, // calculated cost = (3+10)*2-1 = 25 ; sell cost = (25+1)/2 = 13
+    sellPrice: 8,
     heroClasses: [],
     bonuses: [],
     image: IMAGE_ITEM_COIN,
@@ -39,9 +41,11 @@ export const itemCoin3: IItem = {
 export const itemCoin2: IItem = {
     id: "coin",
     name: i18n.items.coin, // "Монета(2)",
+    desc: i18n.items.coin_description + "3",
     type: EItemType.COMMON,
-    level: 3,
-    priceLevel: 2, // calculated cost = (2+3)*2-1 = 9 ; sell cost = (9+1)/2 = 5
+    level: 2,
+    priceLevel: 1, // calculated cost = (2+3)*2-1 = 9 ; sell cost = (9+1)/2 = 5
+    sellPrice: 3,
     heroClasses: [],
     bonuses: [],
     image: IMAGE_ITEM_COIN,
@@ -50,10 +54,12 @@ export const itemCoin2: IItem = {
 
 export const itemCoin: IItem = {
     id: "coin",
-    name: i18n.items.coin, // "Монета",
+    name: i18n.items.coin,
+    desc: i18n.items.coin_description + "1",
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1, // calculated cost = (1+1)*2-1 = 3 ; sell cost = (3+1)/2 = 2
+    sellPrice: 1,
     heroClasses: [],
     bonuses: [],
     image: IMAGE_ITEM_COIN,
@@ -228,7 +234,7 @@ export const itemGoblinBoneDagger_3: IItem = {
                 type: EItemBattleBonusType.BASIC_ATTACK_TWICE,
                 value: 50,
                 valueType: "percent",
-            }
+            },
         },
     ],
     image: IMAGE_ITEM_GOBLIN_BONE_DAGGER,
@@ -294,8 +300,8 @@ export const regenMantle_3: IItem = {
     heroClasses: [],
     bonuses: [],
     afterDuelBonuses: [
-        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1},
-        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, condition: EItemAfterDuelBonusCondition.WON }
+        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1 },
+        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, condition: EItemAfterDuelBonusCondition.WON },
     ],
     image: IMAGE_ITEM_REGEN_MANTLE,
 };
@@ -308,7 +314,7 @@ export const regenMantle_2: IItem = {
     priceLevel: 1,
     heroClasses: [],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1}],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1 }],
     image: IMAGE_ITEM_REGEN_MANTLE,
     nextLevel: regenMantle_3,
 };
@@ -338,8 +344,8 @@ export const itemSpiritSpear_3: IItem = {
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
     evolving: true,
     afterDuelBonuses: [
-        { type: EItemAfterDuelBonusType.STAT_MP, value: 1},
-        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON }
+        { type: EItemAfterDuelBonusType.STAT_MP, value: 1 },
+        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON },
     ],
     image: IMAGE_ITEM_SPIRIT_SPEAR,
 };
@@ -354,7 +360,7 @@ export const itemSpiritSpear_2: IItem = {
     weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
     evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1}],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1 }],
     image: IMAGE_ITEM_SPIRIT_SPEAR,
     nextLevel: itemSpiritSpear_3,
 };

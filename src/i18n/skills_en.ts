@@ -30,12 +30,6 @@ export const SKILLS_EN = {
             desc2: "Deal [3] magic damage \nto random enemy 3 times",
             desc3: "Deal [4] magic damage \nto random enemy 3 times",
         },
-        magicRain: {
-            name: "Magic rain",
-            desc1: "Deal [2] magic damage \nto random enemy [1+MP*40%] times",
-            desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
-            desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
-        },
         //
         // MASTER
         //
@@ -180,11 +174,29 @@ export const SKILLS_EN = {
             desc2: "Apply [1] shock to the first enemy",
             desc3: "Apply [1] shock to the first enemy",
         },
+        attrDescArmor: {
+            name: "Entangle of vines ",
+            desc1: "Break [8] armor to first enemy",
+            desc2: "Break [14] armor to first enemy",
+            desc3: "Apply [26] shock to the first enemy",
+        },
         buffNextBaBeCritSelf: {
             name: "Full effort",
             desc1: "Next basic attack is a crit",
             desc2: "Next basic attack is a crit\n and increse damage [2]",
             desc3: "Next basic attack is a crit\n and increse damage [5]",
+        },
+        buffNextBaTimes: {
+            name: "Sword shadow",
+            desc1: "Next basic attack has +[1] time",
+            desc2: "Next basic attack has +[1] time",
+            desc3: "Next basic attack has +[2] times",
+        },
+        buffPpAll: {
+            name: "Buff PP all",
+            desc1: "Buff Physical power \n[1]+[MP*50%] all allies",
+            desc2: "Buff Physical power \n[1]+[MP*70%] all allies",
+            desc3: "Buff Physical power \n[1]+[MP] all allies",
         },
         debuffBaNextBaAll: {
             name: "Weakness",
@@ -192,17 +204,29 @@ export const SKILLS_EN = {
             desc2: "Debuff next basic attack [1]+[MP*70%] all enemies",
             desc3: "Debuff next basic attack [1]+[MP] all enemies",
         },
+        incrSummonArmor: {
+            name: "Increase summon armor",
+            desc1: "Increase current summon armor [8]+[MP*50%]",
+            desc2: "Increase current summon armor [8]+[MP*75%]",
+            desc3: "Increase current summon armor [8]+[MP]",
+        },
+        incrSummonBa: {
+            name: "Increase summon attack",
+            desc1: "Increase current summon basic attack damage [1]+[MP*50%]",
+            desc2: "Increase current summon basic attack damage [1]+[MP*70%]",
+            desc3: "Increase current summon basic attack damage [1]+[MP]",
+        },
         magicAttackAll: {
             name: "Magic Attack All",
             desc1: "Deal [1]+[MP*20%] magic damage to all enemies",
             desc2: "Deal [1]+[MP*40%] magic damage to all enemies",
             desc3: "Deal [1]+[MP*60%] magic damage to all enemies",
         },
-        buffPpAll: {
-            name: "Buff PP all",
-            desc1: "Buff Physical power \n[1]+[MP*50%] all allies",
-            desc2: "Buff Physical power \n[1]+[MP*70%] all allies",
-            desc3: "Buff Physical power \n[1]+[MP] all allies",
+        noBasicAttackSkill: {
+            name: "Chain link",
+            desc1: "Chains to the next skill",
+            desc2: "Chains to the next skill",
+            desc3: "Chains to the next skill",
         },
     },
     level3: {
@@ -229,6 +253,18 @@ export const SKILLS_EN = {
             desc1: "Increase [5]+[20%xMP]+[20%xPP]\nself max hp and\nheal same amount",
             desc2: "Increase [5]+[30%xMP]+[30%xPP]\nself max hp and\nheal same amount",
             desc3: "Increase [5]+[40%xMP]+[40%xPP]\nself max hp and\nheal same amount",
+        },
+        incrTotemValueSkill: {
+            name: "Empower totem",
+            desc1: "Increase current totem\n values by [1]+[MPx20%]",
+            desc2: "Increase current totem\n values by [1]+[MPx40%]",
+            desc3: "Increase current totem\n values by [1]+[MPx60%]",
+        },
+        magicRain: {
+            name: "Magic rain",
+            desc1: "Deal [2] magic damage \nto random enemy [1+MP*40%] times",
+            desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
+            desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
         },
         shieldAttackSkill: {
             name: "Shield bash",

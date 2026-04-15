@@ -25,6 +25,9 @@ export const IMAGE_FEINT_ATTACK = "IMAGE_FEINT_ATTACK";
 export const IMAGE_SKILL_OVERCOME = "IMAGE_SKILL_OVERCOME";
 export const IMAGE_FIREFLY_SELF_POISON = "IMAGE_FIREFLY_SELF_POISON";
 export const IMAGE_SKILL_CLEAVE = "IMAGE_SKILL_CLEAVE";
+export const IMAGE_SKILL_CHAIN = "IMAGE_SKILL_CHAIN";
+export const IMAGE_SKILL_CLEAR = "IMAGE_SKILL_CLEAR";
+export const IMAGE_SKILL_DUEL = "IMAGE_SKILL_DUEL";
 
 // LEVEL 2
 
@@ -80,11 +83,15 @@ export function loadSkillImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_HEAL_1, "assets/sprites/skills/holy_spell_1.png");
     scene.load.image(IMAGE_SKILL_TEST, "assets/sprites/skills/skills_test.png");
 
-    scene.load.image(IMAGE_SKILL_WORTHY_FOE, "assets/sprites/skills/worthy_foe.png");
+    //scene.load.image(IMAGE_SKILL_WORTHY_FOE, "assets/sprites/skills/worthy_foe.png");
     //scene.load.image(IMAGE_FEINT_ATTACK, "assets/sprites/skills/feint_attack.png");
-    scene.load.image(IMAGE_SKILL_OVERCOME, "assets/sprites/skills/overcome.png");
+    //scene.load.image(IMAGE_SKILL_OVERCOME, "assets/sprites/skills/overcome.png");
     scene.load.image(IMAGE_FIREFLY_SELF_POISON, "assets/sprites/skills/firefly_self_poison.png");
     scene.load.image(IMAGE_SKILL_CLEAVE, "assets/sprites/skills/cleave.png");
+    //
+    scene.load.image(IMAGE_SKILL_CHAIN, "assets/sprites/skills/chain.png");
+    scene.load.image(IMAGE_SKILL_CLEAR, "assets/sprites/skills/clear.png");
+    scene.load.image(IMAGE_SKILL_DUEL, "assets/sprites/skills/duel.png");
     //
     // LEVEL 2
     scene.load.image(IMAGE_SKILL_DARK_21, prefix + "2/dark_21.png");

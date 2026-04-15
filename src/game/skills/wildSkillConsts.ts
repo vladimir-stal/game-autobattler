@@ -183,8 +183,8 @@ export const totemAttackSkill: IHeroSkillSet = {
 
 export const attrDescArmor_3: IHeroSkillSet = {
     id: "attrDescArmor",
-    name: "-armor(3)",
-    desc: "Break [13] armor to first enemy",
+    name: i18n.skills.level2.attrDescArmor.name,
+    desc: i18n.skills.level2.attrDescArmor.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.WILD],
@@ -192,7 +192,7 @@ export const attrDescArmor_3: IHeroSkillSet = {
         {
             type: EHeroSkillType.ATTRIBUTE_DECREASE,
             isBasicAttack: true,
-            value: 13, //TODO MP: add MP to armor decrease
+            value: 26, //TODO MP: add MP to armor decrease
             valueType: "number",
             attribute: "armor",
             targetType: ETargetType.FIRST_ENEMY,
@@ -203,8 +203,8 @@ export const attrDescArmor_3: IHeroSkillSet = {
 
 export const attrDescArmor_2: IHeroSkillSet = {
     id: "attrDescArmor",
-    name: "-armor(2)",
-    desc: "Break [14] armor to first enemy",
+    name: i18n.skills.level2.attrDescArmor.name,
+    desc: i18n.skills.level2.attrDescArmor.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.WILD],
@@ -224,8 +224,8 @@ export const attrDescArmor_2: IHeroSkillSet = {
 
 export const attrDescArmor: IHeroSkillSet = {
     id: "attrDescArmor",
-    name: "-armor",
-    desc: "Break [8] armor to first enemy",
+    name: i18n.skills.level2.attrDescArmor.name,
+    desc: i18n.skills.level2.attrDescArmor.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.WILD],
@@ -247,10 +247,10 @@ export const attrDescArmor: IHeroSkillSet = {
 
 export const incrTotemValueSkill_2: IHeroSkillSet = {
     id: "incrTotemValueSkill",
-    name: "Empower totem(2)",
-    //name: i18n.skills.mc.shamanTotemEmpower.name,
-    desc: "Increase current totem\n values by [1]+[MPx40%]",
-    //desc: i18n.skills.mc.shamanTotemEmpower.desc1, //"Increase all totems values by [1]+[MP*50%]",
+    //name: "Empower totem(2)",
+    //desc: "Increase current totem\n values by [1]+[MPx40%]",
+    name: i18n.skills.level3.incrTotemValueSkill.name,
+    desc: i18n.skills.level3.incrTotemValueSkill.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD],
@@ -271,10 +271,10 @@ export const incrTotemValueSkill_2: IHeroSkillSet = {
 
 export const incrTotemValueSkill: IHeroSkillSet = {
     id: "incrTotemValueSkill",
-    name: "Empower totem",
-    //name: i18n.skills.mc.shamanTotemEmpower.name,
-    desc: "Increase current totem\n values by [1]+[MPx20%]",
-    //desc: i18n.skills.mc.shamanTotemEmpower.desc1, //"Increase all totems values by [1]+[MP*50%]",
+    //name: "Empower totem",
+    //desc: "Increase current totem\n values by [1]+[MPx20%]",
+    name: i18n.skills.level3.incrTotemValueSkill.name,
+    desc: i18n.skills.level3.incrTotemValueSkill.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD],

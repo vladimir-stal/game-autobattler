@@ -1,6 +1,6 @@
 import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_RAGE, IMAGE_SKILL_SWORD_BUFF_2, IMAGE_SKILL_WORTHY_FOE } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
 
 // BUFF NEXT BA
@@ -95,8 +95,10 @@ export const buffNextBa: IHeroSkillSet = {
 
 export const buffNextBaTimes_3: IHeroSkillSet = {
     id: "buffNextBaTimes",
-    name: "Next BA +2 time buff(3)",
-    desc: "Next basic attack has +[2] time",
+    //name: "Next BA +2 time buff(3)",
+    //desc: "Next basic attack has +[2] time",
+    name: i18n.skills.level2.buffNextBaTimes.name,
+    desc: i18n.skills.level2.buffNextBaTimes.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
@@ -119,8 +121,10 @@ export const buffNextBaTimes_3: IHeroSkillSet = {
 
 export const buffNextBaTimes_2: IHeroSkillSet = {
     id: "buffNextBaTimes",
-    name: "Next BA +1 time buff(2)",
-    desc: "Next basic attack has +[1] time",
+    //name: "Next BA +1 time buff(2)",
+    //desc: "Next basic attack has +[1] time",
+    name: i18n.skills.level2.buffNextBaTimes.name,
+    desc: i18n.skills.level2.buffNextBaTimes.desc2,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
@@ -144,8 +148,10 @@ export const buffNextBaTimes_2: IHeroSkillSet = {
 
 export const buffNextBaTimes: IHeroSkillSet = {
     id: "buffNextBaTimes",
-    name: "Next BA +1 time buff",
-    desc: "Next basic attack has +[1] time",
+    //name: "Next BA +1 time buff",
+    //desc: "Next basic attack has +[1] time",
+    name: i18n.skills.level2.buffNextBaTimes.name,
+    desc: i18n.skills.level2.buffNextBaTimes.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
@@ -219,7 +225,7 @@ export const debuffWorthyFoe_3: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_WORTHY_FOE,
+    image: IMAGE_SKILL_DUEL,
 };
 
 export const debuffWorthyFoe_2: IHeroSkillSet = {
@@ -274,7 +280,7 @@ export const debuffWorthyFoe_2: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_WORTHY_FOE,
+    image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_3,
 };
 
@@ -330,7 +336,7 @@ export const debuffWorthyFoe: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_WORTHY_FOE,
+    image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_2,
 };
 

@@ -18,11 +18,11 @@ import { i18n } from "../consts";
 import {
     IMAGE_SKILL_MAGIC_HAND,
     IMAGE_SKILL_PHYS_ATTACK,
-    IMAGE_SKILL_TEST,
     IMAGE_SKILL_YELLOW_FLAME,
-    IMAGE_SKILL_OVERCOME,
     IMAGE_SKILL_CLEAVE,
     IMAGE_SKILL_POISON,
+    IMAGE_SKILL_CHAIN,
+    IMAGE_SKILL_CLEAR,
 } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 
@@ -33,8 +33,10 @@ import { skillsetSummon } from "../utils/skillUtils2";
 
 export const noBasicAttackSkill: IHeroSkillSet = {
     id: "noBasicAttack",
-    name: "No basic attack",
-    desc: "Perform no basic attack",
+    //name: "No basic attack",
+    //desc: "Perform no basic attack",
+    name: i18n.skills.level2.noBasicAttackSkill.name,
+    desc: i18n.skills.level2.noBasicAttackSkill.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.ALL],
@@ -45,7 +47,7 @@ export const noBasicAttackSkill: IHeroSkillSet = {
     ],
     isBasicAttack: false,
     isChained: true,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_CHAIN,
 };
 
 // ONLY BASIC ATTACK
@@ -137,7 +139,7 @@ export const statusesIntoHeal_2: IHeroSkillSet = {
         ...overcomeSkillStack(EStatusType.POISON, 65),
         ...overcomeSkillStack(EStatusType.SHOCK, 65),
     ],
-    image: IMAGE_SKILL_OVERCOME,
+    image: IMAGE_SKILL_CLEAR,
 };
 
 export const statusesIntoHeal: IHeroSkillSet = {
@@ -155,7 +157,7 @@ export const statusesIntoHeal: IHeroSkillSet = {
         ...overcomeSkillStack(EStatusType.POISON, 50),
         ...overcomeSkillStack(EStatusType.SHOCK, 50),
     ],
-    image: IMAGE_SKILL_OVERCOME,
+    image: IMAGE_SKILL_CLEAR,
     nextLevel: statusesIntoHeal_2,
 };
 

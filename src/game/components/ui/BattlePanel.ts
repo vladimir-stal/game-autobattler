@@ -48,10 +48,10 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         this.setVisible(true);
 
         this.currentActiveUnitId = undefined;
-        const player1NumberOfHeroes = playerUnits.filter(u => !!u).length;
-        const player2NumberOfHeroes = enemyUnits.filter(u => !!u).length;
+        const player1NumberOfHeroes = playerUnits.filter((u) => !!u).length;
+        const player2NumberOfHeroes = enemyUnits.filter((u) => !!u).length;
 
-        this.playerUnits = playerUnits.map((unit,index) => {
+        this.playerUnits = playerUnits.map((unit, index) => {
             if (!unit) {
                 return null;
             }
@@ -65,14 +65,14 @@ export class BattlePanel extends Phaser.GameObjects.Container {
             }
         }
 
-        this.enemyUnits = enemyUnits.map((unit,index) => {
+        this.enemyUnits = enemyUnits.map((unit, index) => {
             if (!unit) {
                 return null;
             }
             const frontRow = (player2NumberOfHeroes <= 2 && index === 0) || (player2NumberOfHeroes > 2 && index <= 1);
             return prepareUnitToBattle(unit, !frontRow);
         });
-        console.log("BattlePanel check",this.playerUnits,this.enemyUnits);
+        console.log("BattlePanel check", this.playerUnits, this.enemyUnits);
         this.removeAll(true);
         this.renderPlayerUnitsPanel();
         this.renderEnemyUnitsPanel();
@@ -466,7 +466,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         return;
                     }
 
-                    this.cards[unitId].playSkillSet(name, animation);
+                    await this.cards[unitId].playSkillSet(name, animation);
 
                     this.playNextAction();
                 }

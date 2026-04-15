@@ -310,7 +310,7 @@ export function createBasicHeroesAnimations(scene: Scene) {
     scene.anims.create({
         key: AnimationType.MAGIC_ATTACK_SPELL,
         frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_SPELL, { start: 0, end: 99 }),
-        frameRate: 40,
+        frameRate: 50,
     });
 
     scene.anims.create({

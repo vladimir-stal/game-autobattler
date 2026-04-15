@@ -13,7 +13,13 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_DARK_21, IMAGE_SKILL_DARK_22, IMAGE_SKILL_MAGIC_MISSILES, IMAGE_SKILL_POISON, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_DARK_21,
+    IMAGE_SKILL_DARK_22,
+    IMAGE_SKILL_DARK_MISSILES_RAIN,
+    IMAGE_SKILL_MAGIC_MISSILES,
+    IMAGE_SKILL_POISON,
+} from "../utils/load/skillImagesLoad";
 import { removeBuffSkill } from "./commonSkillConsts";
 
 // DEBUFF NEXT BA
@@ -431,8 +437,8 @@ export const stealPPorMPSkill: IHeroSkillSet = {
 
 export const magicRain_3: IHeroSkillSet = {
     id: "magicRain",
-    name: i18n.skills.basic.magicRain.name,
-    desc: i18n.skills.basic.magicRain.desc3,
+    name: i18n.skills.level3.magicRain.name,
+    desc: i18n.skills.level3.magicRain.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
@@ -457,14 +463,14 @@ export const magicRain_3: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_MAGIC_MISSILES,
+    image: IMAGE_SKILL_DARK_MISSILES_RAIN,
     animation: AnimationType.UNIT_ATTACK,
 };
 
 export const magicRain_2: IHeroSkillSet = {
     id: "magicRain",
-    name: i18n.skills.basic.magicRain.name,
-    desc: i18n.skills.basic.magicRain.desc2,
+    name: i18n.skills.level3.magicRain.name,
+    desc: i18n.skills.level3.magicRain.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
@@ -490,14 +496,14 @@ export const magicRain_2: IHeroSkillSet = {
         },
     ],
     nextLevel: magicRain_3,
-    image: IMAGE_SKILL_MAGIC_MISSILES,
+    image: IMAGE_SKILL_DARK_MISSILES_RAIN,
     animation: AnimationType.UNIT_ATTACK,
 };
 
 export const magicRain: IHeroSkillSet = {
     id: "magicRain",
-    name: i18n.skills.basic.magicRain.name,
-    desc: i18n.skills.basic.magicRain.desc1,
+    name: i18n.skills.level3.magicRain.name,
+    desc: i18n.skills.level3.magicRain.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
@@ -523,7 +529,7 @@ export const magicRain: IHeroSkillSet = {
         },
     ],
     nextLevel: magicRain_2,
-    image: IMAGE_SKILL_MAGIC_MISSILES,
+    image: IMAGE_SKILL_DARK_MISSILES_RAIN,
     animation: AnimationType.UNIT_ATTACK,
 };
 

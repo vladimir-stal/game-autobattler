@@ -45,7 +45,7 @@ export const darkHero: IUnit = {
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 0,
-    basicMagicPower: 4,
+    basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.DARK,
     id: "DARK",
