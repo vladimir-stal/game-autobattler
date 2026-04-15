@@ -13,13 +13,11 @@ import {
     TUnits,
     IBuff,
     EStatusType,
-    ITotem,
     TBattleRecord,
     IActionTarget,
     EItemBattleBonusType,
     IHeroSkillSet,
     IDebuff,
-    EHeroClassType,
 } from "../../types";
 import { eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -127,7 +125,7 @@ export class BattleController {
         this.roundCount = roundCount;
         this.isTillDeath = isTillDeath;
         this.prepareToBattle();
-        console.log("-= Pre battle =-",this.player1BattleUnits,this.player2BattleUnits);
+        console.log("-= Pre battle =-", this.player1BattleUnits, this.player2BattleUnits);
         //
         this.battleRecord = [];
 
@@ -175,20 +173,20 @@ export class BattleController {
     }
 
     prepareToBattle() {
-        const player1NumberOfHeroes = this.player1Units.filter(u => !!u).length;
-        const player2NumberOfHeroes = this.player2Units.filter(u => !!u).length;
+        const player1NumberOfHeroes = this.player1Units.filter((u) => !!u).length;
+        const player2NumberOfHeroes = this.player2Units.filter((u) => !!u).length;
         //console.log("Party size",player1NumberOfHeroes,player2NumberOfHeroes);
-        
+
         this.player1BattleUnits = this.player1Units.map((unit, index) => {
             if (!unit) {
                 return null;
-            }            
+            }
             const frontRow = (player1NumberOfHeroes <= 2 && index === 0) || (player1NumberOfHeroes > 2 && index <= 1);
             //console.log("Unit",unit," index",index," front",frontRow);
             return prepareUnitToBattle(unit, !frontRow);
         });
 
-        this.player2BattleUnits = this.player2Units.map((unit,index) => {
+        this.player2BattleUnits = this.player2Units.map((unit, index) => {
             if (!unit) {
                 return null;
             }
@@ -548,7 +546,7 @@ export class BattleController {
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
         targets.forEach((target) => {
-            console.log("INCR ATTR TARGET", attribute, target);
+            //console.log("INCR ATTR TARGET", attribute, target);
             const increaseValue = calculateIncreaseValue(target[attribute], value, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
 
             target[attribute] += increaseValue;
@@ -741,7 +739,7 @@ export class BattleController {
                         buffAction.buffTargets?.push({ targetId: target.id, isExisting: !!existingBuff, value: buffValue });
                     });
                 }
-                break;            
+                break;
             case EBuffType.ANTISKILL_SHIELD:
             case EBuffType.DARK_HEAL:
             case EBuffType.BLADEDANCE:
@@ -1552,7 +1550,7 @@ export class BattleController {
         const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
         if (divineShield) {
             this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-            changeBuffValue(target,divineShield,-1,this.battleRecord);
+            changeBuffValue(target, divineShield, -1, this.battleRecord);
             //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
             return;
         }
@@ -1789,90 +1787,4 @@ export class BattleController {
         debuffToRemoveIndexes.sort((a, b) => b - a);
         debuffToRemoveIndexes.forEach((index) => removeDebuff(unit, unit, index, this.battleRecord));
     }
-
-    // displayBattleRecord() {
-    //     this.battleRecord.forEach((action) => {
-    //         switch (action.type) {
-    //             case EBattleActionType.STATUS_APPLY:
-    //                 {
-    //                     console.log(action.unitId + " applies " + action.status + " " + action.value + " on " + action.targetId);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.ATTRIBUTE_INCREASE:
-    //                 {
-    //                     console.log(action.unitId + " increase " + action.attribute + " to " + action.value + " for " + action.targetId);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.ATTACK:
-    //                 {
-    //                     console.log(action.unitId + " basic attack " + action.targets?.[0].targetId + " with " + action.value);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.BUFF:
-    //                 {
-    //                     const target = action.targetId || "self";
-    //                     console.log(action.unitId + " buff " + target + " with " + action.name);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.BUFF_REMOVED:
-    //                 {
-    //                     console.log(action.name + " removed from " + action.unitId);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.DEBUFF:
-    //                 {
-    //                     const target = action.targetId || "self";
-    //                     console.log(action.unitId + " debuff " + target + " with " + action.name);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.DEATH:
-    //                 {
-    //                     console.log(action.unitId + " DIED !");
-    //                 }
-    //                 break;
-    //             case EBattleActionType.HEAL:
-    //                 {
-    //                     console.log(action.unitId + " heals " + action.value + " " + action.targetId);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.REGEN_HP:
-    //                 {
-    //                     console.log(action.unitId + " regens " + action.value + "hp");
-    //                 }
-    //                 break;
-    //             case EBattleActionType.ROUND_END:
-    //                 {
-    //                     console.log("--------- ");
-    //                 }
-    //                 break;
-    //             case EBattleActionType.ROUND_START:
-    //                 {
-    //                     console.log("--------- " + action.value);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.SUMMON:
-    //                 {
-    //                     console.log(action.unitId + " summons " + action.name);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.TAKE_DAMAGE:
-    //                 {
-    //                     console.log(action.unitId + " takes " + action.value + " damage, " + action.value2 + " hp left");
-    //                 }
-    //                 break;
-    //             case EBattleActionType.TOTEM_PLACE:
-    //                 {
-    //                     console.log(action.unitId + " places totem " + action.name);
-    //                 }
-    //                 break;
-    //             case EBattleActionType.TURN_START:
-    //                 {
-    //                     console.log("-- " + action.name);
-    //                 }
-    //                 break;
-    //             default:
-    //                 console.log("No description for action", action.type);
-    //         }
-    //     });
-    // }
 }

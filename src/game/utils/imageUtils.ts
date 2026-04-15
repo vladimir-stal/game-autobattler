@@ -102,6 +102,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.BARD:
             return {
                 distance: -40,
+                distanceEnemy: -10,
                 image: IMAGE_BARD_IDLE,
                 animation: AnimationType.BARD_IDLE,
                 idleBattleAnimation: AnimationType.BARD_IDLE_BATTLE, //, BARD_IDLE_BATTLE
@@ -149,6 +150,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 attackEnemyAnimation: EEffectAnimationType.EFFECT_MAGIC_ATTACK,
                 attackEnemyAnimDelay: 700,
                 attackEnemyAnimDistance: { x: 20, y: 50 },
+                attackEnemyAnimDistanceInverted: { x: 250, y: 50 },
             };
         case EHeroClass.MASTER:
             return {
@@ -450,6 +452,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
             };
         case "GOBLIN":
             return {
+                distance: -20,
                 distanceEnemy: -60,
                 image: IMAGE_GOBLIN_2,
                 idleBattleAnimation: AnimationType.MOB_GOBLIN_2_BATTLE_IDLE,

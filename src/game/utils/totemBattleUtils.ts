@@ -1,4 +1,15 @@
-import { EBattleActionType, EHeroAttackType, EHeroSkillType, EItemBattleBonusType, IBattleUnit, IHeroSkill, ITotem, TBattleRecord, TBattleUnits } from "../../types";
+import {
+    EBattleActionType,
+    EHeroAttackType,
+    EHeroSkillType,
+    EItemBattleBonusType,
+    IBattleAction,
+    IBattleUnit,
+    IHeroSkill,
+    ITotem,
+    TBattleRecord,
+    TBattleUnits,
+} from "../../types";
 import { BattleController } from "../components/BattleController";
 import { calculateIncreaseValue, emptyBattleUnit, getAllyTargets, getOpponentTargets } from "./battleUtils";
 import { emptyUnit } from "./unitUtils";
@@ -91,14 +102,11 @@ const performTotemAttack = (
         //battleRecord.push({ unitId: totem.id, targetId: finalTarget.id, type: EBattleActionType.ATTACK, value: attackDamage });
         //
         //dealDamage(finalTarget, attackDamage, skill.attackType!, battleRecord);
-        battleController.dealDamage(
-            emptyBattleUnit,
-            finalTarget,
-            attackDamage,
-            skill.attackType!,
-            undefined,
-            { unitId: totem.id, targetId: finalTarget.id, type: EBattleActionType.ATTACK, value: attackDamage },
-        );
+
+        const attackRecord: IBattleAction = { unitId: totem.id, targets: [], type: EBattleActionType.ATTACK, value: attackDamage };
+        battleController.battleRecord.push(attackRecord);
+
+        battleController.dealDamage(emptyBattleUnit, finalTarget, attackDamage, skill.attackType!, undefined, attackRecord);
     });
 };
 
@@ -108,7 +116,7 @@ const performTotemHeal = (
     skill: IHeroSkill,
     allyUnits: TBattleUnits,
     totemValueBonus: number,
-    battleRecord: TBattleRecord
+    battleRecord: TBattleRecord,
 ) => {
     const { targetType, value } = skill;
     if (!targetType || value === undefined) {
@@ -139,7 +147,7 @@ const performTotemAttrIncrease = (
     skill: IHeroSkill,
     allyUnits: TBattleUnits,
     totemValueBonus: number,
-    battleRecord: TBattleRecord
+    battleRecord: TBattleRecord,
 ) => {
     const { targetType, value, attribute, valueType } = skill;
     if (!targetType || value === undefined || !attribute || !valueType) {

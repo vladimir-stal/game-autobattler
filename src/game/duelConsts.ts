@@ -30,7 +30,7 @@ import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
 import { buffNextBaIgnoreArmorSelf, buffNextBaXSelf } from "./skills/masterSkillConsts";
 import { attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2 } from "./skills/priestSkillConsts";
-import { fireflySummonSkill } from "./skills/summonSkillConsts2";
+import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
 import { buffNextBa } from "./skills/warriorSkillConsts";
 import { attrDescArmor, totemAttackSkill } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
@@ -730,9 +730,9 @@ export const testAssassin: TDuelEnemy = {
 };
 
 export const testWild: TDuelEnemy = {
-    0: [wildHero],
-    1: [wildHero],
-    2: [wildHero],
+    0: [{ ...wildHero, skills: [totemAttackSkill] }],
+    1: [{ ...wildHero, skills: [totemAttackSkill] }],
+    2: [{ ...wildHero, skills: [totemAttackSkill] }],
     3: [wildHero],
     4: [wildHero],
     5: [wildHero],
@@ -801,16 +801,16 @@ export const testSamurai: TDuelEnemy = {
 
 export const testMinistrel: TDuelEnemy = {
     1: [beastMasterHero, blackKnightHero, minstrelHero],
-    0: [samuraiHero],
-    2: [samuraiHero],
-    3: [samuraiHero],
-    4: [samuraiHero],
-    5: [samuraiHero],
-    6: [samuraiHero],
-    7: [samuraiHero],
-    8: [samuraiHero],
-    9: [samuraiHero],
-    10: [samuraiHero],
+    0: [minstrelHero],
+    2: [minstrelHero],
+    3: [minstrelHero],
+    4: [minstrelHero],
+    5: [minstrelHero],
+    6: [minstrelHero],
+    7: [minstrelHero],
+    8: [minstrelHero],
+    9: [minstrelHero],
+    10: [minstrelHero],
 };
 
 export const testPriest: TDuelEnemy = {
@@ -841,4 +841,32 @@ export const testDark: TDuelEnemy = {
     10: [darkHero],
 };
 
-export const testDuelEnemies = [testDark];
+export const testMagic: TDuelEnemy = {
+    1: [{ ...magicHero, skills: [magicAttack, applyShock, applyBurn] }],
+    0: [{ ...magicHero, skills: [magicAttack, applyShock, applyBurn] }],
+    2: [{ ...magicHero, skills: [magicAttack, applyShock, applyBurn] }],
+    3: [darkHero],
+    4: [darkHero],
+    5: [darkHero],
+    6: [darkHero],
+    7: [darkHero],
+    8: [darkHero],
+    9: [darkHero],
+    10: [darkHero],
+};
+
+export const testSummon: TDuelEnemy = {
+    1: [{ ...summonHero, skills: [fireflySummonSkill] }],
+    0: [{ ...summonHero, skills: [fireflySummonSkill] }],
+    2: [{ ...summonHero, skills: [fireflySummonSkill] }],
+    3: [darkHero],
+    4: [darkHero],
+    5: [darkHero],
+    6: [darkHero],
+    7: [darkHero],
+    8: [darkHero],
+    9: [darkHero],
+    10: [darkHero],
+};
+
+export const testDuelEnemies = [testWild];

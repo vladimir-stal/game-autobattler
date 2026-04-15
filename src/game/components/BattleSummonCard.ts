@@ -92,7 +92,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     }
 
     renderPanels() {
-        this.turnRect = this.scene.add.rectangle(50, 5, 40, 20, colors.GREY_BLUE).setOrigin(0, 0);
+        const turnRectX = this.isInverted ? 15 : 50;
+        this.turnRect = this.scene.add.rectangle(turnRectX, 45, 40, 20, colors.GREY_BLUE).setOrigin(0, 0);
         this.add(this.turnRect);
         this.actionRect = this.scene.add.rectangle(50, -350, 40, 20, colors.RED).setOrigin(0, 0).setVisible(false);
         this.add(this.actionRect);
@@ -157,7 +158,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
         const { name } = this.totem;
 
-        this.titleText = this.scene.add.text(0, -330, name, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5, 0);
+        const totemTextX = this.isInverted ? 20 : 80;
+        this.titleText = this.scene.add.text(totemTextX, -330, name, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5, 0);
         this.add(this.titleText);
 
         this.renderTotemImage();
@@ -397,6 +399,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
     playTakeDamage(value: number, armorValue: number, options: { status?: EStatusType; isCrit?: boolean; isEvasion?: boolean; skill?: IHeroSkill }) {
         const { status, isCrit, isEvasion, skill } = options;
+        console.log("playTakeDamage", value, armorValue, options);
         this.changeHp(-value);
         const damageType = status || "DAMAGE";
         this.setAction(`${damageType} ${value} ${isCrit ? " CRIT!" : ""} ${isEvasion ? " EVADE!" : ""} ${status || ""}`, colors.RED);

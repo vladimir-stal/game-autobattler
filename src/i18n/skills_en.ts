@@ -174,6 +174,12 @@ export const SKILLS_EN = {
             desc2: "Apply [1] shock to the first enemy",
             desc3: "Apply [1] shock to the first enemy",
         },
+        attrIncArmorAll: {
+            name: "Barricades",
+            desc1: "Armor all [5 + 20% PP]",
+            desc2: "Armor all [5 + 35% PP]",
+            desc3: "Armor all [5 + 65% PP]",
+        },
         attrDescArmor: {
             name: "Entangle of vines ",
             desc1: "Break [8] armor to first enemy",
@@ -230,6 +236,12 @@ export const SKILLS_EN = {
         },
     },
     level3: {
+        attrArmorBigSelf: {
+            name: "Armor more",
+            desc1: "Armor self [5]+[PPx40%]",
+            desc2: "Armor self [5]+[PPx70%]",
+            desc3: "Armor self [5]+[PP]",
+        },
         buffSelfMPorPP: {
             name: "Strong link",
             desc1: "Buff self MP or PP [6]\ndepending on which\nattribute is highest",

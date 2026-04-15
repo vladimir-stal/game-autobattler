@@ -75,6 +75,7 @@ export const magicAttack: IHeroSkillSet = {
             attackType: EHeroAttackType.MAGIC,
             effectAnimationType: EEffectAnimationType.EFFECT_LIGHTNING_1,
             effectAnimationDelay: 800,
+            effectAnimDistanceInverted: { x: 250 },
         },
     ],
     nextLevel: magicAttack_2,

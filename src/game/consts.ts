@@ -19,13 +19,17 @@ export const colors = {
     BLUE_LIGHT: 0x66ccff,
     GREY: 0x666666,
     GREY_BLUE: 0x6688aa,
-    GREEN: 0x339933,
+    GREEN: 0x339933, // "#339933"
     GREEN_2: 0x339933,
+    GREEN_DARK: 0x002200, // "#002200"
     WHITE: 0x999999,
     GREY_HOVER: 0x888888,
     GREEN_HOVER: 0x22aa22,
     ORANGE: 0xff9966,
-    PURPLE: 0x990099,
-    RED: 0xcc4444,
+    PURPLE: 0x990099, //"#990099"
+    PURPLE_DARK: 0x663366, // "#663366"
+    RED: 0xcc4444, //"#cc4444"
+    RED_DARK: 0x330000, //"#330000"
+    RED_DARK_2: 0x993333, //"#993333"
     WHITE_HOVER: 0xbbbbbb,
 };
