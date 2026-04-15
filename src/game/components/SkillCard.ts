@@ -84,7 +84,7 @@ export class SkillCard extends Phaser.GameObjects.Container {
 
     renderTags() {
         this.skill.heroClasses.forEach((heroClass, index) => {
-            const x = index * 60;
+            const x = index * 60 - 50;
             const y = 178;
             const hcTag = new HeroClassTag(this.gameScene, x, y, heroClass);
             this.add(hcTag);

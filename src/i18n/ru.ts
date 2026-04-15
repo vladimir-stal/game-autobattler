@@ -214,6 +214,7 @@ export const i18n: Ii18n = {
         staff5: "Вулкан",
         // COMMON
         weaponSlotSheath: "Ножны для оружия",
+        weaponSlotSheath_description: "Добавляет еще один\nслот для оружия",
         // mob items
         spiritSpear: "Копье паров спирта :)",
         spiritArmor: "Броня паров спирта :)",
@@ -317,6 +318,12 @@ export const i18n: Ii18n = {
         [ERoomType.UPGRADE_SKILL_OR_ITEM]: "УЛУЧШИТЬ ПРЕДМЕТ ИЛИ НАВЫК",
     },
     skills: SKILLS_RU,
+    statuses: {
+        BLEED: "кровотечение",
+        BURN: "ожог",
+        POISON: "яд",
+        SHOCK: "шок",
+    },
     tags: {
         BARD: "БАРД",
         DARK: "ТЕМНЫЙ",

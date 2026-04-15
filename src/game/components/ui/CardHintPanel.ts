@@ -344,9 +344,11 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         const bonusesText =
             (desc ? desc + "\n" : "") +
             (battleBonuses?.reduce((text, bonus) => {
-                if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND)
+                if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND) {
                     text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill?.name || "" + ")\n";
-                else text += i18n.attributes.bonusType[bonus.type] + " " + bonus.value + "\n";
+                } else {
+                    text += i18n.attributes.bonusType[bonus.type] + (bonus.status ? " " + i18n.statuses[bonus.status] : "") + " [" + bonus.value + "]\n";
+                }
                 return text;
             }, "") || "");
         if (bonusesText) {

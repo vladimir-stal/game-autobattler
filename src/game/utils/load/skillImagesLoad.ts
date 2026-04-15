@@ -58,6 +58,8 @@ export const IMAGE_SKILL_PRIEST_SCROLL = "IMAGE_SKILL_PRIEST_SCROLL";
 export const IMAGE_SKILL_SUMMON_SHIELD = "IMAGE_SKILL_SUMMON_SHIELD";
 export const IMAGE_SKILL_SUMMON_SWORD = "IMAGE_SKILL_SUMMON_SWORD";
 export const IMAGE_SKILL_TOTEM_EMPOWER_2 = "IMAGE_SKILL_TOTEM_EMPOWER_2";
+export const IMAGE_SKILL_YELLOW_CROWN = "IMAGE_SKILL_YELLOW_CROWN";
+export const IMAGE_SKILL_SUMMON_WITH_SHIELD = "IMAGE_SKILL_SUMMON_WITH_SHIELD";
 
 const prefix = "assets/sprites/skills/";
 
@@ -121,4 +123,7 @@ export function loadSkillImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_SUMMON_SHIELD, prefix + "2/summon_shield.png");
     scene.load.image(IMAGE_SKILL_SUMMON_SWORD, prefix + "2/summon_sword.png");
     scene.load.image(IMAGE_SKILL_TOTEM_EMPOWER_2, prefix + "2/totem_empower_2.png");
+    //
+    scene.load.image(IMAGE_SKILL_YELLOW_CROWN, prefix + "2/shield_summon.png");
+    scene.load.image(IMAGE_SKILL_SUMMON_WITH_SHIELD, prefix + "2/yellow_crown.png");
 }

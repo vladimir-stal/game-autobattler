@@ -157,6 +157,10 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         this.add(rect);
     }
 
+    stopBattle() {
+        this.currentActionIndex = -1;
+    }
+
     async playBattle(record: TBattleRecord) {
         this.isStartBattle = true;
         console.log("visualizeBattle", record);
@@ -263,11 +267,13 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     action.targets?.forEach((target) => {
                         const { damageValue, targetId, armorValue, isEvasion } = target;
                         const { unit } = this.cards[unitId];
-                        if (!unit || damageValue === undefined) {
+                        if (damageValue === undefined) {
+                            const cardsT = { ...this.cards };
+                            console.log("BattlePanel > ATTACK ERROR", this.cards.length, cardsT, unitId, unit, damageValue);
                             return;
                         }
 
-                        this.cards[targetId].playEffect(unit, skill);
+                        this.cards[targetId].playEffect(unit || undefined, skill);
                         setTimeout(() => {
                             this.cards[targetId].playTakeDamage(damageValue, armorValue || 0, { status, isCrit, isEvasion });
                         }, 700);
@@ -625,7 +631,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     }
                     //const totemCard = await this.cards[this.currentActiveUnitId].placeTotem(totem, skill);
                     const totemCard = await this.cards[unitId].placeTotem(totem, skill);
-
+                    console.log("place totem > ", totem.id, totemCard);
                     this.cards[totem.id] = totemCard;
                     //setTimeout(() => {
                     this.playNextAction();

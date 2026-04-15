@@ -124,7 +124,8 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    scene.load.spritesheet(IMAGE_DARK_DEFEATED, "assets/sprites/units/dark/dark_defeated_400.webp", {
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_DARK_DEFEATED, "assets/sprites/units/dark/dark_defeated_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });

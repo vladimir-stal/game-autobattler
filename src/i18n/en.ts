@@ -9,6 +9,7 @@ import {
     ERoomType,
     ESelectCardHint,
     ESelectRoomHint,
+    EStatusType,
     THeroAttribute,
 } from "../types";
 import { SKILLS_EN } from "./skills_en";
@@ -145,6 +146,7 @@ export interface Ii18n {
         dagger5: string;
         // COMMON
         weaponSlotSheath: string;
+        weaponSlotSheath_description: string;
     };
     rooms: Partial<Record<ERoomType, string>>;
     roomDescriptions: Partial<Record<ERoomType, string>>;
@@ -157,6 +159,7 @@ export interface Ii18n {
         mobs: Record<string, TSkillI18n>;
         mc: Record<string, TSkillI18n>;
     };
+    statuses: Record<EStatusType, string>;
     tags: Partial<Record<EHeroClass, string>>;
     ui: {
         BUY: string;
@@ -436,6 +439,7 @@ export const i18n: Ii18n = {
         staff5: "The Volcano",
         // COMMON
         weaponSlotSheath: "Weapon sheath",
+        weaponSlotSheath_description: "Adds one more\nweapon slot",
         // mob items
         spiritSpear: "Spirit Spear",
         spiritArmor: "Spirit Armor",
@@ -500,6 +504,12 @@ export const i18n: Ii18n = {
     },
     roomDescriptions: {},
     skills: SKILLS_EN,
+    statuses: {
+        BLEED: "bleed",
+        BURN: "burn",
+        POISON: "poison",
+        SHOCK: "shock",
+    },
     tags: {
         BARD: "bard",
         DARK: "dark",

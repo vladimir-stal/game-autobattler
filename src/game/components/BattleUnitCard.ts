@@ -25,6 +25,7 @@ import { getHeroImage, getUnitImage } from "../utils/imageUtils";
 import { BattleStatusCard } from "./BattleStatusCard";
 import { IMAGE_EFFECT_LIGHTNING_1 } from "../utils/load/imageLoadEffects";
 import { IMAGE_EFFECT_UI_BUFF_0 } from "../utils/load/imageLoadUIEffects";
+import { IMAGE_ICON_ATTACK, IMAGE_ICON_HEALTH, IMAGE_ICON_SHIELD } from "../utils/imageLoadUtil";
 
 /** Card to show unit in battle  */
 export class BattleUnitCard extends Phaser.GameObjects.Container {
@@ -33,6 +34,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     rect: GameObjects.Rectangle;
     titleText: GameObjects.Text;
+    hpRect: GameObjects.Rectangle;
+    hpIcon: GameObjects.Image;
+    armorRect: GameObjects.Rectangle;
+    armorIcon: GameObjects.Image;
     turnRect: GameObjects.Rectangle;
     actionRect: GameObjects.Rectangle;
     actionText: GameObjects.Text;
@@ -199,7 +204,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     renderPanels() {
-        this.turnRect = this.scene.add.rectangle(0, 205, 100, 20, colors.GREY).setOrigin(0, 0);
+        this.turnRect = this.scene.add.rectangle(0, 245, 100, 20, colors.GREY).setOrigin(0, 0);
         this.add(this.turnRect);
 
         this.actionRect = this.scene.add.rectangle(0, -160, 100, 20, colors.GREY).setOrigin(0, 0).setVisible(false);
@@ -270,15 +275,78 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.add(this.titleText);
         this.titleText.setText(this.title);
 
-        this.hpText = this.scene.add.text(15, -110, hp + "/" + maxHp + "", { fontSize: 12, color: "#ddffdd" });
-        this.add(this.hpText);
+        //
 
-        this.attackText = this.scene.add.text(-15, -110, "A" + basicAttack, { fontSize: 12, color: "#ffdddd" });
+        const graphics = this.scene.add.graphics();
+
+        //graphics.fillStyle(0x333333, 1);
+        //graphics.fillRect(x, y, width, height);
+        graphics.lineStyle(3, 0xffffff, 1);
+        graphics.lineBetween(0, 205, 0, 220);
+        graphics.lineBetween(100, 205, 100, 220);
+
+        //graphics.lineBetween(0, 225, 0, 240);
+        //graphics.lineBetween(100, 225, 100, 240);
+
+        ////////
+
+        const hpBackgroundRect = this.scene.add.rectangle(0, 205, 100, 15, colors.RED_DARK).setOrigin(0, 0);
+        this.add(hpBackgroundRect);
+
+        this.hpRect = this.scene.add.rectangle(0, 205, 100, 15, colors.RED_DARK_2).setOrigin(0, 0);
+        //this.hpRect.setStrokeStyle(1, 0x777777);
+        this.add(this.hpRect);
+
+        //graphics.lineStyle(2, 0x666666, 1);
+        //graphics.lineBetween(25, 205, 25, 220);
+        //graphics.lineBetween(50, 205, 50, 220);
+        //graphics.lineBetween(75, 205, 75, 220);
+
+        //graphics.lineBetween(25, 225, 25, 240);
+        //graphics.lineBetween(50, 225, 50, 240);
+        //graphics.lineBetween(75, 225, 75, 240);
+
+        this.hpText = this.scene.add.text(50, 205, hp + "/" + maxHp + "", { fontSize: 12, color: "#ffffff" }).setOrigin(0.5, 0);
+
+        //this.hpIcon = this.scene.add.image(100, 205, IMAGE_ICON_HEALTH).setOrigin(0, 0).setDisplaySize(30, 30);
+        //this.add(this.hpIcon);
+
+        //
+        const armorRectWidth = Math.min(Math.floor((100 * armor) / maxHp), 100);
+        this.armorRect = this.scene.add
+            .rectangle(100 - armorRectWidth, 205, armorRectWidth, 15, colors.GREY_BLUE)
+            .setOrigin(0, 0)
+            .setVisible(armor > 0);
+        //this.armorRect.setStrokeStyle(1, 0xaaaaaa);
+        this.add(this.armorRect);
+
+        this.armorText = this.scene.add
+            .text(115, 205, armor + "", { fontSize: 12, color: "#ffffff" })
+            .setOrigin(0.5, 0)
+            .setVisible(armor > 0);
+        //this.armorText.setVisible(armor > 0);
+
+        this.armorIcon = this.scene.add
+            .image(90, 202, IMAGE_ICON_SHIELD)
+            .setOrigin(0, 0)
+            .setVisible(armor > 0);
+        this.add(this.armorIcon);
+
+        /////////////
+
+        this.add(graphics);
+        this.add(this.hpText);
+        this.add(this.armorText);
+
+        //////////////
+
+        //this.hpText = this.scene.add.text(15, -110, hp + "/" + maxHp + "", { fontSize: 12, color: "#ddffdd" });
+
+        this.attackText = this.scene.add.text(20, -110, "" + basicAttack, { fontSize: 12, color: "#ffffff" }); //ffdddd
         this.add(this.attackText);
 
-        this.armorText = this.scene.add.text(55, -110, armor + "arm", { fontSize: 12, color: "#ddddff" });
-        this.armorText.setVisible(armor > 0);
-        this.add(this.armorText);
+        const attackIcon = this.scene.add.image(0, -115, IMAGE_ICON_ATTACK).setDisplaySize(25, 25).setOrigin(0, 0);
+        this.add(attackIcon);
 
         // const itemsTextContent = items.length > 0 ? "Items: " + items.map((item) => item.name).join(", ") : "";
         // const itemsText = this.scene.add.text(10, 90, itemsTextContent, { fontSize: 12, color: "#dddddd" });
@@ -699,12 +767,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
     }
 
-    playEffect(unit: IBattleUnit, skill?: IHeroSkill) {
+    playEffect(unit?: IBattleUnit, skill?: IHeroSkill) {
         if (GAME_MODE !== "FULL") {
             return;
         }
 
-        const { unitType, heroClass, id } = unit;
         let animation: EEffectAnimationType | undefined;
         let animationDelay = 0;
         let attackEnemyAnimDistanceX = 0;
@@ -719,7 +786,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 attackEnemyAnimDistanceX = skill.effectAnimDistanceInverted?.x || 0;
                 attackEnemyAnimDistanceY = skill.effectAnimDistanceInverted?.y || 0;
             }
-        } else {
+        } else if (unit) {
+            const { unitType, heroClass, id } = unit;
             const animations = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(id);
             animation = animations.attackEnemyAnimation;
             animationDelay = animations.attackEnemyAnimDelay || 0;
@@ -806,9 +874,16 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     playDead() {
         this.isDead = true;
-        this.setAction(i18n.ui.DEAD, colors.RED);
-        this.actionText.setVisible(true);
+        //this.setAction(i18n.ui.DEAD, colors.RED);
+        //this.actionText.setVisible(true);
         this.actionRect.fillColor = colors.BLACK;
+
+        this.hpRect.setFillStyle(colors.RED_DARK, 1);
+        this.hpText.setText(i18n.ui.DEAD);
+        this.hpRect.setSize(100, 15);
+        this.armorRect.setVisible(false);
+        this.armorText.setVisible(false);
+        this.armorIcon.setVisible(false);
 
         const animation = this.unitDefeatedAnimation;
         if (animation) {
@@ -932,6 +1007,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.unit.hp = this.unit.maxHp;
         }
         this.hpText.setText(this.unit.hp + "/" + this.unit.maxHp);
+        const width = Math.floor((100 * this.unit.hp) / this.unit.maxHp);
+        this.hpRect.setSize(width, 15);
     }
 
     /** Increase or descrease unit hp by value (negative value to decrease) */
@@ -947,6 +1024,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.unit.hp = this.unit.maxHp;
         }
         this.hpText.setText(this.unit.hp + "/" + this.unit.maxHp);
+        const width = Math.floor((100 * this.unit.hp) / this.unit.maxHp);
+        this.hpRect.setSize(width, 15);
     }
 
     /** Increase or descrease unit max hp by value (negative value to decrease) */
@@ -959,17 +1038,35 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.unit.maxHp = 0;
         }
         this.hpText.setText(this.unit.hp + "/" + this.unit.maxHp);
+        const width = Math.floor((100 * this.unit.hp) / this.unit.maxHp);
+        this.hpRect.setSize(width, 15);
     }
 
     changeArmor(value: number) {
         if (!this.unit) {
             return;
         }
+        //console.log(">>>>>>>>> CHANGE ARMOR", value);
         this.unit.armor += value;
         if (this.unit.armor < 0) {
             this.unit.armor = 0;
         }
-        this.armorText.setText(this.unit.armor + "arm");
+        //
+        if (this.unit.armor === 0) {
+            this.armorRect.setVisible(false);
+            this.armorText.setVisible(false);
+            this.armorIcon.setVisible(false);
+        } else {
+            this.armorRect.setVisible(true);
+            this.armorText.setVisible(true);
+            this.armorIcon.setVisible(true);
+            //
+            this.armorText.setText(this.unit.armor + "");
+            const armorRectWidth = Math.min(Math.floor((100 * this.unit.armor) / this.unit.maxHp), 100);
+            armorRectWidth;
+            this.armorRect.setSize(armorRectWidth, 15);
+            this.armorRect.setPosition(100 - armorRectWidth, 205);
+        }
     }
 
     addBuff(buff: IBuff, buffTatget: IActionBuffTarget) {
@@ -1055,18 +1152,19 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                     if (this.unit.attack < 0) {
                         this.unit.attack = 0;
                     }
-                    this.attackText.setText("A" + this.unit.attack);
+                    this.attackText.setText("" + this.unit.attack);
                 }
                 break;
             case "armor":
                 {
                     //console.log("CHANGE ARMOR, prev, next", this.unit.armor, this.unit.armor + value);
-                    this.unit.armor += value;
-                    if (this.unit.armor < 0) {
-                        this.unit.armor = 0;
-                    }
-                    this.armorText.setText(this.unit.armor + "arm");
-                    this.armorText.setVisible(this.unit.armor > 0);
+                    // this.unit.armor += value;
+                    // if (this.unit.armor < 0) {
+                    //     this.unit.armor = 0;
+                    // }
+                    // this.armorText.setText(this.unit.armor + "arm");
+                    // this.armorText.setVisible(this.unit.armor > 0);
+                    this.changeArmor(value);
                 }
                 break;
             case "maxHp":

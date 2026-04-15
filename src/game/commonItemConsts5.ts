@@ -13,6 +13,7 @@ import { IMAGE_ITEM_POTION_1 } from "./utils/load/imageLoadItems";
 export const weaponSlotSheath: IItem = {
     id: "weapon_slot_sheath",
     name: i18n.items.weaponSlotSheath,
+    desc: i18n.items.weaponSlotSheath_description,
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 5,

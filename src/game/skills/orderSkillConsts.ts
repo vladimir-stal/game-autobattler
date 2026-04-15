@@ -53,7 +53,7 @@ export const attrArmorSelf_2: IHeroSkillSet = {
 export const attrArmorSelf: IHeroSkillSet = {
     id: "attrIncArmorSelf",
     name: i18n.skills.basic.attrIncArmorSelf.name,
-    desc: i18n.skills.basic.attrIncArmorSelf.desc1, //""Armor self [3]",
+    desc: i18n.skills.basic.attrIncArmorSelf.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.ORDER],
@@ -143,8 +143,10 @@ export const attrAttackSelf: IHeroSkillSet = {
 
 export const attrArmorAll_3: IHeroSkillSet = {
     id: "attrIncArmorAll",
-    name: "+armor all(3)",
-    desc: "Armor all [5 + 65% PP]",
+    //name: "+armor all(3)",
+    //desc: "Armor all [5 + 65% PP]",
+    name: i18n.skills.level2.attrIncArmorAll.name,
+    desc: i18n.skills.level2.attrIncArmorAll.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
@@ -164,8 +166,10 @@ export const attrArmorAll_3: IHeroSkillSet = {
 
 export const attrArmorAll_2: IHeroSkillSet = {
     id: "attrIncArmorAll",
-    name: "+armor all(2)",
-    desc: "Armor all [5 + 35% PP]",
+    //name: "+armor all(2)",
+    //desc: "Armor all [5 + 35% PP]",
+    name: i18n.skills.level2.attrIncArmorAll.name,
+    desc: i18n.skills.level2.attrIncArmorAll.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
@@ -186,8 +190,10 @@ export const attrArmorAll_2: IHeroSkillSet = {
 
 export const attrArmorAll: IHeroSkillSet = {
     id: "attrIncArmorAll",
-    name: "+armor all",
-    desc: "Armor all [5 + 20% PP]",
+    //name: "+armor all",
+    //desc: "Armor all [5 + 20% PP]",
+    name: i18n.skills.level2.attrIncArmorAll.name,
+    desc: i18n.skills.level2.attrIncArmorAll.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
@@ -208,11 +214,34 @@ export const attrArmorAll: IHeroSkillSet = {
 
 // // INCREASE ATTR ARMOR SELF (LEVEL 3) SKILL
 
+export const attrArmorBigSelf_3: IHeroSkillSet = {
+    id: "attrIncArmorSelf",
+    name: i18n.skills.level3.attrArmorBigSelf.name,
+    desc: i18n.skills.level3.attrArmorBigSelf.desc3,
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.ORDER],
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            isBasicAttack: true,
+            attribute: "armor",
+            value: 5,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+            ppScale: 100,
+        },
+    ],
+    //nextLevel: attrArmorBigSelf_2,
+    image: IMAGE_SKILL_KNIGHT,
+};
+
 export const attrArmorBigSelf_2: IHeroSkillSet = {
     id: "attrIncArmorSelf",
-    //name: i18n.skills.basic.attrIncArmorSelf.name,
-    name: "Armor more(2)",
-    desc: "Armor self [5]+[PPx70%]",
+    //name: "Armor more(2)",
+    //desc: "Armor self [5]+[PPx70%]",
+    name: i18n.skills.level3.attrArmorBigSelf.name,
+    desc: i18n.skills.level3.attrArmorBigSelf.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.ORDER],
@@ -227,15 +256,16 @@ export const attrArmorBigSelf_2: IHeroSkillSet = {
             ppScale: 70,
         },
     ],
-    //nextLevel: attrArmorBigSelf_2,
+    nextLevel: attrArmorBigSelf_3,
     image: IMAGE_SKILL_KNIGHT,
 };
 
 export const attrArmorBigSelf: IHeroSkillSet = {
     id: "attrIncArmorSelf",
-    //name: i18n.skills.basic.attrIncArmorSelf.name,
-    name: "Armor more",
-    desc: "Armor self [5]+[PPx40%]",
+    //name: "Armor more",
+    //desc: "Armor self [5]+[PPx40%]",
+    name: i18n.skills.level3.attrArmorBigSelf.name,
+    desc: i18n.skills.level3.attrArmorBigSelf.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.ORDER],
