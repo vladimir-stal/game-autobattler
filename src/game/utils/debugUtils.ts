@@ -2,7 +2,7 @@ import { ECardType, ICard } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { dagger1 } from "../basicWeaponItemConsts";
-import { assasinHero } from "../mcHeroConsts";
+import { assasinHero, paladinHero } from "../mcHeroConsts";
 import { blindingBeamSkill, heatUpSkill, nextBAArea, radiantWallSkill, removeDebuffSkill, statusesIntoHeal } from "../skills/commonSkillConsts";
 import { poisonRandom } from "../skills/darkSkillConsts";
 import { fireflySelfPoison } from "../skills/mobSkills";
@@ -25,7 +25,7 @@ export const debugStartingItemsRoom = true;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: warriorHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: paladinHero }, null];
     //return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }, null];
 };
 

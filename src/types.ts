@@ -577,7 +577,8 @@ export enum EStatusType {
 export enum EBuffType {
     ADD_STATUS_ON_BASIC_ATTACK = "ADD_STATUS_ON_BASIC_ATTACK",
     ATTRIBUTE_INCREASE = "ATTRIBUTE_INCREASE",
-    DIVINE_SHIELD = "DIVINE_SHIELD", // ignores first incoming damage
+    DIVINE_SHIELD = "DIVINE_SHIELD", // ignores incoming damage below stacks
+    COSMIC_SHIELD = "COSMIC_SHIELD", // ignores first incoming damage
     ANTISKILL_SHIELD = "ANTISKILL_SHIELD", // reflects first enemy skill back to attacker
     FIRE_SHIELD = "FIRE_SHIELD", // on taking damage applies burn to enemy
     DARK_HEAL = "DARK_HEAL", // transforms heal spells into magic attack spells

@@ -32,6 +32,7 @@ import {
     calculateDebuffValue,
     calculateIncreaseValue,
     calculateUnitsAfterBattle,
+    changeBuffCurrent,
     changeBuffValue,
     checkSkillCondition,
     executeDebuff,
@@ -281,10 +282,11 @@ export class BattleController {
             this.performBasicAttack(unit, undefined, isPlayer1);
         }
 
-        this.executeAfterAction(unit, isPlayer1);
+        if (recurseDeep===0) {
+            this.executeAfterAction(unit, isPlayer1);
 
-        // items with CAST_SKILL_X_ROUND - use skill in the item
-        unit.itemBonuses
+          // items with CAST_SKILL_X_ROUND - use skill in the item
+          unit.itemBonuses
             .filter((ib) => ib.type === EItemBattleBonusType.CAST_SKILL_X_ROUND && ib.value === round && ib.relatedSkill)
             .forEach((ib) => {
                 const itemSkillSet = ib.relatedSkill;
@@ -303,6 +305,7 @@ export class BattleController {
                     }
                 });
             });
+          }
     }
 
     /** Execute all after action activities every round:
@@ -326,6 +329,7 @@ export class BattleController {
         buffs.forEach((buff) => {
             if (buff.timeType === EBuffTimeType.DURATION) {
                 buff.duration = (buff.duration || 0) - 1;
+                console.log("buff",buff.name,"time",buff.duration);
                 if (buff.duration < 1)
                     removeBuff(unit,buff,this.battleRecord);
             }
@@ -1405,11 +1409,11 @@ export class BattleController {
         attackRecord.targets?.push(recordTarget);
         let finalDamageValue = damageValue;
 
-        // check if divine shield is active
-        const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
-        if (divineShield) {
+        // check if cosmic shield is active
+        const cosmicShield = target.buffs.find((buff) => buff.type === EBuffType.COSMIC_SHIELD);
+        if (cosmicShield) {
             this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-            changeBuffValue(target,divineShield,-1,this.battleRecord);
+            changeBuffValue(target,cosmicShield,-1,this.battleRecord);
             //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
             return;
         }
@@ -1487,6 +1491,16 @@ export class BattleController {
             recordTarget.isEvasion = true;
         }
 
+        // check if divine shield is active
+        const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
+        if (divineShield) {
+            const stacks = divineShield.totalValue;
+            if (finalDamageValue <= stacks) {
+                this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
+                return;
+            } else
+                changeBuffValue(target,divineShield,(finalDamageValue - stacks),this.battleRecord);
+        }
         // ARMOR
 
         const ignoreArmorBuff = unit.buffs.find((buff) => buff.type === EBuffType.IGNORE_ARMOR);

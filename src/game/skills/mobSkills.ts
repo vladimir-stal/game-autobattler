@@ -65,9 +65,9 @@ export const goblinApplyShock_3: IHeroSkillSet = {
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
+    isBasicAttack: false,
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.SHOCK,
             value: 3,
@@ -85,9 +85,9 @@ export const goblinApplyShock_2: IHeroSkillSet = {
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
+    isBasicAttack: false,
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.SHOCK,
             value: 2,
@@ -106,9 +106,9 @@ export const goblinApplyShock: IHeroSkillSet = {
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
+    isBasicAttack: false,
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.SHOCK,
             value: 1,
@@ -169,7 +169,7 @@ export const fireflySelfPoison: IHeroSkillSet = {
             isBasicAttack: true,
             buff: {
                 name: "Invulnerable",
-                type: EBuffType.DIVINE_SHIELD,
+                type: EBuffType.COSMIC_SHIELD,
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.DUEL,
                 value: 3,

@@ -188,9 +188,9 @@ export const SKILLS_EN = {
         },
         buffNextBaTimes: {
             name: "Sword shadow",
-            desc1: "Next basic attack has +[1] time",
-            desc2: "Next basic attack has +[1] time",
-            desc3: "Next basic attack has +[2] times",
+            desc1: "Attack +[1] time\nnext 1 round",
+            desc2: "Attack +[1] time\nnext 2 rounds",
+            desc3: "Attack +[2] times\nnext 1 round",
         },
         buffPpAll: {
             name: "Buff PP all",
@@ -351,9 +351,9 @@ export const SKILLS_EN = {
         },
         DivineShield: {
             name: "Divine shield",
-            desc1: "Shield self with magic, protecting from first attack",
-            desc2: "Shield self with magic, protecting from first attack",
-            desc3: "Shield self with magic, protecting from first attack",
+            desc1: "Shield self with faith,\nprotecting from attacks\nbelow [5+PPx20%] damage",
+            desc2: "Shield self with faith,\nprotecting from attacks\nbelow [7+PPx40%] damage",
+            desc3: "Shield self with faith,\nprotecting from attacks\nbelow [10+PPx60%] damage",
         },
         doomsayerSkill: {
             name: "Doom curse",
@@ -423,9 +423,9 @@ export const SKILLS_EN = {
         },
         knightSkill: {
             name: "Knight armor",
-            desc1: "Armor self [12]",
-            desc2: "Armor self [12]",
-            desc3: "Armor self [12]",
+            desc1: "Armor self [12+35%xPP]",
+            desc2: "Armor self [15+50%xPP]",
+            desc3: "Armor self [20+65%xPP]",
         },
         mimicSkill: {
             name: "Mimicry",

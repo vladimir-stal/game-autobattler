@@ -2,10 +2,10 @@ import { ECardType, EHeroClass, EItemTargetType, ERoomType, ESelectCardHint, EUn
 import { bosses } from "../bossConsts";
 import { GameScene } from "../scenes/GameScene";
 import { getRandomArrayItem, getRandomArrayItems } from "../utils/commonUtils";
-import { applyItemBonuses, upgradeItem } from "../utils/itemUtils";
+import { applyItemBonuses, getItemPrice, upgradeItem } from "../utils/itemUtils";
 import { getCards, getDuelRewardCards, getGold, getIncome, getMobRewardCard, getRooms } from "../utils/selectPhaseUtils";
-import { upgradeSkillSet } from "../utils/skillUtils";
-import { addAttributeToUnit, addExp, addExpToUnit } from "../utils/unitUtils";
+import { getSkillPrice, upgradeSkillSet } from "../utils/skillUtils";
+import { addAttributeToUnit, addExp, addExpToUnit, getUnitCardPrice } from "../utils/unitUtils";
 import { Card } from "./Card";
 
 /** Room which activate instant action on select and dont have cards to select */
@@ -64,8 +64,27 @@ export class SelectController {
         this.prevRooms = [];
     }
 
+    sellCardPrice(card: ICard):number {
+        switch (card.type) {
+            case ECardType.ITEM:
+                return (!card.item) ? 0 : card.item.sellPrice !== undefined ? card.item.sellPrice : Math.floor((getItemPrice(card.item) + 1) / 2);
+            case ECardType.SKILL:
+                return (!card.skill) ? 0 : Math.floor((getSkillPrice(card.skill.priceLevel) + 1) / 2);
+            case ECardType.UNIT:
+                return (!card.unit) ? 0 : Math.floor((getUnitCardPrice(card.unit, 24, 7) + 1) / 2);
+        };
+        return 0;
+    }
+
     showNextRoomSelect() {
         this.gameScene.cardSelectPanel.hide();
+        const single = (this.gameScene.cardSelectPanel.isSingleSelect && this.gameScene.cardSelectPanel.boughtCardIndexes.length > 0)
+        if (!single)
+          this.gameScene.cardSelectPanel.cards.filter((card, index) => !!card && card.price === 0 && !this.gameScene.cardSelectPanel.boughtCardIndexes.includes(index)).forEach((c) => {
+            const price = this.sellCardPrice(c);
+            console.log("Unpicked item, price ", price);
+            this.gameScene.bankController.addToBank(price);
+          });
         this.setHour(this.hour + 1);
         this.showRoomSelect();
     }

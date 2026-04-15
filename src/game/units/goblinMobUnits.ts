@@ -1,4 +1,4 @@
-import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType } from "../../types";
+import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType, EDebuffType } from "../../types";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinGoldCoin, itemGoblinSilverCoin } from "../mobItemConsts";
 import { fireflyNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff } from "../skills/mobSkills";
@@ -61,7 +61,8 @@ export const goblinShamanUnit: IUnit = {
     heroClass: EHeroClass.MAGIC,
     mobHeroClasses: [EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.MARKED_ENEMY,
+    attackTargetType: ETargetType.FIRST_ENEMY, //??? ETargetType.MARKED_ENEMY
+    //basicAttackMarkType: EDebuffType.MARK_WORTHY_FOE,
     basicAttack: 4,
     basicAttackTimes: 1,
     basicMaxHp: 14,

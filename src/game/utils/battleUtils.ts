@@ -393,6 +393,7 @@ export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff
     const { value, valueType, mpScale, ppScale } = buff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+    console.log("calc buff value",value,mpScaleValue,ppScaleValue,valueType,initialValue);
     if (valueType === "number" || valueType === "evolvedNumber") {
         return value + mpScaleValue + ppScaleValue;
     } else if (valueType === "percent" || valueType === "evolvedPercent") {
@@ -486,30 +487,22 @@ export const removeDebuffSimple = (unit: IBattleUnit, debuff: IDebuff, battleRec
     battleRecord.push({ unitId: unit.id, type: EBattleActionType.DEBUFF_REMOVE, debuff });
 };
 
+export const changeBuffCurrent = (currentBuff: IBuff, value: number): number => {
+    currentBuff.totalValue = (currentBuff.totalValue || 0) + value;
+    return currentBuff.totalValue;
+}
+
 export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, battleRecord: TBattleRecord) => {
-    const currentBuff = unit.buffs.find((b) => b.type === buff.type);
-
-    if (!currentBuff) {
-        console.log("ERROR! changeBuffValue >> buff not found", buff.type);
-        return;
-    }
-
-    if (currentBuff.totalValue && currentBuff.totalValue + value <= 0) {
-        removeBuff(unit, buff, battleRecord);
-        return;
-    }
-
-    currentBuff.value += value;
-    if (currentBuff.totalValue) {
-        currentBuff.totalValue += value;
-    }
-
-    battleRecord.push({
-        unitId: unit.id,
-        type: EBattleActionType.BUFF,
-        buff,
-        buffTargets: [{ targetId: unit.id, isExisting: true, value: currentBuff.totalValue }],
-    });
+    const newValue = changeBuffCurrent(buff,value);
+    if (newValue <= 0)
+        removeBuff(unit,buff,battleRecord);
+    else
+        battleRecord.push({
+            unitId: unit.id,
+            type: EBattleActionType.BUFF,
+            buff: buff,
+            buffTargets: [{ targetId: unit.id, isExisting: true, value: newValue }],
+        });
 };
 
 export const prepareUnitToBattle = (unit: IUnit, backrow:boolean = false): IBattleUnit => {
@@ -614,10 +607,18 @@ export const dealDamage = (target: IBattleUnit, damageValue: number, damageType:
     let finalDamageValue = damageValue;
     // check if divine shield is active
     const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
-    if (divineShield) {
+        if (divineShield) {
+            const stacks = divineShield.totalValue;
+            if (finalDamageValue <= stacks) {
+                battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
+                return;
+            } else
+                changeBuffValue(target,divineShield,(finalDamageValue - stacks),battleRecord);
+        }
+    const cosmicShield = target.buffs.find((buff) => buff.type === EBuffType.COSMIC_SHIELD);
+    if (cosmicShield) {
         battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-        changeBuffValue(target,divineShield,-1,battleRecord);
-        //removeBuff(target, divineShield, battleRecord);
+        changeBuffValue(target,cosmicShield,-1,battleRecord);
         return;
     }
 
@@ -890,8 +891,8 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
 };
 
 export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleAction, caster?: IBattleUnit, battleCtrl?:BattleController) => {
-    if (buff.valueFrom === "customNumber")
-        console.log("-= Debug buff from calculated number =-",target,caster);
+    //if (buff.valueFrom === "customNumber")
+    //    console.log("-= Debug buff from calculated number =-",target,caster);
     const existingBuff = target.buffs.find((bf) => (bf.type === buff.type) && (bf.attribute === buff.attribute) && (bf.timeType === buff.timeType));
     if (existingBuff) {
         console.log("existing buff found", target.id, buff.type, buff.attribute, buff.timeType);
@@ -950,7 +951,7 @@ export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleA
                 (buff.attribute ? target[buff.attribute] : 100);
         const buffValue = calculateBuffValue(caster || target, initValue, buff);
         if (buff.type === EBuffType.ATTRIBUTE_INCREASE) {
-            target[buff.attribute] -= buffValue;
+            target[buff.attribute] += buffValue;
             battleCtrl.battleRecord.push({
                             unitId: caster?.id || target.id,
                             targetId: target.id,

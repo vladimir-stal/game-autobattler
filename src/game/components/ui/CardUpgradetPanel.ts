@@ -3,6 +3,8 @@ import { ECardType, EHeroClass, ERoomType, ICard } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { GameObjects } from "phaser";
 import { CardSlot } from "../CardSlot";
+import { upgradeItem } from "../../utils/itemUtils";
+import { upgradeSkillSet } from "../../utils/skillUtils";
 
 /** UI panel to upgrade a card (skill or item) */
 export class CardUpgradetPanel extends Phaser.GameObjects.Container {
@@ -108,7 +110,7 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
                     return;
                 }
                 if (item.nextLevel) {
-                    const newItem = item.nextLevel;
+                    const newItem = upgradeItem(item);                    
                     this.cardSlot.placeCard({ type: ECardType.ITEM, price: 0, item: newItem }, undefined);
                     //this.moveButton.setVisible(true);
                     this.upgradeButton.setVisible(false);
@@ -120,11 +122,10 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
                     return;
                 }
                 if (skill.nextLevel) {
-                    const newSkill = skill.nextLevel;
-                    newSkill.isActivateOnStart = skill.isActivateOnStart;
-                    newSkill.isChained = skill.isChained;
+                    const newSkill = upgradeSkillSet(skill,skill);
+                    //newSkill.isActivateOnStart = skill.isActivateOnStart;
+                    //newSkill.isChained = skill.isChained;
                     this.cardSlot.placeCard({ type: ECardType.SKILL, price: 0, skill: newSkill }, undefined);
-                    //this.moveButton.setVisible(true);
                     this.upgradeButton.setVisible(false);
                     this.isCardUpgraded = true;
                 }
