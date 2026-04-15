@@ -795,6 +795,10 @@ export interface IStatus {
     value: number;
 }
 
+/**
+ * @property customNumber  for tricky skill calculations
+ * TODO: add detailed description for customNumber
+ */
 export interface IBattleUnit extends IUnit {
     attack: number;
     hpRegen: number;
@@ -805,7 +809,7 @@ export interface IBattleUnit extends IUnit {
     physicalPower: number;
     critChance: number;
     evasionChance: number;
-    customNumber: number; // for tricky skill calculations
+    customNumber: number;
     isBackRowPosition: boolean;
     //
     isSummon: boolean;
