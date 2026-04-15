@@ -98,8 +98,8 @@ export const totemAttackSkill_3: IHeroSkillSet = {
             type: EHeroSkillType.TOTEM,
             isBasicAttack: true,
             totem: {
-                id: "basicTotem",
-                name: "Totem",
+                id: "basicWildTotem",
+                name: i18n.totems.basicWildTotem,
                 skills: [
                     {
                         type: EHeroSkillType.ATTACK,
@@ -129,8 +129,8 @@ export const totemAttackSkill_2: IHeroSkillSet = {
             type: EHeroSkillType.TOTEM,
             isBasicAttack: true,
             totem: {
-                id: "basicTotem",
-                name: "Totem",
+                id: "basicWildTotem",
+                name: i18n.totems.basicWildTotem,
                 skills: [
                     {
                         type: EHeroSkillType.ATTACK,

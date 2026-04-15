@@ -1,4 +1,4 @@
-import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
@@ -107,12 +107,13 @@ export const buffNextBaTimes_3: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "+2 time ba",
+                name: "flurry",
                 type: EBuffType.BASIC_ATTACK_ADD_TIMES,
                 value: 2,
                 valueType: "number",
+                duration: 1,
                 targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
+                timeType: EBuffTimeType.DURATION,
             },
         },
     ],
@@ -125,20 +126,20 @@ export const buffNextBaTimes_2: IHeroSkillSet = {
     //desc: "Next basic attack has +[1] time",
     name: i18n.skills.level2.buffNextBaTimes.name,
     desc: i18n.skills.level2.buffNextBaTimes.desc2,
-    level: 3,
+    level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
-                name: "+1 time ba",
+                name: "flurry",
                 type: EBuffType.BASIC_ATTACK_ADD_TIMES,
                 value: 1,
                 valueType: "number",
+                duration: 2,
                 targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
+                timeType: EBuffTimeType.DURATION,
             },
         },
     ],
@@ -155,23 +156,82 @@ export const buffNextBaTimes: IHeroSkillSet = {
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true,
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
-                name: "+1 time ba",
+                name: "flurry",
                 type: EBuffType.BASIC_ATTACK_ADD_TIMES,
                 value: 1,
                 valueType: "number",
+                duration: 1,
                 targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
+                timeType: EBuffTimeType.DURATION,
             },
         },
     ],
     image: IMAGE_SKILL_DOUBLE_SWORD,
     nextLevel: buffNextBaTimes_2,
 };
+
+const wortyFoeSkillset = (atkMinus: number, ppScale: number, vulStacks: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "foe",
+                type: EDebuffType.MARK_WORTHY_FOE,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.TILL_GOT_HIT,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "-2 next ba",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: atkMinus,
+                valueType: "number",
+                targetType: ETargetType.MARKED_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                ppScale: ppScale,
+            },
+            animation: AnimationType.NONE,
+            markType: EDebuffType.MARK_WORTHY_FOE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "vulnerable",
+                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
+                value: vulStacks,
+                valueType: "number",
+                targetType: ETargetType.MARKED_ENEMY,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+            animation: AnimationType.NONE,
+            markType: EDebuffType.MARK_WORTHY_FOE,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "duel",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                changeTargetTypeTo: ETargetType.MARKED_ENEMY,
+                changeTargetMarkType: EDebuffType.MARK_WORTHY_FOE,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },            
+        }
+    ];
+}
 
 export const debuffWorthyFoe_3: IHeroSkillSet = {
     id: "debuffWorthyFoe",
@@ -182,49 +242,7 @@ export const debuffWorthyFoe_3: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "-2 next ba",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 2,
-                valueType: "number",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 65,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "vulnerable",
-                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
-                value: 3,
-                valueType: "number",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "duel",
-                type: EBuffType.CHANGE_TARGET_TYPE,
-                changeTargetTypeTo: ETargetType.HIGH_ATTACK_ENEMY,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-        },
-    ],
+    skills: wortyFoeSkillset(2,65,3),
     image: IMAGE_SKILL_DUEL,
 };
 
@@ -237,49 +255,7 @@ export const debuffWorthyFoe_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "-2 next ba",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 2,
-                valueType: "number",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 50,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "vulnerable",
-                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
-                value: 2,
-                valueType: "number",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "duel",
-                type: EBuffType.CHANGE_TARGET_TYPE,
-                changeTargetTypeTo: ETargetType.HIGH_ATTACK_ENEMY,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-        },
-    ],
+    skills: wortyFoeSkillset(2,50,2),
     image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_3,
 };
@@ -293,49 +269,7 @@ export const debuffWorthyFoe: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "-2 next ba",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 2,
-                valueType: "number",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                //ppScale: 35,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "vulnerable",
-                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "duel",
-                type: EBuffType.CHANGE_TARGET_TYPE,
-                changeTargetTypeTo: ETargetType.HIGH_ATTACK_ENEMY,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-        },
-    ],
+    skills: wortyFoeSkillset(2,0,1),
     image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_2,
 };

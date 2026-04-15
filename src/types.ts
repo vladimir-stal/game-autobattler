@@ -571,12 +571,14 @@ export enum EStatusType {
     BURN = "BURN",
     POISON = "POISON",
     SHOCK = "SHOCK",
+    RADIATE = "RADIATE",
 }
 
 export enum EBuffType {
     ADD_STATUS_ON_BASIC_ATTACK = "ADD_STATUS_ON_BASIC_ATTACK",
     ATTRIBUTE_INCREASE = "ATTRIBUTE_INCREASE",
-    DIVINE_SHIELD = "DIVINE_SHIELD", // ignores first incoming damage
+    DIVINE_SHIELD = "DIVINE_SHIELD", // ignores incoming damage below stacks
+    COSMIC_SHIELD = "COSMIC_SHIELD", // ignores first incoming damage
     ANTISKILL_SHIELD = "ANTISKILL_SHIELD", // reflects first enemy skill back to attacker
     FIRE_SHIELD = "FIRE_SHIELD", // on taking damage applies burn to enemy
     DARK_HEAL = "DARK_HEAL", // transforms heal spells into magic attack spells
@@ -589,6 +591,7 @@ export enum EBuffType {
     EVADE = "EVADE", // evade next N basic attacks
     IGNORE_NEXT_DEBUFF = "IGNORE_NEXT_DEBUFF",
     OUTGOING_HEAL = "OUTGOING_HEAL",
+    OVERHEAL_TO_DAMAGE = "OVERHEAL_TO_DAMAGE", // Every heal beyond maxHp apply RADIATE status on [changeTargetTypeTo] targets
 }
 
 export enum EDebuffType {
@@ -602,11 +605,15 @@ export enum EDebuffType {
     MAGIC_RESIST_DECREASE = "MAGIC_RESIST_DECREASE", // decrease hero magic resist
     PHYSICAL_RESIST_DECREASE = "PHYSICAL_RESIST_DECREASE", // decrease hero physical resist
     DISABLE_SKILL = "DISABLE_SKILL", // enemy next skill is not performed
+    BLIND = "BLIND", // enemy attacks have their target evasion chance +X
+    MARK_WORTHY_FOE = "MARK_WORTHY_FOE",
 }
 
 export enum EBuffTimeType {
     DUEL = "DUEL",
     TILL_NEXT_BA = "TILL_NEXT_BA",
+    DURATION = "DURATION",
+    TILL_GOT_HIT = "TILL_GOT_HIT",
 }
 
 export enum ETargetType {
@@ -910,8 +917,10 @@ export interface IBuff {
     totalValue?: number; // total value is calculated in battle
     statusType?: EStatusType;
     changeTargetTypeTo?: ETargetType;
+    changeTargetMarkType?: EDebuffType;
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
+    duration?: number;
 }
 
 export interface IDebuff {
@@ -925,6 +934,7 @@ export interface IDebuff {
     totalValue?: number; // total value is calculated in battle
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
+    duration?: number;
 }
 
 /**

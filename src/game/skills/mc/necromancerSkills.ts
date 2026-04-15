@@ -6,7 +6,6 @@ import { skillsetSummon } from "../../utils/skillUtils2";
 const buffSummonRegen = (regen: number): IHeroSkill => {
     return {
         type: EHeroSkillType.ATTRIBUTE_INCREASE,
-        isBasicAttack: false,
         attribute: "hpRegen",
         value: regen,
         valueType: "number",

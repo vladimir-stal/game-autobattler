@@ -2,6 +2,58 @@ import { AnimationType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ES
 import { i18n } from "../../consts";
 
 //TODO: DivineShield should also ignore dmg below X instead of removing self. X is increased with lvl and scales from PP or hp%
+export const paladinSkill_3: IHeroSkillSet = {
+    id: "DivineShield",
+    name: i18n.skills.mc.DivineShield.name,
+    desc: i18n.skills.mc.DivineShield.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.PALADIN],
+    isMcSkill: true,
+    isBasicAttack: true,
+    skills: [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Divine shield",
+                type: EBuffType.DIVINE_SHIELD,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DURATION,
+                duration: 4, // effectively always active, but value dont stack
+                value: 10,
+                ppScale: 60,
+            },
+            animation: AnimationType.PALADIN_MAGIC_SHIELD,
+        },
+    ],
+};
+
+export const paladinSkill_2: IHeroSkillSet = {
+    id: "DivineShield",
+    name: i18n.skills.mc.DivineShield.name,
+    desc: i18n.skills.mc.DivineShield.desc2,
+    level: 2,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.PALADIN],
+    isMcSkill: true,
+    isBasicAttack: true,
+    skills: [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Divine shield",
+                type: EBuffType.DIVINE_SHIELD,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DURATION,
+                duration: 4, // effectively always active, but value dont stack
+                value: 7,
+                ppScale: 40,
+            },
+            animation: AnimationType.PALADIN_MAGIC_SHIELD,
+        },
+    ],
+    nextLevel: paladinSkill_3,
+};
 
 export const paladinSkill: IHeroSkillSet = {
     id: "DivineShield",
@@ -11,21 +63,23 @@ export const paladinSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.PALADIN],
     isMcSkill: true,
+    isBasicAttack: true,
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "Divine shield",
                 type: EBuffType.DIVINE_SHIELD,
                 targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-                value: 1,
+                timeType: EBuffTimeType.DURATION,
+                duration: 4, // effectively always active, but value dont stack
+                value: 5,
+                ppScale: 20,
             },
             animation: AnimationType.PALADIN_MAGIC_SHIELD,
         },
     ],
-    //isActivateOnStart: true,
+    nextLevel: paladinSkill_2,
 };
 
 export const paladinSkills: THeroSkills = [paladinSkill];

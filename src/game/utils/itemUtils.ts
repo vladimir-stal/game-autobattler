@@ -562,13 +562,18 @@ export const createItem = (item: IItem): IItem => {
     return { ...item, bonuses: [...item.bonuses] };
 };
 
+export const createItemWoEvolve = (item: IItem): IItem => {
+    const bb = item.bonuses.filter((b) => b.valueType === "number" || b.valueType === "percent");
+    return { ...item, bonuses: bb };
+};
+
 export const genShopItemCards = (items: IItem[], lastItemPriceUp: boolean = false): (ICard | null)[] => {
     return items.map((item, index) => {
         if (!item) {
             return null;
         } else {
             const price = getItemPrice(item, lastItemPriceUp && index === items.length - 1 ? 1 : 0);
-            const shopItem = createItem(item);
+            const shopItem = item.evolving ? createItemWoEvolve(item) : createItem(item);
             return { item: shopItem, type: ECardType.ITEM, price };
         }
     });
