@@ -567,6 +567,7 @@ export const heatUpSkill: IHeroSkillSet = {
             valueType: "number",
             targetType: ETargetType.FIRST_ENEMY,
             status: EStatusType.BURN,
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
@@ -574,12 +575,14 @@ export const heatUpSkill: IHeroSkillSet = {
             value: 1,
             valueType: "number",
             targetType: ETargetType.FIRST_ENEMY,
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.BUFF,
             buff: {
                 name: "Heat up",
                 type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "magicPower",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.DURATION,
                 duration: 2, // next 3,4

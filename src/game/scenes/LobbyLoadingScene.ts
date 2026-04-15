@@ -5,6 +5,7 @@ import { getRandomArrayIndex } from "../utils/commonUtils";
 //const IMAGE_LOBBY_LOADING = "IMAGE_LOBBY_LOADING";
 //const IMAGE_LOBBY_FOX_SMILE = "IMAGE_LOBBY_FOX_SMILE";
 
+const LOADING_LINE2 = "Подождите. Загрузка ресурсов может занять несколько минут.";
 export class LobbyLoadingScene extends Scene {
     camera: Cameras.Scene2D.Camera;
     background: GameObjects.Image;
@@ -24,9 +25,10 @@ export class LobbyLoadingScene extends Scene {
 
     timeoutId: number;
 
-    //
-
     resizeTimeoutId: number;
+    line1: string;
+    line2: string;
+    line3: string;
 
     constructor() {
         super(EScene.LOBBY_LOADING);
@@ -50,6 +52,9 @@ export class LobbyLoadingScene extends Scene {
     //         console.log("STATUS IS NOT 5 >>" + status);
     //     }
     // }
+    updateDescr(): void {
+        this.descrText.setText(LOADING_LINE2 + '\n' + (this.line1 || "") + " " + (this.line2) + '\n' + (this.line3 || ""));
+    }
 
     create() {
         this.initHints();
@@ -60,6 +65,9 @@ export class LobbyLoadingScene extends Scene {
 
         this.events.on("destroy", () => {
             console.log("SCENE LOADING IS DESTROYED");
+            this.events.off("progress-info");
+            this.events.off("progress-info2");
+            this.events.off("progress-info3");
         });
 
         this.events.on("pause", () => {
@@ -68,6 +76,9 @@ export class LobbyLoadingScene extends Scene {
 
         this.events.on("shutdown", () => {
             console.log("SCENE LOADING IS shutdown");
+            this.events.off("progress-info");
+            this.events.off("progress-info2");
+            this.events.off("progress-info3");
         });
 
         this.events.on("sleep", () => {
@@ -76,6 +87,19 @@ export class LobbyLoadingScene extends Scene {
 
         this.events.on("start", () => {
             console.log("SCENE LOADING IS start");
+        });
+
+        this.events.on("progress-info", (data: string) => {
+            this.line1 = data;
+            this.updateDescr();
+        });
+        this.events.on("progress-info2", (data: string) => {
+            this.line2 = data;
+            this.updateDescr();
+        });
+        this.events.on("progress-info3", (data: string) => {
+            this.line3 = data;
+            this.updateDescr();
         });
 
         // this.anims.create({
@@ -122,7 +146,7 @@ export class LobbyLoadingScene extends Scene {
             .setOrigin(0.5, 0); //LOADING...
 
         this.descrText = this.add
-            .text(screenCenterX, screenCenterY - 150, "Подождите. Загрузка ресурсов может занять несколько минут.", {
+            .text(screenCenterX, screenCenterY - 150, LOADING_LINE2, {
                 fontFamily: "Arial Black",
                 fontSize: 16,
                 //fontStyle: "bold",

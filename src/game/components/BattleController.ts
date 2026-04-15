@@ -542,6 +542,13 @@ export class BattleController {
                 parentUnit = target;
             }
 
+            const bleedStacks = finalTarget.statuses.find((st) => st.type === EStatusType.BLEED);
+            if (bleedStacks && bleedStacks.value > 0) {
+                // increase BLEED stacks for each used skill
+                const increase =  Math.floor(bleedStacks.value/3)+1;
+                applyStatus(finalTarget,finalTarget,bleedStacks.type,increase,this.battleRecord);
+            }
+
             // check if target unit has antiskill shield
             const antiskillShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
             if (antiskillShieldBuff) {
@@ -811,8 +818,9 @@ export class BattleController {
         const { type, targetType, name, attribute, value, mpScale, ppScale, duration } = debuff;
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
 
-        const targets = getOpponentTargets(opponentUnits, targetType);
+        const targets = getOpponentTargets(opponentUnits, targetType, skill.markType);
         if (!targets) {
+            console.log("performDebuff: FAIL to find targets", targetType, skill.markType);
             return;
         } else            
             targets.forEach((target) => {
@@ -1115,6 +1123,7 @@ export class BattleController {
         }
 
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
+        
         const targets = getAllyTargets(unit, allyUnits, targetType);
         if (!targets || targets.length === 0 || !targets[0]) {
             console.log("performSwapHp > NO TARGET FOUND");
@@ -1126,6 +1135,12 @@ export class BattleController {
         });
     }
 
+    getTargetsSimple(unit: IBattleUnit, targetType:ETargetType, isPlayer1?:boolean): IBattleUnit[] {
+        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
+        const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
+        return getTargets(unit, allyUnits, opponentUnits, targetType);
+    }
+
     performCustomCalculation(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType, value } = skill;
         if (!targetType || value === undefined) {
@@ -1133,8 +1148,7 @@ export class BattleController {
             return;
         }
 
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1);
         if (!targets) {
             console.log("NO TARGET FOUND");
             return;
@@ -1228,16 +1242,15 @@ export class BattleController {
 
         // check change target buffs
         const changeTargetBuff = buffs.find((buff) => buff.type === EBuffType.CHANGE_TARGET_TYPE);
-        if (changeTargetBuff) {
-            console.log("CHANGE TARGET bUFF Found,", changeTargetBuff.changeTargetTypeTo);
-        }
-
         const targetType = changeTargetBuff ? changeTargetBuff.changeTargetTypeTo : attackTargetType;
-
+        const markType = changeTargetBuff ? changeTargetBuff.changeTargetMarkType : unit.basicAttackMarkType;
+        if (changeTargetBuff) {
+            console.log("basicAttack : CHANGE TARGET buff,", changeTargetBuff.changeTargetTypeTo, "redirect", targetType,markType);
+        }
         // find attack target
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         const opponentTargetType = summon ? summon.attackTargetType : targetType || ETargetType.FIRST_ENEMY;
-        const targets = getOpponentTargets(opponentUnits, opponentTargetType, unit.basicAttackMarkType);
+        const targets = getOpponentTargets(opponentUnits, opponentTargetType, markType);
         if (!targets) {
             return;
         }
@@ -1370,6 +1383,8 @@ export class BattleController {
                 }
                 applyStatus(unit, target, status, value, this.battleRecord);
             }
+            this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
+            this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
 
         // remove TILL_NEXT_BA buffs and debuffs

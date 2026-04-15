@@ -605,12 +605,14 @@ export enum EDebuffType {
     PHYSICAL_RESIST_DECREASE = "PHYSICAL_RESIST_DECREASE", // decrease hero physical resist
     DISABLE_SKILL = "DISABLE_SKILL", // enemy next skill is not performed
     BLIND = "BLIND", // enemy attacks have their target evasion chance +X
+    MARK_WORTHY_FOE = "MARK_WORTHY_FOE",
 }
 
 export enum EBuffTimeType {
     DUEL = "DUEL",
     TILL_NEXT_BA = "TILL_NEXT_BA",
     DURATION = "DURATION",
+    TILL_GOT_HIT = "TILL_GOT_HIT",
 }
 
 export enum ETargetType {
@@ -914,6 +916,7 @@ export interface IBuff {
     totalValue?: number; // total value is calculated in battle
     statusType?: EStatusType;
     changeTargetTypeTo?: ETargetType;
+    changeTargetMarkType?: EDebuffType;
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
     duration?: number;

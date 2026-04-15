@@ -1,9 +1,9 @@
 import { ECardType, ICard } from "../../types";
 
-import { bardHero, darkHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
+import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { dagger1 } from "../basicWeaponItemConsts";
 import { assasinHero } from "../mcHeroConsts";
-import { blindingBeamSkill, nextBAArea, radiantWallSkill, removeDebuffSkill, statusesIntoHeal } from "../skills/commonSkillConsts";
+import { blindingBeamSkill, heatUpSkill, nextBAArea, radiantWallSkill, removeDebuffSkill, statusesIntoHeal } from "../skills/commonSkillConsts";
 import { poisonRandom } from "../skills/darkSkillConsts";
 import { fireflySelfPoison } from "../skills/mobSkills";
 import { healSelf } from "../skills/priestSkillConsts";
@@ -25,15 +25,15 @@ export const debugStartingItemsRoom = true;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: bardHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: warriorHero }, null];
     //return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
         //{ type: ECardType.UNIT, price: 0, unit: orderHero },
-        { type: ECardType.SKILL, price: 0, skill: {...blindingBeamSkill, isChained: true} },
-        { type: ECardType.SKILL, price: 0, skill: {...blindingBeamSkill, isChained: true} },
+        { type: ECardType.SKILL, price: 0, skill: {...debuffWorthyFoe, isChained: true} },
+        { type: ECardType.SKILL, price: 0, skill: {...debuffWorthyFoe, isChained: true} },
         //{ type: ECardType.ITEM, price: 0, item: dagger1 },
         //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },
         //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },

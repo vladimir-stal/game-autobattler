@@ -404,7 +404,7 @@ export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff
 };
 
 export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, debuff: IDebuff): number => {
-    console.log("calculateDebuffValue", initialValue, debuff);
+    //console.log("calculateDebuffValue", initialValue, debuff);
     // add MP or PP scaling
     const { value, valueType, mpScale, ppScale } = debuff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
@@ -673,17 +673,17 @@ export const applyStatus = (
 ) => {
     const existingStatus = target.statuses.find((st) => st.type === statusType);
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.STATUS_APPLY, status: statusType, value, isStartBattle: isStartBattle });
-
+    //console.log("-= Apply ",statusType,"+",value,"was",existingStatus,"target",target);
+    
     if (existingStatus) {
         const existingStatusValue = existingStatus.value;
         existingStatus.value += value;
+        console.log("new",existingStatus.value,"old",existingStatusValue);
         // deal damage in case of SHOCK status
-        if (statusType === EStatusType.SHOCK) {
+        if (statusType === EStatusType.SHOCK)
             takeStatusDamage(target, existingStatusValue, EStatusType.SHOCK, battleRecord);
-        }
-        return;
-    }
-    target.statuses.push({ type: statusType, value });
+    } else
+        target.statuses.push({ type: statusType, value });
 };
 
 export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statusType: EStatusType, battleRecord: TBattleRecord) => {
@@ -890,6 +890,8 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
 };
 
 export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleAction, caster?: IBattleUnit, battleCtrl?:BattleController) => {
+    if (buff.valueFrom === "customNumber")
+        console.log("-= Debug buff from calculated number =-",target,caster);
     const existingBuff = target.buffs.find((bf) => (bf.type === buff.type) && (bf.attribute === buff.attribute) && (bf.timeType === buff.timeType));
     if (existingBuff) {
         console.log("existing buff found", target.id, buff.type, buff.attribute, buff.timeType);
@@ -898,6 +900,8 @@ export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleA
                 const initValue = buff.valueFrom ? target[buff.valueFrom] : target[buff.attribute];
                 const newValue = calculateBuffValue(caster || target, initValue, buff);
                 const oldValue = existingBuff.totalValue;
+                if (buff.valueFrom === "customNumber")
+                    console.log("init",initValue,"new",newValue,"old",oldValue);
                 if (buff.timeType === EBuffTimeType.DURATION) {
                     existingBuff.totalValue = Math.max(newValue, oldValue);
                     existingBuff.duration += buff.duration;
