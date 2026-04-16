@@ -1,7 +1,7 @@
-import { EHeroClass, EHeroClassType, EItemBonusType, IItem, IUnit } from "../types";
+import { EHeroClass, EHeroClassType, EItemBonusType, IItem, IUnit, TDuelCards, TDuelEnemy } from "../types";
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "./basicHeroConsts";
 import { axe1, mace1, musical1, musical1_2, scepter1, scepter1_2, shield1, staff1, sword1, sword1_2, totem1, wand1, wand1_2 } from "./basicWeaponItemConsts";
-import { basic_boots, basic_exp_bag, basic_hat, basic_hat_2, basic_jacket, basic_pants, basic_ring_damage } from "./commonItemConsts";
+import { basic_boots, basic_exp_bag, basic_hat, basic_hat_2, basic_heal, basic_heal_2, basic_jacket, basic_pants, basic_pants_2, basic_ring_damage } from "./commonItemConsts";
 import {
     assasinHero,
     beastMasterHero,
@@ -21,27 +21,31 @@ import {
     samuraiHero,
     witchHero,
     zealotHero,
+    inquisitorHero,
+    bladedancerHero,
 } from "./mcHeroConsts";
 import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
-import { phycisalAttackSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
+import { noBasicAttackSkill, phycisalAttackSkill, removeBuffSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
 import { magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
 import { buffNextBaIgnoreArmorSelf, buffNextBaXSelf } from "./skills/masterSkillConsts";
 import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
-import { healFirst, healFirst_2 } from "./skills/priestSkillConsts";
+import { healFirst, healFirst_2, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
 import { buffNextBa } from "./skills/warriorSkillConsts";
-import { attrDescArmor, totemAttackSkill } from "./skills/wildSkillConsts";
+import { attrDescArmor, totemAttackSkill, totemAttackSkill_2 } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
 import {
+    axe21,
     axe22,
     mace21,
     musical21,
     musical21_2,
     scepter22,
     shield22,
+    shield22_2,
     staff22,
     sword22,
     sword22_2,
@@ -50,15 +54,16 @@ import {
     wand21,
     wand21_2,
 } from "./weaponItem2Consts";
-import { goblinUnit, weakGoblinUnit } from "./units/goblinMobUnits";
+import { goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
 import { gloves_war2, hat21, jacket21 } from "./commonItemConsts2";
 import { strongWolfUnit } from "./units/wolfsMobUnits";
 import { minstrelSkill } from "./skills/mc/minstrelSkills";
-import { itemGoblinBoneDagger } from "./mobItemConsts";
+import { itemGoblinBoneDagger, itemPeasantPitchfork } from "./mobItemConsts";
 import { shield31, shield32 } from "./weaponItem3Consts";
 import { buffSelfMPorPP } from "./skills/commonSkill3Consts";
-
-type TDuelEnemy = Record<number, (IUnit | null)[]>;
+import { buildDuelEnemy } from "./utils/duelUtils";
+import { removeBuff } from "./utils/battleUtils";
+import { music5AddBuffTarget } from "./weaponItem5Consts";
 
 const addItem = (unit: IUnit, item: IItem) => {
     unit.items.push(item);
@@ -81,89 +86,35 @@ const createHero = (templateUnit: IUnit) => {
 
 //////////////////////// ENEMY 1 //////////////////
 
-// 1
-
-const unit11 = createHero(warriorHero);
-addItem(unit11, shield1);
-unit11.skills.push(phycisalAttackSkill);
-
-// 2
-
-const unit11_2 = { ...unit11 };
-unit11_2.items = [...unit11.items];
-unit11_2.skills = [...unit11.skills];
-levelUpUnit(unit11_2);
-
-const unit12_2 = createHero(masterHero);
-unit12_2.skills.push(buffNextBaXSelf);
-
-// 3
-
-const unit11_3 = { ...unit11_2 };
-unit11_3.items = [...unit11_2.items];
-unit11_3.skills = [...unit11_2.skills];
-levelUpUnit(unit11_3);
-addItem(unit11_3, basic_hat);
-
-const unit12_3 = { ...unit12_2 };
-unit12_3.items = [...unit12_2.items];
-unit12_3.skills = [...unit12_2.skills];
-levelUpUnit(unit12_3);
-
-// 4
-
-const unit11_4 = createHero(paladinHero);
-unit11_4.skills.push(healFirst);
-unit11_4.skills.push(phycisalAttackSkill);
-unit11_4.items = [...unit11_3.items];
-
-const unit12_4 = { ...unit12_3 };
-unit12_4.items = [...unit12_3.items];
-unit12_4.skills = [...unit12_3.skills];
-levelUpUnit(unit12_4);
-
-const unit13_4 = createHero(darkHero);
-unit13_4.skills.push(magicAttackX3);
-unit12_4.items.push(wand1_2);
-
-// 5
-
-const unit11_5 = { ...unit11_4 };
-unit11_5.items = [...unit11_4.items];
-unit11_5.skills = [...unit11_4.skills];
-unit11_5.skills[1] = healFirst_2;
-unit11_5.skills[2] = phycisalAttackSkill;
-unit11_5.skills[3] = phycisalAttackSkill;
-
-const unit12_5 = createHero(samuraiHero);
-unit12_5.items = [...unit12_4.items];
-unit11_4.skills.push(buffNextBaXSelf);
-
-const unit13_5 = createHero(darkHero);
-unit13_5.items = [...unit13_4.items];
-unit13_5.skills = [...unit13_4.skills];
-unit13_5.skills.push(magicAttackX3);
-levelUpUnit(unit13_5);
-levelUpUnit(unit13_5);
-
-//
-const unit14_6 = createHero(strongWolfUnit);
-levelUpUnit(unit14_6);
-
-/** Duel units for each day */
-export const enemy1: TDuelEnemy = {
-    0: [unit11],
-    1: [unit11],
-    2: [unit11_2, unit12_2],
-    3: [unit11_3, unit12_3],
-    4: [unit11_4, unit12_4, unit13_4],
-    5: [unit11_5, unit12_5, unit13_5],
-    6: [unit11_5, unit12_5, unit13_5, unit14_6],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-};
+export const enemy1_test: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    {1: [{unit:warriorHero},{item: shield1},{skill:phycisalAttackSkill}]},
+    // day 2
+    {1: [{unit:warriorHero},{item: shield1},{skill:phycisalAttackSkill},{levelup:1}],
+     2: [{unit:masterHero},{skill:buffNextBaXSelf}]},
+    // day 3
+    {1: [{unit:warriorHero},{item: shield1},{skill:phycisalAttackSkill},{levelup:2},{item: basic_hat}],
+     2: [{unit:masterHero},{skill:buffNextBaXSelf},{levelup: 1}]},
+    // day 4
+    {1: [{unit:paladinHero},
+         {skill:healFirst},{skill:phycisalAttackSkill},
+         {item: shield1},{item: basic_hat}],
+     2: [{unit:masterHero},{skill:buffNextBaXSelf},{levelup: 2}],
+     3: [{unit:darkHero},{skill:magicAttackX3},{item: wand1_2}]},
+    // day 5
+    {1: [{unit:paladinHero},
+         {skill:healFirst_2},{skill:phycisalAttackSkill},{skill:phycisalAttackSkill},
+         {item: shield1},{item: basic_hat}],
+     2: [{unit:samuraiHero},{skill:buffNextBaXSelf}],
+     3: [{unit:darkHero},{skill:magicAttackX3},{item: wand1_2},{levelup: 2}]},
+    // day 6
+    {1: [{unit:paladinHero},
+         {skill:healFirst_2},{skill:phycisalAttackSkill},{skill:phycisalAttackSkill},
+         {item: shield1},{item: basic_hat}],
+     2: [{unit:samuraiHero},{skill:buffNextBaXSelf}],
+     3: [{unit:darkHero},{skill:magicAttackX3},{item: wand1_2},{levelup: 2}],
+     4: [{unit:strongWolfUnit},{levelup:1}]},
+]);
 
 //////////////////////// ENEMY 2 //////////////////
 
@@ -483,106 +434,79 @@ export const enemy4: TDuelEnemy = {
 
 //////////////////////// ENEMY 5 //////////////////
 
-// 0
-
-const unit51 = createHero(priestHero);
-addItem(unit51, mace1);
-unit51.skills.push(healFirst);
-
-// 1
-
-const unit51_1 = { ...unit51 };
-unit41_1.items = [...unit51.items, basic_pants];
-unit41_1.skills = [...unit51.skills];
-
-// 2
-
-const unit51_2 = { ...unit51_1 };
-unit51_2.items = [...unit51_1.items];
-unit51_2.skills = [...unit51_1.skills];
-levelUpUnit(unit51_2);
-
-const unit52_2 = createHero(orderHero);
-unit52_2.items = [basic_ring_damage];
-unit52_2.skills.push(attrArmorSelf);
-
-// 3
-
-const unit51_3 = { ...unit51_2 };
-unit51_3.items = [scepter22, basic_pants];
-unit51_3.skills = [...unit51_2.skills];
-levelUpUnit(unit51_3);
-
-const unit52_3 = { ...unit52_2 };
-unit52_3.items = [mace1, basic_jacket];
-unit52_3.skills = [...unit52_2.skills];
-levelUpUnit(unit52_3);
-
-// 4
-
-const unit51_4 = createHero(monkHero);
-unit51_4.items = [scepter22, mace1, basic_pants, basic_hat];
-unit51_4.skills = unit51_4.skills.concat([...unit51_3.skills]);
-
-const unit52_4 = { ...unit52_3 };
-unit52_4.items = [shield22, basic_jacket];
-unit52_4.skills = [...unit52_3.skills];
-levelUpUnit(unit52_4);
-
-const unit53_4 = createHero(priestHero);
-unit53_4.items = [musical1, basic_ring_damage];
-unit53_4.skills.push(buffNextBaAll);
-
-// 5
-
-const unit51_5 = { ...unit51_4 };
-unit51_5.items = [...unit51_4.items];
-unit51_5.skills = [...unit51_4.skills];
-
-const unit52_5 = createHero(knightHero);
-unit52_5.items = [shield22, sword1, basic_jacket, basic_hat];
-unit52_5.skills = unit52_5.skills.concat([attrArmorSelf, buffNextBa]);
-
-const unit53_5 = { ...unit53_4 };
-unit53_5.items = [musical1_2, basic_ring_damage];
-unit53_5.skills = [...unit53_4.skills];
-levelUpUnit(unit53_5);
-
-// 6
-
-const unit51_6 = { ...unit51_5 };
-unit51_6.items = [...unit51_5.items];
-unit51_6.skills = [...unit51_5.skills];
-
-const unit52_6 = { ...unit52_5 };
-unit52_6.items = [...unit52_5.items];
-unit52_6.skills = [...unit52_5.skills, attrArmorSelf];
-levelUpUnit(unit52_6);
-
-const unit53_6 = createHero(heraldHero);
-unit53_6.items = [];
-unit53_6.skills = unit53_6.skills.concat([buffNextBaAll_2]);
-
-const unit54_6 = createHero(bardHero);
-unit54_6.items = [];
-unit54_6.skills.push(buffNextBaAll);
-
-//
-
 /** Enemy 5 - Duel units for each day */
-export const enemy5: TDuelEnemy = {
-    0: [applyItems(unit51)],
-    1: [applyItems(unit51_1)],
-    2: [applyItems(unit52_2), applyItems(unit51_2)],
-    3: [applyItems(unit52_3), applyItems(unit51_3)],
-    4: [applyItems(unit52_4), applyItems(unit51_4), applyItems(unit53_4)],
-    5: [applyItems(unit52_5), applyItems(unit51_5), applyItems(unit53_5)],
-    6: [applyItems(unit52_6), applyItems(unit53_6), applyItems(unit51_6), applyItems(unit54_6)],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-};
+export const enemy5: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    {1: [{unit:priestHero},
+        {item: mace1},{item: basic_heal},
+        {skill:healSelf},
+        {levelup: 1}]},
+    // day 2
+    {1: [{unit:priestHero},
+        {item: scepter22},{item: basic_heal_2},
+        {skill:healSelf},
+        {levelup: 2},{attribute: {a:"basicMaxHp", v:3}}],
+     2: [{unit:wildHero},
+        {item: basic_ring_damage},
+        {item: basic_hat},
+        {skill: totemAttackSkill}],
+     3: [{unit:goldGoblin1Unit}]},
+    // day 3
+    {1: [{unit:inquisitorHero},
+        {item: scepter22},{item: basic_heal_2},{item: basic_ring_damage},
+        {skill:noBasicAttackSkill},{skill:healSelf},
+        {attribute: {a:"basicMaxHp", v:3}},{attribute: {a:"basicMagicPower", v:1}}],
+     2: [{unit:wildHero},
+        {item: axe21},{item: basic_hat},
+        {skill: totemAttackSkill}, {skill: removeBuffSkill},
+        {levelup: 1}],
+     3: [{unit:peasantUnit},{item:itemPeasantPitchfork}],
+     4: [{unit:goldGoblin1Unit}]},
+     // day 4
+    {1: [{unit:inquisitorHero},
+        {item: scepter22},{item: basic_heal_2},{item: basic_ring_damage},{item: shield22},
+        {skill:noBasicAttackSkill},{skill:healSelf},{skill:attrArmorAll},
+        {attribute: {a:"basicMaxHp", v:3}},{attribute: {a:"basicMagicPower", v:1}},
+        {attribute: {a:"basicArmor", v:3}},,{attribute: {a:"basicEvasionChance", v:2}}],
+     2: [{unit:druidHero},
+        {item: axe21},{item: basic_hat},{item: basic_pants},
+        {skill: totemAttackSkill}, {skill: removeBuffSkill}],
+     3: [{unit:bardHero},
+         {skill:buffNextBaAll}],
+     4: [{unit:goldGoblin1Unit}]},
+     // day 5
+     {1: [{unit:inquisitorHero},
+        {item: scepter22},{item: basic_heal_2},{item: basic_ring_damage},{item: shield22},
+        {skill:noBasicAttackSkill},{skill:healSelf},{skill:attrArmorAll},
+        {attribute: {a:"basicMaxHp", v:3}},{attribute: {a:"basicMagicPower", v:1}},
+        {attribute: {a:"basicArmor", v:3}},{attribute: {a:"basicEvasionChance", v:2}}],
+     2: [{unit:druidHero},
+        {item: axe21},{item: basic_hat},{item: basic_pants},
+        {skill: totemAttackSkill_2}, {skill: removeBuffSkill},
+        {attribute: {a:"basicMagicPower", v:1}},],
+     3: [{unit:bardHero},
+         {skill:buffNextBaAll},
+         {item: music5AddBuffTarget}],
+     4: [{unit:goldGoblin1Unit},
+         {item: musical21}]},
+    // day 6
+    {1: [{unit:inquisitorHero},
+        {item: scepter22},{item: basic_heal_2},{item: basic_ring_damage},{item: shield22_2},
+        {skill:noBasicAttackSkill},{skill:healSelf},{skill:attrArmorAll},
+        {attribute: {a:"basicMaxHp", v:3}},{attribute: {a:"basicMagicPower", v:1}},
+        {attribute: {a:"basicArmor", v:3}},{attribute: {a:"basicEvasionChance", v:2}},
+        {attribute: {a:"basicCritChance", v:2}},{levelup: 1}],
+     2: [{unit:druidHero},
+        {item: axe21},{item: basic_hat_2},{item: basic_pants_2},
+        {skill: totemAttackSkill_2}, {skill: removeBuffSkill},
+        {attribute: {a:"basicMagicPower", v:1}},{levelup: 1}],
+     3: [{unit:bladedancerHero},
+         {skill:buffNextBaAll},
+         {item: music5AddBuffTarget},{item: musical21}],
+     4: [{unit:magicHero},
+         {skill:applyBurn},{skill:applyBurn},
+         {item: staff22},]},
+]);
 
 //////////////////////// ENEMY 6 //////////////////
 
@@ -694,7 +618,7 @@ export const enemy6: TDuelEnemy = {
     10: [],
 };
 
-//////////////////////// ENEMY 6 //////////////////
+//////////////////////// ENEMY 7 //////////////////
 
 // 1
 
@@ -833,7 +757,7 @@ export const enemy7: TDuelEnemy = {
 
 //
 
-export const duelEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy2];
+export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy2];
 
 ////////////////////////////////////
 

@@ -1,22 +1,16 @@
-import { ECardType, ICard } from "../../types";
+import { ECardType, ICard, TDuelEnemy } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { dagger1, wand1 } from "../basicWeaponItemConsts";
-import { assasinHero, paladinHero } from "../mcHeroConsts";
-import { blindingBeamSkill, heatUpSkill, nextBAArea, radiantWallSkill, removeDebuffSkill, statusesIntoHeal } from "../skills/commonSkillConsts";
-import { magicAttackX3, poisonRandom } from "../skills/darkSkillConsts";
+import { enemy1_test, enemy5 } from "../duelConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
-import { fireflySelfPoison } from "../skills/mobSkills";
-import { healSelf } from "../skills/priestSkillConsts";
-import { debuffWorthyFoe } from "../skills/warriorSkillConsts";
-import { attrDescArmor } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
-import { fireflySummonMob_6 } from "../units/summonMobUnits";
-import { dagger22 } from "../weaponItem2Consts";
-import { music5AddBuffTarget } from "../weaponItem5Consts";
 
 export const debugHeroSelectRoom = false; // true // false
 export const debugStartingItemsRoom = false;
+export const debugAlwaysOneEnemy = true;
+
+export const debugEnemy: TDuelEnemy = enemy5;
 
 /*
     let isSingleSelect = false;

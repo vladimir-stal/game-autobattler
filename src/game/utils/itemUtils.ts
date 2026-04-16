@@ -221,8 +221,10 @@ export const getHeroClassesItemsWithTop = (heroClasses: EHeroClass[], day: numbe
     const randomClass = getRandomArrayItem(heroClasses);
     const randomItemType = day > 2 ? getRandomArrayItem(["weapon", "common"]) : "weapon";
     const topLevelItem = randomItemType === "weapon" ? getHeroClassWeaponItemTop(randomClass, day) : getHeroClassCommonItemTop(randomClass, day);
-
-    return [...items, topLevelItem];
+    if (!!topLevelItem)
+        return [...items, topLevelItem];
+    else
+        return [...items, getRandomArrayItem(getHeroClassesItems(heroClasses, day))];
 };
 
 /** Return weapon items for specific hero classes */
