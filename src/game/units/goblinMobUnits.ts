@@ -5,7 +5,7 @@ import { fireflyNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff
 
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.MASTER,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.MASTER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -29,11 +29,11 @@ export const weakGoblinUnit: IUnit = {
 
 export const goblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.GLADIATOR,
-    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER, EHeroClass.MOB],
+    heroClass: EHeroClass.MOB,
+    mobHeroClasses: [EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 5,
+    basicAttack: 4,
     basicAttackTimes: 1,
     basicMaxHp: 8,
     basicHpRegen: 0,
@@ -86,7 +86,8 @@ export const goblinShamanUnit: IUnit = {
     ],
 };
 
-export const goldGoblin1Unit: IUnit = { // Rewards and shop variant (NOT FOR COMBAT)
+export const goldGoblin1Unit: IUnit = {
+    // Rewards and shop variant (NOT FOR COMBAT)
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BARD,
     mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
@@ -118,7 +119,8 @@ export const goldGoblin1Unit: IUnit = { // Rewards and shop variant (NOT FOR COM
     ],
 };
 
-export const goldGoblinBattleUnit: IUnit = { // combat variant
+export const goldGoblinBattleUnit: IUnit = {
+    // combat variant
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.BARD,
     mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
@@ -135,7 +137,7 @@ export const goldGoblinBattleUnit: IUnit = { // combat variant
     basicPhysicalPower: 0,
     name: i18n.units.GOLDGOBLIN1, //name: "Goblin trader"
     id: "GOLDGOBLIN1",
-    skills: [fireflyNoSkill,goldGoblinBuff,fireflyNoSkill,goldGoblinBuff],
+    skills: [fireflyNoSkill, goldGoblinBuff, fireflyNoSkill, goldGoblinBuff],
     items: [],
     level: 3,
     exp: 0,

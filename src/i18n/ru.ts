@@ -106,7 +106,7 @@ export const i18n: Ii18n = {
     },
     units: {
         WEAKGOBLIN: "Слабый гоблин",
-        GOBLIN: "Гоблин",
+        GOBLIN: "Гоблин колдун",
         GOBLINSHAMAN: "Гоблин шаман",
         SKELETON: "Скелет",
         SKELETONWARRIOR: "Скелет воин",

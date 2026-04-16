@@ -384,6 +384,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             return { image: IMAGE_BISHOP };
         case EHeroClass.MAGIC_BARD:
             return {
+                distanceEnemy: -50,
                 image: IMAGE_JESTER,
                 animation: AnimationType.JESTER_IDLE,
                 idleBattleAnimation: AnimationType.JESTER_BATTLE_IDLE,
