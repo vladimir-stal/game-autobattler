@@ -155,7 +155,6 @@ export interface Ii18n {
         level2: Record<string, TSkillI18n>;
         level3: Record<string, TSkillI18n>;
         level4: Record<string, TSkillI18n>;
-        common: Record<string, TSkillI18n>;
         mobs: Record<string, TSkillI18n>;
         mc: Record<string, TSkillI18n>;
     };
@@ -509,6 +508,7 @@ export const i18n: Ii18n = {
         BURN: "burn",
         POISON: "poison",
         SHOCK: "shock",
+        RADIATE: "radiate",
     },
     tags: {
         BARD: "bard",

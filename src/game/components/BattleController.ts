@@ -657,7 +657,7 @@ export class BattleController {
             }
         }
         targets.forEach((target) => {
-            applyBuff(target, buff, buffAction, unit, this);
+            applyBuff(target, buff, buffAction, this, unit);
         });
     }
 
@@ -828,7 +828,7 @@ export class BattleController {
                 const antiskillShieldBuff = target.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
                 if (antiskillShieldBuff) {
                     removeBuff(target, antiskillShieldBuff, this.battleRecord);
-                    applyDebuff(unit, debuff, debuffAction, unit, this);
+                    applyDebuff(unit, debuff, debuffAction, this, unit);
                     return;
                 }
                 const ignoreDebuffBuff = target.buffs.find((buff) => buff.type === EBuffType.IGNORE_NEXT_DEBUFF);
@@ -836,7 +836,7 @@ export class BattleController {
                     changeBuffValue(target, ignoreDebuffBuff, -1, this.battleRecord);
                     return;
                 }
-                applyDebuff(target, debuff, debuffAction, unit, this);
+                applyDebuff(target, debuff, debuffAction, this, unit);
             });
     }
 
@@ -1349,7 +1349,7 @@ export class BattleController {
                 const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff };
                 this.battleRecord.push(debuffAction);
 
-                applyDebuff(finalTarget, debuff, debuffAction);
+                applyDebuff(finalTarget, debuff, debuffAction, this);
 
                 const bladedancerMark = finalTarget.debuffs.find((debuff) => debuff.type === EDebuffType.MARK_BLADEDANCER);
                 if (bladedancerMark && bladedancerMark.totalValue) {
