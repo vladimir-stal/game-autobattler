@@ -807,7 +807,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         setTimeout(() => {
             const initialX = this.effectImageObject.x;
             const initialY = this.effectImageObject.y;
-            console.log("initial X", initialX);
+            //console.log("initial X", initialX);
             if (attackEnemyAnimDistanceX !== 0) {
                 this.effectImageObject.setX(initialX + attackEnemyAnimDistanceX);
                 //console.log("changed X", this.effectImageObject.x);

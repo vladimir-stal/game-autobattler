@@ -24,22 +24,39 @@ import {
 } from "./mcHeroConsts";
 import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
-import { phycisalAttackSkill } from "./skills/commonSkillConsts";
+import { phycisalAttackSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
 import { magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
 import { buffNextBaIgnoreArmorSelf, buffNextBaXSelf } from "./skills/masterSkillConsts";
-import { attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
+import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2 } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
 import { buffNextBa } from "./skills/warriorSkillConsts";
 import { attrDescArmor, totemAttackSkill } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
-import { axe22, mace21, musical21, musical21_2, scepter22, shield22, sword22_2, totem21, totem22, wand21, wand21_2 } from "./weaponItem2Consts";
-import { weakGoblinUnit } from "./units/goblinMobUnits";
-import { gloves_war2 } from "./commonItemConsts2";
+import {
+    axe22,
+    mace21,
+    musical21,
+    musical21_2,
+    scepter22,
+    shield22,
+    staff22,
+    sword22,
+    sword22_2,
+    totem21,
+    totem22,
+    wand21,
+    wand21_2,
+} from "./weaponItem2Consts";
+import { goblinUnit, weakGoblinUnit } from "./units/goblinMobUnits";
+import { gloves_war2, hat21, jacket21 } from "./commonItemConsts2";
 import { strongWolfUnit } from "./units/wolfsMobUnits";
 import { minstrelSkill } from "./skills/mc/minstrelSkills";
+import { itemGoblinBoneDagger } from "./mobItemConsts";
+import { shield31, shield32 } from "./weaponItem3Consts";
+import { buffSelfMPorPP } from "./skills/commonSkill3Consts";
 
 type TDuelEnemy = Record<number, (IUnit | null)[]>;
 
@@ -661,8 +678,6 @@ const unit63_6 = createHero(darkHero);
 unit63_6.items = [wand1];
 unit63_6.skills = [poisonRandom];
 
-//
-
 /** Enemy 6 - Duel units for each day */
 export const enemy6: TDuelEnemy = {
     0: [applyItems(unit61)],
@@ -679,9 +694,146 @@ export const enemy6: TDuelEnemy = {
     10: [],
 };
 
+//////////////////////// ENEMY 6 //////////////////
+
+// 1
+
+const unit71_magic = createHero(magicHero);
+addItem(unit71_magic, wand1);
+unit71_magic.skills.push(magicAttack);
+
+const unit72_goblin = { ...goblinUnit };
+
+// 2
+
+const unit71_magic_2 = { ...unit71_magic };
+unit71_magic_2.skills = [applyBurn, magicAttack];
+
+const unit72_goblin_2 = { ...unit72_goblin };
+addItem(unit72_goblin_2, itemGoblinBoneDagger);
+
+const unit73_order_2 = createHero(orderHero);
+unit73_order_2.skills.push(attrArmorSelf);
+addItem(unit73_order_2, basic_jacket);
+
+// 3
+
+const unit71_magic_3 = { ...unit71_magic_2 };
+levelUpUnit(unit71_magic_3);
+unit71_magic_3.skills = [{ ...applyShock, isMcSkill: true }, magicAttack];
+unit71_magic_3.items = [wand1_2];
+
+const unit72_goblin_3 = { ...unit72_goblin_2 };
+
+const unit73_order_3 = { ...unit73_order_2 };
+levelUpUnit(unit73_order_3);
+levelUpUnit(unit73_order_3);
+unit73_order_3.basicArmor += 3;
+unit73_order_3.skills = [attrArmorAll, attrArmorSelf];
+unit73_order_3.items.push(hat21);
+
+const unit74_goblin_3 = { ...goblinUnit };
+
+// 4
+
+//const unit71_magic_4 = { ...unit71_magic_3 };
+const unit71_druid_4 = createHero(druidHero);
+unit71_druid_4.basicMagicPower = 3;
+unit71_druid_4.skills.push({ ...applyShock, isMcSkill: true });
+unit71_druid_4.skills.push(applyShock);
+unit71_druid_4.skills.push(magicAttack);
+//unit71_magic_4.basicMagicPower += 1;
+unit71_druid_4.items = [staff22];
+
+const unit72_goblin_4 = { ...unit72_goblin_3 };
+levelUpUnit(unit72_goblin_4);
+
+//const unit73_order_4 = { ...unit73_order_3 };
+const unit73_knight_4 = createHero(knightHero);
+unit73_knight_4.basicArmor = 24;
+unit73_knight_4.basicArmor = 25;
+unit73_knight_4.skills.push(attrArmorAll);
+unit73_knight_4.skills.push(attrArmorSelf);
+unit73_knight_4.items = [basic_jacket, hat21, sword22];
+
+const unit74_goblin_4 = { ...unit74_goblin_3 };
+levelUpUnit(unit74_goblin_4);
+unit74_goblin_4.items = [wand1_2];
+
+// 5
+
+const unit71_druid_5 = { ...unit71_druid_4 };
+unit71_druid_5.basicMagicPower += 2;
+
+const unit73_knight_5 = { ...unit73_knight_4 };
+levelUpUnit(unit73_knight_5);
+unit73_knight_5.basicArmor += 3;
+unit73_knight_5.skills = [unit73_knight_4.skills[0], attrArmorAll_2, removeDebuffSkill, attrArmorAll];
+
+const unit72_goblin_5 = { ...unit72_goblin_4 };
+
+const unit74_goblin_5 = { ...unit74_goblin_4 };
+
+// 6
+
+const unit71_druid_6 = { ...unit71_druid_5 };
+levelUpUnit(unit71_druid_5);
+unit71_druid_6.basicArmor += 3;
+unit71_druid_6.items.push(basic_jacket);
+
+const unit73_knight_6 = { ...unit73_knight_5 };
+levelUpUnit(unit73_knight_6);
+unit73_knight_6.items = [jacket21, hat21, sword22, shield32];
+
+const unit72_goblin_6 = { ...unit72_goblin_5 };
+levelUpUnit(unit72_goblin_6);
+levelUpUnit(unit72_goblin_6);
+
+const unit74_goblin_6 = { ...unit74_goblin_5 };
+levelUpUnit(unit72_goblin_5);
+
+// 7
+
+const unit71_druid_7 = { ...unit71_druid_6 };
+unit71_druid_7.basicMaxHp += 3;
+
+const unit73_knight_7 = { ...unit73_knight_6 };
+unit73_knight_7.skills = [unit73_knight_6.skills[0], buffSelfMPorPP, attrArmorAll_2, attrArmorAll];
+
+const unit72_goblin_7 = { ...unit72_goblin_6 };
+levelUpUnit(unit72_goblin_7);
+
+const unit74_goblin_7 = { ...unit74_goblin_6 };
+levelUpUnit(unit74_goblin_7);
+
+// hp aura - hack
+unit71_druid_7.basicMaxHp += 10;
+unit73_knight_7.basicMaxHp += 10;
+unit72_goblin_7.basicMaxHp += 10;
+unit74_goblin_7.basicMaxHp += 10;
+
+const units_7_7 = [applyItems(unit73_knight_7), applyItems(unit71_druid_7), applyItems(unit72_goblin_7), applyItems(unit74_goblin_7)];
+
+/** Enemy 7 - for RELEASE_1 */
+export const enemy7: TDuelEnemy = {
+    0: [unit72_goblin, applyItems(unit71_magic)],
+    1: [unit72_goblin, applyItems(unit71_magic)],
+    2: [applyItems(unit73_order_2), applyItems(unit72_goblin_2), applyItems(unit71_magic_2)],
+    3: [applyItems(unit73_order_3), applyItems(unit72_goblin_3), applyItems(unit71_magic_3), applyItems(unit74_goblin_3)],
+    4: [applyItems(unit73_knight_4), applyItems(unit71_druid_4), applyItems(unit72_goblin_4), applyItems(unit74_goblin_4)],
+    5: [applyItems(unit73_knight_5), applyItems(unit71_druid_5), applyItems(unit72_goblin_5), applyItems(unit74_goblin_5)],
+    6: [applyItems(unit73_knight_6), applyItems(unit71_druid_6), applyItems(unit72_goblin_6), applyItems(unit74_goblin_6)],
+    7: units_7_7,
+    8: units_7_7,
+    9: units_7_7,
+    10: units_7_7,
+};
+
+///////////////////////////////////////////////////////////
+
 //
 
-export const duelEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy1, enemy2];
+export const duelEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy2];
 
 ////////////////////////////////////
 

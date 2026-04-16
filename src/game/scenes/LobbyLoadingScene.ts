@@ -53,7 +53,7 @@ export class LobbyLoadingScene extends Scene {
     //     }
     // }
     updateDescr(): void {
-        this.descrText.setText(LOADING_LINE2 + '\n' + (this.line1 || "") + " " + (this.line2) + '\n' + (this.line3 || ""));
+        this.descrText.setText(LOADING_LINE2 + "\n\n" + (this.line1 || "") + " " + this.line2 + "\n" + (this.line3 || ""));
     }
 
     create() {
