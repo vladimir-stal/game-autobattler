@@ -135,7 +135,7 @@ export function loadMcHeroesImages(scene: Scene) {
     //scene.load.image(IMAGE_HUNTER, "assets/sprites/units/mc/hunter/hunter_2_idle_300.webp");
 
     //TODO: webp
-    scene.load.spritesheet(IMAGE_HUNTER_IDLE, "assets/sprites/units/mc/hunter/hunter_idle_cut_300.png", {
+    scene.load.spritesheet(IMAGE_HUNTER_IDLE, "assets/sprites/units/mc/hunter/hunter_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });

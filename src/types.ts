@@ -805,9 +805,13 @@ export interface IBattleUnit extends IUnit {
     physicalPower: number;
     critChance: number;
     evasionChance: number;
-    customNumber: number; // for tricky skill calculations
     isBackRowPosition: boolean;
-    //
+    customNumber: number; // for tricky skill calculations
+    // see BattleController.performCustomCalculation()
+    // count by priority: skill.status (add) > skill.attribute (add) > skill.value (set)
+    //    > skill.valueFrom (add%) > skill.valueType="percent" (multiply this customNumber)
+    // after calculation IHeroSkill may use .valueFrom="customNumber"
+    // is set to 0 before every IHeroSkillSet
     isSummon: boolean;
     buffs: IBuff[];
     debuffs: IDebuff[];

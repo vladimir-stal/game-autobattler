@@ -552,18 +552,11 @@ export const removeBuffSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_MAGIC_HAND,
 };
 
-// HEAT UP : magic + priest = burn + buff mp (based on burn) 2 duration [1+1/2+2/3+3]
-export const heatUpSkill: IHeroSkillSet = {
-    id: "heatUpSkill",
-    name: "Разогрев",
-    desc: "Apply [1] burn, increase own MP by target's burn for 2 turns",
-    level: 1,
-    priceLevel: 1,
-    heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
-    skills: [
+const heatUpSkillSet = (burn: number, duration: number, mpConversionPercent: number):IHeroSkill[] => {
+    return [
         {
             type: EHeroSkillType.STATUS_APPLY,
-            value: 1, // next 2,3
+            value: burn, // next 2,3
             valueType: "number",
             targetType: ETargetType.FIRST_ENEMY,
             status: EStatusType.BURN,
@@ -585,58 +578,135 @@ export const heatUpSkill: IHeroSkillSet = {
                 attribute: "magicPower",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.DURATION,
-                duration: 2, // next 3,4
-                value: 100,
+                duration: duration, // next 3,4
+                value: mpConversionPercent,
                 valueType: "percent",
                 valueFrom: "customNumber",
             },
         },
-    ],
-    //nextLevel: warriorSummonSkill_2,
+    ]
+}
+
+// HEAT UP : magic + priest = burn + buff mp (based on burn) 2 duration [1+1/2+2/3+3]
+export const heatUpSkill_3: IHeroSkillSet = {
+    id: "heatUpSkill",
+    name: "Разогрев 3",
+    desc: "Apply [3] burn, increase own MP by target's burn for 4 turns",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
+    skills: heatUpSkillSet(3,4,100),
+    image: IMAGE_SKILL_POISON,
+};
+
+export const heatUpSkill_2: IHeroSkillSet = {
+    id: "heatUpSkill",
+    name: "Разогрев 2",
+    desc: "Apply [2] burn, increase own MP by target's burn for 3 turns",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
+    skills: heatUpSkillSet(2,3,100),
+    nextLevel: heatUpSkill_3,
+    image: IMAGE_SKILL_POISON,
+};
+
+export const heatUpSkill: IHeroSkillSet = {
+    id: "heatUpSkill",
+    name: "Разогрев 1",
+    desc: "Apply [1] burn, increase own MP by target's burn for 2 turns",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
+    skills: heatUpSkillSet(1,2,100),
+    nextLevel: heatUpSkill_2,
     image: IMAGE_SKILL_POISON,
 };
 
 // TOXIC TUNE : bard + dark = totem +1 poison on enemy [1 front, 1 front 1 random, 2 front 1 random]
-const toxicTuneSkill: IHeroSkillSet = {
+const toxicTuneSkill_3: IHeroSkillSet = {
     id: "toxicTuneSkill",
-    name: "Токсичный мотив",
+    name: "Токсичный мотив 3",
     desc: "Each turn front enemy\nrecieve [1] poison",
-    level: 1,
+    level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.DARK],
-    skills: [
-        {
+    skills: [{
             type: EHeroSkillType.TOTEM,
-            isBasicAttack: false,
             totem: {
                 id: "ToxicTune",
                 name: "Токсичный мотив",
-                skills: [
-                    {
+                skills: [{
+                        type: EHeroSkillType.STATUS_APPLY,
+                        value: 2,
+                        valueType: "number",
+                        targetType: ETargetType.FIRST_ENEMY,
+                        status: EStatusType.POISON,
+                    },{
+                        type: EHeroSkillType.STATUS_APPLY,
+                        value: 1,
+                        valueType: "number",
+                        targetType: ETargetType.RANDOM_ENEMY,
+                        status: EStatusType.POISON,
+                    }],
+            }}],
+};
+
+const toxicTuneSkill_2: IHeroSkillSet = {
+    id: "toxicTuneSkill",
+    name: "Токсичный мотив 2",
+    desc: "Each turn front enemy\nrecieve [1] poison",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.BARD, EHeroClass.DARK],
+    skills: [{
+            type: EHeroSkillType.TOTEM,
+            totem: {
+                id: "ToxicTune",
+                name: "Токсичный мотив",
+                skills: [{
                         type: EHeroSkillType.STATUS_APPLY,
                         value: 1,
                         valueType: "number",
                         targetType: ETargetType.FIRST_ENEMY,
                         status: EStatusType.POISON,
-                    },
-                    // level 2: + status apply 1 random enemy
-                    // level 3: first enemy 2 poison
-                ],
-            },
-        },
-    ],
-    //nextLevel: gladiatorSkill_2,
+                    },{
+                        type: EHeroSkillType.STATUS_APPLY,
+                        value: 1,
+                        valueType: "number",
+                        targetType: ETargetType.RANDOM_ENEMY,
+                        status: EStatusType.POISON,
+                    }],
+            }}],
+    nextLevel: toxicTuneSkill_3,
 };
 
-// VENOM HEART : dark + summon = buff 2 duration +poison on ba (self / summon)
-export const venomHeartSkill: IHeroSkillSet = {
-    id: "venomHeartSkill",
-    name: "Venom heart",
-    desc: "Buff summon's and\nown attacks to apply\n[1] poison for [2] turns",
+const toxicTuneSkill: IHeroSkillSet = {
+    id: "toxicTuneSkill",
+    name: "Токсичный мотив 1",
+    desc: "Each turn front enemy\nrecieve [1] poison",
     level: 1,
     priceLevel: 1,
-    heroClasses: [EHeroClass.DARK, EHeroClass.SUMMON],
-    skills: [
+    heroClasses: [EHeroClass.BARD, EHeroClass.DARK],
+    isBasicAttack: false,
+    skills: [{
+            type: EHeroSkillType.TOTEM,
+            totem: {
+                id: "ToxicTune",
+                name: "Токсичный мотив",
+                skills: [{
+                        type: EHeroSkillType.STATUS_APPLY,
+                        value: 1,
+                        valueType: "number",
+                        targetType: ETargetType.FIRST_ENEMY,
+                        status: EStatusType.POISON,
+                    }],
+            }}],
+    nextLevel: toxicTuneSkill_2,
+};
+
+const venomHeartSkillSet = (duration: number, stacks: number): IHeroSkill[] => {
+    return [
         {
             type: EHeroSkillType.BUFF,
             buff: {
@@ -644,8 +714,8 @@ export const venomHeartSkill: IHeroSkillSet = {
                 type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.DURATION,
-                duration: 2, // next 2,4
-                value: 1, // next 2,2
+                duration: duration, // next 2,4
+                value: stacks, // next 2,2
                 valueType: "number",
             }
         },
@@ -656,30 +726,57 @@ export const venomHeartSkill: IHeroSkillSet = {
                 type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
                 targetType: ETargetType.SUMMON_CURRENT,
                 timeType: EBuffTimeType.DURATION,
-                duration: 2, // next 2,4
-                value: 1, // next 2,2
+                duration: duration, // next 2,4
+                value: stacks, // next 2,2
                 valueType: "number",
             },
             condition: ESkillCondition.HAS_SUMMON
         },
-    ],
-    //nextLevel: warriorSummonSkill_2,
+    ];
+}
+
+// VENOM HEART : dark + summon = buff 2 duration +poison on ba (self / summon)
+export const venomHeartSkill_3: IHeroSkillSet = {
+    id: "venomHeartSkill",
+    name: "Venom heart 3",
+    desc: "Buff summon's and\nown attacks to apply\n[1] poison for [2] turns",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.DARK, EHeroClass.SUMMON],
+    skills: venomHeartSkillSet(4,2),
     image: IMAGE_SKILL_POISON,
 };
 
-// BLINDING Beam : bard + magic = magic atk [1/2/3] + debuff blind 2? duration
-export const blindingBeamSkill: IHeroSkillSet = {
-    id: "blindingBeamSkill",
-    name: "Blinding beam",
-    desc: "Deal [1] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+export const venomHeartSkill_2: IHeroSkillSet = {
+    id: "venomHeartSkill",
+    name: "Venom heart 2",
+    desc: "Buff summon's and\nown attacks to apply\n[1] poison for [2] turns",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.DARK, EHeroClass.SUMMON],
+    skills: venomHeartSkillSet(2,2),
+    nextLevel: venomHeartSkill_3,
+    image: IMAGE_SKILL_POISON,
+};
+
+export const venomHeartSkill: IHeroSkillSet = {
+    id: "venomHeartSkill",
+    name: "Venom heart",
+    desc: "Buff summon's and\nown attacks to apply\n[1] poison for [2] turns",
     level: 1,
     priceLevel: 1,
-    heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
-    skills: [
+    heroClasses: [EHeroClass.DARK, EHeroClass.SUMMON],
+    skills: venomHeartSkillSet(2,1),
+    nextLevel: venomHeartSkill_2,
+    image: IMAGE_SKILL_POISON,
+};
+
+const blindingBeamSkillSet = (magDmg:number, blind:number, mpScale:number): IHeroSkill[] => {
+    return [
         {
             type: EHeroSkillType.ATTACK,
             attackType: EHeroAttackType.MAGIC,
-            value: 1, // next 2,3
+            value: magDmg, // next 2,3
             valueType: "number",
             targetType: ETargetType.FIRST_ENEMY,
             animation: AnimationType.NONE,
@@ -692,25 +789,60 @@ export const blindingBeamSkill: IHeroSkillSet = {
                 targetType: ETargetType.FIRST_ENEMY,
                 timeType: EBuffTimeType.DURATION,
                 duration: 2,
-                value: 35, // next 45,55
+                value: blind, // next 45,55
                 valueType: "number",
-                mpScale: 100, // next 135,150
+                mpScale: mpScale, // next 135,150
             }
         },
-    ],
-    //nextLevel: warriorSummonSkill_2,
+    ];
+}
+
+// BLINDING Beam : bard + magic = magic atk [1/2/3] + debuff blind 2? duration
+export const blindingBeamSkill_3: IHeroSkillSet = {
+    id: "blindingBeamSkill",
+    name: "Blinding beam 3",
+    desc: "Deal [1] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
+    skills: blindingBeamSkillSet(3,55,150),
+    image: IMAGE_SKILL_MAGIC_HAND,
+};
+
+export const blindingBeamSkill_2: IHeroSkillSet = {
+    id: "blindingBeamSkill",
+    name: "Blinding beam 2",
+    desc: "Deal [1] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
+    skills: blindingBeamSkillSet(2,45,135),
+    nextLevel: blindingBeamSkill_3,
+    image: IMAGE_SKILL_MAGIC_HAND,
+};
+
+export const blindingBeamSkill: IHeroSkillSet = {
+    id: "blindingBeamSkill",
+    name: "Blinding beam 1",
+    desc: "Deal [1] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
+    skills: blindingBeamSkillSet(1,35,100),
+    nextLevel: blindingBeamSkill_2,
     image: IMAGE_SKILL_MAGIC_HAND,
 };
 
 // RADIANT WALL : summon + priest = summon [0,5] + buff overheal 2 duration
-export const radiantWallSummon: IUnit = {
+const radiantWallSummon = (hp: number, level: number): IUnit => {
+  return {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.ORDER,
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 0,
     basicAttackTimes: 1,
-    basicMaxHp: 5,
+    basicMaxHp: hp,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,
@@ -721,8 +853,9 @@ export const radiantWallSummon: IUnit = {
     id: "RADIANTSUMMON",
     skills: [],
     items: [],
-    level: 1,
+    level: level,
     exp: 0,
+  }
 };
 
 const selfBuffOverheal = (duration: number):IHeroSkill => {
@@ -740,16 +873,51 @@ const selfBuffOverheal = (duration: number):IHeroSkill => {
     };
 }
 
+export const radiantWallSkill_3: IHeroSkillSet = {
+    id: "radiantWallSkill",
+    name: "Radiant wall 3",
+    desc: "Summons defender [0,5]\nand for 2 turns\noverheals increase damage\nto front enemy",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.PRIEST],
+    skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon(10,3), 0, 35, 60, 3, 3)], // summon 0/10
+    image: IMAGE_SKILL_MAGIC_HAND,
+};
+
+export const radiantWallSkill_2: IHeroSkillSet = {
+    id: "radiantWallSkill",
+    name: "Radiant wall 2",
+    desc: "Summons defender [0,5]\nand for 2 turns\noverheals increase damage\nto front enemy",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.PRIEST],
+    skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon(7,2), 0, 35, 40, 2, 3)], // summon 0/7
+    nextLevel: radiantWallSkill_3,
+    image: IMAGE_SKILL_MAGIC_HAND,
+};
+
 export const radiantWallSkill: IHeroSkillSet = {
     id: "radiantWallSkill",
-    name: "Radiant wall",
+    name: "Radiant wall 1",
     desc: "Summons defender [0,5]\nand for 2 turns\noverheals increase damage\nto front enemy",
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.PRIEST],
-    skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon, 0, 35, 20, 2, 2)], // summon 0/5
-    //nextLevel: warriorSummonSkill_2,
+    skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon(5,1), 0, 35, 20, 2, 2)], // summon 0/5
+    nextLevel: radiantWallSkill_2,
     image: IMAGE_SKILL_MAGIC_HAND,
 };
 
-export const multiclassSkills1 = [phycisalAttackSkill, statusesIntoHeal, attackWithBleedSkill, nextBAArea];
+export const multiclassSkills1 = [
+    // physical classes
+    phycisalAttackSkill,
+    statusesIntoHeal,
+    attackWithBleedSkill,
+    nextBAArea,
+    // magical classes
+    radiantWallSkill,
+    blindingBeamSkill,
+    venomHeartSkill,
+    toxicTuneSkill,
+    heatUpSkill
+];
