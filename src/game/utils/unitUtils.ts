@@ -143,10 +143,10 @@ const addAttributesOnLevelUp = (unit: IUnit) => {
     if (unit.unitType == EUnitType.UNIT) {
         const attr = getRandomIntFromInterval(0, 3);
         unit.basicArmor += 2;
-        unit.basicAttack += 1;
-        if (attr == 0) unit.basicCritChance += 2;
-        if (attr == 1) unit.basicEvasionChance += 2;
-        if (attr == 2) unit.basicMaxHp += 2;
+        unit.basicMaxHp += 1;
+        if (attr == 0) unit.basicCritChance += 3;
+        if (attr == 1) unit.basicEvasionChance += 3;
+        if (attr == 2) {unit.basicPhysicalPower++; unit.basicMagicPower++; };
         if (attr == 3) unit.basicAttack += 1;
     }
 };
