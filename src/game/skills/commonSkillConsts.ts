@@ -83,8 +83,6 @@ export const noBasicAttackSkill: IHeroSkillSet = {
     bard + magic = magic atk [1/2/3] + debuff blind 2? duration
 */
 
-
-
 const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] => {
     return [
         {
@@ -410,8 +408,8 @@ export const nextBAArea: IHeroSkillSet = {
 
 export const removeDebuffSkill_3: IHeroSkillSet = {
     id: "removeDebuff",
-    name: i18n.skills.common.removeDebuff.name,
-    desc: i18n.skills.common.removeDebuff.desc1,
+    name: i18n.skills.level2.removeDebuff.name,
+    desc: i18n.skills.level2.removeDebuff.desc1,
     level: 3,
     priceLevel: 2,
     //rarity: 2,
@@ -438,8 +436,8 @@ export const removeDebuffSkill_3: IHeroSkillSet = {
 
 export const removeDebuffSkill_2: IHeroSkillSet = {
     id: "removeDebuff",
-    name: i18n.skills.common.removeDebuff.name,
-    desc: i18n.skills.common.removeDebuff.desc1,
+    name: i18n.skills.level2.removeDebuff.name,
+    desc: i18n.skills.level2.removeDebuff.desc1,
     level: 2,
     priceLevel: 2,
     //rarity: 2,
@@ -462,8 +460,8 @@ export const removeDebuffSkill_2: IHeroSkillSet = {
 
 export const removeDebuffSkill: IHeroSkillSet = {
     id: "removeDebuff",
-    name: i18n.skills.common.removeDebuff.name,
-    desc: i18n.skills.common.removeDebuff.desc1,
+    name: i18n.skills.level2.removeDebuff.name,
+    desc: i18n.skills.level2.removeDebuff.desc1,
     level: 1,
     priceLevel: 2,
     //rarity: 2,
@@ -483,8 +481,8 @@ export const removeDebuffSkill: IHeroSkillSet = {
 
 export const removeBuffSkill_3: IHeroSkillSet = {
     id: "removeBuff",
-    name: i18n.skills.common.removeBuff.name,
-    desc: i18n.skills.common.removeBuff.desc1,
+    name: i18n.skills.level2.removeBuff.name,
+    desc: i18n.skills.level2.removeBuff.desc1,
     level: 3,
     priceLevel: 2,
     //rarity: 2,
@@ -511,8 +509,8 @@ export const removeBuffSkill_3: IHeroSkillSet = {
 
 export const removeBuffSkill_2: IHeroSkillSet = {
     id: "removeBuff",
-    name: i18n.skills.common.removeBuff.name,
-    desc: i18n.skills.common.removeBuff.desc1,
+    name: i18n.skills.level2.removeBuff.name,
+    desc: i18n.skills.level2.removeBuff.desc1,
     level: 2,
     priceLevel: 2,
     //rarity: 2,
@@ -535,8 +533,8 @@ export const removeBuffSkill_2: IHeroSkillSet = {
 
 export const removeBuffSkill: IHeroSkillSet = {
     id: "removeBuff",
-    name: i18n.skills.common.removeBuff.name,
-    desc: i18n.skills.common.removeBuff.desc1,
+    name: i18n.skills.level2.removeBuff.name,
+    desc: i18n.skills.level2.removeBuff.desc1,
     level: 1,
     priceLevel: 2,
     //rarity: 2,
@@ -555,8 +553,10 @@ export const removeBuffSkill: IHeroSkillSet = {
 // HEAT UP : magic + priest = burn + buff mp (based on burn) 2 duration [1+1/2+2/3+3]
 export const heatUpSkill: IHeroSkillSet = {
     id: "heatUpSkill",
-    name: "Разогрев",
-    desc: "Apply [1] burn, increase own MP by target's burn for 2 turns",
+    //name: "Разогрев",
+    //desc: "Apply [1] burn, increase own MP by target's burn for 2 turns",
+    name: i18n.skills.basic.heatUpSkill.name,
+    desc: i18n.skills.basic.heatUpSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
@@ -599,8 +599,10 @@ export const heatUpSkill: IHeroSkillSet = {
 // TOXIC TUNE : bard + dark = totem +1 poison on enemy [1 front, 1 front 1 random, 2 front 1 random]
 const toxicTuneSkill: IHeroSkillSet = {
     id: "toxicTuneSkill",
-    name: "Токсичный мотив",
-    desc: "Each turn front enemy\nrecieve [1] poison",
+    //name: "Токсичный мотив",
+    //desc: "Each turn front enemy\nrecieve [1] poison",
+    name: i18n.skills.basic.toxicTuneSkill.name,
+    desc: i18n.skills.basic.toxicTuneSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.DARK],
@@ -631,8 +633,10 @@ const toxicTuneSkill: IHeroSkillSet = {
 // VENOM HEART : dark + summon = buff 2 duration +poison on ba (self / summon)
 export const venomHeartSkill: IHeroSkillSet = {
     id: "venomHeartSkill",
-    name: "Venom heart",
-    desc: "Buff summon's and\nown attacks to apply\n[1] poison for [2] turns",
+    //name: "Venom heart",
+    //desc: "Buff summon's and\nown attacks to apply\n[1] poison for [2] turns",
+    name: i18n.skills.basic.venomHeartSkill.name,
+    desc: i18n.skills.basic.venomHeartSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.DARK, EHeroClass.SUMMON],
@@ -647,7 +651,7 @@ export const venomHeartSkill: IHeroSkillSet = {
                 duration: 2, // next 2,4
                 value: 1, // next 2,2
                 valueType: "number",
-            }
+            },
         },
         {
             type: EHeroSkillType.BUFF,
@@ -660,7 +664,7 @@ export const venomHeartSkill: IHeroSkillSet = {
                 value: 1, // next 2,2
                 valueType: "number",
             },
-            condition: ESkillCondition.HAS_SUMMON
+            condition: ESkillCondition.HAS_SUMMON,
         },
     ],
     //nextLevel: warriorSummonSkill_2,
@@ -670,8 +674,10 @@ export const venomHeartSkill: IHeroSkillSet = {
 // BLINDING Beam : bard + magic = magic atk [1/2/3] + debuff blind 2? duration
 export const blindingBeamSkill: IHeroSkillSet = {
     id: "blindingBeamSkill",
-    name: "Blinding beam",
-    desc: "Deal [1] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+    //name: "Blinding beam",
+    //desc: "Deal [1] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+    name: i18n.skills.basic.blindingBeamSkill.name,
+    desc: i18n.skills.basic.blindingBeamSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
@@ -695,7 +701,7 @@ export const blindingBeamSkill: IHeroSkillSet = {
                 value: 35, // next 45,55
                 valueType: "number",
                 mpScale: 100, // next 135,150
-            }
+            },
         },
     ],
     //nextLevel: warriorSummonSkill_2,
@@ -725,7 +731,7 @@ export const radiantWallSummon: IUnit = {
     exp: 0,
 };
 
-const selfBuffOverheal = (duration: number):IHeroSkill => {
+const selfBuffOverheal = (duration: number): IHeroSkill => {
     return {
         type: EHeroSkillType.BUFF,
         buff: {
@@ -738,12 +744,14 @@ const selfBuffOverheal = (duration: number):IHeroSkill => {
             changeTargetTypeTo: ETargetType.FIRST_ENEMY,
         },
     };
-}
+};
 
 export const radiantWallSkill: IHeroSkillSet = {
     id: "radiantWallSkill",
-    name: "Radiant wall",
-    desc: "Summons defender [0,5]\nand for 2 turns\noverheals increase damage\nto front enemy",
+    //name: "Radiant wall",
+    //desc: "Summons defender [0,5]\nand for 2 turns\noverheals increase damage\nto front enemy",
+    name: i18n.skills.basic.radiantWallSkill.name,
+    desc: i18n.skills.basic.radiantWallSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.PRIEST],

@@ -323,6 +323,7 @@ export const i18n: Ii18n = {
         BURN: "ожог",
         POISON: "яд",
         SHOCK: "шок",
+        RADIATE: "сияние",
     },
     tags: {
         BARD: "БАРД",

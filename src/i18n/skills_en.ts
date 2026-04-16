@@ -166,6 +166,51 @@ export const SKILLS_EN = {
             desc2: "Summon totem that deals \n[2] damage to random enemy",
             desc3: "Summon totem that deals \n[3] damage to random enemy",
         },
+        //
+        // MAGIC + PRIEST
+        //
+        heatUpSkill: {
+            name: "Heat up",
+            desc1: "Apply [1] burn, increase own MP by target's burn for 2 turns",
+            desc2: "Apply [2] burn, increase own MP by target's burn for 2 turns",
+            desc3: "Apply [3] burn, increase own MP by target's burn for 2 turns",
+        },
+        //
+        // BARD + DARK
+        //
+        toxicTuneSkill: {
+            name: "Toxic tune",
+            desc1: "Summons totem that\n poisons [1] front enemy",
+            desc2: "Summons totem that\n poisons [1] front enemy\n and [1] random enemy",
+            desc3: "Summons totem that\n poisons [2] front enemy",
+        },
+        //
+        // DARK + SUMMON
+        //
+        venomHeartSkill: {
+            name: "Venom heart",
+            desc1: "Buff summon's and\nown attacks to apply\n[1] poison for [2] turns",
+            desc2: "Buff summon's and\nown attacks to apply\n[2] poison for [2] turns",
+            desc3: "Buff summon's and\nown attacks to apply\n[2] poison for [4] turns",
+        },
+        //
+        // BARD + MAGIC
+        //
+        blindingBeamSkill: {
+            name: "Blinding beam",
+            desc1: "Deal [1] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+            desc2: "Deal [2] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+            desc3: "Deal [3] magic damage\nand apply [35+MP] blind\nto enemy for 2 turns",
+        },
+        //
+        // SUMMON + PRIEST
+        //
+        radiantWallSkill: {
+            name: "Radiant wall",
+            desc1: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
+            desc2: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
+            desc3: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
+        },
     },
     level2: {
         applyShock: {
@@ -234,6 +279,18 @@ export const SKILLS_EN = {
             desc2: "Chains to the next skill",
             desc3: "Chains to the next skill",
         },
+        removeBuff: {
+            name: "Remove buff",
+            desc1: "Remove [1] buff from enemy",
+            desc2: "Remove [2] buffs from enemy",
+            desc3: "Remove [3] buffs from enemy",
+        },
+        removeDebuff: {
+            name: "Remove debuff",
+            desc1: "Remove [1] debuff from ally",
+            desc2: "Remove [2] debuffs from ally",
+            desc3: "Remove [3] debuff from ally",
+        },
     },
     level3: {
         attrArmorBigSelf: {
@@ -292,20 +349,6 @@ export const SKILLS_EN = {
         },
     },
     level4: {},
-    common: {
-        removeBuff: {
-            name: "Remove buff",
-            desc1: "Remove [1] buff from enemy",
-            desc2: "Remove [2] buffs from enemy",
-            desc3: "Remove [3] buffs from enemy",
-        },
-        removeDebuff: {
-            name: "Remove debuff",
-            desc1: "Remove [1] debuff from ally",
-            desc2: "Remove [2] debuffs from ally",
-            desc3: "Remove [3] debuff from ally",
-        },
-    },
     mc: {
         alchemistSkill: {
             name: "Salvation",
