@@ -25,7 +25,7 @@ export function loadImagesEffects(scene: Scene) {
     //
     // LIGHTNING
     //
-    scene.load.spritesheet(IMAGE_EFFECT_LIGHTNING_1, `${path}magic_lightning_1_cut_400.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_LIGHTNING_1, `${path}magic_lightning_1_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -33,53 +33,53 @@ export function loadImagesEffects(scene: Scene) {
     // BASIC HEROES //////////////////////////////////////////////////////////
     //
     // BARD
-    scene.load.spritesheet(IMAGE_EFFECT_BARD_ATTACK, `${path}bard/bard_attack_300_5.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_BARD_ATTACK, `${path}bard/bard_attack_300_5.webp`, {
         frameWidth: 300,
         frameHeight: 300,
     });
     // DARK
-    scene.load.spritesheet(IMAGE_EFFECT_DARK_ATTACK, `${path}dark/dark_attack_2_300_10.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_DARK_ATTACK, `${path}dark/dark_attack_2_300_10.webp`, {
         frameWidth: 300,
         frameHeight: 300,
     });
     // MAGIC
-    scene.load.spritesheet(IMAGE_EFFECT_MAGIC_ATTACK, `${path}lightning03_cut_400.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_MAGIC_ATTACK, `${path}lightning03_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 400,
     });
     // MASTER
-    scene.load.spritesheet(IMAGE_EFFECT_MASTER_ATTACK_2, `${path}master/master_attack_2_300.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_MASTER_ATTACK_2, `${path}master/master_attack_2_300.webp`, {
         frameWidth: 300,
         frameHeight: 300,
     });
     // ORDER
-    scene.load.spritesheet(IMAGE_EFFECT_ORDER_ATTACK_2, `${path}order/order_attack_2_cut_400.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_ORDER_ATTACK_2, `${path}order/order_attack_2_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 300,
     });
     // PRIEST
-    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_ATTACK, `${path}priest/priest_attack_2_cut_500.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_ATTACK, `${path}priest/priest_attack_2_cut_500.webp`, {
         frameWidth: 500,
         frameHeight: 500,
     });
     //
-    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_ATTACK_2, `${path}priest/priest_holy_sword_cut_400.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_ATTACK_2, `${path}priest/priest_holy_sword_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 400,
     });
     //
-    //scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_cut_400.png`, {
-    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_2_cut_400.png`, {
+    //scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_cut_400.webp`, {
+    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `${path}priest/heal_2_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 400,
     });
     // WARRIOR
-    scene.load.spritesheet(IMAGE_EFFECT_WARRIOR_ATTACK_2, `${path}warrior/warrior_attack_5_cut_300.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_WARRIOR_ATTACK_2, `${path}warrior/warrior_attack_5_cut_300.webp`, {
         frameWidth: 300,
         frameHeight: 300,
     });
     // WILD
-    scene.load.spritesheet(IMAGE_EFFECT_WILD_ATTACK, `${path}wild/wild_attack_2_300.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_WILD_ATTACK, `${path}wild/wild_attack_2_300.webp`, {
         frameWidth: 300,
         frameHeight: 225,
     });
@@ -89,7 +89,7 @@ export function loadImagesEffects(scene: Scene) {
     //
     // SAMURAI
     //
-    scene.load.spritesheet(IMAGE_EFFECT_SAMURAI_ATTACK_2, `${path}samurai/samurai_attack_2_cut_300.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_SAMURAI_ATTACK_2, `${path}samurai/samurai_attack_2_cut_300.webp`, {
         frameWidth: 300,
         frameHeight: 300,
     });

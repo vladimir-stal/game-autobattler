@@ -89,7 +89,7 @@ export const substituteSummonDescription = (skillset: IHeroSkillSet): string => 
     const { desc, skills } = skillset;
     if (desc.includes("[stats]")) {
         const { summon } = skills.find((sk) => sk.type === EHeroSkillType.SUMMON) || {};
-        const atk = summon?.basicAttack || "?";
+        const atk = summon?.basicAttack || "0";
         const hp = summon?.basicMaxHp || "?";
         return desc.replace("[stats]", "[" + atk + "," + hp + "]");
     }

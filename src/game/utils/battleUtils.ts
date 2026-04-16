@@ -905,7 +905,7 @@ export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleA
     //if (buff.valueFrom === "customNumber")
     const { attribute, duration, timeType, type } = buff;
     //    console.log("-= Debug buff from calculated number =-",target,caster);
-    const existingBuff = target.buffs.find((bf) => bf.type === type && bf.attribute === attribute && bf.timeType === timeType);
+    const existingBuff = target?.buffs?.find((bf) => bf.type === type && bf.attribute === attribute && bf.timeType === timeType);
     if (existingBuff) {
         if (existingBuff.totalValue === undefined) {
             console.log("ERROR applyDebuff existingDebuff.totalValue is undefined");
