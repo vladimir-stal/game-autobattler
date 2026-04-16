@@ -726,6 +726,7 @@ export interface IMobsVariants {
     description: string;
     units: TUnits;
     rewards: IMobReward[];
+    level: number;
 }
 
 export interface ICard {

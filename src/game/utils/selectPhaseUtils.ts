@@ -262,11 +262,16 @@ export const getRooms = (
 
     let choiseRooms = choiseTypeRooms;
     switch (day) {
-        case 5:
+        case 5: {
+            // on day 5 player can upgrade one item or skill to the next level
+            if (hour === 0) {
+                choiseRooms = [ERoomType.UPGRADE_SKILL_OR_ITEM];
+            }
+        }
+        case 6:
             {
-                // on day 5 player can upgrade one item or skill to the next level
                 if (hour === 0) {
-                    choiseRooms = [ERoomType.UPGRADE_SKILL_OR_ITEM];
+                    choiseRooms = [ERoomType.SKILLS_SELL_ENHANCED];
                 }
             }
             break;
@@ -802,7 +807,7 @@ export const getCards = (
                 console.log("ERoomType.MOBS", randomMobs);
 
                 cards = randomMobs.map((mobs, idx) => {
-                    const { name, units, rewards, description } = mobs;
+                    const { name, units, rewards, description, level } = mobs;
                     const reward = getRandomArrayItem(rewards);
 
                     const lines = description.split(" ");
@@ -822,14 +827,14 @@ export const getCards = (
                     });
                     return {
                         mobs: {
-                            units: createUnits(units, autolevel + idx),
+                            units: createUnits(units, autolevel > 5 ? autolevel : -1), // autolevel + idx
                             reward,
                         },
                         type: ECardType.MOBS,
                         price: 0,
                         //name: name + "\n" + wordwrap,
                         name,
-                        description: wordwrap + "\nDifficulty ~" + (autolevel + idx),
+                        description: wordwrap + "\n" + i18n.ui.LEVEL + " " + level, //wordwrap + "\nDifficulty ~" + (autolevel + idx),
                     };
                 });
             }

@@ -60,6 +60,7 @@ export const IMAGE_SKILL_SUMMON_SWORD = "IMAGE_SKILL_SUMMON_SWORD";
 export const IMAGE_SKILL_TOTEM_EMPOWER_2 = "IMAGE_SKILL_TOTEM_EMPOWER_2";
 export const IMAGE_SKILL_YELLOW_CROWN = "IMAGE_SKILL_YELLOW_CROWN";
 export const IMAGE_SKILL_SUMMON_WITH_SHIELD = "IMAGE_SKILL_SUMMON_WITH_SHIELD";
+export const IMAGE_SKILL_BURNING_MAN = "IMAGE_SKILL_BURNING_MAN";
 
 const prefix = "assets/sprites/skills/";
 
@@ -102,16 +103,16 @@ export function loadSkillImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_DRAGON_FIRE, prefix + "2/dragon_fire.png");
     scene.load.image(IMAGE_SKILL_POISON_FLOWER, prefix + "2/flower_poison.png");
     scene.load.image(IMAGE_SKILL_KNIGHT, prefix + "2/knight.png");
-    scene.load.image(IMAGE_SKILL_KNIGHT_MAGIC, prefix + "2/knight_magic.png"); // free
+    scene.load.image(IMAGE_SKILL_KNIGHT_MAGIC, prefix + "2/knight_magic.png");
     scene.load.image(IMAGE_SKILL_KNIGHT_SHIELD, prefix + "2/knight_shield.png");
     scene.load.image(IMAGE_SKILL_MAGIC_FIGHT, prefix + "2/magic_fight.png");
     scene.load.image(IMAGE_SKILL_MAGIC_HAND, prefix + "2/magic_hand.png");
-    scene.load.image(IMAGE_SKILL_DARK_MISSILES_RAIN, prefix + "2/missiles_rain.png"); // free
-    scene.load.image(IMAGE_SKILL_NATURE_SHIELD, prefix + "2/nature_shield.png"); // free
+    scene.load.image(IMAGE_SKILL_DARK_MISSILES_RAIN, prefix + "2/missiles_rain.png");
+    scene.load.image(IMAGE_SKILL_NATURE_SHIELD, prefix + "2/nature_shield.png");
     scene.load.image(IMAGE_SKILL_RAGE, prefix + "2/rage.png");
     scene.load.image(IMAGE_SKILL_SHOCK_HAND, prefix + "2/shock_hand.png");
     scene.load.image(IMAGE_SKILL_SKULL_KNIFE, prefix + "2/skull_knife.png");
-    scene.load.image(IMAGE_SKILL_SKULLS, prefix + "2/skulls.png"); // free
+    scene.load.image(IMAGE_SKILL_SKULLS, prefix + "2/skulls.png");
     scene.load.image(IMAGE_SKILL_VINES_ARMOR, prefix + "2/vines_armor.png");
     scene.load.image(IMAGE_SKILL_WARLOCK_SPELL, prefix + "2/warlock_spell.png"); // free
     scene.load.image(IMAGE_SKILL_YELLOW_EXPLOSION, prefix + "2/yellow_explosion.png");
@@ -126,4 +127,5 @@ export function loadSkillImages(scene: Scene) {
     //
     scene.load.image(IMAGE_SKILL_YELLOW_CROWN, prefix + "2/shield_summon.png");
     scene.load.image(IMAGE_SKILL_SUMMON_WITH_SHIELD, prefix + "2/yellow_crown.png");
+    scene.load.image(IMAGE_SKILL_BURNING_MAN, prefix + "2/burning_man.png");
 }

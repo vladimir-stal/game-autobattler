@@ -75,7 +75,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     evasionText: GameObjects.Text;
     evasionDescrText: GameObjects.Text;
     //
-    activeSkillText: GameObjects.Text;
+    activeSkillText: BBCodeText;
     passiveSkillText: GameObjects.Text;
     baTypeText: GameObjects.Text;
 
@@ -252,7 +252,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         // unit skills
 
-        this.activeSkillText = this.scene.add.text(10, 200, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.activeSkillText = this.scene.add.rexBBCodeText(10, 200, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        //this.activeSkillText = this.scene.add.text(10, 200, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.activeSkillText);
         this.passiveSkillText = this.scene.add.text(10, 270, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.passiveSkillText);

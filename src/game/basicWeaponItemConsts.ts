@@ -28,7 +28,7 @@ export const axe1_3: IItem = {
     weaponType: EWeaponItemType.AXE,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" },
-        { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicCritChance" },
+        { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicCritChance" },
     ],
 };
 
@@ -44,7 +44,7 @@ export const axe1_2: IItem = {
     weaponType: EWeaponItemType.AXE,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" },
-        { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicCritChance" },
+        { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicCritChance" },
     ],
     nextLevel: axe1_3,
 };

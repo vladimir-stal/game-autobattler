@@ -255,6 +255,12 @@ export const SKILLS_EN = {
             desc2: "Debuff next basic attack [1]+[MP*70%] all enemies",
             desc3: "Debuff next basic attack [1]+[MP] all enemies",
         },
+        healLowHpSkill: {
+            name: "Heal Low Hp",
+            desc1: "Heal [5]+[MP*50%] lowest hp ally",
+            desc2: "Heal [5]+[MP*75%] lowest hp ally",
+            desc3: "Heal [4]+[MP] lowest hp ally",
+        },
         incrSummonArmor: {
             name: "Increase summon armor",
             desc1: "Increase current summon armor [8]+[MP*50%]",

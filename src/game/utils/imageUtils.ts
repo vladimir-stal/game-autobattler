@@ -167,7 +167,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 buffAnimation: AnimationType.MASTER_BUFF,
                 //
                 attackEnemyAnimation: EEffectAnimationType.EFFECT_MASTER_ATTACK_2,
-                attackEnemyAnimDelay: 500,
+                attackEnemyAnimDelay: 400,
                 attackEnemyAnimDistance: { x: 100, y: -50 },
                 attackEnemyAnimDistanceInverted: { x: 230, y: -50 },
             };
@@ -384,7 +384,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             return { image: IMAGE_BISHOP };
         case EHeroClass.MAGIC_BARD:
             return {
-                distanceEnemy: -50,
+                distanceEnemy: -70,
                 image: IMAGE_JESTER,
                 animation: AnimationType.JESTER_IDLE,
                 idleBattleAnimation: AnimationType.JESTER_BATTLE_IDLE,

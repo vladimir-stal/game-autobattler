@@ -64,7 +64,7 @@ export const emptyUnit: IUnit = {
     level: 1,
     exp: 0,
     mobItems: [],
-}
+};
 
 export const addExp = (units: (IUnit | null)[], expAdd: number) => {
     units.forEach((unit) => {
@@ -403,10 +403,11 @@ export const addMobItem = (unit: IUnit) => {
 
 export const copyUnit = (unit: IUnit, copyItems: boolean = false): IUnit => {
     const copy: IUnit = { ...unit };
-    if (copyItems)
-        copy.items = { ...unit.items};
-    else
+    if (copyItems) {
+        copy.items = { ...unit.items };
+    } else {
         copy.items = [];
+    }
     copy.addedAttributes = [];
     copy.afterDuelBonuses = [];
     return copy;

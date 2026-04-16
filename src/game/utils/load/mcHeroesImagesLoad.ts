@@ -218,7 +218,8 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // PREDATOR /////////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_PREDATOR_IDLE, "assets/sprites/units/mc/predator/predator_idle_cut_320.webp", {
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_PREDATOR_IDLE, "assets/sprites/units/mc/predator/predator_idle_cut_320.png", {
         frameWidth: 320,
         frameHeight: 320,
     });
@@ -264,7 +265,8 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // WARLOCK_IDLE ///////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_WARLOCK_IDLE, "assets/sprites/units/mc/warlock/warlock_idle_cut_300.webp", {
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_WARLOCK_IDLE, "assets/sprites/units/mc/warlock/warlock_idle_cut_300.png", {
         frameWidth: 300,
         frameHeight: 300,
     });

@@ -12,6 +12,7 @@ const borderMaxWidth = 800;
 const borderMiddleWidth = 600;
 
 const HIDE_HERO_CLASSES_ROOMS = [ERoomType.TRIPLE_SET];
+const yellowColorRooms = [ERoomType.HEROES_SELL, ERoomType.UPGRADE_SKILL_OR_ITEM, ERoomType.ENCHANCE_SKILL_CHAINED, ERoomType.SKILLS_SELL_ENHANCED];
 
 /** UI panel to select next room */
 export class RoomSelectPanel extends Phaser.GameObjects.Container {
@@ -95,7 +96,7 @@ export class RoomSelectPanel extends Phaser.GameObjects.Container {
         //
         //
         const title = getSelectRoomDisplayName(type) || "";
-        const color = [ERoomType.HEROES_SELL, ERoomType.UPGRADE_SKILL_OR_ITEM, ERoomType.ENCHANCE_SKILL_CHAINED].includes(type) ? "#f0dd8cff" : "#ffffff";
+        const color = yellowColorRooms.includes(type) ? "#f0dd8cff" : "#ffffff";
         const roomText = this.scene.add
             .text(roomX, 20, title, {
                 //50 + index * 250

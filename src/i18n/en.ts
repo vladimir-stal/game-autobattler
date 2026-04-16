@@ -182,6 +182,7 @@ export interface Ii18n {
         PREPARE: string;
         NEXT: string;
         SELECT_UPGRADE: string;
+        LEVEL: string;
         //
         SKILL: string;
         ITEM: string;
@@ -546,6 +547,7 @@ export const i18n: Ii18n = {
         PREPARE: "PREPARE",
         NEXT: "NEXT",
         SELECT_UPGRADE: "SELECT UPGRADE",
+        LEVEL: "Level",
         //
         [EHeroAttackType.MAGIC]: "magic",
         [EHeroAttackType.PHYSICAL]: "phys",

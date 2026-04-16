@@ -6,13 +6,17 @@ export const getMobs = (day: number) => {
         case 0:
             return [getRandomArrayItem(mobsLvl1), getRandomArrayItem(mobsLvl2), getRandomArrayItem(mobsLvl2)];
         case 1:
-            return [getRandomArrayItem(mobsLvl1), getRandomArrayItem(mobsLvl2), getRandomArrayItem(mobsLvl3)];
+            return [getRandomArrayItem(mobsLvl1), getRandomArrayItem(mobsLvl1), getRandomArrayItem(mobsLvl2)];
         case 2:
-            return [getRandomArrayItem(mobsLvl2), getRandomArrayItem(mobsLvl3), getRandomArrayItem(mobsLvl4)];
+            return [getRandomArrayItem(mobsLvl1), getRandomArrayItem(mobsLvl2), getRandomArrayItem(mobsLvl3)];
         case 3:
-            return [getRandomArrayItem(mobsLvl3), getRandomArrayItem(mobsLvl4), getRandomArrayItem(mobsLvl5)];
+            return [getRandomArrayItem(mobsLvl2), getRandomArrayItem(mobsLvl3), getRandomArrayItem(mobsLvl4)];
         case 4:
+            return [getRandomArrayItem(mobsLvl3), getRandomArrayItem(mobsLvl4), getRandomArrayItem(mobsLvl5)];
+        case 5:
             return [getRandomArrayItem(mobsLvl4), getRandomArrayItem(mobsLvl5), getRandomArrayItem(mobsLvl6)];
+        case 6:
+            return [getRandomArrayItem(mobsLvl5), getRandomArrayItem(mobsLvl6), getRandomArrayItem(mobsLvl6)];
         default:
             return [getRandomArrayItem(mobsLvl6), getRandomArrayItem(mobsLvl6), getRandomArrayItem(mobsLvl6)];
     }

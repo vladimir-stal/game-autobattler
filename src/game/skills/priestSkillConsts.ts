@@ -148,8 +148,10 @@ export const healFirst: IHeroSkillSet = {
 
 export const healLowHpSkill_3: IHeroSkillSet = {
     id: "healLowHp",
-    name: "Heal Low Hp(3)",
-    desc: "Heal [4]+[MP] lowest hp ally",
+    //name: "Heal Low Hp(3)",
+    //desc: "Heal [4]+[MP] lowest hp ally",
+    name: i18n.skills.level2.healLowHpSkill.name,
+    desc: i18n.skills.level2.healLowHpSkill.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST],
@@ -167,8 +169,10 @@ export const healLowHpSkill_3: IHeroSkillSet = {
 
 export const healLowHpSkill_2: IHeroSkillSet = {
     id: "healLowHp",
-    name: "Heal Low Hp(2)",
-    desc: "Heal [4]+[MP*75%] lowest hp ally",
+    //name: "Heal Low Hp(2)",
+    //desc: "Heal [4]+[MP*75%] lowest hp ally",
+    name: i18n.skills.level2.healLowHpSkill.name,
+    desc: i18n.skills.level2.healLowHpSkill.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST],
@@ -187,8 +191,10 @@ export const healLowHpSkill_2: IHeroSkillSet = {
 
 export const healLowHpSkill: IHeroSkillSet = {
     id: "healLowHp",
-    name: "Heal Low Hp",
-    desc: "Heal [5]+[MP*50%] lowest hp ally",
+    //name: "Heal Low Hp",
+    //desc: "Heal [5]+[MP*50%] lowest hp ally",
+    name: i18n.skills.level2.healLowHpSkill.name,
+    desc: i18n.skills.level2.healLowHpSkill.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST],

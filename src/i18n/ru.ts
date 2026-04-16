@@ -216,15 +216,15 @@ export const i18n: Ii18n = {
         weaponSlotSheath: "Ножны для оружия",
         weaponSlotSheath_description: "Добавляет еще один\nслот для оружия",
         // mob items
-        spiritSpear: "Копье паров спирта :)",
-        spiritArmor: "Броня паров спирта :)",
+        spiritSpear: "Призрачное копье",
+        spiritArmor: "Призрачные доспехи",
         regen_mantle: "Мантия регенерации",
         goblinBoneDagger: "Костяной кинжал",
         goblin_gold_coin: "Золотая монета",
         goblin_silver_coin: "Серебряная монета",
         peasantPitchfork: "Крестьянские вилы",
         coin: "Монета",
-        coin_description: "Собери чтобы увеличить ее\nценность, или продай за ",
+        coin_description: "Собери еще чтобы увеличить\nценность, или продай за ",
     },
     totems: {
         basicWildTotem: "Дикий тотем",
@@ -360,6 +360,7 @@ export const i18n: Ii18n = {
         PREPARE: "ПОДГОТОВКА",
         NEXT: "ДАЛЬШЕ",
         SELECT_UPGRADE: "ВЫБЕРИТЕ УЛУЧШЕНИЕ",
+        LEVEL: "уровень",
         //
         [EHeroAttackType.MAGIC]: "маг",
         [EHeroAttackType.PHYSICAL]: "физ",

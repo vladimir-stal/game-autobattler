@@ -3,6 +3,7 @@ import { i18n } from "../consts";
 import {
     IMAGE_SKILL_KNIGHT_SHIELD,
     IMAGE_SKILL_MAGIC_FIGHT,
+    IMAGE_SKILL_NATURE_SHIELD,
     IMAGE_SKILL_POISON_FLOWER,
     IMAGE_SKILL_RAGE,
     IMAGE_SKILL_TEST,
@@ -258,7 +259,7 @@ export const increaseMaxHpSkill_2: IHeroSkillSet = {
         },
     ],
     //nextLevel: increaseMaxHpSkill_2,
-    image: IMAGE_SKILL_POISON_FLOWER,
+    image: IMAGE_SKILL_NATURE_SHIELD,
 };
 
 export const increaseMaxHpSkill: IHeroSkillSet = {
@@ -292,7 +293,7 @@ export const increaseMaxHpSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: increaseMaxHpSkill_2,
-    image: IMAGE_SKILL_POISON_FLOWER,
+    image: IMAGE_SKILL_NATURE_SHIELD,
 };
 
 //
