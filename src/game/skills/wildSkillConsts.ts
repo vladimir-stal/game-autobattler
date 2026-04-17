@@ -26,9 +26,9 @@ export const attrIncrHpReg_3: IHeroSkillSet = {
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
             isBasicAttack: true,
-            value: 3,
+            value: 4,
             valueType: "number",
-            attribute: "armor",
+            attribute: "hpRegen",
             targetType: ETargetType.SELF,
         },
     ],

@@ -19,8 +19,6 @@ import {
     IMAGE_SKILL_MAGIC_HAND,
     IMAGE_SKILL_PHYS_ATTACK,
     IMAGE_SKILL_YELLOW_FLAME,
-    IMAGE_SKILL_CLEAVE,
-    IMAGE_SKILL_POISON,
     IMAGE_SKILL_CHAIN,
     IMAGE_SKILL_CLEAR,
     IMAGE_SKILL_YELLOW_CROWN,
@@ -28,6 +26,7 @@ import {
     IMAGE_SKILL_POISON_FLOWER,
     IMAGE_SKILL_SKULLS,
     IMAGE_SKILL_BURNING_MAN,
+    IMAGE_SKILL_MACE_ATTACK,
 } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 import { outHealBuffSkill } from "./bardSkillConsts";
@@ -332,7 +331,7 @@ export const nextBAArea_3: IHeroSkillSet = {
             },
         },
     ],
-    image: IMAGE_SKILL_CLEAVE,
+    image: IMAGE_SKILL_MACE_ATTACK,
 };
 
 export const nextBAArea_2: IHeroSkillSet = {
@@ -370,7 +369,7 @@ export const nextBAArea_2: IHeroSkillSet = {
         },
     ],
     nextLevel: nextBAArea_3,
-    image: IMAGE_SKILL_CLEAVE,
+    image: IMAGE_SKILL_MACE_ATTACK,
 };
 
 export const nextBAArea: IHeroSkillSet = {
@@ -408,7 +407,7 @@ export const nextBAArea: IHeroSkillSet = {
         },
     ],
     nextLevel: nextBAArea_2,
-    image: IMAGE_SKILL_CLEAVE,
+    image: IMAGE_SKILL_MACE_ATTACK,
 };
 
 // REMOVE DEBUFF

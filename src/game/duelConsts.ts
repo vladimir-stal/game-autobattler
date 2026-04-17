@@ -361,102 +361,79 @@ export const enemy3: TDuelEnemy = {
 
 //////////////////////// ENEMY 4 //////////////////
 
-// 0
-
-const unit41 = createHero(summonHero);
-addItem(unit41, scepter1);
-unit41.skills.push(fireflySummonSkill);
-
-// 1
-
-const unit41_1 = { ...unit41 };
-unit41_1.items = [scepter1_2];
-unit41_1.skills = [...unit41.skills];
-
-// 2
-
-const unit41_2 = { ...unit41_1 };
-unit41_2.items = [...unit41_1.items];
-unit41_2.skills = [...unit41_1.skills];
-levelUpUnit(unit41_2);
-
-const unit42_2 = createHero(darkHero);
-unit42_2.items = [totem22];
-unit42_2.skills.push(poisonRandom_2);
-
-// 3
-
-const unit41_3 = { ...unit41_2 };
-unit41_3.items = [...unit41_2.items, basic_pants];
-unit41_3.skills = [...unit41_2.skills];
-levelUpUnit(unit41_3);
-
-const unit42_3 = { ...unit42_2 };
-unit42_3.items = [...unit42_2.items];
-unit42_3.skills = [...unit42_2.skills];
-levelUpUnit(unit42_3);
-
-// 4
-
-const unit41_4 = createHero(witchHero);
-unit41_4.items = [...unit41_3.items, musical21, basic_hat];
-unit41_4.skills = unit41_4.skills.concat([...unit41_3.skills]);
-
-const unit42_4 = { ...unit42_3 };
-unit42_4.items = [...unit42_3.items];
-unit42_4.skills = [...unit42_3.skills];
-levelUpUnit(unit42_4);
-
-const unit43_4 = createHero(darkHero);
-addItem(unit43_4, wand21);
-unit43_4.skills.push(poisonRandom);
-
-// 5
-
-const unit41_5 = { ...unit41_4 };
-unit41_5.items = [musical21_2, scepter1_2, basic_hat, basic_pants];
-unit41_5.skills = [...unit41_4.skills];
-
-const unit42_5 = createHero(predatorHero);
-unit42_5.items = [...unit42_4.items, axe22, basic_hat];
-unit42_5.skills = unit42_5.skills.concat([...unit42_4.skills]);
-
-const unit43_5 = { ...unit43_4 };
-unit43_5.items = [...unit43_4.items];
-unit43_5.skills = [...unit43_4.skills];
-
-// 6
-
-const unit41_6 = { ...unit41_5 };
-unit41_6.items = [...unit41_5.items];
-unit41_6.skills = [...unit41_5.skills];
-levelUpUnit(unit41_6);
-
-const unit42_6 = { ...unit42_5 };
-unit42_6.items = [...unit42_5.items, basic_hat];
-unit42_6.skills = [...unit42_5.skills];
-levelUpUnit(unit42_6);
-
-const unit43_6 = createHero(predatorHero);
-unit43_6.items = [wand21_2, wand1_2];
-unit43_6.skills = unit43_6.skills.concat([...unit43_5.skills]);
-
-//
-
-/** Enemy 4 - Duel units for each day */
-export const enemy4: TDuelEnemy = {
-    0: [applyItems(unit41)],
-    1: [applyItems(unit41_1)],
-    2: [applyItems(unit41_2), applyItems(unit42_2)],
-    3: [applyItems(unit41_3), applyItems(unit42_3)],
-    4: [applyItems(unit41_4), applyItems(unit42_4), applyItems(unit43_4)],
-    5: [applyItems(unit41_5), applyItems(unit42_5), applyItems(unit43_5)],
-    6: [applyItems(unit41_6), applyItems(unit42_6), applyItems(unit43_6)],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-};
+export const enemy4_test: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
+    // day 2
+    { 1: [
+        { unit: summonHero },
+        { item: scepter1_2 },
+        { skill: fireflySummonSkill },
+        {levelup:1}],
+      2: [
+        { unit: darkHero },
+        { item: totem22 },
+        { skill: poisonRandom_2 }],
+    },
+    // day 3
+    { 1: [
+        { unit: summonHero },
+        { item: scepter1_2 }, { item: basic_pants },
+        { skill: fireflySummonSkill },
+        {levelup:2}],
+      2: [
+        { unit: darkHero },
+        { item: totem22 },
+        { skill: poisonRandom_2 },
+        {levelup:1}],
+    },
+    // day 4
+    { 1: [
+        { unit: witchHero },
+        { item: scepter1_2 }, { item: basic_pants }, { item: musical21 }, { item: basic_hat },
+        { skill: fireflySummonSkill }],
+      2: [
+        { unit: darkHero },
+        { item: totem22 },
+        { skill: poisonRandom_2 },
+        {levelup:2}],
+      3: [
+        { unit: darkHero },
+        { item: wand21 },
+        { skill: poisonRandom }],
+    },
+    // day 5
+    { 1: [
+        { unit: witchHero },
+        { item: scepter1_2 }, { item: basic_pants }, { item: musical21_2 }, { item: basic_hat },
+        { skill: fireflySummonSkill }],
+      2: [
+        { unit: predatorHero },
+        { item: totem22 }, { item: axe22 }, { item: basic_hat },
+        { skill: poisonRandom_2 }],
+      3: [
+        { unit: darkHero },
+        { item: wand21 },
+        { skill: poisonRandom },
+        {levelup:1}],
+    },
+    // day 6
+    { 1: [
+        { unit: witchHero },
+        { item: scepter1_2 }, { item: basic_pants }, { item: musical21_2 }, { item: basic_hat },
+        { skill: fireflySummonSkill },
+        {levelup:1}],
+      2: [
+        { unit: predatorHero },
+        { item: totem22 }, { item: axe22 }, { item: basic_hat }, { item: basic_hat },
+        { skill: poisonRandom_2 },
+        {levelup:1}],
+      3: [
+        { unit: predatorHero },
+        { item: wand21_2 }, { item: wand1_2 },
+        { skill: poisonRandom }],
+    },
+]);
 
 //////////////////////// ENEMY 5 //////////////////
 
@@ -816,7 +793,7 @@ export const enemy7: TDuelEnemy = {
 
 //
 
-export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy2];
+export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy2];
 
 ////////////////////////////////////
 

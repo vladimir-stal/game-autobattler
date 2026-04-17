@@ -2,15 +2,15 @@ import { ECardType, ICard, TDuelEnemy } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { dagger1, wand1 } from "../basicWeaponItemConsts";
-import { enemy1_test, enemy5 } from "../duelConsts";
+import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 
 export const debugHeroSelectRoom = false; // true // false
 export const debugStartingItemsRoom = false;
-export const debugAlwaysOneEnemy = false;
+export const debugAlwaysOneEnemy = true;
 
-export const debugEnemy: TDuelEnemy = enemy5;
+export const debugEnemy: TDuelEnemy = enemy4_test;
 
 /*
     let isSingleSelect = false;

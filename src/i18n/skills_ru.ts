@@ -184,9 +184,9 @@ export const SKILLS_RU = {
         //
         heatUpSkill: {
             name: "Разогрев",
-            desc1: `Накладывает [color=${colors.BURN}][1] ожог[/color]\n, увеличивает МС на значение\n [color=${colors.BURN}]ожога[/color] у врага\n на 2 хода`,
-            desc2: `Накладывает [color=${colors.BURN}][2] ожог[/color]\n, увеличивает МС на значение\n [color=${colors.BURN}]ожога[/color] у врага\n на 2 хода`,
-            desc3: `Накладывает [color=${colors.BURN}][3] ожог[/color]\n, увеличивает МС на значение\n [color=${colors.BURN}]ожога[/color] у врага\n на 2 хода`,
+            desc1: `Накладывает [color=${colors.BURN}][1] ожог[/color],\n увеличивает МС на значение\n [color=${colors.BURN}]ожога[/color] у врага\n на 2 хода`,
+            desc2: `Накладывает [color=${colors.BURN}][2] ожог[/color],\n увеличивает МС на значение\n [color=${colors.BURN}]ожога[/color] у врага\n на 2 хода`,
+            desc3: `Накладывает [color=${colors.BURN}][3] ожог[/color],\n увеличивает МС на значение\n [color=${colors.BURN}]ожога[/color] у врага\n на 2 хода`,
         },
         //
         // BARD + DARK
@@ -314,9 +314,9 @@ export const SKILLS_RU = {
     level3: {
         attrArmorBigSelf: {
             name: "Латы",
-            desc1: `Увеличивает [color=${colors.ARMOR}]броню[/color] у\nна [5 + ФСx40%]`,
-            desc2: `Увеличивает [color=${colors.ARMOR}]броню[/color] у\nна [5 + ФСx70%]`,
-            desc3: `Увеличивает [color=${colors.ARMOR}]броню[/color] у\nна [5 + ФС]`,
+            desc1: `Увеличивает [color=${colors.ARMOR}]броню[/color]\nна [5 + ФСx40%]`,
+            desc2: `Увеличивает [color=${colors.ARMOR}]броню[/color]\nна [5 + ФСx70%]`,
+            desc3: `Увеличивает [color=${colors.ARMOR}]броню[/color]\nна [5 + ФС]`,
         },
         buffSelfMPorPP: {
             name: "Глубокая связь",
