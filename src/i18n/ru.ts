@@ -299,6 +299,7 @@ export const i18n: Ii18n = {
         [ERoomType.ITEM_COMMON_RANDOM]: "СЛУЧАЙНЫЙ ПРОСТОЙ ПРЕДМЕТ",
         [ERoomType.ITEM_CLASS_RANDOM]: "СЛУЧАЙНЫЙ ПРЕДМЕТ КЛАССА",
         [ERoomType.ITEM_CLASS_SELL]: "КУПИТЬ ПРЕДМЕТ КЛАССА",
+        [ERoomType.ITEM_WEAPON_SELL]: "КУПИТЬ ОРУЖИЕ",
         [ERoomType.ITEM_WEAPON_CLASS_SELL]: "КУПИТЬ ОРУЖИЕ КЛАССА",
         [ERoomType.HEROES_SELL]: "НАНЯТЬ ГЕРОЯ",
         // SKILLS

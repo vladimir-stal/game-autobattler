@@ -431,8 +431,8 @@ export const staff31_3: IItem = {
     image: IMAGE_ITEM_STAFF_31,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 4, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 8, valueType: "number" }],
 };
 
 export const staff31_2: IItem = {
@@ -444,8 +444,8 @@ export const staff31_2: IItem = {
     image: IMAGE_ITEM_STAFF_31,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 2, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 4, valueType: "number" }],
     nextLevel: staff31_3,
 };
 
@@ -458,8 +458,8 @@ export const staff31: IItem = {
     image: IMAGE_ITEM_STAFF_31,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 1, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 2, valueType: "number" }],
     nextLevel: staff31_2,
 };
 
@@ -492,7 +492,7 @@ export const musical31_2: IItem = {
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicMaxHp" }],
     afterDuelBonuses: [
         { type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 2 },
-        { type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 1, condition: EItemAfterDuelBonusCondition.WON }
+        { type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 1, condition: EItemAfterDuelBonusCondition.WON },
     ],
     nextLevel: musical31_3,
 };
