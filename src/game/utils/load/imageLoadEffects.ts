@@ -33,14 +33,12 @@ export function loadImagesEffects(scene: Scene) {
     // BASIC HEROES //////////////////////////////////////////////////////////
     //
     // BARD
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_EFFECT_BARD_ATTACK, `${path}bard/bard_attack_300_5.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_BARD_ATTACK, `${path}bard/bard_attack_300_5.webp`, {
         frameWidth: 300,
         frameHeight: 300,
     });
     // DARK
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_EFFECT_DARK_ATTACK, `${path}dark/dark_attack_2_300_10.png`, {
+    scene.load.spritesheet(IMAGE_EFFECT_DARK_ATTACK, `${path}dark/dark_attack_2_300_10.webp`, {
         frameWidth: 300,
         frameHeight: 300,
     });

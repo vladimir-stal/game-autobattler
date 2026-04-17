@@ -124,8 +124,7 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_DARK_DEFEATED, "assets/sprites/units/dark/dark_defeated_cut_400.png", {
+    scene.load.spritesheet(IMAGE_DARK_DEFEATED, "assets/sprites/units/dark/dark_defeated_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -197,8 +196,7 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 400,
     });
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_MASTER_ATTACK_2, "assets/sprites/units/master/master_attack_2_cut_400.png", {
+    scene.load.spritesheet(IMAGE_MASTER_ATTACK_2, "assets/sprites/units/master/master_attack_2_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -244,8 +242,7 @@ export function loadBasicHeroesImages(scene: Scene) {
         frameHeight: 500,
     });
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_ORDER_ATTACK_2, "assets/sprites/units/order/order_attack_2_cut_500.png", {
+    scene.load.spritesheet(IMAGE_ORDER_ATTACK_2, "assets/sprites/units/order/order_attack_2_cut_500.webp", {
         frameWidth: 500,
         frameHeight: 375,
     });
@@ -288,8 +285,7 @@ export function loadBasicHeroesImages(scene: Scene) {
     //     frameHeight: 400,
     // });
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_PRIEST_ATTACK_2, "assets/sprites/units/priest/priest_holy_sword_cut_2_400.png", {
+    scene.load.spritesheet(IMAGE_PRIEST_ATTACK_2, "assets/sprites/units/priest/priest_holy_sword_cut_2_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -383,8 +379,7 @@ export function loadBasicHeroesImages(scene: Scene) {
     //
     //
 
-    //TODO: webp
-    scene.load.spritesheet(IMAGE_WILD_IDLE, "assets/sprites/units/wild/wild_idle_cut_300.png", {
+    scene.load.spritesheet(IMAGE_WILD_IDLE, "assets/sprites/units/wild/wild_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });

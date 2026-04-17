@@ -339,6 +339,9 @@ export class GameScene extends Phaser.Scene {
 
         const relativeDay = Math.min(6, this.selectController.day);
         const enemyUnits: (IUnit | null)[] = getDuelEnemy(this.leaderController.nextOpponentId)[relativeDay];
+        enemyUnits.forEach((enemyUnit) => {
+            enemyUnit && generateUnitId(enemyUnit);
+        });
         const unitsCount = enemyUnits.length;
         for (let i = 0; i < 4 - unitsCount; i++) {
             enemyUnits.push(null);
@@ -347,7 +350,8 @@ export class GameScene extends Phaser.Scene {
             enemyUnits.forEach((u, i) => {
                 // this.selectController.day - u.level + 3 - i
                 //   level up units below specific level, and front positions level up more
-                if (u) for (let j = 0; j < Math.floor((this.selectController.day + 3 - i)/1.5) - u.level; j++) levelUpUnitRandom(u);
+                if (u)
+                    levelUpUnitRandom(u, Math.floor((this.selectController.day + 3 - i)/1.5));
             });
         this.battlePanel.show(units, enemyUnits);
         // TODO: calculate round count from day and enemies left
@@ -369,7 +373,7 @@ export class GameScene extends Phaser.Scene {
         //
         const units = this.unitPanel.slots.map((slot) => (slot.slot.card ? slot.slot.card.card.unit || basicClassHeroes[0] : null));
         mobs.forEach((mob) => {
-            if (mob) generateUnitId(mob);
+            mob && generateUnitId(mob);
         });
         this.battlePanel.show(units, mobs);
         this.battleController.start(this.battlePanel.playerUnits, this.battlePanel.enemyUnits, true, 0);

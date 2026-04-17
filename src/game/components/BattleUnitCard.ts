@@ -67,7 +67,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     title: string;
 
     unitImageObject: GameObjects.Sprite;
-    effectImageObject: GameObjects.Sprite;
+    effectImageObject: GameObjects.Sprite; // for attack and skill effect animations
     unitImage: string;
     unitAnimation: string | undefined;
     unitAttackAnimation: string | undefined;
@@ -85,7 +85,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     //
 
-    uiEffectImageObject: GameObjects.Sprite;
+    //uiEffectImageObject: GameObjects.Sprite; // for attack and skill effects
 
     //
 
@@ -104,19 +104,19 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.renderEffectImage();
         }
         this.renderPanels();
-        this.renderUIEffects();
+        //this.renderUIEffects();
     }
 
-    renderUIEffects() {
-        this.uiEffectImageObject = this.gameScene.add
-            .sprite(0, 0, IMAGE_EFFECT_UI_BUFF_0)
-            .setOrigin(0.5, 0.5)
-            //.setDisplaySize(displaySize, displaySize)
-            //.setFlipX(this.isInverted)
-            .setDepth(200)
-            .setVisible(false);
-        this.add(this.uiEffectImageObject);
-    }
+    // renderUIEffects() {
+    //     this.uiEffectImageObject = this.gameScene.add
+    //         .sprite(0, 0, IMAGE_EFFECT_UI_BUFF_0)
+    //         .setOrigin(0.5, 0.5)
+    //         //.setDisplaySize(displaySize, displaySize)
+    //         //.setFlipX(this.isInverted)
+    //         .setDepth(200)
+    //         .setVisible(false);
+    //     this.add(this.uiEffectImageObject);
+    // }
 
     renderEffectImage() {
         //
@@ -128,20 +128,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             .setFlipX(!this.isInverted)
             .setDepth(200)
             .setVisible(false);
-
-        //this.effectImageObject.anims.play(EffectAnimationType.EFFECT_LIGHTNING_1);
-        // this.unitImageObject.on(ANIMATION_COMPLETE, () => {
-        //     if (this.unitAnimation) {
-        //         this.unitImageObject.anims.play(this.unitAnimation);
-        //     }
-        //     this.unitImageObject.removeListener(ANIMATION_COMPLETE);
-        // });
-
-        // return new Promise((resolve, reject) => {
-        //     setTimeout(() => {
-        //         resolve(0);
-        //     }, this.unitImageObject.anims.currentAnim.duration);
-        // });
 
         this.add(this.effectImageObject);
     }
@@ -804,9 +790,10 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             return;
         }
 
+        const initialX = this.effectImageObject.x;
+        const initialY = this.effectImageObject.y;
+
         setTimeout(() => {
-            const initialX = this.effectImageObject.x;
-            const initialY = this.effectImageObject.y;
             //console.log("initial X", initialX);
             if (attackEnemyAnimDistanceX !== 0) {
                 this.effectImageObject.setX(initialX + attackEnemyAnimDistanceX);
@@ -890,24 +877,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.unitImageObject.anims.play(animation);
         }
     }
-
-    /** Play animation of buff icon appearing on the buff icons bar */
-    // TODO: ?? do we need to move animation into BattleBuffCard ?
-    // playAddBuffTarget(index: number) {
-    //     //if (GAME_MODE === "FULL") {
-    //     const x = 40 * index + 10;
-    //     const y = -175;
-    //     this.uiEffectImageObject.setPosition(x, y);
-
-    //     const animation = EEffectAnimationType.EFFECT_UI_BUFF_0;
-    //     this.uiEffectImageObject.setVisible(true);
-    //     this.uiEffectImageObject.anims.play(animation);
-    //     this.uiEffectImageObject.on(ANIMATION_COMPLETE, () => {
-    //         this.uiEffectImageObject.setVisible(false);
-    //         this.uiEffectImageObject.removeListener(ANIMATION_COMPLETE);
-    //     });
-    //     //}
-    // }
 
     async summonUnit(unit: IBattleUnit, skill?: IHeroSkill): Promise<BattleSummonCard> {
         this.setAction("SUMMON " + unit.name);
