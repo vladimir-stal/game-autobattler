@@ -254,7 +254,7 @@ export const incrTotemValueSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD],
-    isMcSkill: true,
+    //isMcSkill: true,
     skills: [
         {
             type: EHeroSkillType.TOTEM_INCREASE_VALUE,
@@ -278,7 +278,7 @@ export const incrTotemValueSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD],
-    isMcSkill: true,
+    //isMcSkill: true,
     skills: [
         {
             type: EHeroSkillType.TOTEM_INCREASE_VALUE,

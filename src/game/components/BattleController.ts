@@ -18,6 +18,7 @@ import {
     EItemBattleBonusType,
     IHeroSkillSet,
     IDebuff,
+    ESkillCondition,
 } from "../../types";
 import { eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -117,6 +118,8 @@ export class BattleController {
             this.battleRecord.push(skillSetBattleAction);
 
             skillSet.skills.forEach((skill) => {
+                if (skill.condition === ESkillCondition.NOT_BEFORE_COMBAT)
+                    return;
                 this.performSkill(unit, skill, isPlayer1, true);
             });
         });
@@ -203,7 +206,8 @@ export class BattleController {
         //console.log(this.player2BattleUnits);
     }
 
-    performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean, recurseDeep: number = 0) {
+    performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean, recurseDeep: number = 0, forcedSingleCast: boolean = false) {
+        // forcedSingleCast ~ do NOT skill chain & do NOT basic attack
         if (!unit) {
             return;
         }
@@ -260,6 +264,8 @@ export class BattleController {
             unit.customNumber = 0;
 
             skillSet.skills.forEach((skill) => {
+                if (forcedSingleCast && skill.type === EHeroSkillType.FORCE_UNIT_CAST_SKILL)
+                    return; // Ban FORCE_UNIT_CAST_SKILL on FORCE_UNIT_CAST_SKILL
                 if (skill.condition) {
                     const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
                     if (isConditionFulfilled) {
@@ -269,6 +275,7 @@ export class BattleController {
                     this.performSkill(unit, skill, isPlayer1);
                 }
             });
+            if (forcedSingleCast) return; // do not skill chain or basic attack
             if (skillSet.isChained && recurseDeep < 5) {
                 this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
                 this.performAction(unit, round, isPlayer1, recurseDeep + 1);
@@ -280,6 +287,7 @@ export class BattleController {
             this.performBasicAttack(unit, undefined, isPlayer1);
         }
 
+        if (forcedSingleCast) return; // skip executeAfterAction
         if (recurseDeep === 0) {
             this.executeAfterAction(unit, isPlayer1);
 
@@ -370,6 +378,8 @@ export class BattleController {
     }
 
     performSkill(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+        if (skill.condition === ESkillCondition.ONLY_BEFORE_COMBAT && !isStartBattle)
+            return;
         switch (skill.type) {
             case EHeroSkillType.ATTACK:
                 this.performAttack(unit, skill, isPlayer1, isStartBattle);
@@ -433,6 +443,12 @@ export class BattleController {
                 break;
             case EHeroSkillType.CALCULATE_NUMBER:
                 this.performCustomCalculation(unit, skill, isPlayer1, isStartBattle);
+                break;
+            case EHeroSkillType.FORCE_UNIT_MAKE_ATTACK:
+                this.performForceOutOfTurnAction(unit,skill,isPlayer1,false,isStartBattle);
+                break;
+            case EHeroSkillType.FORCE_UNIT_CAST_SKILL:
+                this.performForceOutOfTurnAction(unit,skill,isPlayer1,true,isStartBattle);
                 break;
             case EHeroSkillType.NONE:
                 {
@@ -1146,6 +1162,27 @@ export class BattleController {
 
         targets.forEach((target) => {
             swapHp(unit, target, this.battleRecord, isStartBattle);
+        });
+    }
+
+    performForceOutOfTurnAction(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isCastSkill:boolean, isStartBattle?: boolean) {
+        const { targetType } = skill;
+        if (!targetType) {
+            console.log("performForceOutOfTurnAction > NO TARGET TYPE OR VALUE");
+            return;
+        }
+        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
+        const targets = getAllyTargets(unit, allyUnits, targetType);
+        if (!targets || targets.length === 0 || !targets[0]) {
+            console.log("performForceOutOfTurnAction > NO TARGET FOUND");
+            return;
+        }
+
+        targets.forEach((target) => {
+            if (isCastSkill)
+                this.performAction(target,0,isPlayer1,0,true)
+            else
+                this.performBasicAttack(target,undefined,isPlayer1);
         });
     }
 

@@ -2,7 +2,7 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../.
 import { basic_heal } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemConsts";
-import { fireflyNoSkill, fireflySelfPoison } from "../skills/mobSkills";
+import { mobNoSkill, fireflySelfPoison } from "../skills/mobSkills";
 
 //////////// SPIRIT WARRIOR //////////////////////////
 
@@ -141,7 +141,7 @@ export const fireflySummonMob_6: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.FIREFLY,
     id: "FIREFLYSUMMON",
-    skills: [fireflyNoSkill,fireflyNoSkill,fireflyNoSkill,fireflySelfPoison],
+    skills: [mobNoSkill,mobNoSkill,mobNoSkill,fireflySelfPoison],
     items: [],
     level: 6,
     exp: 0,

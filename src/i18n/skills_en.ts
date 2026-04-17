@@ -370,9 +370,9 @@ export const SKILLS_EN = {
         },
         barbarianSkill: {
             name: "Barbarian Shout",
-            desc1: "Add hp regen value to self next basic attack",
-            desc2: "Add hp regen value to self next basic attack",
-            desc3: "Add hp regen value to self next basic attack",
+            desc1: "100% of hp regen increase\nbasic attack for 2 turns",
+            desc2: "125% of hp regen increase\nbasic attack for 3 turns",
+            desc3: "150% of hp regen increase\nbasic attack for 4 turns",
         },
         battleMageSkill: {
             name: "Multi attack",

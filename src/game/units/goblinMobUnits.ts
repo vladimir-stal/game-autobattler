@@ -1,7 +1,7 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType, EDebuffType } from "../../types";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinGoldCoin, itemGoblinSilverCoin } from "../mobItemConsts";
-import { fireflyNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff } from "../skills/mobSkills";
+import { mobNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff, mobCheerSkill, mobAmbushSkill } from "../skills/mobSkills";
 
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
@@ -137,10 +137,59 @@ export const goldGoblinBattleUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOLDGOBLIN1, //name: "Goblin trader"
     id: "GOLDGOBLIN1",
-    skills: [fireflyNoSkill, goldGoblinBuff, fireflyNoSkill, goldGoblinBuff],
+    skills: [mobNoSkill, goldGoblinBuff, mobNoSkill, goldGoblinBuff],
     items: [],
     level: 3,
     exp: 0,
     afterDuelBonuses: [],
     mobItems: [],
 };
+
+export const cheeringGoblinUnit_skills: IUnit = {
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.MOB,
+    mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
+    attackType: EHeroAttackType.PHYSICAL,
+    attackTargetType: ETargetType.FIRST_ENEMY,
+    basicAttack: 2,
+    basicAttackTimes: 1,
+    basicMaxHp: 5,
+    basicHpRegen: 0,
+    basicArmor: 0,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: i18n.units.WEAKGOBLIN, // Cheer goblin
+    id: "WEAKGOBLIN",
+    skills: [mobCheerSkill,mobNoSkill,mobCheerSkill],
+    items: [],
+    level: 1,
+    exp: 0,
+    mobItems: [{ item: itemCoin, probability: 40 }],
+};
+
+export const cheeringGoblinUnit_attacks: IUnit = {
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.MOB,
+    mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
+    attackType: EHeroAttackType.PHYSICAL,
+    attackTargetType: ETargetType.FIRST_ENEMY,
+    basicAttack: 2,
+    basicAttackTimes: 1,
+    basicMaxHp: 5,
+    basicHpRegen: 0,
+    basicArmor: 0,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: i18n.units.WEAKGOBLIN, // Cheer goblin
+    id: "WEAKGOBLIN",
+    skills: [mobAmbushSkill,mobAmbushSkill,mobAmbushSkill,mobAmbushSkill],
+    items: [],
+    level: 1,
+    exp: 0,
+    mobItems: [{ item: itemCoin, probability: 40 }],
+};
+

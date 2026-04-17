@@ -1,4 +1,5 @@
-import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, THeroSkills, EHeroSkillType, AnimationType } from "../types";
+import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, THeroSkills, EHeroSkillType, AnimationType, IBossFight } from "../types";
+import { cheeringGoblinUnit_attacks, cheeringGoblinUnit_skills, goldGoblinBattleUnit } from "./units/goblinMobUnits";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -99,4 +100,7 @@ export const bossMinotaur: IUnit = {
     exp: 0,
 };
 
-export const bosses = [bossMinotaur];
+export const bosses: IBossFight[] = [
+    {name: bossMinotaur.name, units: [bossMinotaur,cheeringGoblinUnit_skills,cheeringGoblinUnit_attacks,goldGoblinBattleUnit]},
+    {name: bossMinotaur.name, units: [bossMinotaur,cheeringGoblinUnit_attacks,cheeringGoblinUnit_skills,goldGoblinBattleUnit]},
+];

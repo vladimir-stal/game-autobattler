@@ -7,6 +7,7 @@ import {
     ESelectCardHint,
     EUnitType,
     EWeaponItemType,
+    IBossFight,
     ICard,
     IHeroSkillSet,
     IItem,
@@ -25,6 +26,7 @@ import { basicWeapons, itemsLvl5 } from "../itemConsts";
 import { GameScene } from "../scenes/GameScene";
 
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
+import { cheeringGoblinUnit_attacks, cheeringGoblinUnit_skills } from "../units/goblinMobUnits";
 
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { customHeroSelectRoom, customStartingItemsRoom, debugHeroSelectRoom, debugStartingItemsRoom } from "./debugUtils";
@@ -126,7 +128,7 @@ const wordWrapSymbolLimitForCardText = 20;
 
 export interface IRoomOptions {
     heroClasses?: EHeroClass[];
-    boss?: { name: string; units: IUnit[] };
+    boss?: IBossFight;
     autolevel?: number;
 }
 
@@ -199,7 +201,7 @@ export const getRooms = (
             {
                 if (hour === 5) {
                     const boss = getRandomArrayItem(bosses);
-                    return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: { name: boss.name, units: [boss] } } }, null];
+                    return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: boss }}, null];
                 }
             }
             break;
@@ -860,11 +862,11 @@ export const getCards = (
         case ERoomType.BOSS:
             {
                 const randomBoss = getRandomArrayItem(bosses);
-                const { name } = randomBoss;
+                const { name, units } = randomBoss;
                 cards = [
                     null,
                     {
-                        mobs: { units: createUnits([randomBoss]), reward: { exp: 0, type: IMobRewardType.GOLD, value: 1 } },
+                        mobs: { units: createUnits(units), reward: { exp: 0, type: IMobRewardType.GOLD, value: 1 } },
                         type: ECardType.MOBS,
                         price: 0,
                         name,

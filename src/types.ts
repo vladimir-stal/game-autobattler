@@ -566,6 +566,8 @@ export enum EHeroSkillType {
     TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE",
     REPEATING_SKILL = "REPEATING_SKILL",
     CALCULATE_NUMBER = "CALCULATE_NUMBER", // modify IBattleUnit.customNumber
+    FORCE_UNIT_CAST_SKILL = "FORCE_UNIT_CAST_SKILL", // make other unit to cast skill out of its turn
+    FORCE_UNIT_MAKE_ATTACK = "FORCE_UNIT_MAKE_ATTACK", // make other unit attack
 }
 
 export enum EStatusType {
@@ -689,6 +691,8 @@ export enum ESkillCondition {
     CUSTOM_NUMBER_NOT_ZERO = "CUSTOM_NUMBER_NOT_ZERO",
     IN_BACK_ROW = "IN_BACK_ROW",
     IN_FRONT_ROW = "IN_FRONT_ROW",
+    ONLY_BEFORE_COMBAT = "ONLY_BEFORE_COMBAT",
+    NOT_BEFORE_COMBAT = "NOT_BEFORE_COMBAT",
 }
 
 /**
@@ -708,6 +712,11 @@ export type TValueType = "number" | "percent" | "evolvedNumber" | "evolvedPercen
 export type TUnits = (IUnit | null)[];
 
 export type TBattleUnits = (IBattleUnit | null)[];
+
+export interface IBossFight {
+    name: string,
+    units: IUnit[],
+}
 
 export interface IMobReward {
     type: IMobRewardType;
