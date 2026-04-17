@@ -163,7 +163,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
 
     async playBattle(record: TBattleRecord) {
         this.isStartBattle = true;
-        console.log("visualizeBattle", record);
+        console.log(">>>>>>>>>> visualizeBattle", record);
         this.record = record;
         this.currentActionIndex = 0;
 

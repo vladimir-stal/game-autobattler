@@ -198,9 +198,6 @@ export class BattleController {
             //console.log("Unit",unit," index",index," front",frontRow);
             return prepareUnitToBattle(unit, !frontRow);
         });
-
-        //console.log(">>>>>>>>>>>>>>> prepareToBattle");
-        //console.log(this.player2BattleUnits);
     }
 
     performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean, recurseDeep: number = 0) {
@@ -656,7 +653,7 @@ export class BattleController {
                 const additionalTargets = allyUnits.filter((u) => !!u && u.id !== targets[0].id);
                 const rndTarget = additionalTargets.at(getRandomIntFromInterval(0, additionalTargets.length - 1));
                 //console.log("ADDITIONAL_BUFF_TARGET item bonus",additionalTargets,allyUnits,rndTarget);
-                additionalTargets && targets.push(rndTarget);
+                additionalTargets && rndTarget && targets.push(rndTarget);
             }
         }
         targets.forEach((target) => {
@@ -936,7 +933,7 @@ export class BattleController {
                         finalHeal = finalHeal - calculateDebuffValue(unit, finalHeal, debuff);
                     }
                 });
-            //console.log("FINAL HEAL after buffs/debuffs", finalHeal);
+                //console.log("FINAL HEAL after buffs/debuffs", finalHeal);
 
                 // check if target has antiheal debuffs (like ANTIHEAL)
                 const antihealDebuffIndex = target.debuffs.findIndex((debuff) => debuff.type === EDebuffType.ANTIHEAL);
@@ -967,7 +964,7 @@ export class BattleController {
                         finalHeal -= reduction;
                     }
                 });
-            //
+                //
                 target.hp += finalHeal;
                 if (target.hp > target.maxHp) {
                     overhealTotal += target.hp - target.maxHp;
@@ -980,10 +977,18 @@ export class BattleController {
         // overheal managing
         console.log("Total overheal", overhealTotal);
         if (overhealTotal > 0) {
-        const overhealBuffs = unit.buffs.filter((buff) => buff.type === EBuffType.OVERHEAL_TO_DAMAGE);
+            const overhealBuffs = unit.buffs.filter((buff) => buff.type === EBuffType.OVERHEAL_TO_DAMAGE);
             if (overhealBuffs.length > 0) {
                 overhealBuffs.forEach((buff) => {
-                    const attackRecord2 = { unitId: unit.id, type: EBattleActionType.ATTACK, value: overhealTotal, isCrit: false, targets: [], skill, isStartBattle };
+                    const attackRecord2 = {
+                        unitId: unit.id,
+                        type: EBattleActionType.ATTACK,
+                        value: overhealTotal,
+                        isCrit: false,
+                        targets: [],
+                        skill,
+                        isStartBattle,
+                    };
                     this.battleRecord.push(attackRecord2);
                     // TODO: overheal to something good (or bad)
                     const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
@@ -991,7 +996,7 @@ export class BattleController {
                     targets?.forEach((target) => {
                         //  Radiate removed for now
                         //applyStatus(unit, target, EStatusType.RADIATE, overhealTotal, this.battleRecord, isStartBattle);
-                        this.dealDamage(unit,target,overhealTotal,EHeroAttackType.MAGIC,undefined,attackRecord2);
+                        this.dealDamage(unit, target, overhealTotal, EHeroAttackType.MAGIC, undefined, attackRecord2);
                     });
                 });
             }
