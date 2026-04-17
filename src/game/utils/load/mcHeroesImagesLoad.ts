@@ -60,20 +60,17 @@ export function loadMcHeroesImages(scene: Scene) {
     //
     // ASSASSIN ///////////////////////////////////////////////////////////////////
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_ASSASSIN_IDLE, "assets/sprites/units/mc/assassin/assassin_idle_cut_300.png", {
+    scene.load.spritesheet(IMAGE_ASSASSIN_IDLE, "assets/sprites/units/mc/assassin/assassin_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });
 
     if (GAME_MODE === "FULL") {
-        // TODO: webp
-        scene.load.spritesheet(IMAGE_ASSASSIN_BATTLE_IDLE, "assets/sprites/units/mc/assassin/assassin_battle_idle_cut_400.png", {
+        scene.load.spritesheet(IMAGE_ASSASSIN_BATTLE_IDLE, "assets/sprites/units/mc/assassin/assassin_battle_idle_cut_400.webp", {
             frameWidth: 400,
             frameHeight: 400,
         });
-        // TODO: webp
-        scene.load.spritesheet(IMAGE_ASSASSIN_ATTACK, "assets/sprites/units/mc/assassin/assassin_attack_cut_400.png", {
+        scene.load.spritesheet(IMAGE_ASSASSIN_ATTACK, "assets/sprites/units/mc/assassin/assassin_attack_cut_400.webp", {
             frameWidth: 400,
             frameHeight: 400,
         });
@@ -134,7 +131,6 @@ export function loadMcHeroesImages(scene: Scene) {
 
     //scene.load.image(IMAGE_HUNTER, "assets/sprites/units/mc/hunter/hunter_2_idle_300.webp");
 
-    //TODO: webp
     scene.load.spritesheet(IMAGE_HUNTER_IDLE, "assets/sprites/units/mc/hunter/hunter_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
@@ -192,8 +188,7 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // PALADIN ///////////////////////////////////////////////////////////////////
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_PALADIN_IDLE, "assets/sprites/units/mc/paladin/paladin_idle_cut_300.png", {
+    scene.load.spritesheet(IMAGE_PALADIN_IDLE, "assets/sprites/units/mc/paladin/paladin_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });
@@ -218,24 +213,21 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // PREDATOR /////////////////////////////////////////////////////////////////////
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_PREDATOR_IDLE, "assets/sprites/units/mc/predator/predator_idle_cut_320.png", {
+    scene.load.spritesheet(IMAGE_PREDATOR_IDLE, "assets/sprites/units/mc/predator/predator_idle_cut_320.webp", {
         frameWidth: 320,
         frameHeight: 320,
     });
 
     // RUNECASTER ///////////////////////////////////////////////////////////////////
 
-    //TODO: webp
-    scene.load.spritesheet(IMAGE_RUNECASTER_IDLE, "assets/sprites/units/mc/runecaster/runecaster_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_RUNECASTER_IDLE, "assets/sprites/units/mc/runecaster/runecaster_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
 
     // SAMURAI ///////////////////////////////////////////////////////////////////
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_SAMURAI_IDLE, "assets/sprites/units/mc/samurai/samurai_idle_cut_320.png", {
+    scene.load.spritesheet(IMAGE_SAMURAI_IDLE, "assets/sprites/units/mc/samurai/samurai_idle_cut_320.webp", {
         frameWidth: 320,
         frameHeight: 320,
     });
@@ -250,8 +242,8 @@ export function loadMcHeroesImages(scene: Scene) {
             frameWidth: 400,
             frameHeight: 400,
         });
-        // TODO: webp
-        scene.load.spritesheet(IMAGE_SAMURAI_ATTACK_2, "assets/sprites/units/mc/samurai/samurai_attack_2_cut_400.png", {
+
+        scene.load.spritesheet(IMAGE_SAMURAI_ATTACK_2, "assets/sprites/units/mc/samurai/samurai_attack_2_cut_400.webp", {
             frameWidth: 400,
             frameHeight: 400,
         });
@@ -266,8 +258,7 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // WARLOCK_IDLE ///////////////////////////////////////////////////////////////////
 
-    // TODO: webp
-    scene.load.spritesheet(IMAGE_WARLOCK_IDLE, "assets/sprites/units/mc/warlock/warlock_idle_cut_300.png", {
+    scene.load.spritesheet(IMAGE_WARLOCK_IDLE, "assets/sprites/units/mc/warlock/warlock_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });

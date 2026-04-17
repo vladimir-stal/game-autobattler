@@ -136,8 +136,7 @@ export function loadImagesMobs(scene: Scene) {
         frameWidth: 300,
         frameHeight: 300,
     });
-    //TODO: webp
-    scene.load.spritesheet(IMAGE_FIREFLY_ATTACK, path + "firefly/firefly_attack_1_cut_300.png", {
+    scene.load.spritesheet(IMAGE_FIREFLY_ATTACK, path + "firefly/firefly_attack_1_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });
