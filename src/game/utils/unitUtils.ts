@@ -88,9 +88,16 @@ export const levelUpUnit = (unit: IUnit) => {
     }
 };
 
-export const levelUpUnitRandom = (unit: IUnit) => {
-    unit.level += 1;
-    addAttributesOnLevelUpRandom(unit);
+export const levelUpUnitRandom = (unit: IUnit, levelUpToLevel?: number) => {
+    if (levelUpToLevel) {
+        for (let j = 0; j < levelUpToLevel - unit.level; j++) {
+            unit.level += 1;
+            addAttributesOnLevelUpRandom(unit);
+        }
+    } else {
+        unit.level += 1;
+        addAttributesOnLevelUpRandom(unit);
+    }
 };
 
 export const addExpToUnit = (unit: IUnit, expAdd: number) => {
