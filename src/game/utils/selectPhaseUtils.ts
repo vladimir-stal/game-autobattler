@@ -56,6 +56,7 @@ import {
     getHeroClassesSkills,
     getHeroClassSkills,
     getMaxUnitSkillCount,
+    getMixedClassesSkills,
     getSkillPrice,
     getTopAllClassesSkill,
     getTopHeroClassSkill,
@@ -93,7 +94,13 @@ const randomTypeRooms = [
 
 //const randomTypeRooms = [ERoomType.SKILL_CLASS_RANDOM];
 
-const choiseTypeRooms = [ERoomType.ATTRIBUTE_SELECT, ERoomType.EXP_SELECT, ERoomType.ITEM_SELECT, ERoomType.MIXED_CLASS_SELECT];
+const choiseTypeRooms = [
+    ERoomType.ATTRIBUTE_SELECT,
+    ERoomType.EXP_SELECT,
+    ERoomType.ITEM_SELECT,
+    ERoomType.MIXED_CLASS_SELECT,
+    ERoomType.SKILLS_SELL_MIXED_CLASSES,
+];
 
 //TODO: ROOMS TO IMPLEMENT = ERoomType.EXP_ALL
 
@@ -628,6 +635,17 @@ export const getCards = (
                 cards = skills.map((skill, index) => {
                     const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
                     return { skill, type: ECardType.SKILL, price: price };
+                });
+            }
+            break;
+        case ERoomType.SKILLS_SELL_MIXED_CLASSES:
+            {
+                isRerollAvailable = false;
+
+                const randomSkills = getRandomArrayItems(getMixedClassesSkills(day), 4, true);
+
+                cards = randomSkills.map((skill) => {
+                    return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel) };
                 });
             }
             break;

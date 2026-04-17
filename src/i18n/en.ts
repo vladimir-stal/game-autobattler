@@ -475,6 +475,7 @@ export const i18n: Ii18n = {
         //
         [ERoomType.ITEM_SELECT]: "BLACK MARKET",
         [ERoomType.MIXED_CLASS_SELECT]: "SPECIALIST",
+        [ERoomType.SKILLS_SELL_MIXED_CLASSES]: "MIXED SKILLS",
         //
         // RANDOM ROOMS
         //
@@ -502,7 +503,9 @@ export const i18n: Ii18n = {
         [ERoomType.ENCHANCE_SKILL_CHAINED]: "ENHANCE",
         //
     },
-    roomDescriptions: {},
+    roomDescriptions: {
+        [ERoomType.SKILLS_SELL_MIXED_CLASSES]: "BUY MIXED SKILLS",
+    },
     skills: SKILLS_EN,
     statuses: {
         BLEED: "bleed",

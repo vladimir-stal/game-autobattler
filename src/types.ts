@@ -311,10 +311,12 @@ export enum ERoomType {
     MOBS = "MOBS", // fight vs mobs
     MOBS_REWARDS = "MOBS_REWARDS",
     SKILLS_SELL = "SKILLS_SELL", // buy 3 random skills
+    SKILLS_SELL_MIXED_CLASSES = "SKILLS_SELL_MIXED_CLASSES", // buy 3 random skills for multiple basic classes
     SKILLS_SELL_ENHANCED = "SKILLS_SELL_ENHANCED", // buy 1 of 3 random skills with chain or onStart
     SKILLS_CLASS_SELL = "SKILLS_CLASS_SELL", // buy one of 3 random skills for specific hero classes
     SKILL_CLASS_RANDOM = "SKILL_CLASS_RANDOM", // get random skill for specific hero classes
     SKILL_RANDOM = "SKILL_RANDOM", // get random skill
+
     TRIPLE_SET = "TRIPLE_SET", // get 3 free random items from [commonItem, weapon, skill, gold, exp, attr]
     UNIT_RANDOM = "UNIT_RANDOM",
     UNIT_SELL = "UNIT_SELL",
@@ -1020,11 +1022,11 @@ export type TDuelCards = Record<number, IMixedDuelCard[]>;
 export interface IAttrModify {
     a: THeroAttribute;
     v: number;
-};
+}
 export interface IMixedDuelCard {
     unit?: IUnit;
     item?: IItem;
     skill?: IHeroSkillSet;
     attribute?: IAttrModify;
     levelup?: number;
-} 
+}

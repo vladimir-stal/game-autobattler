@@ -30,6 +30,8 @@ import {
     IMAGE_SKILL_BURNING_MAN,
 } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
+import { outHealBuffSkill } from "./bardSkillConsts";
+import { buffSelfMPorPP, buffSummonCritSkill, increaseMaxHpSkill, shieldAttackSkill } from "./commonSkill3Consts";
 
 ////////////// COMMON SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
 
@@ -942,7 +944,7 @@ export const radiantWallSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_SUMMON_WITH_SHIELD,
 };
 
-export const multiclassSkills1 = [
+export const mixedClassSkills1 = [
     // physical classes
     phycisalAttackSkill,
     statusesIntoHeal,
@@ -955,3 +957,7 @@ export const multiclassSkills1 = [
     toxicTuneSkill,
     heatUpSkill,
 ];
+
+export const mixedClassSkills2 = [removeBuffSkill, removeDebuffSkill];
+
+export const mixedClassSkills3 = [outHealBuffSkill, shieldAttackSkill, buffSelfMPorPP, increaseMaxHpSkill, buffSummonCritSkill];

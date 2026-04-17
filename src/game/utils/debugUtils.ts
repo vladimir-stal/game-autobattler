@@ -8,7 +8,7 @@ import { goblinUnit } from "../units/goblinMobUnits";
 
 export const debugHeroSelectRoom = false; // true // false
 export const debugStartingItemsRoom = false;
-export const debugAlwaysOneEnemy = true;
+export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy5;
 

@@ -253,6 +253,7 @@ export const i18n: Ii18n = {
         //
         [ERoomType.ITEM_SELECT]: "ЧЕРНЫЙ РЫНОК",
         [ERoomType.MIXED_CLASS_SELECT]: "СПЕЦИАЛИСТ",
+        [ERoomType.SKILLS_SELL_MIXED_CLASSES]: "ТАЙНЫЕ ЗНАНИЯ",
         //
         // RANDOM ROOMS
         //
@@ -305,6 +306,7 @@ export const i18n: Ii18n = {
         [ERoomType.SKILLS_CLASS_SELL]: "КУПИТЬ НАВЫКИ КЛАССА",
         [ERoomType.SKILL_RANDOM]: "СЛУЧАЙНЫЙ НАВЫК",
         [ERoomType.SKILLS_SELL_ENHANCED]: "ВЫБРАТЬ ЦЕПНОЙ НАВЫК",
+        [ERoomType.SKILLS_SELL_MIXED_CLASSES]: "КУПИТЬ СМЕШАННЫЕ НАВЫКИ",
         // UNIT
         [ERoomType.UNIT_SELL]: "ЗАВЕРБОВАТЬ ПОМОЩНИКА",
         [ERoomType.UNIT_RANDOM]: "СЛУЧАЙНЫЙ ПОМОЩНИК",

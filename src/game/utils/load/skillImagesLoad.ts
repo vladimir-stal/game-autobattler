@@ -125,7 +125,7 @@ export function loadSkillImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_SUMMON_SWORD, prefix + "2/summon_sword.png");
     scene.load.image(IMAGE_SKILL_TOTEM_EMPOWER_2, prefix + "2/totem_empower_2.png");
     //
-    scene.load.image(IMAGE_SKILL_YELLOW_CROWN, prefix + "2/shield_summon.png");
-    scene.load.image(IMAGE_SKILL_SUMMON_WITH_SHIELD, prefix + "2/yellow_crown.png");
+    scene.load.image(IMAGE_SKILL_YELLOW_CROWN, prefix + "2/yellow_crown.png");
+    scene.load.image(IMAGE_SKILL_SUMMON_WITH_SHIELD, prefix + "2/shield_summon.png");
     scene.load.image(IMAGE_SKILL_BURNING_MAN, prefix + "2/burning_man.png");
 }

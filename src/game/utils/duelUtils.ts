@@ -7,8 +7,7 @@ import { levelUpUnit } from "./unitUtils";
 export const getDuelEnemy = (player: number) => {
     if (debugAlwaysOneEnemy)
         return debugEnemy; // FOR TESTING
-    else
-        return duelEnemies[player]; // [player];
+    else return duelEnemies[player]; // [player];
 };
 
 const addItem = (unit: IUnit, item: IItem) => {
@@ -33,19 +32,20 @@ const createHero = (templateUnit: IUnit) => {
 export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
     const result: TDuelEnemy = {};
     for (let i = 0; i < daysCards.length; i++) {
-        const day = i+1;
+        const day = i + 1;
         result[day] = [];
         const dc: TDuelCards = daysCards[i];
         // 1: [{unit: wildHero}, {item:totem1}, {skill:totemAttackSkill}],
         for (let unitSlot = 1; unitSlot < 5; unitSlot++) {
             if (dc[unitSlot]) {
                 const unitTemplate = dc[unitSlot].find((mx) => !!mx.unit)?.unit;
-                let unit: IUnit;
-                if (unitTemplate && unitTemplate.unitType === EUnitType.HERO)
-                    unit = createHero(unitTemplate)
-                else if (unitTemplate && unitTemplate.unitType === EUnitType.UNIT)
+                let unit: IUnit | undefined = undefined;
+                if (unitTemplate && unitTemplate.unitType === EUnitType.HERO) {
+                    unit = createHero(unitTemplate);
+                } else if (unitTemplate && unitTemplate.unitType === EUnitType.UNIT) {
                     unit = { ...unitTemplate };
-                if (!!unit) {
+                }
+                if (unit) {
                     dc[unitSlot].forEach((v) => {
                         if (!!v.unit) return;
                         if (!!v.item) {
@@ -55,8 +55,7 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
                         } else if (!!v.attribute) {
                             unit[v.attribute.a] += v.attribute.v;
                         } else if (!!v.levelup) {
-                            for (let r = 0; r < v.levelup; r++)
-                                levelUpUnit(unit);
+                            for (let r = 0; r < v.levelup; r++) levelUpUnit(unit);
                         }
                     });
                     result[day].push(applyItems(unit));
@@ -65,4 +64,4 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
         }
     }
     return result;
-}
+};

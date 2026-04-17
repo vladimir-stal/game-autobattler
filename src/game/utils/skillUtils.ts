@@ -11,6 +11,7 @@ import {
     skillPrices,
 } from "../skillConsts";
 import { bardSkills, bardSkills_2, bardSkills_3 } from "../skills/bardSkillConsts";
+import { mixedClassSkills1, mixedClassSkills2, mixedClassSkills3 } from "../skills/commonSkillConsts";
 import { darkSkills, darkSkills_2, darkSkills_3 } from "../skills/darkSkillConsts";
 import { magicSkills, magicSkills_2, magicSkills_3 } from "../skills/magicSkillConsts";
 import { masterSkills, masterSkills_2, masterSkills_3 } from "../skills/masterSkillConsts";
@@ -235,6 +236,23 @@ export const getAllClassesSkills = (day: number) => {
         return allClassesSkills_3;
     } else {
         return allClassesSkills_3;
+    }
+};
+
+/**
+ *
+ * @param day
+ * @returns List of skills for two basic hero classes for current day
+ */
+export const getMixedClassesSkills = (day: number) => {
+    if (day < 3) {
+        return mixedClassSkills1;
+    } else if (day < 6) {
+        return mixedClassSkills1.concat(mixedClassSkills2);
+    } else if (day < 8) {
+        return mixedClassSkills1.concat(mixedClassSkills2).concat(mixedClassSkills3);
+    } else {
+        return mixedClassSkills1.concat(mixedClassSkills2).concat(mixedClassSkills3);
     }
 };
 

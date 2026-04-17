@@ -64,7 +64,7 @@ export const axe21: IItem = {
     image: IMAGE_ITEM_AXE_22,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
     battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING, value: 1, valueType: "number" }],
     nextLevel: axe21_2,
 };
@@ -80,7 +80,10 @@ export const axe22_3: IItem = {
     image: IMAGE_ITEM_AXE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicPhysicalPower" },
+    ],
 };
 
 export const axe22_2: IItem = {
@@ -92,7 +95,10 @@ export const axe22_2: IItem = {
     image: IMAGE_ITEM_AXE_21,
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [
+        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicPhysicalPower" },
+    ],
     nextLevel: axe22_3,
 };
 
