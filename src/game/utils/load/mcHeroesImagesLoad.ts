@@ -234,7 +234,8 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // SAMURAI ///////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_SAMURAI_IDLE, "assets/sprites/units/mc/samurai/samurai_idle_sprite_320.webp", {
+    // TODO: webp
+    scene.load.spritesheet(IMAGE_SAMURAI_IDLE, "assets/sprites/units/mc/samurai/samurai_idle_cut_320.png", {
         frameWidth: 320,
         frameHeight: 320,
     });
@@ -249,8 +250,8 @@ export function loadMcHeroesImages(scene: Scene) {
             frameWidth: 400,
             frameHeight: 400,
         });
-
-        scene.load.spritesheet(IMAGE_SAMURAI_ATTACK_2, "assets/sprites/units/mc/samurai/samurai_attack_2_cut_400.webp", {
+        // TODO: webp
+        scene.load.spritesheet(IMAGE_SAMURAI_ATTACK_2, "assets/sprites/units/mc/samurai/samurai_attack_2_cut_400.png", {
             frameWidth: 400,
             frameHeight: 400,
         });

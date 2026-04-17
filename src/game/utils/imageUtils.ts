@@ -341,6 +341,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             };
         case EHeroClass.SAMURAI:
             return {
+                distance: -10,
                 distanceEnemy: -50,
                 image: IMAGE_SAMURAI,
                 animation: AnimationType.SAMURAI_IDLE,
@@ -350,7 +351,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 //
                 attackEnemyAnimation: EEffectAnimationType.EFFECT_SAMURAI_ATTACK_2,
                 attackEnemyAnimDelay: 800,
-                attackEnemyAnimDistance: { x: 250, y: -70 },
+                attackEnemyAnimDistance: { x: 200, y: -70 },
             };
         case EHeroClass.WITCH:
             return { image: IMAGE_WITCH };
@@ -402,7 +403,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
     switch (id) {
         case "BOSSMINOTAUR":
             return {
-                size: 500,
+                size: 550,
                 distanceEnemy: -100,
                 image: IMAGE_BOSS_MINOTAUR,
                 animation: AnimationType.BOSS_MINOTAUR_IDLE,
