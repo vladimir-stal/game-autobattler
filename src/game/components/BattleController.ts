@@ -120,7 +120,15 @@ export class BattleController {
             skillSet.skills.forEach((skill) => {
                 if (skill.condition === ESkillCondition.NOT_BEFORE_COMBAT)
                     return;
-                this.performSkill(unit, skill, isPlayer1, true);
+                if (skill.condition) {
+                    const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
+                    if (isConditionFulfilled) {
+                        this.performSkill(unit, skill, isPlayer1, true);
+                    }
+                } else {
+                    this.performSkill(unit, skill, isPlayer1, true);
+                }
+                //this.performSkill(unit, skill, isPlayer1, true);
             });
         });
     }
@@ -434,7 +442,14 @@ export class BattleController {
                     const count = Math.min(calculateSkillValue(skill, unit), 20);
                     console.log("REPEATING_SKILL x" + count);
                     for (let i = 0; i < count; i++) {
-                        this.performSkill(unit, skill.childSkill, isPlayer1, isStartBattle);
+                        if (skill.childSkill.condition) {
+                            const isConditionFulfilled = checkSkillCondition(unit, skill.childSkill.condition);
+                            if (isConditionFulfilled) {
+                                this.performSkill(unit, skill.childSkill, isPlayer1);
+                            }
+                        } else {
+                            this.performSkill(unit, skill.childSkill, isPlayer1);
+                        }
                     }
                 }
                 break;

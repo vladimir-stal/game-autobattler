@@ -508,9 +508,9 @@ export const SKILLS_EN = {
         },
         necromancerSkill: {
             name: "Undead call",
-            desc1: "Summon a skeleton [stats]",
-            desc2: "Summon a skeleton [stats]",
-            desc3: "Summon a skeleton [stats]",
+            desc1: "Summon a skeleton [stats1]\nif in front row, or\nskeletal mage [stats2]",
+            desc2: "Summon a skeleton [stats1]\nif in front row, or\nskeletal mage [stats2]",
+            desc3: "Summon a skeleton [stats1]\nif in front row, or\nskeletal mage [stats2]",
         },
         oracleSkill: {
             name: "Destiny whisper",

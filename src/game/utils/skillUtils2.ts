@@ -100,12 +100,14 @@ export const substituteSummonDescription = (skillset: IHeroSkillSet): string => 
                 if (sk.type === EHeroSkillType.SUMMON) return sk.summon;
                 else return sk.childSkill?.summon;
             });
+        console.log("Stats numbered",allSummons);
+        let descNew = desc;
         allSummons.forEach((summon, index) => {
-            const atk = summon?.basicAttack || "?";
+            const atk = summon?.basicAttack || "0";
             const hp = summon?.basicMaxHp || "?";
-            desc.replace("[stats" + (index + 1) + "]", "[" + atk + "," + hp + "]");
+            descNew = descNew.replace("[stats" + (index + 1) + "]", "[" + atk + "," + hp + "]");
         });
-        return desc;
+        return descNew;
     }
     return desc;
 };

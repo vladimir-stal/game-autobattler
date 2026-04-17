@@ -59,22 +59,22 @@ export const noBasicAttackSkill: IHeroSkillSet = {
 // ONLY BASIC ATTACK
 // always chained. to circle fast through skills
 
-// export const onlyBasicAttackSkill: IHeroSkillSet = {
-//     id: "onlyBasicAttack",
-//     name: "Only basic attack",
-//     desc: "Perform a basic attack",
-//     level: 1,
-//     priceLevel: 2,
-//     heroClasses: [EHeroClass.ALL],
-//     skills: [
-//         {
-//             type: EHeroSkillType.NONE,
-//             isBasicAttack: true,
-//         },
-//     ],
-//     isChained: true,
-//     image: IMAGE_SKILL_TEST,
-// };
+export const onlyBasicAttackSkill: IHeroSkillSet = {
+     id: "onlyBasicAttack",
+     name: "Combo attack",
+     desc: "Perform a basic attack",
+     level: 1,
+     priceLevel: 3,
+     heroClasses: [EHeroClass.ALL],
+     skills: [
+         {
+             type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+             targetType: ETargetType.SELF,             
+         },
+     ],
+     isChained: true,
+     image: IMAGE_SKILL_CHAIN,
+ };
 // Double class skills
 /*
     warrior + master = physical attack [4/5/6]

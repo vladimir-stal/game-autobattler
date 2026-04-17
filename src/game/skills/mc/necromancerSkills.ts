@@ -79,7 +79,7 @@ export const skeletonBackSummon: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.units.SKELETON,
+    name: i18n.units.SKELETONMAGE,
     id: "SkeletonBackSummon",
     skills: [],
     items: [],

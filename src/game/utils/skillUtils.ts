@@ -249,8 +249,8 @@ export const getMixedClassesSkills = (day: number) => {
         return mixedClassSkills1;
     } else if (day < 6) {
         return mixedClassSkills1.concat(mixedClassSkills2);
-    } else if (day < 8) {
-        return mixedClassSkills1.concat(mixedClassSkills2).concat(mixedClassSkills3);
+    //} else if (day < 8) {
+    //    return mixedClassSkills1.concat(mixedClassSkills2).concat(mixedClassSkills3);
     } else {
         return mixedClassSkills1.concat(mixedClassSkills2).concat(mixedClassSkills3);
     }

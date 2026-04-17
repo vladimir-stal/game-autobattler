@@ -1,5 +1,5 @@
 import { bardSkills, bardSkills_2, bardSkills_3 } from "./skills/bardSkillConsts";
-import { attackWithBleedSkill, mixedClassSkills1, noBasicAttackSkill, phycisalAttackSkill, statusesIntoHeal } from "./skills/commonSkillConsts";
+import { attackWithBleedSkill, mixedClassSkills1, noBasicAttackSkill, onlyBasicAttackSkill, phycisalAttackSkill, statusesIntoHeal } from "./skills/commonSkillConsts";
 import { darkSkills, darkSkills_2, darkSkills_3 } from "./skills/darkSkillConsts";
 import { magicSkills, magicSkills_2, magicSkills_3 } from "./skills/magicSkillConsts";
 import { masterSkills, masterSkills_2, masterSkills_3 } from "./skills/masterSkillConsts";
@@ -58,7 +58,7 @@ export const allClassesSkills_2 = [
     ...warriorSkills_2,
     ...wildSkills_2,
     noBasicAttackSkill,
-    //onlyBasicAttackSkill,
+    //onlyBasicAttackSkill, // level 3
 ].filter(function (item, pos, self) {
     return self.indexOf(item) == pos;
 });
@@ -75,7 +75,7 @@ export const allClassesSkills_3 = [
     ...warriorSkills_3,
     ...wildSkills_3,
     noBasicAttackSkill,
-    //onlyBasicAttackSkill,
+    onlyBasicAttackSkill,
 ].filter(function (item, pos, self) {
     return self.indexOf(item) == pos;
 });
