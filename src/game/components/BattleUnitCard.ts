@@ -598,7 +598,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         if (hurtAnimation) {
             this.unitImageObject.anims.play(hurtAnimation);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
-                console.log(">> ANIMATION_COMPLETE hurtAnimation");
+                //console.log(">> ANIMATION_COMPLETE hurtAnimation");
                 if (!this.isDead && this.unitAnimation) {
                     this.unitImageObject.anims.play(this.unitAnimation);
                 }

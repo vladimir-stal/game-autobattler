@@ -7,6 +7,7 @@ import { HeroClassTag } from "./ui/HeroClassTag";
 import { colors, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
 import { getCardBorderColor } from "../utils/commonUtils";
+import { IMAGE_MULTIATALAS_ITEMS } from "../utils/load/imageLoadItems";
 
 /** Card to buy from shop  */
 export class ItemCard extends Phaser.GameObjects.Container {
@@ -64,7 +65,7 @@ export class ItemCard extends Phaser.GameObjects.Container {
 
     renderImage() {
         const { image } = this.item;
-        const imageObject = this.gameScene.add.sprite(0, 100, image).setOrigin(0.5, 0.5); //.setDisplaySize(150, 150)
+        const imageObject = this.gameScene.add.sprite(0, 100, IMAGE_MULTIATALAS_ITEMS, image).setOrigin(0.5, 0.5); //.setDisplaySize(150, 150)
         this.add(imageObject);
     }
 

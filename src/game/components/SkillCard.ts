@@ -7,6 +7,7 @@ import { IMAGE_ICON_ATTACK, IMAGE_ICON_CHAINED } from "../utils/imageLoadUtil";
 import { colors, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
 import { getCardBorderColor } from "../utils/commonUtils";
+import { IMAGE_MULTIATALAS_SKILLS } from "../utils/load/skillImagesLoad";
 
 /** Skill card to buy, move and equip on hero */
 export class SkillCard extends Phaser.GameObjects.Container {
@@ -78,7 +79,7 @@ export class SkillCard extends Phaser.GameObjects.Container {
             return;
         }
 
-        this.image = this.gameScene.add.sprite(0, 5, image).setOrigin(0.5, 0);
+        this.image = this.gameScene.add.sprite(0, 5, IMAGE_MULTIATALAS_SKILLS, image).setOrigin(0.5, 0);
         this.add(this.image);
     }
 

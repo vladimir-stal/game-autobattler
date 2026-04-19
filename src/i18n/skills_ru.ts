@@ -124,15 +124,15 @@ export const SKILLS_RU = {
         //
         healFirst: {
             name: "Исцеление",
-            desc1: `[color=${colors.HEAL}]Лечит[/color] первого союзника\n на [3]`,
-            desc2: `[color=${colors.HEAL}]Лечит[/color] первого союзника\n на [5]`,
-            desc3: `[color=${colors.HEAL}]Лечит[/color] первого союзника\n на [7]`,
+            desc1: `[color=${colors.HEAL}]Лечит[/color] первого союзника\n на [color=${colors.HEAL}][3][/color]`,
+            desc2: `[color=${colors.HEAL}]Лечит[/color] первого союзника\n на [color=${colors.HEAL}][5][/color]`,
+            desc3: `[color=${colors.HEAL}]Лечит[/color] первого союзника\n на [color=${colors.HEAL}][7][/color]`,
         },
         healSelf: {
             name: "Самоисцеление",
-            desc1: `[color=${colors.HEAL}]Лечит[/color] себя на [4]`,
-            desc2: `[color=${colors.HEAL}]Лечит[/color] себя на [6]`,
-            desc3: `[color=${colors.HEAL}]Лечит[/color] себя на [8]`,
+            desc1: `[color=${colors.HEAL}]Лечит[/color] себя на [color=${colors.HEAL}][4][/color]`,
+            desc2: `[color=${colors.HEAL}]Лечит[/color] себя на [color=${colors.HEAL}][6][/color]`,
+            desc3: `[color=${colors.HEAL}]Лечит[/color] себя на [color=${colors.HEAL}][8][/color]`,
         },
         //
         // SUMMON
@@ -354,6 +354,12 @@ export const SKILLS_RU = {
             desc2: "Наносит [2] магического урона \nслучайному врагу [2+МС*50%] раз",
             desc3: "Наносит [2] магического урона \nслучайному врагу [3+МС*60%] раз",
         },
+        outHealBuffSkill: {
+            name: "Благословление",
+            desc1: `Усиливает исходящее [color=${colors.HEAL}]лечение[/color]\nна ([10]+[40%xМС])%\nу союзника впереди`,
+            desc2: `Усиливает исходящее [color=${colors.HEAL}]лечение[/color]\nна ([10]+[60%xМС])%\nу союзника впереди`,
+            desc3: `Усиливает исходящее [color=${colors.HEAL}]лечение[/color]\nна ([10]+[80%xМС])%\nу союзника впереди`,
+        },
         shieldAttackSkill: {
             name: "Удар щитом",
             desc1: "Наносит [20%xArmor] физического\nурона первому врагу",
@@ -362,9 +368,9 @@ export const SKILLS_RU = {
         },
         stealPPorMPSkill: {
             name: "Иссушение",
-            desc1: "Ворует [4] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкако атрибут выше",
-            desc2: "Ворует [8] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкако атрибут выше",
-            desc3: "Ворует [12] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкако атрибут выше",
+            desc1: "Ворует [4] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкакой атрибут выше",
+            desc2: "Ворует [8] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкакой атрибут выше",
+            desc3: "Ворует [12] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкакой атрибут выше",
         },
     },
     level4: {},

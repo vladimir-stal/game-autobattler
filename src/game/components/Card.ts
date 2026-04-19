@@ -6,7 +6,7 @@ import { CardSlot } from "./CardSlot";
 import { UnitCard } from "./UnitCard";
 import { ItemCard } from "./ItemCard";
 import { SkillCard } from "./SkillCard";
-import { IMAGE_ITEM_COIN } from "../utils/load/imageLoadItems";
+import { IMAGE_ITEM_COIN, IMAGE_MULTIATALAS_ITEMS } from "../utils/load/imageLoadItems";
 import { MobCard } from "./MobCard";
 import { AttributeCard } from "./AttributeCard";
 import { IMAGE_CARD_EXP } from "../utils/imageLoadUtil";
@@ -171,7 +171,7 @@ export class Card extends Phaser.GameObjects.Container {
         const title = i18n.ui.GOLD + " " + value;
         this.titleText.setText(title);
 
-        const imageObject = this.gameScene.add.sprite(0, 180, IMAGE_ITEM_COIN, 0).setOrigin(0.5, 1);
+        const imageObject = this.gameScene.add.sprite(0, 180, IMAGE_MULTIATALAS_ITEMS, IMAGE_ITEM_COIN).setOrigin(0.5, 1);
         this.add(imageObject);
     }
 

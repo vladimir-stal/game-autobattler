@@ -169,16 +169,16 @@ export class GameScene extends Phaser.Scene {
         // );
 
         // ON SCALE
-        this.scale.addListener(
-            Scale.Events.RESIZE,
-            (gameSize: Structs.Size, baseSize: Structs.Size, displaySize: Structs.Size, previousWidth: number, previousHeight: number) => {
-                console.log("CAMERA: W:", this.camera.width, "H:", this.camera.height);
-                // CAMERA
-                //this.camera.pan(this.mainDude.gameObject.x, this.cameraY, 0, "Sine.easeIn");
-                //this.setCameraY(this.levelController.getLevel());
-                //this.scale.refresh();
-            },
-        );
+        // this.scale.addListener(
+        //     Scale.Events.RESIZE,
+        //     (gameSize: Structs.Size, baseSize: Structs.Size, displaySize: Structs.Size, previousWidth: number, previousHeight: number) => {
+        //         //console.log("CAMERA: W:", this.camera.width, "H:", this.camera.height);
+        //         // CAMERA
+        //         //this.camera.pan(this.mainDude.gameObject.x, this.cameraY, 0, "Sine.easeIn");
+        //         //this.setCameraY(this.levelController.getLevel());
+        //         //this.scale.refresh();
+        //     },
+        // );
         // this.scale.on("resize", (gameSize) => {
         //     //this.scale.refresh();
         //     const { width, height } = gameSize;
@@ -226,6 +226,16 @@ export class GameScene extends Phaser.Scene {
         this.isCardMoveMode = value;
         if (!this.cardToMove) {
             return;
+        }
+
+        if (value) {
+            this.unitPanel.disableCardsMove();
+            this.cardSelectPanel.disableCardsMove();
+            this.inventoryPanel.disableCardsMove();
+        } else {
+            this.unitPanel.enableCardsMove();
+            this.cardSelectPanel.enableCardsMove();
+            this.inventoryPanel.enableCardsMove();
         }
 
         activateSlots(this.allCardSlots, value, this.cardToMove.card, this);

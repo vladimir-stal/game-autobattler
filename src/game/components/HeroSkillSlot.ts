@@ -56,6 +56,9 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
                 if (!this.skillSet || this.skillSet.isMcSkill) {
                     return;
                 }
+                if (this.gameScene.isCardMoveMode) {
+                    return;
+                }
                 const icard: ICard = { price: 0, type: ECardType.SKILL, skill: this.skillSet };
                 const card = new Card(this.gameScene, 0, 0, icard, false).setVisible(false);
                 this.gameScene.selectCardToMove(card);

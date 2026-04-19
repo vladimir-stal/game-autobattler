@@ -32,6 +32,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
     cards: (ICard | null)[];
     boughtCardIndexes: number[] = [];
+    cardObjects: { index: number; buyCardText: GameObjects.Text }[];
 
     isSingleSelect: boolean; // player can select only one card
     isSelectRequired: boolean; // player must select at least one option
@@ -62,6 +63,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
         this.heroClasses = heroClasses;
         this.boughtCardIndexes = [];
         this.cards = cards;
+        this.cardObjects = [];
         this.isRerollAvailable = !!options.isRerollAvailable;
         this.isSingleSelect = !!options.isSingleSelect;
         this.isSelectRequired = !!options.isSelectRequired;
@@ -98,7 +100,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     }
 
     renderCards() {
-        //console.log("CARD SELECT PANEL renderCards", this.cards);
+        this.cardObjects = [];
         this.cards.forEach((card, i) => {
             if (this.boughtCardIndexes.includes(i)) {
                 return;
@@ -114,8 +116,8 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
     renderCard(index: number, card: ICard) {
         const cardX = this.getCardPositionX(index);
-        const cardBomponent = new Card(this.gameScene, cardX, 0, card, true);
-        this.add(cardBomponent);
+        const cardComponent = new Card(this.gameScene, cardX, 0, card, true);
+        this.add(cardComponent);
 
         const buttonTitle = chooseTypeRooms.includes(this.roomType) ? i18n.ui.SELECT : card.price > 0 ? i18n.ui.BUY + " " + card.price : i18n.ui.TAKE;
 
@@ -123,7 +125,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
             .text(cardX, 150, buttonTitle, {
                 fontFamily: "Arial Black",
                 fontSize: 18,
-                color: "#aaffaa",
+                color: colors.string.GREEN_LIGHT,
             })
             .setOrigin(0.5);
 
@@ -151,7 +153,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                 }
 
                 this.selectedCardIndex = index;
-                this.gameScene.selectCardToBuy(cardBomponent);
+                this.gameScene.selectCardToBuy(cardComponent);
             })
             .on("pointerover", () => {
                 buyCardText.setColor("#FFFFFF");
@@ -161,6 +163,7 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
             });
 
         this.add(buyCardText);
+        this.cardObjects.push({ buyCardText, index });
     }
 
     renderButtons() {
@@ -213,24 +216,49 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                 return;
             }
 
-            // if (this.isSingleSelect) {
-            //     this.gameScene.selectController.showNextRoomSelect();
-            //     return;
-            // }
-
-            // const isLastCard = this.cards.filter((card) => card).length === this.boughtCardIndexes.length + 1;
-
-            // console.log("cards", this.cards);
-
-            // console.log("isLastCard", isLastCard, this.cards.length, this.boughtCardIndexes.length);
-            // if (isLastCard) {
-            //     this.gameScene.selectController.showNextRoomSelect();
-            //     return;
-            // }
-
             this.selectedCardIndex = undefined;
             this.render();
         }
+    }
+
+    enableCardsMove() {
+        if (!this.visible) {
+            return;
+        }
+        this.cards.forEach((card) => {
+            if (!card) {
+                return;
+            }
+            this.cardObjects.forEach((cardObject) => {
+                if (!cardObject?.buyCardText) {
+                    return;
+                }
+                const { buyCardText } = cardObject;
+                buyCardText.setColor(colors.string.GREEN_LIGHT);
+                buyCardText.setInteractive();
+            });
+        });
+    }
+
+    disableCardsMove() {
+        if (!this.visible) {
+            return;
+        }
+        console.log("disable cards move >>", this.cardObjects);
+        this.cards.forEach((card) => {
+            if (!card) {
+                return;
+            }
+            this.cardObjects.forEach((cardObject, index) => {
+                console.log("cardObject >>", cardObject, index);
+                if (!cardObject?.buyCardText) {
+                    return;
+                }
+                const { buyCardText } = cardObject;
+                buyCardText.setColor(colors.string.GREY);
+                buyCardText.disableInteractive();
+            });
+        });
     }
 
     private getCardPositionX(index: number): number {

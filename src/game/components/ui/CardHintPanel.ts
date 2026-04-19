@@ -15,9 +15,11 @@ import {
 } from "../../utils/imageLoadUtil";
 import { HeroClassTag } from "./HeroClassTag";
 import { getItemPrice, getWeaponItemHeroClasses } from "../../utils/itemUtils";
-import { IMAGE_ITEM_ARMOR_1 } from "../../utils/load/imageLoadItems";
+import { IMAGE_ITEM_ARMOR_1, IMAGE_MULTIATALAS_ITEMS } from "../../utils/load/imageLoadItems";
 import { substituteSummonDescription } from "../../utils/skillUtils2";
 import BBCodeText from "phaser3-rex-plugins/plugins/gameobjects/tagtext/bbcodetext/BBCodeText";
+import { insertStats } from "../../utils/uiUtils";
+import { IMAGE_MULTIATALAS_SKILLS } from "../../utils/load/skillImagesLoad";
 
 /** Panel to show information on items and skills on hover */
 export class CardHintPanel extends Phaser.GameObjects.Container {
@@ -106,7 +108,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         // skill image
 
-        this.skillImage = this.scene.add.image(25, 100, IMAGE_ITEM_ARMOR_1, 0).setDisplaySize(150, 150).setOrigin(0, 0).setVisible(false);
+        this.skillImage = this.scene.add.image(25, 100, IMAGE_ITEM_ARMOR_1, 0).setOrigin(0, 0).setVisible(false); //setDisplaySize(150, 150)
         this.add(this.skillImage);
 
         //
@@ -168,7 +170,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.add(this.afterDuelBonusesTextObject);
 
         // item image
-        this.itemImage = this.scene.add.image(25, 150, IMAGE_ITEM_ARMOR_1).setDisplaySize(150, 150).setOrigin(0, 0).setVisible(false);
+        this.itemImage = this.scene.add.image(25, 150, IMAGE_ITEM_ARMOR_1).setOrigin(0, 0).setVisible(false); //setDisplaySize(150, 150)
         this.add(this.itemImage);
 
         // item tags
@@ -300,9 +302,12 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         if (isFromHero) {
             const { image, isMcSkill } = skillSet;
-
-            image && this.skillImage.setTexture(image);
-            image && this.skillImage.setVisible(true);
+            if (image) {
+                this.skillImage.setTexture(IMAGE_MULTIATALAS_SKILLS, image);
+                this.skillImage.setVisible(true);
+            } else {
+                this.skillImage.setVisible(false);
+            }
 
             // tags
 
@@ -348,7 +353,11 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
                 if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND) {
                     text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill?.name || "" + ")\n";
                 } else {
-                    text += i18n.attributes.bonusType[bonus.type] + (bonus.status ? " " + i18n.statuses[bonus.status] : "") + " [" + bonus.value + "]\n";
+                    //text += i18n.attributes.bonusType[bonus.type] + (bonus.status ? " " + i18n.statuses[bonus.status] : "") + " [" + bonus.value + "]\n";
+                    const stats = [];
+                    bonus.value && stats.push(bonus.value + "");
+                    bonus.status && stats.push(i18n.statuses[bonus.status]);
+                    text += insertStats(i18n.attributes.bonusType[bonus.type], stats) + "\n";
                 }
                 return text;
             }, "") || "");
@@ -388,7 +397,11 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
                 heroClassBonuses?.reduce((text, bonus) => {
                     text += i18n.tags[bonus.heroClass] + ": ";
                     if (bonus.battleBonus) {
-                        text += i18n.attributes.bonusType[bonus.battleBonus.type] + " " + bonus.battleBonus.value;
+                        //text += i18n.attributes.bonusType[bonus.battleBonus.type] + " " + bonus.battleBonus.value;
+                        const stats = [];
+                        bonus.battleBonus.value && stats.push(bonus.battleBonus.value + "");
+                        bonus.battleBonus.status && stats.push(i18n.statuses[bonus.battleBonus.status]);
+                        text += insertStats(i18n.attributes.bonusType[bonus.battleBonus.type], stats) + "\n";
                     }
                     if (bonus.bonus) {
                         const bonusType =
@@ -425,7 +438,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         if (isFromHero) {
             const { image } = item;
 
-            this.itemImage.setTexture(image);
+            this.itemImage.setTexture(IMAGE_MULTIATALAS_ITEMS, image);
             this.itemImage.setVisible(true);
 
             // tags

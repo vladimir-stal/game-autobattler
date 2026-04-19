@@ -2,7 +2,10 @@ import { ECardType, ICard, TDuelEnemy } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { dagger1, wand1 } from "../basicWeaponItemConsts";
+import { summonerMantle3 } from "../commonItemConsts3";
 import { enemy1_test, enemy5 } from "../duelConsts";
+import { necromancerHero } from "../mcHeroConsts";
+import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 
@@ -22,7 +25,7 @@ export const debugEnemy: TDuelEnemy = enemy5;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: { ...magicHero, skills: [magicAttack] } }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: necromancerHero }, null];
     //return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }, null];
 };
 
@@ -31,10 +34,10 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit: orderHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
-        //{ type: ECardType.ITEM, price: 0, item: dagger1 },
+        { type: ECardType.ITEM, price: 0, item: summonerMantle3 },
         //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },
         //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },
-        { type: ECardType.ITEM, price: 0, item: wand1 },
-        { type: ECardType.UNIT, price: 0, unit: goblinUnit },
+        { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
+        //{ type: ECardType.UNIT, price: 0, unit: goblinUnit },
     ];
 };

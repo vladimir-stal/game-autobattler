@@ -12,7 +12,13 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_SUMMON_FIREFLY, IMAGE_SKILL_SUMMON_SPIRIT, IMAGE_SKILL_SUMMON_SWORD, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_SUMMON_FIREFLY,
+    IMAGE_SKILL_SUMMON_SHIELD,
+    IMAGE_SKILL_SUMMON_SPIRIT,
+    IMAGE_SKILL_SUMMON_SWORD,
+    IMAGE_SKILL_TEST,
+} from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 import { buffSummonCritSkill } from "./commonSkill3Consts";
 
@@ -341,7 +347,7 @@ export const incrSummonArmor_3: IHeroSkillSet = {
             targetType: ETargetType.SUMMON_CURRENT,
         },
     ],
-    image: IMAGE_SKILL_SUMMON_SWORD,
+    image: IMAGE_SKILL_SUMMON_SHIELD,
 };
 
 export const incrSummonArmor_2: IHeroSkillSet = {
@@ -364,7 +370,7 @@ export const incrSummonArmor_2: IHeroSkillSet = {
             targetType: ETargetType.SUMMON_CURRENT,
         },
     ],
-    image: IMAGE_SKILL_SUMMON_SWORD,
+    image: IMAGE_SKILL_SUMMON_SHIELD,
     nextLevel: incrSummonArmor_3,
 };
 
@@ -388,7 +394,7 @@ export const incrSummonArmor: IHeroSkillSet = {
             targetType: ETargetType.SUMMON_CURRENT,
         },
     ],
-    image: IMAGE_SKILL_SUMMON_SWORD,
+    image: IMAGE_SKILL_SUMMON_SHIELD,
     nextLevel: incrSummonArmor_2,
 };
 

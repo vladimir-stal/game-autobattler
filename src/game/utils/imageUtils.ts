@@ -478,6 +478,8 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 buffAnimation: AnimationType.MOB_GOBLIN_SHAMAN_SPELL,
                 defeatedAnimation: AnimationType.MOB_GOBLIN_SHAMAN_DEFEATED,
             };
+        case "SkeletonFrontSummon":
+        case "SkeletonBackSummon":
         case "SKELETON":
             return {
                 distance: -40,

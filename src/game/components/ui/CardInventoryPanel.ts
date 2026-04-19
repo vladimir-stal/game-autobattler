@@ -98,4 +98,24 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
 
         this.slots.push({ moveText: moveCardText, slot: cardSlot });
     }
+
+    enableCardsMove() {
+        this.slots.forEach(({ moveText }) => {
+            if (!moveText.visible) {
+                return;
+            }
+            moveText.setColor(colors.string.GREEN_LIGHT);
+            moveText.setInteractive();
+        });
+    }
+
+    disableCardsMove() {
+        this.slots.forEach(({ moveText }) => {
+            if (!moveText.visible) {
+                return;
+            }
+            moveText.setColor(colors.string.GREY);
+            moveText.disableInteractive();
+        });
+    }
 }

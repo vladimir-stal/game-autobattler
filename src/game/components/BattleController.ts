@@ -317,7 +317,9 @@ export class BattleController {
             }
             if (debuff.timeType === EBuffTimeType.DURATION) {
                 debuff.duration = (debuff.duration || 0) - 1;
-                if (debuff.duration < 1) removeDebuffSimple(unit, debuff, this.battleRecord);
+                if (debuff.duration < 1) {
+                    removeDebuffSimple(unit, debuff, this.battleRecord);
+                }
             }
         });
         buffs.forEach((buff) => {
