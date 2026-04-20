@@ -208,7 +208,6 @@ export class CardSlot extends Phaser.GameObjects.Container {
             }
         }
 
-        //this.equipTextObject.setVisible(value && activeType === "equip" || activeType === "apply");
         if (value && (activeType === "equip" || activeType === "apply")) {
             this.equipTextObject.setText(activeType === "equip" ? i18n.ui.EQUIP : i18n.ui.APPLY);
             this.equipTextObject.setVisible(true);

@@ -8,7 +8,7 @@ export function initInputListeners(scene: GameScene) {
 
         scene.input.on("pointerdown", function (p: Input.Pointer) {
             if (p.rightButtonDown()) {
-                console.log("right button mouse click");
+                //console.log("right button mouse click");
 
                 if (scene.isCardMoveMode) {
                     scene.cancelCardMove();

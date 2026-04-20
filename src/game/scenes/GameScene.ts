@@ -306,6 +306,7 @@ export class GameScene extends Phaser.Scene {
     }
 
     restartGame() {
+        this.allCardSlots = [];
         if (this.phase !== "SELECT") {
             this.battlePanel.hide();
             this.battlePanel.stopBattle();
@@ -332,6 +333,10 @@ export class GameScene extends Phaser.Scene {
         this.cardUpgradePanel.hide();
         this.skillCardEnchantPanel.hide();
         this.unitUpgradePanel.hide();
+
+        this.leaderController.init();
+        this.leadersPanel.refresh();
+        this.leaderPanel.setHp(this.leaderController.hp);
     }
 
     changeToDuelPhase() {
