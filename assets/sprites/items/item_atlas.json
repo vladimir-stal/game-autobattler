@@ -1,0 +1,1805 @@
+{
+	"textures": [
+		{
+			"image": "item_atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1593,
+				"h": 1004
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "3/staff_31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 32,
+						"y": 7,
+						"w": 118,
+						"h": 282
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 118,
+						"h": 282
+					}
+				},
+				{
+					"filename": "5/staff5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 115,
+						"y": 6,
+						"w": 99,
+						"h": 284
+					},
+					"frame": {
+						"x": 1,
+						"y": 285,
+						"w": 99,
+						"h": 284
+					}
+				},
+				{
+					"filename": "5/totem_5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 113,
+						"h": 200
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 4,
+						"w": 113,
+						"h": 196
+					},
+					"frame": {
+						"x": 121,
+						"y": 1,
+						"w": 113,
+						"h": 196
+					}
+				},
+				{
+					"filename": "1/staff_1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 150
+					},
+					"frame": {
+						"x": 236,
+						"y": 1,
+						"w": 150,
+						"h": 150
+					}
+				},
+				{
+					"filename": "2/wand_21.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 150
+					},
+					"frame": {
+						"x": 388,
+						"y": 1,
+						"w": 150,
+						"h": 150
+					}
+				},
+				{
+					"filename": "3/axe_3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 150
+					},
+					"frame": {
+						"x": 540,
+						"y": 1,
+						"w": 150,
+						"h": 150
+					}
+				},
+				{
+					"filename": "3/sword_3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 150
+					},
+					"frame": {
+						"x": 692,
+						"y": 1,
+						"w": 150,
+						"h": 150
+					}
+				},
+				{
+					"filename": "3/wand_2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 150
+					},
+					"frame": {
+						"x": 844,
+						"y": 1,
+						"w": 150,
+						"h": 150
+					}
+				},
+				{
+					"filename": "mobs/peasants_pitchfork.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 150
+					},
+					"frame": {
+						"x": 996,
+						"y": 1,
+						"w": 150,
+						"h": 150
+					}
+				},
+				{
+					"filename": "2/common/helm_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 147
+					},
+					"frame": {
+						"x": 1148,
+						"y": 1,
+						"w": 150,
+						"h": 147
+					}
+				},
+				{
+					"filename": "4/common/helmet_41.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 0,
+						"w": 143,
+						"h": 150
+					},
+					"frame": {
+						"x": 1300,
+						"y": 1,
+						"w": 143,
+						"h": 150
+					}
+				},
+				{
+					"filename": "mobs/spirit_spear.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 147,
+						"h": 143
+					},
+					"frame": {
+						"x": 1445,
+						"y": 1,
+						"w": 147,
+						"h": 143
+					}
+				},
+				{
+					"filename": "2/dagger_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 125,
+						"h": 150
+					},
+					"frame": {
+						"x": 1,
+						"y": 571,
+						"w": 125,
+						"h": 150
+					}
+				},
+				{
+					"filename": "3/totem_3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 129,
+						"h": 150
+					},
+					"frame": {
+						"x": 1,
+						"y": 723,
+						"w": 129,
+						"h": 150
+					}
+				},
+				{
+					"filename": "1/totem_skull_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 9,
+						"w": 141,
+						"h": 128
+					},
+					"frame": {
+						"x": 1,
+						"y": 875,
+						"w": 141,
+						"h": 128
+					}
+				},
+				{
+					"filename": "1/axe_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 136,
+						"h": 138
+					},
+					"frame": {
+						"x": 121,
+						"y": 199,
+						"w": 136,
+						"h": 138
+					}
+				},
+				{
+					"filename": "4/common/armor_41.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 0,
+						"w": 141,
+						"h": 149
+					},
+					"frame": {
+						"x": 102,
+						"y": 339,
+						"w": 141,
+						"h": 149
+					}
+				},
+				{
+					"filename": "potion1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 5,
+						"w": 143,
+						"h": 145
+					},
+					"frame": {
+						"x": 259,
+						"y": 153,
+						"w": 143,
+						"h": 145
+					}
+				},
+				{
+					"filename": "2/shield_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 137
+					},
+					"frame": {
+						"x": 404,
+						"y": 153,
+						"w": 150,
+						"h": 137
+					}
+				},
+				{
+					"filename": "3/shield_3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 135
+					},
+					"frame": {
+						"x": 556,
+						"y": 153,
+						"w": 150,
+						"h": 135
+					}
+				},
+				{
+					"filename": "1/common/helm_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 150,
+						"h": 131
+					},
+					"frame": {
+						"x": 708,
+						"y": 153,
+						"w": 150,
+						"h": 131
+					}
+				},
+				{
+					"filename": "1/common/ring_regen_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 19,
+						"w": 150,
+						"h": 131
+					},
+					"frame": {
+						"x": 860,
+						"y": 153,
+						"w": 150,
+						"h": 131
+					}
+				},
+				{
+					"filename": "1/dagger_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 0,
+						"w": 134,
+						"h": 137
+					},
+					"frame": {
+						"x": 1012,
+						"y": 153,
+						"w": 134,
+						"h": 137
+					}
+				},
+				{
+					"filename": "2/common/ring_regen_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 19,
+						"w": 150,
+						"h": 131
+					},
+					"frame": {
+						"x": 1148,
+						"y": 150,
+						"w": 150,
+						"h": 131
+					}
+				},
+				{
+					"filename": "1/common/gold_bag_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 146,
+						"h": 130
+					},
+					"frame": {
+						"x": 1300,
+						"y": 153,
+						"w": 146,
+						"h": 130
+					}
+				},
+				{
+					"filename": "3/shield_31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 7,
+						"w": 142,
+						"h": 143
+					},
+					"frame": {
+						"x": 1448,
+						"y": 146,
+						"w": 142,
+						"h": 143
+					}
+				},
+				{
+					"filename": "3/music_31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 36,
+						"w": 141,
+						"h": 75
+					},
+					"frame": {
+						"x": 102,
+						"y": 490,
+						"w": 141,
+						"h": 75
+					}
+				},
+				{
+					"filename": "1/sword_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 140,
+						"h": 145
+					},
+					"frame": {
+						"x": 128,
+						"y": 567,
+						"w": 140,
+						"h": 145
+					}
+				},
+				{
+					"filename": "dark_cloak.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 6,
+						"w": 141,
+						"h": 144
+					},
+					"frame": {
+						"x": 132,
+						"y": 714,
+						"w": 141,
+						"h": 144
+					}
+				},
+				{
+					"filename": "3/music_32.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 3,
+						"w": 113,
+						"h": 143
+					},
+					"frame": {
+						"x": 144,
+						"y": 860,
+						"w": 113,
+						"h": 143
+					}
+				},
+				{
+					"filename": "mobs/bone_dagger.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 13,
+						"w": 143,
+						"h": 131
+					},
+					"frame": {
+						"x": 259,
+						"y": 300,
+						"w": 143,
+						"h": 131
+					}
+				},
+				{
+					"filename": "3/dagger_3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 141,
+						"h": 140
+					},
+					"frame": {
+						"x": 404,
+						"y": 292,
+						"w": 141,
+						"h": 140
+					}
+				},
+				{
+					"filename": "1/lute_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 132
+					},
+					"frame": {
+						"x": 245,
+						"y": 433,
+						"w": 134,
+						"h": 132
+					}
+				},
+				{
+					"filename": "5/music_5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 2,
+						"w": 127,
+						"h": 145
+					},
+					"frame": {
+						"x": 270,
+						"y": 567,
+						"w": 127,
+						"h": 145
+					}
+				},
+				{
+					"filename": "1/scepter_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 140,
+						"h": 141
+					},
+					"frame": {
+						"x": 275,
+						"y": 714,
+						"w": 140,
+						"h": 141
+					}
+				},
+				{
+					"filename": "2/totem_skull_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 9,
+						"w": 141,
+						"h": 128
+					},
+					"frame": {
+						"x": 381,
+						"y": 434,
+						"w": 141,
+						"h": 128
+					}
+				},
+				{
+					"filename": "2/scepter_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 140,
+						"h": 141
+					},
+					"frame": {
+						"x": 399,
+						"y": 564,
+						"w": 140,
+						"h": 141
+					}
+				},
+				{
+					"filename": "2/scepter_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 140,
+						"h": 141
+					},
+					"frame": {
+						"x": 417,
+						"y": 707,
+						"w": 140,
+						"h": 141
+					}
+				},
+				{
+					"filename": "2/totem_skull_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 9,
+						"w": 141,
+						"h": 128
+					},
+					"frame": {
+						"x": 524,
+						"y": 434,
+						"w": 141,
+						"h": 128
+					}
+				},
+				{
+					"filename": "1/shield_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 119,
+						"h": 141
+					},
+					"frame": {
+						"x": 541,
+						"y": 564,
+						"w": 119,
+						"h": 141
+					}
+				},
+				{
+					"filename": "2/sword_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 5,
+						"w": 128,
+						"h": 140
+					},
+					"frame": {
+						"x": 547,
+						"y": 292,
+						"w": 128,
+						"h": 140
+					}
+				},
+				{
+					"filename": "3/mace_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 3,
+						"w": 110,
+						"h": 144
+					},
+					"frame": {
+						"x": 559,
+						"y": 707,
+						"w": 110,
+						"h": 144
+					}
+				},
+				{
+					"filename": "3/scepter_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 88,
+						"h": 149
+					},
+					"frame": {
+						"x": 677,
+						"y": 290,
+						"w": 88,
+						"h": 149
+					}
+				},
+				{
+					"filename": "3/totem_skull_31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 7,
+						"w": 133,
+						"h": 138
+					},
+					"frame": {
+						"x": 767,
+						"y": 286,
+						"w": 133,
+						"h": 138
+					}
+				},
+				{
+					"filename": "1/common/pants_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 159,
+						"h": 159
+					},
+					"spriteSourceSize": {
+						"x": 26,
+						"y": 12,
+						"w": 103,
+						"h": 139
+					},
+					"frame": {
+						"x": 902,
+						"y": 286,
+						"w": 103,
+						"h": 139
+					}
+				},
+				{
+					"filename": "1/common/heal_ring_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 139,
+						"h": 129
+					},
+					"frame": {
+						"x": 1007,
+						"y": 292,
+						"w": 139,
+						"h": 129
+					}
+				},
+				{
+					"filename": "gold_coin.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 8,
+						"w": 135,
+						"h": 134
+					},
+					"frame": {
+						"x": 1148,
+						"y": 283,
+						"w": 135,
+						"h": 134
+					}
+				},
+				{
+					"filename": "2/common/heal_ring_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 139,
+						"h": 129
+					},
+					"frame": {
+						"x": 1285,
+						"y": 285,
+						"w": 139,
+						"h": 129
+					}
+				},
+				{
+					"filename": "1/wand_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 9,
+						"w": 134,
+						"h": 133
+					},
+					"frame": {
+						"x": 1426,
+						"y": 291,
+						"w": 134,
+						"h": 133
+					}
+				},
+				{
+					"filename": "1/common/armor_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 122,
+						"h": 136
+					},
+					"frame": {
+						"x": 667,
+						"y": 441,
+						"w": 122,
+						"h": 136
+					}
+				},
+				{
+					"filename": "2/axe_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 14,
+						"w": 123,
+						"h": 123
+					},
+					"frame": {
+						"x": 662,
+						"y": 579,
+						"w": 123,
+						"h": 123
+					}
+				},
+				{
+					"filename": "2/staff_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 6,
+						"w": 128,
+						"h": 139
+					},
+					"frame": {
+						"x": 671,
+						"y": 704,
+						"w": 128,
+						"h": 139
+					}
+				},
+				{
+					"filename": "3/dagger_31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 12,
+						"w": 108,
+						"h": 125
+					},
+					"frame": {
+						"x": 791,
+						"y": 426,
+						"w": 108,
+						"h": 125
+					}
+				},
+				{
+					"filename": "1/common/boots_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 9,
+						"w": 124,
+						"h": 135
+					},
+					"frame": {
+						"x": 901,
+						"y": 427,
+						"w": 124,
+						"h": 135
+					}
+				},
+				{
+					"filename": "mobs/regenMantle.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 10,
+						"y": 6,
+						"w": 128,
+						"h": 139
+					},
+					"frame": {
+						"x": 1027,
+						"y": 423,
+						"w": 128,
+						"h": 139
+					}
+				},
+				{
+					"filename": "2/staff_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 6,
+						"w": 130,
+						"h": 138
+					},
+					"frame": {
+						"x": 1157,
+						"y": 419,
+						"w": 130,
+						"h": 138
+					}
+				},
+				{
+					"filename": "2/wand_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 9,
+						"w": 134,
+						"h": 132
+					},
+					"frame": {
+						"x": 1289,
+						"y": 416,
+						"w": 134,
+						"h": 132
+					}
+				},
+				{
+					"filename": "2/common/gloves_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 9,
+						"w": 128,
+						"h": 135
+					},
+					"frame": {
+						"x": 1425,
+						"y": 426,
+						"w": 128,
+						"h": 135
+					}
+				},
+				{
+					"filename": "2/common/holy_gloves1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 8,
+						"w": 113,
+						"h": 138
+					},
+					"frame": {
+						"x": 259,
+						"y": 860,
+						"w": 113,
+						"h": 138
+					}
+				},
+				{
+					"filename": "mobs/spirit_armor.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 6,
+						"w": 121,
+						"h": 138
+					},
+					"frame": {
+						"x": 374,
+						"y": 857,
+						"w": 121,
+						"h": 138
+					}
+				},
+				{
+					"filename": "2/sword_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 7,
+						"w": 127,
+						"h": 137
+					},
+					"frame": {
+						"x": 497,
+						"y": 853,
+						"w": 127,
+						"h": 137
+					}
+				},
+				{
+					"filename": "3/axe_red.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 5,
+						"w": 126,
+						"h": 137
+					},
+					"frame": {
+						"x": 626,
+						"y": 853,
+						"w": 126,
+						"h": 137
+					}
+				},
+				{
+					"filename": "2/common/armor_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 122,
+						"h": 136
+					},
+					"frame": {
+						"x": 754,
+						"y": 845,
+						"w": 122,
+						"h": 136
+					}
+				},
+				{
+					"filename": "2/axe_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 14,
+						"w": 123,
+						"h": 123
+					},
+					"frame": {
+						"x": 787,
+						"y": 579,
+						"w": 123,
+						"h": 123
+					}
+				},
+				{
+					"filename": "2/common/magic_gloves1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 20,
+						"y": 9,
+						"w": 122,
+						"h": 135
+					},
+					"frame": {
+						"x": 801,
+						"y": 704,
+						"w": 122,
+						"h": 135
+					}
+				},
+				{
+					"filename": "2/common/boots_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 6,
+						"w": 122,
+						"h": 134
+					},
+					"frame": {
+						"x": 912,
+						"y": 564,
+						"w": 122,
+						"h": 134
+					}
+				},
+				{
+					"filename": "2/axe_22.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 14,
+						"w": 123,
+						"h": 123
+					},
+					"frame": {
+						"x": 1036,
+						"y": 564,
+						"w": 123,
+						"h": 123
+					}
+				},
+				{
+					"filename": "2/dagger_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 13,
+						"w": 131,
+						"h": 118
+					},
+					"frame": {
+						"x": 1161,
+						"y": 559,
+						"w": 131,
+						"h": 118
+					}
+				},
+				{
+					"filename": "3/common/summonerMantle.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 20,
+						"y": 14,
+						"w": 110,
+						"h": 125
+					},
+					"frame": {
+						"x": 925,
+						"y": 700,
+						"w": 110,
+						"h": 125
+					}
+				},
+				{
+					"filename": "1/common/ring_attack_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 116,
+						"h": 121
+					},
+					"frame": {
+						"x": 1294,
+						"y": 550,
+						"w": 116,
+						"h": 121
+					}
+				},
+				{
+					"filename": "2/common/ring_attack_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 116,
+						"h": 121
+					},
+					"frame": {
+						"x": 1037,
+						"y": 689,
+						"w": 116,
+						"h": 121
+					}
+				},
+				{
+					"filename": "3/magic_book.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 16,
+						"w": 127,
+						"h": 106
+					},
+					"frame": {
+						"x": 1412,
+						"y": 563,
+						"w": 127,
+						"h": 106
+					}
+				},
+				{
+					"filename": "2/common/pants_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 11,
+						"w": 97,
+						"h": 131
+					},
+					"frame": {
+						"x": 878,
+						"y": 841,
+						"w": 97,
+						"h": 131
+					}
+				},
+				{
+					"filename": "5/dagger5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 9,
+						"w": 78,
+						"h": 130
+					},
+					"frame": {
+						"x": 977,
+						"y": 827,
+						"w": 78,
+						"h": 130
+					}
+				},
+				{
+					"filename": "2/lute_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 22,
+						"y": 13,
+						"w": 113,
+						"h": 118
+					},
+					"frame": {
+						"x": 1057,
+						"y": 812,
+						"w": 113,
+						"h": 118
+					}
+				},
+				{
+					"filename": "1/common/ring_exp_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 32,
+						"y": 15,
+						"w": 88,
+						"h": 121
+					},
+					"frame": {
+						"x": 1155,
+						"y": 689,
+						"w": 88,
+						"h": 121
+					}
+				},
+				{
+					"filename": "2/shield_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 31,
+						"y": 12,
+						"w": 88,
+						"h": 125
+					},
+					"frame": {
+						"x": 1172,
+						"y": 812,
+						"w": 88,
+						"h": 125
+					}
+				},
+				{
+					"filename": "1/mace_1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 20,
+						"y": 17,
+						"w": 110,
+						"h": 116
+					},
+					"frame": {
+						"x": 1245,
+						"y": 679,
+						"w": 110,
+						"h": 116
+					}
+				},
+				{
+					"filename": "2/mace_2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 21,
+						"y": 17,
+						"w": 109,
+						"h": 116
+					},
+					"frame": {
+						"x": 1262,
+						"y": 797,
+						"w": 109,
+						"h": 116
+					}
+				},
+				{
+					"filename": "2/mace_21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 19,
+						"w": 106,
+						"h": 112
+					},
+					"frame": {
+						"x": 1357,
+						"y": 673,
+						"w": 106,
+						"h": 112
+					}
+				},
+				{
+					"filename": "5/wand_5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 24,
+						"y": 21,
+						"w": 101,
+						"h": 110
+					},
+					"frame": {
+						"x": 1373,
+						"y": 787,
+						"w": 101,
+						"h": 110
+					}
+				},
+				{
+					"filename": "mobs/goblin_gold_coin.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 21,
+						"y": 21,
+						"w": 109,
+						"h": 108
+					},
+					"frame": {
+						"x": 1465,
+						"y": 671,
+						"w": 109,
+						"h": 108
+					}
+				},
+				{
+					"filename": "mobs/goblin_silver_coin.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 22,
+						"y": 22,
+						"w": 106,
+						"h": 106
+					},
+					"frame": {
+						"x": 1476,
+						"y": 781,
+						"w": 106,
+						"h": 106
+					}
+				},
+				{
+					"filename": "3/common/amulet_crit.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 31,
+						"w": 128,
+						"h": 86
+					},
+					"frame": {
+						"x": 1262,
+						"y": 915,
+						"w": 128,
+						"h": 86
+					}
+				},
+				{
+					"filename": "3/common/amulet_evasion.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 150,
+						"h": 150
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 37,
+						"w": 120,
+						"h": 87
+					},
+					"frame": {
+						"x": 1392,
+						"y": 899,
+						"w": 120,
+						"h": 87
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:8626f1b86f97811e53ac369109ba6371:9b506292ecb0ec8611e02f05ef4f8a08:b611dc43bb5bbf9cf8df4deab49dc00f$"
+	}
+}
