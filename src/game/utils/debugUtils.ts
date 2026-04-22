@@ -10,6 +10,7 @@ import { necromancerHero, witchHero } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { incrSummonBa } from "../skills/summonSkillConsts2";
+import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
 
@@ -29,7 +30,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: necromancerHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }, null];
     //return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }, null];
 };
 
@@ -39,9 +40,9 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
         { type: ECardType.ITEM, price: 0, item: {...jacket21_3, bonuses: [...jacket21_3.bonuses, {type:EItemBonusType.ATTRIBUTE, value:10, valueType:"evolvedNumber", attribute:"basicMagicPower",targetType:EItemTargetType.SELF}]} },
-        //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },
-        { type: ECardType.SKILL, price: 0, skill: incrSummonBa },
-        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        { type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
+        { type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
+        //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
         //{ type: ECardType.UNIT, price: 0, unit: goblinUnit },
     ];
 };

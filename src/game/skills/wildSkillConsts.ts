@@ -1,4 +1,4 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import {
     IMAGE_SKILL_NATURE_SHIELD,
@@ -83,6 +83,31 @@ export const attrIncrHpReg: IHeroSkillSet = {
 };
 
 // SUMMON ATTACK TOTEM SKILL
+const totemAttackSkillset = (atk: number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.FORCE_TOTEM_ACTION,
+            targetType: ETargetType.SELF,
+            condition: ESkillCondition.HAS_TOTEM,
+        },
+        {
+            type: EHeroSkillType.TOTEM,
+            totem: {
+                id: "basicWildTotem",
+                name: i18n.totems.basicWildTotem,
+                skills: [
+                    {
+                        type: EHeroSkillType.ATTACK,
+                        value: atk,
+                        targetType: ETargetType.RANDOM_ENEMY,
+                        attackType: EHeroAttackType.MAGIC,
+                    },
+                ],
+            },
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM
+        },
+    ]
+}
 
 export const totemAttackSkill_3: IHeroSkillSet = {
     id: "totemAttack",
@@ -93,25 +118,7 @@ export const totemAttackSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
-            totem: {
-                id: "basicWildTotem",
-                name: i18n.totems.basicWildTotem,
-                skills: [
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: false,
-                        value: 3,
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.MAGIC,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: totemAttackSkillset(3),
     image: IMAGE_SKILL_TOTEM_1,
 };
 
@@ -124,25 +131,7 @@ export const totemAttackSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
-            totem: {
-                id: "basicWildTotem",
-                name: i18n.totems.basicWildTotem,
-                skills: [
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: false,
-                        value: 2,
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.MAGIC,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: totemAttackSkillset(2),
     nextLevel: totemAttackSkill_3,
     image: IMAGE_SKILL_TOTEM_1,
 };
@@ -156,25 +145,7 @@ export const totemAttackSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
-            totem: {
-                id: "basicWildTotem",
-                name: i18n.totems.basicWildTotem,
-                skills: [
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: false,
-                        value: 1,
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.MAGIC,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: totemAttackSkillset(1),
     nextLevel: totemAttackSkill_2,
     image: IMAGE_SKILL_TOTEM_1,
 };
@@ -196,6 +167,8 @@ export const attrDescArmor_3: IHeroSkillSet = {
             valueType: "number",
             attribute: "armor",
             targetType: ETargetType.FIRST_ENEMY,
+            mpScale: 65,
+            ppScale: 65,
         },
     ],
     image: IMAGE_SKILL_VINES_ARMOR,
@@ -216,6 +189,8 @@ export const attrDescArmor_2: IHeroSkillSet = {
             valueType: "number",
             attribute: "armor",
             targetType: ETargetType.FIRST_ENEMY,
+            mpScale: 50,
+            ppScale: 50,
         },
     ],
     image: IMAGE_SKILL_VINES_ARMOR,
@@ -237,6 +212,8 @@ export const attrDescArmor: IHeroSkillSet = {
             valueType: "number",
             attribute: "armor",
             targetType: ETargetType.FIRST_ENEMY,
+            mpScale: 35,
+            ppScale: 35,
         },
     ],
     image: IMAGE_SKILL_VINES_ARMOR,
@@ -244,6 +221,27 @@ export const attrDescArmor: IHeroSkillSet = {
 };
 
 // INCR TOTEM VALUE (LEVEL 3) ///////////////////////////////////////////////////////////////////////////////////
+
+export const incrTotemValueSkill_3: IHeroSkillSet = {
+    id: "incrTotemValueSkill",
+    name: i18n.skills.level3.incrTotemValueSkill.name,
+    desc: i18n.skills.level3.incrTotemValueSkill.desc3,
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WILD],
+    //isMcSkill: true,
+    skills: [
+        {
+            type: EHeroSkillType.TOTEM_INCREASE_VALUE,
+            isBasicAttack: true,
+            value: 1,
+            valueType: "number",
+            targetType: ETargetType.TOTEM_ALLY_CURRENT,
+            mpScale: 60,
+        },
+    ],
+    image: IMAGE_SKILL_TOTEM_EMPOWER_2,
+};
 
 export const incrTotemValueSkill_2: IHeroSkillSet = {
     id: "incrTotemValueSkill",
@@ -266,7 +264,7 @@ export const incrTotemValueSkill_2: IHeroSkillSet = {
         },
     ],
     image: IMAGE_SKILL_TOTEM_EMPOWER_2,
-    //nextLevel: incrTotemValueSkill_2,
+    nextLevel: incrTotemValueSkill_3,
 };
 
 export const incrTotemValueSkill: IHeroSkillSet = {

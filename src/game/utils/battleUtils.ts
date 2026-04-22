@@ -337,6 +337,12 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             console.log("markedTarget", markedTarget);
             return markedTarget ? [markedTarget] : null;
         }
+        case ETargetType.ALL_MARKED_ENEMIES: {
+            if (!debuffType)
+                return []
+            else
+                return units.filter((unit) => isAliveUnit(unit) && unit.debuffs.some(d => d.type === debuffType));
+        }
         case ETargetType.RANDOM_ENEMY: {
             const randomTarget = getRandomTarget(units);
             return randomTarget ? [randomTarget] : null;

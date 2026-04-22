@@ -23,6 +23,7 @@ import {
     EAppTrigger,
     IAppTrigger,
     IBuffOrDebuff,
+    ITotem,
 } from "../../types";
 import { eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -433,6 +434,10 @@ export class BattleController {
             takeStatusDamage(unit, value, type, this.battleRecord);
         });
         // totem
+        this.performTotemActionSkill(totem,unit,isPlayer1);
+    }
+
+    performTotemActionSkill(totem: ITotem, unit: IBattleUnit, isPlayer1: boolean) {
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         if (totem) {
@@ -521,6 +526,9 @@ export class BattleController {
                 break;
             case EHeroSkillType.FORCE_UNIT_CAST_SKILL:
                 this.performForceOutOfTurnAction(unit,skill,isPlayer1,true,isStartBattle);
+                break;
+            case EHeroSkillType.FORCE_TOTEM_ACTION:
+                this.performForceOutOfTurnTotem(unit,skill,isPlayer1,isStartBattle);
                 break;
             case EHeroSkillType.NONE:
                 {
@@ -1267,6 +1275,23 @@ export class BattleController {
                 this.performAction(target,0,isPlayer1,0,true)
             else
                 this.performBasicAttack(target,undefined,isPlayer1);
+        });
+    }
+    performForceOutOfTurnTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+        const { targetType } = skill;
+        if (!targetType) {
+            console.log("performForceOutOfTurnAction > NO TARGET TYPE OR VALUE");
+            return;
+        }
+        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
+        const targets = getAllyTargets(unit, allyUnits, targetType);
+        if (!targets || targets.length === 0 || !targets[0]) {
+            console.log("performForceOutOfTurnAction > NO TARGET FOUND");
+            return;
+        }
+
+        targets.forEach((target) => {
+            this.performTotemActionSkill(target.totem,target,isPlayer1);
         });
     }
 

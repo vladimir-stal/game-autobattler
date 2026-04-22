@@ -569,6 +569,7 @@ export enum EHeroSkillType {
     CALCULATE_NUMBER = "CALCULATE_NUMBER", // modify IBattleUnit.customNumber
     FORCE_UNIT_CAST_SKILL = "FORCE_UNIT_CAST_SKILL", // make other unit to cast skill out of its turn
     FORCE_UNIT_MAKE_ATTACK = "FORCE_UNIT_MAKE_ATTACK", // make other unit attack
+    FORCE_TOTEM_ACTION = "FORCE_TOTEM_ACTION", // make other unit's totem to act immediately
 }
 
 export enum EStatusType {
@@ -649,6 +650,7 @@ export enum ETargetType {
     HIGH_PP_ENEMY = "HIGH_PP_ENEMY",
     LOW_HP_ENEMY = "LOW_HP_ENEMY",
     MARKED_ENEMY = "MARKED_ENEMY",
+    ALL_MARKED_ENEMIES = "ALL_MARKED_ENEMIES",
     RANDOM_ENEMY = "RANDOM_ENEMY",
     SECOND_ENEMY = "SECOND_ENEMY",
     SUMMON_CURRENT = "SUMMON_CURRENT",
