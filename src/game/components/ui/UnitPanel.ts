@@ -100,7 +100,7 @@ export class UnitPanel extends Phaser.GameObjects.Container {
             .text(x, y + 150, i18n.ui.MOVE, {
                 fontFamily: "Arial Black",
                 fontSize: 18,
-                color: "#aaffaa",
+                color: colors.string.GREEN_LIGHT,
             })
             .setVisible(!!card);
 
@@ -171,6 +171,20 @@ export class UnitPanel extends Phaser.GameObjects.Container {
             x = (3 - index) * distance;
         }
         return x;
+    }
+
+    enableCardsMove() {
+        this.slots.forEach(({ moveText }) => {
+            moveText.setColor(colors.string.GREEN_LIGHT);
+            moveText.setInteractive();
+        });
+    }
+
+    disableCardsMove() {
+        this.slots.forEach(({ moveText }) => {
+            moveText.setColor(colors.string.GREY);
+            moveText.disableInteractive();
+        });
     }
 
     refreshAfterResize() {

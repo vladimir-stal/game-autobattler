@@ -88,7 +88,7 @@ export const applyBurn_3: IHeroSkillSet = {
     id: "applyBurn",
     name: i18n.skills.basic.applyBurn.name,
     desc: i18n.skills.basic.applyBurn.desc3,
-    level: 2,
+    level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,

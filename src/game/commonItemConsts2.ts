@@ -27,7 +27,7 @@ export const armor_amulet_3: IItem = {
     image: IMAGE_ITEM_POTION_1,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 3 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 8 }],
 };
 
 export const armor_amulet_2: IItem = {
@@ -39,7 +39,7 @@ export const armor_amulet_2: IItem = {
     image: IMAGE_ITEM_POTION_1,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 2 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 4 }],
     nextLevel: armor_amulet_3,
 };
 
@@ -52,7 +52,7 @@ export const armor_amulet: IItem = {
     image: IMAGE_ITEM_POTION_1,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 2 }],
     nextLevel: armor_amulet_2,
 };
 
@@ -67,7 +67,7 @@ export const hp_amulet_3: IItem = {
     image: IMAGE_ITEM_POTION_1,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 3 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 8 }],
 };
 
 export const hp_amulet_2: IItem = {
@@ -79,7 +79,7 @@ export const hp_amulet_2: IItem = {
     image: IMAGE_ITEM_POTION_1,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 2 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 4 }],
     nextLevel: hp_amulet_3,
 };
 
@@ -92,7 +92,7 @@ export const hp_amulet: IItem = {
     image: IMAGE_ITEM_POTION_1,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 1 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 2 }],
     nextLevel: hp_amulet_2,
 };
 

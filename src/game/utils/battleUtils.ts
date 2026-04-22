@@ -484,7 +484,7 @@ export const removeDebuffSimple = (unit: IBattleUnit, debuff: IDebuff, battleRec
             }
             break;
     }
-    battleRecord.push({ unitId: unit.id, type: EBattleActionType.DEBUFF_REMOVE, debuff });
+    battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.DEBUFF_REMOVE, debuff });
 };
 
 export const changeBuffCurrent = (currentBuff: IBuff, value: number): number => {

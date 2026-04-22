@@ -15,8 +15,12 @@ export class LeaderController {
 
     constructor(gameScene: GameScene) {
         this.gameScene = gameScene;
-        this.hp = START_HP;
 
+        this.init();
+    }
+
+    init() {
+        this.hp = START_HP;
         this.leaders = [];
         for (let i = 0; i < INITIAL_PLAYERS_COUNT; i++) {
             const playerName = i === 0 ? "YOU" : "PLAYER " + (i + 1);
@@ -40,7 +44,7 @@ export class LeaderController {
         getRandomArrayItems(
             this.leaders.filter(({ id }) => id !== 0 && id !== this.nextOpponentId),
             3,
-            true
+            true,
         ).forEach(({ id }) => {
             const selectedLeader = this.leaders.find((leader) => leader.id === id);
             if (selectedLeader) {
@@ -51,10 +55,8 @@ export class LeaderController {
 
     selectNextOpponent() {
         let filtList = this.leaders.filter(({ id, hp }) => id !== 0 && id !== this.nextOpponentId && hp > 0);
-        if (filtList.length == 0)
-            filtList = this.leaders.filter(({ id, hp }) => id !== 0 && hp > 0);
-        if (filtList.length == 0)
-            filtList = this.leaders.filter(({ id }) => id !== 0);
+        if (filtList.length == 0) filtList = this.leaders.filter(({ id, hp }) => id !== 0 && hp > 0);
+        if (filtList.length == 0) filtList = this.leaders.filter(({ id }) => id !== 0);
         this.nextOpponentId = getRandomArrayItem(filtList).id;
     }
 }

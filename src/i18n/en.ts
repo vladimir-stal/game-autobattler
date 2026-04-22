@@ -218,6 +218,9 @@ export interface Ii18n {
         [EItemAfterDuelBonusCondition.IS_MOB]: string;
         // bonus target
         [EItemTargetType.ALL_ALLIES]: string;
+        mainMenu: {
+            START_GAME: string;
+        };
     };
 }
 
@@ -588,5 +591,8 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.IS_MOB]: "NON HERO",
         //
         [EItemTargetType.ALL_ALLIES]: "for all",
+        mainMenu: {
+            START_GAME: "START GAME",
+        },
     },
 };

@@ -171,7 +171,7 @@ export const IMAGE_FISHMAN = "IMAGE_FISHMAN";
 
 // LEADERS
 
-export const IMAGE_LEADER_1 = "IMAGE_LEADER_1";
+//export const IMAGE_LEADER_1 = "IMAGE_LEADER_1";
 export const IMAGE_LEADER_1_IDLE = "IMAGE_LEADER_1_IDLE";
 
 // BOSSES
@@ -275,11 +275,20 @@ export function loadImages(scene: Scene) {
     //
     // LEADERS
 
-    scene.load.image(IMAGE_LEADER_1, "assets/sprites/leader/rider_1.webp");
+    //scene.load.image(IMAGE_LEADER_1, "assets/sprites/leader/rider_1.webp");
     scene.load.spritesheet(IMAGE_LEADER_1_IDLE, "assets/sprites/leader/leader1_sprite.webp", {
         frameWidth: 600,
         frameHeight: 600,
     });
+    //scene.load.image(IMAGE_LEADER_1_IDLE, "assets/sprites/leader/leader1.pvr");
+    // scene.load.texture(IMAGE_LEADER_1_IDLE, {
+    //     ASTC
+    // //     S3TC: "",
+    // //     //ktx2: "",
+    // //     //PVR: "assets/texture.pvr",
+    // //     //PNG: "assets/texture.png",
+    // });
+    // scene.load.ktx2()
 
     // MOBS
 

@@ -1,6 +1,6 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
-import { IMAGE_LEADER_1, IMAGE_LEADER_1_IDLE } from "../../utils/imageLoadUtil";
+import { IMAGE_LEADER_1_IDLE } from "../../utils/imageLoadUtil";
 import { AnimationType } from "../../../types";
 import { MAX_WIDTH } from "./uiPanels";
 

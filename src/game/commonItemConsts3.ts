@@ -19,7 +19,7 @@ export const crit_amulet_3: IItem = {
     image: IMAGE_ITEM_AMULET_CRIT_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 5 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 8 }],
 };
 
 export const crit_amulet_2: IItem = {
@@ -31,7 +31,7 @@ export const crit_amulet_2: IItem = {
     image: IMAGE_ITEM_AMULET_CRIT_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 3 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 5 }],
     nextLevel: crit_amulet_3,
 };
 
@@ -44,7 +44,7 @@ export const crit_amulet: IItem = {
     image: IMAGE_ITEM_AMULET_CRIT_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 2 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_CRIT_CHANCE, value: 3 }],
     nextLevel: crit_amulet_2,
 };
 
@@ -61,7 +61,7 @@ export const evasion_amulet_3: IItem = {
     image: IMAGE_ITEM_AMULET_EVASION_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 5 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 8 }],
 };
 
 export const evasion_amulet_2: IItem = {
@@ -73,7 +73,7 @@ export const evasion_amulet_2: IItem = {
     image: IMAGE_ITEM_AMULET_EVASION_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 3 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 5 }],
     nextLevel: evasion_amulet_3,
 };
 
@@ -86,7 +86,7 @@ export const evasion_amulet: IItem = {
     image: IMAGE_ITEM_AMULET_EVASION_3,
     heroClasses: [EHeroClass.ALL],
     bonuses: [],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 2 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 3 }],
     nextLevel: evasion_amulet_2,
 };
 
@@ -142,7 +142,7 @@ export const scrollSkillArmor: IItem = {
     heroClasses: [],
     bonuses: [],
     // CAST_SKILL_X_ROUND ~ rounds are numbered starting at 0
-    battleBonuses: [{type: EItemBattleBonusType.CAST_SKILL_X_ROUND, value: 1, valueType:"number", relatedSkill: skeletonArmorSelfAndLow}],
+    battleBonuses: [{ type: EItemBattleBonusType.CAST_SKILL_X_ROUND, value: 1, valueType: "number", relatedSkill: skeletonArmorSelfAndLow }],
     heroClassBonuses: [],
     image: IMAGE_CARD_EXP,
 };

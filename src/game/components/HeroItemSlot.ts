@@ -53,6 +53,9 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
                 if (!this.item) {
                     return;
                 }
+                if (this.gameScene.isCardMoveMode) {
+                    return;
+                }
                 const icard: ICard = { price: 0, type: ECardType.ITEM, item: this.item };
                 const card = new Card(this.gameScene, 0, 0, icard, false).setVisible(false);
                 this.gameScene.selectCardToMove(card);

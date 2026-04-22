@@ -1,36 +1,31 @@
 import { EScene } from "../../types";
+import { i18n } from "../consts";
 import { EventBus, EventType } from "../EventBus";
 import { Cameras, GameObjects, Input, Scale, Scene, Sound, Structs } from "phaser";
 
 const IMAGE_MAIN_MENU = "IMAGE_MAIN_MENU";
-const SOUND_MAIN_MENU_CHANGE_SCENE = "SOUND_MAIN_MENU_CHANGE_SCENE";
-const SOUND_MAIN_MENU_CLICK_2 = "SOUND_MAIN_MENU_CLICK_2";
+//const SOUND_MAIN_MENU_CHANGE_SCENE = "SOUND_MAIN_MENU_CHANGE_SCENE";
+//const SOUND_MAIN_MENU_CLICK_2 = "SOUND_MAIN_MENU_CLICK_2";
 
 export class MainMenuScene extends Scene {
     camera: Cameras.Scene2D.Camera;
     background: GameObjects.Image;
     //titleText: GameObjects.Text;
+
     mainContainer: GameObjects.Container;
 
-    changeSceneSound1: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
-    changeSceneSound: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
-    mainMenuMusic: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
+    //changeSceneSound1: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
+    //changeSceneSound: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
+    //mainMenuMusic: Sound.WebAudioSound | Sound.NoAudioSound | Sound.HTML5AudioSound;
 
     constructor() {
-        console.log("MainMenuScene costructor");
         super(EScene.MAIN_MENU);
     }
 
     preload() {
-        console.log("MainMenuScene preload");
-        //this.load.audio(SOUND_MAIN_MENU_START, "assets/audio/sounds/main_menu_start.mp3");
-        this.load.audio(SOUND_MAIN_MENU_CHANGE_SCENE, "assets/audio/sounds/owl_1.mp3");
-        //this.load.audio(SOUND_MAIN_MENU_CLICK, "assets/audio/sounds/ui_click_2.mp3");
-        this.load.audio(SOUND_MAIN_MENU_CLICK_2, "assets/audio/sounds/ui_click_1.mp3");
-        //this.load.audio(SOUND_MAIN_MENU_MUSIC, "assets/audio/music/main_menu.mp3");
-
+        //this.load.audio(SOUND_MAIN_MENU_CHANGE_SCENE, "assets/audio/sounds/owl_1.mp3");
+        //this.load.audio(SOUND_MAIN_MENU_CLICK_2, "assets/audio/sounds/ui_click_1.mp3");
         this.load.image(IMAGE_MAIN_MENU, "assets/sprites/background/allHeroes_1200.png");
-        //this.load.image(IMAGE_FOUR_BEASTS, "assets/sprites/background/game_main.png");
     }
 
     create() {
@@ -45,37 +40,21 @@ export class MainMenuScene extends Scene {
         this.background.on(
             Input.Events.GAMEOBJECT_POINTER_DOWN,
             () => {
-                this.playChangeSceneSound();
+                //this.playChangeSceneSound();
                 EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
                 this.scene.switch(EScene.LOBBY_LOADING);
             },
             this,
         );
 
-        //sounds test
-        //const startMainMenuSound = this.sound.add(SOUND_MAIN_MENU_START, { loop: false });
-        //startMainMenuSound.play();
-        this.changeSceneSound1 = this.sound.add(SOUND_MAIN_MENU_CLICK_2, { loop: false, volume: 0.05 });
-        this.changeSceneSound = this.sound.add(SOUND_MAIN_MENU_CHANGE_SCENE, { loop: false, volume: 0.05 });
-        //this.mainMenuMusic = this.sound.add(SOUND_MAIN_MENU_MUSIC, { loop: false, volume: 0.05 });
-
-        // if (this.game.sound.context.state === "suspended") {
-        //     game.sound.context.resume();
-        // }
-        //this.mainMenuMusic.play();
+        //sounds
+        //this.changeSceneSound1 = this.sound.add(SOUND_MAIN_MENU_CLICK_2, { loop: false, volume: 0.05 });
+        //this.changeSceneSound = this.sound.add(SOUND_MAIN_MENU_CHANGE_SCENE, { loop: false, volume: 0.05 });
 
         if (this.input.keyboard) {
             const { keyboard } = this.input;
             keyboard.on("keydown-SPACE", () => {
-                // if (testSong.isPaused) {
-                //     testSong.resume();
-                // } else if (testSong.isPlaying) {
-                //     testSong.pause();
-                // } else {
-                //     testSong.play();
-                // }
-                this.playChangeSceneSound();
-                //EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
+                //this.playChangeSceneSound();
                 this.scene.switch(EScene.LOBBY_LOADING);
             });
         }
@@ -135,9 +114,7 @@ export class MainMenuScene extends Scene {
         // this.mainContainer.add(bg1);
 
         const titleText = this.add
-            .text(0, -250, "НАЧАТЬ ИГРУ", {
-                //"START GAME"
-                //screenCenterX, screenCenterY - 100,
+            .text(0, -250, i18n.ui.mainMenu.START_GAME, {
                 fontFamily: "Arial Black",
                 fontSize: 64,
                 color: "#ffffff",
@@ -150,7 +127,7 @@ export class MainMenuScene extends Scene {
         titleText.on(
             Input.Events.GAMEOBJECT_POINTER_DOWN,
             () => {
-                this.playChangeSceneSound();
+                //this.playChangeSceneSound();
                 EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
                 this.scene.switch(EScene.LOBBY_LOADING);
             },
@@ -165,8 +142,8 @@ export class MainMenuScene extends Scene {
     }
 
     playChangeSceneSound() {
-        this.changeSceneSound1.play();
-        this.changeSceneSound.play();
+        //this.changeSceneSound1.play();
+        //this.changeSceneSound.play();
         //this.mainMenuMusic.stop();
     }
 }

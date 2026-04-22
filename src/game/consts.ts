@@ -32,4 +32,8 @@ export const colors = {
     RED_DARK: 0x330000, //"#330000"
     RED_DARK_2: 0x993333, //"#993333"
     WHITE_HOVER: 0xbbbbbb,
+    string: {
+        GREY: "#666666",
+        GREEN_LIGHT: "#aaffaa",
+    },
 };

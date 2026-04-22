@@ -341,6 +341,12 @@ export const SKILLS_EN = {
             desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
             desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
         },
+        outHealBuffSkill: {
+            name: "Out heal",
+            desc1: "Buff outgoing heal\n([10]+[40%xMP])% ally in front",
+            desc2: "Buff outgoing heal\n([10]+[60%xMP])% ally in front",
+            desc3: "Buff outgoing heal\n([10]+[80%xMP])% ally in front",
+        },
         shieldAttackSkill: {
             name: "Shield bash",
             desc1: "Deal [20%xArmor] to first enemy",
