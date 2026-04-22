@@ -1,6 +1,18 @@
 import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
-import { ETargetType, EDebuffType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EHeroClassType, EBuffTimeType, EBuffType, EAppTrigger, EHeroSkillType } from "../types";
+import {
+    ETargetType,
+    EDebuffType,
+    EHeroAttackType,
+    EHeroClass,
+    IUnit,
+    EUnitType,
+    EHeroClassType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroSkillType,
+    EAppTriggerType,
+} from "../types";
 import { LANG } from "./consts";
 import { alchemistSkills } from "./skills/mc/alchemistSkills";
 import { assassinSkills } from "./skills/mc/assassinSkills";
@@ -271,7 +283,7 @@ export const necromancerHero: IUnit = {
             value: 1,
             appTrigger: {
                 skillId: "NecromancerPassive",
-                trigger: EAppTrigger.DEATH,
+                type: EAppTriggerType.DEATH,
                 targetCheck: ETargetType.EVERY_UNIT,
                 skill: [
                     {
@@ -280,11 +292,11 @@ export const necromancerHero: IUnit = {
                         value: 5,
                         valueType: "number",
                         targetType: ETargetType.SELF,
-                    }
+                    },
                 ],
                 limitedRepeats: false,
-            }
-        }
+            },
+        },
     },
     items: [],
     unitType: EUnitType.HERO,

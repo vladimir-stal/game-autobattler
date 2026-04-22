@@ -1,5 +1,5 @@
 import {
-    EAppTrigger,
+    EAppTriggerType,
     EBattleActionType,
     EBuffTimeType,
     EBuffType,
@@ -15,7 +15,7 @@ import {
     EUnitType,
     IAppTrigger,
     IBattleAction,
-    IBattleTriggers,
+    IBattleTrigger,
     IBattleUnit,
     IBuff,
     IDebuff,
@@ -459,15 +459,14 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
     }
 
     const { type, attribute, totalValue } = buff;
-    if (type === EBuffType.ATTRIBUTE_INCREASE)
-    {
+    if (type === EBuffType.ATTRIBUTE_INCREASE) {
         // decrease attribute back
         if (!attribute || totalValue === undefined) {
             return;
         }
         unit[attribute] -= totalValue;
         battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_DECREASE, attribute, value: totalValue });
-    };
+    }
     battleRecord.push({ unitId: unit.id, type: EBattleActionType.BUFF_REMOVED, buff });
 };
 
@@ -775,15 +774,25 @@ export const reduceStatus = (
     target.statuses.push({ type: statusType, value });
 };
 
-export const applyDebuff = (target: IBattleUnit, debuff: IDebuff, debuffAction: IBattleAction, battleCtrl: BattleController, caster?: IBattleUnit, isPlayer1?:boolean) => {
+export const applyDebuff = (
+    target: IBattleUnit,
+    debuff: IDebuff,
+    debuffAction: IBattleAction,
+    battleCtrl: BattleController,
+    caster?: IBattleUnit,
+    isPlayer1?: boolean,
+) => {
     //
     const { attribute, duration, timeType, type, appTrigger } = debuff;
     // if same debuff already on target, dont apply new one, but empower existing one instead
-    const existingDebuff = target.debuffs.find((dbf) =>
-        dbf.type === type && dbf.attribute === attribute && dbf.timeType === timeType
-        && dbf.appTrigger?.trigger === appTrigger?.trigger
-        && dbf.appTrigger?.targetCheck === appTrigger?.targetCheck
-        && dbf.appTrigger?.skillId === appTrigger?.skillId
+    const existingDebuff = target.debuffs.find(
+        (dbf) =>
+            dbf.type === type &&
+            dbf.attribute === attribute &&
+            dbf.timeType === timeType &&
+            dbf.appTrigger?.type === appTrigger?.type &&
+            dbf.appTrigger?.targetCheck === appTrigger?.targetCheck &&
+            dbf.appTrigger?.skillId === appTrigger?.skillId,
     );
 
     if (existingDebuff) {
@@ -884,15 +893,17 @@ export const applyDebuff = (target: IBattleUnit, debuff: IDebuff, debuffAction: 
                 value: ta,
             });
             target.debuffs.push({ ...debuff, totalValue: ta });
-        } else target.debuffs.push({ ...debuff, totalValue: debuffValue });
-        if (debuff.type === EDebuffType.BATTLE_TRIGGER) {
-            battleCtrl.listOfTriggers.push({
+        } else {
+            target.debuffs.push({ ...debuff, totalValue: debuffValue });
+        }
+        if (debuff.type === EDebuffType.BATTLE_TRIGGER && appTrigger) {
+            battleCtrl.addTrigger({
                 anchorTarget: target,
-                originBattleUnit: caster,
+                originBattleUnit: caster || target,
                 isBuff: false,
-                isPlayer1: isPlayer1,
+                isPlayer1: !!isPlayer1,
                 targetCheck: appTrigger.targetCheck || ETargetType.SELF,
-                trigger: appTrigger.trigger,
+                type: appTrigger.type,
             });
         }
         debuffAction.buffTargets?.push({ targetId: target.id, value: debuffValue });
@@ -927,15 +938,25 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
     target.debuffs = target.debuffs.filter((_, index) => index !== debuffIndex);
 };
 
-export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleAction, battleCtrl: BattleController, caster?: IBattleUnit, isPlayer1?:boolean) => {
+export const applyBuff = (
+    target: IBattleUnit,
+    buff: IBuff,
+    buffAction: IBattleAction,
+    battleCtrl: BattleController,
+    caster?: IBattleUnit,
+    isPlayer1?: boolean,
+) => {
     //if (buff.valueFrom === "customNumber")
     const { attribute, duration, timeType, type, appTrigger } = buff;
     //    console.log("-= Debug buff from calculated number =-",target,caster);
-    const existingBuff = target?.buffs?.find((bf) => 
-        bf.type === type && bf.attribute === attribute && bf.timeType === timeType
-        && bf.appTrigger?.trigger === appTrigger?.trigger
-        && bf.appTrigger?.targetCheck === appTrigger?.targetCheck
-        && bf.appTrigger?.skillId === appTrigger?.skillId
+    const existingBuff = target?.buffs?.find(
+        (bf) =>
+            bf.type === type &&
+            bf.attribute === attribute &&
+            bf.timeType === timeType &&
+            bf.appTrigger?.type === appTrigger?.type &&
+            bf.appTrigger?.targetCheck === appTrigger?.targetCheck &&
+            bf.appTrigger?.skillId === appTrigger?.skillId,
     );
     if (existingBuff) {
         if (existingBuff.totalValue === undefined) {
@@ -1014,15 +1035,15 @@ export const applyBuff = (target: IBattleUnit, buff: IBuff, buffAction: IBattleA
                 attribute: buff.attribute,
                 value: buffValue,
             });
-        } else if (buff.type === EBuffType.BATTLE_TRIGGER) {
+        } else if (buff.type === EBuffType.BATTLE_TRIGGER && appTrigger) {
             battleCtrl.listOfTriggers.push({
                 anchorTarget: target,
-                originBattleUnit: caster,
+                originBattleUnit: caster || target,
                 isBuff: true,
-                isPlayer1: isPlayer1,
+                isPlayer1: !!isPlayer1,
                 targetCheck: appTrigger.targetCheck || ETargetType.SELF,
-                trigger: appTrigger.trigger,
-            })
+                type: appTrigger.type,
+            });
         }
         target.buffs.push({ ...buff, totalValue: buffValue });
         buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });
@@ -1226,34 +1247,44 @@ export const calculateDamageBonuses = (
     return { attackDamage, isCrit };
 };
 
-export const triggerBattleTrigger = (appTrigger: IAppTrigger):boolean => {
+/**
+ * @function checks if trigger collected enough stack to activate
+ * */
+export const isTriggerReady = (appTrigger: IAppTrigger): boolean => {
     if (appTrigger.targetNumber) {
         appTrigger.currentNumber = (appTrigger.currentNumber || 0) + 1;
         if (appTrigger.currentNumber === appTrigger.targetNumber) {
             appTrigger.currentNumber = 0;
             return true;
         }
-    } else { // no targetNumber - apply effect each time it triggers
+    } else {
+        // no targetNumber - apply effect each time it triggers
         return true;
     }
     return false;
-}
+};
 
-export const checkBattleTriggerBuffDebuff = (bt: IBattleTriggers, battleController: BattleController) => {
+export const triggerBattleTrigger = (type: EAppTriggerType, battleController: BattleController, unit?: IBattleUnit) => {
+    battleController.listOfTriggers.forEach((bt) => {
+        if (bt.type === type && (!unit || battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)))
+            checkBattleTriggerBuffDebuff(bt, battleController);
+    });
+};
+
+export const checkBattleTriggerBuffDebuff = (bt: IBattleTrigger, battleController: BattleController) => {
     let found = false;
-    bt.isBuff ? 
-        bt.anchorTarget.buffs.forEach((buff) => {
-            if (buff.type === EBuffType.BATTLE_TRIGGER && buff.appTrigger?.trigger === bt.trigger) {
-                    battleController.performTriggerAction(bt,buff.appTrigger,{buff: buff});
-                    found = true;
-                }
-            }) :
-        bt.anchorTarget.debuffs.forEach((debuff) => {
-            if (debuff.type === EDebuffType.BATTLE_TRIGGER && debuff.appTrigger?.trigger === bt.trigger) {
-                    battleController.performTriggerAction(bt,debuff.appTrigger,{debuff: debuff});
-                    found = true;
-                }
-            });
-    if (!found)
-        bt.trigger = EAppTrigger.NONE; // mark for removal
-}
+    bt.isBuff
+        ? bt.anchorTarget.buffs.forEach((buff) => {
+              if (buff.type === EBuffType.BATTLE_TRIGGER && buff.appTrigger?.type === bt.type) {
+                  battleController.performTriggerAction(bt, buff.appTrigger, { buff: buff });
+                  found = true;
+              }
+          })
+        : bt.anchorTarget.debuffs.forEach((debuff) => {
+              if (debuff.type === EDebuffType.BATTLE_TRIGGER && debuff.appTrigger?.type === bt.type) {
+                  battleController.performTriggerAction(bt, debuff.appTrigger, { debuff: debuff });
+                  found = true;
+              }
+          });
+    if (!found) bt.type = EAppTriggerType.NONE; // mark for removal
+};
