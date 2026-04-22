@@ -1,17 +1,20 @@
-import { ECardType, ICard, TDuelEnemy } from "../../types";
+import { ECardType, EItemBonusType, EItemTargetType, ICard, TDuelEnemy } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { dagger1, wand1 } from "../basicWeaponItemConsts";
+import { basic_exp_bag } from "../commonItemConsts";
+import { jacket21_3 } from "../commonItemConsts2";
 import { summonerMantle3 } from "../commonItemConsts3";
 import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
-import { necromancerHero } from "../mcHeroConsts";
+import { necromancerHero, witchHero } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
+import { incrSummonBa } from "../skills/summonSkillConsts2";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
 
-export const debugHeroSelectRoom = false; // true // false
-export const debugStartingItemsRoom = false;
+export const debugHeroSelectRoom = true // false
+export const debugStartingItemsRoom = true;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -35,10 +38,10 @@ export const customStartingItemsRoom = (): ICard[] => {
         { type: ECardType.UNIT, price: 0, unit: peasantUnit },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
-        { type: ECardType.ITEM, price: 0, item: summonerMantle3 },
+        { type: ECardType.ITEM, price: 0, item: {...jacket21_3, bonuses: [...jacket21_3.bonuses, {type:EItemBonusType.ATTRIBUTE, value:10, valueType:"evolvedNumber", attribute:"basicMagicPower",targetType:EItemTargetType.SELF}]} },
         //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },
-        //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },
-        { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
+        { type: ECardType.SKILL, price: 0, skill: incrSummonBa },
+        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
         //{ type: ECardType.UNIT, price: 0, unit: goblinUnit },
     ];
 };

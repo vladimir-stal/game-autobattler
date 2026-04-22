@@ -542,6 +542,7 @@ export enum EBattleActionType {
     TOTEM_REMOVE = "TOTEM_REMOVE",
     TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE",
     TURN_START = "TURN_START",
+    BATTLE_TRIGGER = "BATTLE_TRIGGER",
 }
 
 export enum EHeroSkillType {
@@ -596,6 +597,7 @@ export enum EBuffType {
     IGNORE_NEXT_DEBUFF = "IGNORE_NEXT_DEBUFF",
     OUTGOING_HEAL = "OUTGOING_HEAL",
     OVERHEAL_TO_DAMAGE = "OVERHEAL_TO_DAMAGE", // Every heal beyond maxHp apply RADIATE status on [changeTargetTypeTo] targets
+    BATTLE_TRIGGER = "BATTLE_TRIGGER", // uses appTrigger field to do stuff
 }
 
 export enum EDebuffType {
@@ -611,6 +613,7 @@ export enum EDebuffType {
     DISABLE_SKILL = "DISABLE_SKILL", // enemy next skill is not performed
     BLIND = "BLIND", // enemy attacks have their target evasion chance +X
     MARK_WORTHY_FOE = "MARK_WORTHY_FOE",
+    BATTLE_TRIGGER = "BATTLE_TRIGGER", // uses appTrigger field to do stuff
 }
 
 export enum EBuffTimeType {
@@ -653,6 +656,7 @@ export enum ETargetType {
     BUFFED_ENEMY_RANDOM = "BUFFED_ENEMY_RANDOM",
     // COMMON
     BY_UNIT_ID = "BY_UNIT_ID",
+    EVERY_UNIT = "EVERY_UNIT",
 }
 
 export enum EWeaponType {
@@ -754,6 +758,11 @@ export interface ICard {
     description?: string;
 }
 
+export interface IPassiveSkill {
+    desc: string;
+    preBattleBuff?: IBuff;
+}
+
 /**
  * @prop basicAttackMarkType - hero basic attack type on marked enemy unit
  * @prop mobItems - list of items unit can probably have when bought
@@ -786,9 +795,7 @@ export interface IUnit {
     skills: THeroSkills;
     items: IItem[];
     afterDuelBonuses?: IAfterDuelBonus[];
-    passiveSkill?: {
-        desc: string;
-    };
+    passiveSkill?: IPassiveSkill;
     mobItems?: { item: IItem; probability: number }[];
 }
 
@@ -920,6 +927,41 @@ export interface IBattleAction {
     animation?: string;
 }
 
+export enum EAppTrigger {
+    NONE = "NONE",
+    BASIC_ATTACK = "BASIC_ATTACK",      // NOT IMPLEMENTED
+    TAKE_ATTACK = "TAKE_ATTACK",        // NOT IMPLEMENTED
+    SUMMON = "SUMMON", // after summon
+    ROUND_CYCLE = "ROUND_CYCLE", // end of the round
+    DEATH = "DEATH", // after reduced to 0 hp
+    KILL = "KILL", // after attack in which target hp reduced to 0
+}
+
+export interface IAppTrigger {
+    trigger: EAppTrigger;
+    skill: IHeroSkill[];
+    skillId: string;
+    // default: targetNumber = 1; limitedRepeats = false; targetCheck = self;
+    targetCheck?: ETargetType; // who triggers
+    currentNumber?: number; // increase this every time trigger happens
+    targetNumber?: number; // perform skill cast after currentNumber reach this number
+    limitedRepeats: boolean;
+}
+
+export interface IBattleTriggers {
+    anchorTarget: IBattleUnit; // buff/debuff anchored to target unit
+    originBattleUnit: IBattleUnit; // original caster and caster of triggered IHeroSkillSet
+    trigger: EAppTrigger;
+    targetCheck: ETargetType;
+    isBuff: boolean; // buff or debuff
+    isPlayer1: boolean;
+}
+
+export interface IBuffOrDebuff {
+    buff?: IBuff;
+    debuff?: IDebuff;
+}
+
 export interface IBuff {
     name: string;
     type: EBuffType;
@@ -937,6 +979,7 @@ export interface IBuff {
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
     duration?: number;
+    appTrigger?: IAppTrigger;
 }
 
 export interface IDebuff {
@@ -951,6 +994,7 @@ export interface IDebuff {
     mpScale?: number; // % of MP value is added to debuff value
     ppScale?: number; // % of PP value is added to debuff value
     duration?: number;
+    appTrigger?: IAppTrigger;
 }
 
 /**

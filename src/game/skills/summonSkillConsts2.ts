@@ -1,12 +1,15 @@
 import {
     AnimationType,
+    EAppTrigger,
     EBuffTimeType,
     EBuffType,
     EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
+    ESkillCondition,
     ETargetType,
     EUnitType,
+    IHeroSkill,
     IHeroSkillSet,
     IUnit,
     THeroSkills,
@@ -251,6 +254,46 @@ export const warriorSummonSkill: IHeroSkillSet = {
 };
 
 // INCREASE CURRENT SUMMON BA SKILL
+const incrSummonBaSkillset = (atk: number, mpScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "attack",
+            value: atk,
+            valueType: "number",
+            mpScale: mpScale,
+            targetType: ETargetType.SUMMON_CURRENT,
+            condition: ESkillCondition.HAS_SUMMON,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "+SmnAtk",
+                type: EBuffType.BATTLE_TRIGGER,
+                value: 1,
+                targetType: ETargetType.SELF,
+                valueType: "number",
+                timeType: EBuffTimeType.DUEL,
+                appTrigger: {
+                    limitedRepeats: true,
+                    trigger: EAppTrigger.SUMMON,
+                    targetCheck: ETargetType.SELF,
+                    skillId: "incrSummonBa",
+                    skill: [{
+                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                        attribute: "attack",
+                        value: atk,
+                        valueType: "number",
+                        mpScale: mpScale,
+                        targetType: ETargetType.SUMMON_CURRENT,
+                        condition: ESkillCondition.HAS_SUMMON,
+                    }]
+                }
+            },
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+    ]
+}
 
 export const incrSummonBa_3: IHeroSkillSet = {
     id: "incrSummonBa",
@@ -261,16 +304,7 @@ export const incrSummonBa_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "attack",
-            value: 1,
-            valueType: "number",
-            mpScale: 100,
-        },
-    ],
+    skills: incrSummonBaSkillset(1,100),
     image: IMAGE_SKILL_SUMMON_SWORD,
 };
 
@@ -283,16 +317,7 @@ export const incrSummonBa_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "attack",
-            value: 1,
-            valueType: "number",
-            mpScale: 70,
-        },
-    ],
+    skills: incrSummonBaSkillset(1,70),
     image: IMAGE_SKILL_SUMMON_SWORD,
     nextLevel: incrSummonBa_3,
 };
@@ -306,17 +331,7 @@ export const incrSummonBa: IHeroSkillSet = {
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "attack",
-            value: 1,
-            valueType: "number",
-            mpScale: 50,
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-    ],
+    skills: incrSummonBaSkillset(1,50),
     image: IMAGE_SKILL_SUMMON_SWORD,
     nextLevel: incrSummonBa_2,
 };
@@ -326,6 +341,46 @@ export const incrSummonBa: IHeroSkillSet = {
 //
 // INCREASE CURRENT SUMMON ARMOR SKILL
 //
+const incrSummonArmorSkillset = (armor: number, mpScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "armor",
+            value: armor,
+            valueType: "number",
+            mpScale: mpScale,
+            targetType: ETargetType.SUMMON_CURRENT,
+            condition: ESkillCondition.HAS_SUMMON,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "+SmnAtk",
+                type: EBuffType.BATTLE_TRIGGER,
+                value: 1,
+                targetType: ETargetType.SELF,
+                valueType: "number",
+                timeType: EBuffTimeType.DUEL,
+                appTrigger: {
+                    limitedRepeats: true,
+                    trigger: EAppTrigger.SUMMON,
+                    targetCheck: ETargetType.SELF,
+                    skillId: "incrSummonBa",
+                    skill: [{
+                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                        attribute: "armor",
+                        value: armor,
+                        valueType: "number",
+                        mpScale: mpScale,
+                        targetType: ETargetType.SUMMON_CURRENT,
+                        condition: ESkillCondition.HAS_SUMMON,
+                    }]
+                }
+            },
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+    ]
+}
 
 export const incrSummonArmor_3: IHeroSkillSet = {
     id: "incrSummonArmor",
@@ -336,17 +391,7 @@ export const incrSummonArmor_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "armor",
-            value: 8,
-            valueType: "number",
-            mpScale: 100,
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-    ],
+    skills: incrSummonArmorSkillset(8,100),
     image: IMAGE_SKILL_SUMMON_SHIELD,
 };
 
@@ -359,17 +404,7 @@ export const incrSummonArmor_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "armor",
-            value: 8,
-            valueType: "number",
-            mpScale: 75,
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-    ],
+    skills: incrSummonArmorSkillset(8,70),
     image: IMAGE_SKILL_SUMMON_SHIELD,
     nextLevel: incrSummonArmor_3,
 };
@@ -383,17 +418,7 @@ export const incrSummonArmor: IHeroSkillSet = {
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.SUMMON],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            attribute: "armor",
-            value: 8,
-            valueType: "number",
-            mpScale: 50,
-            targetType: ETargetType.SUMMON_CURRENT,
-        },
-    ],
+    skills: incrSummonArmorSkillset(8,50),
     image: IMAGE_SKILL_SUMMON_SHIELD,
     nextLevel: incrSummonArmor_2,
 };

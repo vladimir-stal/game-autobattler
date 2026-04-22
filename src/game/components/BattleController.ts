@@ -19,6 +19,10 @@ import {
     IHeroSkillSet,
     IDebuff,
     ESkillCondition,
+    IBattleTriggers,
+    EAppTrigger,
+    IAppTrigger,
+    IBuffOrDebuff,
 } from "../../types";
 import { eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -33,6 +37,7 @@ import {
     calculateUnitsAfterBattle,
     changeBuffCurrent,
     changeBuffValue,
+    checkBattleTriggerBuffDebuff,
     checkSkillCondition,
     executeDebuff,
     getAllyTargets,
@@ -56,6 +61,7 @@ import {
     removeTotem,
     swapHp,
     takeStatusDamage,
+    triggerBattleTrigger,
 } from "../utils/battleUtils";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomIntFromInterval } from "../utils/commonUtils";
 import { calculateSkillValue } from "../utils/skillUtils";
@@ -73,6 +79,8 @@ export class BattleController {
     player1BattleUnits: (IBattleUnit | null)[];
     player2BattleUnits: (IBattleUnit | null)[];
 
+    listOfTriggers: IBattleTriggers[];
+
     battleRecord: TBattleRecord;
 
     isBattleWin: boolean;
@@ -83,11 +91,14 @@ export class BattleController {
 
     activateOnStartSkills() {
         const onStartSkills: { unit: IBattleUnit; skillSet: IHeroSkillSet; isPlayer1: boolean }[] = [];
+        const passiveBuffs: {unit: IBattleUnit; buff: IBuff; isPlayer1: boolean}[] = [];
+        // normal skills
         this.player1BattleUnits.forEach((unit) => {
             if (!unit) {
                 return;
             }
-
+            if (unit.passiveSkill?.preBattleBuff)
+                passiveBuffs.push({ unit, buff: unit.passiveSkill?.preBattleBuff, isPlayer1: true});
             unit.skills.forEach((skill) => {
                 if (skill.isActivateOnStart) {
                     onStartSkills.push({ unit, skillSet: skill, isPlayer1: true });
@@ -98,7 +109,8 @@ export class BattleController {
             if (!unit) {
                 return;
             }
-
+            if (unit.passiveSkill?.preBattleBuff)
+                passiveBuffs.push({ unit, buff: unit.passiveSkill?.preBattleBuff, isPlayer1: false});
             unit.skills.forEach((skill) => {
                 if (skill.isActivateOnStart) {
                     onStartSkills.push({ unit, skillSet: skill, isPlayer1: false });
@@ -106,6 +118,9 @@ export class BattleController {
             });
         });
         //console.log("ON START SKILLS", onStartSkills);
+        passiveBuffs.forEach(({unit,buff,isPlayer1}) => {
+            this.performBuff(unit,undefined,buff,isPlayer1,true);
+        })
         //
         onStartSkills.forEach(({ unit, skillSet, isPlayer1 }) => {
             const skillSetBattleAction: IBattleAction = {
@@ -178,6 +193,15 @@ export class BattleController {
                     break;
                 }
             }
+            // ROUND_CYCLE EAppTrigger
+            this.listOfTriggers.forEach((bt) => {
+                if (bt && bt.trigger === EAppTrigger.ROUND_CYCLE) {
+                    checkBattleTriggerBuffDebuff(bt,this);
+                }
+            })
+            this.listOfTriggers = this.listOfTriggers.filter(t => t.trigger !== EAppTrigger.NONE);
+            console.log(" -= DEBUG =- trigger list size",this.listOfTriggers.length);
+            //
             this.battleRecord.push({ type: EBattleActionType.ROUND_END, value: i });
         }
         //console.log("battle display record");
@@ -191,6 +215,7 @@ export class BattleController {
         const player1NumberOfHeroes = this.player1Units.filter((u) => !!u).length;
         const player2NumberOfHeroes = this.player2Units.filter((u) => !!u).length;
         //console.log("Party size",player1NumberOfHeroes,player2NumberOfHeroes);
+        this.listOfTriggers = [];
 
         this.player1BattleUnits = this.player1Units.map((unit, index) => {
             if (!unit) {
@@ -209,6 +234,37 @@ export class BattleController {
             //console.log("Unit",unit," index",index," front",frontRow);
             return prepareUnitToBattle(unit, !frontRow);
         });
+    }
+
+    performTriggerAction(bt: IBattleTriggers, at: IAppTrigger, bfodbf: IBuffOrDebuff) {
+        if (triggerBattleTrigger(at)) {
+            const triggerBattleAction: IBattleAction = {
+                unitId: bt.originBattleUnit.id,
+                type: EBattleActionType.BATTLE_TRIGGER,
+                targetId: bt.anchorTarget.id,
+                name: bt.trigger.toString() + " / " + bt.targetCheck.toString()
+            };
+            this.battleRecord.push(triggerBattleAction);
+            at.skill.forEach(sk => {
+                this.performSkill(bt.originBattleUnit,sk,bt.isPlayer1,false);
+            });
+            if (at.limitedRepeats) {
+                if (bfodbf.buff) {
+                    bfodbf.buff.totalValue = (bfodbf.buff.totalValue || 0) - 1;
+                    if (bfodbf.buff.totalValue < 1) {
+                        removeBuff(bt.anchorTarget,bfodbf.buff,this.battleRecord);
+                        bt.trigger = EAppTrigger.NONE;
+                    }
+                }
+                if (bfodbf.debuff) {
+                    bfodbf.debuff.totalValue = (bfodbf.debuff.totalValue || 0) - 1;
+                    if (bfodbf.debuff.totalValue < 1) {
+                        removeDebuffSimple(bt.anchorTarget,bfodbf.debuff,this.battleRecord);
+                        bt.trigger = EAppTrigger.NONE;
+                    }
+                }
+            }
+        }
     }
 
     performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean, recurseDeep: number = 0, forcedSingleCast: boolean = false) {
@@ -342,7 +398,9 @@ export class BattleController {
             if (buff.timeType === EBuffTimeType.DURATION) {
                 buff.duration = (buff.duration || 0) - 1;
                 console.log("buff", buff.name, "time", buff.duration);
-                if (buff.duration < 1) removeBuff(unit, buff, this.battleRecord);
+                if (buff.duration < 1) {
+                    removeBuff(unit, buff, this.battleRecord);
+                }
             }
         });
 
@@ -366,7 +424,7 @@ export class BattleController {
                 removeStatus(unit, unit, st.type, this.battleRecord);
                 return;
             }
-            if (st.type === EStatusType.BLEED) {
+            if (st.type === EStatusType.BLEED && hpRegen > 0) {
                 const reduction = Math.min(Math.floor(hpRegen / 5) + 1, st.value);
                 reduceStatus(unit, unit, st.type, reduction, this.battleRecord);
                 // BLEED may reduce hp regeneration
@@ -571,14 +629,14 @@ export class BattleController {
                 finalTarget = target.summon;
                 parentUnit = target;
             }
-
-            const bleedStacks = finalTarget.statuses.find((st) => st.type === EStatusType.BLEED);
-            if (bleedStacks && bleedStacks.value > 0) {
-                // increase BLEED stacks for each used skill
-                const increase = Math.floor(bleedStacks.value / 3) + 1;
-                applyStatus(finalTarget, finalTarget, bleedStacks.type, increase, this.battleRecord);
+            if (isCritAllowed) {
+                const bleedStacks = finalTarget.statuses.find((st) => st.type === EStatusType.BLEED);
+                if (bleedStacks && bleedStacks.value > 0) {
+                    // increase BLEED stacks for each used skill
+                    const increase = Math.floor(bleedStacks.value / 5) + 1;
+                    applyStatus(unit, finalTarget, bleedStacks.type, increase, this.battleRecord);
+                }
             }
-
             // check if target unit has antiskill shield
             const antiskillShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
             if (antiskillShieldBuff) {
@@ -690,7 +748,7 @@ export class BattleController {
             }
         }
         targets.forEach((target) => {
-            !!target && applyBuff(target, buff, buffAction, this, unit);
+            !!target && applyBuff(target, buff, buffAction, this, unit, isPlayer1);
         });
     }
 
@@ -862,7 +920,7 @@ export class BattleController {
                     const antiskillShieldBuff = target.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
                     if (antiskillShieldBuff) {
                         removeBuff(target, antiskillShieldBuff, this.battleRecord);
-                        applyDebuff(unit, debuff, debuffAction, this, unit);
+                        applyDebuff(unit, debuff, debuffAction, this, unit, isPlayer1);
                         return;
                     }
                     const ignoreDebuffBuff = target.buffs.find((buff) => buff.type === EBuffType.IGNORE_NEXT_DEBUFF);
@@ -870,7 +928,7 @@ export class BattleController {
                         changeBuffValue(target, ignoreDebuffBuff, -1, this.battleRecord);
                         return;
                     }
-                    applyDebuff(target, debuff, debuffAction, this, unit);
+                    applyDebuff(target, debuff, debuffAction, this, unit, isPlayer1);
                 }
             });
     }
@@ -1095,8 +1153,12 @@ export class BattleController {
                 unit.summon!.hp += addHpValue;
             }
         });
-
         this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SUMMON, name: summon.name, summon: { ...unit.summon }, skill, isStartBattle });
+
+        this.listOfTriggers.forEach(bt => {
+            if (bt.trigger === EAppTrigger.SUMMON && this.isTarget(unit,bt.originBattleUnit,bt.targetCheck,bt.isPlayer1))
+                checkBattleTriggerBuffDebuff(bt,this);
+        });
     }
 
     performRemoveSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1211,7 +1273,14 @@ export class BattleController {
     getTargetsSimple(unit: IBattleUnit, targetType: ETargetType, isPlayer1?: boolean): IBattleUnit[] | null {
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
-        return getTargets(unit, allyUnits, opponentUnits, targetType);
+        if (targetType === ETargetType.EVERY_UNIT)
+            return [...allyUnits,...opponentUnits];
+        else
+            return getTargets(unit, allyUnits, opponentUnits, targetType);
+    }
+
+    isTarget(target: IBattleUnit, unit: IBattleUnit, targetType: ETargetType, isPlayer1?: boolean): boolean {
+        return this.getTargetsSimple(unit,targetType,isPlayer1).includes(target);
     }
 
     performCustomCalculation(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1390,6 +1459,15 @@ export class BattleController {
                 parentUnit = target;
             }
             //
+            if (isCritAllowed && isCrit) {
+                const bleedStacks = finalTarget.statuses.find((st) => st.type === EStatusType.BLEED);
+                //console.log("basicAttack --> ",finalTarget,bleedStacks)
+                if (bleedStacks && bleedStacks.value > 0) {
+                    // increase BLEED stacks for each used skill
+                    const increase = Math.floor(bleedStacks.value / 10) + 1;
+                    applyStatus(unit, finalTarget, bleedStacks.type, increase, this.battleRecord);
+                }
+            }
             // check if target has on-basic-attack buffs (like FIRE_SHIELD)
             const fireShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.FIRE_SHIELD);
             if (fireShieldBuff) {
@@ -1634,6 +1712,12 @@ export class BattleController {
 
         const bonusDmgFromOverheal = target.statuses.find((st) => st.type === EStatusType.RADIATE)?.value;
         if (bonusDmgFromOverheal) takeStatusDamage(target, bonusDmgFromOverheal, EStatusType.RADIATE, this.battleRecord);
+
+        if (target.hp <= 0)
+            this.listOfTriggers.forEach(bt => {
+                if (bt.trigger === EAppTrigger.KILL && this.isTarget(unit,bt.originBattleUnit,bt.targetCheck,bt.isPlayer1))
+                    checkBattleTriggerBuffDebuff(bt,this);
+            });
     }
 
     takeDamage(target: IBattleUnit, damageValue: number, parentUnit: IBattleUnit | undefined, recordTarget: IActionTarget) {
@@ -1645,6 +1729,12 @@ export class BattleController {
         if (target.hp <= 0) {
             target.hp = 0;
             this.battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
+            // triggers
+            this.listOfTriggers.forEach(bt => {
+                if (bt.trigger === EAppTrigger.DEATH && this.isTarget(target,bt.originBattleUnit,bt.targetCheck,bt.isPlayer1))
+                    checkBattleTriggerBuffDebuff(bt,this);
+            })
+
             // if summon dies remove it from parent unit
             if (parentUnit) {
                 console.log("SUMMON is DED!", parentUnit.summon);

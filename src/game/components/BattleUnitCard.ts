@@ -370,6 +370,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     renderStatuses() {
         this.statusPanels.forEach((statusCard) => {
+            //this.remove(statusCard,true);
             statusCard.destroy();
         });
         this.statusPanels = [];

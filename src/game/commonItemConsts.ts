@@ -351,6 +351,9 @@ export const basic_exp_bag_2: IItem = {
     nextLevel: basic_exp_bag_3,
 };
 
+/**
+ * @constant basic_exp_bag After duel [1/2/3]xp, mob +[1/1/2]xp
+ */
 export const basic_exp_bag: IItem = {
     id: "basic_exp_ring",
     name: i18n.items.basic_exp_ring,

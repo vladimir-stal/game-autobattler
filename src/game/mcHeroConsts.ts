@@ -1,6 +1,6 @@
 import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
-import { ETargetType, EDebuffType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EHeroClassType } from "../types";
+import { ETargetType, EDebuffType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EHeroClassType, EBuffTimeType, EBuffType, EAppTrigger, EHeroSkillType } from "../types";
 import { LANG } from "./consts";
 import { alchemistSkills } from "./skills/mc/alchemistSkills";
 import { assassinSkills } from "./skills/mc/assassinSkills";
@@ -247,7 +247,7 @@ export const samuraiHero: IUnit = {
 export const necromancerHero: IUnit = {
     heroClass: EHeroClass.NECROMANCER,
     attackType: EHeroAttackType.MAGIC,
-    attackTargetType: ETargetType.FIRST_TWO_ENEMIES,
+    attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 4,
     basicAttackTimes: 1,
@@ -263,6 +263,28 @@ export const necromancerHero: IUnit = {
     skills: necromancerSkills,
     passiveSkill: {
         desc: "Gain MP when unit dies",
+        preBattleBuff: {
+            name: "Passive",
+            targetType: ETargetType.SELF,
+            timeType: EBuffTimeType.DUEL,
+            type: EBuffType.BATTLE_TRIGGER,
+            value: 1,
+            appTrigger: {
+                skillId: "NecromancerPassive",
+                trigger: EAppTrigger.DEATH,
+                targetCheck: ETargetType.EVERY_UNIT,
+                skill: [
+                    {
+                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                        attribute: "magicPower",
+                        value: 5,
+                        valueType: "number",
+                        targetType: ETargetType.SELF,
+                    }
+                ],
+                limitedRepeats: false,
+            }
+        }
     },
     items: [],
     unitType: EUnitType.HERO,
