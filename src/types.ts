@@ -718,8 +718,8 @@ export type TUnits = (IUnit | null)[];
 export type TBattleUnits = (IBattleUnit | null)[];
 
 export interface IBossFight {
-    name: string,
-    units: IUnit[],
+    name: string;
+    units: IUnit[];
 }
 
 export interface IMobReward {
@@ -927,10 +927,10 @@ export interface IBattleAction {
     animation?: string;
 }
 
-export enum EAppTrigger {
+export enum EAppTriggerType {
     NONE = "NONE",
-    BASIC_ATTACK = "BASIC_ATTACK",      // NOT IMPLEMENTED
-    TAKE_ATTACK = "TAKE_ATTACK",        // NOT IMPLEMENTED
+    BASIC_ATTACK = "BASIC_ATTACK", // NOT IMPLEMENTED
+    TAKE_ATTACK = "TAKE_ATTACK", // NOT IMPLEMENTED
     SUMMON = "SUMMON", // after summon
     ROUND_CYCLE = "ROUND_CYCLE", // end of the round
     DEATH = "DEATH", // after reduced to 0 hp
@@ -938,7 +938,7 @@ export enum EAppTrigger {
 }
 
 export interface IAppTrigger {
-    trigger: EAppTrigger;
+    type: EAppTriggerType;
     skill: IHeroSkill[];
     skillId: string;
     // default: targetNumber = 1; limitedRepeats = false; targetCheck = self;
@@ -948,10 +948,10 @@ export interface IAppTrigger {
     limitedRepeats: boolean;
 }
 
-export interface IBattleTriggers {
+export interface IBattleTrigger {
     anchorTarget: IBattleUnit; // buff/debuff anchored to target unit
     originBattleUnit: IBattleUnit; // original caster and caster of triggered IHeroSkillSet
-    trigger: EAppTrigger;
+    type: EAppTriggerType;
     targetCheck: ETargetType;
     isBuff: boolean; // buff or debuff
     isPlayer1: boolean;
