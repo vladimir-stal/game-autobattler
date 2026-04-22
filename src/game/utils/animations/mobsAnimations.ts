@@ -46,16 +46,16 @@ export function createMobAnimations(scene: Scene) {
 
     scene.anims.create({
         key: AnimationType.MOB_SKELETON_ATTACK,
-        //frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_ATTACK, { start: 0, end: 69 }),
-        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_ATTACK, {
-            frames: [
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-                //
-                29, 31, 33,
-                //
-                37, 41, 45, 49, 53, 57,
-            ],
-        }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_ATTACK, { start: 0, end: 25 }),
+        //frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_ATTACK, {
+        // frames: [
+        //     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+        //     //
+        //     29, 31, 33,
+        //     //
+        //     37, 41, 45, 49, 53, 57,
+        // ],
+        //}),
         frameRate: 40,
         //repeat: -1,
     });
@@ -80,10 +80,15 @@ export function createMobAnimations(scene: Scene) {
         key: AnimationType.MOB_GOBLIN_1_ATTACK,
         //frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_1_ATTACK, { start: 0, end: 99 }),
         frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_1_ATTACK, {
+            // frames: [
+            //     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 28, 30, 34, 40, 40, 40,
+            //     //
+            //     20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+            // ],
             frames: [
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 28, 30, 34, 40, 40, 40,
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19, 23, 29, 29, 29,
                 //
-                20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+                9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
             ],
         }),
         frameRate: 20,
@@ -97,8 +102,8 @@ export function createMobAnimations(scene: Scene) {
         //frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_2_BATTLE_IDLE, { start: 0, end: 99 }),
         frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_2_BATTLE_IDLE, {
             frames: [
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-                //
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+                // 22
                 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
             ],
         }),
@@ -126,10 +131,15 @@ export function createMobAnimations(scene: Scene) {
         key: AnimationType.MOB_GOBLIN_SHAMAN_BATTLE_IDLE,
         //frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, { start: 0, end: 99 }),
         frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, {
+            // frames: [
+            //     80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 99,
+            //     //
+            //     98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80,
+            // ],
             frames: [
-                80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 99,
+                3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 0, 0,
                 //
-                98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80,
+                21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3,
             ],
         }),
         frameRate: 16,
@@ -140,20 +150,27 @@ export function createMobAnimations(scene: Scene) {
         key: AnimationType.MOB_GOBLIN_SHAMAN_ATTACK,
         //frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_ATTACK, { start: 0, end: 99 }),
         frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_ATTACK, {
+            // frames: [
+            //     //31, 32, 33, 34, 35, 36, 37, 38, 39,
+            //     //40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+            //     //
+            //     //51, 52, 53, 54,
+            //     55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+            //     //55, 56, 57, 58, 59, 60, 61, 62, 64, 66, 68, 70,
+            //     //
+            //     71, 72, 74, 74, 75, 76, 77, 78,
+            //     //72, 74, 76, 78,
+            //     //79,80
+            //     //
+            //     //31, 30, 29, 28, 27, 26, 25, 24, 23,
+            //     22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8,
+            // ],
             frames: [
-                //31, 32, 33, 34, 35, 36, 37, 38, 39,
-                //40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
                 //
-                //51, 52, 53, 54,
-                55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
-                //55, 56, 57, 58, 59, 60, 61, 62, 64, 66, 68, 70,
-                //
-                71, 72, 74, 74, 75, 76, 77, 78,
-                //72, 74, 76, 78,
-                //79,80
-                //
-                //31, 30, 29, 28, 27, 26, 25, 24, 23,
-                22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8,
+                27, 28, 29, 30, 31, 32,
+                // 77, 78,
+                10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
             ],
         }),
         frameRate: 30,
@@ -164,7 +181,25 @@ export function createMobAnimations(scene: Scene) {
         key: AnimationType.MOB_GOBLIN_SHAMAN_SPELL,
         //frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_SPELL, { start: 0, end: 99 }),
         frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_SPELL, {
+            // frames: [
+            //     11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+            //     //
+            //     21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+            //     //
+            //     31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+            //     //
+            //     41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+            //     //
+            //     51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+            //     // 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+            //     // 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+            //     // 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+            //     // 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+            //     //
+            // ],
             frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                //
                 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
                 //
                 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
@@ -173,12 +208,7 @@ export function createMobAnimations(scene: Scene) {
                 //
                 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
                 //
-                51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-                // 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
-                // 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
-                // 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
-                // 91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
-                //
+                //51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
             ],
         }),
         frameRate: 30,
@@ -188,7 +218,7 @@ export function createMobAnimations(scene: Scene) {
     scene.anims.create({
         key: AnimationType.MOB_GOBLIN_SHAMAN_DEFEATED,
         frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_DEFEATED, { start: 0, end: 99 }),
-        frameRate: 20,
+        frameRate: 40,
         //repeat: -1,
     });
 
@@ -212,12 +242,19 @@ export function createMobAnimations(scene: Scene) {
         key: AnimationType.MOB_PEASANT_ATTACK,
         //frames: scene.anims.generateFrameNumbers(IMAGE_PEASANT_ATTACK, { start: 0, end: 99 }),
         frames: scene.anims.generateFrameNumbers(IMAGE_PEASANT_ATTACK, {
+            // frames: [
+            //     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 30, 32, 34, 36, 38,
+            //     //
+            //     42, 42, 42, 42, 42, 41,
+            //     //
+            //     20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+            // ],
             frames: [
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 30, 32, 34, 36, 38,
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 19, 21, 23, 25, 27,
                 //
-                42, 42, 42, 42, 42, 41,
+                31, 31, 31, 31, 31, 30,
                 //
-                20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+                9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
             ],
         }),
         frameRate: 30,
@@ -276,30 +313,35 @@ export function createMobAnimations(scene: Scene) {
 
     scene.anims.create({
         key: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
-        //frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_ATTACK, { start: 0, end: 99 }),
-        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_ATTACK, {
-            frames: [
-                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                //
-                //21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-                22, 24, 26, 28, 30,
-                //
-                //31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-                32, 34, 36, 38, 40,
-                //
-                //41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
-                42, 44, 46, 48, 50,
-                //
-                //51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-                54, 58,
-                //
-                //61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
-                62, 66, 70,
-                //
-                71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
-                //29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
-            ],
-        }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_ATTACK, { start: 0, end: 39 }),
+        //frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_ATTACK, {
+        // frames: [
+        //     11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        //     //
+        //     //21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+        //     22, 24, 26, 28, 30,
+        //     //
+        //     //31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+        //     32, 34, 36, 38, 40,
+        //     //
+        //     //41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+        //     42, 44, 46, 48, 50,
+        //     //
+        //     //51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+        //     54, 58,
+        //     //
+        //     //61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+        //     62, 66, 70,
+        //     //
+        //     71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+        //     //29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+        // ],
+        // frames: [
+        //     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+        //     //
+        //     20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+        // ],
+        //}),
         frameRate: 40,
         //repeat: -1,
     });

@@ -224,9 +224,9 @@ export function loadImages(scene: Scene) {
     loadBasicHeroesImages(scene);
 
     // EFFECTS
-    if (GAME_MODE === "FULL") {
-        loadImagesEffects(scene);
-    }
+    //if (GAME_MODE === "FULL") {
+    loadImagesEffects(scene);
+    //}
     loadImagesUIEffects(scene);
 
     //

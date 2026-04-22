@@ -22,7 +22,7 @@ export const warriorSummonMob_5: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.WARRIORSUMMON,
-    id: "WARRIORSUMMON", // change to diff from summoned unit (+add record in imageUtils)
+    id: "SPIRITWARRIOR",
     skills: [],
     items: [],
     level: 5,
@@ -51,7 +51,7 @@ export const warriorSummonMob_3: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.WARRIORSUMMON,
-    id: "WARRIORSUMMON", // change to diff from summoned unit (+add record in imageUtils)
+    id: "SPIRITWARRIOR",
     skills: [],
     items: [],
     level: 3,
@@ -80,7 +80,7 @@ export const warriorSummonMob: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.WARRIORSUMMON,
-    id: "WARRIORSUMMON", // change to diff from summoned unit (+add record in imageUtils)
+    id: "SPIRITWARRIOR",
     skills: [],
     items: [],
     level: 1,
@@ -111,7 +111,7 @@ export const fireflySummonMob: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.FIREFLY,
-    id: "FIREFLYSUMMON", // change to diff from summoned unit (+add record in imageUtils)
+    id: "FIREFLY",
     skills: [],
     items: [],
     level: 1,
@@ -140,8 +140,8 @@ export const fireflySummonMob_6: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.FIREFLY,
-    id: "FIREFLYSUMMON",
-    skills: [fireflyNoSkill,fireflyNoSkill,fireflyNoSkill,fireflySelfPoison],
+    id: "FIREFLY",
+    skills: [fireflyNoSkill, fireflyNoSkill, fireflyNoSkill, fireflySelfPoison],
     items: [],
     level: 6,
     exp: 0,

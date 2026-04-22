@@ -638,8 +638,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     async playBuff(buff: IBuff, skill?: IHeroSkill) {
         //this.setAction("BUFF " + buff.name);
-
-        if (GAME_MODE !== "FULL") {
+        const { unitType, heroClassType } = this.unit || {};
+        //if (GAME_MODE !== "FULL") {
+        if (GAME_MODE !== "FULL" && unitType === EUnitType.HERO && heroClassType === EHeroClassType.MULTI) {
             return;
         }
 
@@ -754,9 +755,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playEffect(unit?: IBattleUnit, skill?: IHeroSkill) {
-        if (GAME_MODE !== "FULL") {
-            return;
-        }
+        // if (GAME_MODE !== "FULL") {
+        //     return;
+        // }
 
         let animation: EEffectAnimationType | undefined;
         let animationDelay = 0;
@@ -819,9 +820,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playHealEffect() {
-        if (GAME_MODE !== "FULL") {
-            return;
-        }
+        // if (GAME_MODE !== "FULL") {
+        //     return;
+        // }
 
         const animation = EEffectAnimationType.EFFECT_PRIEST_HEAL;
         const animationDelay = 500;
