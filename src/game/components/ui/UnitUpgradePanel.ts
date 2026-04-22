@@ -1,12 +1,11 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, EHeroClass, ICard, IUnit } from "../../../types";
-import { CardSlot } from "../CardSlot";
-import { colors, GAME_MODE, i18n } from "../../consts";
+import { EHeroClass, IUnit } from "../../../types";
+import { colors, i18n } from "../../consts";
 import { createUnit } from "../../utils/unitUtils";
 import { Card } from "../Card";
 import { getRandomArrayItems } from "../../utils/commonUtils";
-import { BASIC_CLASSES, basicClassHeroes } from "../../heroConsts";
+import { BASIC_CLASSES } from "../../heroConsts";
 import { getHeroMulticlass, getMcHeroByClass, getMulticlassSubclasses } from "../../utils/heroUtils";
 import { getHeroImage } from "../../utils/imageUtils";
 import { HeroClassTag } from "./HeroClassTag";
@@ -152,7 +151,6 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         const y = 350;
         const imageObject = this.gameScene.add.sprite(x, y, image, 0).setOrigin(0, 1);
         if (animation) {
-            // && GAME_MODE === "FULL"
             imageObject.anims.play(animation);
         }
         this.add(imageObject);

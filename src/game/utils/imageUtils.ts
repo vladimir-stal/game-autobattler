@@ -161,7 +161,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 animation: AnimationType.MASTER_IDLE,
                 idleBattleAnimation: AnimationType.MASTER_IDLE_BATTLE,
                 attackAnimation: AnimationType.MASTER_ATTACK_2, // AnimationType.MASTER_ATTACK,
-                magicAttackSkillAnimation: AnimationType.MASTER_ATTACK,
+                //magicAttackSkillAnimation: AnimationType.MASTER_ATTACK,
                 defeatedAnimation: AnimationType.MASTER_DEFEATED,
                 hurtAnimation: AnimationType.MASTER_HURT,
                 buffAnimation: AnimationType.MASTER_BUFF,
@@ -411,6 +411,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 massAttackAnimation: AnimationType.BOSS_MINOTAUR_STOMP,
                 hurtAnimation: AnimationType.BOSS_MINOTAUR_HURT,
             };
+        case "FIREFLY":
         case "FIREFLYSUMMON": {
             return {
                 //distance: -40,
@@ -431,6 +432,16 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 //attackAnimation: AnimationType.MOB_SKELETON_ATTACK,
                 //defeatedAnimation: AnimationType.MOB_FIREFLY_DEFEATED,
                 //appearAnimation: AnimationType.MOB_FIREFLY_APPEAR,
+            };
+        }
+        case "SPIRITWARRIOR": {
+            return {
+                size: 400,
+                distance: -30,
+                distanceEnemy: -10,
+                image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
             };
         }
         case "WARRIORSUMMON": {
@@ -471,6 +482,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
             };
         case "GOBLINSHAMAN":
             return {
+                distance: -30,
                 distanceEnemy: -60,
                 image: IMAGE_GOBLIN_1,
                 idleBattleAnimation: AnimationType.MOB_GOBLIN_SHAMAN_BATTLE_IDLE,

@@ -61,27 +61,27 @@ export function loadImagesMobs(scene: Scene) {
         frameWidth: 400,
         frameHeight: 400,
     });
-
-    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
 
     // GOBLIN_1 //////////////////////////////////////////////////////////////
-
-    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
-
-    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
 
     // GOBLIN_2 //////////////////////////////////////////////////////////////
-
-    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -92,18 +92,18 @@ export function loadImagesMobs(scene: Scene) {
     });
 
     // GOBLIN_SHAMAN //////////////////////////////////////////////////////////////
-
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
-
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
-
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -114,13 +114,13 @@ export function loadImagesMobs(scene: Scene) {
     });
 
     // PEASANT //////////////////////////////////////////////////////////////
-
-    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
-
-    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -147,8 +147,8 @@ export function loadImagesMobs(scene: Scene) {
         frameWidth: 400,
         frameHeight: 400,
     });
-
-    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.webp", {
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });
