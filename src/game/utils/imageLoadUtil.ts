@@ -218,6 +218,8 @@ export const IMAGE_ATTRIBUTE_MAGIC_POWER = "IMAGE_ATTRIBUTE_MAGIC_POWER";
 export const IMAGE_ATTRIBUTE_PHYSICAL_POWER = "IMAGE_ATTRIBUTE_PHYSICAL_POWER";
 
 export const IMAGE_CARD_EXP = "IMAGE_CARD_EXP";
+export const IMAGE_ICON_REROLL = "IMAGE_ICON_REROLL";
+export const IMAGE_ICON_GOLD = "IMAGE_ICON_GOLD";
 
 export function loadImages(scene: Scene) {
     // BASIC HEROES
@@ -343,4 +345,7 @@ export function loadImages(scene: Scene) {
 
     //scene.load.image(IMAGE_CARD_EXP, "assets/sprites/attributes/exp.png");
     scene.load.image(IMAGE_CARD_EXP, "assets/sprites/exp.png");
+    //
+    scene.load.image(IMAGE_ICON_REROLL, "assets/sprites/icons/reroll.png");
+    //scene.load.image(IMAGE_ICON_GOLD, "assets/sprites/icons/coin.png");
 }

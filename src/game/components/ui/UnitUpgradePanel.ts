@@ -4,12 +4,15 @@ import { EHeroClass, IUnit } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { createUnit } from "../../utils/unitUtils";
 import { Card } from "../Card";
-import { getRandomArrayItems } from "../../utils/commonUtils";
+import { getRandomArrayItem, getRandomArrayItems } from "../../utils/commonUtils";
 import { BASIC_CLASSES } from "../../heroConsts";
 import { getHeroMulticlass, getMcHeroByClass, getMulticlassSubclasses } from "../../utils/heroUtils";
 import { getHeroImage } from "../../utils/imageUtils";
 import { HeroClassTag } from "./HeroClassTag";
 import { applyItemBonuses } from "../../utils/itemUtils";
+import { IMAGE_ICON_REROLL } from "../../utils/imageLoadUtil";
+
+const REROLL_PRICE = 4;
 
 /** UI panel to upgrade basic class hero to multiclass hero */
 export class UnitUpgradePanel extends Phaser.GameObjects.Container {
@@ -20,6 +23,8 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
     isRerollAvailable: boolean;
 
     hintText: GameObjects.Text;
+
+    basicHeroClasses: EHeroClass[];
 
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
@@ -33,17 +38,17 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         this.unit = unitToUpgrade;
         this.card = card;
         this.isRerollAvailable = true;
-        this.render();
+        this.render(false);
     }
 
     hide() {
         this.setVisible(false);
     }
 
-    render() {
+    render(isAfterReroll: boolean) {
         this.removeAll(true);
         this.renderBorder();
-        this.renderCards();
+        this.renderCards(isAfterReroll);
         this.renderButtons();
         this.setVisible(true);
     }
@@ -63,12 +68,18 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         this.add(title);
     }
 
-    renderCards() {
-        const randomHeroClasses = getRandomArrayItems(
-            BASIC_CLASSES.filter((heroClass) => heroClass !== this.unit.heroClass),
-            3,
-            true,
-        );
+    renderCards(isAfterReroll: boolean) {
+        let basicClasses = BASIC_CLASSES.filter((heroClass) => heroClass !== this.unit.heroClass);
+        // remove one basic, which was in first 3 options, from options after reroll
+        // to increase chance of finding specific mc hero
+        if (isAfterReroll) {
+            const previousBasicHeroClasses = [...this.basicHeroClasses];
+            const randomPrevBasicClass = getRandomArrayItem(previousBasicHeroClasses);
+            basicClasses = basicClasses.filter((heroClass) => heroClass !== randomPrevBasicClass);
+        }
+
+        const randomHeroClasses = getRandomArrayItems(basicClasses, 3, true);
+        this.basicHeroClasses = randomHeroClasses;
 
         const mcClasses = randomHeroClasses.map((randomClass) => getHeroMulticlass(this.unit.heroClass, randomClass));
 
@@ -158,25 +169,28 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
 
     renderButtons() {
         if (this.isRerollAvailable) {
-            const rerollPrice = 4;
-            const rerollPriceText = rerollPrice + " " + i18n.ui.GOLD;
-            const rerollButton = this.scene.add.text(120, -30, i18n.ui.REROLL + " " + rerollPriceText, {
-                //fontFamily: "Arial Black",
-                fontSize: 18,
-                color: "#aaffaa",
-            });
+            const rerollPriceText = REROLL_PRICE + " " + i18n.ui.GOLD;
+            const rerollButtonText = this.scene.add
+                .text(725, -50, rerollPriceText, {
+                    //fontFamily: "Arial Black",
+                    fontSize: 18,
+                    color: "#aaffaa",
+                })
+                .setOrigin(0, 0.5);
+            this.add(rerollButtonText);
 
-            rerollButton.setInteractive().on("pointerdown", () => {
-                if (this.gameScene.bankController.totalGold < rerollPrice) {
+            const rerollButtonImage = this.scene.add.image(700, -50, IMAGE_ICON_REROLL).setOrigin(0.5, 0.5);
+            this.add(rerollButtonImage);
+
+            rerollButtonImage.setInteractive().on("pointerdown", () => {
+                if (this.gameScene.bankController.totalGold < REROLL_PRICE) {
                     return;
                 }
 
-                this.gameScene.bankController.buy(rerollPrice);
+                this.gameScene.bankController.buy(REROLL_PRICE);
                 this.isRerollAvailable = false;
-                this.render();
+                this.render(true);
             });
-
-            this.add(rerollButton);
         }
     }
 }

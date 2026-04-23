@@ -1,7 +1,7 @@
 import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { colors, i18n } from "../consts";
-import { ECardType, ICard, IHeroSkillSet, IItem, IUnit } from "../../types";
+import { ECardType, ICard, ICardToMove, IHeroSkillSet, IItem, IUnit } from "../../types";
 import { CardSlot } from "./CardSlot";
 import { UnitCard } from "./UnitCard";
 import { ItemCard } from "./ItemCard";
@@ -12,7 +12,7 @@ import { AttributeCard } from "./AttributeCard";
 import { IMAGE_CARD_EXP } from "../utils/imageLoadUtil";
 
 /** Card to buy from shop  */
-export class Card extends Phaser.GameObjects.Container {
+export class Card extends Phaser.GameObjects.Container implements ICardToMove {
     gameScene: GameScene;
 
     rect: GameObjects.Rectangle;
@@ -22,18 +22,29 @@ export class Card extends Phaser.GameObjects.Container {
     title: string;
     //upgradeButton: GameObjects.Text;
     onBuyPanel: boolean;
+    onCardMoved: (() => void) | undefined; // used when moving card from hero item slot
+    parentUnitId: string | undefined; // used when moving card from hero item slot to check if item is moved from unit to same unit
+    isCardObject: boolean = true;
 
     heroCard: UnitCard | undefined;
 
-    constructor(scene: GameScene, x: number, y: number, card: ICard, onBuyPanel: boolean, cardSlot?: CardSlot) {
+    constructor(
+        scene: GameScene,
+        x: number,
+        y: number,
+        card: ICard,
+        onBuyPanel: boolean,
+        cardSlot?: CardSlot,
+        onCardMoved?: () => void,
+        parentUnitId?: string,
+    ) {
         super(scene, x, y);
         this.gameScene = scene;
         this.card = card;
         this.cardSlot = cardSlot;
         this.onBuyPanel = onBuyPanel;
-        // if (card.type === ECardType.UNIT) {
-        //     console.log("CARD BEFORE RENDER", this.card.unit.items.length);
-        // }
+        this.onCardMoved = onCardMoved;
+        this.parentUnitId = parentUnitId;
         this.render();
     }
 

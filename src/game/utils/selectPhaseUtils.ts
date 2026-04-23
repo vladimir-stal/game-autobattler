@@ -9,6 +9,7 @@ import {
     EWeaponItemType,
     IBossFight,
     ICard,
+    ICardToMove,
     IHeroSkillSet,
     IItem,
     IMobReward,
@@ -201,7 +202,7 @@ export const getRooms = (
             {
                 if (hour === 5) {
                     const boss = getRandomArrayItem(bosses);
-                    return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: boss }}, null];
+                    return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: boss } }, null];
                 }
             }
             break;
@@ -335,6 +336,7 @@ export const getCards = (
     roomType: ERoomType,
     day: number,
     hour: number,
+    isAfterReroll: boolean,
     heroClasses?: EHeroClass[],
     tripleSetTypes?: ECardType[],
 ): { cards: (ICard | null)[]; isSingleSelect: boolean; isSelectRequired: boolean; isRerollAvailable: boolean; hintTextType?: ESelectCardHint } => {
@@ -540,9 +542,12 @@ export const getCards = (
         case ERoomType.ITEM_SELECT:
             {
                 const topItem = getAllItemTop(day);
-                const holdingItem = getRandomArrayItem(getAllHoldingItems(gameScene));
+                const holdingItem = isAfterReroll ? null : getRandomArrayItem(getAllHoldingItems(gameScene));
                 const num = holdingItem ? 2 : 3;
-                const items = [...getXFromAllItems(day, num), topItem, holdingItem];
+                const items = [...getXFromAllItems(day, num), topItem];
+                if (holdingItem) {
+                    items.push(holdingItem);
+                }
 
                 cards = genShopItemCards(items, !!holdingItem);
             }
@@ -585,8 +590,6 @@ export const getCards = (
                         4,
                         true,
                     );
-
-                    //console.log("MIXED_CLASS_SELECT", heroClasses, mixed);
 
                     cards = mixed.map((itemOrSkill) => {
                         if (!itemOrSkill) {
@@ -634,6 +637,8 @@ export const getCards = (
                 const randomSkills = getRandomArrayItems(getAllClassesSkills(day), num, true);
                 const skills = [...randomSkills, topLevelSkill, holdingSkill];
 
+                console.log("SKILLS_SELL skills", skills);
+
                 cards = skills.map((skill, index) => {
                     const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
                     return { skill, type: ECardType.SKILL, price: price };
@@ -642,7 +647,7 @@ export const getCards = (
             break;
         case ERoomType.SKILLS_SELL_MIXED_CLASSES:
             {
-                isRerollAvailable = false;
+                isRerollAvailable = true;
 
                 const randomSkills = getRandomArrayItems(getMixedClassesSkills(day), 4, true);
 
@@ -686,7 +691,8 @@ export const getCards = (
                 isRerollAvailable = true;
                 hintTextType = ESelectCardHint.SELECT_SINGLE;
 
-                const randomSkills = getRandomArrayItems(getAllClassesSkills(day), 3, true).map((skill) => {
+                const skills = getAllClassesSkills(day).filter((skill) => skill.isChained);
+                const randomSkills = getRandomArrayItems(skills, 3, true).map((skill) => {
                     // const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
                     // const enchancedSkill = { ...skill };
                     // enchancedSkill[enchancedOption] = true;
@@ -853,8 +859,8 @@ export const getCards = (
                         type: ECardType.MOBS,
                         price: 0,
                         //name: name + "\n" + wordwrap,
-                        name,
-                        description: wordwrap + "\n" + i18n.ui.LEVEL + " " + level, //wordwrap + "\nDifficulty ~" + (autolevel + idx),
+                        name: name + "\n" + i18n.ui.LEVEL + " " + level,
+                        description: wordwrap, //wordwrap + "\nDifficulty ~" + (autolevel + idx),
                     };
                 });
             }
@@ -912,9 +918,13 @@ const getCardPrice = (type: ECardType, day: number, hour: number) => {
 };
 
 /** Highlight slots or cards to be a target for another selected card (move, add item, add attribute, heal, ...) */
-export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, gameScene: GameScene) => {
+/**
+ * @param parentUnitId id of unit on units panel - used to check if item is moved from unit to same unit
+ */
+//export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: GameScene, card?: ICard, parentUnitId?: string) => {
+export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: GameScene, cardToMove?: ICardToMove) => {
     slots.forEach((slot) => {
-        if (!value) {
+        if (!value || !cardToMove) {
             slot.setIsActive(false);
             return;
         }
@@ -923,6 +933,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
             return;
         }
 
+        const { card, parentUnitId } = cardToMove;
         const { type, item, skill } = card;
         switch (type) {
             case ECardType.ATTRIBUTE:
@@ -984,6 +995,11 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
 
                     // case move target is unit
                     if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT) {
+                        // case moving items from unit to same unit
+                        if (parentUnitId && slot.card?.card.unit?.id === parentUnitId) {
+                            slot.setIsActive(true, "equip");
+                            return;
+                        }
                         //
                         // CASE TARGET IS MOB
                         if (unitType === EUnitType.UNIT) {
@@ -1063,6 +1079,14 @@ export const activateSlots = (slots: CardSlot[], value: boolean, card: ICard, ga
             case ECardType.SKILL:
                 {
                     if (!skill) {
+                        return;
+                    }
+
+                    // MC SKILL CAN ONLY BE PLACED ON SAME HERO
+                    if (skill.isMcSkill) {
+                        if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT && parentUnitId && slot.card?.card.unit?.id === parentUnitId) {
+                            slot.setIsActive(true, "equip");
+                        }
                         return;
                     }
 

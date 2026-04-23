@@ -39,7 +39,7 @@ export class SkillCard extends Phaser.GameObjects.Container {
 
     renderBorder() {
         this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK, 0).setOrigin(0.5, 0);
-        this.rect.setStrokeStyle(1, getCardBorderColor(this.skill.priceLevel));
+        this.rect.setStrokeStyle(2, getCardBorderColor(this.skill.priceLevel));
 
         this.rect.setInteractive();
         this.rect
@@ -69,7 +69,7 @@ export class SkillCard extends Phaser.GameObjects.Container {
         }
 
         const title = i18n.ui.SKILL;
-        this.titleText = this.scene.add.text(0, 5, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" }).setOrigin(0.5);
+        this.titleText = this.scene.add.text(0, 15, title, { fontSize: 14, color: "#dddddd", fontStyle: "bold" }).setOrigin(0.5);
         this.add(this.titleText);
     }
 

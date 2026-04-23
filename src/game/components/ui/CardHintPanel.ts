@@ -157,16 +157,16 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         //
         //
 
-        this.bonusTextObject = this.scene.add.text(10, 60, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.bonusTextObject = this.scene.add.text(10, 80, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.bonusTextObject);
 
-        this.attrTextObject = this.scene.add.text(10, 30, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
+        this.attrTextObject = this.scene.add.text(10, 50, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
         this.add(this.attrTextObject);
 
-        this.heroClassBonusTextObject = this.scene.add.text(10, 90, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
+        this.heroClassBonusTextObject = this.scene.add.text(10, 110, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
         this.add(this.heroClassBonusTextObject);
 
-        this.afterDuelBonusesTextObject = this.scene.add.text(10, 80, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
+        this.afterDuelBonusesTextObject = this.scene.add.text(10, 100, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
         this.add(this.afterDuelBonusesTextObject);
 
         // item image
@@ -341,7 +341,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         const { name, level, battleBonuses, bonuses, heroClassBonuses, afterDuelBonuses, desc } = item;
 
         const itemLevel = level > 1 ? ` (${level})` : "";
-        this.titleText.setText(name + itemLevel);
+        const itemType = item.weaponType ? "\n(" + i18n.ui.WEAPON + ")" : "";
+        this.titleText.setText(name + itemLevel + itemType);
 
         //
 

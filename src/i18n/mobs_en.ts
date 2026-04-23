@@ -1,0 +1,43 @@
+export const MOBS_EN = {
+    level1: {
+        peasants: "Peasants",
+        weakgoblins: "Weak goblins",
+        spiritwarrior: "Spirit warriror",
+        fireflies: "Fireflies",
+        wolf: "Wolf",
+    },
+    level2: {
+        goblins: "Goblins",
+        goblinshaman: "Goblin shaman",
+        skeleton: "Skeleton",
+        spiritwarrirors: "Spirit warrirors",
+        wolves: "Wolves",
+        fireflies: "Fireflies",
+    },
+    level3: {
+        goblins: "Goblins",
+        skeletons: "Skeletons",
+        goblinshamans: "Goblin shamans",
+        spiritwarrirors: "Spirit warrirors",
+        wolves: "Wolves",
+    },
+    level4: {
+        goblins: "Goblins",
+        skeletons: "Skeletons",
+        infernoflies: "Infernoflies",
+        wolves: "Wolves",
+        peasants: "Peasants",
+    },
+    level5: {
+        goblins: "Goblins",
+        skeletons: "Skeletons",
+        spiritwarrirors: "Spirit warrirors",
+    },
+    level6: {
+        skeletons: "Skeletons",
+        peasants: "Peasants",
+        infernoflies: "Infernoflies",
+    },
+    level7: {},
+    level8: {},
+};

@@ -1,3 +1,5 @@
+import { CardSlot } from "./game/components/CardSlot";
+
 export enum EScene {
     GAME_LOADING = "GAME_LOADING",
     GAME_RESULTS = "GAME_RESULTS",
@@ -756,6 +758,14 @@ export interface ICard {
     valueType?: TValueType;
     mobs?: { units: TUnits; reward: IMobReward };
     description?: string;
+}
+
+export interface ICardToMove {
+    card: ICard;
+    isCardObject: boolean;
+    cardSlot: CardSlot | undefined;
+    onCardMoved: (() => void) | undefined; // used when moving card from hero item slot
+    parentUnitId: string | undefined; // used when moving card from hero item slot to check if item is moved from unit to same unit
 }
 
 export interface IPassiveSkill {

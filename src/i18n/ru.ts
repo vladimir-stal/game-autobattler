@@ -1,5 +1,6 @@
 import { EHeroAttackType, EHeroClass, EItemAfterDuelBonusCondition, EItemTargetType, ERoomType, ESelectCardHint, ESelectRoomHint } from "../types";
 import { Ii18n } from "./en";
+import { MOBS_RU } from "./mobs_ru";
 import { SKILLS_RU } from "./skills_ru";
 
 export const i18n: Ii18n = {
@@ -119,6 +120,7 @@ export const i18n: Ii18n = {
         WOLF: "Волк",
         STRONGWOLF: "Сильный волк",
     },
+    mobs: MOBS_RU,
     items: {
         // WEAPON
         // basic
@@ -365,6 +367,9 @@ export const i18n: Ii18n = {
         NEXT: "ДАЛЬШЕ",
         SELECT_UPGRADE: "ВЫБЕРИТЕ УЛУЧШЕНИЕ",
         LEVEL: "уровень",
+        //
+        WEAPON: "оружие",
+        COMMON: "обычный",
         //
         [EHeroAttackType.MAGIC]: "маг",
         [EHeroAttackType.PHYSICAL]: "физ",

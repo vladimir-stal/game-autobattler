@@ -1,5 +1,5 @@
 import { Cameras, Input, Scale, Structs } from "phaser";
-import { ECardType, EScene, IUnit, TUnits } from "../../types";
+import { ECardType, EScene, ICardToMove, IUnit, TUnits } from "../../types";
 import { initInputListeners } from "./PlatformScene/keyboardInputs";
 import { createUIPanels } from "../components/ui/uiPanels";
 import { TopPanel } from "../components/ui/TopPanel";
@@ -64,7 +64,7 @@ export class GameScene extends Phaser.Scene {
     isCardMoveMode: boolean = false;
     isCardMoveAfterUpgrade: boolean = false;
     isUnitUpgradeMode: boolean = false;
-    cardToMove: Card | undefined;
+    cardToMove: ICardToMove | undefined;
     cardSlotToUpgrade: CardSlot | undefined;
 
     phase: "SELECT" | "DUEL" | "MOB_DUEL" | "BOSS_DUEL" = "SELECT";
@@ -224,9 +224,6 @@ export class GameScene extends Phaser.Scene {
 
     setIsCardMoveMode(value: boolean) {
         this.isCardMoveMode = value;
-        if (!this.cardToMove) {
-            return;
-        }
 
         if (value) {
             this.unitPanel.disableCardsMove();
@@ -238,12 +235,13 @@ export class GameScene extends Phaser.Scene {
             this.inventoryPanel.enableCardsMove();
         }
 
-        activateSlots(this.allCardSlots, value, this.cardToMove.card, this);
+        activateSlots(this.allCardSlots, value, this, this.cardToMove);
     }
 
     cancelCardMove() {
         this.setIsCardMoveMode(false);
         this.isCardMoveAfterUpgrade = false;
+        this.cardToMove = undefined;
     }
 
     setIsUnitUpgradeMode(value: boolean, cardSlotToUpgrade?: CardSlot) {
@@ -274,7 +272,9 @@ export class GameScene extends Phaser.Scene {
             return;
         }
 
-        this.cardToMove.destroy(true);
+        if (this.cardToMove.isCardObject) {
+            (this.cardToMove as Card).destroy(true);
+        }
         this.cardToMove = undefined;
 
         if (this.isCardMoveAfterUpgrade) {
@@ -285,12 +285,12 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
-    selectCardToMove(cardToMove: Card) {
+    selectCardToMove(cardToMove: ICardToMove) {
         this.cardToMove = cardToMove;
         this.setIsCardMoveMode(true);
     }
 
-    selectCardToBuy(card: Card) {
+    selectCardToBuy(card: ICardToMove) {
         this.selectCardToMove(card);
         this.setIsCardBuyMode(true);
     }
@@ -365,8 +365,7 @@ export class GameScene extends Phaser.Scene {
             enemyUnits.forEach((u, i) => {
                 // this.selectController.day - u.level + 3 - i
                 //   level up units below specific level, and front positions level up more
-                if (u)
-                    levelUpUnitRandom(u, Math.floor((this.selectController.day + 3 - i)/1.5));
+                u && levelUpUnitRandom(u, Math.floor((this.selectController.day + 3 - i) / 1.5));
             });
         this.battlePanel.show(units, enemyUnits);
         // TODO: calculate round count from day and enemies left

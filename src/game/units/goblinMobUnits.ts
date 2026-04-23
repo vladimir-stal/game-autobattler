@@ -162,7 +162,7 @@ export const cheeringGoblinUnit_skills: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN, // Cheer goblin
     id: "WEAKGOBLIN",
-    skills: [mobCheerSkill,mobNoSkill,mobCheerSkill],
+    skills: [mobCheerSkill, mobNoSkill, mobCheerSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -186,10 +186,9 @@ export const cheeringGoblinUnit_attacks: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN, // Cheer goblin
     id: "WEAKGOBLIN",
-    skills: [mobAmbushSkill,mobAmbushSkill,mobAmbushSkill,mobAmbushSkill],
+    skills: [mobAmbushSkill, mobAmbushSkill, mobAmbushSkill, mobAmbushSkill],
     items: [],
     level: 1,
     exp: 0,
     mobItems: [{ item: itemCoin, probability: 40 }],
 };
-

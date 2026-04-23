@@ -44,7 +44,7 @@ export class ItemCard extends Phaser.GameObjects.Container {
 
     renderBorder() {
         this.rect = this.scene.add.rectangle(0, 0, 100, 200, colors.BLACK).setOrigin(0.5, 0);
-        this.rect.setStrokeStyle(1, getCardBorderColor(this.item.priceLevel));
+        this.rect.setStrokeStyle(2, getCardBorderColor(this.item.priceLevel));
 
         this.rect.setInteractive();
         this.rect

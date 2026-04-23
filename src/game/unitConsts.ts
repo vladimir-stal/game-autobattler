@@ -21,6 +21,7 @@ import { fireflySummonMob, fireflySummonMob_6, warriorSummonMob, warriorSummonMo
 import { skeletonMageUnit, skeletonUnit, skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { musical31 } from "./weaponItem3Consts";
+import { i18n } from "./consts";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -33,7 +34,7 @@ export const MC_CLASS_MAX_WEAPON_COUNT = 2;
 
 export const mobsLvl1: IMobsVariants[] = [
     {
-        name: "Peasants",
+        name: i18n.mobs.level1.peasants,
         level: 1,
         description: "A trio of filthy peasants", // stat 1/3
         // 1 2 3 attacks ~ 6 dmg, hp 9
@@ -49,7 +50,7 @@ export const mobsLvl1: IMobsVariants[] = [
         ],
     },
     {
-        name: "Weak goblins",
+        name: i18n.mobs.level1.weakgoblins,
         level: 1,
         description: "Two sicky goblins", // stat 2/5 ~ hp 10, dmg~10
         // (formula: first position lives 2 rounds, second +1 round)
@@ -64,7 +65,7 @@ export const mobsLvl1: IMobsVariants[] = [
         ],
     },
     {
-        name: "Spirit warriror",
+        name: i18n.mobs.level1.spiritwarrior,
         level: 1,
         description: "A warrior that is 99% spirit", // stat 2/3 (buffed to 3/9)
         units: [warriorSummonMob, null, null],
@@ -78,7 +79,7 @@ export const mobsLvl1: IMobsVariants[] = [
         ],
     },
     {
-        name: "Fireflies",
+        name: i18n.mobs.level1.fireflies,
         level: 1,
         description: "A pair of magic moth",
         units: [fireflySummonMob, fireflySummonMob, null, null], // stat 4/1
@@ -93,7 +94,7 @@ export const mobsLvl1: IMobsVariants[] = [
         ],
     },
     {
-        name: "Wolf",
+        name: i18n.mobs.level1.wolf,
         level: 1,
         description: "A lone beast in search of red riding hood",
         units: [wolfUnit, null, null, null], // stat 6/8 (nerfed to 5/8)
@@ -110,7 +111,7 @@ export const mobsLvl1: IMobsVariants[] = [
 ];
 export const mobsLvl2: IMobsVariants[] = [
     {
-        name: "Goblins",
+        name: i18n.mobs.level2.goblins,
         level: 2,
         description: "Two sicky goblins, but one is healthy", // stat 5/8 + 2/5
         // (approx 5 dmg/turn) first 2 rounds, second 3 rounds ~ 5+6 = 11 dmg
@@ -124,7 +125,7 @@ export const mobsLvl2: IMobsVariants[] = [
         ],
     },
     {
-        name: "Goblin shaman",
+        name: i18n.mobs.level2.goblinshaman,
         level: 2,
         description: "One shaman doing a ritual of good harvest",
         units: [goblinShamanUnit, null, null], // stat 4/14
@@ -136,7 +137,7 @@ export const mobsLvl2: IMobsVariants[] = [
         ],
     },
     {
-        name: "Skeleton(2)",
+        name: i18n.mobs.level2.skeleton,
         level: 2,
         description: "One bone skull soldier",
         units: [skeletonUnit, null, null, null], // stat 4/10
@@ -150,7 +151,7 @@ export const mobsLvl2: IMobsVariants[] = [
         ],
     },
     {
-        name: "Spirit warrirors(2)",
+        name: i18n.mobs.level2.spiritwarrirors,
         level: 2,
         description: "A trio of spiritual soldiers",
         units: [warriorSummonMob, warriorSummonMob, warriorSummonMob], // 3x 3/9
@@ -161,7 +162,7 @@ export const mobsLvl2: IMobsVariants[] = [
         ],
     },
     {
-        name: "Wolfs(2)",
+        name: i18n.mobs.level2.wolves,
         level: 2,
         description: "Around you are two wolves",
         units: [wolfUnit, wolfUnit, null, null], // stat 5/8
@@ -176,7 +177,7 @@ export const mobsLvl2: IMobsVariants[] = [
         ],
     },
     {
-        name: "Fireflies",
+        name: i18n.mobs.level2.fireflies,
         level: 2,
         description: "Swarm of magic moth",
         units: [fireflySummonMob, fireflySummonMob, fireflySummonMob, fireflySummonMob], // stat 4/1
@@ -193,7 +194,7 @@ export const mobsLvl2: IMobsVariants[] = [
 ];
 export const mobsLvl3: IMobsVariants[] = [
     {
-        name: "Skeletons(3)",
+        name: i18n.mobs.level3.skeletons,
         level: 3,
         description: "One bone skull soldier and his buddy",
         units: [skeletonUnit, skeletonUnit, null, null], // stat 4/10
@@ -208,7 +209,7 @@ export const mobsLvl3: IMobsVariants[] = [
         ],
     },
     {
-        name: "Goblin shaman",
+        name: i18n.mobs.level3.goblinshamans,
         level: 3,
         description: "Two shamans want to find a cure for their village",
         units: [goblinShamanUnit, goblinShamanUnit, null], // stat 4/14
@@ -222,7 +223,7 @@ export const mobsLvl3: IMobsVariants[] = [
         ],
     },
     {
-        name: "Goblins",
+        name: i18n.mobs.level3.goblins,
         level: 3,
         description: "Weak goblin called his two friends",
         units: [weakGoblinUnit, goblinUnit, goblinUnit, null], // stat 5/8 + 2/5
@@ -237,7 +238,7 @@ export const mobsLvl3: IMobsVariants[] = [
         ],
     },
     {
-        name: "Spirit warrirors(3)",
+        name: i18n.mobs.level3.spiritwarrirors,
         level: 3,
         description: "A well known spiritual trio",
         units: [warriorSummonMob_3, warriorSummonMob_3, warriorSummonMob_3], // stat 5/14 (was 6_10)
@@ -252,7 +253,7 @@ export const mobsLvl3: IMobsVariants[] = [
         ],
     },
     {
-        name: "Wolfs(3)",
+        name: i18n.mobs.level3.wolves,
         level: 3,
         description: "Wolf's older brother",
         units: [strongWolfUnit, null, null, null], // stat 10/18
@@ -269,7 +270,7 @@ export const mobsLvl3: IMobsVariants[] = [
 
 export const mobsLvl4: IMobsVariants[] = [
     {
-        name: "Skeletons(4)",
+        name: i18n.mobs.level4.skeletons,
         level: 4,
         description: "One skeleton lieutenant and one private",
         units: [skeletonWarriorUnit, skeletonUnit, null, null], // stats 7/16 + 4/10
@@ -283,7 +284,7 @@ export const mobsLvl4: IMobsVariants[] = [
         ],
     },
     {
-        name: "Goblins(4)",
+        name: i18n.mobs.level4.goblins,
         level: 4,
         description: "Shaman showing his 3 buddies why no good harvest",
         units: [goblinShamanUnit, goblinUnit, goblinUnit, goblinUnit], // stats 4/18 + 5/8
@@ -298,7 +299,7 @@ export const mobsLvl4: IMobsVariants[] = [
         ],
     },
     {
-        name: "Peasants(4)",
+        name: i18n.mobs.level4.peasants,
         level: 4,
         description: "Two not so regular peasants",
         units: [peasantUnit_4, peasantUnit_4, null, null], // stat 5/20 (was 10/30)
@@ -312,7 +313,7 @@ export const mobsLvl4: IMobsVariants[] = [
         ],
     },
     {
-        name: "Infernofly(4)",
+        name: i18n.mobs.level4.infernoflies,
         level: 4,
         description: "Firefly from hell",
         units: [fireflySummonMob_6, null, null, null], // stat 10/2+8
@@ -329,7 +330,7 @@ export const mobsLvl4: IMobsVariants[] = [
 ];
 export const mobsLvl5: IMobsVariants[] = [
     {
-        name: "Skeletons(5)",
+        name: i18n.mobs.level5.skeletons,
         level: 5,
         description: "Two warriors and one mage",
         units: [skeletonWarriorUnit, skeletonWarriorUnit, skeletonMageUnit], // stat 7/16 + 8/9
@@ -344,7 +345,7 @@ export const mobsLvl5: IMobsVariants[] = [
         ],
     },
     {
-        name: "Spirit warriors(5)",
+        name: i18n.mobs.level5.spiritwarrirors,
         level: 5,
         description: "Gang of two spirits",
         units: [warriorSummonMob_5, warriorSummonMob_5], // stat 12/30
@@ -358,7 +359,7 @@ export const mobsLvl5: IMobsVariants[] = [
         ],
     },
     {
-        name: "Goblins(5)",
+        name: i18n.mobs.level5.goblins,
         level: 5,
         description: "Goblin regiment",
         units: [goblinShamanUnit, weakGoblinUnit, goblinUnit, goldGoblinBattleUnit], // stats 4/18 + 5/8
@@ -375,7 +376,7 @@ export const mobsLvl5: IMobsVariants[] = [
 ];
 export const mobsLvl6: IMobsVariants[] = [
     {
-        name: "Skeletons(6)",
+        name: i18n.mobs.level6.skeletons,
         level: 6,
         description: "Two warriors and two mages",
         units: [skeletonWarriorUnit, skeletonWarriorUnit, skeletonMageUnit, skeletonMageUnit],
@@ -389,7 +390,7 @@ export const mobsLvl6: IMobsVariants[] = [
         ],
     },
     {
-        name: "Peasants(6)",
+        name: i18n.mobs.level6.peasants,
         level: 6,
         description: "Agricultural quartet",
         units: [peasantUnit_4, peasantUnit_4, peasantUnit_4, peasantUnit_4], // stat 5/20 (was 10/30)
@@ -403,7 +404,7 @@ export const mobsLvl6: IMobsVariants[] = [
         ],
     },
     {
-        name: "Infernoflies(6)",
+        name: i18n.mobs.level6.infernoflies,
         level: 6,
         description: "Fireflies from hell",
         units: [fireflySummonMob_6, fireflySummonMob_6, fireflySummonMob_6, fireflySummonMob_6], // stat 10/2+8

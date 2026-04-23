@@ -1,7 +1,7 @@
 import { Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { colors } from "../consts";
-import { ECardType, ICard, IHeroSkill, IHeroSkillSet } from "../../types";
+import { ECardType, ICard, ICardToMove, IHeroSkill, IHeroSkillSet } from "../../types";
 import { HintPanel } from "./ui/HintPanel";
 import { Card } from "./Card";
 
@@ -10,14 +10,15 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
     gameScene: GameScene;
     skillSet: IHeroSkillSet | undefined;
     hint: HintPanel;
-
     onItemRemoved: () => void;
+    parentUnitId: string;
 
-    constructor(scene: GameScene, x: number, y: number, skillSet: IHeroSkillSet | undefined, onItemRemoved: () => void) {
+    constructor(scene: GameScene, x: number, y: number, parentUnitId: string, skillSet: IHeroSkillSet | undefined, onItemRemoved: () => void) {
         super(scene, x, y);
         this.gameScene = scene;
         this.skillSet = skillSet;
         this.onItemRemoved = onItemRemoved;
+        this.parentUnitId = parentUnitId;
         this.render();
     }
 
@@ -53,16 +54,23 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
                 //}
             })
             .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-                if (!this.skillSet || this.skillSet.isMcSkill) {
+                if (!this.skillSet) {
                     return;
                 }
                 if (this.gameScene.isCardMoveMode) {
                     return;
                 }
                 const icard: ICard = { price: 0, type: ECardType.SKILL, skill: this.skillSet };
-                const card = new Card(this.gameScene, 0, 0, icard, false).setVisible(false);
+                //const card = new Card(this.gameScene, 0, 0, icard, false).setVisible(false);
+                const card: ICardToMove = {
+                    card: icard,
+                    onCardMoved: this.onItemRemoved,
+                    parentUnitId: this.parentUnitId,
+                    cardSlot: undefined,
+                    isCardObject: false,
+                };
                 this.gameScene.selectCardToMove(card);
-                this.onItemRemoved();
+                //this.onItemRemoved();
             });
 
         const hintText = this.skillSet ? this.skillSet.name + "\n" + this.skillSet.desc : "no skill";

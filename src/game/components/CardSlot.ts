@@ -79,18 +79,20 @@ export class CardSlot extends Phaser.GameObjects.Container {
         this.add(this.equipTextObject);
     }
 
+    // ON FINISH MOVING CARD
     click() {
-        if (!this.isActive) {
-            console.log("THIS CARD SLOT IS NOT ACTIVE");
-            return;
-        }
-
         if (!this.gameScene.isCardMoveMode || !this.gameScene.cardToMove) {
             console.log("game is not in card move mode");
             return;
         }
 
-        const { card, cardSlot } = this.gameScene.cardToMove;
+        if (!this.isActive) {
+            console.log("isCardMoveMode, cardToMove", this.gameScene.isCardMoveMode, this.gameScene.cardToMove);
+            console.log("THIS CARD SLOT IS NOT ACTIVE");
+            return;
+        }
+
+        const { card, cardSlot, onCardMoved } = this.gameScene.cardToMove;
 
         const isItemToUnit = card.type === ECardType.ITEM && this.card?.card.type === ECardType.UNIT;
         const isExpToUnit = card.type === ECardType.EXP;
@@ -128,7 +130,11 @@ export class CardSlot extends Phaser.GameObjects.Container {
         }
 
         if (isItemToUnit || isExpToUnit || isAttributeToUnit || isSkillToUnit || isItemUpgrade || isSkillUpgrade) {
+            if ((isItemToUnit || isSkillToUnit) && onCardMoved) {
+                onCardMoved();
+            }
             this.card && this.gameScene.selectController.performCardAction(card, this.card);
+
             this.gameScene.finishCardMove();
             if (cardSlot) {
                 cardSlot.removeCard();
@@ -136,6 +142,9 @@ export class CardSlot extends Phaser.GameObjects.Container {
             return;
         }
 
+        if (onCardMoved) {
+            onCardMoved();
+        }
         this.gameScene.finishCardMove();
         this.placeCard(card, cardSlot);
     }

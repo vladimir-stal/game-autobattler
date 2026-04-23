@@ -136,7 +136,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderUpgradeButton() {
         const { level, unitType, heroClassType } = this.unit;
 
-        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC && level > 3;
+        const isVisible = unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC; // && level > 3;
         this.upgradeButton = this.scene.add
             .text(0, 120, i18n.ui.UPGRADE, { fontFamily: "Arial Black", fontSize: 18, color: "#f8b705ff" })
             .setOrigin(0.5)
@@ -192,33 +192,30 @@ export class UnitCard extends Phaser.GameObjects.Container {
             return;
         }
 
-        const itemSlotsCount = this.unit.unitType === EUnitType.HERO ? getMaxUnitItemCount(this.unit.heroClassType!) : 1;
+        const { id, unitType, heroClassType, items } = this.unit;
+
+        const itemSlotsCount = unitType === EUnitType.HERO ? getMaxUnitItemCount(heroClassType!) : 1;
         for (let i = 0; i < itemSlotsCount; i++) {
             const x = (i % 2) * 40 - 50;
             const y = i < 2 ? 230 : 270;
             //
             let isWeaponSlot = false;
-            if (this.unit.unitType === EUnitType.UNIT || this.unit.heroClassType === EHeroClassType.BASIC) {
+            if (unitType === EUnitType.UNIT || heroClassType === EHeroClassType.BASIC) {
                 isWeaponSlot = i === 0;
             } else {
                 let weaponSlotCount = 2;
                 // check for +1 weapon slot item
-                const isAddWeaponSlot = this.unit.items.find((item) => item.bonuses.find((bonus) => bonus.type === EItemBonusType.ITEM_WEAPON_SLOT));
+                const isAddWeaponSlot = items.find((item) => item.bonuses.find((bonus) => bonus.type === EItemBonusType.ITEM_WEAPON_SLOT));
                 if (isAddWeaponSlot) {
                     weaponSlotCount += 1;
                 }
                 isWeaponSlot = i < weaponSlotCount;
             }
 
-            //const isWeaponSlot = this.unit.unitType === EUnitType.UNIT || this.unit.heroClassType === EHeroClassType.BASIC ? i === 0 : i < 2;
-            //
-            const itemSlot = new HeroItemSlot(this.gameScene, x, y, isWeaponSlot, this.unit.items[i], () => this.handleItemRemoved(i));
+            const itemSlot = new HeroItemSlot(this.gameScene, x, y, id, isWeaponSlot, items[i], () => this.handleItemRemoved(i));
             this.add(itemSlot);
             this.itemSlots.push(itemSlot);
         }
-        // this.itemSlots.forEach((itemSlot, index) => {
-        //     this.moveTo(itemSlot, index);
-        // });
         this.bringToTop(this.itemSlots[0]);
     }
 
@@ -227,13 +224,15 @@ export class UnitCard extends Phaser.GameObjects.Container {
             return;
         }
 
-        const skillSlotsCount = getMaxUnitSkillCount(this.unit.heroClassType);
+        const { id, heroClassType, skills } = this.unit;
+
+        const skillSlotsCount = getMaxUnitSkillCount(heroClassType);
 
         for (let i = 0; i < skillSlotsCount; i++) {
             const x = 60;
             const y = i * 35;
 
-            const skillSlot = new HeroSkillSlot(this.gameScene, x, y, this.unit.skills[i], () => this.handleSkillRemoved(i));
+            const skillSlot = new HeroSkillSlot(this.gameScene, x, y, id, skills[i], () => this.handleSkillRemoved(i));
             this.add(skillSlot);
             this.skillSlots.push(skillSlot);
         }

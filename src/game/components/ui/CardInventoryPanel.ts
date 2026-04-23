@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import { GameObjects, Input } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
 import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
@@ -49,12 +49,12 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
     }
 
     handleCardPlaced(slotIndex: number) {
-        console.log("INV CARD PLACE SLOT ", slotIndex);
+        //console.log("INV CARD PLACE SLOT ", slotIndex);
         this.slots[slotIndex].moveText.setVisible(true);
     }
 
     handleCardTaken(slotIndex: number) {
-        console.log("INV CARD TAKEN SLOT ", slotIndex);
+        //console.log("INV CARD TAKEN SLOT ", slotIndex);
         this.slots[slotIndex].moveText.setVisible(false);
     }
 
@@ -67,7 +67,6 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
         });
         this.add(cardSlot);
 
-        console.log("ADD INVENTORY CARD SLOT");
         this.gameScene.addCardSlot(cardSlot);
 
         const moveCardText = this.scene.add
@@ -80,17 +79,17 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
 
         moveCardText
             .setInteractive()
-            // .setInteractive(new Phaser.Geom.Rectangle(0, 0, 90, 30), Phaser.Geom.Rectangle.Contains)
-            .on("pointerdown", () => {
+            .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
                 if (cardSlot.card) {
-                    //this.selectedCardIndex = index;
-                    if (this.gameScene.cardToMove === undefined) this.gameScene.selectCardToMove(cardSlot.card);
+                    if (!this.gameScene.cardToMove) {
+                        this.gameScene.selectCardToMove(cardSlot.card);
+                    }
                 }
             })
-            .on("pointerover", () => {
+            .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
                 moveCardText.setColor("#FFFFFF");
             })
-            .on("pointerout", () => {
+            .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 moveCardText.setColor("#AAFFAA");
             });
 

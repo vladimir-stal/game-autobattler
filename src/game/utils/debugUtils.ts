@@ -12,9 +12,10 @@ import { magicAttack } from "../skills/magicSkillConsts";
 import { incrSummonBa } from "../skills/summonSkillConsts2";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
+import { dagger31 } from "../weaponItem3Consts";
 
-export const debugHeroSelectRoom = true // false
-export const debugStartingItemsRoom = true;
+export const debugHeroSelectRoom = false;
+export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -38,10 +39,20 @@ export const customStartingItemsRoom = (): ICard[] => {
         { type: ECardType.UNIT, price: 0, unit: peasantUnit },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
-        { type: ECardType.ITEM, price: 0, item: {...jacket21_3, bonuses: [...jacket21_3.bonuses, {type:EItemBonusType.ATTRIBUTE, value:10, valueType:"evolvedNumber", attribute:"basicMagicPower",targetType:EItemTargetType.SELF}]} },
+        {
+            type: ECardType.ITEM,
+            price: 0,
+            item: {
+                ...jacket21_3,
+                bonuses: [
+                    ...jacket21_3.bonuses,
+                    { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "evolvedNumber", attribute: "basicMagicPower", targetType: EItemTargetType.SELF },
+                ],
+            },
+        },
         //{ type: ECardType.SKILL, price: 0, skill: nextBAArea },
         { type: ECardType.SKILL, price: 0, skill: incrSummonBa },
-        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        { type: ECardType.ITEM, price: 0, item: dagger31 },
         //{ type: ECardType.UNIT, price: 0, unit: goblinUnit },
     ];
 };

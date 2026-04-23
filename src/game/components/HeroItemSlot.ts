@@ -1,7 +1,7 @@
 import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { colors } from "../consts";
-import { ECardType, EHeroClassType, EItemType, EUnitType, ICard, IItem, IUnit } from "../../types";
+import { ECardType, EHeroClassType, EItemType, EUnitType, EWeaponItemType, ICard, ICardToMove, IItem, IUnit } from "../../types";
 import { CardSlot } from "./CardSlot";
 import { HintPanel } from "./ui/HintPanel";
 import { Card } from "./Card";
@@ -12,22 +12,23 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
     gameScene: GameScene;
     item: IItem | undefined;
     isWeaponSlot: boolean;
-
     hint: HintPanel;
-
     onItemRemoved: () => void;
+    parentUnitId: string;
 
-    constructor(scene: GameScene, x: number, y: number, isWeaponSlot: boolean, item: IItem | undefined, onItemRemoved: () => void) {
+    constructor(scene: GameScene, x: number, y: number, parentUnitId: string, isWeaponSlot: boolean, item: IItem | undefined, onItemRemoved: () => void) {
+        console.log("HeroItemSlot > constructor", parentUnitId);
         super(scene, x, y);
         this.gameScene = scene;
         this.item = item;
         this.isWeaponSlot = isWeaponSlot;
         this.onItemRemoved = onItemRemoved;
+        this.parentUnitId = parentUnitId;
         this.render();
     }
 
     render() {
-        const color = this.item ? colors.GREEN : colors.GREY;
+        const color = this.item ? (this.item.weaponType ? colors.BROWN : colors.GREEN) : colors.GREY;
         const rect = this.scene.add.rectangle(0, 0, 30, 30, color).setOrigin(0, 0);
         this.add(rect);
         rect.setInteractive();
@@ -57,13 +58,22 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
                     return;
                 }
                 const icard: ICard = { price: 0, type: ECardType.ITEM, item: this.item };
-                const card = new Card(this.gameScene, 0, 0, icard, false).setVisible(false);
+                console.log("SLot > create card to move", this.parentUnitId);
+                //const card = new Card(this.gameScene, 0, 0, icard, false, undefined, this.onItemRemoved, this.parentUnitId).setVisible(false);
+                const card: ICardToMove = {
+                    card: icard,
+                    onCardMoved: this.onItemRemoved,
+                    parentUnitId: this.parentUnitId,
+                    cardSlot: undefined,
+                    isCardObject: false,
+                };
                 this.gameScene.selectCardToMove(card);
-                this.onItemRemoved();
+                //this.onItemRemoved();
             });
 
         if (this.isWeaponSlot) {
-            const weaponRect = this.scene.add.rectangle(0, 32, 30, 5, colors.GREY).setOrigin(0, 0);
+            const color = this.item ? (this.item.weaponType ? colors.BROWN : colors.GREY) : colors.GREY;
+            const weaponRect = this.scene.add.rectangle(0, 32, 30, 5, color).setOrigin(0, 0);
             this.add(weaponRect);
         }
 
@@ -71,18 +81,5 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
             this.hint = new ItemHintPanel(this.gameScene, 0, -100, this.item, true).setVisible(false);
             this.add(this.hint);
         }
-        // else {
-        //     this.hint = new HintPanel(this.gameScene, 0, 35, "no item").setVisible(false);
-        //     this.add(this.hint);
-        // }
-
-        // if (this.item?.type === EItemType.COMMON) {
-        //     const hintText = this.item ? this.item.name : "no item";
-        //     this.hint = new HintPanel(this.gameScene, 0, 35, hintText).setVisible(false);
-        //     this.add(this.hint);
-        // } else if (this.item?.type === EItemType.WEAPON) {
-        //     this.hint = new ItemHintPanel(this.gameScene, 0, 35, this.item).setVisible(false);
-        //     this.add(this.hint);
-        // }
     }
 }

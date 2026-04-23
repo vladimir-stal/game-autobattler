@@ -221,10 +221,11 @@ export const getHeroClassesItemsWithTop = (heroClasses: EHeroClass[], day: numbe
     const randomClass = getRandomArrayItem(heroClasses);
     const randomItemType = day > 2 ? getRandomArrayItem(["weapon", "common"]) : "weapon";
     const topLevelItem = randomItemType === "weapon" ? getHeroClassWeaponItemTop(randomClass, day) : getHeroClassCommonItemTop(randomClass, day);
-    if (!!topLevelItem)
+    if (!!topLevelItem) {
         return [...items, topLevelItem];
-    else
+    } else {
         return [...items, getRandomArrayItem(getHeroClassesItems(heroClasses, day))];
+    }
 };
 
 /** Return weapon items for specific hero classes */
@@ -332,13 +333,17 @@ export const getAllHoldingItems = (gameScene: GameScene): IItem[] => {
     gameScene.inventoryPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.ITEM) {
             const item = slot.slot.card.card.item;
-            if (item) item.previousLevel ? list.push(item.previousLevel) : list.push(item);
+            if (item && item.priceLevel < 5) {
+                item.previousLevel ? list.push(item.previousLevel) : list.push(item);
+            }
         }
     });
     gameScene.unitPanel.slots.forEach((slot) => {
         if (slot?.slot?.card?.card?.type === ECardType.UNIT) {
             slot?.slot?.card?.card?.unit?.items.forEach((item) => {
-                if (item) item.previousLevel ? list.push(item.previousLevel) : list.push(item);
+                if (item && item.priceLevel < 5) {
+                    item.previousLevel ? list.push(item.previousLevel) : list.push(item);
+                }
             });
         }
     });

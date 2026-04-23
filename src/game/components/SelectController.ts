@@ -141,6 +141,7 @@ export class SelectController {
 
     showCardSelect(
         type: ERoomType,
+        isAfterReroll: boolean,
         { heroClasses, isRerollAvailableForce, tripleSetTypes }: { heroClasses?: EHeroClass[]; isRerollAvailableForce?: boolean; tripleSetTypes?: ECardType[] },
     ) {
         //console.log("SHOW CARD SELECT", type);
@@ -159,6 +160,7 @@ export class SelectController {
             type,
             this.day,
             this.hour,
+            isAfterReroll,
             heroClasses,
             tripleSetTypes,
         );
@@ -196,7 +198,7 @@ export class SelectController {
         }
 
         this.gameScene.roomSelectPanel.hide();
-        this.showCardSelect(type, { heroClasses, tripleSetTypes });
+        this.showCardSelect(type, false, { heroClasses, tripleSetTypes });
     }
 
     /** Execute instant room action when room is selected on roomSelectPanel */
@@ -338,6 +340,7 @@ export class SelectController {
                     applyItemBonuses(card.item, unit, units);
 
                     items.push(card.item);
+                    items.sort((aItem, bItem) => (bItem.weaponType ? 1 : 0) - (aItem.weaponType ? 1 : 0));
 
                     if (card.item.bonuses.find((bonus) => bonus.targetType === EItemTargetType.ALL_ALLIES)) {
                         this.gameScene.unitPanel.refreshAllCards();

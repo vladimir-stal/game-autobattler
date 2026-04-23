@@ -12,6 +12,7 @@ import {
     EStatusType,
     THeroAttribute,
 } from "../types";
+import { MOBS_EN } from "./mobs_en";
 import { SKILLS_EN } from "./skills_en";
 
 type TSkillI18n = Record<number | "name" | "desc1" | "desc2" | "desc3", string>;
@@ -39,6 +40,16 @@ export interface Ii18n {
         FIREFLY: string;
         WOLF: string;
         STRONGWOLF: string;
+    };
+    mobs: {
+        level1: Record<string, string>;
+        level2: Record<string, string>;
+        level3: Record<string, string>;
+        level4: Record<string, string>;
+        level5: Record<string, string>;
+        level6: Record<string, string>;
+        level7: Record<string, string>;
+        level8: Record<string, string>;
     };
     totems: {
         basicWildTotem: string;
@@ -193,6 +204,9 @@ export interface Ii18n {
         ON_START_SKILL: string;
         NO_BA_SKILL: string;
         //
+        WEAPON: string;
+        COMMON: string;
+        //
         [EHeroAttackType.MAGIC]: string;
         [EHeroAttackType.PHYSICAL]: string;
         //
@@ -218,6 +232,7 @@ export interface Ii18n {
         [EItemAfterDuelBonusCondition.IS_MOB]: string;
         // bonus target
         [EItemTargetType.ALL_ALLIES]: string;
+
         mainMenu: {
             START_GAME: string;
         };
@@ -343,6 +358,7 @@ export const i18n: Ii18n = {
         WOLF: "Wolf",
         STRONGWOLF: "Strong wolf",
     },
+    mobs: MOBS_EN,
     totems: {
         basicWildTotem: "Wild Totem",
     },
@@ -554,6 +570,9 @@ export const i18n: Ii18n = {
         NEXT: "NEXT",
         SELECT_UPGRADE: "SELECT UPGRADE",
         LEVEL: "Level",
+        //
+        WEAPON: "weapon",
+        COMMON: "common",
         //
         [EHeroAttackType.MAGIC]: "magic",
         [EHeroAttackType.PHYSICAL]: "phys",

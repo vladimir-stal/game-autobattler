@@ -1,9 +1,10 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardType, EItemAfterDuelBonusType, IMobsVariants } from "../../types";
+import { i18n } from "../consts";
 import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobItemConsts";
 
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.BARBARIAN,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -16,7 +17,7 @@ export const peasantUnit_4: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Peasant",
+    name: i18n.units.PEASANT,
     id: "PEASANT",
     skills: [],
     items: [],
@@ -32,7 +33,7 @@ export const peasantUnit_4: IUnit = {
 
 export const peasantUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARRIOR,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -45,7 +46,7 @@ export const peasantUnit: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Peasant",
+    name: i18n.units.PEASANT,
     id: "PEASANT",
     skills: [],
     items: [],

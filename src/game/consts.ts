@@ -18,7 +18,7 @@ export const colors = {
     BLUE: 0x333399,
     BLUE_LIGHT: 0x66ccff,
     GREY: 0x666666,
-    GREY_BLUE: 0x6688aa,
+    GREY_BLUE: 0x6688aa, // "#6688aa"
     GREEN: 0x339933, // "#339933"
     GREEN_2: 0x339933,
     GREEN_DARK: 0x002200, // "#002200"
@@ -29,6 +29,7 @@ export const colors = {
     PURPLE: 0x990099, //"#990099"
     PURPLE_DARK: 0x663366, // "#663366"
     RED: 0xcc4444, //"#cc4444"
+    BROWN: 0xaa6666, //"#aa6666"
     RED_DARK: 0x330000, //"#330000"
     RED_DARK_2: 0x993333, //"#993333"
     WHITE_HOVER: 0xbbbbbb,

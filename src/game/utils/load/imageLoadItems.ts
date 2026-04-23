@@ -103,7 +103,7 @@ export const IMAGE_ITEM_GOBLIN_GOLD_COIN = "mobs/goblin_gold_coin.png";
 export const IMAGE_ITEM_GOBLIN_BONE_DAGGER = "mobs/bone_dagger.png";
 export const IMAGE_ITEM_PEASANTS_PITCHFORK = "mobs/peasants_pitchfork.png";
 export const IMAGE_ITEM_REGEN_MANTLE = "mobs/regenMantle.png";
-export const IMAGE_ITEM_SPIRIT_SPEAR = "mobs/spirit_spear.pn";
+export const IMAGE_ITEM_SPIRIT_SPEAR = "mobs/spirit_spear.png";
 export const IMAGE_ITEM_SPIRIT_ARMOR = "mobs/spirit_armor.png";
 //
 export const IMAGE_MULTIATALAS_ITEMS = "IMAGE_MULTIATALAS_ITEMS";

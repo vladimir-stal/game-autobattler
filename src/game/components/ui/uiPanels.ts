@@ -40,6 +40,14 @@ export function createUIPanels(scene: GameScene) {
     scene.leaderPanel = new LeaderPanel(scene, leaderPanelX, leaderPanelY);
     fixedContainer.add(scene.leaderPanel);
     //
+    // SELL CARD PANEL
+    //
+    //const sellPanelX = scene.camera.width / 2 + 450;
+    //const sellPanelY = -scene.camera.height + 50;
+    const { x: sellPanelX, y: sellPanelY } = getSellPanelPosition(width, height);
+    scene.sellCardPanel = new SellCardPanel(scene, sellPanelX, sellPanelY);
+    fixedContainer.add(scene.sellCardPanel);
+    //
     // ROOM SELECT PANEL
     //
     //const roomPanelX = scene.camera.width / 2 - 400;
@@ -71,14 +79,6 @@ export function createUIPanels(scene: GameScene) {
     const { x: invPanelX, y: invPanelY } = getInventoryPanelPosition(width, height);
     scene.inventoryPanel = new CardInventoryPanel(scene, invPanelX, invPanelY);
     fixedContainer.add(scene.inventoryPanel);
-    //
-    // SELL CARD PANEL
-    //
-    //const sellPanelX = scene.camera.width / 2 + 450;
-    //const sellPanelY = -scene.camera.height + 50;
-    const { x: sellPanelX, y: sellPanelY } = getSellPanelPosition(width, height);
-    scene.sellCardPanel = new SellCardPanel(scene, sellPanelX, sellPanelY);
-    fixedContainer.add(scene.sellCardPanel);
     //
     // UNIT UPGRADE PANEL
     //
