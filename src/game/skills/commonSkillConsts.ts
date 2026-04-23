@@ -60,21 +60,21 @@ export const noBasicAttackSkill: IHeroSkillSet = {
 // always chained. to circle fast through skills
 
 export const onlyBasicAttackSkill: IHeroSkillSet = {
-     id: "onlyBasicAttack",
-     name: "Combo attack",
-     desc: "Perform a basic attack",
-     level: 1,
-     priceLevel: 3,
-     heroClasses: [EHeroClass.ALL],
-     skills: [
-         {
-             type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
-             targetType: ETargetType.SELF,             
-         },
-     ],
-     isChained: true,
-     image: IMAGE_SKILL_CHAIN,
- };
+    id: "onlyBasicAttack",
+    name: "Combo attack",
+    desc: "Perform a basic attack",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.ALL],
+    skills: [
+        {
+            type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+            targetType: ETargetType.SELF,
+        },
+    ],
+    isChained: true,
+    image: IMAGE_SKILL_CHAIN,
+};
 // Double class skills
 /*
     warrior + master = physical attack [4/5/6]
@@ -632,6 +632,67 @@ export const heatUpSkill: IHeroSkillSet = {
 //
 // TOXIC TUNE : bard + dark = totem +1 poison on enemy [1 front, 1 front 1 random, 2 front 1 random]
 //
+const toxicTuneSkillset = (first: number, rand?: number): IHeroSkill[] => {
+    if (rand) {
+        return [
+            {
+                type: EHeroSkillType.FORCE_TOTEM_ACTION,
+                targetType: ETargetType.SELF,
+                condition: ESkillCondition.HAS_TOTEM,
+            },
+            {
+                type: EHeroSkillType.TOTEM,
+                totem: {
+                    id: "ToxicTune",
+                    name: "Токсичный мотив",
+                    skills: [
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            value: first,
+                            valueType: "number",
+                            targetType: ETargetType.FIRST_ENEMY,
+                            status: EStatusType.POISON,
+                        },
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            value: rand,
+                            valueType: "number",
+                            targetType: ETargetType.RANDOM_ENEMY,
+                            status: EStatusType.POISON,
+                        },
+                    ],
+                },
+                condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+            },
+        ];
+    } else {
+        return [
+            {
+                type: EHeroSkillType.FORCE_TOTEM_ACTION,
+                targetType: ETargetType.SELF,
+                condition: ESkillCondition.HAS_TOTEM,
+            },
+            {
+                type: EHeroSkillType.TOTEM,
+                totem: {
+                    id: "ToxicTune",
+                    name: "Токсичный мотив",
+                    skills: [
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            value: first,
+                            valueType: "number",
+                            targetType: ETargetType.FIRST_ENEMY,
+                            status: EStatusType.POISON,
+                        },
+                    ],
+                },
+                condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+            },
+        ];
+    }
+};
+
 const toxicTuneSkill_3: IHeroSkillSet = {
     id: "toxicTuneSkill",
     name: i18n.skills.basic.toxicTuneSkill.name,
@@ -639,31 +700,7 @@ const toxicTuneSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.DARK],
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            totem: {
-                id: "ToxicTune",
-                name: "Токсичный мотив",
-                skills: [
-                    {
-                        type: EHeroSkillType.STATUS_APPLY,
-                        value: 2,
-                        valueType: "number",
-                        targetType: ETargetType.FIRST_ENEMY,
-                        status: EStatusType.POISON,
-                    },
-                    {
-                        type: EHeroSkillType.STATUS_APPLY,
-                        value: 1,
-                        valueType: "number",
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        status: EStatusType.POISON,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: toxicTuneSkillset(2, 1),
     image: IMAGE_SKILL_SKULLS,
 };
 
@@ -674,31 +711,7 @@ const toxicTuneSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.DARK],
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            totem: {
-                id: "ToxicTune",
-                name: "Токсичный мотив",
-                skills: [
-                    {
-                        type: EHeroSkillType.STATUS_APPLY,
-                        value: 1,
-                        valueType: "number",
-                        targetType: ETargetType.FIRST_ENEMY,
-                        status: EStatusType.POISON,
-                    },
-                    {
-                        type: EHeroSkillType.STATUS_APPLY,
-                        value: 1,
-                        valueType: "number",
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        status: EStatusType.POISON,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: toxicTuneSkillset(1, 1),
     image: IMAGE_SKILL_SKULLS,
     nextLevel: toxicTuneSkill_3,
 };
@@ -711,24 +724,7 @@ const toxicTuneSkill: IHeroSkillSet = {
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.DARK],
     isBasicAttack: false,
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            totem: {
-                id: "ToxicTune",
-                name: "Токсичный мотив",
-                skills: [
-                    {
-                        type: EHeroSkillType.STATUS_APPLY,
-                        value: 1,
-                        valueType: "number",
-                        targetType: ETargetType.FIRST_ENEMY,
-                        status: EStatusType.POISON,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: toxicTuneSkillset(1),
     image: IMAGE_SKILL_SKULLS,
     nextLevel: toxicTuneSkill_2,
 };

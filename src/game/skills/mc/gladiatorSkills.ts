@@ -1,37 +1,55 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 import { phycisalAttackSkill } from "../commonSkillConsts";
 
-const gladiatorSkill_2: IHeroSkillSet = {
-    id: "GladiatorTotem",
-    //name: "Gladiator totem(2)",
-    //desc: "Place a totem that \nincreases physical power [3]",
-    name: i18n.skills.mc.gladiatorSkill.name,
-    desc: i18n.skills.mc.gladiatorSkill.desc2,
-    level: 2,
-    priceLevel: 4,
-    heroClasses: [EHeroClass.GLADIATOR],
-    isMcSkill: true,
-    skills: [
+const gladiatorSkillset = (pp: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.FORCE_TOTEM_ACTION,
+            targetType: ETargetType.SELF,
+            condition: ESkillCondition.HAS_TOTEM,
+        },
         {
             type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
             totem: {
                 id: "GLADIATORTOTEM",
-                name: "Тотем гладиатора(2)",
+                name: "Тотем гладиатора",
                 skills: [
                     {
                         type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                        isBasicAttack: false,
-                        value: 3,
+                        value: pp,
                         valueType: "number",
                         targetType: ETargetType.SELF,
                         attribute: "physicalPower",
                     },
                 ],
             },
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
         },
-    ],
+    ];
+};
+
+const gladiatorSkill_3: IHeroSkillSet = {
+    id: "GladiatorTotem",
+    name: i18n.skills.mc.gladiatorSkill.name,
+    desc: i18n.skills.mc.gladiatorSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.GLADIATOR],
+    isMcSkill: true,
+    skills: gladiatorSkillset(4),
+};
+
+const gladiatorSkill_2: IHeroSkillSet = {
+    id: "GladiatorTotem",
+    name: i18n.skills.mc.gladiatorSkill.name,
+    desc: i18n.skills.mc.gladiatorSkill.desc2,
+    level: 2,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.GLADIATOR],
+    isMcSkill: true,
+    skills: gladiatorSkillset(3),
+    nextLevel: gladiatorSkill_3,
 };
 
 const gladiatorSkill: IHeroSkillSet = {
@@ -44,26 +62,7 @@ const gladiatorSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.GLADIATOR],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
-            totem: {
-                id: "GLADIATORTOTEM",
-                name: "Тотем гладиатора",
-                skills: [
-                    {
-                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                        isBasicAttack: false,
-                        value: 2,
-                        valueType: "number",
-                        targetType: ETargetType.SELF,
-                        attribute: "physicalPower",
-                    },
-                ],
-            },
-        },
-    ],
+    skills: gladiatorSkillset(2),
     nextLevel: gladiatorSkill_2,
 };
 

@@ -64,6 +64,7 @@ import {
     takeStatusDamage,
     isTriggerReady,
     triggerBattleTrigger,
+    dealOverhealDamage,
 } from "../utils/battleUtils";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomIntFromInterval } from "../utils/commonUtils";
 import { calculateSkillValue } from "../utils/skillUtils";
@@ -92,17 +93,34 @@ export class BattleController {
     }
 
     activateOnStartSkills() {
-        const onStartSkills: { unit: IBattleUnit; skillSet: IHeroSkillSet; isPlayer1: boolean }[] = [];
-        const passiveBuffs: { unit: IBattleUnit; buff: IBuff; isPlayer1: boolean }[] = [];
+        const onStartSkills: {
+            unit: IBattleUnit;
+            skillSet: IHeroSkillSet;
+            isPlayer1: boolean;
+        }[] = [];
+        const passiveBuffs: {
+            unit: IBattleUnit;
+            buff: IBuff;
+            isPlayer1: boolean;
+        }[] = [];
         // normal skills
         this.player1BattleUnits.forEach((unit) => {
             if (!unit) {
                 return;
             }
-            if (unit.passiveSkill?.preBattleBuff) passiveBuffs.push({ unit, buff: unit.passiveSkill?.preBattleBuff, isPlayer1: true });
+            if (unit.passiveSkill?.preBattleBuff)
+                passiveBuffs.push({
+                    unit,
+                    buff: unit.passiveSkill?.preBattleBuff,
+                    isPlayer1: true,
+                });
             unit.skills.forEach((skill) => {
                 if (skill.isActivateOnStart) {
-                    onStartSkills.push({ unit, skillSet: skill, isPlayer1: true });
+                    onStartSkills.push({
+                        unit,
+                        skillSet: skill,
+                        isPlayer1: true,
+                    });
                 }
             });
         });
@@ -110,10 +128,19 @@ export class BattleController {
             if (!unit) {
                 return;
             }
-            if (unit.passiveSkill?.preBattleBuff) passiveBuffs.push({ unit, buff: unit.passiveSkill?.preBattleBuff, isPlayer1: false });
+            if (unit.passiveSkill?.preBattleBuff)
+                passiveBuffs.push({
+                    unit,
+                    buff: unit.passiveSkill?.preBattleBuff,
+                    isPlayer1: false,
+                });
             unit.skills.forEach((skill) => {
                 if (skill.isActivateOnStart) {
-                    onStartSkills.push({ unit, skillSet: skill, isPlayer1: false });
+                    onStartSkills.push({
+                        unit,
+                        skillSet: skill,
+                        isPlayer1: false,
+                    });
                 }
             });
         });
@@ -172,7 +199,10 @@ export class BattleController {
             if (battleIsOver) {
                 break;
             }
-            this.battleRecord.push({ type: EBattleActionType.ROUND_START, value: i });
+            this.battleRecord.push({
+                type: EBattleActionType.ROUND_START,
+                value: i,
+            });
 
             //
             // calculate attacks order
@@ -202,7 +232,10 @@ export class BattleController {
             this.listOfTriggers = this.listOfTriggers.filter((t) => t.type !== EAppTriggerType.NONE);
             console.log(" -= DEBUG =- trigger list size", this.listOfTriggers.length);
             //
-            this.battleRecord.push({ type: EBattleActionType.ROUND_END, value: i });
+            this.battleRecord.push({
+                type: EBattleActionType.ROUND_END,
+                value: i,
+            });
         }
         //console.log("battle display record");
         // display battle record
@@ -277,7 +310,11 @@ export class BattleController {
             return;
         }
 
-        this.battleRecord.push({ type: EBattleActionType.TURN_START, name: unit.id, unitId: unit.id });
+        this.battleRecord.push({
+            type: EBattleActionType.TURN_START,
+            name: unit.id,
+            unitId: unit.id,
+        });
 
         const skillIndex = unit.currentSkillIndex;
         if (unit.currentSkillIndex === 3) {
@@ -337,7 +374,10 @@ export class BattleController {
             });
             if (forcedSingleCast) return; // do not skill chain or basic attack
             if (skillSet.isChained && recurseDeep < 5) {
-                this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
+                this.battleRecord.push({
+                    unitId: unit.id,
+                    type: EBattleActionType.SKILL_CHAIN,
+                });
                 this.performAction(unit, round, isPlayer1, recurseDeep + 1);
             } else if (skillSet.isBasicAttack || skillSet.isBasicAttack === undefined) {
                 this.performBasicAttack(unit, undefined, isPlayer1);
@@ -410,7 +450,12 @@ export class BattleController {
             if (unit.hp > unit.maxHp) {
                 unit.hp = unit.maxHp;
             }
-            this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.REGEN_HP, value: regenHp, value2: unit.hp });
+            this.battleRecord.push({
+                unitId: unit.id,
+                type: EBattleActionType.REGEN_HP,
+                value: regenHp,
+                value2: unit.hp,
+            });
         }
         // check statuses
         statuses.forEach((st) => {
@@ -432,7 +477,7 @@ export class BattleController {
             takeStatusDamage(unit, value, type, this.battleRecord);
         });
         // totem
-        this.performTotemActionSkill(totem,unit,isPlayer1);
+        this.performTotemActionSkill(totem, unit, isPlayer1);
     }
 
     performTotemActionSkill(totem: ITotem, unit: IBattleUnit, isPlayer1: boolean) {
@@ -525,7 +570,7 @@ export class BattleController {
                 this.performForceOutOfTurnAction(unit, skill, isPlayer1, true, isStartBattle);
                 break;
             case EHeroSkillType.FORCE_TOTEM_ACTION:
-                this.performForceOutOfTurnTotem(unit,skill,isPlayer1,isStartBattle);
+                this.performForceOutOfTurnTotem(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.NONE:
                 {
@@ -623,7 +668,15 @@ export class BattleController {
         // }
 
         // record
-        const attackRecord = { unitId: unit.id, type: EBattleActionType.ATTACK, value: attackDamage, isCrit, targets: [], skill, isStartBattle };
+        const attackRecord = {
+            unitId: unit.id,
+            type: EBattleActionType.ATTACK,
+            value: attackDamage,
+            isCrit,
+            targets: [],
+            skill,
+            isStartBattle,
+        };
         this.battleRecord.push(attackRecord);
 
         targets.forEach((target) => {
@@ -689,7 +742,11 @@ export class BattleController {
             target[attribute] += increaseValue;
             //console.log(">>>>", increaseValue, target[attribute]);
             //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
-            battleAction.targets?.push({ targetId: target.id, attribute, value: increaseValue });
+            battleAction.targets?.push({
+                targetId: target.id,
+                attribute,
+                value: increaseValue,
+            });
         });
     }
 
@@ -732,7 +789,14 @@ export class BattleController {
         }
         //console.log("performBuff > ", skill, buff);
         // record
-        const buffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.BUFF, buffTargets: [], buff, isStartBattle, skill };
+        const buffAction: IBattleAction = {
+            unitId: unit.id,
+            type: EBattleActionType.BUFF,
+            buffTargets: [],
+            buff,
+            isStartBattle,
+            skill,
+        };
         this.battleRecord.push(buffAction);
 
         const { type, targetType, targetUnitId, attribute, value, statusType, mpScale, ppScale } = buff;
@@ -908,7 +972,14 @@ export class BattleController {
         }
         //console.log("performDebuff", debuff);
         // record
-        const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff, isStartBattle, skill };
+        const debuffAction: IBattleAction = {
+            unitId: unit.id,
+            type: EBattleActionType.DEBUFF,
+            buffTargets: [],
+            debuff,
+            isStartBattle,
+            skill,
+        };
         this.battleRecord.push(debuffAction);
 
         const { type, targetType, name, attribute, value, mpScale, ppScale, duration } = debuff;
@@ -1004,7 +1075,6 @@ export class BattleController {
                 finalHeal += calculateIncreaseValue(finalHeal, value, valueType, percentFrom);
             }
         });
-
         // calculate outgoing heal bonuses from items
         unit.itemBonuses.forEach((bonus) => {
             if (bonus.type === EItemBattleBonusType.HEAL_INCREASE) {
@@ -1039,15 +1109,24 @@ export class BattleController {
                     //const antihealDebuff = target.debuffs[antihealDebuffIndex];
                     //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
                     // record
-                    const attackRecord: IBattleAction = { unitId: target.id, type: EBattleActionType.ATTACK, value: finalHeal, targets: [] };
+                    const attackRecord: IBattleAction = {
+                        unitId: target.id,
+                        type: EBattleActionType.ATTACK,
+                        value: finalHeal,
+                        targets: [],
+                    };
                     this.battleRecord.push(attackRecord);
-                    const recordTarget = { targetId: target.id, isEvasion: false };
+                    const recordTarget = {
+                        targetId: target.id,
+                        isEvasion: false,
+                    };
                     attackRecord?.targets?.push(recordTarget);
                     //
                     this.takeDamage(target, finalHeal, undefined, recordTarget);
                     //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
                     return;
                 }
+                let finalReduction = 0;
                 // BLEED & POISON interaction
                 target.statuses.forEach((status) => {
                     if (status.type === EStatusType.BLEED) {
@@ -1055,48 +1134,30 @@ export class BattleController {
                         reduceStatus(target, target, status.type, reduction, this.battleRecord);
                     }
                     if (status.type === EStatusType.POISON) {
-                        const reduction = Math.min(finalHeal, Math.floor(status.value / 2) + 1, status.value);
-                        reduceStatus(target, target, status.type, reduction, this.battleRecord);
-                        finalHeal -= reduction;
+                        const finalReduction = Math.min(finalHeal, Math.floor(status.value / 2) + 1, status.value);
+                        reduceStatus(target, target, status.type, finalReduction, this.battleRecord);
+                        //finalHeal -= reduction;
                     }
                 });
                 //
-                target.hp += finalHeal;
+                target.hp += finalHeal - finalReduction;
                 if (target.hp > target.maxHp) {
                     overhealTotal += target.hp - target.maxHp;
                     target.hp = target.maxHp;
                 }
 
-                this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.HEAL, value: finalHeal, isStartBattle });
+                this.battleRecord.push({
+                    unitId: unit.id,
+                    targetId: target.id,
+                    type: EBattleActionType.HEAL,
+                    value: finalHeal,
+                    isStartBattle,
+                });
             }
         });
         // overheal managing
-        console.log("Total overheal", overhealTotal);
-        if (overhealTotal > 0) {
-            const overhealBuffs = unit.buffs.filter((buff) => buff.type === EBuffType.OVERHEAL_TO_DAMAGE);
-            if (overhealBuffs.length > 0) {
-                overhealBuffs.forEach((buff) => {
-                    const attackRecord2 = {
-                        unitId: unit.id,
-                        type: EBattleActionType.ATTACK,
-                        value: overhealTotal,
-                        isCrit: false,
-                        targets: [],
-                        skill,
-                        isStartBattle,
-                    };
-                    this.battleRecord.push(attackRecord2);
-                    // TODO: overheal to something good (or bad)
-                    const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
-                    const targets = getOpponentTargets(opponentUnits, buff.changeTargetTypeTo || ETargetType.FIRST_ENEMY);
-                    targets?.forEach((target) => {
-                        //  Radiate removed for now
-                        //applyStatus(unit, target, EStatusType.RADIATE, overhealTotal, this.battleRecord, isStartBattle);
-                        this.dealDamage(unit, target, overhealTotal, EHeroAttackType.MAGIC, undefined, attackRecord2);
-                    });
-                });
-            }
-        }
+        const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
+        dealOverhealDamage(overhealTotal, unit, unit.id, skill, opponentUnits, this);
     }
 
     performDarkHealAttack(unit: IBattleUnit, skill: IHeroSkill, value: number, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1158,7 +1219,14 @@ export class BattleController {
                 unit.summon!.hp += addHpValue;
             }
         });
-        this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SUMMON, name: summon.name, summon: { ...unit.summon }, skill, isStartBattle });
+        this.battleRecord.push({
+            unitId: unit.id,
+            type: EBattleActionType.SUMMON,
+            name: summon.name,
+            summon: { ...unit.summon },
+            skill,
+            isStartBattle,
+        });
 
         triggerBattleTrigger(EAppTriggerType.SUMMON, this, unit);
         // this.listOfTriggers.forEach((bt) => {
@@ -1176,7 +1244,12 @@ export class BattleController {
         }
 
         removeSummon(target);
-        this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.SUMMON_REMOVE, isStartBattle });
+        this.battleRecord.push({
+            unitId: unit.id,
+            targetId: target.id,
+            type: EBattleActionType.SUMMON_REMOVE,
+            isStartBattle,
+        });
     }
 
     performTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1190,7 +1263,14 @@ export class BattleController {
         }
 
         unit.totem = prepareTotemToBattle(totem);
-        this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.TOTEM_PLACE, name: totem.name, totem: unit.totem, skill, isStartBattle });
+        this.battleRecord.push({
+            unitId: unit.id,
+            type: EBattleActionType.TOTEM_PLACE,
+            name: totem.name,
+            totem: unit.totem,
+            skill,
+            isStartBattle,
+        });
     }
 
     performRemoveTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1202,7 +1282,12 @@ export class BattleController {
         }
 
         removeTotem(target);
-        this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.TOTEM_REMOVE, isStartBattle });
+        this.battleRecord.push({
+            unitId: unit.id,
+            targetId: target.id,
+            type: EBattleActionType.TOTEM_REMOVE,
+            isStartBattle,
+        });
     }
 
     performTotemIncreaseValue(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1231,7 +1316,13 @@ export class BattleController {
                 totemSkill.value += calculateIncreaseValue(totemSkill.value, value, valueType, percentFrom) + mpScaleValue + ppScaleValue;
             });
 
-            this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.TOTEM_INCREASE_VALUE, name: "Increase totem value", totem, isStartBattle });
+            this.battleRecord.push({
+                unitId: unit.id,
+                type: EBattleActionType.TOTEM_INCREASE_VALUE,
+                name: "Increase totem value",
+                totem,
+                isStartBattle,
+            });
         });
     }
 
@@ -1287,7 +1378,7 @@ export class BattleController {
         }
 
         targets.forEach((target) => {
-            this.performTotemActionSkill(target.totem,target,isPlayer1);
+            this.performTotemActionSkill(target.totem, target, isPlayer1);
         });
     }
 
@@ -1469,7 +1560,13 @@ export class BattleController {
         attackDamage = attackPercent ? Math.floor((attackDamage * attackPercent) / 100) : attackDamage;
 
         // record
-        const attackRecord = { unitId: unit.id, type: EBattleActionType.ATTACK, value: attackDamage, isCrit, targets: [] };
+        const attackRecord = {
+            unitId: unit.id,
+            type: EBattleActionType.ATTACK,
+            value: attackDamage,
+            isCrit,
+            targets: [],
+        };
         this.battleRecord.push(attackRecord);
         //
         targets.forEach((target) => {
@@ -1520,7 +1617,12 @@ export class BattleController {
                     timeType: EBuffTimeType.DUEL,
                     name: "Bladedancer mark",
                 };
-                const debuffAction: IBattleAction = { unitId: unit.id, type: EBattleActionType.DEBUFF, buffTargets: [], debuff };
+                const debuffAction: IBattleAction = {
+                    unitId: unit.id,
+                    type: EBattleActionType.DEBUFF,
+                    buffTargets: [],
+                    debuff,
+                };
                 this.battleRecord.push(debuffAction);
 
                 applyDebuff(finalTarget, debuff, debuffAction, this);
@@ -1574,14 +1676,23 @@ export class BattleController {
         parentUnit: IBattleUnit | undefined,
         attackRecord: IBattleAction,
     ) {
-        const recordTarget = { targetId: target.id, damageValue: 0, isEvasion: false };
+        const recordTarget = {
+            targetId: target.id,
+            damageValue: 0,
+            isEvasion: false,
+        };
         attackRecord.targets?.push(recordTarget);
         let finalDamageValue = damageValue;
 
         // check if cosmic shield is active
         const cosmicShield = target.buffs.find((buff) => buff.type === EBuffType.COSMIC_SHIELD);
         if (cosmicShield) {
-            this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
+            this.battleRecord.push({
+                unitId: target.id,
+                type: EBattleActionType.TAKE_DAMAGE,
+                value: 0,
+                value2: target.hp,
+            });
             changeBuffValue(target, cosmicShield, -1, this.battleRecord);
 
             //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
@@ -1667,7 +1778,12 @@ export class BattleController {
             const stacks = divineShield.totalValue;
             if (stacks) {
                 if (finalDamageValue <= stacks) {
-                    this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
+                    this.battleRecord.push({
+                        unitId: target.id,
+                        type: EBattleActionType.TAKE_DAMAGE,
+                        value: 0,
+                        value2: target.hp,
+                    });
                     return;
                 } else {
                     changeBuffValue(target, divineShield, finalDamageValue - stacks, this.battleRecord);
@@ -1752,7 +1868,10 @@ export class BattleController {
 
         if (target.hp <= 0) {
             target.hp = 0;
-            this.battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
+            this.battleRecord.push({
+                unitId: target.id,
+                type: EBattleActionType.DEATH,
+            });
             // triggers
             triggerBattleTrigger(EAppTriggerType.DEATH, this, target);
             // this.listOfTriggers.forEach((bt) => {

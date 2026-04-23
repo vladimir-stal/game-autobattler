@@ -83,7 +83,7 @@ export const attrIncrHpReg: IHeroSkillSet = {
 };
 
 // SUMMON ATTACK TOTEM SKILL
-const totemAttackSkillset = (atk: number):IHeroSkill[] => {
+const totemAttackSkillset = (atk: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.FORCE_TOTEM_ACTION,
@@ -104,10 +104,10 @@ const totemAttackSkillset = (atk: number):IHeroSkill[] => {
                     },
                 ],
             },
-            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
         },
-    ]
-}
+    ];
+};
 
 export const totemAttackSkill_3: IHeroSkillSet = {
     id: "totemAttack",
