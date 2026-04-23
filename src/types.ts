@@ -585,7 +585,7 @@ export enum EBuffType {
     ATTRIBUTE_INCREASE = "ATTRIBUTE_INCREASE",
     DIVINE_SHIELD = "DIVINE_SHIELD", // ignores incoming damage below stacks
     COSMIC_SHIELD = "COSMIC_SHIELD", // ignores first incoming damage
-    ANTISKILL_SHIELD = "ANTISKILL_SHIELD", // reflects first enemy skill back to attacker
+    ANTISKILL_MIRROR = "ANTISKILL_MIRROR", // reflects first enemy skill back to attacker
     FIRE_SHIELD = "FIRE_SHIELD", // on taking damage applies burn to enemy
     DARK_HEAL = "DARK_HEAL", // transforms heal spells into magic attack spells
     BLADEDANCE = "BLADEDANCE", // consecutive attacks deal more damage
@@ -635,6 +635,8 @@ export enum ETargetType {
     FIRST_ALLY = "FIRST_ALLY",
     LOW_HP_ALLY = "LOW_HP_ALLY",
     RANDOM_ALLY = "RANDOM_ALLY",
+    HIGH_MP_ALLY = "HIGH_MP_ALLY",
+    HIGH_PP_ALLY = "HIGH_PP_ALLY",
     RANDOM_ALLY_EXCEPT_ID = "RANDOM_ALLY_EXCEPT_ID", // get random ally except ally with id
     SELF = "SELF",
     TOTEM_ALLY_ALL = "TOTEM_ALLY_ALL", // all totems on ally side
@@ -931,12 +933,14 @@ export interface IBattleAction {
 
 export enum EAppTriggerType {
     NONE = "NONE",
-    BASIC_ATTACK = "BASIC_ATTACK", // NOT IMPLEMENTED
-    TAKE_ATTACK = "TAKE_ATTACK", // NOT IMPLEMENTED
+    BASIC_ATTACK = "BASIC_ATTACK", // after making all basic attacks
+    TAKE_ATTACK = "TAKE_ATTACK", // before taking damage of basic attack
     SUMMON = "SUMMON", // after summon
     ROUND_CYCLE = "ROUND_CYCLE", // end of the round
     DEATH = "DEATH", // after reduced to 0 hp
     KILL = "KILL", // after attack in which target hp reduced to 0
+    RECIEVE_BUFF = "RECIEVE_BUFF", // after recieving (non-battle-trigger) buff
+    RECIEVE_DEBUFF = "RECIEVE_DEBUFF", // after recieving (non-battle-trigger) debuff
 }
 
 export interface IAppTrigger {

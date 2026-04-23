@@ -1,5 +1,23 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const bishopSkillset = (heal: number, mpScale: number, repeats: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: repeats,
+            targetType: ETargetType.SELF,
+            valueType: "number",
+            childSkill: {
+                type: EHeroSkillType.HEAL,
+                value: heal,
+                valueType: "number",
+                targetType: ETargetType.LOW_HP_ALLY,
+                mpScale: mpScale,
+            },
+        },
+    ];
+};
 
 export const bishopSkill_3: IHeroSkillSet = {
     id: "bishopHeal",
@@ -9,29 +27,7 @@ export const bishopSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BISHOP],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: false,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 40,
-        },
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: false,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 40,
-        },
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 40,
-        },
-    ],
+    skills: bishopSkillset(2, 40, 3),
 };
 
 export const bishopSkill_2: IHeroSkillSet = {
@@ -44,29 +40,7 @@ export const bishopSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BISHOP],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: false,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 30,
-        },
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: false,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 30,
-        },
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 30,
-        },
-    ],
+    skills: bishopSkillset(2, 30, 3),
     nextLevel: bishopSkill_3,
 };
 
@@ -80,29 +54,7 @@ export const bishopSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BISHOP],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: false,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 20,
-        },
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: false,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 20,
-        },
-        {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
-            value: 2,
-            targetType: ETargetType.LOW_HP_ALLY,
-            mpScale: 20,
-        },
-    ],
+    skills: bishopSkillset(2, 20, 3),
     nextLevel: bishopSkill_2,
 };
 

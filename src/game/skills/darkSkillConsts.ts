@@ -249,13 +249,11 @@ export const magicAttackX3: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.REPEATING_SKILL,
             value: 3, // how many repeats, can be calculated
             targetType: ETargetType.SELF, // not used
             animation: AnimationType.UNIT_ATTACK,
             childSkill: {
-                isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
                 value: 2,
                 targetType: ETargetType.RANDOM_ENEMY,

@@ -256,6 +256,14 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             const firstTarget = getFirstTarget(units);
             return firstTarget ? [firstTarget] : null;
         }
+        case ETargetType.HIGH_MP_ALLY: {
+            const target = getHighestAttributeTarget(units, "magicPower");
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_PP_ALLY: {
+            const target = getHighestAttributeTarget(units, "physicalPower");
+            return target ? [target] : null;
+        }
         case ETargetType.LOW_HP_ALLY: {
             const lowestHpAlly = units.reduce((result, unit) => {
                 if (unit && unit.hp > 0) {

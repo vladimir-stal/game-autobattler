@@ -411,6 +411,20 @@ export const nextBAArea: IHeroSkillSet = {
 };
 
 // REMOVE DEBUFF
+const removeDebuffSkillset = (repeats: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: repeats, // how many repeats, can be calculated
+            targetType: ETargetType.SELF, // not used
+            childSkill: {
+                type: EHeroSkillType.DEBUFF_REMOVE,
+                targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
+                attackType: EHeroAttackType.PHYSICAL,
+            },
+        },
+    ];
+};
 
 export const removeDebuffSkill_3: IHeroSkillSet = {
     id: "removeDebuff",
@@ -420,23 +434,7 @@ export const removeDebuffSkill_3: IHeroSkillSet = {
     priceLevel: 2,
     //rarity: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF_REMOVE,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-        {
-            type: EHeroSkillType.DEBUFF_REMOVE,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-        {
-            type: EHeroSkillType.DEBUFF_REMOVE,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-    ],
+    skills: removeDebuffSkillset(3),
     image: IMAGE_SKILL_YELLOW_FLAME,
 };
 
@@ -448,18 +446,7 @@ export const removeDebuffSkill_2: IHeroSkillSet = {
     priceLevel: 2,
     //rarity: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF_REMOVE,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-        {
-            type: EHeroSkillType.DEBUFF_REMOVE,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-    ],
+    skills: removeDebuffSkillset(2),
     nextLevel: removeDebuffSkill_3,
     image: IMAGE_SKILL_YELLOW_FLAME,
 };
@@ -472,18 +459,26 @@ export const removeDebuffSkill: IHeroSkillSet = {
     priceLevel: 2,
     //rarity: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF_REMOVE,
-            targetType: ETargetType.DEBUFFED_ALLY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-    ],
+    skills: removeDebuffSkillset(1),
     nextLevel: removeDebuffSkill_2,
     image: IMAGE_SKILL_YELLOW_FLAME,
 };
 
 // REMOVE BUFF
+const removeBuffSkillset = (repeats: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            value: repeats, // how many repeats, can be calculated
+            targetType: ETargetType.SELF, // not used
+            childSkill: {
+                type: EHeroSkillType.BUFF_REMOVE,
+                targetType: ETargetType.BUFFED_ENEMY_RANDOM,
+                attackType: EHeroAttackType.PHYSICAL,
+            },
+        },
+    ];
+};
 
 export const removeBuffSkill_3: IHeroSkillSet = {
     id: "removeBuff",
@@ -493,23 +488,7 @@ export const removeBuffSkill_3: IHeroSkillSet = {
     priceLevel: 2,
     //rarity: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF_REMOVE,
-            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-        {
-            type: EHeroSkillType.BUFF_REMOVE,
-            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-        {
-            type: EHeroSkillType.BUFF_REMOVE,
-            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-    ],
+    skills: removeBuffSkillset(3),
     image: IMAGE_SKILL_MAGIC_HAND,
 };
 
@@ -521,18 +500,7 @@ export const removeBuffSkill_2: IHeroSkillSet = {
     priceLevel: 2,
     //rarity: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF_REMOVE,
-            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-        {
-            type: EHeroSkillType.BUFF_REMOVE,
-            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-    ],
+    skills: removeBuffSkillset(2),
     nextLevel: removeBuffSkill_3,
     image: IMAGE_SKILL_MAGIC_HAND,
 };
@@ -545,13 +513,7 @@ export const removeBuffSkill: IHeroSkillSet = {
     priceLevel: 2,
     //rarity: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WILD],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF_REMOVE,
-            targetType: ETargetType.BUFFED_ENEMY_RANDOM,
-            attackType: EHeroAttackType.PHYSICAL,
-        },
-    ],
+    skills: removeBuffSkillset(1),
     nextLevel: removeBuffSkill_2,
     image: IMAGE_SKILL_MAGIC_HAND,
 };

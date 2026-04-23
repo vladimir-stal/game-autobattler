@@ -511,6 +511,9 @@ export class BattleController {
             case EHeroSkillType.BUFF_INCREASE_VALUE:
                 this.performBuffValueIncrease(unit, skill, isPlayer1, isStartBattle);
                 break;
+            case EHeroSkillType.BUFF_REMOVE:
+                this.performBuffRemove(unit, skill, isPlayer1, isStartBattle);
+                break;
             case EHeroSkillType.DEBUFF:
                 this.performDebuff(unit, skill, isPlayer1, isStartBattle);
                 break;
@@ -606,7 +609,8 @@ export class BattleController {
                 this.basicAttack(unit, isPlayer1);
             }
         }
-        //}
+        // triggers
+        triggerBattleTrigger(EAppTriggerType.BASIC_ATTACK, this, unit);
     }
 
     performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -696,7 +700,7 @@ export class BattleController {
                 }
             }
             // check if target unit has antiskill shield
-            const antiskillShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
+            const antiskillShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_MIRROR);
             if (antiskillShieldBuff) {
                 removeBuff(target, antiskillShieldBuff, this.battleRecord);
                 this.dealDamage(unit, unit, attackDamage, skill.attackType!, parentUnit, attackRecord);
@@ -817,7 +821,10 @@ export class BattleController {
             }
         }
         targets.forEach((target) => {
-            !!target && applyBuff(target, buff, buffAction, this, unit, isPlayer1);
+            if (target) {
+                applyBuff(target, buff, buffAction, this, unit, isPlayer1);
+                triggerBattleTrigger(EAppTriggerType.RECIEVE_BUFF, this, target);
+            }
         });
     }
 
@@ -993,7 +1000,7 @@ export class BattleController {
             targets.forEach((target) => {
                 if (target) {
                     // check if target unit has antis debuff bonuses (ANTISKILL_SHIELD, IGNORE_NEXT_DEBUFF)
-                    const antiskillShieldBuff = target.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_SHIELD);
+                    const antiskillShieldBuff = target.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_MIRROR);
                     if (antiskillShieldBuff) {
                         removeBuff(target, antiskillShieldBuff, this.battleRecord);
                         applyDebuff(unit, debuff, debuffAction, this, unit, isPlayer1);
@@ -1005,6 +1012,7 @@ export class BattleController {
                         return;
                     }
                     applyDebuff(target, debuff, debuffAction, this, unit, isPlayer1);
+                    triggerBattleTrigger(EAppTriggerType.RECIEVE_DEBUFF, this, target);
                 }
             });
     }
@@ -1015,20 +1023,13 @@ export class BattleController {
             console.log("NO TARGET TYPE OR VALUE");
             return;
         }
-
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1);
         console.log("performDebuffRemove targets", targets);
         if (!targets || targets.length === 0) {
             return;
         }
-
-        console.log("targets >>>>", targets);
-
         targets.forEach((target) => {
             if (target) {
-                console.log("target >>>>", target);
                 if (target.debuffs.length === 0) {
                     return;
                 }
@@ -1038,6 +1039,32 @@ export class BattleController {
                 }
                 const randomIndex = getRandomArrayIndex(target.debuffs);
                 removeDebuff(unit, target, randomIndex, this.battleRecord, isStartBattle);
+            }
+        });
+    }
+
+    performBuffRemove(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+        const { targetType } = skill;
+        if (!targetType) {
+            console.log("NO TARGET TYPE OR VALUE");
+            return;
+        }
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1);
+        console.log("performBuffRemove targets", targets);
+        if (!targets || targets.length === 0) {
+            return;
+        }
+        targets.forEach((target) => {
+            if (target) {
+                if (target.buffs.length === 0) {
+                    return;
+                }
+                if (target.buffs.length === 1) {
+                    removeBuff(target, target.buffs[0], this.battleRecord);
+                    return;
+                }
+                const randomIndex = getRandomArrayIndex(target.buffs);
+                removeBuff(target, target.buffs[randomIndex], this.battleRecord);
             }
         });
     }
@@ -1633,6 +1660,8 @@ export class BattleController {
                 }
             }
 
+            // triggers
+            triggerBattleTrigger(EAppTriggerType.TAKE_ATTACK, this, finalTarget);
             //
             this.dealDamage(unit, finalTarget, attackDamage, unit.attackType, parentUnit, attackRecord);
 
