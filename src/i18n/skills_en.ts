@@ -472,9 +472,9 @@ export const SKILLS_EN = {
         },
         illusionistSkill: {
             name: "Illusion",
-            desc1: "Summon magic illusion that\n repeats magic skills",
-            desc2: "Summon magic illusion that\n repeats magic skills",
-            desc3: "Summon magic illusion that\n repeats magic skills",
+            desc1: "Summon illusion that\nuse magic skills and\ninherits 25% MP",
+            desc2: "Summon illusion that\nuse magic skills and\ninherits 35% MP",
+            desc3: "Summon illusion that\nuse magic skills and\ninherits 50% MP",
         },
         inquisitorSkill: {
             name: "Brand of obedience",

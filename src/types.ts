@@ -663,6 +663,7 @@ export enum ETargetType {
     // COMMON
     BY_UNIT_ID = "BY_UNIT_ID",
     EVERY_UNIT = "EVERY_UNIT",
+    ANCHOR_TARGET = "ANCHOR_TARGET",
 }
 
 export enum EWeaponType {
@@ -957,7 +958,7 @@ export interface IAppTrigger {
     type: EAppTriggerType;
     skill: IHeroSkill[];
     skillId: string;
-    // default: targetNumber = 1; limitedRepeats = false; targetCheck = self;
+    // default: targetNumber = 1; limitedRepeats = false; targetCheck = anchor_target;
     targetCheck?: ETargetType; // who triggers
     currentNumber?: number; // increase this every time trigger happens
     targetNumber?: number; // perform skill cast after currentNumber reach this number
@@ -996,6 +997,8 @@ export interface IBuff {
     ppScale?: number; // % of PP value is added to debuff value
     duration?: number;
     appTrigger?: IAppTrigger;
+    cannotBeTargeted?: boolean; // cannot be dispelled or copied
+    isHidden?: boolean; // do not display on battle card info panel
 }
 
 export interface IDebuff {
@@ -1011,6 +1014,8 @@ export interface IDebuff {
     ppScale?: number; // % of PP value is added to debuff value
     duration?: number;
     appTrigger?: IAppTrigger;
+    cannotBeTargeted?: boolean; // cannot be dispelled or copied
+    isHidden?: boolean; // do not display on battle card info panel
 }
 
 /**
@@ -1033,6 +1038,7 @@ export interface IHeroSkill {
     targetType?: ETargetType;
     targetFromType?: ETargetType;
     targetUnitId?: string;
+    targetBuffId?: string;
     valueType?: TValueType;
     valueFrom?: THeroBattleAttribute;
     summon?: IUnit;

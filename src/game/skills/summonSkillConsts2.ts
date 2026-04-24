@@ -163,6 +163,29 @@ export const warriorSummon_3: IUnit = {
     exp: 0,
 };
 
+// FAMILIAR SUMMON UNIT
+export const familiarSummon: IUnit = {
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.MOB,
+    attackType: EHeroAttackType.MAGIC,
+    attackTargetType: ETargetType.FIRST_ENEMY,
+    basicAttack: 1,
+    basicAttackTimes: 1,
+    basicMaxHp: 1,
+    basicHpRegen: 0,
+    basicArmor: 0,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: "Familiar",
+    id: "FIREFLYSUMMON",
+    skills: [],
+    items: [],
+    level: 1,
+    exp: 0,
+};
+
 // FIREFLY SUMMON SKILL
 
 export const fireflySummonSkill_3: IHeroSkillSet = {
@@ -339,8 +362,49 @@ export const incrSummonBa: IHeroSkillSet = {
 };
 
 //
+export const summonerFamiliarSkill_3: IHeroSkillSet = {
+    id: "summonerFamiliar",
+    name: "Familiar",
+    desc: "Summons [1,1] creature\nbefore battle and\nbuffs summon [+1,+2]",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: skillsetSummon(familiarSummon, 1, 25, 50, 1, 1), // summon 3/1,
+    //nextLevel: summonerFamiliarSkill_2,
+    isActivateOnStart: true,
+    image: IMAGE_SKILL_SUMMON_FIREFLY,
+    animation: AnimationType.SUMMON_SPELL,
+};
 
-//
+export const summonerFamiliarSkill_2: IHeroSkillSet = {
+    id: "summonerFamiliar",
+    name: "Familiar",
+    desc: "Summons [1,1] creature\nbefore battle and\nbuffs summon [+1,+1]",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: skillsetSummon(familiarSummon, 1, 25, 35, 0, 1), // summon 3/1,
+    nextLevel: summonerFamiliarSkill_3,
+    isActivateOnStart: true,
+    image: IMAGE_SKILL_SUMMON_FIREFLY,
+    animation: AnimationType.SUMMON_SPELL,
+};
+
+export const summonerFamiliarSkill: IHeroSkillSet = {
+    id: "summonerFamiliar",
+    name: "Familiar",
+    desc: "Summons [1,1] creature before battle",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: skillsetSummon(familiarSummon, 0, 25, 25, 0, 0), // summon 3/1,
+    nextLevel: summonerFamiliarSkill_2,
+    isActivateOnStart: true,
+    image: IMAGE_SKILL_SUMMON_FIREFLY,
+    animation: AnimationType.SUMMON_SPELL,
+};
+
+
 // INCREASE CURRENT SUMMON ARMOR SKILL
 //
 const incrSummonArmorSkillset = (armor: number, mpScale: number): IHeroSkill[] => {
@@ -433,4 +497,4 @@ export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill
 
 export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa, incrSummonArmor]);
 
-export const summonSkills_3: THeroSkills = summonSkills_2.concat([buffSummonCritSkill]);
+export const summonSkills_3: THeroSkills = summonSkills_2.concat([buffSummonCritSkill, summonerFamiliarSkill]);

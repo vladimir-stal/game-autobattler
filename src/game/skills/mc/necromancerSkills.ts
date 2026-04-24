@@ -1,4 +1,4 @@
-import { AnimationType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IUnit, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IPassiveSkill, IUnit, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 import { skeletonUnit, skeletonWarriorUnit } from "../../units/skeletonsMobUnits";
 import { skillsetSummon } from "../../utils/skillUtils2";
@@ -135,5 +135,33 @@ export const necromancerSkill: IHeroSkillSet = {
     isActivateOnStart: true,
     nextLevel: necromancerSkill_2,
 };
+
+export const necromancerPassive: IPassiveSkill = {
+        desc: "Gain 3 MP when unit dies",
+        preBattleBuff: {
+            name: "Passive",
+            targetType: ETargetType.SELF,
+            timeType: EBuffTimeType.DUEL,
+            type: EBuffType.BATTLE_TRIGGER,
+            value: 1,
+            cannotBeTargeted: true,
+            isHidden: true,
+            appTrigger: {
+                skillId: "NecromancerPassive",
+                type: EAppTriggerType.DEATH,
+                targetCheck: ETargetType.EVERY_UNIT,
+                skill: [
+                    {
+                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                        attribute: "magicPower",
+                        value: 3,
+                        valueType: "number",
+                        targetType: ETargetType.SELF,
+                    },
+                ],
+                limitedRepeats: false,
+            },
+        },
+    };
 
 export const necromancerSkills: THeroSkills = [necromancerSkill];

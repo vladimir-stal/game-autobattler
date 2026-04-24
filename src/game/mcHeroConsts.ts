@@ -16,7 +16,7 @@ import {
 import { LANG } from "./consts";
 import { alchemistSkills } from "./skills/mc/alchemistSkills";
 import { assassinSkills } from "./skills/mc/assassinSkills";
-import { barbarianSkills } from "./skills/mc/barbarianSkills";
+import { barbarianPassive, barbarianSkills } from "./skills/mc/barbarianSkills";
 import { battleMageSkills } from "./skills/mc/battleMageSkills";
 import { beastMasterSkills } from "./skills/mc/beastmasterSkills";
 import { bishopSkills } from "./skills/mc/bishopSkills";
@@ -29,21 +29,21 @@ import { duelistSkills } from "./skills/mc/duelistSkills";
 import { exorcistSkills } from "./skills/mc/exorcistSkills";
 import { forestSpititSkills } from "./skills/mc/forestSpiritSkills";
 import { gladiatorSkills } from "./skills/mc/gladiatorSkills";
-import { heraldSkills } from "./skills/mc/heraldSkills";
+import { heraldPassive, heraldSkills } from "./skills/mc/heraldSkills";
 import { hunterSkills } from "./skills/mc/hunterSkills";
-import { illusionistSkills } from "./skills/mc/illusionistSkills";
+import { illusionistPassive, illusionistSkills } from "./skills/mc/illusionistSkills";
 import { inquisitorSkills } from "./skills/mc/inquisitorSkills";
 import { knightSkills } from "./skills/mc/knightSkills";
 import { jesterSkills } from "./skills/mc/magicBardSkills";
 import { mimicSkills } from "./skills/mc/mimicSkills";
 import { minstrelSkills } from "./skills/mc/minstrelSkills";
 import { monkSkills } from "./skills/mc/monkSkills";
-import { necromancerSkills } from "./skills/mc/necromancerSkills";
+import { necromancerPassive, necromancerSkills } from "./skills/mc/necromancerSkills";
 import { oracleSkills } from "./skills/mc/oracleSkills";
 import { paladinSkills } from "./skills/mc/paladinSkills";
 import { predatorSkills } from "./skills/mc/predatorSkills";
 import { runecasterSkills } from "./skills/mc/runecasterSkills";
-import { samuraiSkills } from "./skills/mc/samuraiSkills";
+import { samuraiPassive, samuraiSkills } from "./skills/mc/samuraiSkills";
 import { shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
 import { shamanSkills } from "./skills/mc/shamanSkills";
 import { sorcererSkills } from "./skills/mc/sorcererSkills";
@@ -138,9 +138,7 @@ export const barbarianHero: IUnit = {
     name: i18n.heroes.BARBARIAN,
     id: "BARBARIAN",
     skills: barbarianSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: barbarianPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -192,9 +190,7 @@ export const heraldHero: IUnit = {
     name: i18n.heroes.HERALD,
     id: "HERALD",
     skills: heraldSkills,
-    passiveSkill: {
-        desc: "Increase PP per\nbuff on allies",
-    },
+    passiveSkill: heraldPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -246,9 +242,7 @@ export const samuraiHero: IUnit = {
     name: i18n.heroes.SAMURAI,
     id: "SAMURAI",
     skills: samuraiSkills,
-    passiveSkill: {
-        desc: "Upon death apply bleed to all enemies",
-    },
+    passiveSkill: samuraiPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -273,31 +267,7 @@ export const necromancerHero: IUnit = {
     name: i18n.heroes.NECROMANCER,
     id: "NECROMANCER",
     skills: necromancerSkills,
-    passiveSkill: {
-        desc: "Gain MP when unit dies",
-        preBattleBuff: {
-            name: "Passive",
-            targetType: ETargetType.SELF,
-            timeType: EBuffTimeType.DUEL,
-            type: EBuffType.BATTLE_TRIGGER,
-            value: 1,
-            appTrigger: {
-                skillId: "NecromancerPassive",
-                type: EAppTriggerType.DEATH,
-                targetCheck: ETargetType.EVERY_UNIT,
-                skill: [
-                    {
-                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                        attribute: "magicPower",
-                        value: 5,
-                        valueType: "number",
-                        targetType: ETargetType.SELF,
-                    },
-                ],
-                limitedRepeats: false,
-            },
-        },
-    },
+    passiveSkill: necromancerPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -1026,9 +996,7 @@ export const illusionistHero: IUnit = {
     name: i18n.heroes.ILLUSIONIST,
     id: "ILLUSIONIST",
     skills: illusionistSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: illusionistPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

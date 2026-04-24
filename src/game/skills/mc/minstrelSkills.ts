@@ -39,8 +39,9 @@ export const minstrelSkill: IHeroSkillSet = {
             isBasicAttack: true,
             value: 100,
             valueType: "percent",
-            targetFromType: ETargetType.BUFFED_ALLY_RANDOM,
+            //targetFromType: ETargetType.BUFFED_ALLY_RANDOM, // not used?
             targetType: ETargetType.BUFFED_ALLY_RANDOM,
+
         },
     ],
     nextLevel: minstrelSkill_2,

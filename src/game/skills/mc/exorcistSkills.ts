@@ -14,13 +14,13 @@ export const exorcistSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.TOTEM_REMOVE,
-            isBasicAttack: false,
-            targetType: ETargetType.CUSTOM,
+            targetType: ETargetType.ALL_ENEMIES,
+            value: 1,
         },
         {
             type: EHeroSkillType.SUMMON_REMOVE,
-            isBasicAttack: true,
-            targetType: ETargetType.CUSTOM,
+            targetType: ETargetType.ALL_ENEMIES,
+            value: 1,
         },
     ],
     //nextLevel: exorcistSkill_2

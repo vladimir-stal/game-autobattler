@@ -1,4 +1,15 @@
-import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import {
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ETargetType,
+    IHeroSkillSet,
+    IPassiveSkill,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
 
 export const barbarianSkill_3: IHeroSkillSet = {
@@ -88,6 +99,50 @@ export const barbarianSkill: IHeroSkillSet = {
         },
     ],
     nextLevel: barbarianSkill_2,
+};
+
+export const barbarianPassive: IPassiveSkill = {
+    desc: "Every 2nd incoming basic\nattack increase regen by 2",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 10,
+        valueType: "number",
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            limitedRepeats: true,
+            skillId: "Undying rage",
+            type: EAppTriggerType.TAKE_ATTACK,
+            targetNumber: 2,
+            targetCheck: ETargetType.SELF,
+            skill: [
+                {
+                    type: EHeroSkillType.BUFF_INCREASE_VALUE,
+                    targetType: ETargetType.SELF,
+                    targetBuffId: "Undying",
+                    value: 2,
+                    valueType: "number"
+                },
+                {
+                    type: EHeroSkillType.BUFF,
+                    targetType: ETargetType.SELF,
+                    buff: {
+                        name: "Undying",
+                        targetType: ETargetType.SELF,
+                        type: EBuffType.ATTRIBUTE_INCREASE,
+                        timeType: EBuffTimeType.DURATION,
+                        duration: 3,
+                        value: 2,
+                        valueType: "number",
+                        attribute: "hpRegen",
+                    }
+                },
+            ],
+        },
+    },
 };
 
 export const barbarianSkills: THeroSkills = [barbarianSkill];

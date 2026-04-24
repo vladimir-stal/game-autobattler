@@ -1,5 +1,31 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const heraldSkillset = (base:number, ppScale: number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            value: base,
+            valueType: "number",
+            attribute: "armor",
+            targetType: ETargetType.ALL_ALLIES,
+            ppScale: ppScale,
+        },
+    ];
+}
+
+export const heraldSkill_3: IHeroSkillSet = {
+    id: "HeraldHorn",
+    //name: "Herald horn",
+    //desc: "Armor all allies [4]+[200%xPP]",
+    name: i18n.skills.mc.heraldSkill.name,
+    desc: i18n.skills.mc.heraldSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.HERALD],
+    isMcSkill: true,
+    skills: heraldSkillset(4,300),
+};
 
 export const heraldSkill_2: IHeroSkillSet = {
     id: "HeraldHorn",
@@ -7,21 +33,12 @@ export const heraldSkill_2: IHeroSkillSet = {
     //desc: "Armor all allies [4]+[200%xPP]",
     name: i18n.skills.mc.heraldSkill.name,
     desc: i18n.skills.mc.heraldSkill.desc2,
-    level: 1,
+    level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.HERALD],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            value: 4,
-            valueType: "number",
-            attribute: "armor",
-            targetType: ETargetType.ALL_ALLIES,
-            ppScale: 200,
-        },
-    ],
+    skills: heraldSkillset(4,200),
+    nextLevel: heraldSkill_3,
 };
 
 export const heraldSkill: IHeroSkillSet = {
@@ -34,18 +51,36 @@ export const heraldSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.HERALD],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            value: 4,
-            valueType: "number",
-            attribute: "armor",
-            targetType: ETargetType.ALL_ALLIES,
-            ppScale: 100,
-        },
-    ],
+    skills: heraldSkillset(4,100),
     nextLevel: heraldSkill_2,
 };
+
+export const heraldPassive: IPassiveSkill = {
+        desc: "Increase PP per\nbuff on allies",
+        preBattleBuff: {
+            name: "Passive",
+            targetType: ETargetType.SELF,
+            timeType: EBuffTimeType.DUEL,
+            type: EBuffType.BATTLE_TRIGGER,
+            value: 1,
+            isHidden: true,
+            cannotBeTargeted: true,
+            appTrigger: {
+                limitedRepeats: false,
+                skillId: "Herald +PP",
+                type: EAppTriggerType.RECIEVE_BUFF,
+                targetCheck: ETargetType.ALL_ALLIES,
+                skill: [
+                    {
+                        type:EHeroSkillType.ATTRIBUTE_INCREASE,
+                        attribute: "physicalPower",
+                        value: 1,
+                        valueType: "number",
+                        targetType: ETargetType.SELF
+                    }
+                ]
+            }
+        }
+    }
 
 export const heraldSkills: THeroSkills = [heraldSkill];

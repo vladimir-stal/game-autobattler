@@ -220,11 +220,17 @@ const getAllAllySummons = (units: TBattleUnits) => {
 };
 
 const getBuffedAllies = (units: TBattleUnits): IBattleUnit[] => {
-    return units.filter((unit) => unit !== null).filter((unit) => unit.buffs.length);
+    return units
+        .filter((unit) => unit !== null)
+        .filter((unit) => unit.buffs.length)
+        .filter((unit) => unit.buffs.some((buff) => !buff.cannotBeTargeted));
 };
 
 const getDebuffedAllies = (units: TBattleUnits): IBattleUnit[] => {
-    return units.filter((unit) => unit !== null).filter((unit) => unit.debuffs.length);
+    return units
+        .filter((unit) => unit !== null)
+        .filter((unit) => unit.debuffs.length)
+        .filter((unit) => unit.debuffs.some((debuff) => !debuff.cannotBeTargeted));
 };
 
 const isAliveUnit = (unit: IBattleUnit | null): unit is IBattleUnit => !!unit && unit.hp > 0;
@@ -909,7 +915,7 @@ export const applyDebuff = (
                 originBattleUnit: caster || target,
                 isBuff: false,
                 isPlayer1: !!isPlayer1,
-                targetCheck: appTrigger.targetCheck || ETargetType.SELF,
+                targetCheck: appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
                 type: appTrigger.type,
             });
         }
@@ -1048,7 +1054,7 @@ export const applyBuff = (
                 originBattleUnit: caster || target,
                 isBuff: true,
                 isPlayer1: !!isPlayer1,
-                targetCheck: appTrigger.targetCheck || ETargetType.SELF,
+                targetCheck: appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
                 type: appTrigger.type,
             });
         }
@@ -1156,7 +1162,7 @@ export const prepareUniqueSummonToBattle = (unit: IBattleUnit): void => {
                 return;
             }
             if (skill.type === ESkillSetType.MAGIC_ATTACK) {
-                unit.summon?.skills.push({ ...skill, isBasicAttack: false });
+                unit.summon?.skills.push({ ...skill, isBasicAttack: false, isChained: false });
                 return;
             }
             unit.summon?.skills.push(noBasicAttackSkill);
@@ -1273,8 +1279,13 @@ export const isTriggerReady = (appTrigger: IAppTrigger): boolean => {
 
 export const triggerBattleTrigger = (type: EAppTriggerType, battleController: BattleController, unit?: IBattleUnit) => {
     battleController.listOfTriggers.forEach((bt) => {
-        if (bt.type === type && (!unit || battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)))
-            checkBattleTriggerBuffDebuff(bt, battleController);
+        if (bt.type === type) {
+            if (!!unit && bt.targetCheck === ETargetType.ANCHOR_TARGET && bt.anchorTarget === unit) {
+                checkBattleTriggerBuffDebuff(bt, battleController);
+            } else if (!unit || battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
+                checkBattleTriggerBuffDebuff(bt, battleController);
+            }
+        }
     });
 };
 

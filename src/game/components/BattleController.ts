@@ -87,6 +87,7 @@ export class BattleController {
     battleRecord: TBattleRecord;
 
     isBattleWin: boolean;
+    currentActingUnitId?: string;
 
     constructor() {
         this.roundCount = 1;
@@ -230,7 +231,7 @@ export class BattleController {
                 // }
             });
             this.listOfTriggers = this.listOfTriggers.filter((t) => t.type !== EAppTriggerType.NONE);
-            console.log(" -= DEBUG =- trigger list size", this.listOfTriggers.length);
+            //console.log(" -= DEBUG =- trigger list size", this.listOfTriggers.length);
             //
             this.battleRecord.push({
                 type: EBattleActionType.ROUND_END,
@@ -270,6 +271,7 @@ export class BattleController {
     }
 
     performTriggerAction(bt: IBattleTrigger, at: IAppTrigger, bfodbf: IBuffOrDebuff) {
+        console.log("-= Perform Trigger Action =-",bt,at);
         if (isTriggerReady(at)) {
             const triggerBattleAction: IBattleAction = {
                 unitId: bt.originBattleUnit.id,
@@ -315,6 +317,10 @@ export class BattleController {
             name: unit.id,
             unitId: unit.id,
         });
+
+        if (!forcedSingleCast && recurseDeep === 0) {
+            this.currentActingUnitId = unit.id;
+        }
 
         const skillIndex = unit.currentSkillIndex;
         if (unit.currentSkillIndex === 3) {
@@ -411,6 +417,7 @@ export class BattleController {
                         }
                     });
                 });
+            this.currentActingUnitId = undefined;
         }
     }
 
@@ -609,6 +616,9 @@ export class BattleController {
                 this.basicAttack(unit, isPlayer1);
             }
         }
+        // remove TILL_NEXT_BA buffs and debuffs
+        this.removeBuffs(unit, EBuffTimeType.TILL_NEXT_BA);
+        this.removeDebuffs(unit, EBuffTimeType.TILL_NEXT_BA);
         // triggers
         triggerBattleTrigger(EAppTriggerType.BASIC_ATTACK, this, unit);
     }
@@ -823,20 +833,23 @@ export class BattleController {
         targets.forEach((target) => {
             if (target) {
                 applyBuff(target, buff, buffAction, this, unit, isPlayer1);
-                triggerBattleTrigger(EAppTriggerType.RECIEVE_BUFF, this, target);
+                if (!buff.cannotBeTargeted) {
+                    triggerBattleTrigger(EAppTriggerType.RECIEVE_BUFF, this, target);
+                }
             }
         });
     }
 
     performBuffValueIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { targetType, value, valueType } = skill;
+        const { targetType, value, valueType, targetBuffId } = skill;
 
         if (!targetType || value === undefined || !valueType) {
             return;
         }
 
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const filteredUnits = targetBuffId ? allyUnits.filter((u) => !!u && u.buffs.some((b) => b.name === targetBuffId)) : allyUnits;
+        const targets = getAllyTargets(unit, filteredUnits, targetType);
 
         //console.log("performBuffValueIncrease > get buff from", targets);
 
@@ -848,14 +861,16 @@ export class BattleController {
 
         // get buff from target and increse its value
         targets?.forEach((target) => {
-            const buff = { ...getRandomArrayItem(target.buffs) };
+            const buff = targetBuffId
+                ? { ...getRandomArrayItem(target.buffs.filter((b) => !b.cannotBeTargeted && b.name === targetBuffId)) }
+                : { ...getRandomArrayItem(target.buffs.filter((b) => !b.cannotBeTargeted)) };
 
             if (!buff) {
                 return;
             }
 
             const addValue = calculateIncreaseValue(buff.totalValue || 0, value, valueType);
-            buff.value = addValue;
+            buff.value = buff.timeType === EBuffTimeType.DURATION ? (buff.totalValue || 0) + addValue : addValue;
             buff.valueType = "number";
             buff.targetType = ETargetType.BY_UNIT_ID;
             buff.targetUnitId = target.id;
@@ -894,7 +909,7 @@ export class BattleController {
 
         // get buff from target and copy it to random ally
         targets?.forEach((target) => {
-            const buff = { ...getRandomArrayItem(target.buffs) };
+            const buff = { ...getRandomArrayItem(target.buffs.filter((b) => !b.cannotBeTargeted)) };
             buff.targetType = targetType; //ETargetType.RANDOM_ALLY;
 
             if (!buff) {
@@ -1012,7 +1027,9 @@ export class BattleController {
                         return;
                     }
                     applyDebuff(target, debuff, debuffAction, this, unit, isPlayer1);
-                    triggerBattleTrigger(EAppTriggerType.RECIEVE_DEBUFF, this, target);
+                    if (!debuff.cannotBeTargeted) {
+                        triggerBattleTrigger(EAppTriggerType.RECIEVE_DEBUFF, this, target);
+                    }
                 }
             });
     }
@@ -1033,12 +1050,10 @@ export class BattleController {
                 if (target.debuffs.length === 0) {
                     return;
                 }
-                if (target.debuffs.length === 1) {
-                    removeDebuff(unit, target, 0, this.battleRecord);
-                    return;
+                const rndDebuff = getRandomArrayItem(target.debuffs.filter((d) => !d.cannotBeTargeted));
+                if (rndDebuff) {
+                    removeDebuffSimple(target, rndDebuff, this.battleRecord);
                 }
-                const randomIndex = getRandomArrayIndex(target.debuffs);
-                removeDebuff(unit, target, randomIndex, this.battleRecord, isStartBattle);
             }
         });
     }
@@ -1059,12 +1074,10 @@ export class BattleController {
                 if (target.buffs.length === 0) {
                     return;
                 }
-                if (target.buffs.length === 1) {
-                    removeBuff(target, target.buffs[0], this.battleRecord);
-                    return;
+                const rndBuff = getRandomArrayItem(target.buffs.filter((b) => !b.cannotBeTargeted));
+                if (rndBuff) {
+                    removeBuff(target, rndBuff, this.battleRecord);
                 }
-                const randomIndex = getRandomArrayIndex(target.buffs);
-                removeBuff(target, target.buffs[randomIndex], this.battleRecord);
             }
         });
     }
@@ -1075,9 +1088,7 @@ export class BattleController {
             console.log("NO TARGET TYPE OR VALUE");
             return;
         }
-
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const targets = this.getTargetsSimple(unit,targetType,isPlayer1);
         if (!targets) {
             console.log("NO TARGET FOUND");
             return;
@@ -1263,20 +1274,19 @@ export class BattleController {
     }
 
     performRemoveSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
-        const target = getTargetWithSummon(opponentUnits);
-
-        if (!target) {
-            return;
+        const targetList = this.getTargetsSimple(unit, skill.targetType, isPlayer1);
+        for (let i = 0; i < (skill.value || 1); i++) {
+            const target = getTargetWithSummon(targetList);
+            if (target) {
+                removeSummon(target);
+                this.battleRecord.push({
+                    unitId: unit.id,
+                    targetId: target.id,
+                    type: EBattleActionType.SUMMON_REMOVE,
+                    isStartBattle,
+                });
+            }
         }
-
-        removeSummon(target);
-        this.battleRecord.push({
-            unitId: unit.id,
-            targetId: target.id,
-            type: EBattleActionType.SUMMON_REMOVE,
-            isStartBattle,
-        });
     }
 
     performTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1415,12 +1425,14 @@ export class BattleController {
         if (targetType === ETargetType.EVERY_UNIT) {
             return [...allyUnits, ...opponentUnits].filter((unit) => !!unit);
         } else {
-            return getTargets(unit, allyUnits, opponentUnits, targetType);
+            return getTargets(unit, allyUnits, opponentUnits, targetType, this.currentActingUnitId);
         }
     }
 
     isTarget(target: IBattleUnit, unit: IBattleUnit, targetType: ETargetType, isPlayer1?: boolean): boolean {
-        return !!this.getTargetsSimple(unit, targetType, isPlayer1)?.includes(target);
+        const dbgTargets = this.getTargetsSimple(unit, targetType, isPlayer1);
+        console.log("-= isTarget =-",dbgTargets?.map(t => t.id),target.id,targetType,!!(dbgTargets?.includes(target)));
+        return !!(dbgTargets?.includes(target));
     }
 
     performCustomCalculation(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1436,7 +1448,13 @@ export class BattleController {
             return;
         }
 
-        if (skill.status) {
+        if (skill.childSkill) {
+            targets.forEach((t) => {
+                if (checkSkillCondition(t, skill.childSkill.condition)) {
+                    unit.customNumber++;
+                }
+            });
+        } else if (skill.status) {
             targets.forEach((t) => {
                 const v = t.statuses?.find((s) => s.type === skill.status);
                 !!v && (unit.customNumber += v.value);
@@ -1532,7 +1550,7 @@ export class BattleController {
         // find attack target
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         const opponentTargetType = summon ? summon.attackTargetType : targetType || ETargetType.FIRST_ENEMY;
-        const targets = getOpponentTargets(opponentUnits, opponentTargetType, markType);
+        const targets = getOpponentTargets(opponentUnits, opponentTargetType, markType, this.currentActingUnitId);
         if (!targets) {
             return;
         }
@@ -1662,6 +1680,10 @@ export class BattleController {
 
             // triggers
             triggerBattleTrigger(EAppTriggerType.TAKE_ATTACK, this, finalTarget);
+            if (unit.hp <= 0) {
+                return;
+            }
+
             //
             this.dealDamage(unit, finalTarget, attackDamage, unit.attackType, parentUnit, attackRecord);
 
@@ -1690,10 +1712,6 @@ export class BattleController {
             this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
             this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
-
-        // remove TILL_NEXT_BA buffs and debuffs
-        this.removeBuffs(unit, EBuffTimeType.TILL_NEXT_BA);
-        this.removeDebuffs(unit, EBuffTimeType.TILL_NEXT_BA);
     }
 
     /** Calculate final damage according to TARGET unit defense, buffs and debuffs */
@@ -1901,17 +1919,14 @@ export class BattleController {
                 unitId: target.id,
                 type: EBattleActionType.DEATH,
             });
-            // triggers
-            triggerBattleTrigger(EAppTriggerType.DEATH, this, target);
-            // this.listOfTriggers.forEach((bt) => {
-            //     if (bt.type === EAppTriggerType.DEATH && this.isTarget(target, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1))
-            //         checkBattleTriggerBuffDebuff(bt, this);
-            // });
-
             // if summon dies remove it from parent unit
             if (parentUnit) {
                 console.log("SUMMON is DED!", parentUnit.summon);
                 parentUnit.summon = undefined;
+            } else {
+                // triggers
+                // ~ summons do not trigger DEATH
+                triggerBattleTrigger(EAppTriggerType.DEATH, this, target);
             }
         }
     }
