@@ -1,8 +1,11 @@
 import {
     EBattleActionType,
+    EBuffType,
     EHeroAttackType,
     EHeroSkillType,
     EItemBattleBonusType,
+    EStatusType,
+    ETargetType,
     IBattleAction,
     IBattleUnit,
     IHeroSkill,
@@ -11,8 +14,7 @@ import {
     TBattleUnits,
 } from "../../types";
 import { BattleController } from "../components/BattleController";
-import { calculateIncreaseValue, emptyBattleUnit, getAllyTargets, getOpponentTargets } from "./battleUtils";
-import { emptyUnit } from "./unitUtils";
+import { calculateIncreaseValue, dealOverhealDamage, emptyBattleUnit, getAllyTargets, getOpponentTargets, reduceStatus } from "./battleUtils";
 
 export const performTotemSkill = (
     unit: IBattleUnit,
@@ -47,7 +49,7 @@ export const performTotemSkill = (
         //     this.performDebuff(unit, skill, isPlayer1);
         //     break;
         case EHeroSkillType.HEAL:
-            performTotemHeal(unit, totem, skill, allyUnits, totemValueBonus, battleRecord);
+            performTotemHeal(unit, totem, skill, allyUnits, opponentUnits, totemValueBonus, battleRecord, battleController);
             break;
         // case EHeroSkillType.SUMMON:
         //     this.performSummon(unit, skill, isPlayer1);
@@ -68,7 +70,7 @@ const performTotemAttack = (
     totemValueBonus: number,
     battleController: BattleController,
 ) => {
-    const { targetType, value, attackType } = skill;
+    const { targetType, value, attackType, ppScale, mpScale } = skill;
     if (!targetType || !attackType || value === undefined) {
         console.log("NO TARGET TYPE OR VALUE");
         return;
@@ -79,8 +81,12 @@ const performTotemAttack = (
         return;
     }
 
+    // check scaling from MP and PP
+    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+
     // calculate attack damage according to buffs and debuffs
-    let attackDamage = value + totemValueBonus;
+    let attackDamage = value + totemValueBonus + mpScaleValue + ppScaleValue;
     // unit.buffs.forEach((buff) => {
     //     if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
     //         const { value, valueType, valueFrom } = buff;
@@ -91,6 +97,12 @@ const performTotemAttack = (
     //         attackDamage = calculateIncreasedValue(attackDamage!, value, valueType, percentFrom);
     //     }
     // });
+    const attackRecord: IBattleAction = {
+        unitId: totem.id,
+        targets: [],
+        type: EBattleActionType.ATTACK,
+        value: attackDamage,
+    };
 
     targets.forEach((target) => {
         // check if target has a summon - summon takes damage instead
@@ -98,16 +110,31 @@ const performTotemAttack = (
         if (target.summon) {
             finalTarget = target.summon;
         }
-        // record
-        //battleRecord.push({ unitId: totem.id, targetId: finalTarget.id, type: EBattleActionType.ATTACK, value: attackDamage });
-        //
-        //dealDamage(finalTarget, attackDamage, skill.attackType!, battleRecord);
-
-        const attackRecord: IBattleAction = { unitId: totem.id, targets: [], type: EBattleActionType.ATTACK, value: attackDamage };
-        battleController.battleRecord.push(attackRecord);
-
         battleController.dealDamage(emptyBattleUnit, finalTarget, attackDamage, skill.attackType!, undefined, attackRecord);
     });
+    battleController.battleRecord.push(attackRecord);
+};
+
+const calcHealBonuses = (unit: IBattleUnit, baseValue: number): number => {
+    let finalHeal = baseValue;
+    // calculate outgoing heal value accordint to buffs and debuffs
+    unit.buffs.forEach((buff) => {
+        if (buff.type === EBuffType.OUTGOING_HEAL) {
+            const { value, valueType, valueFrom } = buff;
+            if (!valueType || value === undefined) {
+                return;
+            }
+            const percentFrom = valueFrom ? unit[valueFrom] : undefined;
+            finalHeal += calculateIncreaseValue(finalHeal, value, valueType, percentFrom);
+        }
+    });
+    // calculate outgoing heal bonuses from items
+    unit.itemBonuses.forEach((bonus) => {
+        if (bonus.type === EItemBattleBonusType.HEAL_INCREASE) {
+            finalHeal += calculateIncreaseValue(finalHeal, bonus.value, bonus.valueType);
+        }
+    });
+    return finalHeal;
 };
 
 const performTotemHeal = (
@@ -115,10 +142,12 @@ const performTotemHeal = (
     totem: ITotem,
     skill: IHeroSkill,
     allyUnits: TBattleUnits,
+    opponentUnits: TBattleUnits,
     totemValueBonus: number,
     battleRecord: TBattleRecord,
+    battleController: BattleController,
 ) => {
-    const { targetType, value } = skill;
+    const { targetType, value, ppScale, mpScale } = skill;
     if (!targetType || value === undefined) {
         console.log("NO TARGET TYPE OR VALUE");
         return;
@@ -130,15 +159,44 @@ const performTotemHeal = (
         return;
     }
 
+    // check scaling from MP and PP
+    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+    // Totem heal recieve healing bonuses from Hero
+    const finalValue = calcHealBonuses(unit, value + totemValueBonus + mpScaleValue + ppScaleValue);
+
+    let overhealTotal = 0;
     targets.forEach((target) => {
-        // TODO: calculate heal value (buffs)
-        target.hp += value;
+        let finalReduction = 0;
+        // BLEED & POISON interaction
+        target.statuses.forEach((status) => {
+            if (status.type === EStatusType.BLEED) {
+                const reduction = Math.min(Math.floor(finalValue / 5) + 1, status.value);
+                reduceStatus(target, target, status.type, reduction, battleRecord);
+            }
+            if (status.type === EStatusType.POISON) {
+                finalReduction = Math.min(finalValue, Math.floor(status.value / 2) + 1, status.value);
+                reduceStatus(target, target, status.type, finalReduction, battleRecord);
+                //finalHeal -= finalReduction;
+            }
+        });
+
+        target.hp += finalValue - finalReduction;
         if (target.hp > target.maxHp) {
+            overhealTotal += target.hp - target.maxHp;
             target.hp = target.maxHp;
         }
 
-        battleRecord.push({ unitId: totem.id, targetId: target.id, type: EBattleActionType.HEAL, value });
+        battleRecord.push({
+            unitId: totem.id,
+            targetId: target.id,
+            type: EBattleActionType.HEAL,
+            value,
+        });
     });
+
+    // overheal managing
+    dealOverhealDamage(overhealTotal, unit, totem.id, skill, opponentUnits, battleController);
 };
 
 const performTotemAttrIncrease = (
@@ -149,7 +207,7 @@ const performTotemAttrIncrease = (
     totemValueBonus: number,
     battleRecord: TBattleRecord,
 ) => {
-    const { targetType, value, attribute, valueType } = skill;
+    const { targetType, value, attribute, valueType, ppScale, mpScale } = skill;
     if (!targetType || value === undefined || !attribute || !valueType) {
         console.log("NO TARGET TYPE OR VALUE OR ATTR OR VALUETYPE");
         return;
@@ -160,12 +218,21 @@ const performTotemAttrIncrease = (
         console.log("NO TARGET FOUND");
         return;
     }
+    // check scaling from MP and PP
+    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
     targets.forEach((target) => {
         const attrValue = target[attribute];
-        const increaseValue = calculateIncreaseValue(attrValue, value, valueType) + totemValueBonus;
+        const increaseValue = calculateIncreaseValue(attrValue, value, valueType) + totemValueBonus + ppScaleValue + mpScaleValue;
         target[attribute] = attrValue + increaseValue;
 
-        battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
+        battleRecord.push({
+            unitId: totem.id,
+            targetId: target.id,
+            type: EBattleActionType.ATTRIBUTE_INCREASE,
+            attribute,
+            value: increaseValue,
+        });
     });
 };

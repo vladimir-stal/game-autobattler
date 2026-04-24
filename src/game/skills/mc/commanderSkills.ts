@@ -1,5 +1,72 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import {
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
+
+const commanderSkillset = (atk: number, ppScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            targetType: ETargetType.SELF,
+            buff: {
+                name: "Rally",
+                type: EBuffType.BATTLE_TRIGGER,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+                value: 1,
+                valueType: "number",
+                appTrigger: {
+                    limitedRepeats: false,
+                    skillId: "Commander Rally",
+                    type: EAppTriggerType.SUMMON,
+                    targetCheck: ETargetType.ALL_ALLIES,
+                    skill: [
+                        {
+                            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                            value: atk,
+                            valueType: "number",
+                            attribute: "attack",
+                            targetType: ETargetType.ALL_ALLY_SUMMONS,
+                            ppScale: ppScale,
+                            // new Scale? add bonus value from Buff.totalValue
+                        },
+                    ],
+                },
+            },
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            value: atk,
+            valueType: "number",
+            attribute: "attack",
+            targetType: ETargetType.ALL_ALLY_SUMMONS,
+            ppScale: ppScale,
+            condition: ESkillCondition.NOT_BEFORE_COMBAT,
+        },
+    ];
+};
+
+export const commanderSkill_3: IHeroSkillSet = {
+    id: "CommanderHorn",
+    name: i18n.skills.mc.commanderSkill.name,
+    desc: i18n.skills.mc.commanderSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.COMMANDER],
+    isMcSkill: true,
+    skills: commanderSkillset(2, 100),
+    isActivateOnStart: true,
+};
 
 export const commanderSkill_2: IHeroSkillSet = {
     id: "CommanderHorn",
@@ -11,17 +78,9 @@ export const commanderSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.COMMANDER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            value: 2,
-            valueType: "number",
-            attribute: "attack",
-            targetType: ETargetType.ALL_ALLY_SUMMONS,
-            ppScale: 70,
-        },
-    ],
+    skills: commanderSkillset(2, 70),
+    isActivateOnStart: true,
+    nextLevel: commanderSkill_3,
 };
 
 export const commanderSkill: IHeroSkillSet = {
@@ -34,17 +93,7 @@ export const commanderSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.COMMANDER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
-            value: 2,
-            valueType: "number",
-            attribute: "attack",
-            targetType: ETargetType.ALL_ALLY_SUMMONS,
-            ppScale: 50,
-        },
-    ],
+    skills: commanderSkillset(2, 50),
     isActivateOnStart: true,
     nextLevel: commanderSkill_2,
 };

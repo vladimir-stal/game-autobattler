@@ -1,5 +1,37 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const beastMasterSkillset = (atk: number, repeats: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.FORCE_TOTEM_ACTION,
+            targetType: ETargetType.SELF,
+            condition: ESkillCondition.HAS_TOTEM,
+        },
+        {
+            type: EHeroSkillType.TOTEM,
+            totem: {
+                id: "CROWS_TOTEM",
+                name: "Crows",
+                skills: [
+                    {
+                        type: EHeroSkillType.REPEATING_SKILL,
+                        value: repeats,
+                        valueType: "number",
+                        targetType: ETargetType.SELF,
+                        childSkill: {
+                            type: EHeroSkillType.ATTACK,
+                            value: atk, // TODO MP: add PP modifier to value
+                            targetType: ETargetType.RANDOM_ENEMY,
+                            attackType: EHeroAttackType.PHYSICAL,
+                        },
+                    },
+                ],
+            },
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+    ];
+};
 
 export const beastMasterSkill_3: IHeroSkillSet = {
     id: "BeastmasterCrows",
@@ -11,39 +43,7 @@ export const beastMasterSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BEAST_MASTER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
-            totem: {
-                id: "CROWS_TOTEM",
-                name: "Crows",
-                skills: [
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: false,
-                        value: 2, // TODO MP: add PP modifier to value
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.PHYSICAL,
-                    },
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: false,
-                        value: 2, // TODO MP: add PP modifier to value
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.PHYSICAL,
-                    },
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: true,
-                        value: 2, // TODO MP: add PP modifier to value
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.PHYSICAL,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: beastMasterSkillset(2, 3),
 };
 
 export const beastMasterSkill_2: IHeroSkillSet = {
@@ -56,32 +56,7 @@ export const beastMasterSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BEAST_MASTER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
-            totem: {
-                id: "CROWS_TOTEM",
-                name: "Crows",
-                skills: [
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: false,
-                        value: 2, // TODO MP: add PP modifier to value
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.PHYSICAL,
-                    },
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: true,
-                        value: 2, // TODO MP: add PP modifier to value
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.PHYSICAL,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: beastMasterSkillset(2, 2),
     nextLevel: beastMasterSkill_3,
 };
 
@@ -95,25 +70,7 @@ export const beastMasterSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BEAST_MASTER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM,
-            isBasicAttack: true,
-            totem: {
-                id: "CROWS_TOTEM",
-                name: "Crows",
-                skills: [
-                    {
-                        type: EHeroSkillType.ATTACK,
-                        isBasicAttack: true,
-                        value: 2, // TODO MP: add PP modifier to value
-                        targetType: ETargetType.RANDOM_ENEMY,
-                        attackType: EHeroAttackType.PHYSICAL,
-                    },
-                ],
-            },
-        },
-    ],
+    skills: beastMasterSkillset(2, 1),
     nextLevel: beastMasterSkill_2,
 };
 

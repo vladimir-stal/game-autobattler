@@ -382,9 +382,9 @@ export const SKILLS_EN = {
         },
         battleMageSkill: {
             name: "Multi attack",
-            desc1: "Attack random enemy with physical damage.\nAttack random enemy with magical damage.",
-            desc2: "Attack random enemy with physical damage.\nAttack random enemy with magical damage.",
-            desc3: "Attack random enemy with physical damage.\nAttack random enemy with magical damage.",
+            desc1: "Attack random enemy with\nphysical damage [4+35%xPP]\nAttack random enemy with\nmagical damage [4+35%xMP]",
+            desc2: "Attack random enemy with\nphysical damage [6+50%xPP]\nAttack random enemy with\nmagical damage [6+50%xMP]",
+            desc3: "Attack random enemy with\nphysical damage [9+65%xPP]\nAttack random enemy with\nmagical damage [9+65%xMP]",
         },
         beastMasterSkill: {
             name: "Beastmaster crow",

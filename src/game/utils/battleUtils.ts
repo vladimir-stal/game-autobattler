@@ -19,6 +19,7 @@ import {
     IBattleUnit,
     IBuff,
     IDebuff,
+    IHeroSkill,
     IItemBattleBonus,
     ITotem,
     IUnit,
@@ -255,6 +256,14 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             const firstTarget = getFirstTarget(units);
             return firstTarget ? [firstTarget] : null;
         }
+        case ETargetType.HIGH_MP_ALLY: {
+            const target = getHighestAttributeTarget(units, "magicPower");
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_PP_ALLY: {
+            const target = getHighestAttributeTarget(units, "physicalPower");
+            return target ? [target] : null;
+        }
         case ETargetType.LOW_HP_ALLY: {
             const lowestHpAlly = units.reduce((result, unit) => {
                 if (unit && unit.hp > 0) {
@@ -336,6 +345,10 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const markedTarget = getMarkedTarget(units, debuffType);
             console.log("markedTarget", markedTarget);
             return markedTarget ? [markedTarget] : null;
+        }
+        case ETargetType.ALL_MARKED_ENEMIES: {
+            if (!debuffType) return [];
+            else return units.filter((unit) => isAliveUnit(unit) && unit.debuffs.some((d) => d.type === debuffType));
         }
         case ETargetType.RANDOM_ENEMY: {
             const randomTarget = getRandomTarget(units);
@@ -1281,4 +1294,39 @@ export const checkBattleTriggerBuffDebuff = (bt: IBattleTrigger, battleControlle
               }
           });
     if (!found) bt.type = EAppTriggerType.NONE; // mark for removal
+};
+
+export const dealOverhealDamage = (
+    overhealTotal: number,
+    unit: IBattleUnit,
+    unitId4record: string,
+    skill: IHeroSkill,
+    opponentUnits: IBattleUnit[],
+    battleController: BattleController,
+) => {
+    // overheal managing
+    console.log("Total overheal", overhealTotal);
+    if (overhealTotal > 0) {
+        const overhealBuffs = unit.buffs.filter((buff) => buff.type === EBuffType.OVERHEAL_TO_DAMAGE);
+        if (overhealBuffs.length > 0) {
+            overhealBuffs.forEach((buff) => {
+                const attackRecord2 = {
+                    unitId: unitId4record,
+                    type: EBattleActionType.ATTACK,
+                    value: overhealTotal,
+                    isCrit: false,
+                    targets: [],
+                    skill,
+                    isStartBattle: false,
+                };
+                battleController.battleRecord.push(attackRecord2);
+                const targets = getOpponentTargets(opponentUnits, buff.changeTargetTypeTo || ETargetType.FIRST_ENEMY);
+                targets?.forEach((target) => {
+                    //  Radiate removed for now
+                    //applyStatus(unit, target, EStatusType.RADIATE, overhealTotal, this.battleRecord, isStartBattle);
+                    battleController.dealDamage(unit, target, overhealTotal, EHeroAttackType.MAGIC, undefined, attackRecord2);
+                });
+            });
+        }
+    }
 };

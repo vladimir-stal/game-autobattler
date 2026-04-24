@@ -1,4 +1,4 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 // {
@@ -24,6 +24,54 @@ import { i18n } from "../../consts";
 //         ],
 //     },
 
+const battleMageSkillset = (atk:number, ppScale: number, mpScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTACK,
+            value: atk,
+            targetType: ETargetType.RANDOM_ENEMY,
+            attackType: EHeroAttackType.PHYSICAL,
+            ppScale: ppScale,
+        },
+        {
+            type: EHeroSkillType.ATTACK,
+            value: atk,
+            targetType: ETargetType.RANDOM_ENEMY,
+            attackType: EHeroAttackType.MAGIC,
+            mpScale: mpScale,
+        },
+    ]
+}
+
+export const battleMageSkill_3: IHeroSkillSet = {
+    id: "BattlemageAttack",
+    //name: "Multi attack",
+    //desc: "Attack random enemy with physical damage.\nAttack random enemy with magical damage.",
+    name: i18n.skills.mc.battleMageSkill.name,
+    desc: i18n.skills.mc.battleMageSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.BATTLE_MAGE],
+    isMcSkill: true,
+    skills: battleMageSkillset(9, 65, 65),
+    isBasicAttack: false,
+};
+
+export const battleMageSkill_2: IHeroSkillSet = {
+    id: "BattlemageAttack",
+    //name: "Multi attack",
+    //desc: "Attack random enemy with physical damage.\nAttack random enemy with magical damage.",
+    name: i18n.skills.mc.battleMageSkill.name,
+    desc: i18n.skills.mc.battleMageSkill.desc2,
+    level: 2,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.BATTLE_MAGE],
+    isMcSkill: true,
+    skills: battleMageSkillset(6, 50, 50),
+    isBasicAttack: false,
+    nextLevel: battleMageSkill_3,
+};
+
 export const battleMageSkill: IHeroSkillSet = {
     id: "BattlemageAttack",
     //name: "Multi attack",
@@ -34,25 +82,9 @@ export const battleMageSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BATTLE_MAGE],
     isMcSkill: true,
-    skills: [
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 4,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.PHYSICAL,
-            ppScale: 20,
-        },
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTACK,
-            value: 4,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-            mpScale: 20,
-        },
-    ],
+    skills: battleMageSkillset(4, 35, 35),
     isBasicAttack: false,
+    nextLevel: battleMageSkill_2,
 };
 
 export const battleMageSkills: THeroSkills = [battleMageSkill];

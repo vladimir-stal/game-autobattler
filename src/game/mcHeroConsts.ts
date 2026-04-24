@@ -510,7 +510,7 @@ export const jesterHero: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.heroes.MAGIC_BARD,
     id: "MAGICBARD",
-    skills: jesterSkills,
+    skills: jesterSkills, // Fire fists
     passiveSkill: {
         desc: "<EMPTY>",
     },
