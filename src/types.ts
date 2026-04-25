@@ -544,6 +544,7 @@ export enum EBattleActionType {
     TOTEM_REMOVE = "TOTEM_REMOVE",
     TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE",
     TURN_START = "TURN_START",
+    BONUS_ACTION = "BONUS_ACTION",
     BATTLE_TRIGGER = "BATTLE_TRIGGER",
 }
 
@@ -572,6 +573,15 @@ export enum EHeroSkillType {
     FORCE_UNIT_CAST_SKILL = "FORCE_UNIT_CAST_SKILL", // make other unit to cast skill out of its turn
     FORCE_UNIT_MAKE_ATTACK = "FORCE_UNIT_MAKE_ATTACK", // make other unit attack
     FORCE_TOTEM_ACTION = "FORCE_TOTEM_ACTION", // make other unit's totem to act immediately
+    FORCE_REWIND_SKILL_INDEX = "FORCE_REWIND_SKILL_INDEX", // make other unit reduce current skill index
+    /* COPY_UNIT_CAST_SKILL ~ as FORCE_UNIT_CAST_SKILL but this unit casts it (instead of target);
+       notes: value < 0 means target's current skill index offset,
+              value >= 0 means absolute skill index
+            undefined default value = -4: current skill index
+        (this does not change target's current skill index)
+        (please, avoid using values x>3 and x<-4)
+    */
+    COPY_UNIT_CAST_SKILL = "COPY_UNIT_CAST_SKILL",
 }
 
 export enum EStatusType {
@@ -630,7 +640,8 @@ export enum ETargetType {
     // ALLY
     ALL_ALLIES = "ALL_ALLIES",
     ALL_ALLY_SUMMONS = "ALL_ALLY_SUMMONS",
-    ALLY_IN_FRONT = "ALLY_IN_FRONT", // ally who stays in front of buffer
+    ALLY_IN_FRONT = "ALLY_IN_FRONT", // ally who stands in front of caster
+    ALLY_BEHIND = "ALLY_BEHIND", // ally who stands behind the caster
     BUFFED_ALLY_RANDOM = "BUFFED_ALLY_RANDOM", // random ally with a buff
     CUSTOM = "CUSTOM",
     DEBUFFED_ALLY_RANDOM = "DEBUFFED_ALLY_RANDOM", // random ally with a debuff

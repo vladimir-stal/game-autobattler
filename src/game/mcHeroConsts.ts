@@ -35,7 +35,7 @@ import { illusionistPassive, illusionistSkills } from "./skills/mc/illusionistSk
 import { inquisitorSkills } from "./skills/mc/inquisitorSkills";
 import { knightSkills } from "./skills/mc/knightSkills";
 import { jesterSkills } from "./skills/mc/magicBardSkills";
-import { mimicSkills } from "./skills/mc/mimicSkills";
+import { mimicPassive, mimicSkills } from "./skills/mc/mimicSkills";
 import { minstrelSkills } from "./skills/mc/minstrelSkills";
 import { monkSkills } from "./skills/mc/monkSkills";
 import { necromancerPassive, necromancerSkills } from "./skills/mc/necromancerSkills";
@@ -535,9 +535,7 @@ export const mimicHero: IUnit = {
     name: i18n.heroes.MIMIC,
     id: "MIMIC",
     skills: mimicSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: mimicPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

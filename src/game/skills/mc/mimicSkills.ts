@@ -1,26 +1,185 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IPassiveSkill, IUnit, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { mobNoSkill } from "../mobSkills";
 
-// TODO: rework!
-export const mimicSkill: IHeroSkillSet = {
-    id: "MimicSkill",
-    //name: "Mimicry",
-    //desc: "<NOT IMPLEMENTED>",
-    name: i18n.skills.mc.mimicSkill.name,
-    desc: i18n.skills.mc.mimicSkill.desc1,
-    level: 1,
-    priceLevel: 4,
-    heroClasses: [EHeroClass.MIMIC],
-    isMcSkill: true,
-    skills: [
+
+const mimicSummonSkillset = (index:number): IHeroSkill[] => {
+    return [
         {
-            type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
-            value: 8,
-            valueType: "number",
-            targetType: ETargetType.SELF,
+            type: EHeroSkillType.COPY_UNIT_CAST_SKILL,
+            targetType: ETargetType.ALLY_IN_FRONT,
+            animation: AnimationType.NONE,
+            value: index, // cast previous skill of the target
+            childSkill: {
+                type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+                targetType: ETargetType.SELF,
+            },
+            condition: ESkillCondition.IN_BACK_ROW
         },
-    ],
+        {
+            type: EHeroSkillType.COPY_UNIT_CAST_SKILL,
+            targetType: ETargetType.ALLY_BEHIND,
+            animation: AnimationType.NONE,
+            value: index, // cast previous skill of the target
+            childSkill: {
+                type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+                targetType: ETargetType.SELF,
+            },
+            condition: ESkillCondition.IN_FRONT_ROW
+        },
+    ];
+}
+const mimicSummonSkillset3 = (index:number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.COPY_UNIT_CAST_SKILL,
+            targetType: ETargetType.ALL_ALLIES,
+            animation: AnimationType.NONE,
+            value: index, // cast previous skill of the target
+            childSkill: {
+                type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+                targetType: ETargetType.SELF,
+            },
+        }
+    ];
+}
+
+
+const copycatSkill: IHeroSkillSet = {
+    id: "mimicCopySkill",
+    name: "Copy skill",
+    desc: "Copy 4th skill of random ally",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MOB],
+    isBasicAttack: false,
+    isMcSkill: true,
+    skills: mimicSummonSkillset3(3),
+}
+
+const mimicSkill_3: IHeroSkillSet = {
+    id: "mimicCopySkill",
+    name: "Copy skill",
+    desc: "Copy 2nd skill of ally\nCopy 4th skill of random ally",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MIMIC],
+    isBasicAttack: true,
+    isMcSkill: true,
+    skills: [...mimicSummonSkillset(1),...mimicSummonSkillset3(3)],
+}
+
+const mimicSkill_2: IHeroSkillSet = {
+    id: "mimicCopySkill",
+    name: "Copy skill",
+    desc: "Copy 2nd skill of ally",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MIMIC],
+    isBasicAttack: true,
+    isMcSkill: true,
+    skills: mimicSummonSkillset(1),
+    nextLevel: mimicSkill_3,
+}
+
+const mimicSkill: IHeroSkillSet = {
+    id: "mimicCopySkill",
+    name: "Copy skill",
+    desc: "Copy 2nd skill of ally\nMake no basic attack",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MIMIC],
+    isBasicAttack: false,
+    isMcSkill: true,
+    skills: mimicSummonSkillset(1),
+    nextLevel: mimicSkill_2
+}
+
+export const mimicSummon: IUnit = {
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.MAGIC,
+    attackType: EHeroAttackType.MAGIC,
+    attackTargetType: ETargetType.FIRST_ENEMY,
+    basicAttack: 0,
+    basicAttackTimes: 1,
+    basicMaxHp: 2,
+    basicHpRegen: 0,
+    basicArmor: 0,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: "Copycat",
+    id: "COPYCAT",
+    skills: [mobNoSkill,copycatSkill,mobNoSkill,copycatSkill],
+    items: [],
+    level: 1,
+    exp: 0,
+};
+
+const mimicSkillset = (ppScale: number, mpScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.SUMMON,
+            summon: mimicSummon,
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SUMMON_CURRENT,
+            attribute: "physicalPower",
+            value: 0,
+            valueType: "number",
+            ppScale: 40,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SUMMON_CURRENT,
+            attribute: "magicPower",
+            value: 0,
+            valueType: "number",
+            mpScale: 40,
+            animation: AnimationType.NONE
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SUMMON_CURRENT,
+            attribute: "hp",
+            value: 0,
+            valueType: "number",
+            ppScale: ppScale,
+            animation: AnimationType.NONE
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SUMMON_CURRENT,
+            attribute: "attack",
+            value: 0,
+            valueType: "number",
+            mpScale: mpScale,
+            animation: AnimationType.NONE
+        }
+    ];
+};
+
+export const mimicPassive: IPassiveSkill = {
+    desc: "At the start of 2nd round\nsummons Copycat. Boost\nsummon stats atk+35%xMP\nhp+50%xPP, MP & PP x40%\nCopycat mimics 4th slot\nskill every odd round",
+    preBattleBuff: {
+        name: "Passive",
+        type: EBuffType.BATTLE_TRIGGER,
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        value: 1,
+        isHidden: true,
+        cannotBeTargeted: true,
+        appTrigger: {
+            limitedRepeats: true,
+            skillId: "Self copy",
+            type: EAppTriggerType.ROUND_CYCLE,
+            skill: mimicSkillset(50,35),
+        }
+    }
 };
 
 export const mimicSkills: THeroSkills = [mimicSkill];

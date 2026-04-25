@@ -6,8 +6,9 @@ import { basic_exp_bag, basic_jacket } from "../commonItemConsts";
 import { jacket21_3 } from "../commonItemConsts2";
 import { summonerMantle3 } from "../commonItemConsts3";
 import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
-import { barbarianHero, illusionistHero, necromancerHero, samuraiHero, witchHero } from "../mcHeroConsts";
+import { barbarianHero, illusionistHero, mimicHero, necromancerHero, samuraiHero, witchHero } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
+import { phycisalAttackSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { incrSummonBa } from "../skills/summonSkillConsts2";
@@ -16,8 +17,8 @@ import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
 import { dagger31 } from "../weaponItem3Consts";
 
-export const debugHeroSelectRoom = false;
-export const debugStartingItemsRoom = false;
+export const debugHeroSelectRoom = true;
+export const debugStartingItemsRoom = true;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -32,13 +33,13 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: masterHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: mimicHero }, null];
     //return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        { type: ECardType.UNIT, price: 0, unit: peasantUnit },
+        { type: ECardType.UNIT, price: 0, unit: warriorHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
         /*{
@@ -52,8 +53,8 @@ export const customStartingItemsRoom = (): ICard[] => {
                 ],
             },
         },*/
-        { type: ECardType.SKILL, price: 0, skill: followupComboSkill },
-        { type: ECardType.SKILL, price: 0, skill: riposteSkill },
+        { type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
+        { type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
         { type: ECardType.ITEM, price: 0, item: jacket21_3 },
         //{ type: ECardType.UNIT, price: 0, unit: goblinUnit },
     ];

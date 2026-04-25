@@ -144,6 +144,41 @@ export const getAllyTargetInFront = (unitId: string, units: TBattleUnits): IBatt
     return units[3];
 };
 
+export const getAllyTargetBehind = (unitId: string, units: TBattleUnits): IBattleUnit | null => {
+    const unitIndex = units.findIndex((unit) => unit && unit.hp > 0 && unit.id === unitId);
+    if (unitIndex === -1) {
+        return null;
+    }
+    if (unitIndex === 3) {
+        return units[3];
+    }
+
+    let unitBehind = units[unitIndex + 1];
+    if (unitBehind && unitBehind.hp > 0) {
+        return unitBehind;
+    }
+
+    if (unitIndex === 2) {
+        return units[2];
+    }
+
+    unitBehind = units[unitIndex + 2];
+    if (unitBehind && unitBehind.hp > 0) {
+        return unitBehind;
+    }
+
+    if (unitIndex === 1) {
+        return units[1];
+    }
+
+    unitBehind = units[unitIndex + 3];
+    if (unitBehind && unitBehind.hp > 0) {
+        return unitBehind;
+    }
+
+    return units[0];
+};
+
 export const getHighestAttributeTarget = (units: TBattleUnits, attr: THeroBattleAttribute): IBattleUnit | null => {
     return units.reduce((result, unit) => {
         if (unit && unit.hp > 0) {
@@ -247,8 +282,14 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
         case ETargetType.ALL_ALLY_SUMMONS:
             return getAllAllySummons(units);
         case ETargetType.ALLY_IN_FRONT: {
-            const allyInFront = getAllyTargetInFront(unit.id, units);
+            const unitId = unit.isSummon ? units.find((allyUnit) => allyUnit && allyUnit.summon === unit)?.id : unit.id;
+            const allyInFront = getAllyTargetInFront(unitId ? unitId : unit.id, units);
             return allyInFront ? [allyInFront] : null;
+        }
+        case ETargetType.ALLY_BEHIND: {
+            const unitId = unit.isSummon ? units.find((allyUnit) => allyUnit && allyUnit.summon === unit)?.id : unit.id;
+            const allyBehind = getAllyTargetBehind(unitId ? unitId : unit.id, units);
+            return allyBehind ? [allyBehind] : null;
         }
         case ETargetType.BUFFED_ALLY_RANDOM: {
             const buffedAllies = getBuffedAllies(units);
@@ -342,14 +383,14 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             return target ? [target] : null;
         }
         case ETargetType.MARKED_ENEMY: {
-            console.log("ETargetType.MARKED_ENEMY");
+            //console.log("ETargetType.MARKED_ENEMY");
             if (!debuffType) {
                 console.log("no debuff type, first enemy selected");
                 const firstTarget = getFirstTarget(units);
                 return firstTarget ? [firstTarget] : null;
             }
             const markedTarget = getMarkedTarget(units, debuffType);
-            console.log("markedTarget", markedTarget);
+            //console.log("markedTarget", markedTarget);
             return markedTarget ? [markedTarget] : null;
         }
         case ETargetType.ALL_MARKED_ENEMIES: {
