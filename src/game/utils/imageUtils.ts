@@ -463,6 +463,26 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 idleBattleAnimation: AnimationType.MOB_PEASANT_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_PEASANT_ATTACK,
             };
+        case "PIRATE1":
+            return {
+                //size: 270,
+                distance: -10,
+                distanceEnemy: -80,
+                image: IMAGE_PEASANT_1,
+                animation: AnimationType.MOB_PIRATE_1_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_PIRATE_1_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_PIRATE_1_ATTACK,
+            };
+        case "PIRATE2":
+            return {
+                //size: 270,
+                distance: -10,
+                distanceEnemy: -80,
+                image: IMAGE_PEASANT_1,
+                animation: AnimationType.MOB_PIRATE_2_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_PIRATE_2_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_PIRATE_2_ATTACK,
+            };
         case "GOBLIN":
             return {
                 distance: -20,

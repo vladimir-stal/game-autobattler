@@ -7,7 +7,7 @@ import { skeletonArmorSelfAndLow } from "../skills/mobSkills";
 
 export const skeletonUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.DARK,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.DARK, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -37,7 +37,7 @@ export const skeletonUnit: IUnit = {
 
 export const skeletonWarriorUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.BLACK_KNIGHT,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -67,7 +67,7 @@ export const skeletonWarriorUnit: IUnit = {
 
 export const skeletonMageUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WARLOCK,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.DARK, EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.RANDOM_ENEMY,

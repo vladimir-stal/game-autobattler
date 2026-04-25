@@ -6,13 +6,14 @@ import { basic_exp_bag } from "../commonItemConsts";
 import { jacket21_3 } from "../commonItemConsts2";
 import { summonerMantle3 } from "../commonItemConsts3";
 import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
-import { necromancerHero, witchHero } from "../mcHeroConsts";
+import { hunterHero, necromancerHero, samuraiHero, witchHero } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { incrSummonBa } from "../skills/summonSkillConsts2";
 import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
+import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
 import { dagger31 } from "../weaponItem3Consts";
 
 export const debugHeroSelectRoom = false;
@@ -31,13 +32,13 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: pirate2Unit }, null];
     //return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        { type: ECardType.UNIT, price: 0, unit: peasantUnit },
+        { type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
         {
@@ -51,8 +52,8 @@ export const customStartingItemsRoom = (): ICard[] => {
                 ],
             },
         },
-        { type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
-        { type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
         //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
         //{ type: ECardType.UNIT, price: 0, unit: goblinUnit },
     ];

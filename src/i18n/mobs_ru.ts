@@ -5,6 +5,7 @@ export const MOBS_RU = {
         spiritwarrior: "Призрачный рыцарь",
         fireflies: "Светлячки",
         wolf: "Волк",
+        pirate: "Пират",
     },
     level2: {
         goblins: "Гоблины",
@@ -13,6 +14,7 @@ export const MOBS_RU = {
         spiritwarrirors: "Призрачные рыцари",
         wolves: "Волки",
         fireflies: "Светлячки",
+        pirates: "Пираты",
     },
     level3: {
         goblins: "Гоблины",
@@ -27,6 +29,7 @@ export const MOBS_RU = {
         infernoflies: "Адские светлячки",
         wolves: "Волки",
         peasants: "Крестьяне",
+        pirates: "Пираты",
     },
     level5: {
         goblins: "Гоблины",

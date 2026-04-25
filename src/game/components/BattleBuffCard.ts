@@ -78,7 +78,6 @@ export class BattleBuffCard extends Phaser.GameObjects.Container {
     }
 
     playAddBuffTarget() {
-        //if (GAME_MODE === "FULL") {
         //const x = 40 * index;
         //const y = -180;
         //this.uiEffectImageObject.setPosition(x, y);
@@ -90,7 +89,6 @@ export class BattleBuffCard extends Phaser.GameObjects.Container {
             this.uiEffectImageObject.setVisible(false);
             this.uiEffectImageObject.removeListener(ANIMATION_COMPLETE);
         });
-        //}
     }
 
     refresh() {

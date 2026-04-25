@@ -22,6 +22,7 @@ import { skeletonMageUnit, skeletonUnit, skeletonWarriorUnit } from "./units/ske
 import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { musical31 } from "./weaponItem3Consts";
 import { i18n } from "./consts";
+import { pirate1Unit, pirate2Unit } from "./units/piratesMobUnits";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -108,6 +109,21 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 1 },
         ],
     },
+    {
+        name: i18n.mobs.level1.pirate,
+        level: 1,
+        description: "Brave pirate from the dippest ocean",
+        units: [pirate1Unit, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+            //{ type: IMobRewardType.ITEM, item: basic_pants, exp: 1 },
+            //{ type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 1 },
+        ],
+    },
 ];
 export const mobsLvl2: IMobsVariants[] = [
     {
@@ -189,6 +205,17 @@ export const mobsLvl2: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: staff1, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemCoin2, exp: 2 },
             { type: IMobRewardType.ITEM, item: basic_heal, exp: 2 },
+        ],
+    },
+    {
+        name: i18n.mobs.level2.pirates,
+        level: 1,
+        description: "Brave pirate from the dippest ocean",
+        units: [pirate1Unit, pirate1Unit, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 2 },
         ],
     },
 ];
@@ -325,6 +352,16 @@ export const mobsLvl4: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: musical31, exp: 3 },
             { type: IMobRewardType.ITEM, item: itemCoin2, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_exp_bag_2, exp: 3 },
+        ],
+    },
+    {
+        name: i18n.mobs.level4.pirates,
+        level: 1,
+        description: "Pirate captain from the dippest ocean",
+        units: [pirate2Unit, null, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 4 },
         ],
     },
 ];

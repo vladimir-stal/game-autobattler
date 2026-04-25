@@ -5,6 +5,7 @@ export const MOBS_EN = {
         spiritwarrior: "Spirit warriror",
         fireflies: "Fireflies",
         wolf: "Wolf",
+        pirate: "Pirate",
     },
     level2: {
         goblins: "Goblins",
@@ -13,6 +14,7 @@ export const MOBS_EN = {
         spiritwarrirors: "Spirit warrirors",
         wolves: "Wolves",
         fireflies: "Fireflies",
+        pirates: "Pirates",
     },
     level3: {
         goblins: "Goblins",
@@ -27,6 +29,7 @@ export const MOBS_EN = {
         infernoflies: "Infernoflies",
         wolves: "Wolves",
         peasants: "Peasants",
+        pirates: "Pirates",
     },
     level5: {
         goblins: "Goblins",

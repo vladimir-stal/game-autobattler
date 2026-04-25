@@ -58,7 +58,7 @@ export const goblinUnit: IUnit = {
 
 export const goblinShamanUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.MAGIC,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY, //??? ETargetType.MARKED_ENEMY
@@ -89,7 +89,7 @@ export const goblinShamanUnit: IUnit = {
 export const goldGoblin1Unit: IUnit = {
     // Rewards and shop variant (NOT FOR COMBAT)
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.BARD,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -122,7 +122,7 @@ export const goldGoblin1Unit: IUnit = {
 export const goldGoblinBattleUnit: IUnit = {
     // combat variant
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.BARD,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.RANDOM_ENEMY,

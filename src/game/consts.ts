@@ -4,7 +4,7 @@ import { i18n as i18n_ru } from "../i18n/ru";
 export const LANG: "eng" | "ru" = "ru";
 export const i18n = i18n_ru; //LANG === "eng" ? i18n_eng : i18n_ru;
 
-export const GAME_MODE: "NO_MC_HEROES" | "FULL" = "FULL";
+export const GAME_MODE: "NO_MC_HEROES" | "FULL" = "NO_MC_HEROES";
 
 export const IMAGE_LOBBY_FOX_SMILE = "IMAGE_LOBBY_FOX_SMILE";
 export const IMAGE_LOBBY_LOADING = "IMAGE_LOBBY_LOADING";

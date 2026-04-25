@@ -119,6 +119,8 @@ export const i18n: Ii18n = {
         FIREFLY: "Светлячок",
         WOLF: "Волк",
         STRONGWOLF: "Сильный волк",
+        PIRATE_1: "Пират",
+        PIRATE_2: "Капитан пиратов",
     },
     mobs: MOBS_RU,
     items: {

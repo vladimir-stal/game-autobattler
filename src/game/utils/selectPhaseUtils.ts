@@ -159,6 +159,8 @@ export const getRooms = (
                         : [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                     // Go change in debugUtils.ts for custom room
                 } else if (hour === 2) {
+                    //const boss = getRandomArrayItem(bosses);
+                    //return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: boss } }, null];
                     //return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
                 } else if (hour === 5) {

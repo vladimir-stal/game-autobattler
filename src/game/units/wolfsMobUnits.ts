@@ -6,7 +6,7 @@ import { itemCoin, itemCoin2 } from "../mobItemConsts";
 
 export const wolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.WILD,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -35,7 +35,7 @@ export const wolfUnit: IUnit = {
 
 export const strongWolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.HUNTER,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.WILD, EHeroClass.MASTER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,

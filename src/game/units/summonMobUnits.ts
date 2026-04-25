@@ -8,7 +8,7 @@ import { mobNoSkill, fireflySelfPoison } from "../skills/mobSkills";
 
 export const warriorSummonMob_5: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.KNIGHT,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.ORDER, EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -37,7 +37,7 @@ export const warriorSummonMob_5: IUnit = {
 
 export const warriorSummonMob_3: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.ORDER,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -66,7 +66,7 @@ export const warriorSummonMob_3: IUnit = {
 
 export const warriorSummonMob: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.ORDER,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -97,7 +97,7 @@ export const warriorSummonMob: IUnit = {
 
 export const fireflySummonMob: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.SUMMON,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
@@ -126,7 +126,7 @@ export const fireflySummonMob: IUnit = {
 
 export const fireflySummonMob_6: IUnit = {
     unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.SUMMON,
+    heroClass: EHeroClass.MOB,
     mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.FIRST_TWO_ENEMIES,
@@ -141,7 +141,7 @@ export const fireflySummonMob_6: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.FIREFLY,
     id: "FIREFLY",
-    skills: [mobNoSkill,mobNoSkill,mobNoSkill,fireflySelfPoison],
+    skills: [mobNoSkill, mobNoSkill, mobNoSkill, fireflySelfPoison],
     items: [],
     level: 6,
     exp: 0,

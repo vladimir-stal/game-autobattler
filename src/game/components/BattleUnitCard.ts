@@ -152,7 +152,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             attackAnimDisance,
         } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(id);
         this.unitImage = imageBattle || image;
-        if (GAME_MODE === "FULL" || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
+        if (GAME_MODE === "FULL" || unitType === EUnitType.UNIT || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
             this.unitAnimation = idleBattleAnimation || animation;
             this.unitAttackAnimation = attackAnimation;
             this.unitHealAnimation = healAnimation;
@@ -640,7 +640,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     async playBuff(buff: IBuff, skill?: IHeroSkill) {
         //this.setAction("BUFF " + buff.name);
         const { unitType, heroClassType } = this.unit || {};
-        //if (GAME_MODE !== "FULL") {
         if (GAME_MODE !== "FULL" && unitType === EUnitType.HERO && heroClassType === EHeroClassType.MULTI) {
             return;
         }
@@ -756,10 +755,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playEffect(unit?: IBattleUnit, skill?: IHeroSkill) {
-        // if (GAME_MODE !== "FULL") {
-        //     return;
-        // }
-
         let animation: EEffectAnimationType | undefined;
         let animationDelay = 0;
         let attackEnemyAnimDistanceX = 0;
@@ -821,10 +816,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playHealEffect() {
-        // if (GAME_MODE !== "FULL") {
-        //     return;
-        // }
-
         const animation = EEffectAnimationType.EFFECT_PRIEST_HEAL;
         const animationDelay = 500;
         let healAnimDistanceX = this.isInverted ? 100 : 150;

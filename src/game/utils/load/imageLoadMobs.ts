@@ -44,6 +44,11 @@ export const IMAGE_FIREFLY_ATTACK = "IMAGE_FIREFLY_ATTACK";
 export const IMAGE_SUMMONKNIHGT_BATTLE_IDLE = "IMAGE_SUMMONKNIHGT_BATTLE_IDLE";
 export const IMAGE_SUMMONKNIHGT_ATTACK = "IMAGE_SUMMONKNIHGT_ATTACK";
 
+export const IMAGE_PIRATE_1_BATTLE_IDLE = "IMAGE_PIRATE_1_BATTLE_IDLE";
+export const IMAGE_PIRATE_1_ATTACK = "IMAGE_PIRATE_1_ATTACK";
+export const IMAGE_PIRATE_2_BATTLE_IDLE = "IMAGE_PIRATE_2_BATTLE_IDLE";
+export const IMAGE_PIRATE_2_ATTACK = "IMAGE_PIRATE_2_ATTACK";
+
 //
 
 export function loadImagesMobs(scene: Scene) {
@@ -149,6 +154,34 @@ export function loadImagesMobs(scene: Scene) {
     });
     //WEBP
     scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // PIRATES
+
+    // PIRATE 1
+    //
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_1_ATTACK, path + "pirates/pirate_1/pirate_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    // PIRATE 2
+    //
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_2_ATTACK, path + "pirates/pirate_2/pirate_2_attack_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });

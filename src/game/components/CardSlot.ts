@@ -130,7 +130,7 @@ export class CardSlot extends Phaser.GameObjects.Container {
         }
 
         if (isItemToUnit || isExpToUnit || isAttributeToUnit || isSkillToUnit || isItemUpgrade || isSkillUpgrade) {
-            if ((isItemToUnit || isSkillToUnit) && onCardMoved) {
+            if ((isItemToUnit || isSkillToUnit || isItemUpgrade || isSkillUpgrade) && onCardMoved) {
                 onCardMoved();
             }
             this.card && this.gameScene.selectController.performCardAction(card, this.card);

@@ -40,6 +40,8 @@ export interface Ii18n {
         FIREFLY: string;
         WOLF: string;
         STRONGWOLF: string;
+        PIRATE_1: string;
+        PIRATE_2: string;
     };
     mobs: {
         level1: Record<string, string>;
@@ -357,6 +359,8 @@ export const i18n: Ii18n = {
         FIREFLY: "Firefly",
         WOLF: "Wolf",
         STRONGWOLF: "Strong wolf",
+        PIRATE_1: "Pirate",
+        PIRATE_2: "Pirate captain",
     },
     mobs: MOBS_EN,
     totems: {

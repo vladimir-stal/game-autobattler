@@ -43,8 +43,11 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
                 return;
             }
 
-            const { card, cardSlot: previousSlot } = this.gameScene.cardToMove;
+            const { card, cardSlot: previousSlot, onCardMoved } = this.gameScene.cardToMove;
 
+            if (onCardMoved) {
+                onCardMoved();
+            }
             this.gameScene.finishCardMove();
             if (previousSlot) {
                 previousSlot.removeCard();
