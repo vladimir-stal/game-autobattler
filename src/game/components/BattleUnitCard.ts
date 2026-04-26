@@ -349,9 +349,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.buffPanels = [];
 
         this.buffs.forEach((buff, index) => {
-            const buffCard = new BattleBuffCard(this.gameScene, 40 * index, -180, buff);
-            this.add(buffCard);
-            this.buffPanels.push(buffCard);
+            if (!buff.isHidden) {
+                const buffCard = new BattleBuffCard(this.gameScene, 40 * index, -180, buff);
+                this.add(buffCard);
+                this.buffPanels.push(buffCard);
+            }
         });
     }
 
@@ -362,9 +364,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.debuffPanels = [];
 
         this.debuffs.forEach((debuff, index) => {
-            const debuffCard = new BattleDebuffCard(this.gameScene, 40 * index, -210, debuff);
-            this.add(debuffCard);
-            this.debuffPanels.push(debuffCard);
+            if (!debuff.isHidden) {
+                const debuffCard = new BattleDebuffCard(this.gameScene, 40 * index, -210, debuff);
+                this.add(debuffCard);
+                this.debuffPanels.push(debuffCard);
+            }
         });
     }
 
@@ -1052,7 +1056,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.renderBuffs();
         }
 
-        this.buffPanels[this.buffPanels.length - 1].playAddBuffTarget();
+        if (this.buffPanels.length > 0) {
+            this.buffPanels[this.buffPanels.length - 1].playAddBuffTarget();
+        }
         //this.playAddBuffTarget(this.buffs.length - 1);
     }
 

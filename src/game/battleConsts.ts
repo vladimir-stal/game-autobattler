@@ -15,4 +15,8 @@ export const allyTargets = [
     ETargetType.LOW_HP_ALLY,
     ETargetType.RANDOM_ALLY,
     ETargetType.SELF,
+    ETargetType.ALLY_IN_FRONT,
+    ETargetType.HIGH_MP_ALLY,
+    ETargetType.HIGH_PP_ALLY,
+    //ETargetType.
 ];

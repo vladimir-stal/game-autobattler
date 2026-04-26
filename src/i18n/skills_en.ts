@@ -226,16 +226,16 @@ export const SKILLS_EN = {
             desc3: "Armor all [5 + 65% PP]",
         },
         attrDescArmor: {
-            name: "Entangle of vines ",
+            name: "Entangle of vines",
             desc1: "Break [8] armor to first enemy",
             desc2: "Break [14] armor to first enemy",
             desc3: "Apply [26] shock to the first enemy",
         },
         buffNextBaBeCritSelf: {
-            name: "Full effort",
-            desc1: "Next basic attack is a crit",
-            desc2: "Next basic attack is a crit\n and increse damage [2]",
-            desc3: "Next basic attack is a crit\n and increse damage [5]",
+            name: "Perfect strike",
+            desc1: "Critical hit with next\nbasic attack and boost\ndamage by [20%xPP]",
+            desc2: "Critical hit with next\nbasic attack and boost\ndamage by [2+25%xPP]",
+            desc3: "Critical hit with next\nbasic attack and boost\ndamage by [3+35%xPP]",
         },
         buffNextBaTimes: {
             name: "Sword shadow",
@@ -245,9 +245,9 @@ export const SKILLS_EN = {
         },
         buffPpAll: {
             name: "Buff PP all",
-            desc1: "Buff Physical power \n[1]+[MP*50%] all allies",
-            desc2: "Buff Physical power \n[1]+[MP*70%] all allies",
-            desc3: "Buff Physical power \n[1]+[MP] all allies",
+            desc1: "Buff Physical power\n[1]+[MP*50%] all allies",
+            desc2: "Buff Physical power\n[1]+[MP*70%] all allies",
+            desc3: "Buff Physical power\n[1]+[MP] all allies",
         },
         debuffBaNextBaAll: {
             name: "Weakness",
@@ -472,9 +472,9 @@ export const SKILLS_EN = {
         },
         illusionistSkill: {
             name: "Illusion",
-            desc1: "Summon magic illusion that\n repeats magic skills",
-            desc2: "Summon magic illusion that\n repeats magic skills",
-            desc3: "Summon magic illusion that\n repeats magic skills",
+            desc1: "Summon illusion that\nuse magic skills and\ninherits 25% MP",
+            desc2: "Summon illusion that\nuse magic skills and\ninherits 35% MP",
+            desc3: "Summon illusion that\nuse magic skills and\ninherits 50% MP",
         },
         inquisitorSkill: {
             name: "Brand of obedience",

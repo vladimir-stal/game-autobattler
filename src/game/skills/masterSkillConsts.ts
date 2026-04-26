@@ -1,6 +1,26 @@
-import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { NONE } from "phaser";
+import {
+    AnimationType,
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EDebuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_SKULL_KNIFE, IMAGE_FEINT_ATTACK, IMAGE_SKILL_SWORD_BUFF_2 } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_AXE_BUFF,
+    IMAGE_SKILL_MAGIC_FIGHT,
+    IMAGE_SKILL_SKULL_KNIFE,
+    IMAGE_SKILL_SWORD_BUFF_2,
+    IMAGE_SKILL_YELLOW_EXPLOSION,
+} from "../utils/load/skillImagesLoad";
 import { buffSummonCritSkill } from "./commonSkill3Consts";
 
 // BUFF NEXT BA X SELF
@@ -17,7 +37,7 @@ const buffNextBaXSelf_3: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "x1.8 next ba",
+                name: "x1.8 next",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 80,
@@ -42,7 +62,7 @@ const buffNextBaXSelf_2: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "x1.6 next ba",
+                name: "x1.6 next",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 60,
@@ -68,7 +88,7 @@ export const buffNextBaXSelf: IHeroSkillSet = {
             type: EHeroSkillType.BUFF,
             isBasicAttack: true,
             buff: {
-                name: "x1.4 next ba",
+                name: "x1.4 next",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 40,
@@ -85,25 +105,18 @@ export const buffNextBaXSelf: IHeroSkillSet = {
 };
 
 // Feint
-
-export const feintAttack_3: IHeroSkillSet = {
-    id: "feintAttack",
-    name: i18n.skills.basic.feintAttack.name,
-    desc: i18n.skills.basic.feintAttack.desc3,
-    level: 3,
-    priceLevel: 1,
-    heroClasses: [EHeroClass.MASTER],
-    skills: [
+const feintAttackSkillset = (atkPaercent: number, ppScale: number): IHeroSkill[] => {
+    return [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
             isBasicAttack: false,
-            value: 35,
+            value: atkPaercent,
             valueFrom: "attack",
             valueType: "percent",
             attribute: "armor",
             animation: AnimationType.NONE,
             targetType: ETargetType.SELF,
-            ppScale: 30,
+            ppScale: ppScale,
         },
         {
             type: EHeroSkillType.DEBUFF,
@@ -112,13 +125,23 @@ export const feintAttack_3: IHeroSkillSet = {
                 name: "-atk",
                 type: EDebuffType.ATTRIBUTE_DECREASE,
                 attribute: "attack",
-                value: 35,
+                value: atkPaercent,
                 valueType: "percent",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
             },
         },
-    ],
+    ];
+};
+
+export const feintAttack_3: IHeroSkillSet = {
+    id: "feintAttack",
+    name: i18n.skills.basic.feintAttack.name,
+    desc: i18n.skills.basic.feintAttack.desc3,
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER],
+    skills: feintAttackSkillset(35, 35),
     image: IMAGE_SKILL_SWORD_BUFF_2,
 };
 
@@ -129,32 +152,7 @@ export const feintAttack_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.MASTER],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
-            value: 35,
-            valueFrom: "attack",
-            valueType: "percent",
-            attribute: "armor",
-            animation: AnimationType.NONE,
-            targetType: ETargetType.SELF,
-            ppScale: 20,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "-atk",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 35,
-                valueType: "percent",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-        },
-    ],
+    skills: feintAttackSkillset(35, 20),
     nextLevel: feintAttack_3,
     image: IMAGE_SKILL_SWORD_BUFF_2,
 };
@@ -166,250 +164,317 @@ export const feintAttack: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MASTER],
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
-            value: 35,
-            valueFrom: "attack",
-            valueType: "percent",
-            attribute: "armor",
-            animation: AnimationType.NONE,
-            targetType: ETargetType.SELF,
-            //ppScale: 20,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "-atk",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 35,
-                valueType: "percent",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-        },
-    ],
+    skills: feintAttackSkillset(35, 0),
     nextLevel: feintAttack_2,
     image: IMAGE_SKILL_SWORD_BUFF_2,
 };
 
 // BUFF NEXT BA IGNORE ARMOR
 
-export const buffNextBaIgnoreArmorSelf_3: IHeroSkillSet = {
-    id: "buffIgnoreArmorNextBa",
-    name: "Ignore armor(3)",
-    desc: "Ignore enemy armor next basic attack. Buff next basic attack [5]",
-    level: 3,
-    priceLevel: 2,
-    heroClasses: [EHeroClass.MASTER],
-    skills: [
+const attackIgnoringArmorSkillset = (atk: number): IHeroSkill[] => {
+    return [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: false,
             buff: {
                 name: "Ignore armor",
                 type: EBuffType.IGNORE_ARMOR,
                 targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
+                timeType: EBuffTimeType.DURATION,
+                duration: 1,
                 value: 1,
             },
+            animation: AnimationType.NONE,
         },
         {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "Increase next ba",
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "attack",
-                valueType: "number",
-                value: 5,
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
+            type: EHeroSkillType.ATTACK,
+            targetType: ETargetType.FIRST_ENEMY,
+            attackType: EHeroAttackType.PHYSICAL,
+            value: atk,
+            valueType: "percent",
+            valueFrom: "attack",
+            animation: AnimationType.UNIT_ATTACK,
         },
-    ],
+    ];
 };
 
-export const buffNextBaIgnoreArmorSelf_2: IHeroSkillSet = {
-    id: "buffIgnoreArmorNextBa",
-    name: "Ignore armor(2)",
-    desc: "Ignore enemy armor next basic attack. Buff next basic attack [2]",
-    level: 2,
-    priceLevel: 2,
-    heroClasses: [EHeroClass.MASTER],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: false,
-            buff: {
-                name: "Ignore armor",
-                type: EBuffType.IGNORE_ARMOR,
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 1,
-            },
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "Increase next ba",
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "attack",
-                valueType: "number",
-                value: 2,
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-        },
-    ],
-    nextLevel: buffNextBaIgnoreArmorSelf_3,
-};
-
-export const buffNextBaIgnoreArmorSelf: IHeroSkillSet = {
-    id: "buffIgnoreArmorNextBa",
+export const attackIgnoringArmor_3: IHeroSkillSet = {
+    id: "attackIgnoringArmor",
     name: "Ignore armor",
-    desc: "Ignore enemy armor next basic attack",
-    level: 1,
-    priceLevel: 2,
+    desc: "Make physical attack with\n150% attack strength\nIgnore armor this turn",
+    level: 3,
+    priceLevel: 3,
     heroClasses: [EHeroClass.MASTER],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "Ignore armor",
-                type: EBuffType.IGNORE_ARMOR,
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 1,
-            },
-        },
-    ],
-    nextLevel: buffNextBaIgnoreArmorSelf_2,
+    isBasicAttack: false,
+    image: IMAGE_SKILL_SKULL_KNIFE,
+    skills: attackIgnoringArmorSkillset(150),
+};
+
+export const attackIgnoringArmor_2: IHeroSkillSet = {
+    id: "attackIgnoringArmor",
+    name: "Ignore armor",
+    desc: "Make physical attack with\n125% attack strength\nIgnore armor this turn",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MASTER],
+    skills: attackIgnoringArmorSkillset(125),
+    isBasicAttack: false,
+    image: IMAGE_SKILL_SKULL_KNIFE,
+    nextLevel: attackIgnoringArmor_3,
+};
+
+export const attackIgnoringArmor: IHeroSkillSet = {
+    id: "attackIgnoringArmor",
+    name: "Ignore armor",
+    desc: "Make physical attack with\n100% attack strength\nIgnore armor this turn",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MASTER],
+    skills: attackIgnoringArmorSkillset(100),
+    isBasicAttack: false,
+    image: IMAGE_SKILL_SKULL_KNIFE,
+    nextLevel: attackIgnoringArmor_2,
 };
 
 // BUFF NEXT BA TO BE CRIT SKILL
+const buffNextBaBeCritSelfSkillset = (atk: number, ppScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "critBa",
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "critChance",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                value: 100,
+                valueType: "number",
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "nextBa+",
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "attack",
+                valueType: "number",
+                value: atk,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                ppScale: ppScale,
+            },
+        },
+    ];
+};
 
 export const buffNextBaBeCritSelf_3: IHeroSkillSet = {
     id: "buffNextBaBeCritSelf",
-    //name: "Next ba crit(3)",
-    //desc: "Next basic attack is a crit\n and increse damage [5]",
     name: i18n.skills.level2.buffNextBaBeCritSelf.name,
     desc: i18n.skills.level2.buffNextBaBeCritSelf.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: false,
-            buff: {
-                name: "BA is crit",
-                //type: EBuffType.BASIC_ATTACK_IS_CRIT,
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "critChance",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 100,
-                valueType: "number",
-            },
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "increase BA",
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                targetType: ETargetType.SELF,
-                attribute: "attack",
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 5,
-            },
-        },
-    ],
+    skills: buffNextBaBeCritSelfSkillset(4, 35), // 4+1/3 pp
     image: IMAGE_SKILL_SKULL_KNIFE,
 };
 
 export const buffNextBaBeCritSelf_2: IHeroSkillSet = {
     id: "buffNextBaBeCritSelf",
-    //name: "Next ba crit(2)",
-    //desc: "Next basic attack is a crit\n and increse damage [2]",
     name: i18n.skills.level2.buffNextBaBeCritSelf.name,
     desc: i18n.skills.level2.buffNextBaBeCritSelf.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: false,
-            buff: {
-                name: "BA is crit",
-                //type: EBuffType.BASIC_ATTACK_IS_CRIT,
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "critChance",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 100,
-                valueType: "number",
-            },
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "increase BA",
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                targetType: ETargetType.SELF,
-                attribute: "attack",
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 2,
-                valueType: "number",
-            },
-        },
-    ],
+    skills: buffNextBaBeCritSelfSkillset(2, 25), // 2+1/4 pp
     image: IMAGE_SKILL_SKULL_KNIFE,
     nextLevel: buffNextBaBeCritSelf_3,
 };
 
 export const buffNextBaBeCritSelf: IHeroSkillSet = {
     id: "buffNextBaBeCritSelf",
-    //name: "Next ba crit",
-    //desc: "Next basic attack is a crit",
     name: i18n.skills.level2.buffNextBaBeCritSelf.name,
     desc: i18n.skills.level2.buffNextBaBeCritSelf.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "BA is crit",
-                //type: EBuffType.BASIC_ATTACK_IS_CRIT,
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "critChance",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-                value: 100,
-                valueType: "number",
-            },
-        },
-    ],
+    skills: buffNextBaBeCritSelfSkillset(0, 20), // 0+1/5 pp
     image: IMAGE_SKILL_SKULL_KNIFE,
     nextLevel: buffNextBaBeCritSelf_2,
 };
 
+const riposteSkillset = (atk: number, ppScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Riposte",
+                targetType: ETargetType.SELF,
+                type: EBuffType.BATTLE_TRIGGER,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                value: 1,
+                appTrigger: {
+                    limitedRepeats: true,
+                    skillId: "Riposte",
+                    type: EAppTriggerType.TAKE_ATTACK,
+                    skill: [
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                name: "Aim",
+                                targetType: ETargetType.SELF,
+                                timeType: EBuffTimeType.TILL_NEXT_BA,
+                                type: EBuffType.CHANGE_TARGET_TYPE,
+                                changeTargetTypeTo: ETargetType.BY_UNIT_ID,
+                                value: 1,
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                name: "nextBa+",
+                                type: EBuffType.ATTRIBUTE_INCREASE,
+                                attribute: "attack",
+                                valueType: "number",
+                                value: atk,
+                                targetType: ETargetType.SELF,
+                                timeType: EBuffTimeType.TILL_NEXT_BA,
+                                ppScale: ppScale,
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+                            targetType: ETargetType.SELF,
+                            animation: AnimationType.NONE,
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+};
 //
+export const riposteSkill_3: IHeroSkillSet = {
+    id: "riposteSkill",
+    name: "Master Riposte",
+    desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+65%xPP] increase attack",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER],
+    isBasicAttack: false,
+    skills: riposteSkillset(1, 65),
+    image: IMAGE_SKILL_MAGIC_FIGHT,
+};
+
+export const riposteSkill_2: IHeroSkillSet = {
+    id: "riposteSkill",
+    name: "Master Riposte",
+    desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+35%xPP] increase attack",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER],
+    isBasicAttack: false,
+    skills: riposteSkillset(1, 35),
+    image: IMAGE_SKILL_MAGIC_FIGHT,
+    nextLevel: riposteSkill_3,
+};
+
+export const riposteSkill: IHeroSkillSet = {
+    id: "riposteSkill",
+    name: "Master Riposte",
+    desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1] increase attack",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER],
+    isBasicAttack: false,
+    skills: riposteSkillset(1, 0),
+    image: IMAGE_SKILL_MAGIC_FIGHT,
+    nextLevel: riposteSkill_2,
+};
+
+const followupComboSkillset = (ppIncrease: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Combo",
+                targetType: ETargetType.SELF,
+                type: EBuffType.BATTLE_TRIGGER,
+                timeType: EBuffTimeType.DUEL,
+                value: 1,
+                appTrigger: {
+                    limitedRepeats: true,
+                    skillId: "Combo",
+                    type: EAppTriggerType.BASIC_ATTACK,
+                    skill: [
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                name: "PP+",
+                                type: EBuffType.ATTRIBUTE_INCREASE,
+                                attribute: "physicalPower",
+                                valueType: "number",
+                                value: ppIncrease,
+                                targetType: ETargetType.SELF,
+                                timeType: EBuffTimeType.DURATION,
+                                duration: 1,
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.FORCE_UNIT_CAST_SKILL,
+                            targetType: ETargetType.SELF,
+                            animation: AnimationType.NONE,
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+};
+
+export const followupComboSkill_3: IHeroSkillSet = {
+    id: "followupComboSkill",
+    name: "Follow up combo",
+    desc: "Quickly use next skill\nafter next basic attack\nIncrease PP by [9] for\nthat skill",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MASTER],
+    isBasicAttack: true, // make basic attack
+    skills: followupComboSkillset(9),
+    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+};
+
+export const followupComboSkill_2: IHeroSkillSet = {
+    id: "followupComboSkill",
+    name: "Follow up combo",
+    desc: "Quickly use next skill\nafter next basic attack\nIncrease PP by [6] for\nthat skill",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MASTER],
+    isBasicAttack: true, // make basic attack
+    skills: followupComboSkillset(6),
+    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    nextLevel: followupComboSkill_3,
+};
+
+export const followupComboSkill: IHeroSkillSet = {
+    id: "followupComboSkill",
+    name: "Follow up combo",
+    desc: "Quickly use next skill\nafter next basic attack\nIncrease PP by [3] for\nthat skill",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MASTER],
+    isBasicAttack: true, // make basic attack
+    skills: followupComboSkillset(3),
+    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    nextLevel: followupComboSkill_2,
+};
 
 //TODO: add buffNextBaIgnoreArmorSelf to lvl2 skills
 export const masterSkills: THeroSkills = [feintAttack, buffNextBaXSelf];
 
-export const masterSkills_2: THeroSkills = masterSkills.concat([buffNextBaBeCritSelf]);
+export const masterSkills_2: THeroSkills = masterSkills.concat([buffNextBaBeCritSelf, riposteSkill]);
 
-export const masterSkills_3: THeroSkills = masterSkills_2.concat([buffSummonCritSkill]);
+export const masterSkills_3: THeroSkills = masterSkills_2.concat([attackIgnoringArmor, followupComboSkill]);

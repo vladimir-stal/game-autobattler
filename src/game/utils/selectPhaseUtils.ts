@@ -693,7 +693,7 @@ export const getCards = (
                 isRerollAvailable = true;
                 hintTextType = ESelectCardHint.SELECT_SINGLE;
 
-                const skills = getAllClassesSkills(day).filter((skill) => skill.isChained);
+                const skills = getAllClassesSkills(day).filter((skill) => !skill.isChained);
                 const randomSkills = getRandomArrayItems(skills, 3, true).map((skill) => {
                     // const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
                     // const enchancedSkill = { ...skill };

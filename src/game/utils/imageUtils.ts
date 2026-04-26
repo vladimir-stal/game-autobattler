@@ -528,6 +528,25 @@ export const getUnitImage = (unitId: string): IAnimations => {
             return { image: IMAGE_WOLF_1 };
         case "STRONGWOLF":
             return { image: IMAGE_WOLF_2 };
+        case "COPYCAT":
+            return {
+                size: 420,
+                distance: -50,
+                image: IMAGE_MASTER_IDLE,
+                imageBattle: IMAGE_MASTER_IDLE_BATTLE,
+                animation: AnimationType.MASTER_IDLE,
+                idleBattleAnimation: AnimationType.MASTER_IDLE_BATTLE,
+                attackAnimation: AnimationType.MASTER_ATTACK_2, // AnimationType.MASTER_ATTACK,
+                //magicAttackSkillAnimation: AnimationType.MASTER_ATTACK,
+                defeatedAnimation: AnimationType.MASTER_DEFEATED,
+                hurtAnimation: AnimationType.MASTER_HURT,
+                buffAnimation: AnimationType.MASTER_BUFF,
+                //
+                attackEnemyAnimation: EEffectAnimationType.EFFECT_MASTER_ATTACK_2,
+                attackEnemyAnimDelay: 400,
+                attackEnemyAnimDistance: { x: 100, y: -50 },
+                attackEnemyAnimDistanceInverted: { x: 230, y: -50 },
+            };
         default:
             return { image: IMAGE_SKELETON_1 };
     }
