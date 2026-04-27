@@ -146,6 +146,7 @@ export const getAllyTargetInFront = (unitId: string, units: TBattleUnits): IBatt
 
 export const getAllyTargetBehind = (unitId: string, units: TBattleUnits): IBattleUnit | null => {
     const unitIndex = units.findIndex((unit) => unit && unit.hp > 0 && unit.id === unitId);
+    console.log("getAllyTargetBehind >", unitId, unitIndex, units);
     if (unitIndex === -1) {
         return null;
     }
@@ -214,10 +215,20 @@ export const getHighestStatusTarget = (units: TBattleUnits, statusType: EStatusT
 export const getLowHpTarget = (units: TBattleUnits): IBattleUnit | null => {
     return units.reduce((result, unit) => {
         if (unit && unit.hp > 0) {
-            if (!result) {
+            if (!result || unit.hp < result.hp) {
                 return unit;
             }
-            return unit.hp < result.hp ? unit : result;
+        }
+        return result;
+    }, null);
+};
+
+export const getLowHpPercentTarget = (units: TBattleUnits): IBattleUnit | null => {
+    return units.reduce((result, unit) => {
+        if (unit && unit.hp > 0) {
+            if (!result || unit.hp/unit.maxHp < result.hp/result.maxHp) {
+                return unit;
+            }
         }
         return result;
     }, null);
@@ -312,17 +323,16 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             return target ? [target] : null;
         }
         case ETargetType.LOW_HP_ALLY: {
-            const lowestHpAlly = units.reduce((result, unit) => {
-                if (unit && unit.hp > 0) {
-                    //console.log("check unit", unit);
-                    if (!result || unit.hp < result.hp) {
-                        //console.log("set unit as result", unit);
-                        return unit;
-                    }
-                }
-                //console.log("save previous result");
-                return result;
-            }, null);
+            // changed logic from MIN(unit.hp) to MAX(unit.maxHp - unit.hp)
+            // (from lowest hp to highest recieved damage, so it won't target full hp feeble units)
+            const lowestHpAlly = getLowHpTarget(units);
+            //console.log("LOWEST hp ALLy", lowestHpAlly, units);
+            return lowestHpAlly ? [lowestHpAlly] : null;
+        }
+        case ETargetType.LOW_PERCENT_ALLY: {
+            // changed logic from MIN(unit.hp) to MAX(unit.maxHp - unit.hp)
+            // (from lowest hp to highest recieved damage, so it won't target full hp feeble units)
+            const lowestHpAlly = getLowHpPercentTarget(units);
             //console.log("LOWEST hp ALLy", lowestHpAlly, units);
             return lowestHpAlly ? [lowestHpAlly] : null;
         }
@@ -370,6 +380,10 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const target = getHighestStatusTarget(units, EStatusType.BLEED);
             return target ? [target] : null;
         }
+        case ETargetType.HIGH_POISON_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.POISON);
+            return target ? [target] : null;
+        }
         case ETargetType.HIGH_MP_ENEMY: {
             const target = getHighestAttributeTarget(units, "magicPower");
             return target ? [target] : null;
@@ -380,6 +394,10 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
         }
         case ETargetType.LOW_HP_ENEMY: {
             const target = getLowHpTarget(units);
+            return target ? [target] : null;
+        }
+        case ETargetType.LOW_PERCENT_ENEMY: {
+            const target = getLowHpPercentTarget(units);
             return target ? [target] : null;
         }
         case ETargetType.MARKED_ENEMY: {
@@ -1322,13 +1340,25 @@ export const isTriggerReady = (appTrigger: IAppTrigger): boolean => {
     return false;
 };
 
-export const triggerBattleTrigger = (type: EAppTriggerType, battleController: BattleController, unit?: IBattleUnit) => {
+export const triggerBattleTrigger = (type: EAppTriggerType, battleController: BattleController, unit?: IBattleUnit, relevantUnitId?:string) => {
     battleController.listOfTriggers.forEach((bt) => {
         if (bt.type === type) {
             if (!!unit && bt.targetCheck === ETargetType.ANCHOR_TARGET && bt.anchorTarget === unit) {
+                battleController.relevantTriggerUnitId = relevantUnitId;
                 checkBattleTriggerBuffDebuff(bt, battleController);
+                battleController.relevantTriggerUnitId = undefined;
+            } else if (!!unit && unit.isSummon && type === EAppTriggerType.DEATH) {
+                if (bt.targetCheck === ETargetType.ALL_ALLY_SUMMONS && battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
+                    battleController.relevantTriggerUnitId = relevantUnitId;
+                    checkBattleTriggerBuffDebuff(bt, battleController);
+                    battleController.relevantTriggerUnitId = undefined;
+                } else {
+                    return; // Summons do not usually trigger DEATH
+                }
             } else if (!unit || battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
+                battleController.relevantTriggerUnitId = relevantUnitId;
                 checkBattleTriggerBuffDebuff(bt, battleController);
+                battleController.relevantTriggerUnitId = undefined;
             }
         }
     });

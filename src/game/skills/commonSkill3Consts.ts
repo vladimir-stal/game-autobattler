@@ -1,10 +1,23 @@
-import { EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkillSet } from "../../types";
+import {
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+} from "../../types";
 import { i18n } from "../consts";
 import {
     IMAGE_SKILL_KNIGHT_SHIELD,
     IMAGE_SKILL_MAGIC_FIGHT,
     IMAGE_SKILL_NATURE_SHIELD,
     IMAGE_SKILL_POISON_FLOWER,
+    IMAGE_SKILL_PRIEST_SCROLL,
     IMAGE_SKILL_RAGE,
     IMAGE_SKILL_TEST,
 } from "../utils/load/skillImagesLoad";
@@ -299,33 +312,93 @@ export const increaseMaxHpSkill: IHeroSkillSet = {
 //
 // BUFF SUMMON CRIT CHANCE
 //
+const buffSummonCritSkillset = (crit: number, mpScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "critChance",
+            value: crit,
+            valueType: "number",
+            mpScale: mpScale,
+            ppScale: mpScale,
+            targetType: ETargetType.ALL_ALLY_SUMMONS,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                targetType: ETargetType.ALL_ALLY_SUMMONS,
+                name: "Sharpen",
+                value: 1,
+                valueType: "number",
+                timeType: EBuffTimeType.DUEL,
+                statusType: EStatusType.BLEED,
+            },
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "+SmnCrit",
+                type: EBuffType.BATTLE_TRIGGER,
+                value: 1,
+                targetType: ETargetType.SELF,
+                valueType: "number",
+                timeType: EBuffTimeType.DUEL,
+                appTrigger: {
+                    limitedRepeats: true,
+                    type: EAppTriggerType.SUMMON,
+                    targetCheck: ETargetType.ALL_ALLIES,
+                    skillId: "incrSummonBa",
+                    skill: [
+                        {
+                            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                            attribute: "critChance",
+                            value: crit,
+                            valueType: "number",
+                            mpScale: mpScale,
+                            ppScale: mpScale,
+                            targetType: ETargetType.BY_RELEVANT_ID, // target new summon
+                        },
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                                targetType: ETargetType.BY_RELEVANT_ID,
+                                name: "Sharpen",
+                                value: 1,
+                                valueType: "number",
+                                timeType: EBuffTimeType.DUEL,
+                                statusType: EStatusType.BLEED,
+                            },
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+};
+
+export const buffSummonCritSkill_3: IHeroSkillSet = {
+    id: "buffSummonCritSkill",
+    name: i18n.skills.level3.buffSummonCritSkill.name,
+    desc: i18n.skills.level3.buffSummonCritSkill.desc3,
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
+    skills: buffSummonCritSkillset(10,40),
+    //nextLevel: buffSummonCritSkill_2,
+    image: IMAGE_SKILL_RAGE,
+};
 
 export const buffSummonCritSkill_2: IHeroSkillSet = {
     id: "buffSummonCritSkill",
     name: i18n.skills.level3.buffSummonCritSkill.name,
     desc: i18n.skills.level3.buffSummonCritSkill.desc2,
-    //name: "Crit summon(2)",
-    //desc: "Buff summon crit\nchance [5]+[30%xMP]",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
-    skills: [
-        {
-            isBasicAttack: true,
-            type: EHeroSkillType.BUFF,
-            buff: {
-                name: "Crit",
-                targetType: ETargetType.SUMMON_CURRENT,
-                timeType: EBuffTimeType.DUEL,
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "critChance",
-                value: 5,
-                valueType: "number",
-                mpScale: 30,
-            },
-        },
-    ],
-    //nextLevel: buffSummonCritSkill_2,
+    skills: buffSummonCritSkillset(7,30),
+    nextLevel: buffSummonCritSkill_3,
     image: IMAGE_SKILL_RAGE,
 };
 
@@ -338,22 +411,66 @@ export const buffSummonCritSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.MASTER],
+    skills: buffSummonCritSkillset(5,20),
+    nextLevel: buffSummonCritSkill_2,
+    image: IMAGE_SKILL_RAGE,
+};//
+
+// OUTGOING HEAL BUFF (LEVEL 3) /////////////////////////////////////////////////////////////////////////
+
+export const outHealBuffSkill_2: IHeroSkillSet = {
+    id: "buffTotalDmgSkill",
+    //name: i18n.skills.basic.shieldAttackSkill.name,
+    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
+    //name: "Out heal(2)",
+    //desc: "Buff outgoing heal\n([10]+[60%xMP])% ally in front",
+    name: i18n.skills.level3.outHealBuffSkill.name,
+    desc: i18n.skills.level3.outHealBuffSkill.desc2,
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD, EHeroClass.PRIEST],
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "Crit",
-                targetType: ETargetType.SUMMON_CURRENT,
+                name: "Heal",
+                targetType: ETargetType.ALLY_IN_FRONT,
                 timeType: EBuffTimeType.DUEL,
-                type: EBuffType.ATTRIBUTE_INCREASE,
-                attribute: "critChance",
-                value: 5,
-                valueType: "number",
-                mpScale: 20,
+                type: EBuffType.OUTGOING_HEAL,
+                value: 10,
+                valueType: "percent",
+                mpScale: 60,
             },
         },
     ],
-    nextLevel: buffSummonCritSkill_2,
-    image: IMAGE_SKILL_RAGE,
+    // nextLevel: outHealBuffSkill_2,
+    image: IMAGE_SKILL_PRIEST_SCROLL,
 };
+
+export const outHealBuffSkill: IHeroSkillSet = {
+    id: "outHealBuffSkill",
+    //name: "Out heal",
+    //desc: "Buff outgoing heal\n([10]+[40%xMP])% ally in front",
+    name: i18n.skills.level3.outHealBuffSkill.name,
+    desc: i18n.skills.level3.outHealBuffSkill.desc1,
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD, EHeroClass.PRIEST],
+    skills: [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Heal",
+                targetType: ETargetType.ALLY_IN_FRONT,
+                timeType: EBuffTimeType.DUEL,
+                type: EBuffType.OUTGOING_HEAL,
+                value: 10,
+                valueType: "percent",
+                mpScale: 40,
+            },
+        },
+    ],
+    nextLevel: outHealBuffSkill_2,
+    image: IMAGE_SKILL_PRIEST_SCROLL,
+};
+

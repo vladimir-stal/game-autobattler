@@ -14,12 +14,10 @@ export const alchemistSkill_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.SWAP_HP,
-            isBasicAttack: false,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
         },
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 5,
             targetType: ETargetType.SELF,
             mpScale: 40,
@@ -40,12 +38,10 @@ export const alchemistSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.SWAP_HP,
-            isBasicAttack: false,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
         },
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 5,
             targetType: ETargetType.SELF,
             mpScale: 30,
@@ -67,12 +63,10 @@ export const alchemistSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.SWAP_HP,
-            isBasicAttack: false,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
         },
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 5,
             targetType: ETargetType.SELF,
             mpScale: 20,

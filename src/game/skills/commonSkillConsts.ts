@@ -29,7 +29,7 @@ import {
     IMAGE_SKILL_MACE_ATTACK,
 } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
-import { outHealBuffSkill } from "./bardSkillConsts";
+import { outHealBuffSkill } from "./commonSkill3Consts";
 import { buffSelfMPorPP, buffSummonCritSkill, increaseMaxHpSkill, shieldAttackSkill } from "./commonSkill3Consts";
 
 ////////////// COMMON SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
@@ -128,6 +128,24 @@ const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] 
     ];
 };
 
+export const statusesIntoHeal_3: IHeroSkillSet = {
+    id: "statusesIntoHeal",
+    //name: "Overcome",
+    //desc: "Remove [65%] stacks of\nevery status, heal same\namount",
+    name: i18n.skills.basic.statusesIntoHeal.name,
+    desc: i18n.skills.basic.statusesIntoHeal.desc3,
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
+    skills: [
+        ...overcomeSkillStack(EStatusType.BLEED, 80),
+        ...overcomeSkillStack(EStatusType.BURN, 80),
+        ...overcomeSkillStack(EStatusType.POISON, 80),
+        ...overcomeSkillStack(EStatusType.SHOCK, 80),
+    ],
+    image: IMAGE_SKILL_CLEAR,
+};
+
 export const statusesIntoHeal_2: IHeroSkillSet = {
     id: "statusesIntoHeal",
     //name: "Overcome",
@@ -143,6 +161,7 @@ export const statusesIntoHeal_2: IHeroSkillSet = {
         ...overcomeSkillStack(EStatusType.POISON, 65),
         ...overcomeSkillStack(EStatusType.SHOCK, 65),
     ],
+    nextLevel: statusesIntoHeal_3,
     image: IMAGE_SKILL_CLEAR,
 };
 
@@ -655,7 +674,7 @@ const toxicTuneSkillset = (first: number, rand?: number): IHeroSkill[] => {
     }
 };
 
-const toxicTuneSkill_3: IHeroSkillSet = {
+export const toxicTuneSkill_3: IHeroSkillSet = {
     id: "toxicTuneSkill",
     name: i18n.skills.basic.toxicTuneSkill.name,
     desc: i18n.skills.basic.toxicTuneSkill.desc3,
@@ -666,7 +685,7 @@ const toxicTuneSkill_3: IHeroSkillSet = {
     image: IMAGE_SKILL_SKULLS,
 };
 
-const toxicTuneSkill_2: IHeroSkillSet = {
+export const toxicTuneSkill_2: IHeroSkillSet = {
     id: "toxicTuneSkill",
     name: i18n.skills.basic.toxicTuneSkill.name,
     desc: i18n.skills.basic.toxicTuneSkill.desc2,
@@ -678,7 +697,7 @@ const toxicTuneSkill_2: IHeroSkillSet = {
     nextLevel: toxicTuneSkill_3,
 };
 
-const toxicTuneSkill: IHeroSkillSet = {
+export const toxicTuneSkill: IHeroSkillSet = {
     id: "toxicTuneSkill",
     name: i18n.skills.basic.toxicTuneSkill.name,
     desc: i18n.skills.basic.toxicTuneSkill.desc1,

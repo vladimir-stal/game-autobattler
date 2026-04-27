@@ -3,10 +3,12 @@ import {
     EAppTriggerType,
     EBuffTimeType,
     EBuffType,
+    EEffectAnimationType,
     EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
     ESkillCondition,
+    EStatusType,
     ETargetType,
     EUnitType,
     IHeroSkill,
@@ -24,6 +26,7 @@ import {
 } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 import { buffSummonCritSkill } from "./commonSkill3Consts";
+import { radiantWallSkill, venomHeartSkill } from "./commonSkillConsts";
 
 // SUMMON UNITS
 
@@ -491,10 +494,88 @@ export const incrSummonArmor: IHeroSkillSet = {
     nextLevel: incrSummonArmor_2,
 };
 
+const explodingSummonsBuffSkillset = (mpScale: number, area: ETargetType): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Summons explode",
+                type: EBuffType.BATTLE_TRIGGER,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DURATION,
+                duration: 3,
+                value: 1,
+                appTrigger: {
+                    limitedRepeats: false,
+                    targetCheck: ETargetType.ALL_ALLY_SUMMONS,
+                    type: EAppTriggerType.DEATH,
+                    skillId: "Shock explode",
+                    skill: [
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            status: EStatusType.SHOCK,
+                            value: 1,
+                            valueType: "number",
+                            targetType: area,
+                            animation: AnimationType.NONE,
+                            effectAnimationType: EEffectAnimationType.EFFECT_LIGHTNING_1,
+                            effectAnimationDelay: 250,
+                        },
+                        {
+                            type: EHeroSkillType.ATTACK,
+                            targetType: area,
+                            attackType: EHeroAttackType.MAGIC,
+                            value: 0,
+                            mpScale: mpScale,
+                            animation: AnimationType.NONE,
+                        }
+                    ],
+                }
+            }
+        }
+    ];
+}
+
+export const explodingSummonsBuffSkill_3: IHeroSkillSet = {
+    id: "explodingSummonsBuff",
+    name: "Summons explode",
+    desc: "For 3 turns, when summons\ndie, they apply 1 shock\nand deal [80%xMP]\ndamage to first 3 enemies",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: explodingSummonsBuffSkillset(80, ETargetType.FIRST_THREE_ENEMIES),
+    image: IMAGE_SKILL_SUMMON_SHIELD,
+    //nextLevel: explodingSummonsBuffSkill_3,
+};
+
+
+export const explodingSummonsBuffSkill_2: IHeroSkillSet = {
+    id: "explodingSummonsBuff",
+    name: "Summons explode",
+    desc: "For 3 turns, when summons\ndie, they apply 1 shock\nand deal [65%xMP]\ndamage to first 2 enemies",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: explodingSummonsBuffSkillset(65, ETargetType.FIRST_TWO_ENEMIES),
+    image: IMAGE_SKILL_SUMMON_SHIELD,
+    nextLevel: explodingSummonsBuffSkill_3,
+};
+
+export const explodingSummonsBuffSkill: IHeroSkillSet = {
+    id: "explodingSummonsBuff",
+    name: "Summons explode",
+    desc: "For 3 turns, when summons\ndie, they apply 1 shock\nand deal [50%xMP]\ndamage to first enemy",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: explodingSummonsBuffSkillset(50, ETargetType.FIRST_ENEMY),
+    image: IMAGE_SKILL_SUMMON_SHIELD,
+    nextLevel: explodingSummonsBuffSkill_2,
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill];
 
-export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa, incrSummonArmor]);
+export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa, incrSummonArmor, radiantWallSkill, venomHeartSkill]);
 
-export const summonSkills_3: THeroSkills = summonSkills_2.concat([buffSummonCritSkill, summonerFamiliarSkill]);
+export const summonSkills_3: THeroSkills = summonSkills_2.concat([explodingSummonsBuffSkill, summonerFamiliarSkill, buffSummonCritSkill]);

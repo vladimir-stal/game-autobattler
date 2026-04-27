@@ -11,7 +11,7 @@ import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { phycisalAttackSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
-import { incrSummonBa } from "../skills/summonSkillConsts2";
+import { explodingSummonsBuffSkill, familiarSummon, incrSummonBa, summonerFamiliarSkill } from "../skills/summonSkillConsts2";
 import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
@@ -35,15 +35,15 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wolfUnit }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: summonHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
         { type: ECardType.UNIT, price: 0, unit: pirate1Unit },
-        { type: ECardType.UNIT, price: 0, unit: warriorHero },
+        //{ type: ECardType.UNIT, price: 0, unit: warriorHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
-        //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
+        { type: ECardType.SKILL, price: 0, skill: explodingSummonsBuffSkill },
         /*{
             type: ECardType.ITEM,
             price: 0,
@@ -56,7 +56,7 @@ export const customStartingItemsRoom = (): ICard[] => {
             },
 
         },*/
-        { type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
+        { type: ECardType.SKILL, price: 0, skill: summonerFamiliarSkill },
         { type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

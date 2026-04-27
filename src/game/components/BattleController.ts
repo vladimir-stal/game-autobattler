@@ -88,6 +88,7 @@ export class BattleController {
 
     isBattleWin: boolean;
     currentActingUnitId?: string;
+    relevantTriggerUnitId?: string;
 
     constructor() {
         this.roundCount = 1;
@@ -621,23 +622,28 @@ export class BattleController {
         twiceAttackMods.sort((a, b) => b - a);
         //console.log("DEBUG: twice attacks: " + twiceAttackMods.join(", "));
 
+        let lastTargetId: string;
         if (twiceAttackMods.length > 0) {
             // get maximum twice attack mod (first index position)
             // and perform 2+addBaTimes attacks
-            for (let i = -2; i < additionalBaTimes; i++) this.basicAttack(unit, isPlayer1, twiceAttackMods[0]);
+            for (let i = -2; i < additionalBaTimes; i++) {
+                lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1, twiceAttackMods[0]);
+            }
             // perform 1 attack per rest twice attack mods (excluding max mod)
-            for (let j = 1; j < twiceAttackMods.length; j++) this.basicAttack(unit, isPlayer1, twiceAttackMods[j]);
+            for (let j = 1; j < twiceAttackMods.length; j++) {
+                lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1, twiceAttackMods[j]);
+            }
         } else {
-            this.basicAttack(unit, isPlayer1);
+            lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1);
             for (let i = 0; i < additionalBaTimes; i++) {
-                this.basicAttack(unit, isPlayer1);
+                lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1);
             }
         }
         // remove TILL_NEXT_BA buffs and debuffs
         this.removeBuffs(unit, EBuffTimeType.TILL_NEXT_BA);
         this.removeDebuffs(unit, EBuffTimeType.TILL_NEXT_BA);
         // triggers
-        triggerBattleTrigger(EAppTriggerType.BASIC_ATTACK, this, unit);
+        triggerBattleTrigger(EAppTriggerType.BASIC_ATTACK, this, unit, lastTargetId);
     }
 
     performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1195,8 +1201,9 @@ export class BattleController {
             case ETargetType.ALL_ALLIES:
                 newTargetType = ETargetType.ALL_ENEMIES;
                 break;
+            case ETargetType.LOW_PERCENT_ALLY:
             case ETargetType.LOW_HP_ALLY:
-                newTargetType = ETargetType.ALL_ENEMIES;
+                newTargetType = ETargetType.LOW_HP_ENEMY;
                 break;
             default:
                 newTargetType = ETargetType.FIRST_ENEMY;
@@ -1254,7 +1261,8 @@ export class BattleController {
             isStartBattle,
         });
 
-        triggerBattleTrigger(EAppTriggerType.SUMMON, this, unit);
+        triggerBattleTrigger(EAppTriggerType.SUMMON, this, unit, unit.summon.id);
+
         // this.listOfTriggers.forEach((bt) => {
         //     if (bt.type === EAppTriggerType.SUMMON && this.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1))
         //         checkBattleTriggerBuffDebuff(bt, this);
@@ -1483,6 +1491,10 @@ export class BattleController {
             const unitById = this.findUnitByUnitId(this.currentActingUnitId);
             return unitById ? [unitById] : null;
         }
+        if (targetType === ETargetType.BY_RELEVANT_ID && this.relevantTriggerUnitId) {
+            const unitById = this.findUnitByUnitId(this.relevantTriggerUnitId);
+            return unitById ? [unitById] : null;
+        }
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         if (targetType === ETargetType.EVERY_UNIT) {
@@ -1601,7 +1613,7 @@ export class BattleController {
     }
 
     /** Calculate basic attack damage from offensive buffs and debuffs and perform an attack */
-    basicAttack(unit: IBattleUnit, isPlayer1: boolean, attackPercent?: number) {
+    basicAttack(unit: IBattleUnit, isPlayer1: boolean, attackPercent?: number):string {
         const { attackTargetType, summon, buffs } = unit;
         //let finalUnit = unit;
         // if unit has a summon - summon attacks instead
@@ -1682,6 +1694,8 @@ export class BattleController {
             targets: [],
         };
         this.battleRecord.push(attackRecord);
+
+        let lastTargetId: string;
         //
         targets.forEach((target) => {
             // check if target has a summon - summon takes damage instead
@@ -1748,13 +1762,16 @@ export class BattleController {
             }
 
             // triggers
-            triggerBattleTrigger(EAppTriggerType.TAKE_ATTACK, this, finalTarget);
+            triggerBattleTrigger(EAppTriggerType.TAKE_ATTACK, this, finalTarget,unit.id);
             if (unit.hp <= 0) {
                 return;
             }
 
             //
             this.dealDamage(unit, finalTarget, attackDamage, unit.attackType, parentUnit, attackRecord);
+            if (finalTarget.hp > 0) {
+                lastTargetId = finalTarget.id;
+            }
 
             // apply statuses on basic attack
             //TODO: move out of targets.forEach
@@ -1781,6 +1798,7 @@ export class BattleController {
             this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
             this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
+        return lastTargetId;
     }
 
     /** Calculate final damage according to TARGET unit defense, buffs and debuffs */
@@ -1986,15 +2004,17 @@ export class BattleController {
                 unitId: target.id,
                 type: EBattleActionType.DEATH,
             });
+            triggerBattleTrigger(EAppTriggerType.DEATH, this, target);
             // if summon dies remove it from parent unit
             if (parentUnit) {
                 console.log("SUMMON is DED!", parentUnit.summon);
                 parentUnit.summon = undefined;
-            } else {
+            } /*else {
                 // triggers
                 // ~ summons do not trigger DEATH
+                // ~~> will be checked elsewhere
                 triggerBattleTrigger(EAppTriggerType.DEATH, this, target);
-            }
+            }*/
         }
     }
 

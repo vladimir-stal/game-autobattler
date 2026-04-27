@@ -313,9 +313,10 @@ export const SKILLS_EN = {
         },
         buffSummonCritSkill: {
             name: "Serious danger",
-            desc1: "Buff summon crit\nchance [5]+[20%xMP]",
-            desc2: "Buff summon crit\nchance [5]+[30%xMP]",
-            desc3: "Buff summon crit\nchance [5]+[50%xMP]",
+            //desc1: "Командное усиление призывов\nвесь бой шанс критических\nударов +[5+20%x(МС+ФС)]%\nи атаки вызывают кровотечение",
+            desc1: "Team-wide buff of summons\nfor the rest of battle\ncrit chance +[5+20%x(MP+PP)]%\nand attacks cause bleed",
+            desc2: "Team-wide buff of summons\nfor the rest of battle\ncrit chance +[7+30%x(MP+PP)]%\nand attacks cause bleed",
+            desc3: "Team-wide buff of summons\nfor the rest of battle\ncrit chance +[10+40%x(MP+PP)]%\nand attacks cause bleed",
         },
         buffTotalDmgSkill: {
             name: "Total damage",
@@ -356,7 +357,7 @@ export const SKILLS_EN = {
         stealPPorMPSkill: {
             name: "Steal power",
             desc1: "Steal [4] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
-            desc2: "Steal [8] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+            desc2: "Steal [7] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
             desc3: "Steal [12] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
         },
     },

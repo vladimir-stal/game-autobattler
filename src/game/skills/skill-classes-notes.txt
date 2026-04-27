@@ -1,0 +1,92 @@
+[Hero class themes]
+  (magic)
+Dark ~ Debuff, Poison, (?)Totem
+    + poison random
+    ~ magic multi random
+    + debuff next ba all
+    + steal mp or pp
+    ~ magic multi random better
+    ++ add poison, deal poison stacks atk
+    + remove buff (wild/dark)
+    + totem random poison (bard/dark)
+    + poison ba or summon's ba (summon/dark)
+Bard ~ Buff, (?)Totem
+    + buff party next ba
+    + buff self ba duel
+    + buff party pp
+    + buff front total dmg
+    ++ totem +armor most damaged ally
+    + buff front outgoing heal (bard/priest)
+    ~ totem random poison (bard/dark)
+    ~ magic attack and blind (bard/magic)
+    ? party buff next ba and armor (bard/mob)
+Priest ~ Burn, Heal
+    + heal self
+    + heal first
+    + heal low hp
+    + burn and boost mp (magic/priest)
+    + increase max hp (wild/priest)
+    + summon tanky and overheal damage (summon/priest)
+    + buff front outgoing heal (bard/priest)
+    + remove debuff (order/priest)
+Magic ~ Burn, Shock
+    ~ magic attack
+    + burn first
+    ~ magic attack all // tier 2
+    + apply shock // tier 2
+    ++ meteorite fall // tier 3
+    ? apply shock (magic/mob)
+    + burn and boost mp (magic/priest)
+    ~ magic attack and blind (bard/magic)
+    ~ buff pp or mp (warrior/magic)
+Summon ~ Shock, Summon
+    + summon [3,1]
+    + summon [2,3]
+    + increase summon ba
+    + increase summon armor
+    + summon [1,1] before battle
+    +++ buff explosive summons
+    + summon tanky [] and overheal damage (summon/priest)
+    + poison ba or summon's ba (summon/dark)
+    +++ buff all summons crit & bleed (master/summon)
+
+  (physical)
+Wild ~ Poison, Regen, Totem
+    ~ statuses into self heal
+    - physical attack plus bleed (wild/master)
+    + totem random attack
+    + increase regen
+    ~ decrease target armor
+    ~ remove buff (wild/dark)
+    + increase totem values
+    + increase max hp (wild/priest)
+    ? mass inrease regen (wild/mob)
+Master ~ Crit, Bleed, (?) Basic Attacks
+    + multiply next ba
+    ~ reduce ba gain armor
+    ~ physical attack (warrior/master)
+    + physical attack plus bleed (wild/master)
+    + buff self next ba crit
+    ~ forgo ba to riposte with ba
+    ~ 1 turn ignore armor
+    ~ cast next skill after next ba
+    - buff summon crit (master/summon)
+Warrior ~ Armor, Bleed
+    ~ buff next ba
+    ~ buff ba multistrike
+    ~ debuff enemy ba, physical vulnerability
+    ~ physical attack (warrior/master)
+    ~ reduce ba but aoe ba (warrior/order)
+    + physical attack from armor (warrior/order)
+    ? paired armor self & low hp ally (warrior/mob)
+    ~ buff pp or mp (warrior/magic)
+    ++ mortal strike // tier 3
+Order ~ Armor
+    + armor self
+    ~ increase ba duel
+    + armor self more
+    + armor party
+    ~ remove debuff (order/priest)
+    ~ reduce ba but aoe ba (warrior/order)
+    + physical attack from armor (warrior/order)
+    + statuses into self heal (wild/order)

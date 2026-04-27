@@ -1,12 +1,19 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
-import { i18n } from "../consts";
 import {
-    IMAGE_SKILL_BARD_BUFF_1,
-    IMAGE_SKILL_BARD_BUFF_2,
-    IMAGE_SKILL_KNIGHT_MAGIC,
-    IMAGE_SKILL_PRIEST_SCROLL,
-    IMAGE_SKILL_TEST,
-} from "../utils/load/skillImagesLoad";
+    EBuffTimeType,
+    EBuffType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../types";
+import { i18n } from "../consts";
+import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2, IMAGE_SKILL_BURNING_MAN, IMAGE_SKILL_KNIGHT_MAGIC, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { outHealBuffSkill } from "./commonSkill3Consts";
+import { blindingBeamSkill, toxicTuneSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA ALL
 
@@ -20,7 +27,6 @@ export const buffNextBaAll_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "+4 next ba all",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -45,7 +51,6 @@ export const buffNextBaAll_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "+3 next ba all",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -71,7 +76,6 @@ export const buffNextBaAll: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "+2 next ba all",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -99,7 +103,6 @@ export const buffBaSelf_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "buff self ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -124,7 +127,6 @@ export const buffBaSelf_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "buff self ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -150,7 +152,6 @@ export const buffBaSelf: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "buff self ba",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -179,7 +180,6 @@ export const buffPPAll_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "buff pp all",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -205,7 +205,6 @@ export const buffPPAll_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "buff pp all",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -232,7 +231,6 @@ export const buffPPAll: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "buff pp all",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -251,128 +249,141 @@ export const buffPPAll: IHeroSkillSet = {
 
 // TOTAL DAMAGE BUFF (LEVEL 3) /////////////////////////////////////////////////////////////////////////
 
+const buffTotalDmgSkillset = (base: number, mpScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Total dmg%",
+                targetType: ETargetType.ALLY_IN_FRONT,
+                timeType: EBuffTimeType.DUEL,
+                type: EBuffType.TOTAL_DAMAGE_INCREASE,
+                value: base,
+                valueType: "percent",
+                mpScale: mpScale,
+            },
+            condition: ESkillCondition.IN_BACK_ROW,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Total dmg%",
+                targetType: ETargetType.ALLY_BEHIND,
+                timeType: EBuffTimeType.DUEL,
+                type: EBuffType.TOTAL_DAMAGE_INCREASE,
+                value: base,
+                valueType: "percent",
+                mpScale: mpScale,
+            },
+            condition: ESkillCondition.IN_FRONT_ROW,
+        },
+    ];
+};
+
+export const buffTotalDmgSkill_3: IHeroSkillSet = {
+    id: "buffTotalDmgSkill",
+    name: i18n.skills.level3.buffTotalDmgSkill.name,
+    desc: i18n.skills.level3.buffTotalDmgSkill.desc2,
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD],
+    skills: buffTotalDmgSkillset(10, 100),
+    image: IMAGE_SKILL_TEST,
+};
+
 export const buffTotalDmgSkill_2: IHeroSkillSet = {
     id: "buffTotalDmgSkill",
     name: i18n.skills.level3.buffTotalDmgSkill.name,
     desc: i18n.skills.level3.buffTotalDmgSkill.desc2,
-    //name: "Total damage(2)",
-    //desc: "Buff total damage\n ([10]+[60%xMP])% ally in front",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.BARD],
-    skills: [
-        {
-            isBasicAttack: true,
-            type: EHeroSkillType.BUFF,
-            buff: {
-                name: "Total dmg",
-                targetType: ETargetType.ALLY_IN_FRONT,
-                timeType: EBuffTimeType.DUEL,
-                type: EBuffType.TOTAL_DAMAGE_INCREASE,
-                value: 10,
-                valueType: "percent",
-                mpScale: 60,
-            },
-        },
-    ],
-    //nextLevel: buffTotalDmgSkill_2,
+    skills: buffTotalDmgSkillset(10, 75),
+    nextLevel: buffTotalDmgSkill_3,
     image: IMAGE_SKILL_TEST,
 };
 
 export const buffTotalDmgSkill: IHeroSkillSet = {
     id: "buffTotalDmgSkill",
-    //name: "Total damage",
-    //desc: "Buff total damage\n([10]+[40%xMP])% ally in front",
     name: i18n.skills.level3.buffTotalDmgSkill.name,
     desc: i18n.skills.level3.buffTotalDmgSkill.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.BARD],
-    skills: [
-        {
-            isBasicAttack: true,
-            type: EHeroSkillType.BUFF,
-            buff: {
-                name: "Total dmg",
-                targetType: ETargetType.ALLY_IN_FRONT,
-                timeType: EBuffTimeType.DUEL,
-                type: EBuffType.TOTAL_DAMAGE_INCREASE,
-                value: 10,
-                valueType: "percent",
-                mpScale: 40,
-            },
-        },
-    ],
+    skills: buffTotalDmgSkillset(10, 50),
     nextLevel: buffTotalDmgSkill_2,
     image: IMAGE_SKILL_TEST,
 };
 
 //
+const totemGiveArmorSkillset = (amount: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.FORCE_TOTEM_ACTION,
+            targetType: ETargetType.SELF,
+            condition: ESkillCondition.HAS_TOTEM,
+        },
+        {
+            type: EHeroSkillType.TOTEM,
+            totem: {
+                id: "HeroicTune",
+                name: "Героический мотив",
+                skills: [
+                    {
+                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                        attribute: "armor",
+                        value: amount,
+                        valueType: "number",
+                        targetType: ETargetType.LOW_PERCENT_ALLY,
+                    },
+                ],
+            },
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+    ];
+};
 
-// OUTGOING HEAL BUFF (LEVEL 3) /////////////////////////////////////////////////////////////////////////
+export const totemGiveArmorSkill_3: IHeroSkillSet = {
+    id: "totemGiveArmorSkill",
+    name: "HeroicTune",
+    desc: "Призывает тотем который\nувеличивает броню героя\nс наименьшим процентом\nздоровья на [8]",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.BARD],
+    skills: totemGiveArmorSkillset(8),
+    image: IMAGE_SKILL_BURNING_MAN,
+    //nextLevel: totemGiveArmorSkill_2,
+};
 
-export const outHealBuffSkill_2: IHeroSkillSet = {
-    id: "buffTotalDmgSkill",
-    //name: i18n.skills.basic.shieldAttackSkill.name,
-    //desc: i18n.skills.basic.shieldAttackSkill.desc1,
-    //name: "Out heal(2)",
-    //desc: "Buff outgoing heal\n([10]+[60%xMP])% ally in front",
-    name: i18n.skills.level3.outHealBuffSkill.name,
-    desc: i18n.skills.level3.outHealBuffSkill.desc2,
+
+export const totemGiveArmorSkill_2: IHeroSkillSet = {
+    id: "totemGiveArmorSkill",
+    name: "HeroicTune",
+    desc: "Призывает тотем который\nувеличивает броню героя\nс наименьшим процентом\nздоровья на [5]",
     level: 2,
-    priceLevel: 3,
-    heroClasses: [EHeroClass.BARD, EHeroClass.PRIEST],
-    skills: [
-        {
-            isBasicAttack: true,
-            type: EHeroSkillType.BUFF,
-            buff: {
-                name: "Heal",
-                targetType: ETargetType.ALLY_IN_FRONT,
-                timeType: EBuffTimeType.DUEL,
-                type: EBuffType.OUTGOING_HEAL,
-                value: 10,
-                valueType: "percent",
-                mpScale: 60,
-            },
-        },
-    ],
-    // nextLevel: outHealBuffSkill_2,
-    image: IMAGE_SKILL_PRIEST_SCROLL,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.BARD],
+    skills: totemGiveArmorSkillset(5),
+    image: IMAGE_SKILL_BURNING_MAN,
+    nextLevel: totemGiveArmorSkill_3,
 };
 
-export const outHealBuffSkill: IHeroSkillSet = {
-    id: "outHealBuffSkill",
-    //name: "Out heal",
-    //desc: "Buff outgoing heal\n([10]+[40%xMP])% ally in front",
-    name: i18n.skills.level3.outHealBuffSkill.name,
-    desc: i18n.skills.level3.outHealBuffSkill.desc1,
+export const totemGiveArmorSkill: IHeroSkillSet = {
+    id: "totemGiveArmorSkill",
+    name: "HeroicTune",
+    desc: "Призывает тотем который\nувеличивает броню героя\nс наименьшим процентом\nздоровья на [3]",
     level: 1,
-    priceLevel: 3,
-    heroClasses: [EHeroClass.BARD, EHeroClass.PRIEST],
-    skills: [
-        {
-            isBasicAttack: false,
-            type: EHeroSkillType.BUFF,
-            buff: {
-                name: "Heal",
-                targetType: ETargetType.ALLY_IN_FRONT,
-                timeType: EBuffTimeType.DUEL,
-                type: EBuffType.OUTGOING_HEAL,
-                value: 10,
-                valueType: "percent",
-                mpScale: 40,
-            },
-        },
-    ],
-    nextLevel: outHealBuffSkill_2,
-    image: IMAGE_SKILL_PRIEST_SCROLL,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.BARD],
+    skills: totemGiveArmorSkillset(3),
+    image: IMAGE_SKILL_BURNING_MAN,
+    nextLevel: totemGiveArmorSkill_2,
 };
-
-//
 
 export const bardSkills: THeroSkills = [buffNextBaAll, buffBaSelf];
 
-export const bardSkills_2: THeroSkills = bardSkills.concat([buffPPAll]);
+export const bardSkills_2: THeroSkills = bardSkills.concat([buffPPAll, totemGiveArmorSkill, toxicTuneSkill, blindingBeamSkill]);
 
 export const bardSkills_3: THeroSkills = bardSkills_2.concat([outHealBuffSkill, buffTotalDmgSkill]);
+
+// + mob drop skill: goldGoblinBuff

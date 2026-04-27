@@ -133,7 +133,7 @@ export const skeletonArmorSelfAndLow: IHeroSkillSet = {
             attribute: "armor",
             value: 4,
             valueType: "number",
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             ppScale: 20,
         },
         {

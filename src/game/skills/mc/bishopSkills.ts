@@ -12,7 +12,7 @@ const bishopSkillset = (heal: number, mpScale: number, repeats: number): IHeroSk
                 type: EHeroSkillType.HEAL,
                 value: heal,
                 valueType: "number",
-                targetType: ETargetType.LOW_HP_ALLY,
+                targetType: ETargetType.LOW_PERCENT_ALLY,
                 mpScale: mpScale,
             },
         },

@@ -13,6 +13,7 @@ import {
 import { i18n } from "../consts";
 import { IMAGE_SKILL_BURN, IMAGE_SKILL_DRAGON_FIRE, IMAGE_SKILL_LIGHTNING, IMAGE_SKILL_SHOCK_HAND } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP } from "./commonSkill3Consts";
+import { blindingBeamSkill, heatUpSkill } from "./commonSkillConsts";
 
 // MAGIC ATTACK
 
@@ -286,9 +287,12 @@ export const applyShock: IHeroSkillSet = {
     nextLevel: applyShock_2,
 };
 
+// meteorite fall
+//   buff round_cycle trigger 1-3 times : aoe magic damage+burn
+
 //
 export const magicSkills: THeroSkills = [magicAttack, applyBurn];
 
-export const magicSkills_2: THeroSkills = magicSkills.concat([magicAttackAll, applyShock]);
+export const magicSkills_2: THeroSkills = magicSkills.concat([magicAttackAll, applyShock, heatUpSkill, blindingBeamSkill]);
 
 export const magicSkills_3: THeroSkills = magicSkills_2.concat([buffSelfMPorPP]);

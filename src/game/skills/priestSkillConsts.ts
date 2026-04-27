@@ -1,9 +1,9 @@
 import { EEffectAnimationType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_HEAL_1, IMAGE_SKILL_HEAL_2 } from "../utils/load/skillImagesLoad";
-import { outHealBuffSkill } from "./bardSkillConsts";
+import { outHealBuffSkill } from "./commonSkill3Consts";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
-import { removeDebuffSkill } from "./commonSkillConsts";
+import { heatUpSkill, radiantWallSkill, removeDebuffSkill } from "./commonSkillConsts";
 
 // HEAL SELF
 
@@ -160,7 +160,7 @@ export const healLowHpSkill_3: IHeroSkillSet = {
             type: EHeroSkillType.HEAL,
             isBasicAttack: true,
             value: 5,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 100,
         },
     ],
@@ -181,7 +181,7 @@ export const healLowHpSkill_2: IHeroSkillSet = {
             type: EHeroSkillType.HEAL,
             isBasicAttack: true,
             value: 5,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 75,
         },
     ],
@@ -203,7 +203,7 @@ export const healLowHpSkill: IHeroSkillSet = {
             type: EHeroSkillType.HEAL,
             isBasicAttack: true,
             value: 5,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 50,
         },
     ],
@@ -215,6 +215,6 @@ export const healLowHpSkill: IHeroSkillSet = {
 
 export const priestSkills: THeroSkills = [healSelf, healFirst];
 
-export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill, removeDebuffSkill]);
+export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill, removeDebuffSkill, radiantWallSkill, heatUpSkill]);
 
 export const priestSkills_3: THeroSkills = priestSkills_2.concat([outHealBuffSkill, increaseMaxHpSkill]);

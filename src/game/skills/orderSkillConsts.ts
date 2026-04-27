@@ -3,7 +3,7 @@ import { i18n } from "../consts";
 import { removeDebuff } from "../utils/battleUtils";
 import { IMAGE_SKILL_BATTLE, IMAGE_SKILL_KNIGHT, IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { shieldAttackSkill } from "./commonSkill3Consts";
-import { removeDebuffSkill } from "./commonSkillConsts";
+import { nextBAArea, removeDebuffSkill, statusesIntoHeal } from "./commonSkillConsts";
 
 // INCREASE ATTR ARMOR SELF SKILL
 
@@ -286,6 +286,6 @@ export const attrArmorBigSelf: IHeroSkillSet = {
 
 export const orderSkills: THeroSkills = [attrArmorSelf, attrAttackSelf];
 
-export const orderSkills_2: THeroSkills = orderSkills.concat([attrArmorAll, removeDebuffSkill]);
+export const orderSkills_2: THeroSkills = orderSkills.concat([attrArmorAll, removeDebuffSkill, statusesIntoHeal, nextBAArea]);
 
 export const orderSkills_3: THeroSkills = orderSkills_2.concat([attrArmorBigSelf, shieldAttackSkill]);

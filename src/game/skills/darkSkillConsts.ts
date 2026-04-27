@@ -9,6 +9,7 @@ import {
     ESkillCondition,
     EStatusType,
     ETargetType,
+    IHeroSkill,
     IHeroSkillSet,
     THeroSkills,
 } from "../../types";
@@ -20,7 +21,7 @@ import {
     IMAGE_SKILL_MAGIC_MISSILES,
     IMAGE_SKILL_POISON,
 } from "../utils/load/skillImagesLoad";
-import { removeBuffSkill } from "./commonSkillConsts";
+import { removeBuffSkill, toxicTuneSkill, venomHeartSkill } from "./commonSkillConsts";
 
 // DEBUFF NEXT BA
 
@@ -122,7 +123,6 @@ export const poisonRandom_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
             status: EStatusType.POISON,
             value: 9,
             targetType: ETargetType.RANDOM_ENEMY,
@@ -141,7 +141,6 @@ export const poisonRandom_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
             status: EStatusType.POISON,
             value: 5,
             targetType: ETargetType.RANDOM_ENEMY,
@@ -161,7 +160,6 @@ export const poisonRandom: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
             status: EStatusType.POISON,
             value: 3,
             targetType: ETargetType.RANDOM_ENEMY,
@@ -274,6 +272,44 @@ export const magicAttackX3: IHeroSkillSet = {
 // STEAL MP/PP - Steal MP,PP from highest MP or PP enemy, depending of your highest attr
 //
 
+const stealPPorMPSkillset = (amount: number): IHeroSkill[] => {
+    return [
+        {
+            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "magicPower",
+            value: amount,
+            valueType: "number",
+            targetType: ETargetType.HIGH_MP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "magicPower",
+            value: amount,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+        //
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "physicalPower",
+            value: amount,
+            valueType: "number",
+            targetType: ETargetType.HIGH_PP_ENEMY,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "physicalPower",
+            value: amount,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+    ]
+}
+
 export const stealPPorMPSkill_3: IHeroSkillSet = {
     id: "stealPPorMPSkill",
     name: i18n.skills.level3.stealPPorMPSkill.name,
@@ -283,45 +319,7 @@ export const stealPPorMPSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
-    skills: [
-        {
-            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            attribute: "magicPower",
-            value: 12,
-            valueType: "number",
-            targetType: ETargetType.HIGH_MP_ENEMY,
-        },
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: true,
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            attribute: "magicPower",
-            value: 12,
-            valueType: "number",
-            targetType: ETargetType.SELF,
-        },
-        //
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            attribute: "physicalPower",
-            value: 12,
-            valueType: "number",
-            targetType: ETargetType.HIGH_PP_ENEMY,
-        },
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: true,
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            attribute: "physicalPower",
-            value: 12,
-            valueType: "number",
-            targetType: ETargetType.SELF,
-        },
-    ],
+    skills: stealPPorMPSkillset(12),
     image: IMAGE_SKILL_DARK_22,
 };
 
@@ -334,45 +332,7 @@ export const stealPPorMPSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
-    skills: [
-        {
-            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            attribute: "magicPower",
-            value: 8,
-            valueType: "number",
-            targetType: ETargetType.HIGH_MP_ENEMY,
-        },
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: true,
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            attribute: "magicPower",
-            value: 8,
-            valueType: "number",
-            targetType: ETargetType.SELF,
-        },
-        //
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            attribute: "physicalPower",
-            value: 8,
-            valueType: "number",
-            targetType: ETargetType.HIGH_PP_ENEMY,
-        },
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: true,
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            attribute: "physicalPower",
-            value: 8,
-            valueType: "number",
-            targetType: ETargetType.SELF,
-        },
-    ],
+    skills: stealPPorMPSkillset(7),
     image: IMAGE_SKILL_DARK_22,
     nextLevel: stealPPorMPSkill_3,
 };
@@ -386,45 +346,7 @@ export const stealPPorMPSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.DARK],
-    skills: [
-        {
-            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            attribute: "magicPower",
-            value: 4,
-            valueType: "number",
-            targetType: ETargetType.HIGH_MP_ENEMY,
-        },
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: true,
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            attribute: "magicPower",
-            value: 4,
-            valueType: "number",
-            targetType: ETargetType.SELF,
-        },
-        //
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: false,
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            attribute: "physicalPower",
-            value: 4,
-            valueType: "number",
-            targetType: ETargetType.HIGH_PP_ENEMY,
-        },
-        {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
-            isBasicAttack: true,
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            attribute: "physicalPower",
-            value: 4,
-            valueType: "number",
-            targetType: ETargetType.SELF,
-        },
-    ],
+    skills: stealPPorMPSkillset(4),
     image: IMAGE_SKILL_DARK_22,
     nextLevel: stealPPorMPSkill_2,
 };
@@ -514,7 +436,6 @@ export const magicRain: IHeroSkillSet = {
             animation: AnimationType.UNIT_ATTACK,
             mpScale: 40,
             childSkill: {
-                isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
                 value: 2,
                 targetType: ETargetType.RANDOM_ENEMY,
@@ -531,8 +452,70 @@ export const magicRain: IHeroSkillSet = {
     animation: AnimationType.UNIT_ATTACK,
 };
 
+const concentrateThePoisonSkillset = (mpScale:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            targetType: ETargetType.HIGH_POISON_ENEMY,
+            status: EStatusType.POISON,
+            value: 0,
+            mpScale: mpScale,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.HIGH_POISON_ENEMY,
+            status: EStatusType.POISON,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTACK,
+            targetType: ETargetType.HIGH_POISON_ENEMY,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            attackType: EHeroAttackType.MAGIC,
+            animation: AnimationType.NONE,
+        },
+    ];
+}
+
+export const concentrateThePoisonSkill_3: IHeroSkillSet = {
+    id: "concentrateThePoison",
+    name: "Amplify poison",
+    desc: "Apply +[75%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    skills: concentrateThePoisonSkillset(75),
+    image: IMAGE_SKILL_POISON,
+};
+
+export const concentrateThePoisonSkill_2: IHeroSkillSet = {
+    id: "concentrateThePoison",
+    name: "Amplify poison",
+    desc: "Apply +[65%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    skills: concentrateThePoisonSkillset(65),
+    nextLevel: concentrateThePoisonSkill_3,
+    image: IMAGE_SKILL_POISON,
+};
+
+export const concentrateThePoisonSkill: IHeroSkillSet = {
+    id: "concentrateThePoison",
+    name: "Amplify poison",
+    desc: "Apply +[50%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    skills: concentrateThePoisonSkillset(50),
+    nextLevel: concentrateThePoisonSkill_2,
+    image: IMAGE_SKILL_POISON,
+};
+
 export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];
 
-export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, removeBuffSkill]);
+export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, concentrateThePoisonSkill, removeBuffSkill, toxicTuneSkill, venomHeartSkill]);
 
 export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill, magicRain]);

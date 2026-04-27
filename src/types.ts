@@ -648,10 +648,10 @@ export enum ETargetType {
     ALLY_IN_FRONT = "ALLY_IN_FRONT", // ally who stands in front of caster
     ALLY_BEHIND = "ALLY_BEHIND", // ally who stands behind the caster
     BUFFED_ALLY_RANDOM = "BUFFED_ALLY_RANDOM", // random ally with a buff
-    CUSTOM = "CUSTOM",
     DEBUFFED_ALLY_RANDOM = "DEBUFFED_ALLY_RANDOM", // random ally with a debuff
     FIRST_ALLY = "FIRST_ALLY",
     LOW_HP_ALLY = "LOW_HP_ALLY",
+    LOW_PERCENT_ALLY = "LOW_PERCENT_ALLY",
     RANDOM_ALLY = "RANDOM_ALLY",
     HIGH_MP_ALLY = "HIGH_MP_ALLY",
     HIGH_PP_ALLY = "HIGH_PP_ALLY",
@@ -666,9 +666,11 @@ export enum ETargetType {
     FIRST_THREE_ENEMIES = "FIRST_THREE_ENEMIES",
     HIGH_ATTACK_ENEMY = "HIGH_ATTACK_ENEMY",
     HIGH_BLEED_ENEMY = "HIGH_BLEED_ENEMY",
+    HIGH_POISON_ENEMY = "HIGH_POISON_ENEMY",
     HIGH_MP_ENEMY = "HIGH_MP_ENEMY",
     HIGH_PP_ENEMY = "HIGH_PP_ENEMY",
     LOW_HP_ENEMY = "LOW_HP_ENEMY",
+    LOW_PERCENT_ENEMY = "LOW_PERCENT_ENEMY",
     MARKED_ENEMY = "MARKED_ENEMY",
     ALL_MARKED_ENEMIES = "ALL_MARKED_ENEMIES",
     RANDOM_ENEMY = "RANDOM_ENEMY",
@@ -680,6 +682,8 @@ export enum ETargetType {
     BY_UNIT_ID = "BY_UNIT_ID",
     EVERY_UNIT = "EVERY_UNIT",
     ANCHOR_TARGET = "ANCHOR_TARGET",
+    BY_RELEVANT_ID = "BY_RELEVANT_ID", // triggerBattleTrigger() ~ relevantUnitId parameter
+    CUSTOM = "CUSTOM",
 }
 
 export enum EWeaponType {
