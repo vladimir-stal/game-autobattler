@@ -495,7 +495,7 @@ export class BattleController {
             takeStatusDamage(unit, value, type, this.battleRecord);
         });
         // totem
-        this.performTotemActionSkill(totem, unit, isPlayer1);
+        totem && this.performTotemActionSkill(totem, unit, isPlayer1);
     }
 
     performTotemActionSkill(totem: ITotem, unit: IBattleUnit, isPlayer1: boolean) {
@@ -569,7 +569,7 @@ export class BattleController {
                 this.performRewind(unit, skill, isPlayer1, isStartBattle);
                 break;
             case EHeroSkillType.COPY_UNIT_CAST_SKILL:
-                this.performCastAnotherUnitSkill(unit,skill,isPlayer1,true,isStartBattle);
+                this.performCastAnotherUnitSkill(unit, skill, isPlayer1, true, isStartBattle);
                 break;
             case EHeroSkillType.REPEATING_SKILL:
                 if (skill.childSkill) {
@@ -716,8 +716,7 @@ export class BattleController {
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
-
-        if ((!value && (mpScaleValue+ppScaleValue === 0)) || !valueType || !attribute || !targetType) {
+        if ((!value && mpScaleValue + ppScaleValue === 0) || !valueType || !attribute || !targetType) {
             console.log("performAttrIncrease RETURN 1");
             return;
         }
@@ -741,7 +740,7 @@ export class BattleController {
 
         targets.forEach((target) => {
             //console.log("INCR ATTR TARGET", attribute, target);
-            const increaseValue = calculateIncreaseValue(target[attribute], (value || 0), valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
+            const increaseValue = calculateIncreaseValue(target[attribute], value || 0, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
 
             target[attribute] += increaseValue;
             //console.log(">>>>", increaseValue, target[attribute]);
@@ -1263,9 +1262,13 @@ export class BattleController {
     }
 
     performRewind(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+        if (!skill.targetType) {
+            return;
+        }
+
         const targets = this.getTargetsSimple(unit, skill.targetType, isPlayer1);
         const steps = skill.value || 1;
-        targets.forEach((target) => {
+        targets?.forEach((target) => {
             if (target) {
                 for (let i = 0; i < steps; i++) {
                     target.currentSkillIndex--;
@@ -1278,7 +1281,15 @@ export class BattleController {
     }
 
     performRemoveSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+        if (!skill.targetType) {
+            return;
+        }
+
         const targetList = this.getTargetsSimple(unit, skill.targetType, isPlayer1);
+        if (!targetList) {
+            return;
+        }
+
         for (let i = 0; i < (skill.value || 1); i++) {
             const target = getTargetWithSummon(targetList);
             if (target) {
@@ -1400,7 +1411,7 @@ export class BattleController {
             return;
         }
         targets.forEach((target) => {
-            const sksIndex = (value || -4) >= 0 ? value : (4 + target.currentSkillIndex + (value || -4)) % 4;
+            const sksIndex = ((value || -4) >= 0 ? value : (4 + target.currentSkillIndex + (value || -4)) % 4) || 0;
             if (sksIndex >= 0 && sksIndex <= 3 && !!target.skills[sksIndex]) {
                 skillSetList.push(target.skills[sksIndex]);
             }
@@ -1415,10 +1426,11 @@ export class BattleController {
         } else {
             console.log("performCastAnotherUnitSkill > EMPTY RESULING SKILLSET LIST");
             if (skill.childSkill) {
-                this.performSkill(unit,skill.childSkill,isPlayer1,isStartBattle);
+                this.performSkill(unit, skill.childSkill, isPlayer1, isStartBattle);
             }
         }
     }
+
     performForceOutOfTurnAction(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isCastSkill: boolean, isStartBattle?: boolean) {
         const { targetType } = skill;
         if (!targetType) {
@@ -1437,6 +1449,7 @@ export class BattleController {
             else this.performBasicAttack(target, undefined, isPlayer1);
         });
     }
+
     performForceOutOfTurnTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType } = skill;
         if (!targetType) {
@@ -1451,11 +1464,11 @@ export class BattleController {
         }
 
         targets.forEach((target) => {
-            this.performTotemActionSkill(target.totem, target, isPlayer1);
+            target.totem && this.performTotemActionSkill(target.totem, target, isPlayer1);
         });
     }
 
-    findUnitByUnitId(unitId: string): IBattleUnit {
+    findUnitByUnitId(unitId: string): IBattleUnit | undefined {
         const allUnits = [...this.player1BattleUnits, ...this.player2BattleUnits].filter((unit) => !!unit);
         const allSummons: IBattleUnit[] = allUnits
             .map((unit) => {
@@ -1466,7 +1479,7 @@ export class BattleController {
     }
 
     getTargetsSimple(unit: IBattleUnit, targetType: ETargetType, isPlayer1?: boolean, debuffType?: EDebuffType): IBattleUnit[] | null {
-        if (targetType === ETargetType.BY_UNIT_ID) {
+        if (targetType === ETargetType.BY_UNIT_ID && this.currentActingUnitId) {
             const unitById = this.findUnitByUnitId(this.currentActingUnitId);
             return unitById ? [unitById] : null;
         }
@@ -1506,7 +1519,7 @@ export class BattleController {
 
         if (skill.childSkill) {
             targets.forEach((t) => {
-                if (checkSkillCondition(t, skill.childSkill.condition)) {
+                if (skill.childSkill?.condition && checkSkillCondition(t, skill.childSkill.condition)) {
                     unit.customNumber++;
                 }
             });
@@ -1581,10 +1594,10 @@ export class BattleController {
         if (!skillSet || skillSet.isBasicAttack) {
             // if there is no skill for the round perform basic attack
             this.performBasicAttack(summonUnit, undefined, isPlayer1);
-             // remove TILL_NEXT_BA buffs and debuffs
+            // remove TILL_NEXT_BA buffs and debuffs
             this.removeBuffs(summonUnit, EBuffTimeType.TILL_NEXT_BA);
             this.removeDebuffs(summonUnit, EBuffTimeType.TILL_NEXT_BA);
-        }       
+        }
     }
 
     /** Calculate basic attack damage from offensive buffs and debuffs and perform an attack */

@@ -394,8 +394,12 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             return markedTarget ? [markedTarget] : null;
         }
         case ETargetType.ALL_MARKED_ENEMIES: {
-            if (!debuffType) return [];
-            else return units.filter((unit) => isAliveUnit(unit) && unit.debuffs.some((d) => d.type === debuffType));
+            if (!debuffType) {
+                return [];
+            }
+
+            const result = units.filter((unit) => isAliveUnit(unit) && unit.debuffs.some((d) => d.type === debuffType)).filter((unit) => !!unit);
+            return result;
         }
         case ETargetType.RANDOM_ENEMY: {
             const randomTarget = getRandomTarget(units);
@@ -1353,7 +1357,7 @@ export const dealOverhealDamage = (
     unit: IBattleUnit,
     unitId4record: string,
     skill: IHeroSkill,
-    opponentUnits: IBattleUnit[],
+    opponentUnits: (IBattleUnit | null)[],
     battleController: BattleController,
 ) => {
     // overheal managing

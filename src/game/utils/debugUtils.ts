@@ -16,6 +16,7 @@ import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
+import { wolfUnit } from "../units/wolfsMobUnits";
 import { dagger31 } from "../weaponItem3Consts";
 
 export const debugHeroSelectRoom = true;
@@ -34,7 +35,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: mimicHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: wolfUnit }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
