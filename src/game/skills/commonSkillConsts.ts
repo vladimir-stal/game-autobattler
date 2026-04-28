@@ -7,6 +7,7 @@ import {
     EHeroClass,
     EHeroSkillType,
     ESkillCondition,
+    ESkillSetType,
     EStatusType,
     ETargetType,
     EUnitType,
@@ -31,6 +32,7 @@ import {
 import { skillsetSummon } from "../utils/skillUtils2";
 import { outHealBuffSkill } from "./commonSkill3Consts";
 import { buffSelfMPorPP, buffSummonCritSkill, increaseMaxHpSkill, shieldAttackSkill } from "./commonSkill3Consts";
+import { radiantWallNoAttackButArmorSkill } from "./mobSkills";
 
 ////////////// COMMON SKILLS FOR MULTPLE BASIC CLASSES //////////////////////////////////////////////////////////////////////
 
@@ -192,6 +194,7 @@ export const attackWithBleedSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
+    type: ESkillSetType.PHYSICAL_ATTACK,
     skills: [
         {
             type: EHeroSkillType.STATUS_APPLY,
@@ -218,6 +221,7 @@ export const attackWithBleedSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
+    type: ESkillSetType.PHYSICAL_ATTACK,
     skills: [
         {
             type: EHeroSkillType.STATUS_APPLY,
@@ -245,6 +249,7 @@ export const attackWithBleedSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
+    type: ESkillSetType.PHYSICAL_ATTACK,
     skills: [
         {
             type: EHeroSkillType.STATUS_APPLY,
@@ -274,6 +279,7 @@ export const phycisalAttackSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
+    type: ESkillSetType.PHYSICAL_ATTACK,
     skills: [
         {
             type: EHeroSkillType.ATTACK,
@@ -293,6 +299,7 @@ export const phycisalAttackSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
+    type: ESkillSetType.PHYSICAL_ATTACK,
     skills: [
         {
             type: EHeroSkillType.ATTACK,
@@ -313,6 +320,7 @@ export const phycisalAttackSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
+    type: ESkillSetType.PHYSICAL_ATTACK,
     skills: [
         {
             type: EHeroSkillType.ATTACK,
@@ -582,6 +590,7 @@ export const heatUpSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
+    type: ESkillSetType.MAGIC_ATTACK,
     skills: heatUpSkillSet(3, 4, 100),
     image: IMAGE_SKILL_BURNING_MAN,
 };
@@ -593,6 +602,7 @@ export const heatUpSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
+    type: ESkillSetType.MAGIC_ATTACK,
     skills: heatUpSkillSet(2, 3, 100),
     nextLevel: heatUpSkill_3,
     image: IMAGE_SKILL_BURNING_MAN,
@@ -605,6 +615,7 @@ export const heatUpSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC, EHeroClass.PRIEST],
+    type: ESkillSetType.MAGIC_ATTACK,
     skills: heatUpSkillSet(1, 2, 100),
     nextLevel: heatUpSkill_2,
     image: IMAGE_SKILL_BURNING_MAN,
@@ -815,6 +826,7 @@ export const blindingBeamSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
     skills: blindingBeamSkillSet(3, 55, 150),
     image: IMAGE_SKILL_YELLOW_CROWN,
 };
@@ -826,6 +838,7 @@ export const blindingBeamSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
     skills: blindingBeamSkillSet(2, 45, 135),
     nextLevel: blindingBeamSkill_3,
     image: IMAGE_SKILL_YELLOW_CROWN,
@@ -838,6 +851,7 @@ export const blindingBeamSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.BARD, EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
     skills: blindingBeamSkillSet(1, 35, 100),
     nextLevel: blindingBeamSkill_2,
     image: IMAGE_SKILL_YELLOW_CROWN,
@@ -863,14 +877,14 @@ const radiantWallSummon = (hp: number, level: number): IUnit => {
         basicPhysicalPower: 0,
         name: "Radiant wall",
         id: "RADIANTSUMMON",
-        skills: [],
+        skills: [radiantWallNoAttackButArmorSkill,radiantWallNoAttackButArmorSkill,radiantWallNoAttackButArmorSkill,radiantWallNoAttackButArmorSkill],
         items: [],
         level: level,
         exp: 0,
     };
 };
 
-const selfBuffOverheal = (duration: number): IHeroSkill => {
+export const selfBuffOverheal = (duration: number, status?: EStatusType): IHeroSkill => {
     return {
         type: EHeroSkillType.BUFF,
         buff: {
@@ -881,6 +895,7 @@ const selfBuffOverheal = (duration: number): IHeroSkill => {
             type: EBuffType.OVERHEAL_TO_DAMAGE,
             value: 1,
             changeTargetTypeTo: ETargetType.FIRST_ENEMY,
+            statusType: status,
         },
     };
 };

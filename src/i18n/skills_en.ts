@@ -110,15 +110,15 @@ export const SKILLS_EN = {
         //
         healFirst: {
             name: "Heal first",
-            desc1: "Heal [3 +35% MP] first ally",
-            desc2: "Heal [5 +50% MP] first ally",
-            desc3: "Heal [7 +65% MP] first ally",
+            desc1: "Heal [3] first ally",
+            desc2: "Heal [5+35%xMP] first ally",
+            desc3: "Heal [7+50%xMP] first ally",
         },
         healSelf: {
             name: "Heal self",
-            desc3: "Heal [8 +65% MP] self",
-            desc2: "Heal [6 +50% MP] self",
-            desc1: "Heal [4 +35% MP] self",
+            desc3: "Heal [9+50%xMP] self",
+            desc2: "Heal [6+35%xMP] self",
+            desc1: "Heal [4] self",
         },
         //
         // SUMMON
@@ -207,9 +207,9 @@ export const SKILLS_EN = {
         //
         radiantWallSkill: {
             name: "Radiant wall",
-            desc1: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
-            desc2: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
-            desc3: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
+            desc1: "Summons defender [stats]\nand for 2 turns\noverheals deal damage\nto front enemy. Defender\ndoes not attack but\nget armor for 50% of attack",
+            desc2: "Summons defender [stats]\nand for 2 turns\noverheals deal damage\nto front enemy. Defender\ndoes not attack but\nget armor for 50% of attack",
+            desc3: "Summons defender [stats]\nand for 2 turns\noverheals deal damage\nto front enemy. Defender\ndoes not attack but\nget armor for 50% of attack",
         },
     },
     level2: {

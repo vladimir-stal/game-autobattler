@@ -196,6 +196,27 @@ export const mobNoSkill: IHeroSkillSet = {
     ],
 };
 
+export const radiantWallNoAttackButArmorSkill: IHeroSkillSet = {
+    id: "radiantWallNoAttackButArmor",
+    name: "Butt armor",
+    desc: "Convert 50% base attack into armor",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MOB],
+    isBasicAttack: false,
+    isMcSkill: true,
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "armor",
+            targetType: ETargetType.SELF,
+            value: 50,
+            valueType: "percent",
+            valueFrom: "attack",
+        },
+    ],
+};
+
 export const goldGoblinBuff: IHeroSkillSet = {
     id: "goldGoblinBuff",
     name: i18n.skills.basic.buffBaNextBaAll.name,

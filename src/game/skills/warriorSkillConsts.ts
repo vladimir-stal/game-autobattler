@@ -292,6 +292,7 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:numbe
                 value: 1,
                 appTrigger: {
                     limitedRepeats: true,
+                    type: EAppTriggerType.BASIC_ATTACK,                    
                     skillId: "Mortal strike",
                     skill: [
                         {
@@ -343,12 +344,37 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:numbe
                             animation: AnimationType.NONE,
                         },
                     ],
-                    type: EAppTriggerType.BASIC_ATTACK,
                 }
             }
         }
     ]
 }
+
+export const mortalStrikeSkill_3: IHeroSkillSet = {
+    id: "mortalStrikeSkill",
+    name: "Mortal strike",
+    desc: "Next BA apply [8] bleed and physical vulnerability, reduce targets PP & MP by [11] for 3 turns",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: mortalStrikeSkillset(8,11,3),
+    image: IMAGE_SKILL_AXE_BUFF,
+    //nextLevel: mortalStrikeSkill_2, // next level > (5,7,3) > (8,11,3)
+};
+
+export const mortalStrikeSkill_2: IHeroSkillSet = {
+    id: "mortalStrikeSkill",
+    name: "Mortal strike",
+    desc: "Next BA apply [5] bleed and physical vulnerability, reduce targets PP & MP by [7] for 3 turns",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: mortalStrikeSkillset(5,7,3),
+    image: IMAGE_SKILL_AXE_BUFF,
+    //nextLevel: mortalStrikeSkill_3, // next level > (5,7,3) > (8,11,3)
+};
 
 export const mortalStrikeSkill: IHeroSkillSet = {
     id: "mortalStrikeSkill",

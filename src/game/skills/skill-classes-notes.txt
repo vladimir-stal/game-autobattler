@@ -23,7 +23,8 @@ Bard ~ Buff, (?)Totem
 Priest ~ Burn, Heal
     + heal self
     + heal first
-    + heal low hp
+    + heal low hp // tier 2
+    ++ ring of healing // tier 3
     + burn and boost mp (magic/priest)
     + increase max hp (wild/priest)
     + summon tanky and overheal damage (summon/priest)

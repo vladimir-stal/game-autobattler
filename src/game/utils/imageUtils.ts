@@ -93,6 +93,7 @@ export interface IAnimations {
     distance?: number;
     distanceEnemy?: number;
     attackAnimDisance?: number;
+    tint?: number; // ? 0xff0000
 }
 
 export function getHeroImage(heroClass: EHeroClass): IAnimations {
@@ -151,6 +152,9 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 attackEnemyAnimDelay: 700,
                 attackEnemyAnimDistance: { x: 20, y: 50 },
                 attackEnemyAnimDistanceInverted: { x: 250, y: 50 },
+                //
+                //test
+                //tint: 0x00ff00,
             };
         case EHeroClass.MASTER:
             return {
@@ -452,6 +456,18 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
                 idleBattleAnimation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
+            };
+        }
+        case "RADIANTSUMMON": {
+            return {
+                size: 400,
+                distance: -30,
+                distanceEnemy: -10,
+                image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
+                buffAnimation: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
+                tint: 0xEEEE00,
             };
         }
         case "PEASANT":

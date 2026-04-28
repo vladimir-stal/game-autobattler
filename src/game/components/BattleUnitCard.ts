@@ -80,6 +80,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     size: number | undefined;
     distance: number | undefined;
     attackAnimDisance: number | undefined;
+    tint: number | undefined;
 
     isDead: boolean;
 
@@ -150,6 +151,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             distanceEnemy,
             size,
             attackAnimDisance,
+            tint,
         } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(id);
         this.unitImage = imageBattle || image;
         if (GAME_MODE === "FULL" || unitType === EUnitType.UNIT || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
@@ -174,8 +176,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             .setOrigin(0, 1)
             //.setDisplaySize(displaySize, displaySize)
             .setFlipX(this.isInverted)
-            .setDepth(100);
-
+            .setDepth(100)
+            .setTint(tint,tint,tint,tint);
+        if (tint) {
+            this.tint = tint;
+        }
         if (this.size) {
             this.unitImageObject.setDisplaySize(this.size, this.size);
         }
@@ -487,6 +492,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 return;
             }
 
+            if (!!this.tint) {
+                this.unitImageObject.setTint(this.tint)
+            }
             this.unitImageObject.anims.play(animationType);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 //console.log(">> ANIMATION_COMPLETE attach Animation");

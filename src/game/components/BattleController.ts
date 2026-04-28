@@ -272,7 +272,7 @@ export class BattleController {
     }
 
     performTriggerAction(bt: IBattleTrigger, at: IAppTrigger, bfodbf: IBuffOrDebuff) {
-        console.log("-= Perform Trigger Action =-", bt, at);
+        console.log("-= Perform Trigger Action =-", bt, at, this.relevantTriggerUnitId);
         if (isTriggerReady(at)) {
             const triggerBattleAction: IBattleAction = {
                 unitId: bt.originBattleUnit.id,
@@ -639,11 +639,12 @@ export class BattleController {
                 lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1);
             }
         }
+        // triggers
+        //console.log("performBasicAttack",unit.id,">",lastTargetId);
+        triggerBattleTrigger(EAppTriggerType.BASIC_ATTACK, this, unit, lastTargetId);
         // remove TILL_NEXT_BA buffs and debuffs
         this.removeBuffs(unit, EBuffTimeType.TILL_NEXT_BA);
         this.removeDebuffs(unit, EBuffTimeType.TILL_NEXT_BA);
-        // triggers
-        triggerBattleTrigger(EAppTriggerType.BASIC_ATTACK, this, unit, lastTargetId);
     }
 
     performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -922,15 +923,13 @@ export class BattleController {
      * @param unit who applies status
      */
     performApplyStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { status, targetType, targetUnitId, value, mpScale, ppScale, valueFrom, valueType } = skill;
+        const { status, targetType, targetUnitId, value, mpScale, ppScale, valueFrom, valueType, markType } = skill;
         if (!status || !targetType || value === undefined) {
             return;
         }
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
 
-        //const targets = getOpponentTargets(opponentUnits, targetType, undefined, targetUnitId);
-        const targets = getTargets(unit, allyUnits, opponentUnits, targetType, targetUnitId);
+        const targets = this.getTargetsSimple(unit,targetType,isPlayer1, markType, targetUnitId);
+        //getTargets(unit, allyUnits, opponentUnits, targetType, targetUnitId);
 
         if (!targets) {
             return;
@@ -1486,12 +1485,17 @@ export class BattleController {
         return allUnits.find((u) => u.id === unitId) || allSummons.find((u) => u.id === unitId);
     }
 
-    getTargetsSimple(unit: IBattleUnit, targetType: ETargetType, isPlayer1?: boolean, debuffType?: EDebuffType): IBattleUnit[] | null {
+    getTargetsSimple(unit: IBattleUnit, targetType: ETargetType, isPlayer1?: boolean, debuffType?: EDebuffType, targetUnitId?: string): IBattleUnit[] | null {
+        if (targetType === ETargetType.BY_UNIT_ID && targetUnitId) {
+            const unitById = this.findUnitByUnitId(targetUnitId);
+            return unitById ? [unitById] : null;
+        }
         if (targetType === ETargetType.BY_UNIT_ID && this.currentActingUnitId) {
             const unitById = this.findUnitByUnitId(this.currentActingUnitId);
             return unitById ? [unitById] : null;
         }
         if (targetType === ETargetType.BY_RELEVANT_ID && this.relevantTriggerUnitId) {
+            console.log("getTarget > BY_RELEVANT_ID",this.relevantTriggerUnitId);
             const unitById = this.findUnitByUnitId(this.relevantTriggerUnitId);
             return unitById ? [unitById] : null;
         }
@@ -1645,43 +1649,6 @@ export class BattleController {
 
         let { attackDamage, isCrit } = calculateDamageBonuses(unit, unit.attackType, unit.attack, isCritAllowed, 0, 0);
 
-        // calculate basic attack damage according to buffs and debuffs
-        //unit.buffs.forEach((buff) => {
-        // unit.buffs.forEach((buff) => {
-        //     if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
-        //         const { value, valueType, valueFrom } = buff;
-        //         if (!valueType || value === undefined) {
-        //             return;
-        //         }
-        //         const percentFrom = valueFrom ? unit[valueFrom] : undefined;
-        //         attackDamage += calculateIncreaseValue(attackDamage, value, valueType, percentFrom);
-        //     }
-        // });
-
-        //CRIT
-
-        // calculate critical strike value
-        // let isCrit = false;
-        // if (unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_IS_CRIT)) {
-        //     isCrit = true;
-        //     attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
-        // } else if (unit.critChance > 0) {
-        //     if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
-        //         isCrit = true;
-        //         attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
-        //     }
-        // }
-
-        // const critNonCritBonus = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR);
-        // if (critNonCritBonus) {
-        //     // increase damage if critical hit, descrese damage on non critical hit
-        //     if (isCrit) {
-        //         attackDamage += calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
-        //     } else {
-        //         attackDamage -= calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
-        //     }
-        // }
-
         // calculate dmg if using daggers with 2 attacks but lower damage
         attackDamage = attackPercent ? Math.floor((attackDamage * attackPercent) / 100) : attackDamage;
 
@@ -1771,6 +1738,7 @@ export class BattleController {
             this.dealDamage(unit, finalTarget, attackDamage, unit.attackType, parentUnit, attackRecord);
             if (finalTarget.hp > 0) {
                 lastTargetId = finalTarget.id;
+                //console.log("basicAttack",unit.id,">",lastTargetId);
             }
 
             // apply statuses on basic attack
@@ -1798,6 +1766,7 @@ export class BattleController {
             this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
             this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
+        //console.log("final last target",unit.id,">",lastTargetId);
         return lastTargetId;
     }
 
