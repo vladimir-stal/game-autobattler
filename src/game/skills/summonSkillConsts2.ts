@@ -199,7 +199,7 @@ export const fireflySummonSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.SUMMON],
     skills: skillsetSummon(fireflySummon_3, 4, 35, 35, 0, 1), // summon 8/1,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 export const fireflySummonSkill_2: IHeroSkillSet = {
@@ -214,7 +214,7 @@ export const fireflySummonSkill_2: IHeroSkillSet = {
     skills: skillsetSummon(fireflySummon_2, 2, 35, 35, 0, 1), // summon 5/1,
     nextLevel: fireflySummonSkill_3,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 export const fireflySummonSkill: IHeroSkillSet = {
@@ -229,7 +229,7 @@ export const fireflySummonSkill: IHeroSkillSet = {
     skills: skillsetSummon(fireflySummon, 1, 35, 35, 0, 1), // summon 3/1,
     nextLevel: fireflySummonSkill_2,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 // WAAAaahRIOR SUMMON SKILL
@@ -245,7 +245,7 @@ export const warriorSummonSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.SUMMON],
     skills: skillsetSummon(warriorSummon_3, 2, 35, 20, 3, 3), // summon 6/10
     image: IMAGE_SKILL_SUMMON_SPIRIT,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 export const warriorSummonSkill_2: IHeroSkillSet = {
@@ -260,7 +260,7 @@ export const warriorSummonSkill_2: IHeroSkillSet = {
     skills: skillsetSummon(warriorSummon_2, 1, 35, 20, 2, 2), // summon 3/5
     nextLevel: warriorSummonSkill_3,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 export const warriorSummonSkill: IHeroSkillSet = {
@@ -273,7 +273,7 @@ export const warriorSummonSkill: IHeroSkillSet = {
     skills: skillsetSummon(warriorSummon, 1, 35, 20, 1, 1), // summon 2/3
     nextLevel: warriorSummonSkill_2,
     image: IMAGE_SKILL_SUMMON_SPIRIT,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 // INCREASE CURRENT SUMMON BA SKILL
@@ -373,7 +373,7 @@ export const summonerFamiliarSkill_3: IHeroSkillSet = {
     //nextLevel: summonerFamiliarSkill_2,
     isActivateOnStart: true,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 export const summonerFamiliarSkill_2: IHeroSkillSet = {
@@ -387,7 +387,7 @@ export const summonerFamiliarSkill_2: IHeroSkillSet = {
     nextLevel: summonerFamiliarSkill_3,
     isActivateOnStart: true,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 export const summonerFamiliarSkill: IHeroSkillSet = {
@@ -401,9 +401,8 @@ export const summonerFamiliarSkill: IHeroSkillSet = {
     nextLevel: summonerFamiliarSkill_2,
     isActivateOnStart: true,
     image: IMAGE_SKILL_SUMMON_FIREFLY,
-    animation: AnimationType.SUMMON_SPELL,
+    animationType: AnimationType.SUMMON_SPELL,
 };
-
 
 // INCREASE CURRENT SUMMON ARMOR SKILL
 //

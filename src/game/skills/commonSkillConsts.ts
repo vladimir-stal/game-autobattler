@@ -852,8 +852,8 @@ const radiantWallSummon = (hp: number, level: number): IUnit => {
         basicMagicPower: 0,
         basicPhysicalPower: 0,
         name: "Radiant wall",
-        id: "RADIANTSUMMON",
-        skills: [],
+        id: "SHIELDWARRIORSUMMON",
+        skills: [], // TODO: add skill to shield equals to basic attack
         items: [],
         level: level,
         exp: 0,

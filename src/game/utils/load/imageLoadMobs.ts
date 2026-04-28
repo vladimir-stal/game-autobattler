@@ -44,6 +44,10 @@ export const IMAGE_FIREFLY_ATTACK = "IMAGE_FIREFLY_ATTACK";
 export const IMAGE_SUMMONKNIHGT_BATTLE_IDLE = "IMAGE_SUMMONKNIHGT_BATTLE_IDLE";
 export const IMAGE_SUMMONKNIHGT_ATTACK = "IMAGE_SUMMONKNIHGT_ATTACK";
 
+export const IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE = "IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE";
+export const IMAGE_SUMMON_SHIELD_KNIHGT_BUFF = "IMAGE_SUMMON_SHIELD_KNIHGT_BUFF";
+export const IMAGE_SUMMON_SHIELD_KNIHGT_HURT = "IMAGE_SUMMON_SHIELD_KNIHGT_HURT";
+
 export const IMAGE_PIRATE_1_BATTLE_IDLE = "IMAGE_PIRATE_1_BATTLE_IDLE";
 export const IMAGE_PIRATE_1_ATTACK = "IMAGE_PIRATE_1_ATTACK";
 export const IMAGE_PIRATE_2_BATTLE_IDLE = "IMAGE_PIRATE_2_BATTLE_IDLE";
@@ -140,6 +144,12 @@ export function loadImagesMobs(scene: Scene) {
         frameHeight: 400,
     });
 
+    //
+    //
+    // SUMMONS
+    //
+    //
+
     // FIREFLY
 
     scene.load.spritesheet(IMAGE_FIREFLY_BATTLE_IDLE, path + "firefly/firefly_battle_idle_cut_300.webp", {
@@ -164,6 +174,23 @@ export function loadImagesMobs(scene: Scene) {
     });
     //WEBP
     scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // SUMMON SHIELD KNIHGT
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, path + "summon_shield_knight/spirit_warrior_shield_buff_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, path + "summon_shield_knight/spirit_warrior_shield_hurt_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });

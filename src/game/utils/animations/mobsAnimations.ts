@@ -30,6 +30,9 @@ import {
     IMAGE_PIRATE_2_BATTLE_IDLE,
     IMAGE_SKELETON_ATTACK,
     IMAGE_SKELETON_BATTLE_IDLE,
+    IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE,
+    IMAGE_SUMMON_SHIELD_KNIHGT_BUFF,
+    IMAGE_SUMMON_SHIELD_KNIHGT_HURT,
     IMAGE_SUMMONKNIHGT_ATTACK,
     IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
     IMAGE_WOLF_1_ATTACK,
@@ -353,6 +356,37 @@ export function createMobAnimations(scene: Scene) {
         // ],
         //}),
         frameRate: 40,
+        //repeat: -1,
+    });
+
+    // SUMMON SHIELD KNIHGT
+
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKSHIELDNIGHT_BATTLE_IDLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, { start: 60, end: 103 }), //{ start: 60, end: 103 }
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, {
+            frames: [
+                5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+                42, 43,
+                //
+                0, 1, 2, 3, 4,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKSHIELDNIGHT_BUFF,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, { start: 0, end: 32 }), //{ start: 11, end: 43 }
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKSHIELDNIGHT_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, { start: 0, end: 20 }), // { start: 60, end: 84 }
+        frameRate: 20,
         //repeat: -1,
     });
 

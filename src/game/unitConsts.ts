@@ -17,7 +17,14 @@ import {
 } from "./mobItemConsts";
 import { peasantUnit, peasantUnit_4 } from "./units/mobUnitConsts";
 import { goblinShamanUnit, goblinUnit, goldGoblin1Unit, goldGoblinBattleUnit, weakGoblinUnit } from "./units/goblinMobUnits";
-import { fireflySummonMob, fireflySummonMob_6, warriorSummonMob, warriorSummonMob_3, warriorSummonMob_5 } from "./units/summonMobUnits";
+import {
+    fireflySummonMob,
+    fireflySummonMob_6,
+    shieldWarriorsSummonMob,
+    warriorSummonMob,
+    warriorSummonMob_3,
+    warriorSummonMob_5,
+} from "./units/summonMobUnits";
 import { skeletonMageUnit, skeletonUnit, skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { musical31 } from "./weaponItem3Consts";

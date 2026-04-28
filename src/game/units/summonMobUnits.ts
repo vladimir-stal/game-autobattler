@@ -3,6 +3,7 @@ import { basic_heal } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemConsts";
 import { mobNoSkill, fireflySelfPoison } from "../skills/mobSkills";
+import { attrArmorSelf } from "../skills/orderSkillConsts";
 
 //////////// SPIRIT WARRIOR //////////////////////////
 
@@ -89,6 +90,37 @@ export const warriorSummonMob: IUnit = {
         { item: itemCoin, probability: 20 }, // 20%
         { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
         { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
+        // nothing = 100*0.80*0.88*0.86
+    ],
+};
+
+//////////// SPIRIT WARRIOR WITH SHIELD //////////////////////////
+
+export const shieldWarriorsSummonMob: IUnit = {
+    unitType: EUnitType.UNIT,
+    heroClass: EHeroClass.MOB,
+    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
+    attackType: EHeroAttackType.PHYSICAL,
+    attackTargetType: ETargetType.FIRST_ENEMY,
+    basicAttack: 0,
+    basicAttackTimes: 1,
+    basicMaxHp: 10,
+    basicHpRegen: 0,
+    basicArmor: 0,
+    basicCritChance: 0,
+    basicEvasionChance: 0,
+    basicMagicPower: 0,
+    basicPhysicalPower: 0,
+    name: i18n.units.WARRIORSUMMON,
+    id: "SPIRITSHIELDWARRIOR",
+    skills: [attrArmorSelf, attrArmorSelf, attrArmorSelf, attrArmorSelf],
+    items: [],
+    level: 1,
+    exp: 0,
+    mobItems: [
+        { item: itemCoin, probability: 20 }, // 20%
+        //{ item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
+        //{ item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
     ],
 };

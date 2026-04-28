@@ -441,8 +441,21 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 distance: -30,
                 distanceEnemy: -10,
                 image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
+                animation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
                 idleBattleAnimation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
+            };
+        }
+        case "SPIRITSHIELDWARRIOR": {
+            return {
+                //size: 400,
+                distance: -20,
+                distanceEnemy: -50,
+                image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
+                animation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BATTLE_IDLE,
+                buffAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BUFF,
+                hurtAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_HURT,
             };
         }
         case "WARRIORSUMMON": {
@@ -453,6 +466,18 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
                 idleBattleAnimation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
+            };
+        }
+        case "SHIELDWARRIORSUMMON": {
+            return {
+                size: 400,
+                distance: -30,
+                distanceEnemy: -20,
+                image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
+                animation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BATTLE_IDLE,
+                buffAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BUFF,
+                hurtAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_HURT,
             };
         }
         case "PEASANT":
