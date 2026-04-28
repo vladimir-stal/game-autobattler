@@ -331,7 +331,7 @@ export const getMulticlassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] =
         case EHeroClass.ZEALOT:
             return [EHeroClass.DARK, EHeroClass.ORDER];
         default:
-            return [EHeroClass.BARD, EHeroClass.BARD];
+            return [EHeroClass.MOB, EHeroClass.MOB];
     }
 };
 
@@ -341,6 +341,16 @@ export const getMulticlassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] =
 export const checkHeroClassIsBasic = (heroClass: EHeroClass): boolean => {
     return BASIC_HERO_CLASSES.includes(heroClass);
 };
+
+export const getAnyClassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] => {
+    if (checkHeroClassIsBasic(mcHeroClass)) {
+        return [mcHeroClass];
+    } else if (mcHeroClass === EHeroClass.MOB || mcHeroClass === EHeroClass.ALL) {
+        return [mcHeroClass];
+    } else {
+        return getMulticlassSubclasses(mcHeroClass);
+    }
+}
 
 /**
  * @returns flag if [unit] contains [heroClass] as basic class

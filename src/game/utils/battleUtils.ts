@@ -479,7 +479,7 @@ export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
     console.log("calc buff value", value, mpScaleValue, ppScaleValue, valueType, initialValue);
-    if (valueType === "number" || valueType === "evolvedNumber") {
+    if (!valueType || valueType === "number" || valueType === "evolvedNumber") {
         return value + mpScaleValue + ppScaleValue;
     } else if (valueType === "percent" || valueType === "evolvedPercent") {
         //const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
@@ -495,7 +495,7 @@ export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, de
     const { value, valueType, mpScale, ppScale } = debuff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-    if (valueType === "number" || valueType === "evolvedNumber") {
+    if (!valueType || valueType === "number" || valueType === "evolvedNumber") {
         return value + mpScaleValue + ppScaleValue;
     } else if (valueType === "percent" || valueType === "evolvedPercent") {
         const debuffValue = Math.floor((initialValue * value) / 100);
@@ -1121,6 +1121,7 @@ export const applyBuff = (
                 targetCheck: appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
                 type: appTrigger.type,
             });
+            console.log("-= Battle trigger Buff =-",buffValue,buff);
         }
         target.buffs.push({ ...buff, totalValue: buffValue });
         buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });

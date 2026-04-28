@@ -972,6 +972,7 @@ export enum EAppTriggerType {
     KILL = "KILL", // after attack in which target hp reduced to 0
     RECIEVE_BUFF = "RECIEVE_BUFF", // after recieving (non-battle-trigger) buff
     RECIEVE_DEBUFF = "RECIEVE_DEBUFF", // after recieving (non-battle-trigger) debuff
+    TURN_START = "TURN_START", // at start of target's turn
 }
 
 export interface IAppTrigger {
