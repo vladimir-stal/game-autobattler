@@ -81,6 +81,7 @@ export interface IAnimations {
     attackEnemyAnimDistanceInverted?: { x?: number; y?: number };
     massAttackAnimation?: string;
     magicAttackSkillAnimation?: string;
+    physicalAttackSkillAnimation?: string;
     healAnimation?: string;
     deadImage?: string;
     hurtAnimation?: string;
@@ -524,10 +525,26 @@ export const getUnitImage = (unitId: string): IAnimations => {
         case "SKELETONMAGE":
         case "SOLDIER":
             return { image: IMAGE_SKELETON_1 };
-        case "WOLF":
-            return { image: IMAGE_WOLF_1 };
-        case "STRONGWOLF":
-            return { image: IMAGE_WOLF_2 };
+        case "WOLF1":
+            return {
+                distance: 20,
+                distanceEnemy: -130,
+                image: IMAGE_WOLF_1,
+                animation: AnimationType.MOB_WOLF_1_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_WOLF_1_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_WOLF_1_ATTACK,
+                physicalAttackSkillAnimation: AnimationType.MOB_WOLF_1_ATTACK_2,
+            };
+        case "WOLF2":
+            return {
+                //distance: 20,
+                distanceEnemy: -100,
+                image: IMAGE_WOLF_2,
+                animation: AnimationType.MOB_WOLF_2_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_WOLF_2_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_WOLF_2_ATTACK,
+                physicalAttackSkillAnimation: AnimationType.MOB_WOLF_2_ATTACK_2,
+            };
         case "COPYCAT":
             return {
                 size: 420,

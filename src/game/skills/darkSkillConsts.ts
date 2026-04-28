@@ -188,7 +188,7 @@ export const magicAttackX3_3: IHeroSkillSet = {
             type: EHeroSkillType.REPEATING_SKILL,
             value: 3, // how many repeats, can be calculated
             targetType: ETargetType.SELF, // not used
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
             childSkill: {
                 isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
@@ -220,7 +220,7 @@ export const magicAttackX3_2: IHeroSkillSet = {
             type: EHeroSkillType.REPEATING_SKILL,
             value: 3, // how many repeats, can be calculated
             targetType: ETargetType.SELF, // not used
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
             childSkill: {
                 isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
@@ -252,7 +252,7 @@ export const magicAttackX3: IHeroSkillSet = {
             type: EHeroSkillType.REPEATING_SKILL,
             value: 3, // how many repeats, can be calculated
             targetType: ETargetType.SELF, // not used
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
             childSkill: {
                 type: EHeroSkillType.ATTACK,
                 value: 2,
@@ -267,7 +267,7 @@ export const magicAttackX3: IHeroSkillSet = {
     ],
     nextLevel: magicAttackX3_2,
     image: IMAGE_SKILL_MAGIC_MISSILES,
-    animation: AnimationType.UNIT_ATTACK,
+    animationType: AnimationType.UNIT_ATTACK,
 };
 
 //
@@ -446,7 +446,7 @@ export const magicRain_3: IHeroSkillSet = {
             type: EHeroSkillType.REPEATING_SKILL,
             value: 3, // how many repeats, can be calculated (max 20)
             targetType: ETargetType.SELF, // not used
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
             mpScale: 60,
             childSkill: {
                 isBasicAttack: false,
@@ -462,7 +462,7 @@ export const magicRain_3: IHeroSkillSet = {
         },
     ],
     image: IMAGE_SKILL_DARK_MISSILES_RAIN,
-    animation: AnimationType.UNIT_ATTACK,
+    animationType: AnimationType.UNIT_ATTACK,
 };
 
 export const magicRain_2: IHeroSkillSet = {
@@ -478,7 +478,7 @@ export const magicRain_2: IHeroSkillSet = {
             type: EHeroSkillType.REPEATING_SKILL,
             value: 2, // how many repeats, can be calculated (max 20)
             targetType: ETargetType.SELF, // not used
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
             mpScale: 50,
             childSkill: {
                 isBasicAttack: false,
@@ -495,7 +495,7 @@ export const magicRain_2: IHeroSkillSet = {
     ],
     nextLevel: magicRain_3,
     image: IMAGE_SKILL_DARK_MISSILES_RAIN,
-    animation: AnimationType.UNIT_ATTACK,
+    animationType: AnimationType.UNIT_ATTACK,
 };
 
 export const magicRain: IHeroSkillSet = {
@@ -511,7 +511,7 @@ export const magicRain: IHeroSkillSet = {
             type: EHeroSkillType.REPEATING_SKILL,
             value: 1, // how many repeats, can be calculated (max 20)
             targetType: ETargetType.SELF, // not used
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
             mpScale: 40,
             childSkill: {
                 isBasicAttack: false,
@@ -528,7 +528,7 @@ export const magicRain: IHeroSkillSet = {
     ],
     nextLevel: magicRain_2,
     image: IMAGE_SKILL_DARK_MISSILES_RAIN,
-    animation: AnimationType.UNIT_ATTACK,
+    animationType: AnimationType.UNIT_ATTACK,
 };
 
 export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];

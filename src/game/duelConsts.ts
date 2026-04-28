@@ -40,7 +40,7 @@ import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import { noBasicAttackSkill, phycisalAttackSkill, removeBuffSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
 import { magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
-import { buffNextBaIgnoreArmorSelf, buffNextBaXSelf } from "./skills/masterSkillConsts";
+import { buffNextBaXSelf } from "./skills/masterSkillConsts";
 import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
@@ -365,73 +365,40 @@ export const enemy4_test: TDuelEnemy = buildDuelEnemy([
     // day 1
     { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
     // day 2
-    { 1: [
-        { unit: summonHero },
-        { item: scepter1_2 },
-        { skill: fireflySummonSkill },
-        {levelup:1}],
-      2: [
-        { unit: darkHero },
-        { item: totem22 },
-        { skill: poisonRandom_2 }],
+    {
+        1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],
+        2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }],
     },
     // day 3
-    { 1: [
-        { unit: summonHero },
-        { item: scepter1_2 }, { item: basic_pants },
-        { skill: fireflySummonSkill },
-        {levelup:2}],
-      2: [
-        { unit: darkHero },
-        { item: totem22 },
-        { skill: poisonRandom_2 },
-        {levelup:1}],
+    {
+        1: [{ unit: summonHero }, { item: scepter1_2 }, { item: basic_pants }, { skill: fireflySummonSkill }, { levelup: 2 }],
+        2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }, { levelup: 1 }],
     },
     // day 4
-    { 1: [
-        { unit: witchHero },
-        { item: scepter1_2 }, { item: basic_pants }, { item: musical21 }, { item: basic_hat },
-        { skill: fireflySummonSkill }],
-      2: [
-        { unit: darkHero },
-        { item: totem22 },
-        { skill: poisonRandom_2 },
-        {levelup:2}],
-      3: [
-        { unit: darkHero },
-        { item: wand21 },
-        { skill: poisonRandom }],
+    {
+        1: [{ unit: witchHero }, { item: scepter1_2 }, { item: basic_pants }, { item: musical21 }, { item: basic_hat }, { skill: fireflySummonSkill }],
+        2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }, { levelup: 2 }],
+        3: [{ unit: darkHero }, { item: wand21 }, { skill: poisonRandom }],
     },
     // day 5
-    { 1: [
-        { unit: witchHero },
-        { item: scepter1_2 }, { item: basic_pants }, { item: musical21_2 }, { item: basic_hat },
-        { skill: fireflySummonSkill }],
-      2: [
-        { unit: predatorHero },
-        { item: totem22 }, { item: axe22 }, { item: basic_hat },
-        { skill: poisonRandom_2 }],
-      3: [
-        { unit: darkHero },
-        { item: wand21 },
-        { skill: poisonRandom },
-        {levelup:1}],
+    {
+        1: [{ unit: witchHero }, { item: scepter1_2 }, { item: basic_pants }, { item: musical21_2 }, { item: basic_hat }, { skill: fireflySummonSkill }],
+        2: [{ unit: predatorHero }, { item: totem22 }, { item: axe22 }, { item: basic_hat }, { skill: poisonRandom_2 }],
+        3: [{ unit: darkHero }, { item: wand21 }, { skill: poisonRandom }, { levelup: 1 }],
     },
     // day 6
-    { 1: [
-        { unit: witchHero },
-        { item: scepter1_2 }, { item: basic_pants }, { item: musical21_2 }, { item: basic_hat },
-        { skill: fireflySummonSkill },
-        {levelup:1}],
-      2: [
-        { unit: predatorHero },
-        { item: totem22 }, { item: axe22 }, { item: basic_hat }, { item: basic_hat },
-        { skill: poisonRandom_2 },
-        {levelup:1}],
-      3: [
-        { unit: predatorHero },
-        { item: wand21_2 }, { item: wand1_2 },
-        { skill: poisonRandom }],
+    {
+        1: [
+            { unit: witchHero },
+            { item: scepter1_2 },
+            { item: basic_pants },
+            { item: musical21_2 },
+            { item: basic_hat },
+            { skill: fireflySummonSkill },
+            { levelup: 1 },
+        ],
+        2: [{ unit: predatorHero }, { item: totem22 }, { item: axe22 }, { item: basic_hat }, { item: basic_hat }, { skill: poisonRandom_2 }, { levelup: 1 }],
+        3: [{ unit: predatorHero }, { item: wand21_2 }, { item: wand1_2 }, { skill: poisonRandom }],
     },
 ]);
 
@@ -794,4 +761,3 @@ export const enemy7: TDuelEnemy = {
 //
 
 export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy2];
-

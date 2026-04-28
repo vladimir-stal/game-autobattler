@@ -1,5 +1,4 @@
 import {
-    AnimationType,
     EEffectAnimationType,
     EHeroAttackType,
     EHeroClass,

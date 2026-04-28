@@ -155,7 +155,7 @@ export class BattleController {
                 unitId: unit.id,
                 type: EBattleActionType.PEFORM_SKILLSET,
                 name: skillSet.name,
-                animation: skillSet.animation,
+                animation: skillSet.animationType,
             };
             unit.customNumber = 0;
             this.battleRecord.push(skillSetBattleAction);
@@ -315,7 +315,7 @@ export class BattleController {
             unitId: unit.id,
             type: EBattleActionType.PEFORM_SKILLSET,
             name: skillSet.name,
-            animation: skillSet.animation,
+            animation: skillSet.animationType,
         };
         this.battleRecord.push(skillSetBattleAction);
         unit.customNumber = 0;
@@ -1572,7 +1572,7 @@ export class BattleController {
                 unitId: summonUnit.id,
                 type: EBattleActionType.PEFORM_SKILLSET,
                 name: skillSet.name,
-                animation: skillSet.animation,
+                animation: skillSet.animationType,
             };
             this.battleRecord.push(skillSetBattleAction);
 

@@ -40,6 +40,7 @@ export enum AnimationType {
     // UNITS
     // COMMON FOR ALL UNITS
     UNIT_ATTACK = "UNIT_ATTACK",
+    UNIT_PHYSICAL_ATTACK_SKILL = "UNIT_PHYSICAL_ATTACK_SKILL",
     // BASIC HEROES
     //
     // BARD
@@ -214,6 +215,13 @@ export enum AnimationType {
     MOB_PIRATE_1_ATTACK = "MOB_PIRATE_1_ATTACK",
     MOB_PIRATE_2_BATTLE_IDLE = "MOB_PIRATE_2_BATTLE_IDLE",
     MOB_PIRATE_2_ATTACK = "MOB_PIRATE_2_ATTACK",
+    //
+    MOB_WOLF_1_BATTLE_IDLE = "MOB_WOLF_1_BATTLE_IDLE",
+    MOB_WOLF_1_ATTACK = "MOB_WOLF_1_ATTACK",
+    MOB_WOLF_1_ATTACK_2 = "MOB_WOLF_1_ATTACK_2",
+    MOB_WOLF_2_BATTLE_IDLE = "MOB_WOLF_2_BATTLE_IDLE",
+    MOB_WOLF_2_ATTACK = "MOB_WOLF_2_ATTACK",
+    MOB_WOLF_2_ATTACK_2 = "MOB_WOLF_2_ATTACK_2",
     // BOSSES
     // MINOTAUR
     BOSS_MINOTAUR_IDLE = "BOSS_MINOTAUR_IDLE",
@@ -1094,7 +1102,7 @@ export interface IHeroSkillSet {
     type?: ESkillSetType;
     isBasicAttack?: boolean;
     priceLevel: number;
-    animation?: AnimationType;
+    animationType?: AnimationType;
 }
 
 export interface ITotem {

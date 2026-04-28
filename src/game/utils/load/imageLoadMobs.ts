@@ -49,6 +49,16 @@ export const IMAGE_PIRATE_1_ATTACK = "IMAGE_PIRATE_1_ATTACK";
 export const IMAGE_PIRATE_2_BATTLE_IDLE = "IMAGE_PIRATE_2_BATTLE_IDLE";
 export const IMAGE_PIRATE_2_ATTACK = "IMAGE_PIRATE_2_ATTACK";
 
+export const IMAGE_WOLF_1_BATTLE_IDLE = "IMAGE_WOLF_1_BATTLE_IDLE";
+export const IMAGE_WOLF_1_ATTACK = "IMAGE_WOLF_1_ATTACK";
+export const IMAGE_WOLF_1_ATTACK_2 = "IMAGE_WOLF_1_ATTACK_2";
+
+export const IMAGE_WOLF_2_BATTLE_IDLE = "IMAGE_WOLF_2_BATTLE_IDLE";
+export const IMAGE_WOLF_2_ATTACK = "IMAGE_WOLF_2_ATTACK";
+export const IMAGE_WOLF_2_ATTACK_2 = "IMAGE_WOLF_2_ATTACK_2";
+export const IMAGE_WOLF_3_BATTLE_IDLE = "IMAGE_WOLF_3_BATTLE_IDLE";
+export const IMAGE_WOLF_3_ATTACK = "IMAGE_WOLF_3_ATTACK";
+
 //
 
 export function loadImagesMobs(scene: Scene) {
@@ -57,8 +67,8 @@ export function loadImagesMobs(scene: Scene) {
     scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.webp");
     scene.load.image(IMAGE_PEASANT_1, "assets/sprites/units/mobs/peasant/peasant.webp");
 
-    scene.load.image(IMAGE_WOLF_1, "assets/sprites/units/mobs/wolfs/wolf_1.png");
-    scene.load.image(IMAGE_WOLF_2, "assets/sprites/units/mobs/wolfs/wolf_2.png");
+    scene.load.image(IMAGE_WOLF_1, "assets/sprites/units/mobs/wolves/wolf_1.png");
+    scene.load.image(IMAGE_WOLF_2, "assets/sprites/units/mobs/wolves/wolf_2.png");
 
     // SKELETON_1 //////////////////////////////////////////////////////////////
 
@@ -182,6 +192,44 @@ export function loadImagesMobs(scene: Scene) {
     });
     //WEBP
     scene.load.spritesheet(IMAGE_PIRATE_2_ATTACK, path + "pirates/pirate_2/pirate_2_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // WOLVES
+
+    // WOLF 1
+    //
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK, path + "wolves/wolf_1/wolf_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK_2, path + "wolves/wolf_1/wolf_1_attack_2_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // WOLF 2
+    //
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK, path + "wolves/wolf_2/wolf_2_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK_2, path + "wolves/wolf_2/wolf_2_attack_2_cut_400.png", {
         frameWidth: 400,
         frameHeight: 400,
     });

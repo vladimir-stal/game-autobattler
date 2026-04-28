@@ -76,6 +76,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     unitBuffAnimation: string | undefined;
     unitDefeatedAnimation: string | undefined;
     magicAttackSkillAnimation: string | undefined;
+    physicalAttackSkillAnimation: string | undefined;
     summonTotemAnimation: string | undefined;
     size: number | undefined;
     distance: number | undefined;
@@ -145,6 +146,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             buffAnimation,
             defeatedAnimation,
             magicAttackSkillAnimation,
+            physicalAttackSkillAnimation,
             summonTotemAnimation,
             distance,
             distanceEnemy,
@@ -160,6 +162,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.unitBuffAnimation = buffAnimation;
             this.unitDefeatedAnimation = defeatedAnimation;
             this.magicAttackSkillAnimation = magicAttackSkillAnimation;
+            this.physicalAttackSkillAnimation = physicalAttackSkillAnimation;
             this.summonTotemAnimation = summonTotemAnimation;
             this.attackAnimDisance = attackAnimDisance;
         }
@@ -481,6 +484,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             let animationType: string | undefined = undefined;
             if (animation === AnimationType.UNIT_ATTACK) {
                 animationType = this.magicAttackSkillAnimation;
+            } else if (animation === AnimationType.UNIT_PHYSICAL_ATTACK_SKILL) {
+                animationType = this.physicalAttackSkillAnimation || this.unitAttackAnimation;
             }
 
             if (!animationType) {

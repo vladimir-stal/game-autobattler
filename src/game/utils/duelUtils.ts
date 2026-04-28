@@ -1,5 +1,5 @@
 import { IUnit, ICard, TDuelCards, TDuelEnemy, EUnitType, IItem, EHeroClassType, ESelectCardHint } from "../../types";
-import { duelEnemies, testDuelEnemies } from "../duelConsts";
+import { duelEnemies } from "../duelConsts";
 import { debugAlwaysOneEnemy, debugEnemy } from "./debugUtils";
 import { applyItemBonuses, createItem } from "./itemUtils";
 import { levelUpUnit } from "./unitUtils";

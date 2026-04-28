@@ -16,11 +16,11 @@ import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
-import { wolfUnit } from "../units/wolfsMobUnits";
+import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { dagger31 } from "../weaponItem3Consts";
 
-export const debugHeroSelectRoom = true;
-export const debugStartingItemsRoom = true;
+export const debugHeroSelectRoom = false;
+export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -35,12 +35,12 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wolfUnit }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: strongWolfUnit }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        { type: ECardType.UNIT, price: 0, unit: pirate1Unit },
+        { type: ECardType.UNIT, price: 0, unit: wolfUnit },
         { type: ECardType.UNIT, price: 0, unit: warriorHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },

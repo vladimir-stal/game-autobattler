@@ -180,6 +180,7 @@ export const attackWithBleedSkill_3: IHeroSkillSet = {
             value: 3,
             valueType: "number",
             targetType: ETargetType.FIRST_ENEMY,
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.ATTACK,
@@ -187,9 +188,11 @@ export const attackWithBleedSkill_3: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
             attackType: EHeroAttackType.PHYSICAL,
             ppScale: 65,
+            animation: AnimationType.NONE,
         },
     ],
     image: IMAGE_SKILL_PHYS_ATTACK,
+    animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
 };
 
 export const attackWithBleedSkill_2: IHeroSkillSet = {
@@ -206,6 +209,7 @@ export const attackWithBleedSkill_2: IHeroSkillSet = {
             value: 2,
             valueType: "number",
             targetType: ETargetType.FIRST_ENEMY,
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.ATTACK,
@@ -213,10 +217,12 @@ export const attackWithBleedSkill_2: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
             attackType: EHeroAttackType.PHYSICAL,
             ppScale: 50,
+            animation: AnimationType.NONE,
         },
     ],
     nextLevel: attackWithBleedSkill_3,
     image: IMAGE_SKILL_PHYS_ATTACK,
+    animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
 };
 
 export const attackWithBleedSkill: IHeroSkillSet = {
@@ -233,6 +239,7 @@ export const attackWithBleedSkill: IHeroSkillSet = {
             value: 1,
             valueType: "number",
             targetType: ETargetType.FIRST_ENEMY,
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.ATTACK,
@@ -240,10 +247,12 @@ export const attackWithBleedSkill: IHeroSkillSet = {
             targetType: ETargetType.FIRST_ENEMY,
             attackType: EHeroAttackType.PHYSICAL,
             ppScale: 35,
+            animation: AnimationType.NONE,
         },
     ],
     nextLevel: attackWithBleedSkill_2,
     image: IMAGE_SKILL_PHYS_ATTACK,
+    animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
 };
 
 // PHYSICAL ATTACK

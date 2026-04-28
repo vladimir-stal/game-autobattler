@@ -3,6 +3,7 @@ import { basic_pants, basic_ring_regen } from "../commonItemConsts";
 import { hp_amulet } from "../commonItemConsts2";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2 } from "../mobItemConsts";
+import { attackWithBleedSkill } from "../skills/commonSkillConsts";
 
 export const wolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
@@ -12,7 +13,7 @@ export const wolfUnit: IUnit = {
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 5,
     basicAttackTimes: 1,
-    basicMaxHp: 8,
+    basicMaxHp: 10,
     basicHpRegen: 1,
     basicArmor: 0,
     basicCritChance: 0,
@@ -20,8 +21,8 @@ export const wolfUnit: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.WOLF,
-    id: "WOLF",
-    skills: [],
+    id: "WOLF1",
+    skills: [attackWithBleedSkill],
     items: [],
     level: 2,
     exp: 0,
@@ -36,10 +37,10 @@ export const wolfUnit: IUnit = {
 export const strongWolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.WILD, EHeroClass.MASTER, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 10,
+    basicAttack: 8,
     basicAttackTimes: 1,
     basicMaxHp: 18,
     basicHpRegen: 1,
@@ -49,8 +50,8 @@ export const strongWolfUnit: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.STRONGWOLF,
-    id: "STRONGWOLF",
-    skills: [],
+    id: "WOLF2",
+    skills: [attackWithBleedSkill],
     items: [],
     level: 3,
     exp: 0,
