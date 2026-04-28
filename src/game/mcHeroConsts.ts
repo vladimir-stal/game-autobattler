@@ -39,7 +39,7 @@ import { mimicPassive, mimicSkills } from "./skills/mc/mimicSkills";
 import { minstrelSkills } from "./skills/mc/minstrelSkills";
 import { monkSkills } from "./skills/mc/monkSkills";
 import { necromancerPassive, necromancerSkills } from "./skills/mc/necromancerSkills";
-import { oracleSkills } from "./skills/mc/oracleSkills";
+import { oraclePassive, oracleSkills } from "./skills/mc/oracleSkills";
 import { paladinSkills } from "./skills/mc/paladinSkills";
 import { predatorSkills } from "./skills/mc/predatorSkills";
 import { runecasterSkills } from "./skills/mc/runecasterSkills";
