@@ -13,10 +13,16 @@ export const allyTargets = [
     ETargetType.DEBUFFED_ALLY_RANDOM,
     ETargetType.FIRST_ALLY,
     ETargetType.LOW_HP_ALLY,
+    ETargetType.LOW_PERCENT_ALLY,
     ETargetType.RANDOM_ALLY,
     ETargetType.SELF,
     ETargetType.ALLY_IN_FRONT,
+    ETargetType.ALLY_BEHIND,
     ETargetType.HIGH_MP_ALLY,
     ETargetType.HIGH_PP_ALLY,
+    ETargetType.ALL_ALLY_SUMMONS,
+    ETargetType.TOTEM_ALLY_ALL,
+    ETargetType.TOTEM_ALLY_CURRENT,
+    ETargetType.SUMMON_CURRENT,
     //ETargetType.
 ];

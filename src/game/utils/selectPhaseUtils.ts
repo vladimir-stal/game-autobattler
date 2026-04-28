@@ -17,6 +17,7 @@ import {
     IUnit,
     THeroAttribute,
 } from "../../types";
+import { dagger1 } from "../basicWeaponItemConsts";
 
 import { bosses } from "../bossConsts";
 import { CardSlot } from "../components/CardSlot";
@@ -25,13 +26,14 @@ import { i18n } from "../consts";
 import { BASIC_CLASSES, basicClassHeroes, basicHeroAttributes, mcClassHeroes } from "../heroConsts";
 import { basicWeapons, itemsLvl5 } from "../itemConsts";
 import { GameScene } from "../scenes/GameScene";
+import { mobNoSkill } from "../skills/mobSkills";
 
 import { MOB_MAX_ITEM_COUNT } from "../unitConsts";
 import { cheeringGoblinUnit_attacks, cheeringGoblinUnit_skills } from "../units/goblinMobUnits";
 
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { customHeroSelectRoom, customStartingItemsRoom, debugHeroSelectRoom, debugStartingItemsRoom } from "./debugUtils";
-import { getMulticlassSubclasses } from "./heroUtils";
+import { getAnyClassSubclasses, getMulticlassSubclasses } from "./heroUtils";
 import {
     getXFromAllItems,
     getAllItems,
@@ -513,17 +515,19 @@ export const getCards = (
                 isSelectRequired = true;
                 hintTextType = ESelectCardHint.TAKE_ITEM;
 
-                //const item = gloves_priest2;
-                //cards = [null, { item, type: ECardType.ITEM, price: 0 }, null];
-
                 let item;
                 if (gameScene.units.length === 0) {
                     item = getRandomArrayItem(basicWeapons);
                 } else {
                     // get hero classes of heroes player currently has
                     const allHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
-                        if (unit.unitType === EUnitType.HERO && !heroClasses.includes(unit.heroClass)) {
-                            heroClasses.push(unit.heroClass);
+                        if (unit.unitType === EUnitType.HERO) {
+                            const whatClass = getAnyClassSubclasses(unit.heroClass);
+                            whatClass.forEach(c => {
+                                if (!heroClasses.includes(c))
+                                    heroClasses.push(c);
+                            })
+                            //heroClasses.push(unit.heroClass);
                         }
                         return heroClasses;
                     }, [] as EHeroClass[]);
@@ -536,8 +540,7 @@ export const getCards = (
                         const randomWeaponType = getRandomArrayItem(weaponTypes);
                         item = basicWeapons.find((item) => item.weaponType === randomWeaponType);
                     }
-
-                    cards = [null, genShopItemSingleCard(item, true), null];
+                    cards = [null, genShopItemSingleCard(item || dagger1, true), null];
                 }
             }
             break;
@@ -642,9 +645,13 @@ export const getCards = (
                 console.log("SKILLS_SELL skills", skills);
 
                 cards = skills.map((skill, index) => {
-                    const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
-                    return { skill, type: ECardType.SKILL, price: price };
-                });
+                    if (skill) {
+                        const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
+                        return { skill, type: ECardType.SKILL, price: price };
+                    } /*else {
+                        return { skill: {...mobNoSkill, name: "Oops! Something\nwent wrong"}, type: ECardType.SKILL, price: 0 }
+                    }*/
+                }).filter(card => !!card && !!card.skill);
             }
             break;
         case ERoomType.SKILLS_SELL_MIXED_CLASSES:

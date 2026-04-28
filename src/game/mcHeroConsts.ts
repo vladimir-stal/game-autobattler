@@ -32,7 +32,7 @@ import { gladiatorSkills } from "./skills/mc/gladiatorSkills";
 import { heraldPassive, heraldSkills } from "./skills/mc/heraldSkills";
 import { hunterSkills } from "./skills/mc/hunterSkills";
 import { illusionistPassive, illusionistSkills } from "./skills/mc/illusionistSkills";
-import { inquisitorSkills } from "./skills/mc/inquisitorSkills";
+import { inquisitorPassive, inquisitorSkills } from "./skills/mc/inquisitorSkills";
 import { knightSkills } from "./skills/mc/knightSkills";
 import { jesterSkills } from "./skills/mc/magicBardSkills";
 import { mimicPassive, mimicSkills } from "./skills/mc/mimicSkills";
@@ -587,9 +587,7 @@ export const oracleHero: IUnit = {
     name: i18n.heroes.ORACLE,
     id: "ORACLE",
     skills: oracleSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: oraclePassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -749,9 +747,7 @@ export const inquisitorHero: IUnit = {
     name: i18n.heroes.INQUISITOR,
     id: "INQUISITOR",
     skills: inquisitorSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: inquisitorPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

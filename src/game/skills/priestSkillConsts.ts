@@ -1,9 +1,9 @@
-import { EEffectAnimationType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { AnimationType, EBuffTimeType, EBuffType, EEffectAnimationType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_HEAL_1, IMAGE_SKILL_HEAL_2 } from "../utils/load/skillImagesLoad";
-import { outHealBuffSkill } from "./bardSkillConsts";
+import { outHealBuffSkill } from "./commonSkill3Consts";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
-import { removeDebuffSkill } from "./commonSkillConsts";
+import { heatUpSkill, radiantWallSkill, removeDebuffSkill, selfBuffOverheal } from "./commonSkillConsts";
 
 // HEAL SELF
 
@@ -20,9 +20,9 @@ export const healSelf_3: IHeroSkillSet = {
         {
             type: EHeroSkillType.HEAL,
             isBasicAttack: true,
-            value: 8, // TODO MP: add MP modifier to value
+            value: 9, // TODO MP: add MP modifier to value
             targetType: ETargetType.SELF,
-            mpScale: 65,
+            mpScale: 50,
         },
     ],
     image: IMAGE_SKILL_HEAL_1,
@@ -43,7 +43,7 @@ export const healSelf_2: IHeroSkillSet = {
             isBasicAttack: true,
             value: 6,
             targetType: ETargetType.SELF,
-            mpScale: 50,
+            mpScale: 35,
         },
     ],
     nextLevel: healSelf_3,
@@ -68,7 +68,7 @@ export const healSelf: IHeroSkillSet = {
             //
             effectAnimationType: EEffectAnimationType.EFFECT_PRIEST_HEAL,
             effectAnimationDelay: 800,
-            mpScale: 35,
+            //mpScale: 35,
         },
     ],
     nextLevel: healSelf_2,
@@ -92,7 +92,7 @@ export const healFirst_3: IHeroSkillSet = {
             isBasicAttack: true,
             value: 7, // TODO: mp power
             targetType: ETargetType.FIRST_ALLY,
-            mpScale: 65,
+            mpScale: 50,
         },
     ],
     image: IMAGE_SKILL_HEAL_1,
@@ -113,7 +113,7 @@ export const healFirst_2: IHeroSkillSet = {
             isBasicAttack: true,
             value: 5, // TODO: mp power
             targetType: ETargetType.FIRST_ALLY,
-            mpScale: 50,
+            mpScale: 35,
         },
     ],
     image: IMAGE_SKILL_HEAL_1,
@@ -137,7 +137,7 @@ export const healFirst: IHeroSkillSet = {
             //
             effectAnimationType: EEffectAnimationType.EFFECT_PRIEST_HEAL,
             effectAnimationDelay: 800,
-            mpScale: 35,
+            //mpScale: 35,
         },
     ],
     nextLevel: healFirst_2,
@@ -160,7 +160,7 @@ export const healLowHpSkill_3: IHeroSkillSet = {
             type: EHeroSkillType.HEAL,
             isBasicAttack: true,
             value: 5,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 100,
         },
     ],
@@ -181,7 +181,7 @@ export const healLowHpSkill_2: IHeroSkillSet = {
             type: EHeroSkillType.HEAL,
             isBasicAttack: true,
             value: 5,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 75,
         },
     ],
@@ -203,7 +203,7 @@ export const healLowHpSkill: IHeroSkillSet = {
             type: EHeroSkillType.HEAL,
             isBasicAttack: true,
             value: 5,
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 50,
         },
     ],
@@ -211,10 +211,80 @@ export const healLowHpSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_HEAL_2,
 };
 
-//
+// tier 3
+//   + overheal
+const ringOfHealingSkillset = (hpPercent:number): IHeroSkill[] => {
+    return [
+        selfBuffOverheal(2, EStatusType.BURN),
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALLY_IN_FRONT,
+            attribute: "hp",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALLY_BEHIND,
+            attribute: "hp",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            targetType: ETargetType.ALLY_IN_FRONT,
+            value: hpPercent,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            targetType: ETargetType.ALLY_BEHIND,
+            value: hpPercent,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+        },
+    ]
+}
+
+export const ringOfHealingSkill_3: IHeroSkillSet = {
+    id: "ringOfHealing",
+    name: "Ring of healing",
+    desc: "Heal allies by both sides\nof caster for [25%] of sum\nof thier current health\nAnd for 2 turns overheals\napply burn to first enemy",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.PRIEST],
+    skills: ringOfHealingSkillset(25),
+    //nextLevel: healLowHpSkill_2,
+    image: IMAGE_SKILL_HEAL_2,
+}
+
+export const ringOfHealingSkill_2: IHeroSkillSet = {
+    id: "ringOfHealing",
+    name: "Ring of healing",
+    desc: "Heal allies by both sides\nof caster for [20%] of sum\nof thier current health\nAnd for 2 turns overheals\napply burn to first enemy",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.PRIEST],
+    skills: ringOfHealingSkillset(20),
+    nextLevel: ringOfHealingSkill_3,
+    image: IMAGE_SKILL_HEAL_2,
+}
+
+export const ringOfHealingSkill: IHeroSkillSet = {
+    id: "ringOfHealing",
+    name: "Ring of healing",
+    desc: "Heal allies by both sides\nof caster for [15%] of sum\nof thier current health\nAnd for 2 turns overheals\napply burn to first enemy",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.PRIEST],
+    skills: ringOfHealingSkillset(15),
+    nextLevel: ringOfHealingSkill_2,
+    image: IMAGE_SKILL_HEAL_2,
+}
 
 export const priestSkills: THeroSkills = [healSelf, healFirst];
 
-export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill, removeDebuffSkill]);
+export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill, removeDebuffSkill, radiantWallSkill, heatUpSkill]);
 
-export const priestSkills_3: THeroSkills = priestSkills_2.concat([outHealBuffSkill, increaseMaxHpSkill]);
+export const priestSkills_3: THeroSkills = priestSkills_2.concat([outHealBuffSkill, increaseMaxHpSkill, ringOfHealingSkill]);

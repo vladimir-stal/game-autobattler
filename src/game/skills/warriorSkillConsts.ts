@@ -1,7 +1,8 @@
-import { AnimationType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE } from "../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
+import { nextBAArea, phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA
 
@@ -274,10 +275,122 @@ export const debuffWorthyFoe: IHeroSkillSet = {
     nextLevel: debuffWorthyFoe_2,
 };
 
-//
+// mortal strike (tier 3)
+//   ~ next ba
+//   + bleed 
+//   + debuff (physical vulnerability + reduce pp + reduce mp)
+
+const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:number, debuffDuration:number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Mortal strike",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                type: EBuffType.BATTLE_TRIGGER,
+                value: 1,
+                appTrigger: {
+                    limitedRepeats: true,
+                    type: EAppTriggerType.BASIC_ATTACK,                    
+                    skillId: "Mortal strike",
+                    skill: [
+                        {
+                            type:EHeroSkillType.STATUS_APPLY,
+                            status: EStatusType.BLEED,
+                            targetType: ETargetType.BY_RELEVANT_ID, // last target basic attack
+                            value: bleedAndVulnerability,
+                            valueType: "number",
+                        },
+                        {
+                            type:EHeroSkillType.DEBUFF,
+                            debuff: {
+                                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
+                                name: "vulnerable",
+                                value: bleedAndVulnerability,
+                                valueType: "number",
+                                targetType: ETargetType.BY_RELEVANT_ID,
+                                timeType: EBuffTimeType.DURATION,
+                                duration: debuffDuration,
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type:EHeroSkillType.DEBUFF,
+                            debuff: {
+                                type: EDebuffType.ATTRIBUTE_DECREASE,
+                                name: "-MP",
+                                attribute: "magicPower",
+                                value: statReduction,
+                                valueType: "number",
+                                targetType: ETargetType.BY_RELEVANT_ID,
+                                timeType: EBuffTimeType.DURATION,
+                                duration: debuffDuration,
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type:EHeroSkillType.DEBUFF,
+                            debuff: {
+                                type: EDebuffType.ATTRIBUTE_DECREASE,
+                                name: "-PP",
+                                attribute: "physicalPower",
+                                value: statReduction,
+                                valueType: "number",
+                                targetType: ETargetType.BY_RELEVANT_ID,
+                                timeType: EBuffTimeType.DURATION,
+                                duration: debuffDuration,
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                    ],
+                }
+            }
+        }
+    ]
+}
+
+export const mortalStrikeSkill_3: IHeroSkillSet = {
+    id: "mortalStrikeSkill",
+    name: "Mortal strike",
+    desc: "Next BA apply [8] bleed and physical vulnerability, reduce targets PP & MP by [11] for 3 turns",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: mortalStrikeSkillset(8,11,3),
+    image: IMAGE_SKILL_AXE_BUFF,
+    //nextLevel: mortalStrikeSkill_2, // next level > (5,7,3) > (8,11,3)
+};
+
+export const mortalStrikeSkill_2: IHeroSkillSet = {
+    id: "mortalStrikeSkill",
+    name: "Mortal strike",
+    desc: "Next BA apply [5] bleed and physical vulnerability, reduce targets PP & MP by [7] for 3 turns",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: mortalStrikeSkillset(5,7,3),
+    image: IMAGE_SKILL_AXE_BUFF,
+    //nextLevel: mortalStrikeSkill_3, // next level > (5,7,3) > (8,11,3)
+};
+
+export const mortalStrikeSkill: IHeroSkillSet = {
+    id: "mortalStrikeSkill",
+    name: "Mortal strike",
+    desc: "Next BA apply [3] bleed and physical vulnerability, reduce targets PP & MP by [4] for 3 turns",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: mortalStrikeSkillset(3,4,3),
+    image: IMAGE_SKILL_AXE_BUFF,
+    //nextLevel: mortalStrikeSkill_2, // next level > (5,7,3) > (8,11,3)
+};
 
 export const warriorSkills: THeroSkills = [debuffWorthyFoe, buffNextBa];
 
-export const warriorSkills_2: THeroSkills = warriorSkills.concat([buffNextBaTimes]);
+export const warriorSkills_2: THeroSkills = warriorSkills.concat([buffNextBaTimes, nextBAArea, phycisalAttackSkill]);
 
-export const warriorSkills_3: THeroSkills = warriorSkills_2.concat([buffSelfMPorPP, shieldAttackSkill]);
+export const warriorSkills_3: THeroSkills = warriorSkills_2.concat([mortalStrikeSkill, buffSelfMPorPP, shieldAttackSkill]);

@@ -146,6 +146,7 @@ export const getAllyTargetInFront = (unitId: string, units: TBattleUnits): IBatt
 
 export const getAllyTargetBehind = (unitId: string, units: TBattleUnits): IBattleUnit | null => {
     const unitIndex = units.findIndex((unit) => unit && unit.hp > 0 && unit.id === unitId);
+    console.log("getAllyTargetBehind >", unitId, unitIndex, units);
     if (unitIndex === -1) {
         return null;
     }
@@ -214,10 +215,20 @@ export const getHighestStatusTarget = (units: TBattleUnits, statusType: EStatusT
 export const getLowHpTarget = (units: TBattleUnits): IBattleUnit | null => {
     return units.reduce((result, unit) => {
         if (unit && unit.hp > 0) {
-            if (!result) {
+            if (!result || unit.hp < result.hp) {
                 return unit;
             }
-            return unit.hp < result.hp ? unit : result;
+        }
+        return result;
+    }, null);
+};
+
+export const getLowHpPercentTarget = (units: TBattleUnits): IBattleUnit | null => {
+    return units.reduce((result, unit) => {
+        if (unit && unit.hp > 0) {
+            if (!result || unit.hp / unit.maxHp < result.hp / result.maxHp) {
+                return unit;
+            }
         }
         return result;
     }, null);
@@ -312,17 +323,16 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             return target ? [target] : null;
         }
         case ETargetType.LOW_HP_ALLY: {
-            const lowestHpAlly = units.reduce((result, unit) => {
-                if (unit && unit.hp > 0) {
-                    //console.log("check unit", unit);
-                    if (!result || unit.hp < result.hp) {
-                        //console.log("set unit as result", unit);
-                        return unit;
-                    }
-                }
-                //console.log("save previous result");
-                return result;
-            }, null);
+            // changed logic from MIN(unit.hp) to MAX(unit.maxHp - unit.hp)
+            // (from lowest hp to highest recieved damage, so it won't target full hp feeble units)
+            const lowestHpAlly = getLowHpTarget(units);
+            //console.log("LOWEST hp ALLy", lowestHpAlly, units);
+            return lowestHpAlly ? [lowestHpAlly] : null;
+        }
+        case ETargetType.LOW_PERCENT_ALLY: {
+            // changed logic from MIN(unit.hp) to MAX(unit.maxHp - unit.hp)
+            // (from lowest hp to highest recieved damage, so it won't target full hp feeble units)
+            const lowestHpAlly = getLowHpPercentTarget(units);
             //console.log("LOWEST hp ALLy", lowestHpAlly, units);
             return lowestHpAlly ? [lowestHpAlly] : null;
         }
@@ -370,6 +380,10 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const target = getHighestStatusTarget(units, EStatusType.BLEED);
             return target ? [target] : null;
         }
+        case ETargetType.HIGH_POISON_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.POISON);
+            return target ? [target] : null;
+        }
         case ETargetType.HIGH_MP_ENEMY: {
             const target = getHighestAttributeTarget(units, "magicPower");
             return target ? [target] : null;
@@ -380,6 +394,10 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
         }
         case ETargetType.LOW_HP_ENEMY: {
             const target = getLowHpTarget(units);
+            return target ? [target] : null;
+        }
+        case ETargetType.LOW_PERCENT_ENEMY: {
+            const target = getLowHpPercentTarget(units);
             return target ? [target] : null;
         }
         case ETargetType.MARKED_ENEMY: {
@@ -461,7 +479,7 @@ export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
     console.log("calc buff value", value, mpScaleValue, ppScaleValue, valueType, initialValue);
-    if (valueType === "number" || valueType === "evolvedNumber") {
+    if (!valueType || valueType === "number" || valueType === "evolvedNumber") {
         return value + mpScaleValue + ppScaleValue;
     } else if (valueType === "percent" || valueType === "evolvedPercent") {
         //const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
@@ -477,7 +495,7 @@ export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, de
     const { value, valueType, mpScale, ppScale } = debuff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-    if (valueType === "number" || valueType === "evolvedNumber") {
+    if (!valueType || valueType === "number" || valueType === "evolvedNumber") {
         return value + mpScaleValue + ppScaleValue;
     } else if (valueType === "percent" || valueType === "evolvedPercent") {
         const debuffValue = Math.floor((initialValue * value) / 100);
@@ -1005,7 +1023,7 @@ export const applyBuff = (
     isPlayer1?: boolean,
 ) => {
     //if (buff.valueFrom === "customNumber")
-    const { attribute, duration, timeType, type, appTrigger } = buff;
+    const { attribute, duration, timeType, type, appTrigger, statusType } = buff;
     //    console.log("-= Debug buff from calculated number =-",target,caster);
     const existingBuff = target?.buffs?.find(
         (bf) =>
@@ -1014,7 +1032,8 @@ export const applyBuff = (
             bf.timeType === timeType &&
             bf.appTrigger?.type === appTrigger?.type &&
             bf.appTrigger?.targetCheck === appTrigger?.targetCheck &&
-            bf.appTrigger?.skillId === appTrigger?.skillId,
+            bf.appTrigger?.skillId === appTrigger?.skillId &&
+            bf.statusType === statusType,
     );
     if (existingBuff) {
         if (existingBuff.totalValue === undefined) {
@@ -1102,6 +1121,7 @@ export const applyBuff = (
                 targetCheck: appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
                 type: appTrigger.type,
             });
+            console.log("-= Battle trigger Buff =-", buffValue, buff);
         }
         target.buffs.push({ ...buff, totalValue: buffValue });
         buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });
@@ -1322,13 +1342,26 @@ export const isTriggerReady = (appTrigger: IAppTrigger): boolean => {
     return false;
 };
 
-export const triggerBattleTrigger = (type: EAppTriggerType, battleController: BattleController, unit?: IBattleUnit) => {
+export const triggerBattleTrigger = (type: EAppTriggerType, battleController: BattleController, unit?: IBattleUnit, relevantUnitId?: string) => {
     battleController.listOfTriggers.forEach((bt) => {
         if (bt.type === type) {
             if (!!unit && bt.targetCheck === ETargetType.ANCHOR_TARGET && bt.anchorTarget === unit) {
+                console.log("Battle trigger Anchor target", type, bt, relevantUnitId);
+                battleController.relevantTriggerUnitId = relevantUnitId;
                 checkBattleTriggerBuffDebuff(bt, battleController);
+                battleController.relevantTriggerUnitId = undefined;
+            } else if (!!unit && unit.isSummon && type === EAppTriggerType.DEATH) {
+                if (bt.targetCheck === ETargetType.ALL_ALLY_SUMMONS && battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
+                    battleController.relevantTriggerUnitId = relevantUnitId;
+                    checkBattleTriggerBuffDebuff(bt, battleController);
+                    battleController.relevantTriggerUnitId = undefined;
+                } else {
+                    return; // Summons do not usually trigger DEATH
+                }
             } else if (!unit || battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
+                battleController.relevantTriggerUnitId = relevantUnitId;
                 checkBattleTriggerBuffDebuff(bt, battleController);
+                battleController.relevantTriggerUnitId = undefined;
             }
         }
     });
@@ -1366,22 +1399,29 @@ export const dealOverhealDamage = (
         const overhealBuffs = unit.buffs.filter((buff) => buff.type === EBuffType.OVERHEAL_TO_DAMAGE);
         if (overhealBuffs.length > 0) {
             overhealBuffs.forEach((buff) => {
-                const attackRecord2 = {
-                    unitId: unitId4record,
-                    type: EBattleActionType.ATTACK,
-                    value: overhealTotal,
-                    isCrit: false,
-                    targets: [],
-                    skill,
-                    isStartBattle: false,
-                };
-                battleController.battleRecord.push(attackRecord2);
-                const targets = getOpponentTargets(opponentUnits, buff.changeTargetTypeTo || ETargetType.FIRST_ENEMY);
-                targets?.forEach((target) => {
-                    //  Radiate removed for now
-                    //applyStatus(unit, target, EStatusType.RADIATE, overhealTotal, this.battleRecord, isStartBattle);
-                    battleController.dealDamage(unit, target, overhealTotal, EHeroAttackType.MAGIC, undefined, attackRecord2);
-                });
+                if (buff.statusType) {
+                    const targets = getOpponentTargets(opponentUnits, buff.changeTargetTypeTo || ETargetType.FIRST_ENEMY);
+                    targets?.forEach((target) => {
+                        applyStatus(unit, target, buff.statusType!, overhealTotal, battleController.battleRecord, false);
+                    });
+                } else {
+                    const attackRecord2 = {
+                        unitId: unitId4record,
+                        type: EBattleActionType.ATTACK,
+                        value: overhealTotal,
+                        isCrit: false,
+                        targets: [],
+                        skill,
+                        isStartBattle: false,
+                    };
+                    battleController.battleRecord.push(attackRecord2);
+                    const targets = getOpponentTargets(opponentUnits, buff.changeTargetTypeTo || ETargetType.FIRST_ENEMY);
+                    targets?.forEach((target) => {
+                        //  Radiate removed for now
+                        //applyStatus(unit, target, EStatusType.RADIATE, overhealTotal, this.battleRecord, isStartBattle);
+                        battleController.dealDamage(unit, target, overhealTotal, EHeroAttackType.MAGIC, undefined, attackRecord2);
+                    });
+                }
             });
         }
     }

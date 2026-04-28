@@ -6,7 +6,7 @@ import { mobNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff, mo
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.MASTER, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 2,

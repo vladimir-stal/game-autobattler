@@ -9,7 +9,7 @@ import {
     IMAGE_SKILL_VINES_ARMOR,
 } from "../utils/load/skillImagesLoad";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
-import { removeBuffSkill } from "./commonSkillConsts";
+import { attackWithBleedSkill, removeBuffSkill, statusesIntoHeal } from "./commonSkillConsts";
 
 // ATTR INCR HP REGEN
 
@@ -293,6 +293,6 @@ export const incrTotemValueSkill: IHeroSkillSet = {
 
 export const wildSkills: THeroSkills = [totemAttackSkill, attrIncrHpReg];
 
-export const wildSkills_2: THeroSkills = wildSkills.concat([attrDescArmor, removeBuffSkill]);
+export const wildSkills_2: THeroSkills = wildSkills.concat([attrDescArmor, removeBuffSkill, statusesIntoHeal, attackWithBleedSkill]);
 
 export const wildSkills_3: THeroSkills = wildSkills_2.concat([incrTotemValueSkill, increaseMaxHpSkill]);

@@ -133,7 +133,7 @@ export const skeletonArmorSelfAndLow: IHeroSkillSet = {
             attribute: "armor",
             value: 4,
             valueType: "number",
-            targetType: ETargetType.LOW_HP_ALLY,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
             ppScale: 20,
         },
         {
@@ -192,6 +192,27 @@ export const mobNoSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.NONE,
+        },
+    ],
+};
+
+export const radiantWallNoAttackButArmorSkill: IHeroSkillSet = {
+    id: "radiantWallNoAttackButArmor",
+    name: "Butt armor",
+    desc: "Convert 50% base attack into armor",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MOB],
+    isBasicAttack: false,
+    isMcSkill: true,
+    skills: [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "armor",
+            targetType: ETargetType.SELF,
+            value: 50,
+            valueType: "percent",
+            valueFrom: "attack",
         },
     ],
 };

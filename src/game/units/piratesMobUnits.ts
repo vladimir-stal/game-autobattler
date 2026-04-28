@@ -4,7 +4,7 @@ import { i18n } from "../consts";
 export const pirate1Unit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.MASTER],
+    mobHeroClasses: [EHeroClass.MASTER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 5,
@@ -28,7 +28,7 @@ export const pirate1Unit: IUnit = {
 export const pirate2Unit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.MASTER],
+    mobHeroClasses: [EHeroClass.MASTER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 8,

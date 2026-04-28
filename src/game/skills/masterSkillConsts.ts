@@ -22,6 +22,7 @@ import {
     IMAGE_SKILL_YELLOW_EXPLOSION,
 } from "../utils/load/skillImagesLoad";
 import { buffSummonCritSkill } from "./commonSkill3Consts";
+import { attackWithBleedSkill, phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA X SELF
 
@@ -472,9 +473,8 @@ export const followupComboSkill: IHeroSkillSet = {
     nextLevel: followupComboSkill_2,
 };
 
-//TODO: add buffNextBaIgnoreArmorSelf to lvl2 skills
 export const masterSkills: THeroSkills = [feintAttack, buffNextBaXSelf];
 
-export const masterSkills_2: THeroSkills = masterSkills.concat([buffNextBaBeCritSelf, riposteSkill]);
+export const masterSkills_2: THeroSkills = masterSkills.concat([buffNextBaBeCritSelf, riposteSkill, attackWithBleedSkill, phycisalAttackSkill]);
 
-export const masterSkills_3: THeroSkills = masterSkills_2.concat([attackIgnoringArmor, followupComboSkill]);
+export const masterSkills_3: THeroSkills = masterSkills_2.concat([attackIgnoringArmor, followupComboSkill, buffSummonCritSkill]);

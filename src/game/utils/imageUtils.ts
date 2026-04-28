@@ -94,6 +94,7 @@ export interface IAnimations {
     distance?: number;
     distanceEnemy?: number;
     attackAnimDisance?: number;
+    tint?: number; // ? 0xff0000
 }
 
 export function getHeroImage(heroClass: EHeroClass): IAnimations {
@@ -152,6 +153,9 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 attackEnemyAnimDelay: 700,
                 attackEnemyAnimDistance: { x: 20, y: 50 },
                 attackEnemyAnimDistanceInverted: { x: 250, y: 50 },
+                //
+                //test
+                //tint: 0x00ff00,
             };
         case EHeroClass.MASTER:
             return {
@@ -478,6 +482,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 idleBattleAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BATTLE_IDLE,
                 buffAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_BUFF,
                 hurtAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_HURT,
+                tint: 0xeeee00,
             };
         }
         case "PEASANT":

@@ -1,4 +1,7 @@
 import {
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
     EEffectAnimationType,
     EHeroAttackType,
     EHeroClass,
@@ -6,12 +9,20 @@ import {
     ESkillSetType,
     EStatusType,
     ETargetType,
+    IHeroSkill,
     IHeroSkillSet,
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_BURN, IMAGE_SKILL_DRAGON_FIRE, IMAGE_SKILL_LIGHTNING, IMAGE_SKILL_SHOCK_HAND } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_BURN,
+    IMAGE_SKILL_DRAGON_FIRE,
+    IMAGE_SKILL_LIGHTNING,
+    IMAGE_SKILL_SHOCK_HAND,
+    IMAGE_SKILL_YELLOW_EXPLOSION,
+} from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP } from "./commonSkill3Consts";
+import { blindingBeamSkill, heatUpSkill } from "./commonSkillConsts";
 
 // MAGIC ATTACK
 
@@ -285,9 +296,89 @@ export const applyShock: IHeroSkillSet = {
     nextLevel: applyShock_2,
 };
 
+// meteorite fall
+//   buff round_cycle trigger 1-3 times : aoe magic damage+burn
+
+const meteoriteFallSkillset = (baseDmg: number, mpScale: number, burnStacks: number, duration: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                type: EBuffType.BATTLE_TRIGGER,
+                name: "Meteorite",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DURATION,
+                value: 1,
+                duration: duration + 1,
+                appTrigger: {
+                    limitedRepeats: false,
+                    skillId: "Meteorite fall everyone dies",
+                    type: EAppTriggerType.ROUND_CYCLE,
+                    skill: [
+                        {
+                            type: EHeroSkillType.ATTACK,
+                            attackType: EHeroAttackType.PHYSICAL, // magical? or like boom physical
+                            targetType: ETargetType.ALL_ENEMIES,
+                            mpScale: mpScale,
+                            value: baseDmg,
+                            valueType: "number",
+                        },
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            status: EStatusType.BURN,
+                            targetType: ETargetType.ALL_ENEMIES,
+                            value: burnStacks,
+                            valueType: "number",
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+};
+
+export const meteoriteFallSkill_3: IHeroSkillSet = {
+    id: "meteoriteFall",
+    name: "Meteorite fall",
+    desc: "At the end of the round\ndeals [3+MP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[3] rounds",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
+    skills: meteoriteFallSkillset(3, 100, 3, 3),
+    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    //nextLevel: applyShock_2,
+};
+
+export const meteoriteFallSkill_2: IHeroSkillSet = {
+    id: "meteoriteFall",
+    name: "Meteorite fall",
+    desc: "At the end of the round\ndeals [3+70%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[2] rounds",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
+    skills: meteoriteFallSkillset(3, 70, 3, 2),
+    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    nextLevel: meteoriteFallSkill_3,
+};
+
+export const meteoriteFallSkill: IHeroSkillSet = {
+    id: "meteoriteFall",
+    name: "Meteorite fall",
+    desc: "At the end of the round\ndeals [3+40%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[1] round",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
+    skills: meteoriteFallSkillset(3, 40, 3, 1),
+    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    nextLevel: meteoriteFallSkill_2,
+};
+
 //
 export const magicSkills: THeroSkills = [magicAttack, applyBurn];
 
-export const magicSkills_2: THeroSkills = magicSkills.concat([magicAttackAll, applyShock]);
+export const magicSkills_2: THeroSkills = magicSkills.concat([magicAttackAll, applyShock, heatUpSkill, blindingBeamSkill]);
 
-export const magicSkills_3: THeroSkills = magicSkills_2.concat([buffSelfMPorPP]);
+export const magicSkills_3: THeroSkills = magicSkills_2.concat([buffSelfMPorPP, meteoriteFallSkill]);

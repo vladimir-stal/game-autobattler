@@ -110,15 +110,15 @@ export const SKILLS_EN = {
         //
         healFirst: {
             name: "Heal first",
-            desc1: "Heal [3 +35% MP] first ally",
-            desc2: "Heal [5 +50% MP] first ally",
-            desc3: "Heal [7 +65% MP] first ally",
+            desc1: "Heal [3] first ally",
+            desc2: "Heal [5+35%xMP] first ally",
+            desc3: "Heal [7+50%xMP] first ally",
         },
         healSelf: {
             name: "Heal self",
-            desc3: "Heal [8 +65% MP] self",
-            desc2: "Heal [6 +50% MP] self",
-            desc1: "Heal [4 +35% MP] self",
+            desc3: "Heal [9+50%xMP] self",
+            desc2: "Heal [6+35%xMP] self",
+            desc1: "Heal [4] self",
         },
         //
         // SUMMON
@@ -207,9 +207,9 @@ export const SKILLS_EN = {
         //
         radiantWallSkill: {
             name: "Radiant wall",
-            desc1: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
-            desc2: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
-            desc3: "Summons defender [stats]\nand for 2 turns\noverheals increase damage\nto front enemy",
+            desc1: "Summons defender [stats]\nand for 2 turns\noverheals deal damage\nto front enemy. Defender\ndoes not attack but\nget armor for 50% of attack",
+            desc2: "Summons defender [stats]\nand for 2 turns\noverheals deal damage\nto front enemy. Defender\ndoes not attack but\nget armor for 50% of attack",
+            desc3: "Summons defender [stats]\nand for 2 turns\noverheals deal damage\nto front enemy. Defender\ndoes not attack but\nget armor for 50% of attack",
         },
     },
     level2: {
@@ -313,9 +313,10 @@ export const SKILLS_EN = {
         },
         buffSummonCritSkill: {
             name: "Serious danger",
-            desc1: "Buff summon crit\nchance [5]+[20%xMP]",
-            desc2: "Buff summon crit\nchance [5]+[30%xMP]",
-            desc3: "Buff summon crit\nchance [5]+[50%xMP]",
+            //desc1: "Командное усиление призывов\nвесь бой шанс критических\nударов +[5+20%x(МС+ФС)]%\nи атаки вызывают кровотечение",
+            desc1: "Team-wide buff of summons\nfor the rest of battle\ncrit chance +[5+20%x(MP+PP)]%\nand attacks cause bleed",
+            desc2: "Team-wide buff of summons\nfor the rest of battle\ncrit chance +[7+30%x(MP+PP)]%\nand attacks cause bleed",
+            desc3: "Team-wide buff of summons\nfor the rest of battle\ncrit chance +[10+40%x(MP+PP)]%\nand attacks cause bleed",
         },
         buffTotalDmgSkill: {
             name: "Total damage",
@@ -356,7 +357,7 @@ export const SKILLS_EN = {
         stealPPorMPSkill: {
             name: "Steal power",
             desc1: "Steal [4] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
-            desc2: "Steal [8] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
+            desc2: "Steal [7] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
             desc3: "Steal [12] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
         },
     },

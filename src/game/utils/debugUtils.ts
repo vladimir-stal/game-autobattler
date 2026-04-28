@@ -1,11 +1,9 @@
-import { ECardType, EItemBonusType, EItemTargetType, ICard, TDuelEnemy } from "../../types";
+import { ECardType, EItemBattleBonusType, EItemBonusType, EItemTargetType, ICard, TDuelEnemy } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
-import { dagger1, wand1 } from "../basicWeaponItemConsts";
-import { basic_exp_bag, basic_jacket } from "../commonItemConsts";
 import { jacket21_3 } from "../commonItemConsts2";
-import { summonerMantle3 } from "../commonItemConsts3";
 import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
+
 import { barbarianHero, illusionistHero, mimicHero, necromancerHero, samuraiHero, witchHero } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
@@ -19,8 +17,11 @@ import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
 import { shieldWarriorsSummonMob } from "../units/summonMobUnits";
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { dagger31 } from "../weaponItem3Consts";
+import { inquisitorHero } from "../mcHeroConsts";
+import { ringOfHealingSkill } from "../skills/priestSkillConsts";
+import { mortalStrikeSkill } from "../skills/warriorSkillConsts";
 
-export const debugHeroSelectRoom = false;
+export const debugHeroSelectRoom = true;
 export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
@@ -37,6 +38,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
     return [null, { type: ECardType.UNIT, price: 0, unit: summonHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: inquisitorHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
@@ -46,18 +48,25 @@ export const customStartingItemsRoom = (): ICard[] => {
         { type: ECardType.SKILL, price: 0, skill: radiantWallSkill },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
         /*{
+        //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
+        //{ type: ECardType.UNIT, price: 0, unit: warriorHero },
+        //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
+        { type: ECardType.SKILL, price: 0, skill: mortalStrikeSkill },
+        {
+
             type: ECardType.ITEM,
             price: 0,
             item: {
-                ...basic_jacket,
+                ...jacket21_3,
                 bonuses: [
-                    ...basic_jacket.bonuses,
-                    { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "evolvedNumber", attribute: "basicPhysicalPower", targetType: EItemTargetType.SELF },
+                    ...jacket21_3.bonuses,
+                    { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "evolvedNumber", attribute: "basicMagicPower", targetType: EItemTargetType.SELF },
                 ],
+                battleBonuses: [{ type: EItemBattleBonusType.SUMMON_INCREASE_DAMAGE, value: 4, valueType: "number" }],
             },
-
-        },*/
-        { type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
-        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        },
+        { type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
+        //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        */
     ];
 };
