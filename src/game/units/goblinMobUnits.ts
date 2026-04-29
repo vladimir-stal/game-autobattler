@@ -1,7 +1,8 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType, EDebuffType } from "../../types";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinGoldCoin, itemGoblinSilverCoin } from "../mobItemConsts";
-import { mobNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff, mobCheerSkill, mobAmbushSkill } from "../skills/mobSkills";
+import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { mobNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff, mobCheerSkill, mobAmbushSkill, goblinPocketSand } from "../skills/mobSkills";
 
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,
@@ -20,11 +21,14 @@ export const weakGoblinUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN,
     id: "WEAKGOBLIN",
-    skills: [],
+    skills: [mobNoSkill,goblinPocketSand,noBasicAttackSkill],
     items: [],
     level: 1,
     exp: 0,
-    mobItems: [{ item: itemCoin, probability: 40 }],
+    mobItems: [
+        { item: itemCoin, probability: 40 },
+        { skill: goblinPocketSand, probability: 17} // ~10%
+    ],
 };
 
 export const goblinUnit: IUnit = {
@@ -44,7 +48,7 @@ export const goblinUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOBLIN,
     id: "GOBLIN",
-    skills: [goblinApplyShock],
+    skills: [noBasicAttackSkill,goblinApplyShock],
     items: [],
     level: 2,
     exp: 0,
@@ -53,6 +57,7 @@ export const goblinUnit: IUnit = {
         { item: itemGoblinBoneDagger, probability: 12 },
         { item: itemCoin2, probability: 14 },
         // 100*0.80*0.88*0.86 = 60% not to get anything
+        { skill: goblinApplyShock, probability: 16},
     ],
 };
 
@@ -74,7 +79,7 @@ export const goblinShamanUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOBLINSHAMAN,
     id: "GOBLINSHAMAN",
-    skills: [goblinShamanHpRegIncr],
+    skills: [noBasicAttackSkill, goblinShamanHpRegIncr],
     items: [],
     level: 2,
     exp: 0,
@@ -83,6 +88,7 @@ export const goblinShamanUnit: IUnit = {
         { item: itemGoblinSilverCoin, probability: 17 },
         { item: itemGoblinBoneDagger, probability: 14 },
         // 100*0.85*0.83*0.86 = 60% not to get anything
+        { skill: goblinShamanHpRegIncr, probability: 16}
     ],
 };
 
@@ -114,8 +120,9 @@ export const goldGoblin1Unit: IUnit = {
         { item: itemCoin, probability: 15 }, // 15%
         { item: itemCoin2, probability: 17 }, // 15% ~ 15/0.85
         { item: itemGoblinBoneDagger, probability: 14 }, // 10% ~ 10/(0.85*0.83)
-        { item: itemGoblinSilverCoin, probability: 49 }, // 30/(0.85*0.83*0.86)
-        { item: itemGoblinGoldCoin, probability: 100 },
+        { item: itemGoblinSilverCoin, probability: 41 }, // 25/(0.85*0.83*0.86)
+        { skill: goldGoblinBuff, probability: 28 }, // ~10%
+        { item: itemGoblinGoldCoin, probability: 100 }, // ~25%
     ],
 };
 
@@ -137,7 +144,7 @@ export const goldGoblinBattleUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOLDGOBLIN1, //name: "Goblin trader"
     id: "GOLDGOBLIN1",
-    skills: [mobNoSkill, goldGoblinBuff, mobNoSkill, goldGoblinBuff],
+    skills: [mobNoSkill, goldGoblinBuff, noBasicAttackSkill, noBasicAttackSkill],
     items: [],
     level: 3,
     exp: 0,
@@ -162,7 +169,7 @@ export const cheeringGoblinUnit_skills: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN, // Cheer goblin
     id: "WEAKGOBLIN",
-    skills: [mobCheerSkill, mobNoSkill, mobCheerSkill],
+    skills: [mobNoSkill, mobCheerSkill, noBasicAttackSkill, noBasicAttackSkill], // rotation 2 rounds
     items: [],
     level: 1,
     exp: 0,
@@ -172,7 +179,7 @@ export const cheeringGoblinUnit_skills: IUnit = {
 export const cheeringGoblinUnit_attacks: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.BARD, EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 2,
@@ -186,7 +193,7 @@ export const cheeringGoblinUnit_attacks: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN, // Cheer goblin
     id: "WEAKGOBLIN",
-    skills: [mobAmbushSkill, mobAmbushSkill, mobAmbushSkill, mobAmbushSkill],
+    skills: [noBasicAttackSkill, mobAmbushSkill, mobNoSkill, noBasicAttackSkill], // rotation 2 rounds
     items: [],
     level: 1,
     exp: 0,

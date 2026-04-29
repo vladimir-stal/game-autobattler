@@ -14,7 +14,7 @@ import {
     TBattleUnits,
 } from "../../types";
 import { BattleController } from "../components/BattleController";
-import { calculateIncreaseValue, dealOverhealDamage, emptyBattleUnit, getAllyTargets, getOpponentTargets, reduceStatus } from "./battleUtils";
+import { applyStatus, calculateIncreaseValue, dealOverhealDamage, emptyBattleUnit, getAllyTargets, getOpponentTargets, getStatusItemBonusType, reduceStatus } from "./battleUtils";
 
 export const performTotemSkill = (
     unit: IBattleUnit,
@@ -51,15 +51,57 @@ export const performTotemSkill = (
         case EHeroSkillType.HEAL:
             performTotemHeal(unit, totem, skill, allyUnits, opponentUnits, totemValueBonus, battleRecord, battleController);
             break;
-        // case EHeroSkillType.SUMMON:
-        //     this.performSummon(unit, skill, isPlayer1);
-        //     break;
+        case EHeroSkillType.STATUS_APPLY:
+            performTotemStatus(unit, totem, skill, opponentUnits, totemValueBonus, battleController);
+            break;
         // case EHeroSkillType.TOTEM:
         //     this.performTotem(unit, skill, isPlayer1);
         //     break;
         default:
             console.log("No handler for skill type", skill.type);
     }
+};
+
+const performTotemStatus = (
+    unit: IBattleUnit,
+    totem: ITotem,
+    skill: IHeroSkill,
+    opponentUnits: TBattleUnits,
+    totemValueBonus: number,
+    battleController: BattleController,
+) => {
+    const { targetType, value, ppScale, mpScale, status, valueType, valueFrom } = skill;
+    if (!targetType || value === undefined || !status) {
+        console.log("NO TARGET TYPE, VALUE OR STATUS");
+        return;
+    }
+
+    const targets = getOpponentTargets(opponentUnits, targetType);
+    if (!targets) {
+        return;
+    }
+    battleController.battleRecord.push({
+        unitId: totem.id,
+        targets: [],
+        type: EBattleActionType.ATTACK,
+        value: 0,
+    });
+    // check scaling from MP and PP
+    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+    const baseValue =
+        !valueType || valueType === "number" || valueType === "evolvedNumber" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0;
+
+    let finalValue = baseValue + totemValueBonus + mpScaleValue + ppScaleValue;
+
+    const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
+    if (itemBonus) {
+        finalValue += calculateIncreaseValue(1, itemBonus.value, itemBonus.valueType);
+    }
+
+    targets.forEach((target) => {
+        applyStatus(unit, target, status, finalValue, battleController.battleRecord, false);
+    });
 };
 
 const performTotemAttack = (

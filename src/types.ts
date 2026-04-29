@@ -438,6 +438,7 @@ export enum IMobRewardType {
     GOLD = "GOLD",
     ITEM = "ITEM",
     UNIT = "UNIT",
+    SKILL = "SKILL",
 }
 
 export enum EUnitType {
@@ -531,6 +532,7 @@ export enum EItemBattleBonusType {
     STATUS_POISON_APPLY_INCREASE = "STATUS_POISON_APPLY_INCREASE",
     STATUS_BLEED_APPLY_INCREASE = "STATUS_BLEED_APPLY_INCREASE",
     CAST_SKILL_X_ROUND = "CAST_SKILL_X_ROUND",
+    UNPACK_SKILL_IN_STASH = "UNPACK_SKILL_IN_STASH",
 }
 
 export enum EBattleActionType {
@@ -679,6 +681,9 @@ export enum ETargetType {
     HIGH_ATTACK_ENEMY = "HIGH_ATTACK_ENEMY",
     HIGH_BLEED_ENEMY = "HIGH_BLEED_ENEMY",
     HIGH_POISON_ENEMY = "HIGH_POISON_ENEMY",
+    HIGH_SHOCK_ENEMY = "HIGH_SHOCK_ENEMY",
+    HIGH_BURN_ENEMY = "HIGH_BURN_ENEMY",
+    HIGH_RADIATE_ENEMY = "HIGH_RADIATE_ENEMY",
     HIGH_MP_ENEMY = "HIGH_MP_ENEMY",
     HIGH_PP_ENEMY = "HIGH_PP_ENEMY",
     LOW_HP_ENEMY = "LOW_HP_ENEMY",
@@ -693,9 +698,10 @@ export enum ETargetType {
     // COMMON
     BY_UNIT_ID = "BY_UNIT_ID",
     EVERY_UNIT = "EVERY_UNIT",
-    ANCHOR_TARGET = "ANCHOR_TARGET",
+    ANCHOR_TARGET = "ANCHOR_TARGET", // unit that is afflicted with buff/debuff of Battle trigger type (called from that same Battle trigger)
     BY_RELEVANT_ID = "BY_RELEVANT_ID", // triggerBattleTrigger() ~ relevantUnitId parameter
     CUSTOM = "CUSTOM",
+    SAME_LAST_TARGET = "SAME_LAST_TARGET", // in skill set, repeat same target for next steps of set 
 }
 
 export enum EWeaponType {
@@ -732,6 +738,7 @@ export enum ESkillCondition {
     HAS_TOTEM = "HAS_TOTEM",
     HAS_NO_SUMMON_OR_TOTEM = "HAS_NO_SUMMON_OR_TOTEM",
     CUSTOM_NUMBER_NOT_ZERO = "CUSTOM_NUMBER_NOT_ZERO",
+    CUSTOM_NUMBER_IS_ZERO = "CUSTOM_NUMBER_IS_ZERO",
     IN_BACK_ROW = "IN_BACK_ROW",
     IN_FRONT_ROW = "IN_FRONT_ROW",
     ONLY_BEFORE_COMBAT = "ONLY_BEFORE_COMBAT",
@@ -843,7 +850,7 @@ export interface IUnit {
     items: IItem[];
     afterDuelBonuses?: IAfterDuelBonus[];
     passiveSkill?: IPassiveSkill;
-    mobItems?: { item: IItem; probability: number }[];
+    mobItems?: { item?: IItem; skill?: IHeroSkillSet; probability: number }[];
 }
 
 export type THeroAttribute = keyof Pick<
@@ -985,6 +992,8 @@ export enum EAppTriggerType {
     RECIEVE_BUFF = "RECIEVE_BUFF", // after recieving (non-battle-trigger) buff
     RECIEVE_DEBUFF = "RECIEVE_DEBUFF", // after recieving (non-battle-trigger) debuff
     TURN_START = "TURN_START", // at start of target's turn
+    AFTER_EVADE = "AFTER_EVADE", // after successful evade
+    AFTER_CRIT = "AFTER_CRIT",
 }
 
 export interface IAppTrigger {

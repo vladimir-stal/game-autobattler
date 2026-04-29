@@ -40,6 +40,7 @@ export const MOBS_EN = {
         skeletons: "Skeletons",
         peasants: "Peasants",
         infernoflies: "Infernoflies",
+        wolves: "Wolves",
     },
     level7: {},
     level8: {},

@@ -384,6 +384,18 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const target = getHighestStatusTarget(units, EStatusType.POISON);
             return target ? [target] : null;
         }
+        case ETargetType.HIGH_BURN_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.BURN);
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_SHOCK_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.SHOCK);
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_RADIATE_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.RADIATE);
+            return target ? [target] : null;
+        }
         case ETargetType.HIGH_MP_ENEMY: {
             const target = getHighestAttributeTarget(units, "magicPower");
             return target ? [target] : null;
@@ -1251,6 +1263,8 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return !!unit.totem;
         case ESkillCondition.CUSTOM_NUMBER_NOT_ZERO:
             return !!unit.customNumber;
+        case ESkillCondition.CUSTOM_NUMBER_IS_ZERO:
+            return !unit.customNumber;
         case ESkillCondition.IN_BACK_ROW:
             return unit.isBackRowPosition;
         case ESkillCondition.IN_FRONT_ROW:

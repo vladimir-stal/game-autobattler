@@ -162,15 +162,16 @@ export class BattleController {
             unit.customNumber = 0;
             this.battleRecord.push(skillSetBattleAction);
 
+            let lastTargetId;
             skillSet.skills.forEach((skill) => {
                 if (skill.condition === ESkillCondition.NOT_BEFORE_COMBAT) return;
                 if (skill.condition) {
                     const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
                     if (isConditionFulfilled) {
-                        this.performSkill(unit, skill, isPlayer1, true);
+                        lastTargetId = this.performSkill(unit, skill, isPlayer1, true, lastTargetId);
                     }
                 } else {
-                    this.performSkill(unit, skill, isPlayer1, true);
+                    lastTargetId = this.performSkill(unit, skill, isPlayer1, true, lastTargetId);
                 }
                 //this.performSkill(unit, skill, isPlayer1, true);
             });
@@ -283,14 +284,15 @@ export class BattleController {
             };
             this.anchorTriggerUnitId = bt.anchorTarget.id;
             this.battleRecord.push(triggerBattleAction);
+            let lastTargetId;
             at.skill.forEach((sk) => {
                 if (sk.condition) {
                     const isConditionFulfilled = checkSkillCondition(bt.originBattleUnit, sk.condition);
                     if (isConditionFulfilled) {
-                        this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false);
+                        lastTargetId = this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false, lastTargetId);
                     }
                 } else {
-                    this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false);
+                    lastTargetId = this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false, lastTargetId);
                 }
                 //this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false);
             });
@@ -324,15 +326,16 @@ export class BattleController {
         };
         this.battleRecord.push(skillSetBattleAction);
         unit.customNumber = 0;
+        let sameLastTarget; // SAME_LAST_TARGET
         skillSet.skills.forEach((skill) => {
             if (forcedSingleCast && skill.type === EHeroSkillType.FORCE_UNIT_CAST_SKILL) return; // Ban FORCE_UNIT_CAST_SKILL on FORCE_UNIT_CAST_SKILL
             if (skill.condition) {
                 const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
                 if (isConditionFulfilled) {
-                    this.performSkill(unit, skill, isPlayer1);
+                    sameLastTarget = this.performSkill(unit, skill, isPlayer1, false, sameLastTarget);
                 }
             } else {
-                this.performSkill(unit, skill, isPlayer1);
+                sameLastTarget = this.performSkill(unit, skill, isPlayer1, false, sameLastTarget);
             }
         });
     }
@@ -423,14 +426,15 @@ export class BattleController {
                         return;
                     }
                     unit.customNumber = 0;
+                    let lastTargetId;
                     itemSkillSet.skills.forEach((skill) => {
                         if (skill.condition) {
                             const isConditionFulfilled = checkSkillCondition(unit, skill.condition);
                             if (isConditionFulfilled) {
-                                this.performSkill(unit, skill, isPlayer1);
+                                lastTargetId = this.performSkill(unit, skill, isPlayer1, false, lastTargetId);
                             }
                         } else {
-                            this.performSkill(unit, skill, isPlayer1);
+                            lastTargetId = this.performSkill(unit, skill, isPlayer1, false, lastTargetId);
                         }
                     });
                 });
@@ -514,97 +518,79 @@ export class BattleController {
         }
     }
 
-    performSkill(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        if (skill.condition === ESkillCondition.ONLY_BEFORE_COMBAT && !isStartBattle) return;
+    performSkill(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
+        if (skill.condition === ESkillCondition.ONLY_BEFORE_COMBAT && !isStartBattle) return sameLastTargetId;
         switch (skill.type) {
             case EHeroSkillType.ATTACK:
-                this.performAttack(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performAttack(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.ATTRIBUTE_INCREASE:
-                this.performAttrIncrease(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performAttrIncrease(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.ATTRIBUTE_DECREASE:
-                this.performAttrDecrease(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performAttrDecrease(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.BUFF:
-                this.performBuff(unit, skill, skill.buff, isPlayer1, isStartBattle);
-                break;
+                return this.performBuff(unit, skill, skill.buff, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.BUFF_COPY:
-                this.performBuffCopy(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performBuffCopy(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.BUFF_INCREASE_VALUE:
-                this.performBuffValueIncrease(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performBuffValueIncrease(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.BUFF_REMOVE:
-                this.performBuffRemove(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performBuffRemove(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.DEBUFF:
-                this.performDebuff(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performDebuff(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.DEBUFF_REMOVE:
-                this.performDebuffRemove(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performDebuffRemove(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.HEAL:
-                this.performHeal(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performHeal(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.STATUS_APPLY:
-                this.performApplyStatus(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performApplyStatus(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.STATUS_REMOVE:
-                this.performRemoveStatus(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performRemoveStatus(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.SUMMON:
                 this.performSummon(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return sameLastTargetId;
             case EHeroSkillType.SUMMON_REMOVE:
-                this.performRemoveSummon(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performRemoveSummon(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.SWAP_HP:
-                this.performSwapHp(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performSwapHp(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.TOTEM:
                 this.performTotem(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return sameLastTargetId;
             case EHeroSkillType.TOTEM_REMOVE:
-                this.performRemoveTotem(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performRemoveTotem(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.TOTEM_INCREASE_VALUE:
                 this.performTotemIncreaseValue(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return sameLastTargetId;
             case EHeroSkillType.FORCE_REWIND_SKILL_INDEX:
-                this.performRewind(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performRewind(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.COPY_UNIT_CAST_SKILL:
                 this.performCastAnotherUnitSkill(unit, skill, isPlayer1, true, isStartBattle);
-                break;
+                return sameLastTargetId
             case EHeroSkillType.REPEATING_SKILL:
                 if (skill.childSkill) {
                     const count = Math.min(calculateSkillValue(skill, unit), 20);
                     console.log("REPEATING_SKILL x" + count);
+                    let lastSameId;
                     for (let i = 0; i < count; i++) {
                         if (skill.childSkill.condition) {
                             const isConditionFulfilled = checkSkillCondition(unit, skill.childSkill.condition);
                             if (isConditionFulfilled) {
-                                this.performSkill(unit, skill.childSkill, isPlayer1);
+                                lastSameId = this.performSkill(unit, skill.childSkill, isPlayer1, isStartBattle, sameLastTargetId) || lastSameId;
                             }
                         } else {
-                            this.performSkill(unit, skill.childSkill, isPlayer1);
+                            lastSameId = this.performSkill(unit, skill.childSkill, isPlayer1, isStartBattle, sameLastTargetId) || lastSameId;
                         }
                     }
+                    return lastSameId || sameLastTargetId;
                 }
-                break;
+                return sameLastTargetId;
             case EHeroSkillType.CALCULATE_NUMBER:
-                this.performCustomCalculation(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performCustomCalculation(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.FORCE_UNIT_MAKE_ATTACK:
-                this.performForceOutOfTurnAction(unit, skill, isPlayer1, false, isStartBattle);
-                break;
+                return this.performForceOutOfTurnAction(unit, skill, isPlayer1, false, isStartBattle, sameLastTargetId);
             case EHeroSkillType.FORCE_UNIT_CAST_SKILL:
-                this.performForceOutOfTurnAction(unit, skill, isPlayer1, true, isStartBattle);
-                break;
+                return this.performForceOutOfTurnAction(unit, skill, isPlayer1, true, isStartBattle, sameLastTargetId);
             case EHeroSkillType.FORCE_TOTEM_ACTION:
-                this.performForceOutOfTurnTotem(unit, skill, isPlayer1, isStartBattle);
-                break;
+                return this.performForceOutOfTurnTotem(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.NONE:
                 {
                 }
@@ -652,16 +638,16 @@ export class BattleController {
         this.removeDebuffs(unit, EBuffTimeType.TILL_NEXT_BA);
     }
 
-    performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performAttack(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType, value, valueFrom, valueType, attackType, mpScale, ppScale } = skill;
         if (!targetType || !attackType || value === undefined) {
             console.log("NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
 
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
         if (!targets) {
-            return;
+            return sameLastTargetId;
         }
 
         let isCritAllowed = attackType === EHeroAttackType.PHYSICAL;
@@ -693,6 +679,7 @@ export class BattleController {
         };
         this.battleRecord.push(attackRecord);
 
+        let lastAliveTargetId;
         targets.forEach((target) => {
             // check if target has a summon - summon takes damage instead
             let parentUnit; // owner of a summon
@@ -714,14 +701,21 @@ export class BattleController {
             if (antiskillShieldBuff) {
                 removeBuff(target, antiskillShieldBuff, this.battleRecord);
                 this.dealDamage(unit, unit, attackDamage, skill.attackType!, parentUnit, attackRecord);
-                return;
+                return lastAliveTargetId || sameLastTargetId;
             }
 
             this.dealDamage(unit, finalTarget, attackDamage, skill.attackType!, parentUnit, attackRecord);
+            if (finalTarget.hp > 0) {
+                lastAliveTargetId = finalTarget.id;
+            }
         });
+        if (isCrit) {
+            triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastAliveTargetId);
+        }
+        return lastAliveTargetId || sameLastTargetId;
     }
 
-    performAttrIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performAttrIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { value, valueType, valueFrom, attribute, targetType, mpScale, ppScale } = skill;
 
         // check scaling from MP and PP
@@ -730,13 +724,13 @@ export class BattleController {
 
         if ((!value && mpScaleValue + ppScaleValue === 0) || !valueType || !attribute || !targetType) {
             console.log("performAttrIncrease RETURN 1");
-            return;
+            return sameLastTargetId;
         }
 
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
         if (!targets) {
             console.log("performAttrIncrease RETURN 2");
-            return;
+            return sameLastTargetId;
         }
 
         const battleAction: IBattleAction = {
@@ -748,11 +742,18 @@ export class BattleController {
         };
         this.battleRecord.push(battleAction);
 
+        let lastTargetId;
         targets.forEach((target) => {
             //console.log("INCR ATTR TARGET", attribute, target);
             const increaseValue = calculateIncreaseValue(target[attribute], value || 0, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
 
-            target[attribute] += increaseValue;
+            if (attribute === "maxHp") {
+                const percent = target.hp/target.maxHp;
+                target.maxHp += increaseValue;
+                target.hp = Math.min(target.maxHp, Math.floor(target.maxHp*percent)+1);
+            } else {
+                target[attribute] += increaseValue;
+            }
             //console.log(">>>>", increaseValue, target[attribute]);
             //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
             battleAction.targets?.push({
@@ -760,10 +761,12 @@ export class BattleController {
                 attribute,
                 value: increaseValue,
             });
+            lastTargetId = target.id;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performAttrDecrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performAttrDecrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { value, valueType, attribute, targetType, targetUnitId, mpScale, ppScale } = skill;
 
         // check scaling from MP and PP
@@ -772,15 +775,16 @@ export class BattleController {
 
         if (value === undefined || (!value && mpScaleValue + ppScaleValue === 0) || !valueType || !attribute || !targetType) {
             console.log("performAttrIncrease RETURN 1");
-            return;
+            return sameLastTargetId;
         }
 
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, targetUnitId, sameLastTargetId);
 
         if (!targets) {
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         targets.forEach((target) => {
             const decreaseValue = calculateIncreaseValue(target[attribute], value, valueType);
             target[attribute] -= decreaseValue;
@@ -795,13 +799,22 @@ export class BattleController {
                 value: decreaseValue,
                 isStartBattle,
             });
+            lastTargetId = target.id;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performBuff(unit: IBattleUnit, skill: IHeroSkill | undefined, buff: IBuff | undefined, isPlayer1: boolean, isStartBattle?: boolean) {
+    performBuff(
+        unit: IBattleUnit,
+        skill: IHeroSkill | undefined,
+        buff: IBuff | undefined,
+        isPlayer1: boolean,
+        isStartBattle?: boolean,
+        sameLastTargetId?: string,
+    ): string {
         if (!buff) {
             console.log("performBuff RETURN 1");
-            return;
+            return sameLastTargetId;
         }
         //console.log("performBuff > ", skill, buff);
         // record
@@ -818,7 +831,7 @@ export class BattleController {
         const { type, targetType, targetUnitId, attribute, value, statusType, mpScale, ppScale } = buff;
         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
         //const targets = getAllyTargets(unit, allyUnits, targetType, targetUnitId);
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill?.markType, targetUnitId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill?.markType, targetUnitId, sameLastTargetId);
 
         //const t = this.getTargetsSimple(unit,targetType,isPlayer1);
         if (!targets) {
@@ -835,35 +848,50 @@ export class BattleController {
                 additionalTargets && rndTarget && targets.push(rndTarget);
             }
         }
+        let lastTargetId;
         targets.forEach((target) => {
             if (target) {
                 applyBuff(target, buff, buffAction, this, unit, isPlayer1);
                 if (!buff.cannotBeTargeted) {
                     triggerBattleTrigger(EAppTriggerType.RECIEVE_BUFF, this, target);
                 }
+                lastTargetId = target.id;
             }
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performBuffValueIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performBuffValueIncrease(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType, value, valueType, targetBuffId } = skill;
 
         if (!targetType || value === undefined || !valueType) {
-            return;
+            return sameLastTargetId;
         }
 
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const filteredUnits = targetBuffId ? allyUnits.filter((u) => !!u && u.buffs.some((b) => b.name === targetBuffId)) : allyUnits;
-        const targets = getAllyTargets(unit, filteredUnits, targetType);
+        const targets = ((): IBattleUnit[] => {
+            if (
+                targetType === ETargetType.SAME_LAST_TARGET ||
+                targetType === ETargetType.BY_UNIT_ID ||
+                targetType === ETargetType.BY_RELEVANT_ID ||
+                targetType === ETargetType.ANCHOR_TARGET
+            ) {
+                return this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
+            } else {
+                const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
+                const filteredUnits = targetBuffId ? allyUnits.filter((u) => !!u && u.buffs.some((b) => b.name === targetBuffId)) : allyUnits;
+                return getAllyTargets(unit, filteredUnits, targetType);
+            }
+        })();
 
         //console.log("performBuffValueIncrease > get buff from", targets);
 
         // check if at least one buffed ally found
         if (!targets?.[0]) {
             console.log("performBuffValueIncrease > no buff to copy found");
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         // get buff from target and increse its value
         targets?.forEach((target) => {
             const buff = targetBuffId
@@ -893,25 +921,27 @@ export class BattleController {
             // this.battleRecord.push(buffAction);
 
             this.performBuff(unit, skill, buff, isPlayer1, isStartBattle);
+            lastTargetId = target.id;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performBuffCopy(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performBuffCopy(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType, value, valueType, targetFromType } = skill;
 
         if (!targetType || !targetFromType || value === undefined || !valueType) {
-            return;
+            return sameLastTargetId;
         }
 
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const targets = getAllyTargets(unit, allyUnits, targetFromType);
+        const targets = this.getTargetsSimple(unit, targetFromType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
 
         // check if at least one buffed ally found
         if (!targets?.[0]) {
             console.log("performBuffCopy > no buff to copy found");
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         // get buff from target and copy it to random ally
         targets?.forEach((target) => {
             const buff = { ...getRandomArrayItem(target.buffs.filter((b) => !b.cannotBeTargeted)) };
@@ -922,25 +952,26 @@ export class BattleController {
                 return;
             }
 
-            this.performBuff(unit, skill, buff, isPlayer1, isStartBattle);
+            lastTargetId = this.performBuff(unit, skill, buff, isPlayer1, isStartBattle, sameLastTargetId) || lastTargetId;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
     /**
      *
      * @param unit who applies status
      */
-    performApplyStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performApplyStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { status, targetType, targetUnitId, value, mpScale, ppScale, valueFrom, valueType, markType } = skill;
         if (!status || !targetType || value === undefined) {
-            return;
+            return sameLastTargetId;
         }
 
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId, sameLastTargetId);
         //getTargets(unit, allyUnits, opponentUnits, targetType, targetUnitId);
 
         if (!targets) {
-            return;
+            return sameLastTargetId;
         }
 
         // check scaling from MP and PP
@@ -956,27 +987,29 @@ export class BattleController {
             finalValue += calculateIncreaseValue(1, itemBonus.value, itemBonus.valueType);
         }
 
+        let lastTargetId;
         targets.forEach((target) => {
             //console.log("APPLY STATUS", unit, target, status, finalValue);
             applyStatus(unit, target, status, finalValue, this.battleRecord, isStartBattle);
+            lastTargetId = target.id;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
     /** Remove random status from target units */
-    performRemoveStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performRemoveStatus(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType } = skill;
         if (!targetType) {
             console.log("NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
 
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
         if (!targets) {
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         targets.forEach((target) => {
             if (target.statuses.length === 0) {
                 return;
@@ -987,13 +1020,15 @@ export class BattleController {
             }
             const randomStatus = getRandomArrayItem(target.statuses);
             removeStatus(unit, target, randomStatus.type, this.battleRecord, isStartBattle);
+            lastTargetId = target.id;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performDebuff(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performDebuff(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { debuff } = skill;
         if (!debuff) {
-            return;
+            return sameLastTargetId;
         }
         //console.log("performDebuff", debuff);
         // record
@@ -1005,14 +1040,15 @@ export class BattleController {
             isStartBattle,
             skill,
         };
-        this.battleRecord.push(debuffAction);
 
         const { type, targetType, name, attribute, value, mpScale, ppScale, duration } = debuff;
         const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId);
         if (!targets) {
             console.log("performDebuff: FAIL to find targets", targetType, skill.markType);
-            return;
-        } else
+            return sameLastTargetId;
+        } else {
+            this.battleRecord.push(debuffAction);
+            let lastTargetId;
             targets.forEach((target) => {
                 if (target) {
                     // check if target unit has antis debuff bonuses (ANTISKILL_SHIELD, IGNORE_NEXT_DEBUFF)
@@ -1031,21 +1067,25 @@ export class BattleController {
                     if (!debuff.cannotBeTargeted) {
                         triggerBattleTrigger(EAppTriggerType.RECIEVE_DEBUFF, this, target);
                     }
+                    lastTargetId = target.id;
                 }
             });
+            return lastTargetId || sameLastTargetId;
+        }
     }
 
-    performDebuffRemove(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performDebuffRemove(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType, markType, targetUnitId } = skill;
         if (!targetType) {
             console.log("NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId, sameLastTargetId);
         console.log("performDebuffRemove targets", targets);
         if (!targets || targets.length === 0) {
-            return;
+            return sameLastTargetId;
         }
+        let lastTargetId;
         targets.forEach((target) => {
             if (target) {
                 if (target.debuffs.length === 0) {
@@ -1054,22 +1094,25 @@ export class BattleController {
                 const rndDebuff = getRandomArrayItem(target.debuffs.filter((d) => !d.cannotBeTargeted));
                 if (rndDebuff) {
                     removeDebuffSimple(target, rndDebuff, this.battleRecord);
+                    lastTargetId = target.id;
                 }
             }
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performBuffRemove(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performBuffRemove(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType, markType, targetUnitId } = skill;
         if (!targetType) {
             console.log("NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId, sameLastTargetId);
         console.log("performBuffRemove targets", targets);
         if (!targets || targets.length === 0) {
-            return;
+            return sameLastTargetId;
         }
+        let lastTargetId;
         targets.forEach((target) => {
             if (target) {
                 if (target.buffs.length === 0) {
@@ -1078,21 +1121,23 @@ export class BattleController {
                 const rndBuff = getRandomArrayItem(target.buffs.filter((b) => !b.cannotBeTargeted));
                 if (rndBuff) {
                     removeBuff(target, rndBuff, this.battleRecord);
+                    lastTargetId = target.id;
                 }
             }
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performHeal(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performHeal(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType, value, mpScale, ppScale, valueType, valueFrom, markType, targetUnitId } = skill;
         if (!targetType || !value) {
             console.log("NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
-        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId, sameLastTargetId);
         if (!targets) {
             console.log("NO TARGET FOUND");
-            return;
+            return sameLastTargetId;
         }
 
         // calculate outgoing heal value
@@ -1125,11 +1170,12 @@ export class BattleController {
         const darkHealBuff = unit.buffs.find((buff) => buff.type === EBuffType.DARK_HEAL);
         if (darkHealBuff) {
             this.performDarkHealAttack(unit, skill, finalHeal, isPlayer1, isStartBattle);
-            return;
+            return sameLastTargetId;
         }
         // OVERHEAL_TO_DAMAGE
 
         let overhealTotal = 0;
+        let lastTargetId;
         targets.forEach((target) => {
             if (target) {
                 // calculate incoming heal value from target buffs and debuffs
@@ -1165,6 +1211,7 @@ export class BattleController {
                     //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
                     return;
                 }
+                lastTargetId = target.id;
                 let finalReduction = 0;
                 // BLEED & POISON interaction
                 target.statuses.forEach((status) => {
@@ -1197,11 +1244,11 @@ export class BattleController {
         // overheal managing
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         dealOverhealDamage(overhealTotal, unit, unit.id, skill, opponentUnits, this);
+        return lastTargetId || sameLastTargetId;
     }
 
     performDarkHealAttack(unit: IBattleUnit, skill: IHeroSkill, value: number, isPlayer1: boolean, isStartBattle?: boolean) {
         const { targetType, isBasicAttack } = skill;
-        const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
 
         let newTargetType = ETargetType.FIRST_ENEMY;
         switch (targetType) {
@@ -1242,6 +1289,9 @@ export class BattleController {
             console.log("summon already exists !");
             return;
         }
+        if (unit.totem) {
+            removeTotem(unit);
+        }
 
         unit.summon = prepareSummonToBattle(summon, unit.isBackRowPosition);
 
@@ -1276,13 +1326,14 @@ export class BattleController {
         // });
     }
 
-    performRewind(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performRewind(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         if (!skill.targetType) {
-            return;
+            return sameLastTargetId;
         }
 
-        const targets = this.getTargetsSimple(unit, skill.targetType, isPlayer1, skill.markType, skill.targetUnitId);
+        const targets = this.getTargetsSimple(unit, skill.targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
         const steps = skill.value || 1;
+        let lastTargetId;
         targets?.forEach((target) => {
             if (target) {
                 for (let i = 0; i < steps; i++) {
@@ -1291,20 +1342,23 @@ export class BattleController {
                         target.currentSkillIndex = 3;
                     }
                 }
+                lastTargetId = target.id;
             }
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performRemoveSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performRemoveSummon(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         if (!skill.targetType) {
-            return;
+            return sameLastTargetId;
         }
 
-        const targetList = this.getTargetsSimple(unit, skill.targetType, isPlayer1);
+        const targetList = this.getTargetsSimple(unit, skill.targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
         if (!targetList) {
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         for (let i = 0; i < (skill.value || 1); i++) {
             const target = getTargetWithSummon(targetList);
             if (target) {
@@ -1315,8 +1369,10 @@ export class BattleController {
                     type: EBattleActionType.SUMMON_REMOVE,
                     isStartBattle,
                 });
+                lastTargetId = target.id;
             }
         }
+        return lastTargetId || sameLastTargetId;
     }
 
     performTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1340,21 +1396,27 @@ export class BattleController {
         });
     }
 
-    performRemoveTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
-        const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
-        const target = getTargetWithTotem(opponentUnits);
-
-        if (!target) {
-            return;
+    performRemoveTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
+        const targetList = this.getTargetsSimple(unit, skill.targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
+        if (!targetList) {
+            return sameLastTargetId;
         }
 
-        removeTotem(target);
-        this.battleRecord.push({
-            unitId: unit.id,
-            targetId: target.id,
-            type: EBattleActionType.TOTEM_REMOVE,
-            isStartBattle,
-        });
+        let lastTargetId;
+        for (let i = 0; i < (skill.value || 1); i++) {
+            const target = getTargetWithTotem(targetList);
+            if (target) {
+                removeTotem(target);
+                this.battleRecord.push({
+                    unitId: unit.id,
+                    targetId: target.id,
+                    type: EBattleActionType.TOTEM_REMOVE,
+                    isStartBattle,
+                });
+                lastTargetId = target.id;
+            }
+        }
+        return lastTargetId || sameLastTargetId;
     }
 
     performTotemIncreaseValue(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
@@ -1393,24 +1455,26 @@ export class BattleController {
         });
     }
 
-    performSwapHp(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performSwapHp(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType } = skill;
         if (!targetType) {
             console.log("performSwapHp > NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
 
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
 
-        const targets = getAllyTargets(unit, allyUnits, targetType);
         if (!targets || targets.length === 0 || !targets[0]) {
             console.log("performSwapHp > NO TARGET FOUND");
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         targets.forEach((target) => {
             swapHp(unit, target, this.battleRecord, isStartBattle);
+            lastTargetId = target.id;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
     performCastAnotherUnitSkill(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isCastSkill: boolean, isStartBattle?: boolean) {
@@ -1446,41 +1510,49 @@ export class BattleController {
         }
     }
 
-    performForceOutOfTurnAction(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isCastSkill: boolean, isStartBattle?: boolean) {
+    performForceOutOfTurnAction(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isCastSkill: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType } = skill;
         if (!targetType) {
             console.log("performForceOutOfTurnAction > NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const targets = this.getTargetsSimple(unit, targetType,isPlayer1,skill.markType,skill.targetUnitId,sameLastTargetId);
+
         if (!targets || targets.length === 0 || !targets[0]) {
             console.log("performForceOutOfTurnAction > NO TARGET FOUND");
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         targets.forEach((target) => {
             if (isCastSkill) this.performAction(target, 0, isPlayer1, 0, true);
             else this.performBasicAttack(target, undefined, isPlayer1);
+            lastTargetId = target.id;
         });
+        return lastTargetId || sameLastTargetId;
     }
 
-    performForceOutOfTurnTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performForceOutOfTurnTotem(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType } = skill;
         if (!targetType) {
             console.log("performForceOutOfTurnAction > NO TARGET TYPE OR VALUE");
-            return;
+            return sameLastTargetId;
         }
-        const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        const targets = getAllyTargets(unit, allyUnits, targetType);
+        const targets = this.getTargetsSimple(unit, targetType,isPlayer1,skill.markType,skill.targetUnitId,sameLastTargetId);
+        
         if (!targets || targets.length === 0 || !targets[0]) {
             console.log("performForceOutOfTurnAction > NO TARGET FOUND");
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         targets.forEach((target) => {
-            target.totem && this.performTotemActionSkill(target.totem, target, isPlayer1);
+            if (target.totem) {
+                this.performTotemActionSkill(target.totem, target, isPlayer1);
+                lastTargetId = target.id;
+            }
         });
+        return lastTargetId || sameLastTargetId;
     }
 
     findUnitByUnitId(unitId: string): IBattleUnit | undefined {
@@ -1493,9 +1565,20 @@ export class BattleController {
         return allUnits.find((u) => u.id === unitId) || allSummons.find((u) => u.id === unitId);
     }
 
-    getTargetsSimple(unit: IBattleUnit, targetType: ETargetType, isPlayer1?: boolean, debuffType?: EDebuffType, targetUnitId?: string): IBattleUnit[] | null {
+    getTargetsSimple(
+        unit: IBattleUnit,
+        targetType: ETargetType,
+        isPlayer1?: boolean,
+        debuffType?: EDebuffType,
+        targetUnitId?: string,
+        sameLastTargetId?: string,
+    ): IBattleUnit[] | null {
         if (targetType === ETargetType.BY_UNIT_ID && targetUnitId) {
             const unitById = this.findUnitByUnitId(targetUnitId);
+            return unitById ? [unitById] : null;
+        }
+        if (targetType === ETargetType.SAME_LAST_TARGET && sameLastTargetId) {
+            const unitById = this.findUnitByUnitId(sameLastTargetId);
             return unitById ? [unitById] : null;
         }
         if (targetType === ETargetType.BY_UNIT_ID && this.currentActingUnitId) {
@@ -1532,34 +1615,40 @@ export class BattleController {
         return !!dbgTargets?.includes(target);
     }
 
-    performCustomCalculation(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean) {
+    performCustomCalculation(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
         const { targetType, value } = skill;
         if (!targetType) {
             console.log("NO TARGET TYPE");
-            return;
+            return sameLastTargetId;
         }
 
         const targets = this.getTargetsSimple(unit, targetType, isPlayer1);
         if (!targets) {
             console.log("NO TARGET FOUND");
-            return;
+            return sameLastTargetId;
         }
 
+        let lastTargetId;
         if (skill.childSkill) {
             targets.forEach((t) => {
                 if (skill.childSkill?.condition && checkSkillCondition(t, skill.childSkill.condition)) {
                     unit.customNumber++;
+                    lastTargetId = t.id;
                 }
             });
         } else if (skill.status) {
             targets.forEach((t) => {
                 const v = t.statuses?.find((s) => s.type === skill.status);
-                !!v && (unit.customNumber += v.value);
+                if (v) {
+                    unit.customNumber += v.value;
+                    lastTargetId = t.id;
+                }
             });
         } else if (skill.attribute) {
             targets.forEach((t) => {
                 if (skill.attribute) {
                     unit.customNumber += t[skill.attribute];
+                    lastTargetId = t.id;
                 }
             });
         } else if (skill.valueType === "number" || skill.valueType === "evolvedNumber") {
@@ -1569,18 +1658,20 @@ export class BattleController {
                 if (skill.valueFrom) {
                     const v = Math.floor(((value || 100) * t[skill.valueFrom]) / 100);
                     unit.customNumber += v;
+                    lastTargetId = t.id;
                 }
             });
         } else if (skill.valueType === "percent" || skill.valueType === "evolvedPercent") {
             if (value === undefined) {
                 console.log("NO PERCENT VALUE WAS SET");
-                return;
+                return sameLastTargetId;
             }
             unit.customNumber = Math.floor((value * unit.customNumber) / 100);
         } else {
             console.log("Error. Wrong calculation arguments.", skill);
-            return;
+            return sameLastTargetId;
         }
+        return lastTargetId || sameLastTargetId;
         //console.log("-= Calculate ", unit.customNumber, skill);
     }
 
@@ -1605,17 +1696,16 @@ export class BattleController {
             this.battleRecord.push(skillSetBattleAction);
 
             summonUnit.customNumber = 0;
-            // TODO: skill set should store isBasicAttack instead of skill
+            let lastTargetId;            
             skillSet.skills.forEach((skill) => {
-                this.performSkill(summonUnit, skill, isPlayer1);
-
+                if (skill.condition) {
+                    if (checkSkillCondition(summonUnit,skill.condition)) {
+                        lastTargetId = this.performSkill(summonUnit, skill, isPlayer1, false, lastTargetId);
+                    }
+                } else {
+                    lastTargetId = this.performSkill(summonUnit, skill, isPlayer1, false, lastTargetId);
+                }
                 // !!!! NO CHAIN SKILLS FOR SUMMONS
-                // if (skillSet.isChained) {
-                //     this.battleRecord.push({ unitId: unit.id, type: EBattleActionType.SKILL_CHAIN });
-                //     this.performAction(unit, round, isPlayer1);
-                // } else {
-                //     this.performBasicAttack(unit, skill, isPlayer1, skillIndex);
-                // }
             });
         }
 
@@ -1781,6 +1871,9 @@ export class BattleController {
             this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
             this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
+        if (isCrit) {
+            triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastTargetId);
+        }
         //console.log("final last target",unit.id,">",lastTargetId);
         return lastTargetId;
     }
@@ -1969,6 +2062,9 @@ export class BattleController {
 
         if (target.hp <= 0) {
             triggerBattleTrigger(EAppTriggerType.KILL, this, unit);
+        }
+        if (recordTarget.isEvasion) {
+            triggerBattleTrigger(EAppTriggerType.AFTER_EVADE, this, target, unit.id);
         }
         // this.listOfTriggers.forEach((bt) => {
         //     if (bt.type === EAppTriggerType.KILL && this.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1))

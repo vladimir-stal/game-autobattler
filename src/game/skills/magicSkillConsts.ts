@@ -244,7 +244,6 @@ export const applyShock_3: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.SHOCK,
             value: 3,
@@ -264,7 +263,6 @@ export const applyShock_2: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.SHOCK,
             value: 2,
@@ -285,7 +283,6 @@ export const applyShock: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.SHOCK,
             value: 1,
@@ -346,7 +343,7 @@ export const meteoriteFallSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     skills: meteoriteFallSkillset(3, 100, 3, 3),
-    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    image: IMAGE_SKILL_YELLOW_EXPLOSION, // IMAGE_SKILL_TEST
     //nextLevel: applyShock_2,
 };
 
@@ -359,7 +356,7 @@ export const meteoriteFallSkill_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     skills: meteoriteFallSkillset(3, 70, 3, 2),
-    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    image: IMAGE_SKILL_YELLOW_EXPLOSION, // IMAGE_SKILL_TEST
     nextLevel: meteoriteFallSkill_3,
 };
 
@@ -372,7 +369,7 @@ export const meteoriteFallSkill: IHeroSkillSet = {
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     skills: meteoriteFallSkillset(3, 40, 3, 1),
-    image: IMAGE_SKILL_YELLOW_EXPLOSION,
+    image: IMAGE_SKILL_YELLOW_EXPLOSION, // IMAGE_SKILL_TEST
     nextLevel: meteoriteFallSkill_2,
 };
 

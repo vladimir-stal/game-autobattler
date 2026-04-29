@@ -1,4 +1,17 @@
-import { EHeroAttackType, EHeroClass, EHeroClassType, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IUnit, THeroAttribute, TUnits } from "../../types";
+import {
+    EHeroAttackType,
+    EHeroClass,
+    EHeroClassType,
+    EItemBattleBonusType,
+    ETargetType,
+    EUnitType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IUnit,
+    THeroAttribute,
+    TUnits,
+} from "../../types";
+import { scrollOfSkill } from "../commonItemConsts3";
 import { basicClassHeroesByLevel } from "../heroConsts";
 import { basicCommonItems, basicWeapons } from "../itemConsts";
 import { bardSkills } from "../skills/bardSkillConsts";
@@ -153,7 +166,10 @@ const addAttributesOnLevelUp = (unit: IUnit) => {
         unit.basicMaxHp += 1;
         if (attr == 0) unit.basicCritChance += 3;
         if (attr == 1) unit.basicEvasionChance += 3;
-        if (attr == 2) {unit.basicPhysicalPower++; unit.basicMagicPower++; };
+        if (attr == 2) {
+            unit.basicPhysicalPower++;
+            unit.basicMagicPower++;
+        }
         if (attr == 3) unit.basicAttack += 1;
     }
 };
@@ -397,11 +413,15 @@ export const addMobItem = (unit: IUnit) => {
     }
 
     for (let i = 0; i < unit.mobItems.length; i++) {
-        const { item, probability } = unit.mobItems[i];
+        const { item, skill, probability } = unit.mobItems[i];
         //console.log("check item", item.name);
         const isItemAdded = checkProbability(probability);
-        if (isItemAdded) {
+        if (isItemAdded && item) {
             unit.items.push({ ...item, bonuses: [...item.bonuses] });
+            //console.log("add item to unit", unit);
+            break;
+        } else if (isItemAdded && skill) {
+            unit.items.push(scrollOfSkill(skill));
             //console.log("add item to unit", unit);
             break;
         }

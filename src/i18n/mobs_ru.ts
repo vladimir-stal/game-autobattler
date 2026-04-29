@@ -40,6 +40,7 @@ export const MOBS_RU = {
         skeletons: "Скелеты",
         peasants: "Крестьяне",
         infernoflies: "Адские светлячки",
+        wolves: "Волки",
     },
     level7: {},
     level8: {},

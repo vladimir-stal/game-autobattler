@@ -21,9 +21,12 @@ import { inquisitorHero } from "../mcHeroConsts";
 import { ringOfHealingSkill } from "../skills/priestSkillConsts";
 import { mortalStrikeSkill } from "../skills/warriorSkillConsts";
 import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
+import { skeletonMageUnit } from "../units/skeletonsMobUnits";
+import { skeletonPoisonedFlames } from "../skills/mobSkills";
+import { scrollOfSkill } from "../commonItemConsts3";
 
 export const debugHeroSelectRoom = false;
-export const debugStartingItemsRoom = false;
+export const debugStartingItemsRoom = true;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -38,15 +41,16 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 */
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: summonHero }, null];
+    return [null, { type: ECardType.UNIT, price: 0, unit: magicHero }, null];
     return [null, { type: ECardType.UNIT, price: 0, unit: inquisitorHero }, null];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.UNIT, price: 0, unit: warriorHero },
-        { type: ECardType.SKILL, price: 0, skill: debuffBaNextBaAll },
+        { type: ECardType.UNIT, price: 0, unit: peasantUnit },
+        //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
+        //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
         /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
@@ -67,7 +71,8 @@ export const customStartingItemsRoom = (): ICard[] => {
             },
         },
         { type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
-        //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
-        */
+         */
+        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        
     ];
 };
