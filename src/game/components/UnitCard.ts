@@ -145,6 +145,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.upgradeButton.setInteractive().on("pointerdown", () => {
             this.gameScene.unitUpgradePanel.show(this.unit, this.parentCard);
             this.upgradeButton.setVisible(false);
+            this.gameScene.disableCardMoving();
         });
         this.add(this.upgradeButton);
     }

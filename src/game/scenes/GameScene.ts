@@ -238,6 +238,16 @@ export class GameScene extends Phaser.Scene {
         activateSlots(this.allCardSlots, value, this, this.cardToMove);
     }
 
+    disableCardMoving() {
+        this.unitPanel.disableCardsMove();
+        this.inventoryPanel.disableCardsMove();
+    }
+
+    enableCardMoving() {
+        this.unitPanel.enableCardsMove();
+        this.inventoryPanel.enableCardsMove();
+    }
+
     cancelCardMove() {
         this.setIsCardMoveMode(false);
         this.isCardMoveAfterUpgrade = false;

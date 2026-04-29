@@ -29,7 +29,7 @@ export const IMAGE_FIREFLY_SELF_POISON = "poison1.png";
 
 // LEVEL 2
 
-export const IMAGE_SKILL_DARK_21 = "/dark_21.png";
+export const IMAGE_SKILL_DARK_21 = "2/dark_21.png";
 export const IMAGE_SKILL_DARK_22 = "2/dark_22.png";
 export const IMAGE_SKILL_BATTLE = "2/battle.png";
 export const IMAGE_SKILL_DRAGON_FIRE = "2/dragon_fire.png";

@@ -60,11 +60,11 @@ export class SkillCard extends Phaser.GameObjects.Container {
 
     renderInfo() {
         if (this.skill.isChained) {
-            const chainImage = this.scene.add.image(0, 20, IMAGE_ICON_CHAINED).setOrigin(0.5);
+            const chainImage = this.scene.add.image(0, 40, IMAGE_ICON_CHAINED).setOrigin(0.5);
             this.add(chainImage);
         }
         if (this.skill.isActivateOnStart) {
-            const onStartImage = this.scene.add.image(0, 20, IMAGE_ICON_ATTACK).setOrigin(0.5);
+            const onStartImage = this.scene.add.image(0, 40, IMAGE_ICON_ATTACK).setOrigin(0.5);
             this.add(onStartImage);
         }
 

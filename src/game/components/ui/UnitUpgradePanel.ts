@@ -146,6 +146,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
                 this.card.setUnit(mcUnit);
 
                 this.hide();
+                this.gameScene.enableCardMoving();
             })
             .on("pointerover", () => {
                 upgradeButton.setColor("#FFFFFF");

@@ -6,7 +6,7 @@ import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
 import { barbarianHero, illusionistHero, mimicHero, necromancerHero, samuraiHero, witchHero } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
-import { phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
+import { onlyBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { incrSummonBa } from "../skills/summonSkillConsts2";
@@ -20,8 +20,9 @@ import { dagger31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
 import { ringOfHealingSkill } from "../skills/priestSkillConsts";
 import { mortalStrikeSkill } from "../skills/warriorSkillConsts";
+import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
 
-export const debugHeroSelectRoom = true;
+export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
@@ -45,7 +46,7 @@ export const customStartingItemsRoom = (): ICard[] => {
     return [
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         { type: ECardType.UNIT, price: 0, unit: warriorHero },
-        { type: ECardType.SKILL, price: 0, skill: radiantWallSkill },
+        { type: ECardType.SKILL, price: 0, skill: debuffBaNextBaAll },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
         /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
