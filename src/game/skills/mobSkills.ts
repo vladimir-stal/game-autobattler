@@ -1,5 +1,6 @@
 import {
     AnimationType,
+    EAppTriggerType,
     EBuffTimeType,
     EBuffType,
     EDebuffType,
@@ -12,11 +13,20 @@ import {
     ETargetType,
     IHeroSkill,
     IHeroSkillSet,
+    IPassiveSkill,
     IUnit,
 } from "../../types";
 import { i18n } from "../consts";
 import { wolfUnitSmol } from "../units/wolfsMobUnits";
-import { IMAGE_FIREFLY_SELF_POISON, IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_PHYS_ATTACK, IMAGE_SKILL_REGEN, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_FIREFLY_SELF_POISON,
+    IMAGE_SKILL_BARD_BUFF_1,
+    IMAGE_SKILL_DOUBLE_SWORD,
+    IMAGE_SKILL_KNIGHT_SHIELD,
+    IMAGE_SKILL_PHYS_ATTACK,
+    IMAGE_SKILL_REGEN,
+    IMAGE_SKILL_TEST,
+} from "../utils/load/skillImagesLoad";
 
 // weak goblin
 const goblinPocketSandSkillset = (blind: number, blindScale: number, atkboost: number, atkScale: number): IHeroSkill[] => {
@@ -414,35 +424,42 @@ export const skeletonPoisonedFlames: IHeroSkillSet = {
     nextLevel: skeletonPoisonedFlames_2,
 };
 
-export const fireflySelfPoison: IHeroSkillSet = {
-    id: "fireflySelfPoison",
-    name: "poison self",
-    desc: "Apply poison [1] self",
-    level: 1,
-    priceLevel: 3,
-    heroClasses: [EHeroClass.SUMMON, EHeroClass.WILD],
-    skills: [
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
-            status: EStatusType.POISON,
-            value: 1,
-            targetType: ETargetType.SELF,
+export const infernoFlyPassive: IPassiveSkill = {
+    desc: "Start with 1 poison & 3 cosmic shield",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        valueType: "number",
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            limitedRepeats: true,
+            skillId: "Unstable firefly",
+            type: EAppTriggerType.PRE_BATTLE,
+            skill: [
+                {
+                    type: EHeroSkillType.STATUS_APPLY,
+                    status: EStatusType.POISON,
+                    value: 1,
+                    targetType: ETargetType.SELF,
+                },
+                {
+                    type: EHeroSkillType.BUFF,
+                    buff: {
+                        name: "Invulnerable",
+                        type: EBuffType.COSMIC_SHIELD,
+                        targetType: ETargetType.SELF,
+                        timeType: EBuffTimeType.DUEL,
+                        value: 3,
+                        cannotBeTargeted: true,
+                    },
+                },
+            ],
         },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "Invulnerable",
-                type: EBuffType.COSMIC_SHIELD,
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-                value: 3,
-            },
-        },
-    ],
-    isActivateOnStart: true,
-    image: IMAGE_FIREFLY_SELF_POISON,
+    },
 };
 
 export const mobNoSkill: IHeroSkillSet = {
@@ -553,7 +570,7 @@ export const mobCheerSkill_2: IHeroSkillSet = {
     id: "mobCheerSkill",
     name: "Cheer ally 2",
     desc: "Make first ally cast\nskill out of turn\nSkip own basic attack",
-    level: 2,
+    level: 2, // really should not go beyond level 1
     priceLevel: 2,
     heroClasses: [EHeroClass.MOB],
     isBasicAttack: false,
@@ -593,10 +610,10 @@ export const mobAmbushSkill_2: IHeroSkillSet = {
     id: "mobAmbushSkill",
     name: "Ambush attack 2", // Need better name
     desc: "First ally makes a\nbasic attack out of turn\nSkip own basic attack",
-    level: 2,
+    level: 2, // really should not go beyond level 1
     priceLevel: 2,
     heroClasses: [EHeroClass.MOB],
-    isBasicAttack: false,
+    isBasicAttack: true,
     skills: [
         {
             type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
@@ -852,7 +869,7 @@ export const peasantsStronkSkill: IHeroSkillSet = {
 };
 
 // wolf skill
-const regularWolfSkillset = (atk: number, bleed: number, ppScale: number):IHeroSkill[] => {
+const regularWolfSkillset = (atk: number, bleed: number, ppScale: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.STATUS_APPLY,
@@ -886,8 +903,8 @@ const regularWolfSkillset = (atk: number, bleed: number, ppScale: number):IHeroS
             ppScale: ppScale,
             animation: AnimationType.UNIT_ATTACK,
         },
-    ]
-}
+    ];
+};
 
 export const regularWolfSkill_3: IHeroSkillSet = {
     id: "regularWolfSkill",
@@ -898,11 +915,11 @@ export const regularWolfSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
     type: ESkillSetType.PHYSICAL_ATTACK,
     isBasicAttack: false,
-    skills: regularWolfSkillset(2,2,40),
+    skills: regularWolfSkillset(2, 2, 40),
     //nextLevel: regularWolfSkill_2,
     image: IMAGE_SKILL_PHYS_ATTACK,
     animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
-}
+};
 
 export const regularWolfSkill_2: IHeroSkillSet = {
     id: "regularWolfSkill",
@@ -913,11 +930,11 @@ export const regularWolfSkill_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
     type: ESkillSetType.PHYSICAL_ATTACK,
     isBasicAttack: false,
-    skills: regularWolfSkillset(2,1,30),
+    skills: regularWolfSkillset(2, 1, 30),
     nextLevel: regularWolfSkill_3,
     image: IMAGE_SKILL_PHYS_ATTACK,
     animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
-}
+};
 
 export const regularWolfSkill: IHeroSkillSet = {
     id: "regularWolfSkill",
@@ -928,11 +945,11 @@ export const regularWolfSkill: IHeroSkillSet = {
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
     type: ESkillSetType.PHYSICAL_ATTACK,
     isBasicAttack: false,
-    skills: regularWolfSkillset(1,1,20),
+    skills: regularWolfSkillset(1, 1, 20),
     nextLevel: regularWolfSkill_2,
     image: IMAGE_SKILL_PHYS_ATTACK,
     animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
-}
+};
 
 // big wolf skill
 const bigWolfSummonSkillset = (bonusAtk: number, bonusHp: number, bonusPP: number): IHeroSkill[] => {
@@ -948,7 +965,7 @@ const bigWolfSummonSkillset = (bonusAtk: number, bonusHp: number, bonusPP: numbe
         {
             type: EHeroSkillType.SUMMON,
             summon: {
-                ...wolfUnitSmol, 
+                ...wolfUnitSmol,
                 basicMaxHp: wolfUnitSmol.basicMaxHp + bonusHp,
                 basicAttack: wolfUnitSmol.basicAttack + bonusAtk,
                 basicPhysicalPower: wolfUnitSmol.basicPhysicalPower + bonusPP,
@@ -958,40 +975,563 @@ const bigWolfSummonSkillset = (bonusAtk: number, bonusHp: number, bonusPP: numbe
     ];
 };
 
-export const bigWolfSummonSkill_3:IHeroSkillSet = {
+export const bigWolfSummonSkill_3: IHeroSkillSet = {
     id: "bigWolfSummon",
     name: "Call the pack",
     desc: "Summon [3,8] wolf that\nuses physical attack skill\nwith bleed status",
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD, EHeroClass.SUMMON],
-    skills: bigWolfSummonSkillset(1,4,10),
+    skills: bigWolfSummonSkillset(1, 4, 10),
     image: IMAGE_SKILL_PHYS_ATTACK, // IMAGE_SKILL_TEST
     animationType: AnimationType.UNIT_ATTACK,
-}
+};
 
-export const bigWolfSummonSkill_2:IHeroSkillSet = {
+export const bigWolfSummonSkill_2: IHeroSkillSet = {
     id: "bigWolfSummon",
     name: "Call the pack",
     desc: "Summon [3,6] wolf that\nuses physical attack skill\nwith bleed status",
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD, EHeroClass.SUMMON],
-    skills: bigWolfSummonSkillset(1,2,5),
+    skills: bigWolfSummonSkillset(1, 2, 5),
     nextLevel: bigWolfSummonSkill_3,
     image: IMAGE_SKILL_PHYS_ATTACK, // IMAGE_SKILL_TEST
     animationType: AnimationType.UNIT_ATTACK,
-}
+};
 
-export const bigWolfSummonSkill:IHeroSkillSet = {
+export const bigWolfSummonSkill: IHeroSkillSet = {
     id: "bigWolfSummon",
     name: "Call the pack",
     desc: "Summon [2,4] wolf that\nuses physical attack skill\nwith bleed status",
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.WILD, EHeroClass.SUMMON],
-    skills: bigWolfSummonSkillset(0,0,0),
+    skills: bigWolfSummonSkillset(0, 0, 0),
     nextLevel: bigWolfSummonSkill_2,
     image: IMAGE_SKILL_PHYS_ATTACK, // IMAGE_SKILL_TEST
     animationType: AnimationType.UNIT_ATTACK,
-}
+};
+
+// regular Firefly
+//   ~ summon
+// debuff blind (20) until get hit
+const fireflyConfusingMistSkillset = (blind: number, mpScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Mist",
+                targetType: ETargetType.ALL_ENEMIES,
+                timeType: EBuffTimeType.TILL_GOT_HIT,
+                type: EDebuffType.BLIND,
+                value: blind, // ~ 20, 30, 40 (it stacks)
+                valueType: "number",
+            },
+        },
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            animation: AnimationType.NONE,
+            value: 0,
+            valueType: "number",
+            childSkill: {
+                type: EHeroSkillType.BUFF,
+                animation: AnimationType.NONE,
+                buff: {
+                    name: "Shock BA",
+                    targetType: ETargetType.RANDOM_ALLY,
+                    timeType: EBuffTimeType.TILL_NEXT_BA,
+                    type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                    statusType: EStatusType.SHOCK,
+                    value: 1,
+                    valueType: "number",
+                },
+            },
+            mpScale: mpScale,
+        },
+    ];
+};
+
+export const fireflyConfusingMistSkill_3: IHeroSkillSet = {
+    id: "fireflyConfusingMist",
+    name: "Confusing mist",
+    desc: "Blind [35] all enemies\nuntil they take attack\nRandom [35%xMP] allies have\ntheir attacks apply 1 shock",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.BARD],
+    skills: fireflyConfusingMistSkillset(35, 35),
+    //nextLevel: fireflyConfusingMistSkill_2,
+    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const fireflyConfusingMistSkill_2: IHeroSkillSet = {
+    id: "fireflyConfusingMist",
+    name: "Confusing mist",
+    desc: "Blind [25] all enemies\nuntil they take attack\nRandom [25%xMP] allies have\ntheir attacks apply 1 shock",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.BARD],
+    skills: fireflyConfusingMistSkillset(25, 25),
+    nextLevel: fireflyConfusingMistSkill_3,
+    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const fireflyConfusingMistSkill: IHeroSkillSet = {
+    id: "fireflyConfusingMist",
+    name: "Confusing mist",
+    desc: "Blind [20] all enemies\nuntil they take attack\nRandom [20%xMP] allies have\ntheir attacks apply 1 shock",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.BARD],
+    skills: fireflyConfusingMistSkillset(20, 20),
+    nextLevel: fireflyConfusingMistSkill_2,
+    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+// InfernoFly
+//   ~ summon, magic
+//
+const fireflyUnfairExchangeSkillset = (hpPercent: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            value: -100,
+            valueFrom: "hp",
+            valueType: "percent",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.SWAP_HP,
+            targetType: ETargetType.HIGH_PERCENT_ENEMY,
+            valueType: "percent",
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            attribute: "hp",
+            animation: AnimationType.NONE,
+        }, // customNumber is (NewHp - OldHp)
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            value: 0,
+            animation: AnimationType.NONE,
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_NEGATIVE,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            targetType: ETargetType.SELF,
+            attribute: "hp",
+            value: 50,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Next Ba+",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "attack",
+                value: hpPercent,
+                valueType: "percent",
+                valueFrom: "customNumber",
+                mpScale: hpPercent,
+            },
+        },
+    ];
+};
+
+export const fireflyUnfairExchange_3: IHeroSkillSet = {
+    id: "fireflyUnfairExchange",
+    name: "Unfair exchange",
+    desc: "Swap Hp in percentage\nwith highest Hp% enemy,\nbut get only half Hp restored\nand [60%xMP] +[60%] of\nrestored Hp as buff to\nnext basic attack",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.DARK],
+    isBasicAttack: false,
+    skills: fireflyUnfairExchangeSkillset(60),
+    //nextLevel: fireflyUnfairExchange_2,
+    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const fireflyUnfairExchange_2: IHeroSkillSet = {
+    id: "fireflyUnfairExchange",
+    name: "Unfair exchange",
+    desc: "Swap Hp in percentage\nwith highest Hp% enemy,\nbut get only half Hp restored\nand [45%xMP] +[45%] of\nrestored Hp as buff to\nnext basic attack",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.DARK],
+    isBasicAttack: false,
+    skills: fireflyUnfairExchangeSkillset(45),
+    nextLevel: fireflyUnfairExchange_3,
+    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const fireflyUnfairExchange: IHeroSkillSet = {
+    id: "fireflyUnfairExchange",
+    name: "Unfair exchange",
+    desc: "Swap Hp in percentage\nwith highest Hp% enemy,\nbut get only half Hp restored\nand [30%xMP] +[30%] of\nrestored Hp as buff to\nnext basic attack",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.DARK],
+    isBasicAttack: false,
+    skills: fireflyUnfairExchangeSkillset(30),
+    nextLevel: fireflyUnfairExchange_2,
+    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+// Spirit warrior (levels 1, 3, 5)
+//  ~ summon, warrior
+//
+const spiritTeamFlurrySkillset = (ppScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            value: -1,
+            animation: AnimationType.NONE,
+        }, // start with customNumber = -1
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALL_ALLIES,
+            childSkill: {
+                type: EHeroSkillType.NONE,
+                condition: ESkillCondition.NOT_BEFORE_COMBAT,
+            },
+            animation: AnimationType.NONE,
+        }, // calc number of alive allies
+        // customNumber = numberOfAllies - 1;
+        // condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE ~ 2+ allies alive
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            targetType: ETargetType.SELF,
+            value: 100,
+            valueFrom: "customNumber",
+            valueType: "percent",
+            ppScale: ppScale,
+            childSkill: {
+                type: EHeroSkillType.ATTACK,
+                attackType: EHeroAttackType.PHYSICAL,
+                targetType: ETargetType.FIRST_ENEMY,
+                value: 1,
+                valueType: "number",
+            },
+        },
+        {
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.PHYSICAL,
+            targetType: ETargetType.FIRST_TWO_ENEMIES,
+            value: 100,
+            valueFrom: "attack",
+            valueType: "percent",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO, // no other allies alive
+        },
+    ];
+};
+
+export const spiritTeamFlurry_3: IHeroSkillSet = {
+    id: "spiritTeamFlurry",
+    name: "Pointy sticks",
+    desc: "Unleash [65%xPP]+ number\nof teammates damage 1\nattacks. And if alone\npowerful attack on two\nenemies",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: spiritTeamFlurrySkillset(65),
+    //nextLevel: spiritTeamFlurry_2,
+    image: IMAGE_SKILL_DOUBLE_SWORD, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const spiritTeamFlurry_2: IHeroSkillSet = {
+    id: "spiritTeamFlurry",
+    name: "Pointy sticks",
+    desc: "Unleash [50%xPP]+ number\nof teammates damage 1\nattacks. And if alone\npowerful attack on two\nenemies",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: spiritTeamFlurrySkillset(50),
+    nextLevel: spiritTeamFlurry_3,
+    image: IMAGE_SKILL_DOUBLE_SWORD, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const spiritTeamFlurry: IHeroSkillSet = {
+    id: "spiritTeamFlurry",
+    name: "Pointy sticks",
+    desc: "Unleash [35%xPP]+ number\nof teammates damage 1\nattacks. And if alone\npowerful attack on two\nenemies",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: spiritTeamFlurrySkillset(35),
+    nextLevel: spiritTeamFlurry_2,
+    image: IMAGE_SKILL_DOUBLE_SWORD, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+const spiritTeamRevengeSkillset = (ppScale: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Revenge",
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                targetType: ETargetType.SELF,
+                type: EBuffType.BATTLE_TRIGGER,
+                value: 1,
+                appTrigger: {
+                    limitedRepeats: true,
+                    skillId: "Revenge poke",
+                    type: EAppTriggerType.BASIC_ATTACK,
+                    targetCheck: ETargetType.ALL_ENEMIES,
+                    skill: [
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                name: "Aim",
+                                targetType: ETargetType.SELF,
+                                timeType: EBuffTimeType.TILL_NEXT_BA,
+                                type: EBuffType.CHANGE_TARGET_TYPE,
+                                changeTargetTypeTo: ETargetType.BY_UNIT_ID, // current acting unit id
+                                isHidden: true,
+                                value: 1,
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            targetType: ETargetType.BY_UNIT_ID,
+                            targetUnitId: "[ActingUnit]",
+                            status: EStatusType.BLEED,
+                            value: 1,
+                            valueType: "number",
+                            ppScale: ppScale,
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+                            targetType: ETargetType.SELF,
+                            value: 1, // not used
+                            animation: AnimationType.NONE,
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+};
+
+export const spiritTeamRevenge_3: IHeroSkillSet = {
+    id: "spiritTeamRevenge",
+    name: "Revenge poke",
+    desc: "Forgo basic attack to\nstrike next enemy that\nuses basic attack and\napply [1+PP] bleed",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: spiritTeamRevengeSkillset(100),
+    //nextLevel: spiritTeamRevenge_2,
+    image: IMAGE_SKILL_PHYS_ATTACK, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const spiritTeamRevenge_2: IHeroSkillSet = {
+    id: "spiritTeamRevenge",
+    name: "Revenge poke",
+    desc: "Forgo basic attack to\nstrike next enemy that\nuses basic attack and\napply [1+65%xPP] bleed",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: spiritTeamRevengeSkillset(65),
+    nextLevel: spiritTeamRevenge_3,
+    image: IMAGE_SKILL_PHYS_ATTACK, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const spiritTeamRevenge: IHeroSkillSet = {
+    id: "spiritTeamRevenge",
+    name: "Revenge poke",
+    desc: "Forgo basic attack to\nstrike next enemy that\nuses basic attack and\napply [1+35%xPP] bleed",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: spiritTeamRevengeSkillset(35),
+    nextLevel: spiritTeamRevenge_2,
+    image: IMAGE_SKILL_PHYS_ATTACK, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+// Shield warrior
+const spiritShieldRadiateSkillset = (armor: number, ppScale: number, radiateStacks: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SELF,
+            attribute: "armor",
+            ppScale: ppScale,
+            value: armor,
+            valueType: "number",
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                targetType: ETargetType.SELF,
+                type: EBuffType.BATTLE_TRIGGER,
+                name: "Radiate",
+                timeType: EBuffTimeType.TILL_GOT_HIT,
+                value: 1,
+                appTrigger: {
+                    type: EAppTriggerType.TAKE_ATTACK,
+                    limitedRepeats: true,
+                    skillId: "Radiate retaliate",
+                    skill: [
+                        {
+                            type: EHeroSkillType.DEBUFF,
+                            debuff: {
+                                name: "Guilty",
+                                targetType: ETargetType.BY_RELEVANT_ID, // attacker
+                                timeType: EBuffTimeType.DURATION,
+                                type: EDebuffType.BATTLE_TRIGGER,
+                                value: 3,
+                                appTrigger: {
+                                    limitedRepeats: true,
+                                    skillId: "Guilty amp",
+                                    type: EAppTriggerType.TURN_START,
+                                    targetCheck: ETargetType.ALL_ALLIES,
+                                    skill: [
+                                        {
+                                            type: EHeroSkillType.STATUS_APPLY,
+                                            targetType: ETargetType.ANCHOR_TARGET,
+                                            status: EStatusType.RADIATE,
+                                            value: radiateStacks,
+                                            valueType: "number",
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                name: "Shiny",
+                                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                                targetType: ETargetType.ALL_ALLIES,
+                                timeType: EBuffTimeType.DURATION,
+                                duration: 2,
+                                value: 1,
+                                valueType: "number",
+                                statusType: EStatusType.RADIATE,
+                            },
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+};
+
+export const spiritShieldRadiate_3: IHeroSkillSet = {
+    id: "spiritShieldRadiate",
+    name: "Sanctuary",
+    desc: "Gain [5+65%xPP] armor\nAnd next time get hit by\nbasic attack, buff allies'\nattacks to apply 1 Radiate\nAnd attacker gets [3]\nRadiate stacks each turn",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    isBasicAttack: true,
+    skills: spiritShieldRadiateSkillset(5, 65, 3),
+    //nextLevel: spiritShieldRadiate_2,
+    image: IMAGE_SKILL_KNIGHT_SHIELD, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const spiritShieldRadiate_2: IHeroSkillSet = {
+    id: "spiritShieldRadiate",
+    name: "Sanctuary",
+    desc: "Gain [4+50%xPP] armor\nAnd next time get hit by\nbasic attack, buff allies'\nattacks to apply 1 Radiate\nAnd attacker gets [2]\nRadiate stacks each turn",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    isBasicAttack: true,
+    skills: spiritShieldRadiateSkillset(4, 50, 2),
+    nextLevel: spiritShieldRadiate_3,
+    image: IMAGE_SKILL_KNIGHT_SHIELD, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const spiritShieldRadiate: IHeroSkillSet = {
+    id: "spiritShieldRadiate",
+    name: "Sanctuary",
+    desc: "Gain [3+35%xPP] armor\nAnd next time get hit by\nbasic attack, buff allies'\nattacks to apply 1 Radiate\nAnd attacker gets [1]\nRadiate stacks each turn",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    isBasicAttack: true,
+    skills: spiritShieldRadiateSkillset(3, 35, 1),
+    nextLevel: spiritShieldRadiate_2,
+    image: IMAGE_SKILL_KNIGHT_SHIELD, // IMAGE_SKILL_TEST
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const spiritWarriorPassive: IPassiveSkill = {
+    desc: "Gain 3 armor per turn, if have less armor than 35% attack +PP",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        isHidden: true,
+        cannotBeTargeted: true,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Spirit armor",
+            type: EAppTriggerType.TURN_START,
+            skill: [
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.ANCHOR_TARGET,
+                    attribute: "physicalPower",
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.ANCHOR_TARGET,
+                    value: 35,
+                    valueType: "percent",
+                    valueFrom: "attack",
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.ANCHOR_TARGET,
+                    value: -100,
+                    valueType: "percent",
+                    valueFrom: "armor",
+                    animation: AnimationType.NONE,
+                }, // calc (Attack - Armor)
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    targetType: ETargetType.ANCHOR_TARGET,
+                    attribute: "armor",
+                    value: 3,
+                    valueType: "number",
+                    animation: AnimationType.NONE,
+                },
+            ],
+        },
+    },
+};

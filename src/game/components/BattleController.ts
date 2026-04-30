@@ -176,6 +176,8 @@ export class BattleController {
                 //this.performSkill(unit, skill, isPlayer1, true);
             });
         });
+        // pre battle triggers
+        triggerBattleTrigger(EAppTriggerType.PRE_BATTLE, this);
     }
 
     async start(player1Units: (IUnit | null)[], player2Units: (IUnit | null)[], isTillDeath: boolean, roundCount: number) {
@@ -564,7 +566,7 @@ export class BattleController {
                 return this.performRewind(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.COPY_UNIT_CAST_SKILL:
                 this.performCastAnotherUnitSkill(unit, skill, isPlayer1, true, isStartBattle);
-                return sameLastTargetId
+                return sameLastTargetId;
             case EHeroSkillType.REPEATING_SKILL:
                 if (skill.childSkill) {
                     const count = Math.min(calculateSkillValue(skill, unit), 20);
@@ -748,9 +750,9 @@ export class BattleController {
             const increaseValue = calculateIncreaseValue(target[attribute], value || 0, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
 
             if (attribute === "maxHp") {
-                const percent = target.hp/target.maxHp;
+                const percent = target.hp / target.maxHp;
                 target.maxHp += increaseValue;
-                target.hp = Math.min(target.maxHp, Math.floor(target.maxHp*percent)+1);
+                target.hp = Math.min(target.maxHp, Math.floor(target.maxHp * percent) + 1);
             } else {
                 target[attribute] += increaseValue;
             }
@@ -1456,12 +1458,13 @@ export class BattleController {
     }
 
     performSwapHp(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
-        const { targetType } = skill;
+        const { targetType, valueType } = skill;
         if (!targetType) {
-            console.log("performSwapHp > NO TARGET TYPE OR VALUE");
+            console.log("performSwapHp > NO TARGET TYPE");
             return sameLastTargetId;
         }
 
+        const isSwapPercentage = valueType === "percent";
         const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
 
         if (!targets || targets.length === 0 || !targets[0]) {
@@ -1471,7 +1474,7 @@ export class BattleController {
 
         let lastTargetId;
         targets.forEach((target) => {
-            swapHp(unit, target, this.battleRecord, isStartBattle);
+            swapHp(unit, target, this.battleRecord, isStartBattle, isSwapPercentage);
             lastTargetId = target.id;
         });
         return lastTargetId || sameLastTargetId;
@@ -1510,13 +1513,20 @@ export class BattleController {
         }
     }
 
-    performForceOutOfTurnAction(unit: IBattleUnit, skill: IHeroSkill, isPlayer1: boolean, isCastSkill: boolean, isStartBattle?: boolean, sameLastTargetId?: string): string {
+    performForceOutOfTurnAction(
+        unit: IBattleUnit,
+        skill: IHeroSkill,
+        isPlayer1: boolean,
+        isCastSkill: boolean,
+        isStartBattle?: boolean,
+        sameLastTargetId?: string,
+    ): string {
         const { targetType } = skill;
         if (!targetType) {
             console.log("performForceOutOfTurnAction > NO TARGET TYPE OR VALUE");
             return sameLastTargetId;
         }
-        const targets = this.getTargetsSimple(unit, targetType,isPlayer1,skill.markType,skill.targetUnitId,sameLastTargetId);
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
 
         if (!targets || targets.length === 0 || !targets[0]) {
             console.log("performForceOutOfTurnAction > NO TARGET FOUND");
@@ -1538,8 +1548,8 @@ export class BattleController {
             console.log("performForceOutOfTurnAction > NO TARGET TYPE OR VALUE");
             return sameLastTargetId;
         }
-        const targets = this.getTargetsSimple(unit, targetType,isPlayer1,skill.markType,skill.targetUnitId,sameLastTargetId);
-        
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
+
         if (!targets || targets.length === 0 || !targets[0]) {
             console.log("performForceOutOfTurnAction > NO TARGET FOUND");
             return sameLastTargetId;
@@ -1562,7 +1572,11 @@ export class BattleController {
                 return unit.summon;
             })
             .filter((u) => !!u);
-        return allUnits.find((u) => u.id === unitId) || allSummons.find((u) => u.id === unitId);
+        if (unitId === "[ActingUnit]") {
+            return allUnits.find((u) => u.id === unitId) || allSummons.find((u) => u.id === this.currentActingUnitId);
+        } else {
+            return allUnits.find((u) => u.id === unitId) || allSummons.find((u) => u.id === unitId);
+        }
     }
 
     getTargetsSimple(
@@ -1696,10 +1710,10 @@ export class BattleController {
             this.battleRecord.push(skillSetBattleAction);
 
             summonUnit.customNumber = 0;
-            let lastTargetId;            
+            let lastTargetId;
             skillSet.skills.forEach((skill) => {
                 if (skill.condition) {
-                    if (checkSkillCondition(summonUnit,skill.condition)) {
+                    if (checkSkillCondition(summonUnit, skill.condition)) {
                         lastTargetId = this.performSkill(summonUnit, skill, isPlayer1, false, lastTargetId);
                     }
                 } else {
@@ -1766,6 +1780,29 @@ export class BattleController {
             targets: [],
         };
         this.battleRecord.push(attackRecord);
+
+        const statusesOnAttack: Map<EStatusType, number> = new Map();
+        unit.buffs.forEach((buff) => {
+            if (buff.type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK) {
+                const { statusType, value } = buff;
+                if (!statusType || value === undefined) {
+                    return;
+                }
+                if (statusesOnAttack.has(statusType)) {
+                    statusesOnAttack.set(statusType,statusesOnAttack[statusType]+value);
+                } else {
+                    statusesOnAttack.set(statusType,value);
+                }
+            }
+        });
+        unit.itemBonuses.filter((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK).forEach(applyStatusBonus => {
+            const { value, status } = applyStatusBonus;
+            if (statusesOnAttack.has(status)) {
+                    statusesOnAttack.set(status,statusesOnAttack[status]+value);
+                } else {
+                    statusesOnAttack.set(status,value);
+                }
+        });
 
         let lastTargetId: string | undefined;
         //
@@ -1847,27 +1884,10 @@ export class BattleController {
             }
 
             // apply statuses on basic attack
-            //TODO: move out of targets.forEach
-            unit.buffs.forEach((buff) => {
-                if (buff.type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK) {
-                    const { statusType, value } = buff;
-                    if (!statusType || value === undefined) {
-                        return;
-                    }
-                    applyStatus(unit, target, statusType, value, this.battleRecord);
-                }
-            });
+            statusesOnAttack.forEach((v,k) => {
+                applyStatus(unit, target, k, v, this.battleRecord);
+            })
 
-            //TODO: move out of targets.forEach
-            //const applyStatusBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_POISON_ON_HIT);
-            const applyStatusBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK);
-            if (applyStatusBonus) {
-                const { type, value, status } = applyStatusBonus;
-                if (!type || !status || value === undefined) {
-                    return;
-                }
-                applyStatus(unit, target, status, value, this.battleRecord);
-            }
             this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
             this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
@@ -2057,8 +2077,8 @@ export class BattleController {
 
         this.takeDamage(target, finalDamageValue, parentUnit, recordTarget);
 
-        const bonusDmgFromOverheal = target.statuses.find((st) => st.type === EStatusType.RADIATE)?.value;
-        if (bonusDmgFromOverheal) takeStatusDamage(target, bonusDmgFromOverheal, EStatusType.RADIATE, this.battleRecord);
+        const bonusDmgFromRadiate = target.statuses.find((st) => st.type === EStatusType.RADIATE)?.value;
+        if (bonusDmgFromRadiate) takeStatusDamage(target, bonusDmgFromRadiate, EStatusType.RADIATE, this.battleRecord);
 
         if (target.hp <= 0) {
             triggerBattleTrigger(EAppTriggerType.KILL, this, unit);

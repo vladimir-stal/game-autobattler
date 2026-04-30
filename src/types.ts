@@ -687,7 +687,8 @@ export enum ETargetType {
     HIGH_MP_ENEMY = "HIGH_MP_ENEMY",
     HIGH_PP_ENEMY = "HIGH_PP_ENEMY",
     LOW_HP_ENEMY = "LOW_HP_ENEMY",
-    LOW_PERCENT_ENEMY = "LOW_PERCENT_ENEMY",
+    LOW_PERCENT_ENEMY = "LOW_PERCENT_ENEMY", // lowest hp% = hp/maxhp
+    HIGH_PERCENT_ENEMY = "HIGH_PERCENT_ENEMY", // highest hp%
     MARKED_ENEMY = "MARKED_ENEMY",
     ALL_MARKED_ENEMIES = "ALL_MARKED_ENEMIES",
     RANDOM_ENEMY = "RANDOM_ENEMY",
@@ -743,6 +744,8 @@ export enum ESkillCondition {
     IN_FRONT_ROW = "IN_FRONT_ROW",
     ONLY_BEFORE_COMBAT = "ONLY_BEFORE_COMBAT",
     NOT_BEFORE_COMBAT = "NOT_BEFORE_COMBAT",
+    CUSTOM_NUMBER_IS_POSITIVE = "CUSTOM_NUMBER_IS_POSITIVE",
+    CUSTOM_NUMBER_IS_NEGATIVE = "CUSTOM_NUMBER_IS_NEGATIVE",
 }
 
 /**
@@ -994,6 +997,7 @@ export enum EAppTriggerType {
     TURN_START = "TURN_START", // at start of target's turn
     AFTER_EVADE = "AFTER_EVADE", // after successful evade
     AFTER_CRIT = "AFTER_CRIT",
+    PRE_BATTLE = "PRE_BATTLE", // once pre battle (as non-repeatable skill)
 }
 
 export interface IAppTrigger {
