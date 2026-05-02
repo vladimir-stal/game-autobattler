@@ -461,7 +461,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
             return {
                 size: 400,
                 distance: -30,
-                distanceEnemy: -10,
+                distanceEnemy: -20,
                 image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
                 animation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
                 idleBattleAnimation: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
@@ -480,6 +480,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 hurtAnimation: AnimationType.MOB_SUMMONKSHIELDNIGHT_HURT,
             };
         }
+        // SUMMONS
         case "WARRIORSUMMON": {
             return {
                 size: 400,

@@ -3,32 +3,10 @@ import { basic_pants, basic_ring_regen } from "../commonItemConsts";
 import { hp_amulet } from "../commonItemConsts2";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2 } from "../mobItemConsts";
-import { attackWithBleedSkill, noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { bigWolfSummonSkill, mobNoSkill, regularWolfSkill } from "../skills/mobSkills";
-
-export const wolfUnitSmol: IUnit = {
-    unitType: EUnitType.UNIT,
-    heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.WILD, EHeroClass.MOB],
-    attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 2,
-    basicAttackTimes: 1,
-    basicMaxHp: 4,
-    basicHpRegen: 1,
-    basicArmor: 0,
-    basicCritChance: 0,
-    basicEvasionChance: 0,
-    basicMagicPower: 0,
-    basicPhysicalPower: 0,
-    name: i18n.units.WOLF,
-    id: "WOLF1",
-    skills: [mobNoSkill,regularWolfSkill],
-    items: [],
-    level: 1,
-    exp: 0,
-    mobItems: [],
-};
+import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { bigWolfSummonSkill } from "../skills/mobs/bigWolfMobSkills";
+import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
+import { mobNoSkill } from "../skills/mobSkills";
 
 export const wolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
@@ -47,7 +25,7 @@ export const wolfUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WOLF,
     id: "WOLF1",
-    skills: [mobNoSkill,regularWolfSkill,noBasicAttackSkill],
+    skills: [mobNoSkill, regularWolfSkill, noBasicAttackSkill],
     items: [],
     level: 2,
     exp: 0,
@@ -77,7 +55,7 @@ export const strongWolfUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.STRONGWOLF,
     id: "WOLF2",
-    skills: [noBasicAttackSkill,regularWolfSkill,mobNoSkill,bigWolfSummonSkill],
+    skills: [noBasicAttackSkill, regularWolfSkill, mobNoSkill, bigWolfSummonSkill],
     items: [],
     level: 3,
     exp: 0,
@@ -86,7 +64,7 @@ export const strongWolfUnit: IUnit = {
         { item: hp_amulet, probability: 17 }, // 15% ~ 15/0.85
         { item: itemCoin2, probability: 14 }, // 10% ~ 10/(0.85*0.83)
         // 100*0.85*0.83*0.86 = 60% not to get anything
-        { skill: bigWolfSummonSkill, probability: 8}, // ~5%
-        { skill: regularWolfSkill, probability: 9}, // ~5%
+        { skill: bigWolfSummonSkill, probability: 8 }, // ~5%
+        { skill: regularWolfSkill, probability: 9 }, // ~5%
     ],
 };

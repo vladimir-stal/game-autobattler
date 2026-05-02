@@ -1,6 +1,16 @@
 import { IMobRewardType, IMobsVariants } from "../types";
 import { dagger1, shield1, staff1, wand1, wand1_2 } from "./basicWeaponItemConsts";
-import { basic_boots, basic_exp_bag_2, basic_hat, basic_heal, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen, basic_ring_regen_2 } from "./commonItemConsts";
+import {
+    basic_boots,
+    basic_exp_bag_2,
+    basic_hat,
+    basic_heal,
+    basic_jacket,
+    basic_pants,
+    basic_ring_damage,
+    basic_ring_regen,
+    basic_ring_regen_2,
+} from "./commonItemConsts";
 import { armor_amulet, hp_amulet, hp_amulet_2 } from "./commonItemConsts2";
 
 import {
@@ -31,8 +41,25 @@ import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { musical31 } from "./weaponItem3Consts";
 import { i18n } from "./consts";
 import { pirate1Unit, pirate2Unit } from "./units/piratesMobUnits";
-import { bigWolfSummonSkill, fireflyConfusingMistSkill, fireflyUnfairExchange, goblinApplyShock, goblinPocketSand, goblinShamanHpRegIncr, goldGoblinBuff, peasantSkill, peasantsStronkSkill, regularWolfSkill, skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap, spiritShieldRadiate, spiritTeamFlurry, spiritTeamRevenge } from "./skills/mobSkills";
+import {
+    fireflyConfusingMistSkill,
+    fireflyUnfairExchange,
+    goblinApplyShock,
+    goblinPocketSand,
+    goblinShamanHpRegIncr,
+    goldGoblinBuff,
+    peasantSkill,
+    peasantsStronkSkill,
+    skeletonArmorSelfAndLow,
+    skeletonPoisonedFlames,
+    skeletonUnholyLeap,
+    spiritShieldRadiate,
+    spiritTeamFlurry,
+    spiritTeamRevenge,
+} from "./skills/mobSkills";
 import { scrollOfSkill } from "./commonItemConsts3";
+import { regularWolfSkill } from "./skills/mobs/wolfMobSkills";
+import { bigWolfSummonSkill } from "./skills/mobs/bigWolfMobSkills";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -338,7 +365,7 @@ export const mobsLvl4: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: basic_boots, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_jacket, exp: 4 },
-            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 4},
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 4 },
             { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonUnholyLeap), exp: 4 },
         ],
     },
@@ -431,8 +458,8 @@ export const mobsLvl5: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: skeletonMageUnit, exp: 4 },
             { type: IMobRewardType.ITEM, item: armor_amulet, exp: 5 },
             { type: IMobRewardType.ITEM, item: hp_amulet, exp: 5 },
-            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 5},
-            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonPoisonedFlames), exp: 5},
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 5 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonPoisonedFlames), exp: 5 },
         ],
     },
     {
@@ -484,8 +511,8 @@ export const mobsLvl6: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: skeletonMageUnit, exp: 4 },
             { type: IMobRewardType.ITEM, item: armor_amulet, exp: 5 },
             { type: IMobRewardType.ITEM, item: hp_amulet, exp: 5 },
-            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 5},
-            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonPoisonedFlames), exp: 5},
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 5 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonPoisonedFlames), exp: 5 },
         ],
     },
     {
