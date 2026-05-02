@@ -2,7 +2,8 @@ import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
 
 export const LANG: "eng" | "ru" = "ru";
-export const i18n = i18n_ru; //LANG === "eng" ? i18n_eng : i18n_ru;
+// @ts-ignore: TS2367
+export const i18n = LANG === "eng" ? i18n_eng : i18n_ru;
 
 export const GAME_MODE: "NO_MC_HEROES" | "FULL" = "FULL";
 

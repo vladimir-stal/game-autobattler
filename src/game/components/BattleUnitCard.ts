@@ -180,7 +180,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             //.setDisplaySize(displaySize, displaySize)
             .setFlipX(this.isInverted)
             .setDepth(100)
-            .setTint(tint,tint,tint,tint);
+            .setTint(tint, tint, tint, tint);
         if (tint) {
             this.tint = tint;
         }
@@ -482,6 +482,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playSkillSet(name: string, animation?: string) {
+        console.log("playSkillSet", name, animation);
         this.setAction(name);
 
         if (animation) {
@@ -491,6 +492,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 animationType = this.magicAttackSkillAnimation;
             } else if (animation === AnimationType.UNIT_PHYSICAL_ATTACK_SKILL) {
                 animationType = this.physicalAttackSkillAnimation || this.unitAttackAnimation;
+            } else if (animation === AnimationType.UNIT_DEBUFF) {
+                animationType = this.unitBuffAnimation;
             }
 
             if (!animationType) {
@@ -498,7 +501,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             }
 
             if (!!this.tint) {
-                this.unitImageObject.setTint(this.tint)
+                this.unitImageObject.setTint(this.tint);
             }
             this.unitImageObject.anims.play(animationType);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
@@ -685,7 +688,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         }
     }
 
-    async playDebuff(debuff: IDebuff, skill?: IHeroSkill) {
+    async playDebuff(skill?: IHeroSkill) {
+        //debuff: IDebuff,
         //this.setAction("BUFF " + buff.name);
 
         const animation = skill?.animation || this.unitBuffAnimation;

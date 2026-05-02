@@ -395,7 +395,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
     playBuff(buff: IBuff) {}
 
-    playDebuff(debuff: IDebuff) {}
+    playDebuff() {}
 
     playTakeDamage(value: number, armorValue: number, options: { status?: EStatusType; isCrit?: boolean; isEvasion?: boolean; skill?: IHeroSkill }) {
         const { status, isCrit, isEvasion, skill } = options;

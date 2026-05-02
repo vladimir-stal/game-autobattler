@@ -361,7 +361,16 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.WITCH:
             return { image: IMAGE_WITCH };
         case EHeroClass.ORACLE:
-            return { image: IMAGE_ORACLE };
+            return {
+                distance: -10,
+                distanceEnemy: -60,
+                image: IMAGE_ORACLE,
+                animation: AnimationType.ORACLE_IDLE,
+                idleBattleAnimation: AnimationType.ORACLE_BATTLE_IDLE,
+                attackAnimation: AnimationType.ORACLE_ATTACK,
+                hurtAnimation: AnimationType.ORACLE_SKILL_2,
+                buffAnimation: AnimationType.ORACLE_SKILL_1,
+            };
         case EHeroClass.FOREST_SPIRIT:
             return { image: IMAGE_FORESTSPIRIT };
         case EHeroClass.BLACK_KNIGHT:
@@ -371,7 +380,16 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.SORCERER:
             return { image: IMAGE_SORCERER, animation: AnimationType.SORCERER_IDLE };
         case EHeroClass.DOOMSAYER:
-            return { image: IMAGE_DOOMSAYER };
+            return {
+                distance: -20,
+                distanceEnemy: -50,
+                image: IMAGE_DOOMSAYER,
+                animation: AnimationType.DOOMSAYER_IDLE,
+                idleBattleAnimation: AnimationType.DOOMSAYER_BATTLE_IDLE,
+                attackAnimation: AnimationType.DOOMSAYER_ATTACK,
+                magicAttackSkillAnimation: AnimationType.DOOMSAYER_SKILL,
+                buffAnimation: AnimationType.DOOMSAYER_SKILL,
+            };
         case EHeroClass.MINSTREL:
             return { image: IMAGE_MINSTREL };
         case EHeroClass.WARLOCK:

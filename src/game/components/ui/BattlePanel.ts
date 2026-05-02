@@ -420,7 +420,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         this.cards[debuffTarget.targetId].addDebuff(debuff, debuffTarget);
                     });
 
-                    await this.cards[unitId].playDebuff(debuff, skill);
+                    await this.cards[unitId].playDebuff(skill);
 
                     if (mode === "FAST") {
                         this.playNextAction();

@@ -523,10 +523,9 @@ export const getCards = (
                     const allHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
                         if (unit.unitType === EUnitType.HERO) {
                             const whatClass = getAnyClassSubclasses(unit.heroClass);
-                            whatClass.forEach(c => {
-                                if (!heroClasses.includes(c))
-                                    heroClasses.push(c);
-                            })
+                            whatClass.forEach((c) => {
+                                if (!heroClasses.includes(c)) heroClasses.push(c);
+                            });
                             //heroClasses.push(unit.heroClass);
                         }
                         return heroClasses;
@@ -644,14 +643,16 @@ export const getCards = (
 
                 console.log("SKILLS_SELL skills", skills);
 
-                cards = skills.map((skill, index) => {
-                    if (skill) {
+                cards = skills
+                    .map((skill, index) => {
+                        if (!skill) {
+                            return null;
+                            //return { skill: {...mobNoSkill, name: "Oops! Something\nwent wrong"}, type: ECardType.SKILL, price: 0 }
+                        }
                         const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
                         return { skill, type: ECardType.SKILL, price: price };
-                    } /*else {
-                        return { skill: {...mobNoSkill, name: "Oops! Something\nwent wrong"}, type: ECardType.SKILL, price: 0 }
-                    }*/
-                }).filter(card => !!card && !!card.skill);
+                    })
+                    .filter((card) => !!card?.skill);
             }
             break;
         case ERoomType.SKILLS_SELL_MIXED_CLASSES:

@@ -8,6 +8,10 @@ import {
     IMAGE_BLADEDANCER,
     IMAGE_COMMANDER_BATTLE_IDLE,
     IMAGE_COMMANDER_IDLE,
+    IMAGE_DOOMSAYER_ATTACK,
+    IMAGE_DOOMSAYER_BATTLE_IDLE,
+    IMAGE_DOOMSAYER_IDLE,
+    IMAGE_DOOMSAYER_SKILL,
     IMAGE_PREDATOR_IDLE,
     IMAGE_RUNECASTER_IDLE,
     IMAGE_SAMURAI_ATTACK,
@@ -31,6 +35,11 @@ import {
     IMAGE_NECROMANCER_ATTACK,
     IMAGE_NECROMANCER_BATTLE_IDLE,
     IMAGE_NECROMANCER_IDLE,
+    IMAGE_ORACLE_ATTACK,
+    IMAGE_ORACLE_BATTLE_IDLE,
+    IMAGE_ORACLE_IDLE,
+    IMAGE_ORACLE_SKILL_1,
+    IMAGE_ORACLE_SKILL_2,
     IMAGE_PALADIN_ATTACK,
     IMAGE_PALADIN_BATTLE_IDLE,
     IMAGE_PALADIN_IDLE,
@@ -270,6 +279,40 @@ export function createMcHeroesAnimations(scene: Scene) {
 
     //
     //
+    // DOOMSAYER ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //
+
+    scene.anims.create({
+        key: AnimationType.DOOMSAYER_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DOOMSAYER_IDLE, { start: 0, end: 49 }), //{ start: 10, end: 59 }
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.DOOMSAYER_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DOOMSAYER_BATTLE_IDLE, { start: 0, end: 54 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.DOOMSAYER_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DOOMSAYER_ATTACK, { start: 0, end: 43 }), //start: 11, end: 54
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.DOOMSAYER_SKILL,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DOOMSAYER_SKILL, { start: 0, end: 54 }), //{ start: 44, end: 98 }
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    //
+    //
     // HUNTER  ///////////////////////////////////////////////////////////////////////////////////////////////////
     //
     //
@@ -416,6 +459,84 @@ export function createMcHeroesAnimations(scene: Scene) {
             ],
         }),
         frameRate: 30,
+        //repeat: -1,
+    });
+
+    //
+    //
+    // ORACLE ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //
+
+    scene.anims.create({
+        key: AnimationType.ORACLE_IDLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_IDLE, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+                38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49,
+                //50, 51, 52, 53, 54,
+                //
+                //55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73,
+                //74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97,
+                //
+                //97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62,
+                //61, 60, 59, 58, 57, 56, 55,
+                //
+                //54, 53, 52, 51, 50,
+                49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14,
+                13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORACLE_BATTLE_IDLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_BATTLE_IDLE, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+                38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+                //
+                54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19,
+                18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORACLE_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_ATTACK, { start: 0, end: 27 }),
+        // frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_ATTACK, {
+        //     frames: [
+        //         //0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+        //         //11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+        //         //47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,
+        //         11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65,
+        //     ],
+        // }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORACLE_SKILL_1,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_SKILL_1, { start: 0, end: 20 }),
+        // frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_SKILL_1, {
+        //     frames: [11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53],
+        // }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORACLE_SKILL_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORACLE_SKILL_2, { start: 0, end: 23 }), //{ start: 11, end: 32 }
+        frameRate: 20,
         //repeat: -1,
     });
 

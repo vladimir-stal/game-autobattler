@@ -1,4 +1,4 @@
-import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, ESkillSetType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 export const doomsayerSkill_2: IHeroSkillSet = {
@@ -23,6 +23,7 @@ export const doomsayerSkill_2: IHeroSkillSet = {
                 targetType: ETargetType.RANDOM_ENEMY,
                 timeType: EBuffTimeType.DUEL,
             },
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.DEBUFF,
@@ -35,8 +36,11 @@ export const doomsayerSkill_2: IHeroSkillSet = {
                 targetType: ETargetType.RANDOM_ENEMY,
                 timeType: EBuffTimeType.DUEL,
             },
+            animation: AnimationType.NONE,
         },
     ],
+    //
+    animationType: AnimationType.UNIT_DEBUFF,
 };
 
 export const doomsayerSkill: IHeroSkillSet = {
@@ -61,9 +65,12 @@ export const doomsayerSkill: IHeroSkillSet = {
                 targetType: ETargetType.RANDOM_ENEMY,
                 timeType: EBuffTimeType.DUEL,
             },
+            animation: AnimationType.NONE,
         },
     ],
     nextLevel: doomsayerSkill_2,
+    //
+    animationType: AnimationType.UNIT_DEBUFF,
 };
 
 export const doomsayerSkills: THeroSkills = [doomsayerSkill];

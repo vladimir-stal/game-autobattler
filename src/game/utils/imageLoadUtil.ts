@@ -154,6 +154,11 @@ export const IMAGE_BLADEDANCER = "IMAGE_BLADEDANCER";
 export const IMAGE_COMMANDER_IDLE = "IMAGE_COMMANDER_IDLE";
 export const IMAGE_COMMANDER_BATTLE_IDLE = "IMAGE_COMMANDER_BATTLE_IDLE";
 export const IMAGE_COMMANDER_ATTACK = "IMAGE_COMMANDER_ATTACK";
+//DOOMSAYER
+export const IMAGE_DOOMSAYER_IDLE = "IMAGE_DOOMSAYER_IDLE";
+export const IMAGE_DOOMSAYER_BATTLE_IDLE = "IMAGE_DOOMSAYER_BATTLE_IDLE";
+export const IMAGE_DOOMSAYER_ATTACK = "IMAGE_DOOMSAYER_ATTACK";
+export const IMAGE_DOOMSAYER_SKILL = "IMAGE_DOOMSAYER_SKILL";
 // PREDATOR
 export const IMAGE_PREDATOR_IDLE = "IMAGE_PREDATOR_IDLE";
 export const IMAGE_PREDATOR_BATTLE_IDLE = "IMAGE_PREDATOR_BATTLE_IDLE";
@@ -226,10 +231,11 @@ export function loadImages(scene: Scene) {
     loadBasicHeroesImages(scene);
 
     // EFFECTS
-    //if (GAME_MODE === "FULL") {
     loadImagesEffects(scene);
-    //}
     loadImagesUIEffects(scene);
+
+    // MOBS
+    loadImagesMobs(scene);
 
     //
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    //
@@ -291,10 +297,6 @@ export function loadImages(scene: Scene) {
     // //     //PNG: "assets/texture.png",
     // });
     // scene.load.ktx2()
-
-    // MOBS
-
-    loadImagesMobs(scene);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
