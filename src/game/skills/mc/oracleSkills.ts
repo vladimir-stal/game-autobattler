@@ -1,7 +1,20 @@
-import { AnimationType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import {
+    AnimationType,
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroClass,
+    EHeroSkillType,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IPassiveSkill,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
 
-const oracleSkillset = (numEvades:number, numClear:number):IHeroSkill[] => {
+const oracleSkillset = (numEvades: number, numClear: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.BUFF,
@@ -13,7 +26,7 @@ const oracleSkillset = (numEvades:number, numClear:number):IHeroSkill[] => {
                 value: numEvades,
                 valueType: "number",
             },
-            animation: AnimationType.NONE
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.BUFF,
@@ -26,8 +39,8 @@ const oracleSkillset = (numEvades:number, numClear:number):IHeroSkill[] => {
                 valueType: "number",
             },
         },
-    ]
-}
+    ];
+};
 
 export const oracleSkill_3: IHeroSkillSet = {
     id: "warningWhisper",
@@ -37,7 +50,7 @@ export const oracleSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.ORACLE],
     isMcSkill: true,
-    skills: oracleSkillset(2,2),
+    skills: oracleSkillset(2, 2),
     //nextLevel: oracleSkill_3,
 };
 
@@ -51,7 +64,7 @@ export const oracleSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.ORACLE],
     isMcSkill: true,
-    skills: oracleSkillset(2,1),
+    skills: oracleSkillset(2, 1),
     nextLevel: oracleSkill_3,
 };
 
@@ -65,13 +78,37 @@ export const oracleSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.ORACLE],
     isMcSkill: true,
-    skills: oracleSkillset(1,1),
+    skills: oracleSkillset(1, 1),
     nextLevel: oracleSkill_2,
 };
 
 export const oraclePassive: IPassiveSkill = {
-    desc: "",
-    // to do
-}
+    desc: "Gain Armor after each\nevade (1+40%x(MP+PP))",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        isHidden: true,
+        cannotBeTargeted: true,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Cannot hit me twice",
+            type: EAppTriggerType.AFTER_EVADE,
+            skill: [
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    attribute: "armor",
+                    targetType: ETargetType.SELF,
+                    value: 1,
+                    valueType: "number",
+                    mpScale: 40,
+                    ppScale: 40,
+                },
+            ],
+        },
+    },
+};
 
 export const oracleSkills: THeroSkills = [oracleSkill];

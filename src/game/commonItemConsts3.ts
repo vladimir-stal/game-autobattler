@@ -1,8 +1,24 @@
-import { EHeroClass, EItemAfterDuelBonusType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, EWeaponItemType, IItem } from "../types";
+import {
+    EHeroClass,
+    EItemAfterDuelBonusType,
+    EItemBattleBonusType,
+    EItemBonusType,
+    EItemTargetType,
+    EItemType,
+    EWeaponItemType,
+    IHeroSkillSet,
+    IItem,
+} from "../types";
 import { i18n } from "./consts";
 import { skeletonArmorSelfAndLow } from "./skills/mobSkills";
 import { IMAGE_CARD_EXP } from "./utils/imageLoadUtil";
-import { IMAGE_ITEM_AMULET_CRIT_3, IMAGE_ITEM_AMULET_EVASION_3, IMAGE_ITEM_POTION_1, IMAGE_ITEM_SUMMONER_MANTLE_3 } from "./utils/load/imageLoadItems";
+import {
+    IMAGE_ITEM_AMULET_CRIT_3,
+    IMAGE_ITEM_AMULET_EVASION_3,
+    IMAGE_ITEM_BOOK_MAGIC,
+    IMAGE_ITEM_POTION_1,
+    IMAGE_ITEM_SUMMONER_MANTLE_3,
+} from "./utils/load/imageLoadItems";
 
 ////// COMMON ITEMS LEVEL 3 /////////////////////////////////////////////////
 
@@ -145,4 +161,19 @@ export const scrollSkillArmor: IItem = {
     battleBonuses: [{ type: EItemBattleBonusType.CAST_SKILL_X_ROUND, value: 1, valueType: "number", relatedSkill: skeletonArmorSelfAndLow }],
     heroClassBonuses: [],
     image: IMAGE_CARD_EXP,
+};
+
+export const scrollOfSkill = (skill: IHeroSkillSet): IItem => {
+    return {
+        id: "scroll_of_skill",
+        name: "Skill book of " + skill.name,
+        type: EItemType.COMMON,
+        level: skill.level,
+        priceLevel: skill.priceLevel,
+        heroClasses: [],
+        bonuses: [],
+        battleBonuses: [{ type: EItemBattleBonusType.UNPACK_SKILL_IN_STASH, value: 1, valueType: "number", relatedSkill: skill }],
+        heroClassBonuses: [],
+        image: IMAGE_ITEM_BOOK_MAGIC,
+    };
 };

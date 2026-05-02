@@ -25,7 +25,6 @@ export const predatorSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
             debuff: {
                 name: "Predator mark",
                 type: EDebuffType.MARK_PREDATOR,
@@ -51,7 +50,6 @@ export const predatorSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
             debuff: {
                 name: "Predator mark",
                 type: EDebuffType.MARK_PREDATOR,

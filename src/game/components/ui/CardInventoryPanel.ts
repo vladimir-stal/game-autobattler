@@ -2,6 +2,8 @@ import { GameObjects, Input } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
 import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
+import { ECardType, EItemBattleBonusType } from "../../../types";
+import { getSkillPrice } from "../../utils/skillUtils";
 
 /** UI panel to store cards */
 export class CardInventoryPanel extends Phaser.GameObjects.Container {
@@ -50,6 +52,16 @@ export class CardInventoryPanel extends Phaser.GameObjects.Container {
 
     handleCardPlaced(slotIndex: number) {
         //console.log("INV CARD PLACE SLOT ", slotIndex);
+        const card = this.slots[slotIndex].slot?.card?.card;
+        if (card.item && card.item.id === "scroll_of_skill") {
+            const skill = card.item.battleBonuses.find(bb => bb.type === EItemBattleBonusType.UNPACK_SKILL_IN_STASH && bb.relatedSkill)?.relatedSkill;
+            if (skill) {                
+                card.skill = {...skill};
+                card.price = getSkillPrice(skill.priceLevel);
+                card.item = undefined;
+                card.type = ECardType.SKILL;
+            }
+        }
         this.slots[slotIndex].moveText.setVisible(true);
     }
 

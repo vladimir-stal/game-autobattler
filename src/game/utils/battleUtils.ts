@@ -233,6 +233,16 @@ export const getLowHpPercentTarget = (units: TBattleUnits): IBattleUnit | null =
         return result;
     }, null);
 };
+export const getHighHpPercentTarget = (units: TBattleUnits): IBattleUnit | null => {
+    return units.reduce((result, unit) => {
+        if (unit && unit.hp > 0) {
+            if (!result || unit.hp / unit.maxHp > result.hp / result.maxHp) {
+                return unit;
+            }
+        }
+        return result;
+    }, null);
+};
 
 export const getMarkedTarget = (units: TBattleUnits, debuffType: EDebuffType): IBattleUnit | null => {
     return units.find((unit) => unit && unit.hp > 0 && unit?.debuffs.find((db) => db.type === debuffType)) || getFirstTarget(units);
@@ -384,6 +394,18 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const target = getHighestStatusTarget(units, EStatusType.POISON);
             return target ? [target] : null;
         }
+        case ETargetType.HIGH_BURN_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.BURN);
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_SHOCK_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.SHOCK);
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_RADIATE_ENEMY: {
+            const target = getHighestStatusTarget(units, EStatusType.RADIATE);
+            return target ? [target] : null;
+        }
         case ETargetType.HIGH_MP_ENEMY: {
             const target = getHighestAttributeTarget(units, "magicPower");
             return target ? [target] : null;
@@ -398,6 +420,10 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
         }
         case ETargetType.LOW_PERCENT_ENEMY: {
             const target = getLowHpPercentTarget(units);
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_PERCENT_ENEMY: {
+            const target = getHighHpPercentTarget(units);
             return target ? [target] : null;
         }
         case ETargetType.MARKED_ENEMY: {
@@ -1128,16 +1154,23 @@ export const applyBuff = (
     }
 };
 
-export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
+export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBattleRecord, isStartBattle?: boolean, isPercentage?: boolean) => {
     const unitHp = unit.hp;
     const targetHp = target.hp;
-    unit.hp = targetHp;
-    if (unit.hp > unit.maxHp) {
-        unit.hp = unit.maxHp;
-    }
-    target.hp = unitHp;
-    if (target.hp > target.maxHp) {
-        target.hp = target.maxHp;
+    if (isPercentage) {
+        const unitPercent = unitHp / unit.maxHp;
+        const targetPercent = targetHp / target.maxHp;
+        unit.hp = Math.floor(0.5 + unit.maxHp * targetPercent);
+        target.hp = Math.floor(0.5 + target.maxHp * unitPercent);
+    } else {
+        unit.hp = targetHp;
+        if (unit.hp > unit.maxHp) {
+            unit.hp = unit.maxHp;
+        }
+        target.hp = unitHp;
+        if (target.hp > target.maxHp) {
+            target.hp = target.maxHp;
+        }
     }
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.SWAP_HP, value: unit.hp, value2: target.hp, isStartBattle });
 };
@@ -1251,6 +1284,12 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return !!unit.totem;
         case ESkillCondition.CUSTOM_NUMBER_NOT_ZERO:
             return !!unit.customNumber;
+        case ESkillCondition.CUSTOM_NUMBER_IS_ZERO:
+            return !unit.customNumber;
+        case ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE:
+            return (unit.customNumber && unit.customNumber > 0);
+        case ESkillCondition.CUSTOM_NUMBER_IS_NEGATIVE:
+            return (unit.customNumber && unit.customNumber < 0);
         case ESkillCondition.IN_BACK_ROW:
             return unit.isBackRowPosition;
         case ESkillCondition.IN_FRONT_ROW:

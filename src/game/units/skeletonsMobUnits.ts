@@ -3,7 +3,8 @@ import { dagger1, staff1, sword1, totem1 } from "../basicWeaponItemConsts";
 import { basic_boots, basic_exp_bag, basic_hat, basic_pants, basic_ring_damage } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin } from "../mobItemConsts";
-import { skeletonArmorSelfAndLow } from "../skills/mobSkills";
+import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { mobNoSkill, skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap } from "../skills/mobSkills";
 
 export const skeletonUnit: IUnit = {
     unitType: EUnitType.UNIT,
@@ -22,7 +23,8 @@ export const skeletonUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETON,
     id: "SKELETON",
-    skills: [],
+    skills: [mobNoSkill,skeletonUnholyLeap,noBasicAttackSkill],
+    // cast no skill 1st round, cast unique skill 2nd round, then fast forward to make skill rotation 3 rounds instead of 4
     items: [],
     level: 2,
     exp: 0,
@@ -32,6 +34,7 @@ export const skeletonUnit: IUnit = {
         { item: basic_pants, probability: 12 }, // 10% ~ 10/0.9/0.89
         { item: basic_boots, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
         // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
+        { skill: skeletonUnholyLeap, probability: 16 }
     ],
 };
 
@@ -52,7 +55,7 @@ export const skeletonWarriorUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONWARRIOR,
     id: "SKELETONWARRIOR",
-    skills: [skeletonArmorSelfAndLow],
+    skills: [noBasicAttackSkill,skeletonArmorSelfAndLow],
     items: [],
     level: 3,
     exp: 0,
@@ -62,6 +65,7 @@ export const skeletonWarriorUnit: IUnit = {
         { item: totem1, probability: 12 }, // 10% ~ 10/0.9/0.89
         { item: basic_ring_damage, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
         // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
+        { skill: skeletonArmorSelfAndLow, probability: 16}, // ~10%
     ],
 };
 
@@ -82,7 +86,7 @@ export const skeletonMageUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONMAGE,
     id: "SKELETONMAGE",
-    skills: [],
+    skills: [mobNoSkill,skeletonPoisonedFlames,noBasicAttackSkill],
     items: [],
     level: 3,
     exp: 0,
@@ -92,5 +96,6 @@ export const skeletonMageUnit: IUnit = {
         { item: dagger1, probability: 12 }, // 10% ~ 10/0.9/0.89
         { item: basic_exp_bag, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
         // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
+        { skill: skeletonPoisonedFlames, probability: 16}, // ~10%
     ],
 };

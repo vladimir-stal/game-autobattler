@@ -511,6 +511,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 image: IMAGE_PEASANT_1,
                 idleBattleAnimation: AnimationType.MOB_PEASANT_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_PEASANT_ATTACK,
+                buffAnimation: AnimationType.MOB_PEASANT_ATTACK,
             };
         case "PIRATE1":
             return {

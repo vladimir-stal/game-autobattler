@@ -326,6 +326,7 @@ const riposteSkillset = (atk: number, ppScale: number): IHeroSkill[] => {
                                 timeType: EBuffTimeType.TILL_NEXT_BA,
                                 type: EBuffType.CHANGE_TARGET_TYPE,
                                 changeTargetTypeTo: ETargetType.BY_UNIT_ID,
+                                isHidden: true,
                                 value: 1,
                             },
                             animation: AnimationType.NONE,

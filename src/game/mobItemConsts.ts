@@ -77,7 +77,7 @@ export const itemPeasantPitchfork_3: IItem = {
     level: 3,
     priceLevel: 2,
     heroClasses: [],
-    weaponType: EWeaponItemType.SWORD,
+    weaponType: EWeaponItemType.SPEAR,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: -4, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 25, valueType: "number", attribute: "basicCritChance" },
@@ -93,7 +93,7 @@ export const itemPeasantPitchfork_2: IItem = {
     level: 2,
     priceLevel: 2,
     heroClasses: [],
-    weaponType: EWeaponItemType.SWORD,
+    weaponType: EWeaponItemType.SPEAR,
     bonuses: [
         { type: EItemBonusType.ATTRIBUTE, value: -2, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 20, valueType: "number", attribute: "basicCritChance" },
@@ -109,7 +109,7 @@ export const itemPeasantPitchfork: IItem = {
     level: 1,
     priceLevel: 1,
     heroClasses: [],
-    weaponType: EWeaponItemType.SWORD,
+    weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
     image: IMAGE_ITEM_PEASANTS_PITCHFORK,
     nextLevel: itemPeasantPitchfork_2,

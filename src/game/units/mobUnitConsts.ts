@@ -1,11 +1,13 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardType, EItemAfterDuelBonusType, IMobsVariants } from "../../types";
 import { i18n } from "../consts";
 import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobItemConsts";
+import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { mobNoSkill, peasantSkill, peasantsStronkSkill } from "../skills/mobSkills";
 
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 5,
@@ -19,7 +21,7 @@ export const peasantUnit_4: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
     id: "PEASANT",
-    skills: [],
+    skills: [noBasicAttackSkill,peasantsStronkSkill],
     items: [],
     level: 4,
     exp: 0,
@@ -28,13 +30,14 @@ export const peasantUnit_4: IUnit = {
         { item: itemCoin, probability: 12 }, // 10% ~ 10/0.8
         { item: itemPeasantPitchfork_2, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
+        { skill: peasantsStronkSkill, probability: 16},
     ],
 };
 
 export const peasantUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.WARRIOR, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 1,
@@ -48,7 +51,7 @@ export const peasantUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
     id: "PEASANT",
-    skills: [],
+    skills: [mobNoSkill,peasantSkill,noBasicAttackSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -56,5 +59,6 @@ export const peasantUnit: IUnit = {
         { item: itemPeasantPitchfork, probability: 25 },
         { item: itemCoin, probability: 20 }, // 15% ~ 15/(100-25)
         // nothing = 100*0.75*0.80
+        { skill: peasantSkill, probability: 16}, // ~10%
     ],
 };

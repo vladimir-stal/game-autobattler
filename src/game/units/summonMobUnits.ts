@@ -2,7 +2,8 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../.
 import { basic_heal } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemConsts";
-import { mobNoSkill, fireflySelfPoison } from "../skills/mobSkills";
+import { noBasicAttackSkill as chainToNextSkill, noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { mobNoSkill, fireflyConfusingMistSkill, fireflyUnfairExchange, infernoFlyPassive, spiritShieldRadiate, spiritTeamFlurry, spiritWarriorPassive, spiritTeamRevenge } from "../skills/mobSkills";
 import { attrArmorSelf } from "../skills/orderSkillConsts";
 
 //////////// SPIRIT WARRIOR //////////////////////////
@@ -10,9 +11,9 @@ import { attrArmorSelf } from "../skills/orderSkillConsts";
 export const warriorSummonMob_5: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.WARRIOR, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
+    attackTargetType: ETargetType.HIGH_RADIATE_ENEMY,
     basicAttack: 12,
     basicAttackTimes: 1,
     basicMaxHp: 30,
@@ -21,27 +22,29 @@ export const warriorSummonMob_5: IUnit = {
     basicCritChance: 0,
     basicEvasionChance: 0,
     basicMagicPower: 0,
-    basicPhysicalPower: 0,
+    basicPhysicalPower: 5,
     name: i18n.units.WARRIORSUMMON,
     id: "SPIRITWARRIOR",
-    skills: [],
+    skills: [chainToNextSkill,spiritTeamRevenge,mobNoSkill,spiritTeamFlurry],
     items: [],
     level: 5,
     exp: 0,
+    passiveSkill: spiritWarriorPassive, // regain up to (12/3 + 5)= 9 armor (3/turn)
     mobItems: [
         { item: itemCoin2, probability: 20 }, // 20%
         { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
         { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
+        { skill: spiritTeamRevenge, probability: 16 },
     ],
 };
 
 export const warriorSummonMob_3: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WARLOCK, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
+    attackTargetType: ETargetType.HIGH_RADIATE_ENEMY,
     basicAttack: 5,
     basicAttackTimes: 1,
     basicMaxHp: 14,
@@ -53,7 +56,7 @@ export const warriorSummonMob_3: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WARRIORSUMMON,
     id: "SPIRITWARRIOR",
-    skills: [],
+    skills: [chainToNextSkill,spiritTeamFlurry],
     items: [],
     level: 3,
     exp: 0,
@@ -62,15 +65,16 @@ export const warriorSummonMob_3: IUnit = {
         { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
         { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
+        { skill: spiritTeamFlurry, probability: 16 }
     ],
 };
 
 export const warriorSummonMob: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
+    attackTargetType: ETargetType.HIGH_RADIATE_ENEMY,
     basicAttack: 3,
     basicAttackTimes: 1,
     basicMaxHp: 9,
@@ -82,7 +86,7 @@ export const warriorSummonMob: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WARRIORSUMMON,
     id: "SPIRITWARRIOR",
-    skills: [],
+    skills: [mobNoSkill,spiritTeamFlurry,chainToNextSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -91,37 +95,42 @@ export const warriorSummonMob: IUnit = {
         { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
         { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
+        { skill: spiritTeamFlurry, probability: 16 }
     ],
 };
+// spiritTeamRevenge - like Riposte but after attack and apply Bleed
+// spiritTeamFlurry - make barrage of physical skill attacks
+// spiritShieldRadiate - gain armor, enemy get Radiate
 
 //////////// SPIRIT WARRIOR WITH SHIELD //////////////////////////
 
 export const shieldWarriorsSummonMob: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.ORDER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
+    attackTargetType: ETargetType.HIGH_RADIATE_ENEMY,
     basicAttack: 0,
     basicAttackTimes: 1,
-    basicMaxHp: 10,
+    basicMaxHp: 20,
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 0,
     basicMagicPower: 0,
-    basicPhysicalPower: 0,
+    basicPhysicalPower: 9,
     name: i18n.units.WARRIORSUMMON,
     id: "SPIRITSHIELDWARRIOR",
-    skills: [attrArmorSelf, attrArmorSelf, attrArmorSelf, attrArmorSelf],
+    skills: [chainToNextSkill, spiritShieldRadiate],
+    passiveSkill: spiritWarriorPassive, // regain up to (0 + 9)= 9 armor (3/turn)
     items: [],
-    level: 1,
+    level: 2,
     exp: 0,
     mobItems: [
         { item: itemCoin, probability: 20 }, // 20%
-        //{ item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
-        //{ item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
-        // nothing = 100*0.80*0.88*0.86
+        { item: spiritArmor, probability: 25 }, // 20% ~ 20/0.8
+        // nothing = 100*0.80*0.75
+        { skill: spiritShieldRadiate, probability: 16 }
     ],
 };
 
@@ -140,11 +149,11 @@ export const fireflySummonMob: IUnit = {
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 35,
-    basicMagicPower: 0,
+    basicMagicPower: 5,
     basicPhysicalPower: 0,
     name: i18n.units.FIREFLY,
     id: "FIREFLY",
-    skills: [],
+    skills: [mobNoSkill, fireflyConfusingMistSkill, chainToNextSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -153,13 +162,14 @@ export const fireflySummonMob: IUnit = {
         { item: itemCoin2, probability: 12 }, // 10% ~ 10/0.8
         { item: basic_heal, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
+        { skill: fireflyConfusingMistSkill, probability: 16},
     ],
 };
 
 export const fireflySummonMob_6: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WILD, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.MAGIC, EHeroClass.MOB],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.FIRST_TWO_ENEMIES,
     basicAttack: 8,
@@ -169,18 +179,20 @@ export const fireflySummonMob_6: IUnit = {
     basicArmor: 13,
     basicCritChance: 0,
     basicEvasionChance: 100,
-    basicMagicPower: 0,
+    basicMagicPower: 5,
     basicPhysicalPower: 0,
     name: i18n.units.FIREFLY,
     id: "FIREFLY",
-    skills: [mobNoSkill, mobNoSkill, mobNoSkill, fireflySelfPoison],
+    skills: [mobNoSkill, fireflyUnfairExchange, chainToNextSkill],
     items: [],
     level: 6,
     exp: 0,
+    passiveSkill: infernoFlyPassive,
     mobItems: [
         { item: itemCoin, probability: 20 }, // 20%
         { item: itemCoin2, probability: 12 }, // 10% ~ 10/0.8
         { item: basic_heal, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
+        { skill: fireflyUnfairExchange, probability: 16 },
     ],
 };

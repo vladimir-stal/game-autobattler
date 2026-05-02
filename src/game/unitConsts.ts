@@ -1,11 +1,12 @@
 import { IMobRewardType, IMobsVariants } from "../types";
 import { dagger1, shield1, staff1, wand1, wand1_2 } from "./basicWeaponItemConsts";
-import { basic_boots, basic_exp_bag_2, basic_hat, basic_heal, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen } from "./commonItemConsts";
-import { armor_amulet, hp_amulet } from "./commonItemConsts2";
+import { basic_boots, basic_exp_bag_2, basic_hat, basic_heal, basic_jacket, basic_pants, basic_ring_damage, basic_ring_regen, basic_ring_regen_2 } from "./commonItemConsts";
+import { armor_amulet, hp_amulet, hp_amulet_2 } from "./commonItemConsts2";
 
 import {
     itemCoin,
     itemCoin2,
+    itemCoin3,
     itemGoblinBoneDagger,
     itemGoblinGoldCoin,
     itemGoblinSilverCoin,
@@ -30,6 +31,8 @@ import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { musical31 } from "./weaponItem3Consts";
 import { i18n } from "./consts";
 import { pirate1Unit, pirate2Unit } from "./units/piratesMobUnits";
+import { bigWolfSummonSkill, fireflyConfusingMistSkill, fireflyUnfairExchange, goblinApplyShock, goblinPocketSand, goblinShamanHpRegIncr, goldGoblinBuff, peasantSkill, peasantsStronkSkill, regularWolfSkill, skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap, spiritShieldRadiate, spiritTeamFlurry, spiritTeamRevenge } from "./skills/mobSkills";
+import { scrollOfSkill } from "./commonItemConsts3";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -55,6 +58,7 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.ITEM, item: itemPeasantPitchfork, exp: 1 },
             { type: IMobRewardType.UNIT, unit: peasantUnit, exp: 1 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(peasantSkill), exp: 1 },
         ],
     },
     {
@@ -70,6 +74,7 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 1 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinPocketSand), exp: 1 },
         ],
     },
     {
@@ -84,6 +89,7 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 1 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamFlurry), exp: 1 },
         ],
     },
     {
@@ -99,6 +105,7 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: fireflySummonMob, exp: 1 },
             { type: IMobRewardType.ITEM, item: wand1, exp: 1 },
             { type: IMobRewardType.ITEM, item: staff1, exp: 1 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(fireflyConfusingMistSkill), exp: 1 },
         ],
     },
     {
@@ -114,12 +121,13 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 1 },
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 1 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(regularWolfSkill), exp: 1 },
         ],
     },
     {
         name: i18n.mobs.level1.pirate,
         level: 1,
-        description: "Brave pirate from the dippest ocean",
+        description: "Brave pirate from the deepest ocean",
         units: [pirate1Unit, null, null, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 1 },
@@ -145,6 +153,7 @@ export const mobsLvl2: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: itemGoblinSilverCoin, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemGoblinBoneDagger, exp: 2 },
             { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinPocketSand), exp: 2 },
         ],
     },
     {
@@ -157,6 +166,7 @@ export const mobsLvl2: IMobsVariants[] = [
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.ITEM, item: regenMantle, exp: 2 },
             { type: IMobRewardType.UNIT, unit: goblinShamanUnit, exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinShamanHpRegIncr), exp: 2 },
         ],
     },
     {
@@ -177,11 +187,15 @@ export const mobsLvl2: IMobsVariants[] = [
         name: i18n.mobs.level2.spiritwarrirors,
         level: 2,
         description: "A trio of spiritual soldiers",
-        units: [warriorSummonMob, warriorSummonMob, warriorSummonMob], // 3x 3/9
+        units: [shieldWarriorsSummonMob, warriorSummonMob, warriorSummonMob], // 3x 3/9
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.UNIT, unit: warriorSummonMob, exp: 2 },
+            { type: IMobRewardType.UNIT, unit: shieldWarriorsSummonMob, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 2 },
+            { type: IMobRewardType.ITEM, item: spiritArmor, exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamFlurry), exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritShieldRadiate), exp: 2 },
         ],
     },
     {
@@ -197,6 +211,7 @@ export const mobsLvl2: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: wolfUnit, exp: 2 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 2 },
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(regularWolfSkill), exp: 2 },
         ],
     },
     {
@@ -212,12 +227,14 @@ export const mobsLvl2: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: staff1, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemCoin2, exp: 2 },
             { type: IMobRewardType.ITEM, item: basic_heal, exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(fireflyConfusingMistSkill), exp: 2 },
+            { type: IMobRewardType.UNIT, unit: fireflySummonMob, exp: 1 },
         ],
     },
     {
         name: i18n.mobs.level2.pirates,
         level: 1,
-        description: "Brave pirate from the dippest ocean",
+        description: "Brave pirates from the deepest ocean",
         units: [pirate1Unit, pirate1Unit, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
@@ -240,6 +257,7 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: basic_boots, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_jacket, exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonUnholyLeap), exp: 3 },
         ],
     },
     {
@@ -254,6 +272,7 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: regenMantle, exp: 3 },
             { type: IMobRewardType.UNIT, unit: goblinShamanUnit, exp: 3 },
             { type: IMobRewardType.ITEM, item: itemGoblinSilverCoin, exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinShamanHpRegIncr), exp: 2 },
         ],
     },
     {
@@ -269,6 +288,7 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 3 },
             { type: IMobRewardType.ITEM, item: itemGoblinBoneDagger, exp: 3 },
             { type: IMobRewardType.ITEM, item: itemGoblinSilverCoin, exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinApplyShock), exp: 3 },
         ],
     },
     {
@@ -284,6 +304,8 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: itemCoin, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_ring_damage, exp: 3 },
+            { type: IMobRewardType.UNIT, unit: warriorSummonMob_3, exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamFlurry), exp: 2 },
         ],
     },
     {
@@ -298,6 +320,7 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: hp_amulet, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 3 },
             { type: IMobRewardType.ITEM, item: itemCoin2, exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(bigWolfSummonSkill), exp: 3 },
         ],
     },
 ];
@@ -315,6 +338,8 @@ export const mobsLvl4: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: basic_boots, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_pants, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_jacket, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 4},
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonUnholyLeap), exp: 4 },
         ],
     },
     {
@@ -330,6 +355,7 @@ export const mobsLvl4: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: itemGoblinGoldCoin, exp: 4 },
             { type: IMobRewardType.ITEM, item: itemGoblinBoneDagger, exp: 4 },
             { type: IMobRewardType.UNIT, unit: weakGoblinUnit, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinApplyShock), exp: 3 },
         ],
     },
     {
@@ -344,6 +370,7 @@ export const mobsLvl4: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: dagger1, exp: 4 },
             { type: IMobRewardType.ITEM, item: shield1, exp: 4 },
             { type: IMobRewardType.UNIT, unit: peasantUnit, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(peasantsStronkSkill), exp: 4 },
         ],
     },
     {
@@ -359,16 +386,34 @@ export const mobsLvl4: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: musical31, exp: 3 },
             { type: IMobRewardType.ITEM, item: itemCoin2, exp: 3 },
             { type: IMobRewardType.ITEM, item: basic_exp_bag_2, exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(fireflyUnfairExchange), exp: 3 },
         ],
     },
     {
         name: i18n.mobs.level4.pirates,
-        level: 1,
+        level: 4,
         description: "Pirate captain from the dippest ocean",
         units: [pirate2Unit, null, null, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 4 },
             { type: IMobRewardType.GOLD, value: 3, exp: 4 },
+        ],
+    },
+    {
+        name: i18n.mobs.level4.spiritwarrirors,
+        level: 4,
+        description: "Mixed spriritual unit",
+        units: [shieldWarriorsSummonMob, warriorSummonMob_5, warriorSummonMob_3, warriorSummonMob], // stat 5/14 (was 6_10)
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 4 },
+            { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 3 },
+            { type: IMobRewardType.ITEM, item: spiritArmor, exp: 3 },
+            { type: IMobRewardType.UNIT, unit: warriorSummonMob_3, exp: 3 },
+            { type: IMobRewardType.UNIT, unit: shieldWarriorsSummonMob, exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamFlurry), exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamRevenge), exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritShieldRadiate), exp: 2 },
         ],
     },
 ];
@@ -386,6 +431,8 @@ export const mobsLvl5: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: skeletonMageUnit, exp: 4 },
             { type: IMobRewardType.ITEM, item: armor_amulet, exp: 5 },
             { type: IMobRewardType.ITEM, item: hp_amulet, exp: 5 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 5},
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonPoisonedFlames), exp: 5},
         ],
     },
     {
@@ -397,9 +444,11 @@ export const mobsLvl5: IMobsVariants[] = [
             { type: IMobRewardType.GOLD, value: 3, exp: 5 },
             { type: IMobRewardType.GOLD, value: 4, exp: 5 },
             { type: IMobRewardType.GOLD, value: 5, exp: 5 },
-            { type: IMobRewardType.UNIT, unit: warriorSummonMob_3, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: warriorSummonMob_5, exp: 4 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 5 },
             { type: IMobRewardType.ITEM, item: spiritArmor, exp: 5 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamFlurry), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamRevenge), exp: 4 },
         ],
     },
     {
@@ -415,6 +464,10 @@ export const mobsLvl5: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: itemGoblinGoldCoin, exp: 5 },
             { type: IMobRewardType.ITEM, item: itemGoblinBoneDagger, exp: 5 },
             { type: IMobRewardType.UNIT, unit: goldGoblin1Unit, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinApplyShock), exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinPocketSand), exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinShamanHpRegIncr), exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(goldGoblinBuff), exp: 3 },
         ],
     },
 ];
@@ -431,6 +484,8 @@ export const mobsLvl6: IMobsVariants[] = [
             { type: IMobRewardType.UNIT, unit: skeletonMageUnit, exp: 4 },
             { type: IMobRewardType.ITEM, item: armor_amulet, exp: 5 },
             { type: IMobRewardType.ITEM, item: hp_amulet, exp: 5 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonArmorSelfAndLow), exp: 5},
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonPoisonedFlames), exp: 5},
         ],
     },
     {
@@ -445,6 +500,8 @@ export const mobsLvl6: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: dagger1, exp: 4 },
             { type: IMobRewardType.ITEM, item: shield1, exp: 4 },
             { type: IMobRewardType.UNIT, unit: peasantUnit_4, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(peasantsStronkSkill), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(peasantSkill), exp: 4 },
         ],
     },
     {
@@ -460,12 +517,44 @@ export const mobsLvl6: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: musical31, exp: 4 },
             { type: IMobRewardType.ITEM, item: itemCoin2, exp: 4 },
             { type: IMobRewardType.ITEM, item: basic_exp_bag_2, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(fireflyUnfairExchange), exp: 3 },
+        ],
+    },
+    {
+        name: i18n.mobs.level6.wolves,
+        level: 6,
+        description: "Full pack of wolves",
+        units: [strongWolfUnit, wolfUnit, strongWolfUnit, strongWolfUnit], // stat 10/18
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 4, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.ITEM, item: hp_amulet_2, exp: 4 },
+            { type: IMobRewardType.ITEM, item: basic_ring_regen_2, exp: 4 },
+            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: strongWolfUnit, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(bigWolfSummonSkill), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(regularWolfSkill), exp: 4 },
+        ],
+    },
+    {
+        name: i18n.mobs.level6.spiritwarrirors,
+        level: 6,
+        description: "Veterans of spirit army",
+        units: [shieldWarriorsSummonMob, warriorSummonMob_5, warriorSummonMob_5, warriorSummonMob], // stat 12/30
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 4, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.UNIT, unit: warriorSummonMob_5, exp: 4 },
+            { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 5 },
+            { type: IMobRewardType.ITEM, item: spiritArmor, exp: 5 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamFlurry), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamRevenge), exp: 4 },
         ],
     },
 ];
 
-export const unitsLvl1 = [peasantUnit, weakGoblinUnit];
-export const unitsLvl2 = [goblinUnit];
-export const unitsLvl3 = [goblinUnit, goldGoblin1Unit, skeletonUnit, wolfUnit];
-export const unitsLvl4 = [skeletonWarriorUnit, goldGoblin1Unit];
-export const unitsLvl5 = [skeletonWarriorUnit, skeletonMageUnit, strongWolfUnit];
+export const unitsLvl1 = [peasantUnit, weakGoblinUnit, warriorSummonMob, fireflySummonMob];
+export const unitsLvl2 = [goblinUnit, shieldWarriorsSummonMob];
+export const unitsLvl3 = [goblinUnit, goldGoblin1Unit, skeletonUnit, wolfUnit, shieldWarriorsSummonMob];
+export const unitsLvl4 = [skeletonWarriorUnit, goldGoblin1Unit, warriorSummonMob_3, peasantUnit_4];
+export const unitsLvl5 = [skeletonWarriorUnit, skeletonMageUnit, strongWolfUnit, warriorSummonMob_5];

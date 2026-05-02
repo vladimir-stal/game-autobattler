@@ -351,7 +351,7 @@ export const totemGiveArmorSkill_3: IHeroSkillSet = {
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
     skills: totemGiveArmorSkillset(8),
-    image: IMAGE_SKILL_BURNING_MAN,
+    image: IMAGE_SKILL_BURNING_MAN, // IMAGE_SKILL_TEST
     //nextLevel: totemGiveArmorSkill_2,
 };
 
@@ -364,7 +364,7 @@ export const totemGiveArmorSkill_2: IHeroSkillSet = {
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
     skills: totemGiveArmorSkillset(5),
-    image: IMAGE_SKILL_BURNING_MAN,
+    image: IMAGE_SKILL_BURNING_MAN, // IMAGE_SKILL_TEST
     nextLevel: totemGiveArmorSkill_3,
 };
 
@@ -376,7 +376,7 @@ export const totemGiveArmorSkill: IHeroSkillSet = {
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
     skills: totemGiveArmorSkillset(3),
-    image: IMAGE_SKILL_BURNING_MAN,
+    image: IMAGE_SKILL_BURNING_MAN, // IMAGE_SKILL_TEST
     nextLevel: totemGiveArmorSkill_2,
 };
 

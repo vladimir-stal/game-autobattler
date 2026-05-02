@@ -20,7 +20,7 @@ export const pirate1Unit: IUnit = {
     id: "PIRATE1",
     skills: [],
     items: [],
-    level: 1,
+    level: 2,
     exp: 0,
     mobItems: [],
 };
@@ -44,7 +44,7 @@ export const pirate2Unit: IUnit = {
     id: "PIRATE2",
     skills: [],
     items: [],
-    level: 1,
+    level: 4,
     exp: 0,
     mobItems: [],
 };
