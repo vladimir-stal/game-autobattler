@@ -1,7 +1,7 @@
 // MOBS ///////////////////////////////////////// MOBS //////////
 
 import { Scene } from "phaser";
-import { EEffectAnimationType } from "../../../types";
+import { EEffectAnimationType, EHeroClass } from "../../../types";
 import {
     IMAGE_EFFECT_BARD_ATTACK,
     IMAGE_EFFECT_DARK_ATTACK,
@@ -74,6 +74,8 @@ export function createEffectAnimations(scene: Scene) {
         frameRate: 30,
         //repeat: -1,
     });
+
+    // MAGIC
 
     scene.anims.create({
         key: EEffectAnimationType.EFFECT_MAGIC_ATTACK,
@@ -222,6 +224,145 @@ export function createEffectAnimations(scene: Scene) {
         frameRate: 50,
         //repeat: -1,
     });
+}
+
+export function createCommonEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_LIGHTNING_1,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_LIGHTNING_1, { start: 0, end: 65 }), //119
+        frameRate: 50,
+    });
+}
+
+//
+//
+// BASIC HEROES
+//
+//
+
+// BARD
+export function createBardEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_BARD_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_BARD_ATTACK, { start: 0, end: 32 }), //54
+        // frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_BARD_ATTACK, {
+        //     frames: [
+        //         //0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3,
+        //         4, 5, 6, 7, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+        //         //
+        //         26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+        //     ],
+        // }),
+        frameRate: 40,
+        //repeat: -1,
+    });
+}
+
+// DARK
+export function createDarkEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_DARK_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_DARK_ATTACK, { start: 0, end: 32 }),
+        frameRate: 30,
+    });
+}
+
+// MAGIC
+export function createMagicEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_MAGIC_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_MAGIC_ATTACK, { start: 2, end: 25 }),
+        frameRate: 40,
+    });
+}
+
+// MASTER
+export function createMasterEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_MASTER_ATTACK_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_MASTER_ATTACK_2, {
+            frames: [
+                4, 5, 6, 7, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+                //
+                26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+            ],
+        }),
+        frameRate: 50,
+    });
+}
+
+// ORDER
+export function createOrderEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_ORDER_ATTACK_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_ORDER_ATTACK_2, {
+            frames: [
+                1, 3, 5, 7, 9, 13, 17,
+                //
+                21, 25, 27, 29, 31, 33, 35, 37,
+                //
+                39, 41, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+            ],
+        }),
+        frameRate: 50,
+    });
+}
+
+// PRIEST
+export function createPriestEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_PRIEST_ATTACK_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_ATTACK_2, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                24, 28, 29, 32, 36, 40, 44, 48, 52, 56, 62, 68, 74, 76,
+            ],
+        }),
+        frameRate: 40,
+    });
+}
+
+// SUMMON
+export function createSummonEffectAnimations(scene: Scene) {}
+
+// WARRIOR
+export function createWarriorEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_WARRIOR_ATTACK_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_WARRIOR_ATTACK_2, { start: 5, end: 65 }),
+        frameRate: 60,
+    });
+}
+
+// WILD
+export function createWildEffectAnimations(scene: Scene) {
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_WILD_ATTACK,
+        // TODO: remove frames, descrease frame rate
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_WILD_ATTACK, { start: 0, end: 54 }),
+        frameRate: 60,
+    });
+}
+
+//
+//
+// MC HEROES
+//
+//
+
+export function createMcHeroEffectAnimations(scene: Scene, mcHeroClass: EHeroClass) {
+    switch (mcHeroClass) {
+        case EHeroClass.SAMURAI:
+            {
+                scene.anims.create({
+                    key: EEffectAnimationType.EFFECT_SAMURAI_ATTACK_2,
+                    frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_SAMURAI_ATTACK_2, { start: 0, end: 45 }),
+                    frameRate: 50,
+                });
+            }
+            break;
+    }
 }
 
 //

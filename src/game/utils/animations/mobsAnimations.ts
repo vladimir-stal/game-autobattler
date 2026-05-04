@@ -677,6 +677,509 @@ export function createMobAnimations(scene: Scene) {
     });
 }
 
+//
+//
+// SUMMONS //////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+
+//
+// SPIRIT KNIGHT
+export function createSpiritWarriorAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKNIGHT_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_BATTLE_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        // TODO: remove frames, decrease frame rate
+        key: AnimationType.MOB_SUMMONKNIGHT_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMONKNIHGT_ATTACK, { start: 0, end: 39 }),
+        frameRate: 40,
+    });
+}
+
+// SPIRIT SHIELD KNIHGT
+export function createSpiritShieldWarriorAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKSHIELDNIGHT_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, {
+            frames: [
+                5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+                42, 43,
+                //
+                0, 1, 2, 3, 4,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKSHIELDNIGHT_BUFF,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, { start: 0, end: 32 }), //{ start: 11, end: 43 }
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_SUMMONKSHIELDNIGHT_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, { start: 0, end: 20 }), // { start: 60, end: 84 }
+        frameRate: 20,
+    });
+}
+
+// FIREFLY
+// IDLE
+export function createFireflyIdleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_BATTLE_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+}
+// BATTLE
+export function createFireflyAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_BATTLE_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_ATTACK, { start: 0, end: 108 }),
+        frameRate: 40,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_DEFEATED, { start: 0, end: 43 }),
+        frameRate: 40,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_FIREFLY_APPEAR,
+        frames: scene.anims.generateFrameNumbers(IMAGE_FIREFLY_DEFEATED, {
+            frames: [29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+        }),
+        frameRate: 20,
+    });
+}
+
+//
+//
+// MOBS //////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+
+// SKELETON
+export function createSkeletonAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_SKELETON_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_BATTLE_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_SKELETON_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_ATTACK, { start: 0, end: 25 }),
+        frameRate: 40,
+    });
+}
+
+// GOBLIN
+export function createGoblinAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_1_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_1_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                //
+                8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 16,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_1_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_1_ATTACK, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19, 23, 29, 29, 29,
+                //
+                9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+    });
+}
+
+// GOBLIN MAGE
+export function createGoblinMageAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_2_BATTLE_IDLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_2_BATTLE_IDLE, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_2_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+                // 22
+                21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 16,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_2_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_2_ATTACK, { start: 0, end: 32 }),
+        // frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_1_ATTACK, {
+        //     frames: [
+        //         11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 28, 30, 34, 40, 40, 40,
+        //         //
+        //         20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+        //     ],
+        // }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+}
+
+// GOBLIN SHAMAN
+export function createGoblinShamanAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_SHAMAN_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, {
+            frames: [
+                3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 0, 0,
+                //
+                21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3,
+            ],
+        }),
+        frameRate: 16,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_SHAMAN_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_ATTACK, {
+            frames: [
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+                //
+                27, 28, 29, 30, 31, 32,
+                //
+                10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_SHAMAN_SPELL,
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_SPELL, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                //
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                //
+                31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                //
+                41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                //
+            ],
+        }),
+        frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_GOBLIN_SHAMAN_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_GOBLIN_SHAMAN_DEFEATED, { start: 0, end: 99 }),
+        frameRate: 40,
+    });
+}
+
+// PEASANT
+export function createPeasantAnimations(scene: Scene) {
+    console.log("createPeasantAnimations");
+    scene.anims.create({
+        key: AnimationType.MOB_PEASANT_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PEASANT_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+                //
+                22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_PEASANT_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PEASANT_ATTACK, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 19, 21, 23, 25, 27,
+                //
+                31, 31, 31, 31, 31, 30,
+                //
+                9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 30,
+    });
+}
+
+// PIRATE 1
+// IDLE
+export function createPirate1IdleAnimations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_PIRATE_1_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PIRATE_1_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+                //
+                23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 15,
+        repeat: -1,
+    });
+}
+// BATTLE
+export function createPirate1Animations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_PIRATE_1_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PIRATE_1_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+                //
+                23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 15,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_PIRATE_1_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PIRATE_1_ATTACK, { start: 0, end: 39 }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+}
+
+// PIRATE 2
+// IDLE
+export function createPirate2IdleAnimations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_PIRATE_2_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PIRATE_2_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+                //
+                43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20,
+                //
+                19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+}
+// BATTLE
+export function createPirate2Animations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_PIRATE_2_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PIRATE_2_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+                //
+                43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20,
+                //
+                19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_PIRATE_2_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PIRATE_2_ATTACK, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+                //
+                7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 30,
+    });
+}
+
+// WOLF 1
+// IDLE
+export function createWolf1IdleAnimations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_1_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_1_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+                //
+                21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+}
+// BATTLE
+export function createWolf1Animations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_1_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_1_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+                //
+                21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_1_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_1_ATTACK, { start: 0, end: 23 }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_1_ATTACK_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_1_ATTACK_2, { start: 0, end: 31 }),
+        frameRate: 20,
+    });
+}
+
+// WOLF 2
+// IDLE
+export function createWolf2IdleAnimations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_2_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_2_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                //
+                17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+}
+// BATTLE
+export function createWolf2Animations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_2_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_2_BATTLE_IDLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+                //
+                17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_2_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_2_ATTACK, { start: 0, end: 23 }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_WOLF_2_ATTACK_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WOLF_2_ATTACK_2, { start: 0, end: 35 }),
+        frameRate: 25,
+    });
+}
+
+//
+//
+// BOSSES ///////////////////////////////////////////////////////
+//
+//
+
+// MINOTAUR
+export function createBossMinotaurAnimations(scene: Scene) {
+    scene.anims.create({
+        key: AnimationType.BOSS_MINOTAUR_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_BOSS_MINOTAUR_IDLE, { start: 0, end: 103 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BOSS_MINOTAUR_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_BOSS_MINOTAUR_ATTACK, {
+            frames: [
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 41, 45, 49, 51, 55, 59, 60, 61, 62,
+                63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+                99,
+            ],
+        }),
+        frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BOSS_MINOTAUR_STOMP,
+        frames: scene.anims.generateFrameNumbers(IMAGE_BOSS_MINOTAUR_STOMP, {
+            frames: [
+                12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 32, 36, 37, 41, 42, 43, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+                61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71,
+            ],
+        }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BOSS_MINOTAUR_SPELL,
+        frames: scene.anims.generateFrameNumbers(IMAGE_BOSS_MINOTAUR_SPELL, { start: 22, end: 75 }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BOSS_MINOTAUR_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_BOSS_MINOTAUR_HURT, {
+            frames: [4, 8, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43],
+        }),
+        frameRate: 20,
+    });
+}
+
 // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
 // 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 // 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,

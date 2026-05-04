@@ -9,7 +9,7 @@ export const jesterSkill_2: IHeroSkillSet = {
     desc: i18n.skills.mc.jesterSkill.desc2,
     level: 2,
     priceLevel: 4,
-    heroClasses: [EHeroClass.MAGIC_BARD],
+    heroClasses: [EHeroClass.JESTER],
     isMcSkill: true,
     skills: [
         {
@@ -37,7 +37,7 @@ export const jesterSkill: IHeroSkillSet = {
     desc: i18n.skills.mc.jesterSkill.desc1,
     level: 1,
     priceLevel: 4,
-    heroClasses: [EHeroClass.MAGIC_BARD],
+    heroClasses: [EHeroClass.JESTER],
     isMcSkill: true,
     skills: [
         {

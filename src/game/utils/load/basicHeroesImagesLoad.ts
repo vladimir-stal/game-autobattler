@@ -60,6 +60,8 @@ import {
     IMAGE_WILD_IDLE,
     IMAGE_WILD_IDLE_BATTLE,
 } from "../imageLoadUtil";
+import { createBardBattleAnimations, createDarkBattleAnimations, createMagicBattleAnimations } from "../animations/basicHeroesAnimations";
+import { COMPLETE } from "../../consts";
 
 export function loadBasicHeroesImages(scene: Scene) {
     //
@@ -402,5 +404,404 @@ export function loadBasicHeroesImages(scene: Scene) {
     scene.load.spritesheet(IMAGE_WILD_HURT, "assets/sprites/units/wild/wild_hurt_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
+    });
+}
+
+/**
+ * @function load idle animation images for 9 basic class heroes
+ */
+export function loadBasicHeroesIdleImages(scene: Scene) {
+    // BARD
+    scene.load.spritesheet(IMAGE_BARD_IDLE, "assets/sprites/units/bard/bard_idle_spritesheet_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // DARK
+    scene.load.spritesheet(IMAGE_DARK_IDLE, "assets/sprites/units/dark/dark_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // MAGIC
+    scene.load.spritesheet(IMAGE_MAGIC_IDLE, "assets/sprites/units/magic/magic_idle_spritesheet_300_t.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // MASTER
+    scene.load.spritesheet(IMAGE_MASTER_IDLE, "assets/sprites/units/master/master_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // ORDER
+    scene.load.spritesheet(IMAGE_ORDER_IDLE, "assets/sprites/units/order/order_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // PRIEST
+    scene.load.spritesheet(IMAGE_PRIEST_IDLE, "assets/sprites/units/priest/priest_idle_spritesheet_300_t.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // SUMMON
+    scene.load.spritesheet(IMAGE_SUMMON_IDLE, "assets/sprites/units/summon/summon_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // WARRIOR
+    scene.load.spritesheet(IMAGE_WARRIOR_IDLE, "assets/sprites/units/warrior/warrior_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    // WILD
+    scene.load.spritesheet(IMAGE_WILD_IDLE, "assets/sprites/units/wild/wild_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+}
+
+//
+//
+// BARD ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+export async function loadBardBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_BARD_IDLE_BATTLE, "assets/sprites/units/bard/bard_battle_idle_2_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_BARD_ATTACK, "assets/sprites/units/bard/bard_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_BARD_DEFEATED, "assets/sprites/units/bard/bard_defeated_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_BARD_BUFF, "assets/sprites/units/bard/bard_spell_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_BARD_HURT, "assets/sprites/units/bard/bard_hurt_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+//
+//
+// DARK //////////////////////////////////////////// DARK ////////////////////////////////////////////////////////////////////////////
+//
+//
+export async function loadDarkBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_DARK_IDLE_BATTLE, "assets/sprites/units/dark/dark_idle_battle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_DARK_ATTACK, "assets/sprites/units/dark/dark_attack_2_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_DARK_SPELL, "assets/sprites/units/dark/dark_spell_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_DARK_DEFEATED, "assets/sprites/units/dark/dark_defeated_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_DARK_HURT, "assets/sprites/units/dark/dark_hurt_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+//
+//
+// MAGIC //////////////////////////////////////////////////// MAGIC ////////////////////////////////////////////////////////////////////
+//
+//
+export async function loadMagicBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_MAGIC_IDLE_BATTLE_0, "assets/sprites/units/magic/mage_idle_battle_2_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MAGIC_SPELL, "assets/sprites/units/magic/magic_lightning_attack_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MAGIC_ATTACK, "assets/sprites/units/magic/magic_attack_2_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MAGIC_DEFEATED, "assets/sprites/units/magic/magic_defeated_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MAGIC_HURT, "assets/sprites/units/magic/magic_hurt_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+//
+//
+// MASTER ///////////////////////////////////////////////// MASTER ///////////////////////////////////////////////////////////////////////
+//
+//
+export async function loadMasterBattleHeroImages(scene: Scene) {
+    scene.load.spritesheet(IMAGE_MASTER_IDLE_BATTLE, "assets/sprites/units/master/master_idle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // scene.load.spritesheet(IMAGE_MASTER_ATTACK, "assets/sprites/units/master/master_attack_3_cut_400.webp", {
+    //     frameWidth: 400,
+    //     frameHeight: 400,
+    // });
+    //WEBP
+    scene.load.spritesheet(IMAGE_MASTER_ATTACK_2, "assets/sprites/units/master/master_attack_2_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MASTER_DEFEATED, "assets/sprites/units/master/master_defeated_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MASTER_HURT, "assets/sprites/units/master/master_hurt_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_MASTER_BUFF, "assets/sprites/units/master/master_buff_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+//
+//
+// ORDER ////////////////////////////////////////////////////////// ORDER //////////////////////////////////////////////////////////////
+//
+//
+export async function loadOrderBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_ORDER_IDLE_BATTLE, "assets/sprites/units/order/order_idle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_ORDER_HURT, "assets/sprites/units/order/order_hurt_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // scene.load.spritesheet(IMAGE_ORDER_ATTACK, "assets/sprites/units/order/order_attack_cut_500.webp", {
+    //     frameWidth: 500,
+    //     frameHeight: 500,
+    // });
+    //WEBP
+    scene.load.spritesheet(IMAGE_ORDER_ATTACK_2, "assets/sprites/units/order/order_attack_2_cut_500.png", {
+        frameWidth: 500,
+        frameHeight: 375,
+    });
+
+    scene.load.spritesheet(IMAGE_ORDER_SHIELD_BUFF, "assets/sprites/units/order/order_shield_buff_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_ORDER_DEFEATED, "assets/sprites/units/order/order_defeated_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+//
+//
+// PRIEST /////////////////////////////////////////////////////// PRIEST /////////////////////////////////////////////////////////////////
+//
+//
+export async function loadPriestBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_PRIEST_IDLE_BATTLE, "assets/sprites/units/priest/priest_idle_battle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_PRIEST_HEAL, "assets/sprites/units/priest/priest_spell_2_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_PRIEST_ATTACK_2, "assets/sprites/units/priest/priest_holy_sword_cut_2_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_PRIEST_DEFEATED, "assets/sprites/units/priest/priest_defeated_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_PRIEST_HURT, "assets/sprites/units/priest/priest_hurt_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+//
+//
+// SUMMON ///////////////////////////////////////////////////// SUMMON ///////////////////////////////////////////////////////////////////
+//
+//
+export async function loadSummonBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_SUMMON_IDLE_BATTLE, "assets/sprites/units/summon/summon_idle_battle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_SUMMON_ATTACK, "assets/sprites/units/summon/summon_attack_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_SUMMON_DEFEATED, "assets/sprites/units/summon/summon_defeated_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_SUMMON_SPELL, "assets/sprites/units/summon/summon_spell_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMON_HURT, "assets/sprites/units/summon/summon_hurt_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+//
+//
+// WARRIOR ///////////////////////////////////////////////////// WARRIOR ///////////////////////////////////////////////////////////////////
+//
+//
+export async function loadWarriorBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_WARRIOR_IDLE_BATTLE, "assets/sprites/units/warrior/warrior_idle_battle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    // prev image: warrior_attack_4_cut_400
+    scene.load.spritesheet(IMAGE_WARRIOR_ATTACK, "assets/sprites/units/warrior/warrior_attack_5_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_WARRIOR_BUFF_REGEN, "assets/sprites/units/warrior/warrior_reg_buff_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_WARRIOR_DEFEATED, "assets/sprites/units/warrior/warrior_defeated_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_WARRIOR_HURT, "assets/sprites/units/warrior/warrior_hurt_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+//
+//
+// WILD ///////////////////////////////////////////////////// WILD ///////////////////////////////////////////////////////////////////
+//
+//
+export async function loadWildBattleHeroImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_WILD_IDLE_BATTLE, "assets/sprites/units/wild/wild_idle_battle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_WILD_ATTACK, "assets/sprites/units/wild/wild_attack_3_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_WILD_DEFEATED, "assets/sprites/units/wild/wild_defeated_cut_2_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_WILD_BUFF_GREEN, "assets/sprites/units/wild/wild_buff_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_WILD_HURT, "assets/sprites/units/wild/wild_hurt_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
     });
 }

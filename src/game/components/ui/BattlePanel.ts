@@ -23,6 +23,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
 
     resultRect: GameObjects.Rectangle;
     resultText: GameObjects.Text;
+    loadingText: GameObjects.Text;
 
     cards: Record<string, BattleUnitCard | BattleSummonCard>;
 
@@ -77,11 +78,25 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         this.renderPlayerUnitsPanel();
         this.renderEnemyUnitsPanel();
         this.renderResultPanel();
-        //this.renderButtons();
     }
 
     hide() {
         this.setVisible(false);
+    }
+
+    showLoading() {
+        this.removeAll(true);
+        this.loadingText = this.scene.add
+            .text(0, 0, i18n.ui.LOADING + "...", {
+                fontFamily: "Arial Black",
+                fontSize: 40,
+                color: "#dddddd",
+                fontStyle: "bold",
+            })
+            .setOrigin(0.5, 0.5)
+            .setVisible(true);
+        this.add(this.loadingText);
+        this.setVisible(true);
     }
 
     //renderButtons() {

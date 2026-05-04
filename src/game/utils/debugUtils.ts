@@ -14,14 +14,14 @@ import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
-import { shieldWarriorsSummonMob } from "../units/summonMobUnits";
+import { fireflySummonMob, shieldWarriorsSummonMob } from "../units/summonMobUnits";
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { dagger31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
 import { ringOfHealingSkill } from "../skills/priestSkillConsts";
 import { mortalStrikeSkill } from "../skills/warriorSkillConsts";
 import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
-import { skeletonMageUnit } from "../units/skeletonsMobUnits";
+import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
 import { skeletonPoisonedFlames } from "../skills/mobSkills";
 import { scrollOfSkill } from "../commonItemConsts3";
 
@@ -31,23 +31,19 @@ export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
 
-/*
-    let isSingleSelect = false;
-    let isSelectRequired = false;
-    let isRerollAvailable = false;
-    let hintTextType: ESelectCardHint | undefined = undefined;
-
-    let cards: (ICard | null)[] = [];
-*/
+//
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: doomsayerHero }, { type: ECardType.UNIT, price: 0, unit: oracleHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: wolfUnit }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         { type: ECardType.UNIT, price: 0, unit: peasantUnit },
+        { type: ECardType.UNIT, price: 0, unit: pirate1Unit },
+        { type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
+        { type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
@@ -71,6 +67,6 @@ export const customStartingItemsRoom = (): ICard[] => {
         },
         { type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
          */
-        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

@@ -26,6 +26,7 @@ import { getDuelEnemy } from "../utils/duelUtils";
 import { CardUpgradetPanel } from "../components/ui/CardUpgradetPanel";
 import { SkillCardEnchantPanel } from "../components/ui/SkillCardEnchantPanel";
 import { CardHintPanel } from "../components/ui/CardHintPanel";
+import { ImageLoadController } from "../components/ImageLoadController";
 
 export class GameScene extends Phaser.Scene {
     isHost: boolean;
@@ -54,6 +55,7 @@ export class GameScene extends Phaser.Scene {
     skillCardEnchantPanel: SkillCardEnchantPanel;
     hintPanel: CardHintPanel;
 
+    imageLoadController: ImageLoadController;
     leaderController: LeaderController;
     bankController: BankController;
     selectController: SelectController;
@@ -79,12 +81,11 @@ export class GameScene extends Phaser.Scene {
 
     async preload() {
         //loadImages(this);
-        console.log("GAME SCENE PRELOAD");
+        //console.log("GAME SCENE PRELOAD");
     }
 
     // CREATE /////////////////////////////////////////////////////////////////////////////////
     create() {
-        console.log("GAME SCENE CREAE");
         //this.input.setTopOnly(false); // for top interactive object not to stop capturing events on low level objects
 
         //console.log("GAME SCENE >> CREATE");
@@ -195,6 +196,7 @@ export class GameScene extends Phaser.Scene {
         this.camera.setBounds(0, 0, 2000, 2000);
         this.selectController = new SelectController(this);
 
+        this.imageLoadController = new ImageLoadController(this);
         //createAnimations(this);
 
         this.leaderController = new LeaderController(this);
@@ -349,7 +351,7 @@ export class GameScene extends Phaser.Scene {
         this.leaderPanel.setHp(this.leaderController.hp);
     }
 
-    changeToDuelPhase() {
+    async changeToDuelPhase() {
         this.phase = "DUEL";
         this.topPanel.changeToDuelPhase();
         this.roomSelectPanel.setVisible(false);
@@ -377,6 +379,11 @@ export class GameScene extends Phaser.Scene {
                 //   level up units below specific level, and front positions level up more
                 u && levelUpUnitRandom(u, Math.floor((this.selectController.day + 3 - i) / 1.5));
             });
+        //
+        /// LOAD UNIT ANIMATIONS
+        this.battlePanel.showLoading();
+        await this.loadDuelAnimations(units, enemyUnits);
+        //
         this.battlePanel.show(units, enemyUnits);
         // TODO: calculate round count from day and enemies left
         const battleRoundCount = 3; //this.selectController.day + 1;
@@ -384,7 +391,7 @@ export class GameScene extends Phaser.Scene {
         this.battlePanel.playBattle(this.battleController.battleRecord);
     }
 
-    changeToMobsDuelPhase(mobs: TUnits) {
+    async changeToMobsDuelPhase(mobs: TUnits) {
         this.phase = "MOB_DUEL";
         this.topPanel.changeToDuelPhase();
         this.roomSelectPanel.setVisible(false);
@@ -399,11 +406,18 @@ export class GameScene extends Phaser.Scene {
         mobs.forEach((mob) => {
             mob && generateUnitId(mob);
         });
+
+        //
+        /// LOAD UNIT ANIMATIONS
+        this.battlePanel.showLoading();
+        await this.loadDuelAnimations(units, mobs);
+        //
+        console.log("START DUEL");
         this.battlePanel.show(units, mobs);
         this.battleController.start(this.battlePanel.playerUnits, this.battlePanel.enemyUnits, true, 0);
-        setTimeout(() => {
-            this.battlePanel.playBattle(this.battleController.battleRecord);
-        }, 1000);
+        //setTimeout(() => {
+        this.battlePanel.playBattle(this.battleController.battleRecord);
+        //}, 1000);
     }
 
     changeToBossDuelPhase(mobs: TUnits) {
@@ -482,5 +496,42 @@ export class GameScene extends Phaser.Scene {
         this.battlePanel.hide();
 
         this.phase = "SELECT";
+    }
+
+    /** load animations for player and enemy units */
+    private async loadDuelAnimations(playerUnits: (IUnit | null)[], enemyUnits: (IUnit | null)[]) {
+        // TODO: combine units and skills to load in one promise.all
+        // load unit animations
+        const duelUnitsIds: string[] = [];
+        playerUnits.concat(enemyUnits).forEach((unit) => {
+            if (!unit) {
+                return;
+            }
+
+            const unitId = unit.id.split("_")[0];
+            if (!duelUnitsIds.includes(unitId)) {
+                duelUnitsIds.push(unitId);
+            }
+        });
+        const result = await this.imageLoadController.loadBattleUnits(duelUnitsIds);
+        console.log("RESULT ==", result);
+        //
+        // load unit animations for skills (summons)
+        const skillsIds: string[] = [];
+        playerUnits.concat(enemyUnits).forEach((unit) => {
+            if (!unit) {
+                return;
+            }
+
+            unit.skills.forEach((skillSet) => {
+                if (!skillsIds.includes(skillSet.id)) {
+                    skillsIds.push(skillSet.id);
+                }
+            });
+        });
+        if (skillsIds.length === 0) {
+            return;
+        }
+        await this.imageLoadController.loadBattleSkills(skillsIds);
     }
 }

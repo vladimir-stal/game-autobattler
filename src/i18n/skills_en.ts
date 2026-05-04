@@ -129,7 +129,7 @@ export const SKILLS_EN = {
             desc2: "Summon magic creature [stats]",
             desc1: "Summon magic creature [stats]",
         },
-        sparkSummon: {
+        prititWarriorSummon: {
             name: "Summon spirit warrior",
 
             desc1: "Summon spirit warrior [stats]",
@@ -160,7 +160,7 @@ export const SKILLS_EN = {
             desc2: "Increase self hp regen [2]",
             desc3: "Increase self hp regen [3]",
         },
-        totemAttack: {
+        wildBasicTotemSkill: {
             name: "Wild totem",
             desc1: "Summon totem that deals \n[1] damage to random enemy",
             desc2: "Summon totem that deals \n[2] damage to random enemy",

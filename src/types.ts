@@ -412,24 +412,24 @@ export enum EHeroClass {
     ALCHEMIST = "ALCHEMIST",
     ASSASSIN = "ASSASSIN",
     BARBARIAN = "BARBARIAN",
-    BATTLE_MAGE = "BATTLE_MAGE",
-    BEAST_MASTER = "BEAST_MASTER",
+    BATTLE_MAGE = "BATTLEMAGE",
+    BEAST_MASTER = "BEASTMASTER",
     BISHOP = "BISHOP",
-    BLACK_KNIGHT = "BLACK_KNIGHT",
+    BLACK_KNIGHT = "BLACKKNIGHT",
     BLADEDANCER = "BLADEDANCER",
     COMMANDER = "COMMANDER",
     DOOMSAYER = "DOOMSAYER",
     DRUID = "DRUID",
     DUELIST = "DUELIST",
     EXORCIST = "EXORCIST",
-    FOREST_SPIRIT = "FOREST_SPIRIT",
+    FOREST_SPIRIT = "FORESTSPIRIT",
     GLADIATOR = "GLADIATOR",
     ILLUSIONIST = "ILLUSIONIST",
     HERALD = "HERALD",
     HUNTER = "HUNTER",
     INQUISITOR = "INQUISITOR",
     KNIGHT = "KNIGHT",
-    MAGIC_BARD = "MAGIC_BARD",
+    JESTER = "JESTER",
     MINSTREL = "MINSTREL",
     MIMIC = "MIMIC",
     MONK = "MONK",
@@ -439,7 +439,7 @@ export enum EHeroClass {
     PREDATOR = "PREDATOR",
     RUNECASTER = "RUNECASTER",
     SAMURAI = "SAMURAI",
-    SHADOW_MASTER = "SHADOW_MASTER",
+    SHADOW_MASTER = "SHADOWMASTER",
     SHAMAN = "SHAMAN",
     SORCERER = "SORCERER",
     WARLOCK = "WARLOCK",
@@ -715,7 +715,7 @@ export enum ETargetType {
     ANCHOR_TARGET = "ANCHOR_TARGET", // unit that is afflicted with buff/debuff of Battle trigger type (called from that same Battle trigger)
     BY_RELEVANT_ID = "BY_RELEVANT_ID", // triggerBattleTrigger() ~ relevantUnitId parameter
     CUSTOM = "CUSTOM",
-    SAME_LAST_TARGET = "SAME_LAST_TARGET", // in skill set, repeat same target for next steps of set 
+    SAME_LAST_TARGET = "SAME_LAST_TARGET", // in skill set, repeat same target for next steps of set
 }
 
 export enum EWeaponType {

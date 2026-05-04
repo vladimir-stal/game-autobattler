@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import { IMAGE_EFFECT_PRIEST_HEAL } from "./imageLoadEffects";
 
 const path = "assets/sprites/effects/ui/";
 
@@ -19,6 +20,11 @@ export function loadImagesUIEffects(scene: Scene) {
     scene.load.spritesheet(IMAGE_EFFECT_UI_BUFF_2, `${path}buffs/buff_animation_2_cut_232x344.webp`, {
         frameWidth: 232,
         frameHeight: 344,
+    });
+    // HEAL
+    scene.load.spritesheet(IMAGE_EFFECT_PRIEST_HEAL, `assets/sprites/effects/priest/heal_2_cut_400.webp`, {
+        frameWidth: 400,
+        frameHeight: 400,
     });
     //
     // STATUSES

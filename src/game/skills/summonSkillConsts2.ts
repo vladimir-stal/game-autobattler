@@ -192,7 +192,7 @@ export const familiarSummon: IUnit = {
 // FIREFLY SUMMON SKILL
 
 export const fireflySummonSkill_3: IHeroSkillSet = {
-    id: "fireflySummon",
+    id: "fireflySummonSkill",
     //name: "Firefly Summon(3)",
     //desc: "Summon magic creature [6,6]",
     name: i18n.skills.basic.fireflySummon.name,
@@ -206,7 +206,7 @@ export const fireflySummonSkill_3: IHeroSkillSet = {
 };
 
 export const fireflySummonSkill_2: IHeroSkillSet = {
-    id: "fireflySummon",
+    id: "fireflySummonSkill",
     //name: "Firefly Summon(2)",
     //desc: "Summon magic creature [3,4]",
     name: i18n.skills.basic.fireflySummon.name,
@@ -221,7 +221,7 @@ export const fireflySummonSkill_2: IHeroSkillSet = {
 };
 
 export const fireflySummonSkill: IHeroSkillSet = {
-    id: "fireflySummon",
+    id: "fireflySummonSkill",
     //name: "Firefly Summon",
     // desc: "Summon magic creature [2,3]",
     name: i18n.skills.basic.fireflySummon.name,
@@ -238,11 +238,11 @@ export const fireflySummonSkill: IHeroSkillSet = {
 // WAAAaahRIOR SUMMON SKILL
 
 export const warriorSummonSkill_3: IHeroSkillSet = {
-    id: "warriorSummon",
+    id: "warriorSummonSkill",
     //name: "Spark Summon(3)",
     //desc: "Summon magic spark [7,1]",
-    name: i18n.skills.basic.sparkSummon.name,
-    desc: i18n.skills.basic.sparkSummon.desc3,
+    name: i18n.skills.basic.prititWarriorSummon.name,
+    desc: i18n.skills.basic.prititWarriorSummon.desc3,
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
@@ -252,11 +252,11 @@ export const warriorSummonSkill_3: IHeroSkillSet = {
 };
 
 export const warriorSummonSkill_2: IHeroSkillSet = {
-    id: "warriorSummon",
+    id: "warriorSummonSkill",
     //name: "Spark Summon(2)",
     //desc: "Summon magic spark [4,1]",
-    name: i18n.skills.basic.sparkSummon.name,
-    desc: i18n.skills.basic.sparkSummon.desc2,
+    name: i18n.skills.basic.prititWarriorSummon.name,
+    desc: i18n.skills.basic.prititWarriorSummon.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
@@ -267,9 +267,9 @@ export const warriorSummonSkill_2: IHeroSkillSet = {
 };
 
 export const warriorSummonSkill: IHeroSkillSet = {
-    id: "warriorSummon",
-    name: i18n.skills.basic.sparkSummon.name,
-    desc: i18n.skills.basic.sparkSummon.desc1,
+    id: "warriorSummonSkill",
+    name: i18n.skills.basic.prititWarriorSummon.name,
+    desc: i18n.skills.basic.prititWarriorSummon.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON],
@@ -527,13 +527,13 @@ const explodingSummonsBuffSkillset = (mpScale: number, area: ETargetType): IHero
                             value: 0,
                             mpScale: mpScale,
                             animation: AnimationType.NONE,
-                        }
+                        },
                     ],
-                }
-            }
-        }
+                },
+            },
+        },
     ];
-}
+};
 
 export const explodingSummonsBuffSkill_3: IHeroSkillSet = {
     id: "explodingSummonsBuff",
@@ -546,7 +546,6 @@ export const explodingSummonsBuffSkill_3: IHeroSkillSet = {
     image: IMAGE_SKILL_SUMMON_SHIELD,
     //nextLevel: explodingSummonsBuffSkill_3,
 };
-
 
 export const explodingSummonsBuffSkill_2: IHeroSkillSet = {
     id: "explodingSummonsBuff",

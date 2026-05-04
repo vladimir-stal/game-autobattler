@@ -11,6 +11,7 @@ export const IMAGE_LOBBY_FOX_SMILE = "IMAGE_LOBBY_FOX_SMILE";
 export const IMAGE_LOBBY_LOADING = "IMAGE_LOBBY_LOADING";
 
 export const ANIMATION_COMPLETE = "animationcomplete";
+export const COMPLETE = "complete";
 
 export const SOUND_MAIN_MENU_CHANGE_SCENE = "SOUND_MAIN_MENU_CHANGE_SCENE";
 

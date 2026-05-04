@@ -60,6 +60,72 @@ import {
     IMAGE_WILD_IDLE_BATTLE,
 } from "../imageLoadUtil";
 
+export function createBasicHeroesIdleAnimations(scene: Scene) {
+    // BARD
+    scene.anims.create({
+        key: AnimationType.BARD_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_BARD_IDLE, { start: 0, end: 103 }),
+        frameRate: 10,
+        repeat: -1,
+    });
+    // DARK
+    scene.anims.create({
+        key: AnimationType.DARK_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DARK_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+    // MAGIC
+    scene.anims.create({
+        key: AnimationType.MAGIC_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_IDLE, { start: 0, end: 103 }),
+        frameRate: 10,
+        repeat: -1,
+    });
+    // MASTER
+    scene.anims.create({
+        key: AnimationType.MASTER_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_IDLE, { start: 0, end: 99 }),
+        frameRate: 15,
+        repeat: -1,
+    });
+    // ORDER
+    scene.anims.create({
+        key: AnimationType.ORDER_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORDER_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+    // PRIEST
+    scene.anims.create({
+        key: AnimationType.PRIEST_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_IDLE, { start: 0, end: 99 }),
+        frameRate: 15,
+        repeat: -1,
+    });
+    // SUMMON
+    scene.anims.create({
+        key: AnimationType.SUMMON_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_IDLE, { start: 0, end: 99 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+    // WARRIOR
+    scene.anims.create({
+        key: AnimationType.WARRIOR_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_IDLE, { start: 0, end: 74 }),
+        frameRate: 6,
+        repeat: -1,
+    });
+    // WILD
+    scene.anims.create({
+        key: AnimationType.WILD_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WILD_IDLE, { start: 0, end: 99 }),
+        frameRate: 6,
+        repeat: -1,
+    });
+}
+
 export function createBasicHeroesAnimations(scene: Scene) {
     //
     // BARD ///////////////////////////////////////// BARD //////////////////////////////////////////////////////////////////////////
@@ -1061,6 +1127,720 @@ export function createBasicHeroesAnimations(scene: Scene) {
     });
 }
 
+// BARD ///////////////////////////////////////// BARD //////////////////////////////////////////////////////////////////////////
+export function createBardBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.BARD_IDLE_BATTLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_BARD_IDL_BATTLE, { start: 0, end: 103 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_BARD_IDLE_BATTLE, {
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
+        }),
+        frameRate: 15,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BARD_ATTACK,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_BARD_ATTACK, { start: 0, end: 70 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_BARD_ATTACK, {
+            // frames: [
+            //     1, 3, 5, 7, 9, 11, 13, 14, 15, 16, 17, 18, 19,
+            //     //
+            //     20, 22, 24, 26, 28, 30, 32, 34, 36, 38,
+            //     //
+            //     //40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+            //     40, 44, 48, 52, 56, 60, 61, 62, 63,
+            // ],
+            frames: [
+                0, 2, 3, 4, 5, 6, 7, 8,
+                //
+                9, 11, 13, 15, 17, 19, 21, 23, 25, 27,
+                //
+                29, 33, 37, 41, 45, 49, 50, 51, 52,
+            ],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BARD_DEFEATED,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_BARD_DEFEATED, { start: 0, end: 103 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_BARD_DEFEATED, {
+            // frames: [
+            //     1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 14, 16, 18, 22, 24, 26, 30,
+            //     //
+            //     34, 38, 46,
+
+            //     //
+            //     //40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+            //     52, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68,
+            // ],
+            frames: [
+                0, 1, 3, 5, 7, 11, 13, 15, 19,
+                //
+                23, 27, 35,
+                //
+                41, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54,
+            ],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BARD_BUFF,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_BARD_DEFEATED, { start: 0, end: 103 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_BARD_BUFF, {
+            frames: [
+                //40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3,
+                40,
+                38, 36, 34, 32, 30, 28, 26, 24, 22, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+                //
+                50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 74, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
+                86, 87, 88, 89, 90,
+                //
+                91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+                //
+                //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
+            ],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.BARD_HURT,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_BARD_HURT, { start: 0, end: 103 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_BARD_HURT, {
+            // frames: [
+            //     22, 23, 24, 25, 26, 27, 28, 30, 32, 34, 36, 38, 40, 42, 44, 45, 46, 47, 47, 47,
+            //     //
+            //     28, 27, 26, 25, 24, 23, 22, 21, 20,
+            // ],
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 22, 23, 24, 25, 25, 25,
+                //
+                6, 5, 4, 3, 2, 1, 0, 0,
+            ],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+}
+
+// DARK ///////////////////////////////////////// DARK //////////////////////////////////////////////////////////////////////////
+export function createDarkBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.DARK_IDLE_BATTLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DARK_IDLE_BATTLE, {
+            frames: [
+                //34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+                //
+                //58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33,
+                25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.DARK_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DARK_ATTACK, {
+            // frames: [
+            //     33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68,
+            //     69, 70,
+            //     //
+            //     36, 33, 30, 27, 23, 18, 14, 10, 6, 2,
+            // ],
+            // frames: [
+            //     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+            //     //
+            //     10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            // ],
+            frames: [
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+                47, 48,
+                //
+                14, 11, 8, 5, 3, 1, 0,
+            ],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.DARK_SPELL,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DARK_SPELL, {
+            // frames: [
+            //     11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57,
+            //     58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+            //     //61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+            //     //82, 83, 84, 85,
+            //     //
+            //     26, 22, 18, 14, 13, 12, 11,
+            // ],
+            // frames: [
+            //     0, 1, 2, 3, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+            //     //
+            //     28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
+            //     //
+            //     10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            // ],
+            frames: [
+                0, 1, 2, 3, 4, 6, 8, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+                //
+                30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                //
+                51, 52, 53, 54, 55, 56, 57, 58, 59,
+                //61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
+                //82, 83, 84, 85,
+                //
+                15, 11, 7, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.DARK_DEFEATED,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_DARK_DEFEATED, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_DARK_DEFEATED, {
+            // frames: [
+            //     11, 12, 14, 16, 18, 20, 22, 24, 26, 30, 34, 38, 42, 46, 50, 56, 62,
+            //     //
+            //     63, 64, 65, 66, 67, 68, 69, 70, 71, 72,
+            // ],
+            frames: [
+                //11, 12, 14, 16, 18, 20,
+                0, 1, 2, 3, 4, 8, 12, 14, 20, 24, 28, 34, 40,
+                //
+                41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+            ],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.DARK_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_DARK_HURT, {
+            // frames: [
+            //     11, 12, 14, 16, 18, 20, 22, 24, 26, 30, 34, 38, 42, 46, 50,
+            //     //
+            //     20, 18, 16, 14, 12, 10,
+            // ],
+            frames: [
+                //0, 1, 3,
+                5, 7, 9, 11, 13, 15, 19, 23, 27, 31, 35, 39,
+                //
+                9, 7, 5, 3, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+}
+
+// MAGIC ///////////////////////////////////////// MAGIC ////////////////////////////////////////////////////////////////////////
+export function createMagicBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MAGIC_IDLE_BATTLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_IDLE_BATTLE_0, { start: 0, end: 99 }),
+        //frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_IDLE_BATTLE_0, { start: 0, end: 36 }),
+        // frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_IDLE_BATTLE_0, {
+        //     frames: [
+        //         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 3, 2,
+        //         1,
+        //     ],
+        // }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_IDLE_BATTLE_0, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+                //
+                26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1, 0, 0,
+            ],
+        }),
+        frameRate: 15,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MAGIC_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_ATTACK, { start: 0, end: 48 }),
+        frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MAGIC_ATTACK_SPELL,
+        frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_SPELL, { start: 0, end: 99 }),
+        frameRate: 50,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MAGIC_DEFEATED,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_DEFEATED, { start: 0, end: 90 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_DEFEATED, {
+            //frames: [11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 24, 26, 28, 30, 34, 38, 42, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65],
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43],
+        }),
+        frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MAGIC_HURT,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_HURT, { start: 0, end: 90 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_MAGIC_HURT, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 33, 34, 35, 36, 37, 38, 38,
+                //
+                28, 26, 24, 22, 20, 18, 16, 14, 12, 10,
+            ],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+}
+
+// MASTER ///////////////////////////////////////// MASTER //////////////////////////////////////////////////////////////////////
+export function createMasterBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MASTER_IDLE_BATTLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_IDLE_BATTLE, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_IDLE_BATTLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 26, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16,
+                15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    // scene.anims.create({
+    //     key: AnimationType.MASTER_ATTACK,
+    //     frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_ATTACK, {
+    //         frames: [
+    //             2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 30, 36, 42, 48, 54, 54, 54, 54, 54, 54, 54, 56, 60, 64, 68, 72, 73, 74, 75, 76, 77, 78,
+    //             79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+    //         ],
+    //     }),
+    //     frameRate: 40,
+    //     //repeat: -1,
+    // });
+
+    scene.anims.create({
+        key: AnimationType.MASTER_ATTACK_2,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_ATTACK_2, { start: 0, end: 119 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_ATTACK_2, {
+            // frames: [
+            //     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+            //     //
+            //     42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66,
+            //     //
+            //     //51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65,66,
+            //     67, 68, 69, 70,
+            //     //
+            //     71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
+            //     //88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+            // ],
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 23, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                //
+                31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55,
+                //
+                56, 57, 58, 59,
+                //
+                60, 61, 62, 63, 64, 65,
+                //77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
+            ],
+        }),
+        frameRate: 50,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MASTER_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_DEFEATED, {
+            frames: [2, 6, 10, 14, 18, 22, 26, 30, 36, 40, 44, 48, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MASTER_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_HURT, {
+            //frames: [74, 72, 70, 68, 64, 60, 55, 55, 55, 55, 55, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75],
+            //frames: [74, 72, 70, 68, 64, 60, 57, 57, 57, 57, 57, 57, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75],
+            frames: [17, 15, 13, 11, 7, 3, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MASTER_BUFF,
+        frames: scene.anims.generateFrameNumbers(IMAGE_MASTER_BUFF, {
+            // frames: [
+            //     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 33, 34, 34, 33, 33, 33, 32, 31, 30, 29, 28, 26, 24,
+            //     22, 20, 18, 16, 14, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            // ],
+            frames: [
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 0, 0, 1, 1, 0, 0, 0, 32, 31, 30, 29, 28, 26, 24, 22, 20,
+                18, 16, 14, 12, 11, 10, 9, 8, 7, 6, 5, 4,
+            ],
+        }),
+        frameRate: 30,
+        //repeat: -1,
+    });
+}
+
+// ORDER //////////////////////////////////////////////////////// ORDER ////////////////////////////////////////////////////////
+export function createOrderBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.ORDER_ATTACK_2,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORDER_ATTACK_2, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+                //
+                23, 25, 27, 29, 31, 35, 39, 43, 47, 49, 51, 53, 55, 57, 59,
+                //
+                61, 63, 65, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+                //
+                80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+                //
+                100, 101, 102, 103, 104, 105, 106, 107,
+            ],
+        }),
+        frameRate: 50,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORDER_SHIELD_BUFF,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORDER_SHIELD_BUFF, {
+            frames: [8, 9, 10, 12, 14, 16, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 30, 25, 20, 15, 10, 9, 8],
+        }),
+        frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORDER_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORDER_DEFEATED, { start: 0, end: 31 }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORDER_IDLE_BATTLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORDER_IDLE_BATTLE, { start: 0, end: 95 }),
+        frameRate: 25,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.ORDER_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_ORDER_HURT, {
+            frames: [
+                16, 7, 7, 8, 8, 8, 8, 8, 9, 9, 10, 10, 11, 12, 13, 15, 17, 19, 21, 23,
+                //
+                24, 25, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+            ],
+        }),
+        frameRate: 30,
+    });
+}
+
+// PRIEST ///////////////////////////////////////// PRIEST //////////////////////////////////////////////////////////////////////
+export function createPriestBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.PRIEST_IDLE_BATTLE,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_IDLE_BATTLE, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_IDLE_BATTLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+                //
+                30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+                //
+                40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3,
+                2, 1,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.PRIEST_HEAL,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_HEAL, { start: 0, end: 50 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_HEAL, {
+            frames: [
+                //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                1, 3, 5, 7, 9, 11, 13, 15, 17, 19,
+                //
+                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55,
+                56, 57, 58, 59, 60, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.PRIEST_ATTACK_2,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK_2, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_ATTACK_2, {
+            frames: [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                //
+                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70, 74, 76,
+            ],
+        }),
+        frameRate: 40,
+    });
+
+    scene.anims.create({
+        key: AnimationType.PRIEST_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_DEFEATED, {
+            frames: [1, 3, 5, 7, 9, 10, 12, 14, 16, 18, 20, 24, 28, 52, 56, 60, 64, 65, 66, 67, 68, 69, 70, 71],
+        }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.PRIEST_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_PRIEST_HURT, {
+            frames: [
+                0, 2, 6, 10, 14, 18, 20, 22, 24, 24, 24, 24, 24, 24, 24, 24,
+                //
+                8, 6, 4, 2, 0,
+            ],
+        }),
+        frameRate: 30,
+    });
+}
+
+// SUMMON ///////////////////////////////////////// SUMMON ///////////////////////////////////////////////////////////////////////
+export function createSummonBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.SUMMON_IDLE_BATTLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_IDLE_BATTLE, { start: 0, end: 103 }),
+        frameRate: 15,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.SUMMON_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_ATTACK, {
+            frames: [
+                4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 40, 60, 65,
+                //
+                22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4,
+            ],
+        }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.SUMMON_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_DEFEATED, {
+            frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 24, 28, 32, 36, 40, 44, 48, 52, 53, 54, 55, 56, 57, 58, 59, 60],
+        }),
+        frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: AnimationType.SUMMON_SPELL,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_SPELL, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+                46, 47, 48, 49, 50,
+                //
+                16, 14, 12, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.SUMMON_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SUMMON_HURT, {
+            frames: [
+                4, 6, 8, 10, 12, 14,
+                //
+                30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45,
+                //
+                14, 12, 10, 9, 8, 7, 6, 4,
+            ],
+        }),
+        frameRate: 20,
+    });
+}
+
+// WARRIOR ///////////////////////////////////////// WARRIOR //////////////////////////////////////////////////////////////////////
+export function createWarriorBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.WARRIOR_IDLE_BATTLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_IDLE_BATTLE, {
+            frames: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 23, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11,
+                10, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0,
+            ],
+        }),
+        frameRate: 15,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WARRIOR_ATTACK,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_ATTACK, { start: 0, end: 119 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_ATTACK, {
+            frames: [
+                // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+                //26, 27, 28, 29, 30,
+                26, 28, 30,
+                //
+                //31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                //32, 34, 36, 38, 40, 42, 44, 46, 48, 50,
+                32, 34, 36, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+                //
+                51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+                //
+                71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84,
+                //85, 86, 87, 88, 89, 90,
+                //
+                //91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+                // 101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+                // 111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
+                //19, 18, 17, 16, 15,
+                14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,
+            ],
+        }),
+        frameRate: 40,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WARRIOR_BUFF_REGEN,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_BUFF_REGEN, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_BUFF_REGEN, {
+            frames: [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+                39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+                //61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+                //71, 72, 73, 74,75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+
+                //21, 20, 19, 18.17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5,
+                //27, 26, 25, 24, 23, 22,
+                20, 18, 16, 14, 12, 10, 8, 6, 5, 4, 3,
+            ],
+        }),
+        frameRate: 30,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WARRIOR_DEFEATED,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_DEFEATED, { start: 0, end: 50 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_DEFEATED, {
+            frames: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 46, 52],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WARRIOR_HURT,
+        //frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_HURT, { start: 0, end: 99 }),
+        frames: scene.anims.generateFrameNumbers(IMAGE_WARRIOR_HURT, {
+            frames: [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 18, 22, 26, 26,
+                //
+                18, 16, 14, 12, 10, 8, 6, 4,
+            ],
+        }),
+        frameRate: 20,
+        //repeat: -1,
+    });
+}
+
+// WILD ///////////////////////////////////////// WILD //////////////////////////////////////////////////////////////////////
+export function createWildBattleAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.WILD_IDLE_BATTLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WILD_IDLE_BATTLE, {
+            frames: [
+                5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+                //
+                38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5,
+            ],
+        }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WILD_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WILD_ATTACK, {
+            frames: [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                //
+                21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+                //
+                40, 44, 48, 52, 56, 60, 64, 68, 72, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 93, 94, 94,
+
+                19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 40,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WILD_DEFEATED,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WILD_DEFEATED, {
+            frames: [8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 44, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60],
+        }),
+        frameRate: 20,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WILD_BUFF,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WILD_BUFF_GREEN, {
+            frames: [
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+                39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69,
+                //
+                10, 9, 8, 7, 6, 5, 4, 3, 2, 1,
+            ],
+        }),
+        frameRate: 40,
+    });
+
+    scene.anims.create({
+        key: AnimationType.WILD_HURT,
+        frames: scene.anims.generateFrameNumbers(IMAGE_WILD_HURT, {
+            frames: [
+                1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 19, 19, 19,
+                //
+                15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5,
+            ],
+        }),
+        frameRate: 30,
+    });
+}
 //
 
 // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,

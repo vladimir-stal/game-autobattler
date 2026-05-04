@@ -1,28 +1,113 @@
 import { Scene } from "phaser";
-import { GameScene } from "../scenes/GameScene";
-import { loadBasicHeroesImages } from "./load/basicHeroesImagesLoad";
-import { loadImagesMobs } from "./load/imageLoadMobs";
-import { loadMcHeroesImages } from "./load/mcHeroesImagesLoad";
-import { loadImagesEffects } from "./load/imageLoadEffects";
+import {
+    loadBardBattleHeroImages,
+    loadBasicHeroesIdleImages,
+    loadDarkBattleHeroImages,
+    loadMagicBattleHeroImages,
+    loadMasterBattleHeroImages,
+    loadOrderBattleHeroImages,
+    loadPriestBattleHeroImages,
+    loadSummonBattleHeroImages,
+    loadWarriorBattleHeroImages,
+    loadWildBattleHeroImages,
+} from "./load/basicHeroesImagesLoad";
+import {
+    IMAGE_GOBLIN_1,
+    IMAGE_GOBLIN_2,
+    IMAGE_PEASANT_1,
+    IMAGE_SKELETON_1,
+    IMAGE_WOLF_1,
+    IMAGE_WOLF_2,
+    loadGoblinBattleImages,
+    loadGoblinIdleImages,
+    loadGoblinMageBattleImages,
+    loadGoblinMageIdleImages,
+    loadGoblinShamanBattleImages,
+    loadPeasantBattleImages,
+    loadPeasantIdleImages,
+    loadPirate1BattleImages,
+    loadPirate1IdleImages,
+    loadPirate2BattleImages,
+    loadPirate2IdleImages,
+    loadSkeletonBattleImages,
+    loadSkeletonIdleImages,
+    loadSummonFireflyIdleImages,
+    loadSummonFireflyImages,
+    loadSummonShieldWarriorImages,
+    loadSummonWarriorImages,
+    loadWolf1BattleImages,
+    loadWolf1IdleImages,
+    loadWolf2BattleImages,
+    loadWolf2IdleImages,
+} from "./load/imageLoadMobs";
+import { loadMcHeroBattleImages, loadMcHeroesImages, loadMcHeroIdleImages } from "./load/mcHeroesImagesLoad";
+import {
+    loadBardEffectsImages,
+    loadCommonImagesEffects,
+    loadDarkEffectsImages,
+    loadMagicEffectsImages,
+    loadMasterEffectsImages,
+    loadMcHeroEffectsImages,
+    loadOrderEffectsImages,
+    loadPriestEffectsImages,
+    loadSummonEffectsImages,
+    loadWarriorEffectsImages,
+    loadWildEffectsImages,
+} from "./load/imageLoadEffects";
 import { loadImagesItems } from "./load/imageLoadItems";
-import { GAME_MODE } from "../consts";
 import { loadImagesUIEffects } from "./load/imageLoadUIEffects";
 import { loadSkillImages } from "./load/skillImagesLoad";
+import {
+    createBardBattleAnimations,
+    createDarkBattleAnimations,
+    createMagicBattleAnimations,
+    createMasterBattleAnimations,
+    createOrderBattleAnimations,
+    createPriestBattleAnimations,
+    createSummonBattleAnimations,
+    createWarriorBattleAnimations,
+    createWildBattleAnimations,
+} from "./animations/basicHeroesAnimations";
+import {
+    createBardEffectAnimations,
+    createDarkEffectAnimations,
+    createMagicEffectAnimations,
+    createMasterEffectAnimations,
+    createMcHeroEffectAnimations,
+    createOrderEffectAnimations,
+    createPriestEffectAnimations,
+    createSummonEffectAnimations,
+    createWarriorEffectAnimations,
+    createWildEffectAnimations,
+} from "./animations/effectAnimations";
+import {
+    createFireflyAnimations,
+    createFireflyIdleAnimations,
+    createGoblinAnimations,
+    createGoblinMageAnimations,
+    createGoblinShamanAnimations,
+    createPeasantAnimations,
+    createPirate1Animations,
+    createPirate1IdleAnimations,
+    createPirate2Animations,
+    createPirate2IdleAnimations,
+    createSkeletonAnimations,
+    createSpiritShieldWarriorAnimations,
+    createSpiritWarriorAnimations,
+    createWolf1Animations,
+    createWolf1IdleAnimations,
+    createWolf2Animations,
+    createWolf2IdleAnimations,
+} from "./animations/mobsAnimations";
+import { TOTEM_ID_WILD_BASIC } from "../totemConsts";
+import { loadBasicWildTotemImages } from "./load/totemsImagesLoad";
+import { createWildBasicTotemAnimations } from "./animations/totemAnimations";
+import { EHeroClass } from "../../types";
+import { createMcHeroBattleAnimations, createMcHeroIdleAnimations } from "./animations/mcHeroesAnimations";
+import { PEASANT_ID } from "../units/mobUnitConsts";
 
 // UNITS
 
-//export const IMAGE_BARBARIAN = "IMAGE_BARBARIAN";
-//export const IMAGE_SORCERESS = "IMAGE_SORCERESS";
-//export const IMAGE_SHAMAN = "IMAGE_SHAMAN";
-export const IMAGE_SHAMAN_RIGHT = "IMAGE_SHAMAN_RIGHT";
-//export const IMAGE_SHAMAN_ATTACK = "IMAGE_SHAMAN_ATTACK";
-
-//export const IMAGE_PRIEST = "IMAGE_PRIEST";
-//export const IMAGE_BARD = "IMAGE_BARD";
-//export const IMAGE_MAGIC = "IMAGE_MAGIC";
-//export const IMAGE_ORDER = "IMAGE_ORDER";
-//export const IMAGE_DARK = "IMAGE_DARK";
-//export const IMAGE_SUMMON = "IMAGE_SUMMON";
 //
 // BASIC HEROES
 //
@@ -50,7 +135,6 @@ export const IMAGE_MAGIC_ATTACK = "IMAGE_MAGIC_ATTACK";
 export const IMAGE_MAGIC_SPELL = "IMAGE_MAGIC_SPELL";
 export const IMAGE_MAGIC_DEFEATED = "IMAGE_MAGIC_DEFEATED";
 export const IMAGE_MAGIC_HURT = "IMAGE_MAGIC_HURT";
-
 //
 // MASTER
 export const IMAGE_MASTER_IDLE = "IMAGE_MASTER_IDLE";
@@ -228,89 +312,26 @@ export const IMAGE_ICON_GOLD = "IMAGE_ICON_GOLD";
 
 export function loadImages(scene: Scene) {
     // BASIC HEROES
-    loadBasicHeroesImages(scene);
+    //loadBasicHeroesImages(scene);
+    loadBasicHeroesIdleImages(scene);
 
     // EFFECTS
-    loadImagesEffects(scene);
+    //loadImagesEffects(scene);
+    loadCommonImagesEffects(scene);
     loadImagesUIEffects(scene);
 
     // MOBS
-    loadImagesMobs(scene);
-
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    //
-    // MC HEROES
-    //
-    scene.load.image(IMAGE_ALHEMIST, "assets/sprites/units/alchemist.png");
-    scene.load.image(IMAGE_BEASTMASTER, "assets/sprites/units/beastmaster.png");
-    scene.load.image(IMAGE_DRUID, "assets/sprites/units/druid.png");
-    scene.load.image(IMAGE_GLADIATOR, "assets/sprites/units/gladiator.png");
-    scene.load.image(IMAGE_HERALD, "assets/sprites/units/herald.png");
-    scene.load.image(IMAGE_JESTER, "assets/sprites/units/jester.png");
-    scene.load.image(IMAGE_KNIGHT, "assets/sprites/units/knight.png");
-    scene.load.image(IMAGE_MONK, "assets/sprites/units/monk.png");
-    scene.load.image(IMAGE_PALADIN, "assets/sprites/units/paladin.png");
-    scene.load.image(IMAGE_PREDATOR, "assets/sprites/units/predator.png");
-    scene.load.image(IMAGE_SHADOWMASTER, "assets/sprites/units/shadowmaster.png");
-    scene.load.image(IMAGE_SHAMAN, "assets/sprites/units/shaman2.png");
-    scene.load.image(IMAGE_COMMANDER, "assets/sprites/units/commander.png");
-    scene.load.image(IMAGE_FORESTSPIRIT, "assets/sprites/units/forest_spirit.png");
-    scene.load.image(IMAGE_ORACLE, "assets/sprites/units/oracle.png");
-    scene.load.image(IMAGE_SAMURAI, "assets/sprites/units/samurai.png");
-    scene.load.image(IMAGE_WITCH, "assets/sprites/units/witch.png");
-    scene.load.image(IMAGE_RUNECASTER, "assets/sprites/units/runecaster.png");
-    scene.load.image(IMAGE_SORCERER, "assets/sprites/units/sorceress.png");
-    scene.load.image(IMAGE_BLACKKNIGHT, "assets/sprites/units/black_knight.png");
-    scene.load.image(IMAGE_DOOMSAYER, "assets/sprites/units/mc/doomsayer/doomsayer.webp");
-    scene.load.image(IMAGE_BATTLEMAGE, "assets/sprites/units/battle_mage.png");
-    scene.load.image(IMAGE_MINSTREL, "assets/sprites/units/minstrel.png");
-    scene.load.image(IMAGE_BARBARIAN, "assets/sprites/units/barbarian.png");
-    scene.load.image(IMAGE_WARLOCK, "assets/sprites/units/warlock.png");
-    scene.load.image(IMAGE_ZEALOT, "assets/sprites/units/zealot.png");
-    scene.load.image(IMAGE_ILLUSIONIST, "assets/sprites/units/magician.png");
-    scene.load.image(IMAGE_EXORCIST, "assets/sprites/units/exorcist.png");
-    scene.load.image(IMAGE_INQUISITOR, "assets/sprites/units/inquisitor.png");
-    scene.load.image(IMAGE_DUELIST, "assets/sprites/units/duelist.png");
-    scene.load.image(IMAGE_BISHOP, "assets/sprites/units/bishop.png");
-    scene.load.image(IMAGE_MAGIC_BARD, "assets/sprites/units/magic_bard.png");
-
-    scene.load.image(IMAGE_FISHMAN, "assets/sprites/units/fishman1.png");
+    //loadImagesMobs(scene);
 
     // MC ANIMATION
-
-    loadMcHeroesImages(scene);
+    // loadMcHeroesImages(scene);
 
     //
     // LEADERS
 
-    //scene.load.image(IMAGE_LEADER_1, "assets/sprites/leader/rider_1.webp");
     scene.load.spritesheet(IMAGE_LEADER_1_IDLE, "assets/sprites/leader/leader1_sprite.webp", {
         frameWidth: 600,
         frameHeight: 600,
-    });
-    //scene.load.image(IMAGE_LEADER_1_IDLE, "assets/sprites/leader/leader1.pvr");
-    // scene.load.texture(IMAGE_LEADER_1_IDLE, {
-    //     ASTC
-    // //     S3TC: "",
-    // //     //ktx2: "",
-    // //     //PVR: "assets/texture.pvr",
-    // //     //PNG: "assets/texture.png",
-    // });
-    // scene.load.ktx2()
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // TOTEMS
-    //scene.load.image(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/green_totem_1_300.png"); //totem1
-
-    // scene.load.spritesheet(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/green_orb_150.png", {
-    //     frameWidth: 150,
-    //     frameHeight: 269,
-    // });
-
-    scene.load.spritesheet(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/wild_basic_totem_cut_100.png", {
-        frameWidth: 100,
-        frameHeight: 100,
     });
 
     // ITEMS
@@ -350,4 +371,324 @@ export function loadImages(scene: Scene) {
     //
     scene.load.image(IMAGE_ICON_REROLL, "assets/sprites/icons/reroll.png");
     //scene.load.image(IMAGE_ICON_GOLD, "assets/sprites/icons/coin.png");
+}
+
+/**
+ * loads all spritesheet images for unit animations for select
+ */
+
+export async function loadUnitImagesForSelect(scene: Scene, unitId: string) {
+    console.log(">>> loadUnitImagesForSelect", unitId);
+    // MOB UNIT
+    let isMob = false;
+    switch (unitId) {
+        case "WEAKGOBLIN":
+        case "GOBLINSHAMAN":
+        case "GOLDGOBLIN1":
+            {
+                await loadGoblinIdleImages(scene);
+                isMob = true;
+            }
+            break;
+        case "GOBLIN": {
+            await loadGoblinMageIdleImages(scene);
+            isMob = true;
+        }
+        case "PEASANT":
+            {
+                await loadPeasantIdleImages(scene);
+                isMob = true;
+            }
+            break;
+        case "SKELETON":
+        case "SKELETONWARRIOR":
+        case "SKELETONMAGE":
+            {
+                await loadSkeletonIdleImages(scene);
+                isMob = true;
+            }
+            break;
+        case "WOLF1":
+            {
+                await loadWolf1IdleImages(scene);
+                createWolf1IdleAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "WOLF2":
+            {
+                await loadWolf2IdleImages(scene);
+                createWolf2IdleAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "PIRATE1":
+            {
+                await loadPirate1IdleImages(scene);
+                createPirate1IdleAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "PIRATE2":
+            {
+                await loadPirate2IdleImages(scene);
+                createPirate2IdleAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "FIREFLY": {
+            await loadSummonFireflyIdleImages(scene);
+            createFireflyIdleAnimations(scene);
+        }
+    }
+
+    if (isMob) {
+        return;
+    }
+
+    // MC HERO
+    await loadMcHeroIdleImages(scene, unitId as EHeroClass);
+    createMcHeroIdleAnimations(scene, unitId as EHeroClass);
+}
+
+/**
+ * loads all spritesheet images for unit animations in battle
+ */
+export async function loadUnitImagesForDuel(scene: Scene, unitId: string) {
+    console.log(">>>> loadUnitImagesForDuel", unitId);
+    // case basic class hero
+    let isBasicHero = false;
+    let isMob = false;
+    switch (unitId) {
+        //
+        // BASIC HEROES
+        //
+        case "BARD":
+            {
+                await loadBardBattleHeroImages(scene);
+                createBardBattleAnimations(scene);
+                await loadBardEffectsImages(scene);
+                createBardEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "DARK":
+            {
+                await loadDarkBattleHeroImages(scene);
+                createDarkBattleAnimations(scene);
+                await loadDarkEffectsImages(scene);
+                createDarkEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "MAGIC":
+            {
+                await loadMagicBattleHeroImages(scene);
+                createMagicBattleAnimations(scene);
+                await loadMagicEffectsImages(scene);
+                createMagicEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "MASTER":
+            {
+                await loadMasterBattleHeroImages(scene);
+                createMasterBattleAnimations(scene);
+                await loadMasterEffectsImages(scene);
+                createMasterEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "ORDER":
+            {
+                await loadOrderBattleHeroImages(scene);
+                createOrderBattleAnimations(scene);
+                await loadOrderEffectsImages(scene);
+                createOrderEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "PRIEST":
+            {
+                await loadPriestBattleHeroImages(scene);
+                createPriestBattleAnimations(scene);
+                await loadPriestEffectsImages(scene);
+                createPriestEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "SUMMON":
+            {
+                await loadSummonBattleHeroImages(scene);
+                createSummonBattleAnimations(scene);
+                await loadSummonEffectsImages(scene);
+                createSummonEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "WARRIOR":
+            {
+                await loadWarriorBattleHeroImages(scene);
+                createWarriorBattleAnimations(scene);
+                await loadWarriorEffectsImages(scene);
+                createWarriorEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        case "WILD":
+            {
+                await loadWildBattleHeroImages(scene);
+                createWildBattleAnimations(scene);
+                await loadWildEffectsImages(scene);
+                createWildEffectAnimations(scene);
+                isBasicHero = true;
+            }
+            break;
+        //
+        // SUMMONS
+        //
+        case "FIREFLYSUMMON":
+            {
+                await loadSummonFireflyImages(scene);
+                createFireflyAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "WARRIORSUMMON":
+            {
+                await loadSummonWarriorImages(scene);
+                createSpiritWarriorAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "SHIELDWARRIORSUMMON":
+            {
+                await loadSummonShieldWarriorImages(scene);
+                createSpiritShieldWarriorAnimations(scene);
+                isMob = true;
+            }
+            break;
+        //
+        // MOBS
+        //
+        case "SKELETON":
+        case "SKELETONWARRIOR":
+        case "SKELETONMAGE":
+            {
+                await loadSkeletonBattleImages(scene);
+                createSkeletonAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "WEAKGOBLIN":
+        case "GOLDGOBLIN1":
+            {
+                await loadGoblinBattleImages(scene);
+                createGoblinAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "GOBLIN":
+            {
+                await loadGoblinMageBattleImages(scene);
+                createGoblinMageAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "GOBLINSHAMAN":
+            {
+                await loadGoblinShamanBattleImages(scene);
+                createGoblinShamanAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case PEASANT_ID:
+            {
+                await loadPeasantBattleImages(scene);
+                createPeasantAnimations(scene);
+                isMob = true;
+            }
+            break;
+        case "PIRATE1":
+            {
+                await loadPirate1BattleImages(scene);
+                createPirate1Animations(scene);
+                isMob = true;
+            }
+            break;
+        case "PIRATE2":
+            {
+                await loadPirate2BattleImages(scene);
+                createPirate2Animations(scene);
+                isMob = true;
+            }
+            break;
+        case "WOLF1":
+            {
+                await loadWolf1BattleImages(scene);
+                createWolf1Animations(scene);
+                isMob = true;
+            }
+            break;
+        case "WOLF2":
+            {
+                await loadWolf2BattleImages(scene);
+                createWolf2Animations(scene);
+                isMob = true;
+            }
+            break;
+    }
+
+    if (isBasicHero || isMob) {
+        return;
+    }
+    //
+    // MC HEROES
+    //
+    await loadMcHeroBattleImages(scene, unitId as EHeroClass);
+    createMcHeroBattleAnimations(scene, unitId as EHeroClass);
+    await loadMcHeroEffectsImages(scene, unitId as EHeroClass);
+    createMcHeroEffectAnimations(scene, unitId as EHeroClass);
+}
+
+export async function loadTotemImagesForDuel(scene: Scene, totemId: string) {
+    //
+    switch (totemId) {
+        case TOTEM_ID_WILD_BASIC:
+            {
+                await loadBasicWildTotemImages(scene);
+                createWildBasicTotemAnimations(scene);
+            }
+            break;
+    }
+}
+
+/** return all units ids required to load images for this skill in battle */
+export function getUnitIdsBySkill(skillId: string): string[] {
+    const unitsIds: string[] = [];
+    switch (skillId) {
+        case "warriorSummonSkill":
+            unitsIds.push("WARRIORSUMMON");
+            break;
+        case "fireflySummonSkill":
+            unitsIds.push("FIREFLYSUMMON");
+            break;
+        case "radiantWallSkill":
+            unitsIds.push("SHIELDWARRIORSUMMON");
+            break;
+    }
+    return unitsIds;
+}
+
+/** return all totem ids required to load images for this skill in battle */
+export function getTotemIdsBySkill(skillId: string): string[] {
+    const unitsIds: string[] = [];
+    switch (skillId) {
+        case "wildBasicTotemSkill":
+        case "toxicTuneSkill":
+        case "MinotaurTotemSkill":
+            unitsIds.push(TOTEM_ID_WILD_BASIC);
+            break;
+    }
+    return unitsIds;
 }

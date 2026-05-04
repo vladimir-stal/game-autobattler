@@ -94,12 +94,20 @@ export class SelectController {
         this.showRoomSelect();
     }
 
-    showMobRewards() {
+    async showMobRewards() {
         this.gameScene.roomSelectPanel.hide();
         const rewardCard = getMobRewardCard(this.mobsReward);
         const expCard = { price: 0, type: ECardType.EXP_PARTY, value: this.mobsReward.exp };
         const cards = [expCard, rewardCard, null];
         console.log("SHOW REWARDS", rewardCard);
+
+        // load image
+        if (rewardCard.type === ECardType.UNIT && rewardCard.unit) {
+            console.log(">>> REWaRds unit to load", rewardCard.unit.id);
+            await this.gameScene.imageLoadController.loadIdleUnits([rewardCard.unit.id]);
+        }
+        //
+
         this.gameScene.cardSelectPanel.show(cards, ERoomType.MOBS_REWARDS, undefined, {
             isSingleSelect: false,
             isSelectRequired: false,
@@ -139,7 +147,7 @@ export class SelectController {
         this.gameScene.cardSelectPanel.hide();
     }
 
-    showCardSelect(
+    async showCardSelect(
         type: ERoomType,
         isAfterReroll: boolean,
         { heroClasses, isRerollAvailableForce, tripleSetTypes }: { heroClasses?: EHeroClass[]; isRerollAvailableForce?: boolean; tripleSetTypes?: ECardType[] },
@@ -164,6 +172,12 @@ export class SelectController {
             heroClasses,
             tripleSetTypes,
         );
+
+        // load images
+        const unitsToLoad = cards.filter((card) => !!card && card.type === ECardType.UNIT && card.unit).map((card) => card!.unit!.id);
+        await this.gameScene.imageLoadController.loadIdleUnits(unitsToLoad);
+        //
+
         const isReroll = isRerollAvailableForce !== undefined ? isRerollAvailableForce : isRerollAvailable;
         this.gameScene.cardSelectPanel.show(cards, type, heroClasses, { isSingleSelect, isSelectRequired, isRerollAvailable: isReroll, hintTextType });
 

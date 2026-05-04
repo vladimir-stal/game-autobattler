@@ -4,6 +4,8 @@ import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobIt
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { mobNoSkill, peasantSkill, peasantsStronkSkill } from "../skills/mobSkills";
 
+export const PEASANT_ID = "PEASANT";
+
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
@@ -20,8 +22,8 @@ export const peasantUnit_4: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
-    id: "PEASANT",
-    skills: [noBasicAttackSkill,peasantsStronkSkill],
+    id: PEASANT_ID,
+    skills: [noBasicAttackSkill, peasantsStronkSkill],
     items: [],
     level: 4,
     exp: 0,
@@ -30,7 +32,7 @@ export const peasantUnit_4: IUnit = {
         { item: itemCoin, probability: 12 }, // 10% ~ 10/0.8
         { item: itemPeasantPitchfork_2, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
-        { skill: peasantsStronkSkill, probability: 16},
+        { skill: peasantsStronkSkill, probability: 16 },
     ],
 };
 
@@ -50,8 +52,8 @@ export const peasantUnit: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
-    id: "PEASANT",
-    skills: [mobNoSkill,peasantSkill,noBasicAttackSkill],
+    id: PEASANT_ID,
+    skills: [], //[mobNoSkill, peasantSkill, noBasicAttackSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -59,6 +61,6 @@ export const peasantUnit: IUnit = {
         { item: itemPeasantPitchfork, probability: 25 },
         { item: itemCoin, probability: 20 }, // 15% ~ 15/(100-25)
         // nothing = 100*0.75*0.80
-        { skill: peasantSkill, probability: 16}, // ~10%
+        { skill: peasantSkill, probability: 16 }, // ~10%
     ],
 };

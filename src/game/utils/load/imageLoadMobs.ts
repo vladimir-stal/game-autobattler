@@ -8,6 +8,7 @@ import {
     IMAGE_BOSS_MINOTAUR_SPELL,
     IMAGE_BOSS_MINOTAUR_STOMP,
 } from "../imageLoadUtil";
+import { COMPLETE } from "../../consts";
 
 //
 
@@ -166,7 +167,7 @@ export function loadImagesMobs(scene: Scene) {
         frameHeight: 300,
     });
 
-    // SUMMON KNIHGT
+    // SUMMON KNIGHT
 
     scene.load.spritesheet(IMAGE_SUMMONKNIHGT_BATTLE_IDLE, path + "summon_knight/knight_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
@@ -288,5 +289,423 @@ export function loadImagesMobs(scene: Scene) {
     scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_cut_500.png", {
         frameWidth: 500,
         frameHeight: 500,
+    });
+}
+
+//
+//
+// SUMMONS ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+
+// SUMMON KNIHGT
+export async function loadSummonWarriorImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_BATTLE_IDLE, path + "summon_knight/knight_1_battle_idle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// SUMMON SHIELD KNIHGT
+export async function loadSummonShieldWarriorImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, path + "summon_shield_knight/spirit_warrior_shield_buff_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, path + "summon_shield_knight/spirit_warrior_shield_hurt_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// SUMMON FIREFLY
+// IDLE
+export async function loadSummonFireflyIdleImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_FIREFLY_BATTLE_IDLE, path + "firefly/firefly_battle_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
+export async function loadSummonFireflyImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_FIREFLY_BATTLE_IDLE, path + "firefly/firefly_battle_idle_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+
+    scene.load.spritesheet(IMAGE_FIREFLY_DEFEATED, path + "firefly/firefly_defeated_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    scene.load.spritesheet(IMAGE_FIREFLY_ATTACK, path + "firefly/firefly_attack_1_cut_300.webp", {
+        frameWidth: 300,
+        frameHeight: 300,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+//
+//
+// MOBS ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//
+
+// SKELETON
+// IDLE
+export async function loadSkeletonIdleImages(scene: Scene) {
+    scene.load.image(IMAGE_SKELETON_1, "assets/sprites/units/mobs/skeleton_1/skeleton_1.webp");
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
+export async function loadSkeletonBattleImages(scene: Scene) {
+    scene.load.spritesheet(IMAGE_SKELETON_BATTLE_IDLE, "assets/sprites/units/mobs/skeleton_1/skeleton_battle_idle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// SKELETON
+export async function loadSkeletonMageBattleImages(scene: Scene) {
+    // TODO: later
+}
+
+// GOBLIN
+// IDLE
+export async function loadGoblinIdleImages(scene: Scene) {
+    scene.load.image(IMAGE_GOBLIN_1, "assets/sprites/units/mobs/goblin_1/goblin_1.webp");
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+//BATTLE
+export async function loadGoblinBattleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// GOBLIN MAGE
+// IDLE
+export async function loadGoblinMageIdleImages(scene: Scene) {
+    //WEBP
+    scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.webp");
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
+export async function loadGoblinMageBattleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    scene.load.spritesheet(IMAGE_GOBLIN_2_ATTACK, "assets/sprites/units/mobs/goblin_2/goblin_2_attack_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// GOBLIN SHAMAN
+export async function loadGoblinShamanBattleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_DEFEATED, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_defeated_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// PEASANT
+// IDLE
+export async function loadPeasantIdleImages(scene: Scene) {
+    scene.load.image(IMAGE_PEASANT_1, "assets/sprites/units/mobs/peasant/peasant.webp");
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
+export async function loadPeasantBattleImages(scene: Scene) {
+    console.log("loadPeasantBattleImages");
+    //WEBP
+    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// PIRATE 1
+// IDLE
+export async function loadPirate1IdleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
+export async function loadPirate1BattleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_1_ATTACK, path + "pirates/pirate_1/pirate_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// PIRATE 2
+// IDLE
+export async function loadPirate2IdleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
+export async function loadPirate2BattleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_PIRATE_2_ATTACK, path + "pirates/pirate_2/pirate_2_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// WOLF 1
+// IDLE
+export async function loadWolf1IdleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+//BATTLE
+export async function loadWolf1BattleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK, path + "wolves/wolf_1/wolf_1_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK_2, path + "wolves/wolf_1/wolf_1_attack_2_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// WOLF 2
+// IDLE
+export async function loadWolf2IdleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
+export async function loadWolf2BattleImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK, path + "wolves/wolf_2/wolf_2_attack_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK_2, path + "wolves/wolf_2/wolf_2_attack_2_cut_400.png", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+
+// BOSS MINOTAUR
+export async function loadBossMinotaurImages(scene: Scene) {
+    //WEBP
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_cut_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_cut_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_cut_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_cut_500.png", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
     });
 }

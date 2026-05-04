@@ -1,5 +1,6 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
+import { TOTEM_ID_WILD_BASIC } from "../totemConsts";
 import {
     IMAGE_SKILL_NATURE_SHIELD,
     IMAGE_SKILL_REGEN,
@@ -93,7 +94,7 @@ const totemAttackSkillset = (atk: number): IHeroSkill[] => {
         {
             type: EHeroSkillType.TOTEM,
             totem: {
-                id: "basicWildTotem",
+                id: TOTEM_ID_WILD_BASIC,
                 name: i18n.totems.basicWildTotem,
                 skills: [
                     {
@@ -110,11 +111,11 @@ const totemAttackSkillset = (atk: number): IHeroSkill[] => {
 };
 
 export const totemAttackSkill_3: IHeroSkillSet = {
-    id: "totemAttack",
+    id: "wildBasicTotemSkill",
     //name: "attack totem(3)",
     //desc: "Summon totem that deals [3] damage to random enemy",
-    name: i18n.skills.basic.totemAttack.name,
-    desc: i18n.skills.basic.totemAttack.desc3,
+    name: i18n.skills.basic.wildBasicTotemSkill.name,
+    desc: i18n.skills.basic.wildBasicTotemSkill.desc3,
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
@@ -123,11 +124,11 @@ export const totemAttackSkill_3: IHeroSkillSet = {
 };
 
 export const totemAttackSkill_2: IHeroSkillSet = {
-    id: "totemAttack",
+    id: "wildBasicTotemSkill",
     //name: "attack totem(2)",
     //desc: "Summon totem that deals [2] damage to random enemy",
-    name: i18n.skills.basic.totemAttack.name,
-    desc: i18n.skills.basic.totemAttack.desc2,
+    name: i18n.skills.basic.wildBasicTotemSkill.name,
+    desc: i18n.skills.basic.wildBasicTotemSkill.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
@@ -137,11 +138,11 @@ export const totemAttackSkill_2: IHeroSkillSet = {
 };
 
 export const totemAttackSkill: IHeroSkillSet = {
-    id: "totemAttack",
+    id: "wildBasicTotemSkill",
     //name: "attack totem",
     //desc: "Summon totem that deals [1] damage to random enemy",
-    name: i18n.skills.basic.totemAttack.name,
-    desc: i18n.skills.basic.totemAttack.desc1,
+    name: i18n.skills.basic.wildBasicTotemSkill.name,
+    desc: i18n.skills.basic.wildBasicTotemSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],

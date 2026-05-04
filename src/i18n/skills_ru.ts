@@ -143,7 +143,7 @@ export const SKILLS_RU = {
             desc2: `[color=${colors.SUMMON}]Призвать[/color] магическое\n существо [stats]`,
             desc3: `[color=${colors.SUMMON}]Призвать[/color] магическое\n существо [stats]`,
         },
-        sparkSummon: {
+        prititWarriorSummon: {
             name: "Дух воина",
             desc1: `[color=${colors.SUMMON}]Призвать[/color] дух воина [stats]`,
             desc2: `[color=${colors.SUMMON}]Призвать[/color] дух воина [stats]`,
@@ -173,7 +173,7 @@ export const SKILLS_RU = {
             desc2: `Увеличивает [color=${colors.REGEN}]регенерацию \nздоровья на [2]`,
             desc3: `Увеличивает [color=${colors.REGEN}]регенерацию \nздоровья[/color] на [3]`,
         },
-        totemAttack: {
+        wildBasicTotemSkill: {
             name: "Дикий тотем",
             desc1: `Вызывает [color=${colors.TOTEM}]тотем[/color], который\n наносит [1] урона\n случайному врагу`,
             desc2: `Вызывает [color=${colors.TOTEM}]тотем[/color], который\n наносит [2] урона\n случайному врагу`,

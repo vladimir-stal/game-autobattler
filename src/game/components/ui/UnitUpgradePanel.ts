@@ -68,7 +68,7 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         this.add(title);
     }
 
-    renderCards(isAfterReroll: boolean) {
+    async renderCards(isAfterReroll: boolean) {
         let basicClasses = BASIC_CLASSES.filter((heroClass) => heroClass !== this.unit.heroClass);
         // remove one basic, which was in first 3 options, from options after reroll
         // to increase chance of finding specific mc hero
@@ -82,6 +82,9 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
         this.basicHeroClasses = randomHeroClasses;
 
         const mcClasses = randomHeroClasses.map((randomClass) => getHeroMulticlass(this.unit.heroClass, randomClass));
+
+        const unitsIds = mcClasses.map((mcHeroClass) => getMcHeroByClass(mcHeroClass).id);
+        await this.gameScene.imageLoadController.loadIdleUnits(unitsIds);
 
         mcClasses.forEach((mcHeroClass, i) => {
             this.renderCard(mcHeroClass, i);

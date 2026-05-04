@@ -4,8 +4,8 @@ import { createMcHeroesAnimations } from "./animations/mcHeroesAnimations";
 import { createMobAnimations } from "./animations/mobsAnimations";
 import { IMAGE_LEADER_1_IDLE } from "./imageLoadUtil";
 import { createTotemAnimations } from "./animations/totemAnimations";
-import { createBasicHeroesAnimations } from "./animations/basicHeroesAnimations";
-import { createEffectAnimations } from "./animations/effectAnimations";
+import { createBasicHeroesAnimations, createBasicHeroesIdleAnimations } from "./animations/basicHeroesAnimations";
+import { createCommonEffectAnimations, createEffectAnimations } from "./animations/effectAnimations";
 import { createUIEffectAnimations } from "./animations/effectUIAnimations";
 
 export function createAnimations(scene: Scene) {
@@ -26,6 +26,22 @@ export function createAnimations(scene: Scene) {
     // TOTEMS
 
     createTotemAnimations(scene);
+
+    // LEADER ///////////////////////////////////////////////////////
+
+    scene.anims.create({
+        key: AnimationType.LEADER_1_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_LEADER_1_IDLE, { start: 0, end: 103 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+}
+
+export function createIntialAnimations(scene: Scene) {
+    //
+    createBasicHeroesIdleAnimations(scene);
+    createUIEffectAnimations(scene);
+    createCommonEffectAnimations(scene);
 
     // LEADER ///////////////////////////////////////////////////////
 

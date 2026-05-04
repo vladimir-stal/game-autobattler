@@ -3,21 +3,28 @@
 import { Scene } from "phaser";
 import { EEffectAnimationType } from "../../../types";
 import { IMAGE_EFFECT_UI_BUFF_0, IMAGE_EFFECT_UI_BUFF_2, IMAGE_EFFECT_UI_STATUS_SHOCK_0 } from "../load/imageLoadUIEffects";
+import { IMAGE_EFFECT_PRIEST_HEAL } from "../load/imageLoadEffects";
 
 //
 
 export function createUIEffectAnimations(scene: Scene) {
-    // BUFFS
+    // BUFF ICON BORDER
     scene.anims.create({
         key: EEffectAnimationType.EFFECT_UI_BUFF_0,
         frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_UI_BUFF_0, { start: 0, end: 53 }),
         frameRate: 20,
     });
-    //
+    // BUFF
     scene.anims.create({
         key: EEffectAnimationType.EFFECT_UI_BUFF_2,
         frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_UI_BUFF_2, { start: 0, end: 30 }),
         frameRate: 20,
+    });
+    // HEAL
+    scene.anims.create({
+        key: EEffectAnimationType.EFFECT_PRIEST_HEAL,
+        frames: scene.anims.generateFrameNumbers(IMAGE_EFFECT_PRIEST_HEAL, { start: 0, end: 87 }),
+        frameRate: 40,
     });
     //
     // STATUSES

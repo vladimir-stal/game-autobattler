@@ -406,7 +406,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             return { image: IMAGE_DUELIST };
         case EHeroClass.BISHOP:
             return { image: IMAGE_BISHOP };
-        case EHeroClass.MAGIC_BARD:
+        case EHeroClass.JESTER:
             return {
                 distanceEnemy: -70,
                 image: IMAGE_JESTER,
@@ -440,6 +440,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 //distance: -40,
                 //distanceEnemy: -40,
                 image: IMAGE_FIREFLY_BATTLE_IDLE,
+                animation: AnimationType.MOB_FIREFLY_BATTLE_IDLE,
                 idleBattleAnimation: AnimationType.MOB_FIREFLY_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_FIREFLY_ATTACK,
                 defeatedAnimation: AnimationType.MOB_FIREFLY_DEFEATED,
@@ -554,7 +555,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
         case "GOBLINSHAMAN":
             return {
                 distance: -30,
-                distanceEnemy: -60,
+                distanceEnemy: -50,
                 image: IMAGE_GOBLIN_1,
                 idleBattleAnimation: AnimationType.MOB_GOBLIN_SHAMAN_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_GOBLIN_SHAMAN_ATTACK,

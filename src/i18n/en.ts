@@ -196,6 +196,7 @@ export interface Ii18n {
         NEXT: string;
         SELECT_UPGRADE: string;
         LEVEL: string;
+        LOADING: string;
         //
         SKILL: string;
         ITEM: string;
@@ -292,6 +293,7 @@ export const i18n: Ii18n = {
             SUMMON_INCREASE_DAMAGE: "SUMMON_INCREASE_DAMAGE",
             TOTEM_INCREASE_VALUE: "TOTEM_INCREASE_VALUE",
             CAST_SKILL_X_ROUND: "Once per combat, applies effect at the\nend of round",
+            UNPACK_SKILL_IN_STASH: "",
         },
         itemBonusType: { ATTRIBUTE: "ATTRIBUTE", ITEM_WEAPON_SLOT: "ITEM_WEAPON_SLOT" },
     },
@@ -308,24 +310,24 @@ export const i18n: Ii18n = {
         ALCHEMIST: "Alhemist",
         ASSASSIN: "Assasin",
         BARBARIAN: "Barbarian",
-        BATTLE_MAGE: "Battle Mage",
-        BEAST_MASTER: "Beast Master",
+        BATTLEMAGE: "Battle Mage",
+        BEASTMASTER: "Beast Master",
         BISHOP: "Bishop",
-        BLACK_KNIGHT: "Black Knight",
+        BLACKKNIGHT: "Black Knight",
         BLADEDANCER: "Bladedancer",
         COMMANDER: "Commander",
         DOOMSAYER: "Doomsayer",
         DRUID: "Druid",
         DUELIST: "Duelist",
         EXORCIST: "Exorcist",
-        FOREST_SPIRIT: "Forest Spirit",
+        FORESTSPIRIT: "Forest Spirit",
         GLADIATOR: "Gladiator",
         HERALD: "Herald",
         HUNTER: "Hunter",
         ILLUSIONIST: "Illusionist",
         INQUISITOR: "Inquisitor",
         KNIGHT: "Royal knight",
-        MAGIC_BARD: "Magic Bard",
+        JESTER: "Jester",
         MIMIC: "Mimic",
         MINSTREL: "Minstrel",
         MONK: "Monk",
@@ -335,7 +337,7 @@ export const i18n: Ii18n = {
         PREDATOR: "Predator",
         RUNECASTER: "Runecaster",
         SAMURAI: "Samurai",
-        SHADOW_MASTER: "Shadow Master",
+        SHADOWMASTER: "Shadow Master",
         SHAMAN: "Shaman",
         SORCERER: "Sorcerrer",
         WARLOCK: "Warlock",
@@ -574,6 +576,7 @@ export const i18n: Ii18n = {
         NEXT: "NEXT",
         SELECT_UPGRADE: "SELECT UPGRADE",
         LEVEL: "Level",
+        LOADING: "LOADING",
         //
         WEAPON: "weapon",
         COMMON: "common",

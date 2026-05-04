@@ -1,18 +1,6 @@
 import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
-import {
-    ETargetType,
-    EDebuffType,
-    EHeroAttackType,
-    EHeroClass,
-    IUnit,
-    EUnitType,
-    EHeroClassType,
-    EBuffTimeType,
-    EBuffType,
-    EHeroSkillType,
-    EAppTriggerType,
-} from "../types";
+import { ETargetType, EDebuffType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EHeroClassType } from "../types";
 import { LANG } from "./consts";
 import { alchemistSkills } from "./skills/mc/alchemistSkills";
 import { assassinSkills } from "./skills/mc/assassinSkills";
@@ -53,40 +41,6 @@ import { zealotSkills } from "./skills/mc/zealotSkills";
 
 const i18n = LANG === "eng" ? i18n_eng : i18n_ru;
 
-//  SKILLS  //////////////////////////////////////////////////////////////
-
-//TODO: use this skill
-// const shamanSkills_OLD: THeroSkills = [
-//     {
-//         id: "ShamanTotem",
-//         name: "Shaman totem",
-//         desc: "Place a totem that \nheals low hp ally",
-//         level: 1,
-//         heroClasses: [EHeroClass.SHAMAN],
-//         isMcSkill: true,
-//         skills: [
-//             {
-//                 //heroClasses: [EHeroClass.ALL],
-//                 type: EHeroSkillType.TOTEM,
-//                 isBasicAttack: true,
-//                 totem: {
-//                     id: "SHAMAN_TOTEM",
-//                     name: "Shaman totem",
-//                     skills: [
-//                         {
-//                             type: EHeroSkillType.HEAL,
-//                             isBasicAttack: false,
-//                             value: 3, // TODO MP: add MP modifier to value
-//                             valueType: "number",
-//                             targetType: ETargetType.LOW_HP_ALLY,
-//                         },
-//                     ],
-//                 },
-//             },
-//         ],
-//     },
-// ];
-
 //
 //
 //  HEROES  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,7 +63,7 @@ export const paladinHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.PALADIN,
-    id: "PALADIN",
+    id: EHeroClass.PALADIN,
     skills: paladinSkills,
     passiveSkill: {
         desc: "Heal low hp unit when block or negate damage",
@@ -136,7 +90,7 @@ export const barbarianHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.BARBARIAN,
-    id: "BARBARIAN",
+    id: EHeroClass.BARBARIAN,
     skills: barbarianSkills,
     passiveSkill: barbarianPassive,
     items: [],
@@ -161,7 +115,7 @@ export const knightHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.KNIGHT,
-    id: "KNIGHT",
+    id: EHeroClass.KNIGHT,
     skills: knightSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -188,7 +142,7 @@ export const heraldHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.HERALD,
-    id: "HERALD",
+    id: EHeroClass.HERALD,
     skills: heraldSkills,
     passiveSkill: heraldPassive,
     items: [],
@@ -213,7 +167,7 @@ export const shamanHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.SHAMAN,
-    id: "SHAMAN",
+    id: EHeroClass.SHAMAN,
     skills: shamanSkills,
     passiveSkill: {
         desc: "Increase MP for each totem",
@@ -240,7 +194,7 @@ export const samuraiHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.SAMURAI,
-    id: "SAMURAI",
+    id: EHeroClass.SAMURAI,
     skills: samuraiSkills,
     passiveSkill: samuraiPassive,
     items: [],
@@ -265,7 +219,7 @@ export const necromancerHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.NECROMANCER,
-    id: "NECROMANCER",
+    id: EHeroClass.NECROMANCER,
     skills: necromancerSkills,
     passiveSkill: necromancerPassive,
     items: [],
@@ -289,8 +243,8 @@ export const beastMasterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.BEAST_MASTER,
-    id: "BEAST_MASTER",
+    name: i18n.heroes.BEASTMASTER,
+    id: EHeroClass.BEAST_MASTER,
     skills: beastMasterSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -317,7 +271,7 @@ export const gladiatorHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.GLADIATOR,
-    id: "GLADIATOR",
+    id: EHeroClass.GLADIATOR,
     skills: gladiatorSkills,
     passiveSkill: {
         desc: "Can crit with physical attack skills",
@@ -344,7 +298,7 @@ export const warlockHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.WARLOCK,
-    id: "WARLOCK",
+    id: EHeroClass.WARLOCK,
     skills: warlockSkills,
     passiveSkill: {
         desc: "Enemy dies from poison increase\nnext magic attack on poison value",
@@ -371,7 +325,7 @@ export const runecasterHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.RUNECASTER,
-    id: "RUNECASTER",
+    id: EHeroClass.RUNECASTER,
     skills: runecasterSkills,
     passiveSkill: {
         desc: "Gain armor increases from MP",
@@ -398,7 +352,7 @@ export const commanderHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.COMMANDER,
-    id: "COMMANDER",
+    id: EHeroClass.COMMANDER,
     skills: commanderSkills,
     passiveSkill: {
         desc: "Apply buffs to hero's summon\ninstead of hero",
@@ -425,7 +379,7 @@ export const doomsayerHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.DOOMSAYER,
-    id: "DOOMSAYER",
+    id: EHeroClass.DOOMSAYER,
     skills: doomsayerSkills,
     passiveSkill: {
         desc: "Increase MP from\neach debuff on enemies",
@@ -452,7 +406,7 @@ export const minstrelHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.MINSTREL,
-    id: "MINSTREL",
+    id: EHeroClass.MINSTREL,
     skills: minstrelSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -465,7 +419,7 @@ export const minstrelHero: IUnit = {
 
 // MAGICBARD = JESTER (magic + bard)
 export const jesterHero: IUnit = {
-    heroClass: EHeroClass.MAGIC_BARD,
+    heroClass: EHeroClass.JESTER,
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
@@ -478,8 +432,8 @@ export const jesterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 0,
-    name: i18n.heroes.MAGIC_BARD,
-    id: "MAGICBARD",
+    name: i18n.heroes.JESTER,
+    id: EHeroClass.JESTER,
     skills: jesterSkills, // Fire fists
     passiveSkill: {
         desc: "<EMPTY>",
@@ -506,7 +460,7 @@ export const duelistHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.DUELIST,
-    id: "DUELIST",
+    id: EHeroClass.DUELIST,
     skills: duelistSkills,
     passiveSkill: {
         desc: "Gets bonus when using sword",
@@ -533,7 +487,7 @@ export const mimicHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.MIMIC,
-    id: "MIMIC",
+    id: EHeroClass.MIMIC,
     skills: mimicSkills,
     passiveSkill: mimicPassive,
     items: [],
@@ -557,8 +511,8 @@ export const forestSpiritHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.FOREST_SPIRIT,
-    id: "FORESTSPIRIT",
+    name: i18n.heroes.FORESTSPIRIT,
+    id: EHeroClass.FOREST_SPIRIT,
     skills: forestSpititSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -585,7 +539,7 @@ export const oracleHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.ORACLE,
-    id: "ORACLE",
+    id: EHeroClass.ORACLE,
     skills: oracleSkills,
     passiveSkill: oraclePassive,
     items: [],
@@ -609,8 +563,8 @@ export const shadowMasterHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: i18n.heroes.SHADOW_MASTER,
-    id: "SHADOW_MASTER",
+    name: i18n.heroes.SHADOWMASTER,
+    id: EHeroClass.SHADOW_MASTER,
     skills: shadowMasterSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -637,7 +591,7 @@ export const druidHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.DRUID,
-    id: "DRUID",
+    id: EHeroClass.DRUID,
     skills: druidSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -663,8 +617,8 @@ export const battleMageHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 2,
     basicPhysicalPower: 2,
-    name: i18n.heroes.BATTLE_MAGE,
-    id: "BATTLE_MAGE",
+    name: i18n.heroes.BATTLEMAGE,
+    id: EHeroClass.BATTLE_MAGE,
     skills: battleMageSkills,
     passiveSkill: {
         desc: "Skills get bonuses both\nfrom MP and PP.\nBut cannot basic attack.",
@@ -691,7 +645,7 @@ export const sorcererHero: IUnit = {
     basicMagicPower: 3,
     basicPhysicalPower: 0,
     name: i18n.heroes.SORCERER,
-    id: "SORCERER",
+    id: EHeroClass.SORCERER,
     skills: sorcererSkills,
     passiveSkill: {
         desc: "Can crit with magic attack skills",
@@ -718,7 +672,7 @@ export const assasinHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.ASSASSIN,
-    id: "ASSASSIN",
+    id: EHeroClass.ASSASSIN,
     skills: assassinSkills,
     passiveSkill: {
         desc: "Increased chance of critical\nattack on poisoned target",
@@ -745,7 +699,7 @@ export const inquisitorHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.INQUISITOR,
-    id: "INQUISITOR",
+    id: EHeroClass.INQUISITOR,
     skills: inquisitorSkills,
     passiveSkill: inquisitorPassive,
     items: [],
@@ -770,7 +724,7 @@ export const witchHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.WITCH,
-    id: "WITCH",
+    id: EHeroClass.WITCH,
     skills: witchSkills,
     passiveSkill: {
         desc: "Increase MP depending on\ntotal bleed on all enemies",
@@ -797,7 +751,7 @@ export const monkHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.MONK,
-    id: "MONK",
+    id: EHeroClass.MONK,
     skills: monkSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -825,7 +779,7 @@ export const hunterHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 2,
     name: i18n.heroes.HUNTER,
-    id: "HUNTER",
+    id: EHeroClass.HUNTER,
     skills: hunterSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -853,7 +807,7 @@ export const predatorHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.PREDATOR,
-    id: "PREDATOR",
+    id: EHeroClass.PREDATOR,
     skills: predatorSkills,
     passiveSkill: {
         desc: "Killing marked target\ngrants PP bonus",
@@ -880,7 +834,7 @@ export const bladedancerHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.BLADEDANCER,
-    id: "BLADEDANCER",
+    id: EHeroClass.BLADEDANCER,
     skills: bladedancerSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -907,7 +861,7 @@ export const alchemistHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.ALCHEMIST,
-    id: "ALCHEMIST",
+    id: EHeroClass.ALCHEMIST,
     skills: alchemistSkills,
     passiveSkill: {
         desc: "Gets double value from potions",
@@ -934,7 +888,7 @@ export const zealotHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 2,
     name: i18n.heroes.ZEALOT,
-    id: "ZEALOT",
+    id: EHeroClass.ZEALOT,
     skills: zealotSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -961,7 +915,7 @@ export const exorcistHero: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.EXORCIST,
-    id: "EXORCIST",
+    id: EHeroClass.EXORCIST,
     skills: exorcistSkills,
     passiveSkill: {
         desc: "<EMPTY>",
@@ -988,7 +942,7 @@ export const illusionistHero: IUnit = {
     basicMagicPower: 2,
     basicPhysicalPower: 0,
     name: i18n.heroes.ILLUSIONIST,
-    id: "ILLUSIONIST",
+    id: EHeroClass.ILLUSIONIST,
     skills: illusionistSkills,
     passiveSkill: illusionistPassive,
     items: [],
@@ -1012,8 +966,8 @@ export const blackKnightHero: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 2,
-    name: i18n.heroes.BLACK_KNIGHT,
-    id: "BLACK_KNIGHT",
+    name: i18n.heroes.BLACKKNIGHT,
+    id: EHeroClass.BLACK_KNIGHT,
     skills: blackKnightSkills,
     passiveSkill: {
         desc: "Permanently gain 1 PP\nafter every two duels",
@@ -1040,7 +994,7 @@ export const bishopHero: IUnit = {
     basicMagicPower: 4,
     basicPhysicalPower: 0,
     name: i18n.heroes.BISHOP,
-    id: "BISHOP",
+    id: EHeroClass.BISHOP,
     skills: bishopSkills,
     passiveSkill: {
         desc: "Can crit with heal skills",

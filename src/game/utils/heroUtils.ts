@@ -52,7 +52,7 @@ const BASIC_HERO_CLASSES = [
 
 const multiclasses: Record<string, EHeroClass> = {
     [EHeroClass.BARD + "_" + EHeroClass.DARK]: EHeroClass.DOOMSAYER,
-    [EHeroClass.BARD + "_" + EHeroClass.MAGIC]: EHeroClass.MAGIC_BARD,
+    [EHeroClass.BARD + "_" + EHeroClass.MAGIC]: EHeroClass.JESTER,
     [EHeroClass.BARD + "_" + EHeroClass.MASTER]: EHeroClass.DUELIST,
     [EHeroClass.BARD + "_" + EHeroClass.ORDER]: EHeroClass.HERALD,
     [EHeroClass.BARD + "_" + EHeroClass.PRIEST]: EHeroClass.MINSTREL,
@@ -69,7 +69,7 @@ const multiclasses: Record<string, EHeroClass> = {
     [EHeroClass.DARK + "_" + EHeroClass.WARRIOR]: EHeroClass.BLACK_KNIGHT,
     [EHeroClass.DARK + "_" + EHeroClass.WILD]: EHeroClass.PREDATOR,
     //
-    [EHeroClass.MAGIC + "_" + EHeroClass.BARD]: EHeroClass.MAGIC_BARD,
+    [EHeroClass.MAGIC + "_" + EHeroClass.BARD]: EHeroClass.JESTER,
     [EHeroClass.MAGIC + "_" + EHeroClass.DARK]: EHeroClass.WARLOCK,
     [EHeroClass.MAGIC + "_" + EHeroClass.MASTER]: EHeroClass.SORCERER,
     [EHeroClass.MAGIC + "_" + EHeroClass.ORDER]: EHeroClass.RUNECASTER,
@@ -136,7 +136,7 @@ const multiclasses: Record<string, EHeroClass> = {
 export const getMcHeroByClass = (heroClass: EHeroClass): IUnit => {
     let unit;
     switch (heroClass) {
-        case EHeroClass.MAGIC_BARD:
+        case EHeroClass.JESTER:
             unit = jesterHero;
             break;
         case EHeroClass.DUELIST:
@@ -294,7 +294,7 @@ export const getMulticlassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] =
             return [EHeroClass.PRIEST, EHeroClass.ORDER];
         case EHeroClass.KNIGHT:
             return [EHeroClass.ORDER, EHeroClass.WARRIOR];
-        case EHeroClass.MAGIC_BARD:
+        case EHeroClass.JESTER:
             return [EHeroClass.MAGIC, EHeroClass.BARD];
         case EHeroClass.DUELIST:
             return [EHeroClass.MASTER, EHeroClass.BARD];
@@ -350,7 +350,7 @@ export const getAnyClassSubclasses = (mcHeroClass: EHeroClass): EHeroClass[] => 
     } else {
         return getMulticlassSubclasses(mcHeroClass);
     }
-}
+};
 
 /**
  * @returns flag if [unit] contains [heroClass] as basic class

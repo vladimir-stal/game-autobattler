@@ -439,3 +439,16 @@ export const copyUnit = (unit: IUnit, copyItems: boolean = false): IUnit => {
     copy.afterDuelBonuses = [];
     return copy;
 };
+
+/** @returns id of initial unit if units have same animations */
+export const getMainUnitId = (unitId: string): string => {
+    switch (unitId) {
+        case "SPIRITWARRIOR":
+            return "WARRIORSUMMON";
+        case "SPIRITSHIELDWARRIOR":
+            return "SHIELDWARRIORSUMMON";
+        case "FIREFLY":
+            return "FIREFLYSUMMON";
+    }
+    return unitId;
+};
