@@ -129,30 +129,25 @@ export function loadMcHeroesImages(scene: Scene) {
     });
 
     // COMMADER ///////////////////////////////////////////////////////////////////
-    //WEBP
-    scene.load.spritesheet(IMAGE_COMMANDER_IDLE, "assets/sprites/units/mc/commander/commander_2_idle_cut_350.png", {
+    scene.load.spritesheet(IMAGE_COMMANDER_IDLE, "assets/sprites/units/mc/commander/commander_2_idle_cut_350.webp", {
         frameWidth: 350,
         frameHeight: 350,
     });
 
     // DOOMSAYER ///////////////////////////////////////////////////////////////////
-    //WEBP
-    scene.load.spritesheet(IMAGE_DOOMSAYER_IDLE, "assets/sprites/units/mc/doomsayer/doomsayer_idle_cut_300.png", {
+    scene.load.spritesheet(IMAGE_DOOMSAYER_IDLE, "assets/sprites/units/mc/doomsayer/doomsayer_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_DOOMSAYER_BATTLE_IDLE, "assets/sprites/units/mc/doomsayer/doomsayer_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_DOOMSAYER_BATTLE_IDLE, "assets/sprites/units/mc/doomsayer/doomsayer_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_DOOMSAYER_ATTACK, "assets/sprites/units/mc/doomsayer/doomsayer_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_DOOMSAYER_ATTACK, "assets/sprites/units/mc/doomsayer/doomsayer_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_DOOMSAYER_SKILL, "assets/sprites/units/mc/doomsayer/doomsayer_skill_cut_400.png", {
+    scene.load.spritesheet(IMAGE_DOOMSAYER_SKILL, "assets/sprites/units/mc/doomsayer/doomsayer_skill_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -219,28 +214,23 @@ export function loadMcHeroesImages(scene: Scene) {
     }
 
     // ORACLE ///////////////////////////////////////////////////////////////////
-    //WEBP
-    scene.load.spritesheet(IMAGE_ORACLE_IDLE, "assets/sprites/units/mc/oracle/oracle_idle_cut_300.png", {
+    scene.load.spritesheet(IMAGE_ORACLE_IDLE, "assets/sprites/units/mc/oracle/oracle_idle_cut_300.webp", {
         frameWidth: 300,
         frameHeight: 300,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_ORACLE_BATTLE_IDLE, "assets/sprites/units/mc/oracle/oracle_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_ORACLE_BATTLE_IDLE, "assets/sprites/units/mc/oracle/oracle_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_ORACLE_ATTACK, "assets/sprites/units/mc/oracle/oracle_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_ORACLE_ATTACK, "assets/sprites/units/mc/oracle/oracle_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_ORACLE_SKILL_1, "assets/sprites/units/mc/oracle/oracle_skill_1_cut_400.png", {
+    scene.load.spritesheet(IMAGE_ORACLE_SKILL_1, "assets/sprites/units/mc/oracle/oracle_skill_1_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_ORACLE_SKILL_2, "assets/sprites/units/mc/oracle/oracle_skill_2_cut_400.png", {
+    scene.load.spritesheet(IMAGE_ORACLE_SKILL_2, "assets/sprites/units/mc/oracle/oracle_skill_2_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
