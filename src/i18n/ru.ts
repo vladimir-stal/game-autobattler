@@ -53,6 +53,7 @@ export const i18n: Ii18n = {
             SUMMON_INCREASE_DAMAGE: "Увеливает урон призыва\nна {1}",
             TOTEM_INCREASE_VALUE: "Увеливает урон тотема\nна {1}",
             CAST_SKILL_X_ROUND: "Раз за бой, срабатывает\n эффект\nв конце раунда",
+            UNPACK_SKILL_IN_STASH: "Переместите предмет в\nинвентаре чтобы получить\nнавык",
         },
         itemBonusType: { ATTRIBUTE: "АТРИБУТ", ITEM_WEAPON_SLOT: "Дополнительный слот для оружия" },
     },

@@ -112,7 +112,7 @@ export const shieldWarriorsSummonMob: IUnit = {
     attackTargetType: ETargetType.HIGH_RADIATE_ENEMY,
     basicAttack: 0,
     basicAttackTimes: 1,
-    basicMaxHp: 20,
+    basicMaxHp: 15, // was 20
     basicHpRegen: 0,
     basicArmor: 0,
     basicCritChance: 0,

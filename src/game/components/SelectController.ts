@@ -1,4 +1,4 @@
-import { ECardType, EHeroClass, EItemTargetType, ERoomType, ESelectCardHint, EUnitType, ICard, IMobReward, IUnit } from "../../types";
+import { ECardType, EHeroClass, EItemTargetType, ERoomType, ESelectCardHint, EUnitType, ICard, IMobReward, IPreDuelHistoryExport, IUnit, IUnitExport } from "../../types";
 import { bosses } from "../bossConsts";
 import { GameScene } from "../scenes/GameScene";
 import { getRandomArrayItem, getRandomArrayItems } from "../utils/commonUtils";
@@ -51,6 +51,9 @@ export class SelectController {
 
     /** Previous hour rooms (ignore duel and mobs rooms) */
     prevRooms: ERoomType[];
+
+    /** Dev/Debug pre duel party history */
+    partyPerDuelSnapshot: IPreDuelHistoryExport;
 
     constructor(gameScene: GameScene) {
         this.gameScene = gameScene;
@@ -201,11 +204,52 @@ export class SelectController {
         this.showCardSelect(type, false, { heroClasses, tripleSetTypes });
     }
 
+    makePreDuelSnapshot(day: number) {
+        if (!this.partyPerDuelSnapshot) {
+            this.partyPerDuelSnapshot = {};
+        }
+        this.partyPerDuelSnapshot[day] = this.gameScene.unitPanel.slots.map(us => {
+            if (!!us?.slot?.card?.card?.unit) {
+                const uscc = us.slot.card.card.unit;
+                const unitEntry: IUnitExport = {
+                    id: uscc.id,
+                    level: uscc.level,
+                    addedAttributes: [...uscc.addedAttributes],
+                    items: uscc.items.map(item => {
+                        if (item) {
+                            return {
+                                id: item.id,
+                                level: item.level,
+                                addedBonuses: item.bonuses.map(b => {
+                                    if (!!b && (b.valueType === "evolvedNumber" || b.valueType === "evolvedPercent")) {
+                                        return b;
+                                    }
+                                })
+                            }
+                        }
+                    }),
+                    skills: uscc.skills.map(skill => {
+                        if (skill) {
+                            return {
+                                id: skill.id,
+                                level: skill.level,
+                                isChained: skill.isChained,
+                            }
+                        }
+                    })
+                }
+                return unitEntry;
+            }
+        })
+        console.log("--= Export build day "+day+" =--",this.partyPerDuelSnapshot);
+    }
+
     /** Execute instant room action when room is selected on roomSelectPanel */
     executeRoomAction(type: ERoomType, day: number, units?: IUnit[]) {
         switch (type) {
             case ERoomType.DUEL:
                 {
+                    this.makePreDuelSnapshot(day);
                     this.gameScene.changeToDuelPhase();
                 }
                 break;
@@ -215,6 +259,7 @@ export class SelectController {
                         console.log("ERROR! No units for boss");
                         return;
                     }
+                    this.makePreDuelSnapshot(day);
                     this.gameScene.changeToBossDuelPhase(units);
                 }
                 break;

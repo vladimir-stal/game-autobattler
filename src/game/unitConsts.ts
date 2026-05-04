@@ -214,15 +214,15 @@ export const mobsLvl2: IMobsVariants[] = [
         name: i18n.mobs.level2.spiritwarrirors,
         level: 2,
         description: "A trio of spiritual soldiers",
-        units: [shieldWarriorsSummonMob, warriorSummonMob, warriorSummonMob], // 3x 3/9
+        units: [warriorSummonMob, warriorSummonMob, warriorSummonMob], // 3x 3/9
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.UNIT, unit: warriorSummonMob, exp: 2 },
-            { type: IMobRewardType.UNIT, unit: shieldWarriorsSummonMob, exp: 2 },
+            //{ type: IMobRewardType.UNIT, unit: shieldWarriorsSummonMob, exp: 2 },
             { type: IMobRewardType.ITEM, item: itemSpiritSpear, exp: 2 },
             { type: IMobRewardType.ITEM, item: spiritArmor, exp: 2 },
             { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamFlurry), exp: 2 },
-            { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritShieldRadiate), exp: 2 },
+            //{ type: IMobRewardType.ITEM, item: scrollOfSkill(spiritShieldRadiate), exp: 2 },
         ],
     },
     {
@@ -260,7 +260,7 @@ export const mobsLvl2: IMobsVariants[] = [
     },
     {
         name: i18n.mobs.level2.pirates,
-        level: 1,
+        level: 2,
         description: "Brave pirates from the deepest ocean",
         units: [pirate1Unit, pirate1Unit, null],
         rewards: [
@@ -321,8 +321,8 @@ export const mobsLvl3: IMobsVariants[] = [
     {
         name: i18n.mobs.level3.spiritwarrirors,
         level: 3,
-        description: "A well known spiritual trio",
-        units: [warriorSummonMob_3, warriorSummonMob_3, warriorSummonMob_3], // stat 5/14 (was 6_10)
+        description: "A well known spiritual duo", // was trio
+        units: [warriorSummonMob_3, warriorSummonMob_3], // stat 5/14 (was 6_10)
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 3 },
             { type: IMobRewardType.GOLD, value: 2, exp: 3 },

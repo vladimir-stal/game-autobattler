@@ -12,7 +12,7 @@ import {
     TUnits,
 } from "../../types";
 import { GameScene } from "../scenes/GameScene";
-import { addExpToUnit } from "./unitUtils";
+import { addAttributeToUnit, addExpToUnit } from "./unitUtils";
 
 export const applyAfterDuelBonuses = (gameScene: GameScene, units: TUnits, isBattleWin: boolean) => {
     units.forEach((unit) => {
@@ -71,36 +71,49 @@ const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit:
         case EItemAfterDuelBonusType.STAT_ARMOR:
             {
                 unit.basicArmor += value;
+                addAttributeToUnit(unit,"basicArmor",value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_MAX_HP:
             {
                 unit.basicMaxHp += value;
+                addAttributeToUnit(unit,"basicMaxHp",value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_HP_REGEN:
             {
                 unit.basicHpRegen += value;
+                addAttributeToUnit(unit,"basicHpRegen",value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_CRIT_CHANCE:
             {
                 unit.basicCritChance += value;
+                addAttributeToUnit(unit,"basicCritChance",value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_EVAS_CHANCE:
             {
                 unit.basicEvasionChance += value;
+                addAttributeToUnit(unit,"basicEvasionChance",value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_MP:
             {
                 unit.basicMagicPower += value;
+                addAttributeToUnit(unit,"basicMagicPower",value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_PP:
             {
                 unit.basicPhysicalPower += value;
+                addAttributeToUnit(unit,"basicPhysicalPower",value);
+            }
+            break;
+        case EItemAfterDuelBonusType.STAT_BASIC_ATTACK:
+            {
+                unit.basicAttack += value;
+                addAttributeToUnit(unit,"basicAttack",value);
             }
             break;
         default:

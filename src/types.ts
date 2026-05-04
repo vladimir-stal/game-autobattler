@@ -869,6 +869,28 @@ export interface IUnit {
     mobItems?: { item?: IItem; skill?: IHeroSkillSet; probability: number }[];
 }
 
+export interface ISkillsExport {
+    id: string;
+    level: number;
+    isChained?: boolean;
+}
+
+export interface IItemExport {
+    id: string;
+    level: number;
+    addedBonuses?: IItemBonus[]; // bonuses to apply when item is equipped
+}
+
+export interface IUnitExport {
+    id: string;
+    level: number;
+    addedAttributes?: { attr: THeroAttribute; value: number }[];
+    items?: IItemExport[];
+    skills?: ISkillsExport[];
+}
+
+export type IPreDuelHistoryExport = Record<number, IUnitExport[]>; // day & units
+
 export type THeroAttribute = keyof Pick<
     IUnit,
     "basicAttack" | "basicArmor" | "basicHpRegen" | "basicMaxHp" | "basicCritChance" | "basicEvasionChance" | "basicMagicPower" | "basicPhysicalPower"
