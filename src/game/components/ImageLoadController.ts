@@ -76,12 +76,14 @@ export class ImageLoadController {
     }
 
     private async loadIdleUnit(unitId: string) {
-        if (this.loadedUnits[unitId]) {
+        const initUnitId = getMainUnitId(unitId);
+
+        if (this.loadedUnits[initUnitId]) {
             return;
         }
 
-        await loadUnitImagesForSelect(this.gameScene, unitId);
-        this.loadedUnits[unitId] = true;
+        await loadUnitImagesForSelect(this.gameScene, initUnitId);
+        this.loadedUnits[initUnitId] = true;
     }
 
     private async loadBattleUnit(unitId: string) {

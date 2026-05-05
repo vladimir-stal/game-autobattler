@@ -19,6 +19,7 @@ export const MIDDLE_WIDTH = 1400; // middle camera width for resizing
 export const MIN_WIDTH = 1200; // min range camera width for resizing
 export const MAX_HEIGHT = 900;
 export const MIDDLE_HEIGHT = 800;
+export const MIN_HEIGHT = 700;
 
 let resizeTimeoutId: number;
 

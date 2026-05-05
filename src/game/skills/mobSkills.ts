@@ -61,8 +61,10 @@ const goblinPocketSandSkillset = (blind: number, blindScale: number, atkboost: n
 };
 export const goblinPocketSand_3: IHeroSkillSet = {
     id: "goblinPocketSand",
-    name: "Pocket sand",
-    desc: "Blind first enemy for\n[60+1.8xPP] (1 turn) and\nincrease own next base\nattack by [2+PP]",
+    //name: "Pocket sand",
+    //desc: "Blind first enemy for\n[60+1.8xPP] (1 turn) and\nincrease own next basic\nattack by [2+PP]",
+    name: i18n.skills.mobs.goblinPocketSand.name,
+    desc: i18n.skills.mobs.goblinPocketSand.desc3,
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.BARD],
@@ -73,8 +75,10 @@ export const goblinPocketSand_3: IHeroSkillSet = {
 
 export const goblinPocketSand_2: IHeroSkillSet = {
     id: "goblinPocketSand",
-    name: "Pocket sand",
-    desc: "Blind first enemy for\n[50+1.4xPP] (1 turn) and\nincrease own next base\nattack by [2+75%xPP]",
+    //name: "Pocket sand",
+    //desc: "Blind first enemy for\n[50+1.4xPP] (1 turn) and\nincrease own next basic\nattack by [2+75%xPP]",
+    name: i18n.skills.mobs.goblinPocketSand.name,
+    desc: i18n.skills.mobs.goblinPocketSand.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.BARD],
@@ -86,8 +90,10 @@ export const goblinPocketSand_2: IHeroSkillSet = {
 
 export const goblinPocketSand: IHeroSkillSet = {
     id: "goblinPocketSand",
-    name: "Pocket sand",
-    desc: "Blind first enemy for\n[40+PP] (1 turn) and\nincrease own next base\nattack by [2+50%xPP]",
+    //name: "Pocket sand",
+    //desc: "Blind first enemy for\n[40+PP] (1 turn) and\nincrease own next basic\nattack by [2+50%xPP]",
+    name: i18n.skills.mobs.goblinPocketSand.name,
+    desc: i18n.skills.mobs.goblinPocketSand.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.BARD],

@@ -307,8 +307,8 @@ const stealPPorMPSkillset = (amount: number): IHeroSkill[] => {
             valueType: "number",
             targetType: ETargetType.SELF,
         },
-    ]
-}
+    ];
+};
 
 export const stealPPorMPSkill_3: IHeroSkillSet = {
     id: "stealPPorMPSkill",
@@ -452,7 +452,7 @@ export const magicRain: IHeroSkillSet = {
     animationType: AnimationType.UNIT_ATTACK,
 };
 
-const concentrateThePoisonSkillset = (mpScale:number):IHeroSkill[] => {
+const concentrateThePoisonSkillset = (mpScale: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.STATUS_APPLY,
@@ -477,12 +477,14 @@ const concentrateThePoisonSkillset = (mpScale:number):IHeroSkill[] => {
             animation: AnimationType.NONE,
         },
     ];
-}
+};
 
 export const concentrateThePoisonSkill_3: IHeroSkillSet = {
     id: "concentrateThePoison",
-    name: "Amplify poison",
-    desc: "Apply +[75%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    //name: "Amplify poison",
+    //desc: "Apply +[75%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    name: i18n.skills.level2.concentrateThePoison.name,
+    desc: i18n.skills.level2.concentrateThePoison.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK],
@@ -492,8 +494,10 @@ export const concentrateThePoisonSkill_3: IHeroSkillSet = {
 
 export const concentrateThePoisonSkill_2: IHeroSkillSet = {
     id: "concentrateThePoison",
-    name: "Amplify poison",
-    desc: "Apply +[65%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    //name: "Amplify poison",
+    //desc: "Apply +[65%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    name: i18n.skills.level2.concentrateThePoison.name,
+    desc: i18n.skills.level2.concentrateThePoison.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK],
@@ -504,8 +508,10 @@ export const concentrateThePoisonSkill_2: IHeroSkillSet = {
 
 export const concentrateThePoisonSkill: IHeroSkillSet = {
     id: "concentrateThePoison",
-    name: "Amplify poison",
-    desc: "Apply +[50%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    //name: "Amplify poison",
+    //desc: "Apply +[50%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+    name: i18n.skills.level2.concentrateThePoison.name,
+    desc: i18n.skills.level2.concentrateThePoison.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK],

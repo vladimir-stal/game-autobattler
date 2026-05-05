@@ -1988,7 +1988,7 @@ export class BattleController {
         if (damageType === EHeroAttackType.MAGIC) {
             // calculate defense debuffs
             target.debuffs.forEach((debuff) => {
-                if (debuff.type === EDebuffType.MAGIC_RESIST_DECREASE) {
+                if (debuff.type === EDebuffType.RESIST_DECREASE) {
                     const { value, valueType } = debuff;
                     if (!valueType) {
                         console.log("ERROR! No valueType");

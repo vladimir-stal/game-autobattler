@@ -1,4 +1,17 @@
-import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
+import {
+    AnimationType,
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EDebuffType,
+    EHeroClass,
+    EHeroSkillType,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
@@ -209,7 +222,7 @@ const wortyFoeSkillset = (atkMinus: number, ppScale: number, vulStacks: number):
             type: EHeroSkillType.DEBUFF,
             debuff: {
                 name: "vulnerable",
-                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
+                type: EDebuffType.RESIST_DECREASE,
                 value: vulStacks,
                 valueType: "number",
                 targetType: ETargetType.MARKED_ENEMY,
@@ -229,10 +242,10 @@ const wortyFoeSkillset = (atkMinus: number, ppScale: number, vulStacks: number):
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-            },            
-        }
+            },
+        },
     ];
-}
+};
 
 export const debuffWorthyFoe_3: IHeroSkillSet = {
     id: "debuffWorthyFoe",
@@ -240,10 +253,10 @@ export const debuffWorthyFoe_3: IHeroSkillSet = {
     //desc: "Attack enemy with highest\nattack this turn and reduce\nits next attack by [2+PP*65%]\nmake it vulnerable [3]",
     name: i18n.skills.basic.debuffWorthyFoe.name,
     desc: i18n.skills.basic.debuffWorthyFoe.desc3,
-    level: 2,
+    level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
-    skills: wortyFoeSkillset(2,65,3),
+    skills: wortyFoeSkillset(2, 65, 3),
     image: IMAGE_SKILL_DUEL,
 };
 
@@ -256,7 +269,7 @@ export const debuffWorthyFoe_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
-    skills: wortyFoeSkillset(2,50,2),
+    skills: wortyFoeSkillset(2, 50, 2),
     image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_3,
 };
@@ -270,17 +283,17 @@ export const debuffWorthyFoe: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR],
-    skills: wortyFoeSkillset(2,0,1),
+    skills: wortyFoeSkillset(2, 0, 1),
     image: IMAGE_SKILL_DUEL,
     nextLevel: debuffWorthyFoe_2,
 };
 
 // mortal strike (tier 3)
 //   ~ next ba
-//   + bleed 
+//   + bleed
 //   + debuff (physical vulnerability + reduce pp + reduce mp)
 
-const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:number, debuffDuration:number): IHeroSkill[] => {
+const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction: number, debuffDuration: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.BUFF,
@@ -292,20 +305,20 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:numbe
                 value: 1,
                 appTrigger: {
                     limitedRepeats: true,
-                    type: EAppTriggerType.BASIC_ATTACK,                    
+                    type: EAppTriggerType.BASIC_ATTACK,
                     skillId: "Mortal strike",
                     skill: [
                         {
-                            type:EHeroSkillType.STATUS_APPLY,
+                            type: EHeroSkillType.STATUS_APPLY,
                             status: EStatusType.BLEED,
                             targetType: ETargetType.BY_RELEVANT_ID, // last target basic attack
                             value: bleedAndVulnerability,
                             valueType: "number",
                         },
                         {
-                            type:EHeroSkillType.DEBUFF,
+                            type: EHeroSkillType.DEBUFF,
                             debuff: {
-                                type: EDebuffType.PHYSICAL_RESIST_DECREASE,
+                                type: EDebuffType.RESIST_DECREASE,
                                 name: "vulnerable",
                                 value: bleedAndVulnerability,
                                 valueType: "number",
@@ -316,7 +329,7 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:numbe
                             animation: AnimationType.NONE,
                         },
                         {
-                            type:EHeroSkillType.DEBUFF,
+                            type: EHeroSkillType.DEBUFF,
                             debuff: {
                                 type: EDebuffType.ATTRIBUTE_DECREASE,
                                 name: "-MP",
@@ -330,7 +343,7 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:numbe
                             animation: AnimationType.NONE,
                         },
                         {
-                            type:EHeroSkillType.DEBUFF,
+                            type: EHeroSkillType.DEBUFF,
                             debuff: {
                                 type: EDebuffType.ATTRIBUTE_DECREASE,
                                 name: "-PP",
@@ -344,11 +357,11 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction:numbe
                             animation: AnimationType.NONE,
                         },
                     ],
-                }
-            }
-        }
-    ]
-}
+                },
+            },
+        },
+    ];
+};
 
 export const mortalStrikeSkill_3: IHeroSkillSet = {
     id: "mortalStrikeSkill",
@@ -358,7 +371,7 @@ export const mortalStrikeSkill_3: IHeroSkillSet = {
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR],
     isBasicAttack: true, // make basic attack
-    skills: mortalStrikeSkillset(8,11,3),
+    skills: mortalStrikeSkillset(8, 11, 3),
     image: IMAGE_SKILL_AXE_BUFF,
     //nextLevel: mortalStrikeSkill_2, // next level > (5,7,3) > (8,11,3)
 };
@@ -371,7 +384,7 @@ export const mortalStrikeSkill_2: IHeroSkillSet = {
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR],
     isBasicAttack: true, // make basic attack
-    skills: mortalStrikeSkillset(5,7,3),
+    skills: mortalStrikeSkillset(5, 7, 3),
     image: IMAGE_SKILL_AXE_BUFF,
     //nextLevel: mortalStrikeSkill_3, // next level > (5,7,3) > (8,11,3)
 };
@@ -384,7 +397,7 @@ export const mortalStrikeSkill: IHeroSkillSet = {
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR],
     isBasicAttack: true, // make basic attack
-    skills: mortalStrikeSkillset(3,4,3),
+    skills: mortalStrikeSkillset(3, 4, 3),
     image: IMAGE_SKILL_AXE_BUFF,
     //nextLevel: mortalStrikeSkill_2, // next level > (5,7,3) > (8,11,3)
 };

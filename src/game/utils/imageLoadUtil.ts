@@ -34,7 +34,9 @@ import {
     loadSkeletonIdleImages,
     loadSummonFireflyIdleImages,
     loadSummonFireflyImages,
+    loadSummonShieldWarriorIdleImages,
     loadSummonShieldWarriorImages,
+    loadSummonWarriorIdleImages,
     loadSummonWarriorImages,
     loadWolf1BattleImages,
     loadWolf1IdleImages,
@@ -95,6 +97,7 @@ import {
     createPirate2IdleAnimations,
     createSkeletonAnimations,
     createSpiritShieldWarriorAnimations,
+    createSpiritShieldWarriorIdleAnimations,
     createSpiritWarriorAnimations,
     createWolf1Animations,
     createWolf1IdleAnimations,
@@ -438,10 +441,24 @@ export async function loadUnitImagesForSelect(scene: Scene, unitId: string) {
                 isMob = true;
             }
             break;
-        case "FIREFLY": {
-            await loadSummonFireflyIdleImages(scene);
-            createFireflyIdleAnimations(scene);
-        }
+        case "FIREFLYSUMMON":
+            {
+                await loadSummonFireflyIdleImages(scene);
+                createFireflyIdleAnimations(scene);
+            }
+            break;
+        case "WARRIORSUMMON":
+            {
+                await loadSummonWarriorIdleImages(scene);
+                createFireflyIdleAnimations(scene);
+            }
+            break;
+        case "SHIELDWARRIORSUMMON":
+            {
+                await loadSummonShieldWarriorIdleImages(scene);
+                createSpiritShieldWarriorIdleAnimations(scene);
+            }
+            break;
     }
 
     if (isMob) {

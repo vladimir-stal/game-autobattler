@@ -488,13 +488,35 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         if (animation) {
             // TODO: add other types of animation
             let animationType: string | undefined = undefined;
-            if (animation === AnimationType.UNIT_ATTACK) {
-                animationType = this.magicAttackSkillAnimation;
-            } else if (animation === AnimationType.UNIT_PHYSICAL_ATTACK_SKILL) {
-                animationType = this.physicalAttackSkillAnimation || this.unitAttackAnimation;
-            } else if (animation === AnimationType.UNIT_DEBUFF) {
-                animationType = this.unitBuffAnimation;
+            switch (animation) {
+                case AnimationType.UNIT_ATTACK:
+                    {
+                        animationType = this.magicAttackSkillAnimation;
+                    }
+                    break;
+                case AnimationType.UNIT_PHYSICAL_ATTACK_SKILL:
+                    {
+                        animationType = this.physicalAttackSkillAnimation || this.unitAttackAnimation;
+                    }
+                    break;
+                case AnimationType.UNIT_DEBUFF:
+                    {
+                        animationType = this.unitBuffAnimation;
+                    }
+                    break;
+                case AnimationType.SUMMON_SPELL:
+                    {
+                        animationType = this.summonTotemAnimation;
+                    }
+                    break;
             }
+            // if (animation === AnimationType.UNIT_ATTACK) {
+            //     animationType = this.magicAttackSkillAnimation;
+            // } else if (animation === AnimationType.UNIT_PHYSICAL_ATTACK_SKILL) {
+            //     animationType = this.physicalAttackSkillAnimation || this.unitAttackAnimation;
+            // } else if (animation === AnimationType.UNIT_DEBUFF) {
+            //     animationType = this.unitBuffAnimation;
+            // }
 
             if (!animationType) {
                 return;
@@ -893,7 +915,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     async summonUnit(unit: IBattleUnit, skill?: IHeroSkill): Promise<BattleSummonCard> {
-        this.setAction("SUMMON " + unit.name);
+        //this.setAction("SUMMON " + unit.name);
 
         if (!this.summonCard.unit) {
             setTimeout(() => {

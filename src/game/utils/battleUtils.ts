@@ -733,7 +733,7 @@ export const dealDamage = (target: IBattleUnit, damageValue: number, damageType:
     if (damageType === EHeroAttackType.MAGIC) {
         // calculate defense debuffs
         target.debuffs.forEach((debuff) => {
-            if (debuff.type === EDebuffType.MAGIC_RESIST_DECREASE) {
+            if (debuff.type === EDebuffType.RESIST_DECREASE) {
                 if (debuff.valueType === "number") {
                     finalDamageValue += debuff.value;
                 } else if (debuff.valueType === "percent") {
@@ -1287,9 +1287,9 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
         case ESkillCondition.CUSTOM_NUMBER_IS_ZERO:
             return !unit.customNumber;
         case ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE:
-            return (unit.customNumber && unit.customNumber > 0);
+            return unit.customNumber && unit.customNumber > 0;
         case ESkillCondition.CUSTOM_NUMBER_IS_NEGATIVE:
-            return (unit.customNumber && unit.customNumber < 0);
+            return unit.customNumber && unit.customNumber < 0;
         case ESkillCondition.IN_BACK_ROW:
             return unit.isBackRowPosition;
         case ESkillCondition.IN_FRONT_ROW:

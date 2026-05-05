@@ -344,7 +344,7 @@ export const sword22_3: IItem = {
     image: IMAGE_ITEM_SWORD_21,
     heroClasses: [],
     weaponType: EWeaponItemType.SWORD,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicAttack" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 14, valueType: "number", attribute: "basicAttack" }],
 };
 
 export const sword22_2: IItem = {

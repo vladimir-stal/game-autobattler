@@ -712,7 +712,7 @@ export const inquisitorHero: IUnit = {
 export const witchHero: IUnit = {
     heroClass: EHeroClass.WITCH,
     attackType: EHeroAttackType.MAGIC,
-    attackTargetType: ETargetType.RANDOM_ENEMY,
+    attackTargetType: ETargetType.FIRST_ENEMY,
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 2,
     basicAttackTimes: 1,

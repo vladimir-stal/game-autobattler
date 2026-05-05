@@ -3,8 +3,16 @@ import { basic_heal } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemConsts";
 import { noBasicAttackSkill as chainToNextSkill, noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { mobNoSkill, fireflyConfusingMistSkill, fireflyUnfairExchange, infernoFlyPassive, spiritShieldRadiate, spiritTeamFlurry, spiritWarriorPassive, spiritTeamRevenge } from "../skills/mobSkills";
-import { attrArmorSelf } from "../skills/orderSkillConsts";
+import {
+    mobNoSkill,
+    fireflyConfusingMistSkill,
+    fireflyUnfairExchange,
+    infernoFlyPassive,
+    spiritShieldRadiate,
+    spiritTeamFlurry,
+    spiritWarriorPassive,
+    spiritTeamRevenge,
+} from "../skills/mobSkills";
 
 //////////// SPIRIT WARRIOR //////////////////////////
 
@@ -25,7 +33,7 @@ export const warriorSummonMob_5: IUnit = {
     basicPhysicalPower: 5,
     name: i18n.units.WARRIORSUMMON,
     id: "SPIRITWARRIOR",
-    skills: [chainToNextSkill,spiritTeamRevenge,mobNoSkill,spiritTeamFlurry],
+    skills: [chainToNextSkill, spiritTeamRevenge, mobNoSkill, spiritTeamFlurry],
     items: [],
     level: 5,
     exp: 0,
@@ -56,7 +64,7 @@ export const warriorSummonMob_3: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WARRIORSUMMON,
     id: "SPIRITWARRIOR",
-    skills: [chainToNextSkill,spiritTeamFlurry],
+    skills: [chainToNextSkill, spiritTeamFlurry],
     items: [],
     level: 3,
     exp: 0,
@@ -65,7 +73,7 @@ export const warriorSummonMob_3: IUnit = {
         { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
         { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
-        { skill: spiritTeamFlurry, probability: 16 }
+        { skill: spiritTeamFlurry, probability: 16 },
     ],
 };
 
@@ -86,7 +94,7 @@ export const warriorSummonMob: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WARRIORSUMMON,
     id: "SPIRITWARRIOR",
-    skills: [mobNoSkill,spiritTeamFlurry,chainToNextSkill],
+    skills: [mobNoSkill, spiritTeamFlurry, chainToNextSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -95,7 +103,7 @@ export const warriorSummonMob: IUnit = {
         { item: spiritArmor, probability: 12 }, // 10% ~ 10/0.8
         { item: itemSpiritSpear, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
-        { skill: spiritTeamFlurry, probability: 16 }
+        { skill: spiritTeamFlurry, probability: 16 },
     ],
 };
 // spiritTeamRevenge - like Riposte but after attack and apply Bleed
@@ -130,7 +138,7 @@ export const shieldWarriorsSummonMob: IUnit = {
         { item: itemCoin, probability: 20 }, // 20%
         { item: spiritArmor, probability: 25 }, // 20% ~ 20/0.8
         // nothing = 100*0.80*0.75
-        { skill: spiritShieldRadiate, probability: 16 }
+        { skill: spiritShieldRadiate, probability: 16 },
     ],
 };
 
@@ -162,7 +170,7 @@ export const fireflySummonMob: IUnit = {
         { item: itemCoin2, probability: 12 }, // 10% ~ 10/0.8
         { item: basic_heal, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
-        { skill: fireflyConfusingMistSkill, probability: 16},
+        { skill: fireflyConfusingMistSkill, probability: 16 },
     ],
 };
 

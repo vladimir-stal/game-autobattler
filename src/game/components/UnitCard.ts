@@ -12,7 +12,7 @@ import { HeroClassTag } from "./ui/HeroClassTag";
 import { IMAGE_ICON_ATTACK, IMAGE_ICON_HEALTH, IMAGE_ICON_SHIELD } from "../utils/imageLoadUtil";
 import { colors, i18n } from "../consts";
 import { CardSlot } from "./CardSlot";
-import { MAX_HEIGHT } from "./ui/uiPanels";
+import { MAX_HEIGHT, MIDDLE_HEIGHT, MIN_HEIGHT, MIN_WIDTH } from "./ui/uiPanels";
 
 /** Card to buy from shop  */
 export class UnitCard extends Phaser.GameObjects.Container {
@@ -68,26 +68,29 @@ export class UnitCard extends Phaser.GameObjects.Container {
     renderInfo() {
         const { basicAttack, basicMaxHp, name, basicArmor, level, exp } = this.unit;
 
-        const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position
+        //const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position
+        const { height } = this.gameScene.camera;
+        console.log("height >>> ", height);
+        const btyp = height >= MIDDLE_HEIGHT ? -80 : height >= MIN_HEIGHT ? -50 : 0;
 
         const title = name + " " + level + "(" + exp + "/" + getUnitNextLevelExp(this.unit) + ")";
         this.titleText = this.scene.add.text(0, btyp - 40, title, { fontSize: 12, color: "#dddddd" }).setOrigin(0.5);
         this.add(this.titleText);
 
-        this.attackText = this.scene.add.text(-33, btyp - 18, basicAttack + "", { fontSize: 12, color: "#dddddd" });
+        this.attackText = this.scene.add.text(-33, btyp - 28, basicAttack + "", { fontSize: 12, color: "#dddddd" });
         this.add(this.attackText);
-        this.attackImage = this.scene.add.image(-40, btyp - 10, IMAGE_ICON_ATTACK).setDisplaySize(20, 20);
+        this.attackImage = this.scene.add.image(-40, btyp - 20, IMAGE_ICON_ATTACK).setDisplaySize(20, 20);
         this.add(this.attackImage);
 
-        this.healthText = this.scene.add.text(0, btyp - 18, basicMaxHp + "", { fontSize: 12, color: "#dddddd" });
+        this.healthText = this.scene.add.text(0, btyp - 28, basicMaxHp + "", { fontSize: 12, color: "#dddddd" });
         this.add(this.healthText);
-        this.healthImage = this.scene.add.image(-10, btyp - 10, IMAGE_ICON_HEALTH).setDisplaySize(20, 20);
+        this.healthImage = this.scene.add.image(-10, btyp - 20, IMAGE_ICON_HEALTH).setDisplaySize(20, 20);
         this.add(this.healthImage);
 
-        this.armorText = this.scene.add.text(35, btyp - 18, basicArmor + "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.armorText = this.scene.add.text(35, btyp - 28, basicArmor + "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.armorText);
         this.armorImage = this.scene.add
-            .image(25, btyp - 10, IMAGE_ICON_SHIELD)
+            .image(25, btyp - 20, IMAGE_ICON_SHIELD)
             .setDisplaySize(20, 20)
             .setVisible(false);
         this.add(this.armorImage);
@@ -247,19 +250,22 @@ export class UnitCard extends Phaser.GameObjects.Container {
 
     refreshAfterResize() {
         const { height } = this.gameScene.camera;
+        console.log("height >>> ", height);
         const scale = height < MAX_HEIGHT ? height / MAX_HEIGHT : 1;
         this.imageObject.setScale(scale);
         this.imgHeight = this.imageObject.displayHeight;
 
-        const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position
+        //const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position
+
+        const btyp = height >= MAX_HEIGHT ? -80 : height >= MIDDLE_HEIGHT ? -70 : height >= MIN_HEIGHT ? -50 : 0;
 
         this.titleText.setY(btyp - 40);
-        this.attackText.setY(btyp - 18);
-        this.attackImage.setY(btyp - 10);
-        this.healthText.setY(btyp - 18);
-        this.healthImage.setY(btyp - 10);
-        this.armorText?.setY(btyp - 18);
-        this.armorImage?.setY(btyp - 10);
+        this.attackText.setY(btyp - 28);
+        this.attackImage.setY(btyp - 20);
+        this.healthText.setY(btyp - 28);
+        this.healthImage.setY(btyp - 20);
+        this.armorText?.setY(btyp - 28);
+        this.armorImage?.setY(btyp - 20);
     }
 
     setUnit(unit: IUnit) {

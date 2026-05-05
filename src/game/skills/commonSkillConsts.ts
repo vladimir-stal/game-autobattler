@@ -910,6 +910,7 @@ export const selfBuffOverheal = (duration: number, status?: EStatusType): IHeroS
             changeTargetTypeTo: ETargetType.FIRST_ENEMY,
             statusType: status,
         },
+        animation: AnimationType.NONE,
     };
 };
 
@@ -946,6 +947,7 @@ export const radiantWallSkill: IHeroSkillSet = {
     skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon(5, 1), 0, 35, 20, 2, 2)], // summon 0/5
     nextLevel: radiantWallSkill_2,
     image: IMAGE_SKILL_SUMMON_WITH_SHIELD,
+    animationType: AnimationType.SUMMON_SPELL,
 };
 
 export const mixedClassSkills1 = [

@@ -249,6 +249,12 @@ export const SKILLS_EN = {
             desc2: "Buff Physical power\n[1]+[MP*70%] all allies",
             desc3: "Buff Physical power\n[1]+[MP] all allies",
         },
+        concentrateThePoison: {
+            name: "Amplify poison",
+            desc1: "Apply +[50%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+            desc2: "Apply +[65%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+            desc3: "Apply +[75%xMP] poison\nto enemy with most poison\nand deal magical damage\nequal to total stacks",
+        },
         debuffBaNextBaAll: {
             name: "Weakness",
             desc1: "Debuff next basic attack [1]+[MP*50%] all enemies",
@@ -586,6 +592,12 @@ export const SKILLS_EN = {
             desc1: "Increase regeneration [2] for all allies",
             desc2: "Increase regeneration [4] for all allies",
             desc3: "Increase regeneration [8] for all allies",
+        },
+        goblinPocketSand: {
+            name: "Pocket sand",
+            desc1: "Blind first enemy for\n[40+PP] (1 turn) and\nincrease own next basic\nattack by [2+50%xPP]",
+            desc2: "Blind first enemy for\n[50+1.4xPP] (1 turn) and\nincrease own next basic\nattack by [2+75%xPP]",
+            desc3: "Blind first enemy for\n[60+1.8xPP] (1 turn) and\nincrease own next basic\nattack by [2+PP]",
         },
     },
 };

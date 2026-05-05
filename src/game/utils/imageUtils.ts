@@ -462,7 +462,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
         }
         case "SPIRITWARRIOR": {
             return {
-                size: 400,
+                //size: 400,
                 distance: -30,
                 distanceEnemy: -20,
                 image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
@@ -486,7 +486,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
         // SUMMONS
         case "WARRIORSUMMON": {
             return {
-                size: 400,
+                //size: 400,
                 distance: -50,
                 distanceEnemy: -10,
                 image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
@@ -496,7 +496,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
         }
         case "SHIELDWARRIORSUMMON": {
             return {
-                size: 400,
+                //size: 400,
                 distance: -30,
                 distanceEnemy: -20,
                 image: IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
@@ -566,7 +566,6 @@ export const getUnitImage = (unitId: string): IAnimations => {
             };
         case "SkeletonFrontSummon":
         case "SkeletonBackSummon":
-        case "SKELETON":
             return {
                 distance: -40,
                 distanceEnemy: -40,
@@ -574,10 +573,16 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 idleBattleAnimation: AnimationType.MOB_SKELETON_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_SKELETON_ATTACK,
             };
+        case "SKELETON":
         case "SKELETONWARRIOR":
         case "SKELETONMAGE":
-        case "SOLDIER":
-            return { image: IMAGE_SKELETON_1 };
+            return {
+                distance: -40,
+                distanceEnemy: -20,
+                image: IMAGE_SKELETON_1,
+                idleBattleAnimation: AnimationType.MOB_SKELETON_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_SKELETON_ATTACK,
+            };
         case "WOLF1":
             return {
                 distance: 20,

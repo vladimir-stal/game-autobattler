@@ -207,7 +207,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
             this.unitImageObject = this.gameScene.add
                 .sprite(x, 0, this.unitImage, 0)
                 .setOrigin(0, 1)
-                .setDisplaySize(displaySize, displaySize)
+                //.setDisplaySize(displaySize, displaySize)
                 .setFlipX(this.isInverted)
                 .setDepth(100);
 

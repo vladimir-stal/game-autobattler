@@ -276,6 +276,20 @@ export function loadImagesMobs(scene: Scene) {
 //
 
 // SUMMON KNIHGT
+// IDLE
+export async function loadSummonWarriorIdleImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_BATTLE_IDLE, path + "summon_knight/knight_1_battle_idle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
 export async function loadSummonWarriorImages(scene: Scene) {
     //
     scene.load.spritesheet(IMAGE_SUMMONKNIHGT_BATTLE_IDLE, path + "summon_knight/knight_1_battle_idle_cut_400.webp", {
@@ -295,6 +309,20 @@ export async function loadSummonWarriorImages(scene: Scene) {
 }
 
 // SUMMON SHIELD KNIHGT
+// IDLE
+export async function loadSummonShieldWarriorIdleImages(scene: Scene) {
+    //
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.webp", {
+        frameWidth: 400,
+        frameHeight: 400,
+    });
+    //
+    return new Promise((resolve) => {
+        scene.load.once(COMPLETE, resolve);
+        scene.load.start();
+    });
+}
+// BATTLE
 export async function loadSummonShieldWarriorImages(scene: Scene) {
     //
     scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.webp", {
