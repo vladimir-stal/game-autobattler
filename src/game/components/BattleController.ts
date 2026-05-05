@@ -276,7 +276,7 @@ export class BattleController {
     }
 
     performTriggerAction(bt: IBattleTrigger, at: IAppTrigger, bfodbf: IBuffOrDebuff) {
-        if (bt.originBattleUnit.hp<=0 && !at.allowCastFromDead) {
+        if (bt.originBattleUnit.hp <= 0 && !at.allowCastFromDead) {
             if (bfodbf.buff) {
                 removeBuff(bt.anchorTarget, bfodbf.buff, this.battleRecord);
             } else {
@@ -769,16 +769,24 @@ export class BattleController {
                 const percent = target.hp / target.maxHp;
                 target.maxHp += increaseValue;
                 target.hp = Math.min(target.maxHp, Math.floor(target.maxHp * percent) + 1);
+                battleAction.targets?.push({
+                    targetId: target.id,
+                    attribute: "maxHp",
+                    value: increaseValue,
+                });
+                battleAction.targets?.push({
+                    targetId: target.id,
+                    attribute: "hp",
+                    value: increaseValue,
+                });
             } else {
                 target[attribute] += increaseValue;
+                battleAction.targets?.push({
+                    targetId: target.id,
+                    attribute,
+                    value: increaseValue,
+                });
             }
-            //console.log(">>>>", increaseValue, target[attribute]);
-            //this.battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: increaseValue });
-            battleAction.targets?.push({
-                targetId: target.id,
-                attribute,
-                value: increaseValue,
-            });
             lastTargetId = target.id;
         });
         return lastTargetId || sameLastTargetId;
@@ -1685,7 +1693,7 @@ export class BattleController {
         let lastTargetId;
         if (skill.childSkill) {
             targets.forEach((t) => {
-                if (skill.childSkill?.condition && checkSkillCondition(t, skill.childSkill.condition)) {
+                if (skill.childSkill?.condition && (skill.childSkill.condition === ESkillCondition.NOT_BEFORE_COMBAT || checkSkillCondition(t, skill.childSkill.condition))) {
                     unit.customNumber++;
                     lastTargetId = t.id;
                 }
@@ -1725,8 +1733,8 @@ export class BattleController {
             console.log("Error. Wrong calculation arguments.", skill);
             return sameLastTargetId;
         }
+        console.log(">>> Calculate >>>", unit.customNumber, skill);
         return lastTargetId || sameLastTargetId;
-        //console.log("-= Calculate ", unit.customNumber, skill);
     }
 
     /** Summonned unit performs a skill or basic attack */

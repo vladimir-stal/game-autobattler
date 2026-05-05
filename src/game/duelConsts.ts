@@ -9,6 +9,7 @@ import {
     basic_heal,
     basic_heal_2,
     basic_jacket,
+    basic_jacket_2,
     basic_pants,
     basic_pants_2,
     basic_ring_damage,
@@ -41,10 +42,10 @@ import {
 import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import { heatUpSkill, noBasicAttackSkill, phycisalAttackSkill, phycisalAttackSkill_2, removeBuffSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
-import { magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
+import { concentrateThePoisonSkill, magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
 import { buffNextBaXSelf } from "./skills/masterSkillConsts";
-import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
+import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf, attrAttackSelf_2 } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2, healLowHpSkill, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
 import { buffNextBa, debuffWorthyFoe } from "./skills/warriorSkillConsts";
@@ -68,18 +69,21 @@ import {
     totem22,
     wand21,
     wand21_2,
+    wand22,
 } from "./weaponItem2Consts";
 import { goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
-import { gloves_war2, hat21, jacket21, jacket21_2 } from "./commonItemConsts2";
+import { gloves_war2, hat21, jacket21, jacket21_2, ring_regen2, ring_regen2_2 } from "./commonItemConsts2";
 import { strongWolfUnit } from "./units/wolfsMobUnits";
 import { minstrelSkill } from "./skills/mc/minstrelSkills";
 import { itemGoblinBoneDagger, itemPeasantPitchfork, regenMantle } from "./mobItemConsts";
-import { scepter31, shield31, shield32 } from "./weaponItem3Consts";
-import { buffSelfMPorPP } from "./skills/commonSkill3Consts";
+import { axe32, scepter31, shield31, shield32 } from "./weaponItem3Consts";
+import { buffSelfMPorPP, increaseMaxHpSkill } from "./skills/commonSkill3Consts";
 import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
 import { music5AddBuffTarget } from "./weaponItem5Consts";
 import { peasantSkill, skeletonPoisonedFlames } from "./skills/mobSkills";
+import { warriorSummonMob, warriorSummonMob_3 } from "./units/summonMobUnits";
+import { skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 
 const addItem = (unit: IUnit, item: IItem) => {
     unit.items.push(item);
@@ -799,8 +803,136 @@ export const enemy7: TDuelEnemy = {
     10: units_7_7,
 };
 
+// Enemy 8
+
+export const enemy8: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    { 1: [{ unit: orderHero }, { item: shield1 }, { item: basic_jacket }, { skill: attrAttackSelf_2 }] },
+    // day 2
+    {
+        1: [
+            { unit: orderHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 4 } },
+            { item: shield1 },
+            { item: basic_jacket_2 },
+            { skill: attrAttackSelf_2 },
+        ],
+        2: [{ unit: darkHero }, { item: totem1 }, { item: basic_hat }, { skill: poisonRandom }],
+    },
+    // day 3
+    {
+        1: [
+            { unit: orderHero },
+            { levelup: 2 },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 4 } },
+            { item: shield1 },
+            { item: basic_jacket_2 },
+            { attribute: { a: "basicMaxHp", v: 1 } },
+            { skill: attrAttackSelf_2 },
+        ],
+        2: [{ unit: darkHero }, { item: totem1 }, { item: ring_regen2_2 }, { skill: magicAttackX3, chained: true }, { skill: poisonRandom }],
+        3: [{ unit: warriorSummonMob }, { item: basic_hat }],
+    },
+    // day 4
+    {
+        1: [
+            { unit: forestSpiritHero },
+            //{ levelup: 2 },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 8 } },
+            { item: shield1 },
+            { item: totem22 },
+            { item: basic_jacket_2 },
+            { item: basic_hat },
+            { attribute: { a: "basicMaxHp", v: 2 } },
+            { skill: attrAttackSelf_2 },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [
+            { unit: necromancerHero },
+            { attribute: { a: "basicMagicPower", v: 5 } },
+            { item: totem1 },
+            { item: wand22 },
+            { item: ring_regen2_2 },
+            { attribute: { a: "basicHpRegen", v: 1 } },
+            { skill: magicAttackX3, chained: true },
+            { skill: poisonRandom },
+            { skill: poisonRandom },
+        ],
+        3: [{ unit: warriorSummonMob_3 }],
+        4: [{ unit: warriorSummonMob }],
+    },
+    // day 5
+    {
+        1: [
+            { unit: forestSpiritHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 8 } },
+            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { item: shield1 },
+            { item: totem1 },
+            { item: basic_jacket_2 },
+            { item: basic_hat },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { skill: attrAttackSelf_2 },
+            { skill: increaseMaxHpSkill },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [
+            { unit: necromancerHero },
+            { attribute: { a: "basicMagicPower", v: 5 } },
+            { item: totem1 },
+            { item: wand22 },
+            { item: ring_regen2_2 },
+            { attribute: { a: "basicHpRegen", v: 2 } },
+            { skill: magicAttackX3, chained: true },
+            { skill: poisonRandom_2 },
+            { skill: concentrateThePoisonSkill, chained: true },
+        ],
+        3: [{ unit: warriorSummonMob_3 }],
+        4: [{ unit: skeletonWarriorUnit }, {item: totem22}],
+    },
+    // day 6
+    {
+        1: [
+            { unit: forestSpiritHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 8 } },
+            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { item: axe32 },
+            { item: totem1 },
+            { item: basic_jacket_2 },
+            { item: basic_hat },
+            { attribute: { a: "basicMaxHp", v: 4 } },
+            { skill: attrAttackSelf_2 },
+            { skill: attrArmorSelf, chained: true},
+            { skill: increaseMaxHpSkill },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [
+            { unit: necromancerHero },
+            { levelup: 1},
+            { attribute: { a: "basicMagicPower", v: 5 } },
+            { item: totem1 },
+            { item: wand22 },
+            { item: ring_regen2_2 },
+            { attribute: { a: "basicHpRegen", v: 3 } },
+            { skill: magicAttackX3, chained: true },
+            { skill: poisonRandom_2 },
+            { skill: concentrateThePoisonSkill, chained: true },
+        ],
+        3: [{ unit: warriorSummonMob_3 }],
+        4: [{ unit: skeletonWarriorUnit }, {item: totem22}],
+    },
+]);
+
 ///////////////////////////////////////////////////////////
 
 //
 
-export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy2];
+export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy8];

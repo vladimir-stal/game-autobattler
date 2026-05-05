@@ -14,7 +14,7 @@ import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { peasantUnit } from "../units/mobUnitConsts";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
-import { fireflySummonMob, shieldWarriorsSummonMob } from "../units/summonMobUnits";
+import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from "../units/summonMobUnits";
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { dagger31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
@@ -34,16 +34,16 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wolfUnit }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.UNIT, price: 0, unit: peasantUnit },
-        { type: ECardType.UNIT, price: 0, unit: pirate1Unit },
-        { type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
-        { type: ECardType.UNIT, price: 0, unit: wolfUnit },
+        { type: ECardType.UNIT, price: 0, unit: warriorSummonMob_3 },
+        //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
+        //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
+        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },

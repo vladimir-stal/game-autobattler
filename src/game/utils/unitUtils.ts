@@ -224,6 +224,7 @@ export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroA
     if (addedAttributes && addedAttributes.length > 0) {
         addedAttributes.forEach(({ attr, value }) => {
             unit[attr] += value;
+            unit.addedAttributes.push({attr, value})
         });
     }
     // autolevel

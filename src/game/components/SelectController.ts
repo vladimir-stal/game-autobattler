@@ -6,6 +6,7 @@ import {
     ESelectCardHint,
     EUnitType,
     ICard,
+    IItemBonus,
     IMobReward,
     IPreDuelHistoryExport,
     IUnit,
@@ -251,7 +252,9 @@ export class SelectController {
                             //         return b;
                             //     }
                             // }),
-                            addedBonuses: item.bonuses.filter((b) => !!b && (b.valueType === "evolvedNumber" || b.valueType === "evolvedPercent")),
+                            addedBonuses: item.bonuses.filter((b) => !!b && (b.valueType === "evolvedNumber" || b.valueType === "evolvedPercent")).map(ib => {
+                                return {...ib}
+                            }),
                         };
                         //}
                     }),
