@@ -11,7 +11,9 @@ import {
     IHeroSkillSet,
     ESkillCondition,
 } from "../types";
+import { i18n } from "./consts";
 import { cheeringGoblinUnit_attacks, cheeringGoblinUnit_skills, goldGoblinBattleUnit } from "./units/goblinMobUnits";
+import { BOSS_MINOTAUR_ID } from "./units/mobUnitConsts";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -87,8 +89,8 @@ export const bossMinotaur: IUnit = {
     basicEvasionChance: 0,
     basicMagicPower: 0,
     basicPhysicalPower: 0,
-    name: "Minotaur",
-    id: "BOSSMINOTAUR",
+    name: i18n.units.BOSS_MINOTAUR,
+    id: BOSS_MINOTAUR_ID,
     skills: [minotaurTotemSkill, minotaurEarthquakeSkill, minotaurEarthquakeSkill],
     items: [],
     level: 5,

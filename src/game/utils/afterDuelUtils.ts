@@ -12,7 +12,7 @@ import {
     TUnits,
 } from "../../types";
 import { GameScene } from "../scenes/GameScene";
-import { addExpToUnit } from "./unitUtils";
+import { addAttributeToUnit, addExpToUnit } from "./unitUtils";
 
 export const applyAfterDuelBonuses = (gameScene: GameScene, units: TUnits, isBattleWin: boolean) => {
     units.forEach((unit) => {
@@ -70,37 +70,50 @@ const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit:
             break;
         case EItemAfterDuelBonusType.STAT_ARMOR:
             {
-                unit.basicArmor += value;
+                //unit.basicArmor += value;
+                addAttributeToUnit(unit, "basicArmor", value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_MAX_HP:
             {
-                unit.basicMaxHp += value;
+                //unit.basicMaxHp += value;
+                addAttributeToUnit(unit, "basicMaxHp", value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_HP_REGEN:
             {
-                unit.basicHpRegen += value;
+                //unit.basicHpRegen += value;
+                addAttributeToUnit(unit, "basicHpRegen", value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_CRIT_CHANCE:
             {
-                unit.basicCritChance += value;
+                //unit.basicCritChance += value;
+                addAttributeToUnit(unit, "basicCritChance", value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_EVAS_CHANCE:
             {
-                unit.basicEvasionChance += value;
+                //unit.basicEvasionChance += value;
+                addAttributeToUnit(unit, "basicEvasionChance", value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_MP:
             {
-                unit.basicMagicPower += value;
+                //unit.basicMagicPower += value;
+                addAttributeToUnit(unit, "basicMagicPower", value);
             }
             break;
         case EItemAfterDuelBonusType.STAT_PP:
             {
-                unit.basicPhysicalPower += value;
+                //unit.basicPhysicalPower += value;
+                addAttributeToUnit(unit, "basicPhysicalPower", value);
+            }
+            break;
+        case EItemAfterDuelBonusType.STAT_BASIC_ATTACK:
+            {
+                //unit.basicAttack += value;
+                addAttributeToUnit(unit, "basicAttack", value);
             }
             break;
         default:
@@ -110,10 +123,12 @@ const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit:
 
 const evolveBonus = (bonuses: IItemBonus[], attribute: THeroAttribute, value: number) => {
     let found = false;
-    bonuses.filter((b) => (b.attribute === attribute && b.valueType === "evolvedNumber")).forEach((b) => {
-        b.value += value;
-        found = true;
-    })
+    bonuses
+        .filter((b) => b.attribute === attribute && b.valueType === "evolvedNumber")
+        .forEach((b) => {
+            b.value += value;
+            found = true;
+        });
     if (!found) {
         bonuses.push({
             type: EItemBonusType.ATTRIBUTE,
@@ -136,7 +151,7 @@ const applyAfterDuelBonusEvolve = (gameScene: GameScene, bonus: IAfterDuelBonus,
     if (condition === EItemAfterDuelBonusCondition.IS_HERO && !(unit.unitType === EUnitType.HERO)) {
         return;
     }
-    if (condition === EItemAfterDuelBonusCondition.IS_MOB && (unit.unitType === EUnitType.HERO)) {
+    if (condition === EItemAfterDuelBonusCondition.IS_MOB && unit.unitType === EUnitType.HERO) {
         return;
     }
 

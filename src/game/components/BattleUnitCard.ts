@@ -81,7 +81,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     size: number | undefined;
     distance: number | undefined;
     attackAnimDisance: number | undefined;
-    tint: number | undefined;
+    //tint: number | undefined;
 
     isDead: boolean;
 
@@ -156,18 +156,18 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             tint,
         } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(id);
         this.unitImage = imageBattle || image;
-        if (GAME_MODE === "FULL" || unitType === EUnitType.UNIT || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
-            this.unitAnimation = idleBattleAnimation || animation;
-            this.unitAttackAnimation = attackAnimation;
-            this.unitHealAnimation = healAnimation;
-            this.unitHurtAnimation = hurtAnimation;
-            this.unitBuffAnimation = buffAnimation;
-            this.unitDefeatedAnimation = defeatedAnimation;
-            this.magicAttackSkillAnimation = magicAttackSkillAnimation;
-            this.physicalAttackSkillAnimation = physicalAttackSkillAnimation;
-            this.summonTotemAnimation = summonTotemAnimation;
-            this.attackAnimDisance = attackAnimDisance;
-        }
+        //if (GAME_MODE === "FULL" || unitType === EUnitType.UNIT || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
+        this.unitAnimation = idleBattleAnimation || animation;
+        this.unitAttackAnimation = attackAnimation;
+        this.unitHealAnimation = healAnimation;
+        this.unitHurtAnimation = hurtAnimation;
+        this.unitBuffAnimation = buffAnimation;
+        this.unitDefeatedAnimation = defeatedAnimation;
+        this.magicAttackSkillAnimation = magicAttackSkillAnimation;
+        this.physicalAttackSkillAnimation = physicalAttackSkillAnimation;
+        this.summonTotemAnimation = summonTotemAnimation;
+        this.attackAnimDisance = attackAnimDisance;
+        //}
         this.distance = distance;
         this.size = size;
         //const displaySize = this.size || 400;
@@ -179,11 +179,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             .setOrigin(0, 1)
             //.setDisplaySize(displaySize, displaySize)
             .setFlipX(this.isInverted)
-            .setDepth(100)
-            .setTint(tint, tint, tint, tint);
-        if (tint) {
-            this.tint = tint;
-        }
+            .setDepth(100);
+        //.setTint(tint, tint, tint, tint);
+        // if (tint) {
+        //     this.tint = tint;
+        // }
         if (this.size) {
             this.unitImageObject.setDisplaySize(this.size, this.size);
         }
@@ -500,9 +500,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                 return;
             }
 
-            if (!!this.tint) {
-                this.unitImageObject.setTint(this.tint);
-            }
+            // if (!!this.tint) {
+            //     this.unitImageObject.setTint(this.tint);
+            // }
             this.unitImageObject.anims.play(animationType);
             this.unitImageObject.on(ANIMATION_COMPLETE, () => {
                 //console.log(">> ANIMATION_COMPLETE attach Animation");
@@ -660,9 +660,9 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     async playBuff(buff: IBuff, skill?: IHeroSkill) {
         //this.setAction("BUFF " + buff.name);
         const { unitType, heroClassType } = this.unit || {};
-        if (GAME_MODE !== "FULL" && unitType === EUnitType.HERO && heroClassType === EHeroClassType.MULTI) {
-            return;
-        }
+        // if (GAME_MODE !== "FULL" && unitType === EUnitType.HERO && heroClassType === EHeroClassType.MULTI) {
+        //     return;
+        // }
 
         const animation = skill?.animation || this.unitBuffAnimation;
         if (animation) {

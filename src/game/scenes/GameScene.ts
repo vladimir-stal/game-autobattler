@@ -406,7 +406,6 @@ export class GameScene extends Phaser.Scene {
         mobs.forEach((mob) => {
             mob && generateUnitId(mob);
         });
-
         //
         /// LOAD UNIT ANIMATIONS
         this.battlePanel.showLoading();
@@ -420,7 +419,7 @@ export class GameScene extends Phaser.Scene {
         //}, 1000);
     }
 
-    changeToBossDuelPhase(mobs: TUnits) {
+    async changeToBossDuelPhase(mobs: TUnits) {
         this.phase = "BOSS_DUEL";
         this.topPanel.changeToDuelPhase();
         this.roomSelectPanel.setVisible(false);
@@ -435,6 +434,11 @@ export class GameScene extends Phaser.Scene {
         mobs.forEach((mob) => {
             if (mob) generateUnitId(mob);
         });
+        //
+        /// LOAD UNIT ANIMATIONS
+        this.battlePanel.showLoading();
+        await this.loadDuelAnimations(units, mobs);
+        //
         this.battlePanel.show(units, mobs);
         this.battleController.start(this.battlePanel.playerUnits, this.battlePanel.enemyUnits, true, 0);
         setTimeout(() => {
@@ -529,9 +533,8 @@ export class GameScene extends Phaser.Scene {
                 }
             });
         });
-        if (skillsIds.length === 0) {
-            return;
+        if (skillsIds.length !== 0) {
+            await this.imageLoadController.loadBattleSkills(skillsIds);
         }
-        await this.imageLoadController.loadBattleSkills(skillsIds);
     }
 }

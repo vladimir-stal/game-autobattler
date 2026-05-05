@@ -362,6 +362,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             return { image: IMAGE_WITCH };
         case EHeroClass.ORACLE:
             return {
+                //size: 500,
                 distance: -10,
                 distanceEnemy: -60,
                 image: IMAGE_ORACLE,
@@ -426,7 +427,8 @@ export const getUnitImage = (unitId: string): IAnimations => {
     switch (id) {
         case "BOSSMINOTAUR":
             return {
-                size: 550,
+                //size: 550,
+                distance: -50,
                 distanceEnemy: -100,
                 image: IMAGE_BOSS_MINOTAUR,
                 animation: AnimationType.BOSS_MINOTAUR_IDLE,
@@ -507,9 +509,9 @@ export const getUnitImage = (unitId: string): IAnimations => {
         }
         case "PEASANT":
             return {
-                size: 270,
+                //size: 270,
                 distance: 5,
-                distanceEnemy: -50,
+                distanceEnemy: -60,
                 image: IMAGE_PEASANT_1,
                 idleBattleAnimation: AnimationType.MOB_PEASANT_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_PEASANT_ATTACK,

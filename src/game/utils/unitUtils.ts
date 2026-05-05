@@ -142,10 +142,6 @@ export const addAttributeToUnit = (unit: IUnit, attribute: THeroAttribute, value
     } else {
         unit.addedAttributes.push({ attr: attribute, value });
     }
-
-    // if (attribute === "basicMaxHp") {
-    //     unit.basicMaxHp += value;
-    // }
 };
 
 const addAttributesOnLevelUp = (unit: IUnit) => {

@@ -18,6 +18,7 @@ import {
     IMAGE_SKELETON_1,
     IMAGE_WOLF_1,
     IMAGE_WOLF_2,
+    loadBossMinotaurImages,
     loadGoblinBattleImages,
     loadGoblinIdleImages,
     loadGoblinMageBattleImages,
@@ -81,6 +82,7 @@ import {
     createWildEffectAnimations,
 } from "./animations/effectAnimations";
 import {
+    createBossMinotaurAnimations,
     createFireflyAnimations,
     createFireflyIdleAnimations,
     createGoblinAnimations,
@@ -104,7 +106,7 @@ import { loadBasicWildTotemImages } from "./load/totemsImagesLoad";
 import { createWildBasicTotemAnimations } from "./animations/totemAnimations";
 import { EHeroClass } from "../../types";
 import { createMcHeroBattleAnimations, createMcHeroIdleAnimations } from "./animations/mcHeroesAnimations";
-import { PEASANT_ID } from "../units/mobUnitConsts";
+import { BOSS_MINOTAUR_ID, PEASANT_ID } from "../units/mobUnitConsts";
 
 // UNITS
 
@@ -634,6 +636,18 @@ export async function loadUnitImagesForDuel(scene: Scene, unitId: string) {
             {
                 await loadWolf2BattleImages(scene);
                 createWolf2Animations(scene);
+                isMob = true;
+            }
+            break;
+        //
+        // BOSSES
+        //
+        case BOSS_MINOTAUR_ID:
+            {
+                console.log("minotaur start loading");
+                await loadBossMinotaurImages(scene);
+                console.log("minotaur loaded");
+                await createBossMinotaurAnimations(scene);
                 isMob = true;
             }
             break;

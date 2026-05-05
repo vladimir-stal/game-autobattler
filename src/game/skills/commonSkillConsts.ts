@@ -390,6 +390,7 @@ export const nextBAArea_2: IHeroSkillSet = {
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
             },
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.BUFF,
@@ -428,6 +429,7 @@ export const nextBAArea: IHeroSkillSet = {
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
             },
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.BUFF,
@@ -741,6 +743,7 @@ const venomHeartSkillSet = (duration: number, stacks: number): IHeroSkill[] => {
             buff: {
                 name: "Venom",
                 type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                statusType: EStatusType.POISON,
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.DURATION,
                 duration: duration, // next 2,4
@@ -753,6 +756,7 @@ const venomHeartSkillSet = (duration: number, stacks: number): IHeroSkill[] => {
             buff: {
                 name: "Venom",
                 type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                statusType: EStatusType.POISON,
                 targetType: ETargetType.SUMMON_CURRENT,
                 timeType: EBuffTimeType.DURATION,
                 duration: duration, // next 2,4

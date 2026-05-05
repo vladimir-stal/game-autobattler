@@ -42,6 +42,7 @@ export interface Ii18n {
         STRONGWOLF: string;
         PIRATE_1: string;
         PIRATE_2: string;
+        BOSS_MINOTAUR: string;
     };
     mobs: {
         level1: Record<string, string>;
@@ -292,8 +293,8 @@ export const i18n: Ii18n = {
             STATUS_POISON_APPLY_INCREASE: "STATUS_POISON_APPLY_INCREASE",
             SUMMON_INCREASE_DAMAGE: "SUMMON_INCREASE_DAMAGE",
             TOTEM_INCREASE_VALUE: "TOTEM_INCREASE_VALUE",
-            CAST_SKILL_X_ROUND: "Once per combat, applies effect at the\nend of round",
-            UNPACK_SKILL_IN_STASH: "",
+            CAST_SKILL_X_ROUND: "Once per combat, applies\neffect at the end of round",
+            UNPACK_SKILL_IN_STASH: "Move this item into stash\nto unpack a skill",
         },
         itemBonusType: { ATTRIBUTE: "ATTRIBUTE", ITEM_WEAPON_SLOT: "ITEM_WEAPON_SLOT" },
     },
@@ -363,6 +364,8 @@ export const i18n: Ii18n = {
         STRONGWOLF: "Strong wolf",
         PIRATE_1: "Pirate",
         PIRATE_2: "Pirate captain",
+        //
+        BOSS_MINOTAUR: "Minotaur",
     },
     mobs: MOBS_EN,
     totems: {

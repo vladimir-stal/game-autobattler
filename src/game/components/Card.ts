@@ -106,8 +106,6 @@ export class Card extends Phaser.GameObjects.Container implements ICardToMove {
         this.titleText.setVisible(false);
         this.rect.setVisible(false);
 
-        console.log("--> renderHeroCard", this.card.unit.name, this.card.unit.basicMaxHp);
-
         this.heroCard = new UnitCard(this.gameScene, 0, 0, this, this.card.unit, !this.onBuyPanel, !this.onBuyPanel, this.cardSlot);
         this.add(this.heroCard);
     }

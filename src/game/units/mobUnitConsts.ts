@@ -5,6 +5,7 @@ import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { mobNoSkill, peasantSkill, peasantsStronkSkill } from "../skills/mobSkills";
 
 export const PEASANT_ID = "PEASANT";
+export const BOSS_MINOTAUR_ID = "BOSSMINOTAUR";
 
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
@@ -53,7 +54,7 @@ export const peasantUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
     id: PEASANT_ID,
-    skills: [], //[mobNoSkill, peasantSkill, noBasicAttackSkill],
+    skills: [mobNoSkill, peasantSkill, noBasicAttackSkill],
     items: [],
     level: 1,
     exp: 0,

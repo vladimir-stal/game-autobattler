@@ -72,8 +72,8 @@ export function loadImagesMobs(scene: Scene) {
     scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.webp");
     scene.load.image(IMAGE_PEASANT_1, "assets/sprites/units/mobs/peasant/peasant.webp");
 
-    scene.load.image(IMAGE_WOLF_1, "assets/sprites/units/mobs/wolves/wolf_1.png");
-    scene.load.image(IMAGE_WOLF_2, "assets/sprites/units/mobs/wolves/wolf_2.png");
+    scene.load.image(IMAGE_WOLF_1, "assets/sprites/units/mobs/wolves/wolf_1.webp");
+    scene.load.image(IMAGE_WOLF_2, "assets/sprites/units/mobs/wolves/wolf_2.webp");
 
     // SKELETON_1 //////////////////////////////////////////////////////////////
 
@@ -81,27 +81,23 @@ export function loadImagesMobs(scene: Scene) {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
 
     // GOBLIN_1 //////////////////////////////////////////////////////////////
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
 
     // GOBLIN_2 //////////////////////////////////////////////////////////////
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -112,18 +108,15 @@ export function loadImagesMobs(scene: Scene) {
     });
 
     // GOBLIN_SHAMAN //////////////////////////////////////////////////////////////
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.png", {
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -134,13 +127,11 @@ export function loadImagesMobs(scene: Scene) {
     });
 
     // PEASANT //////////////////////////////////////////////////////////////
-    //WEBP
-    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -173,25 +164,21 @@ export function loadImagesMobs(scene: Scene) {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
 
     // SUMMON SHIELD KNIHGT
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, path + "summon_shield_knight/spirit_warrior_shield_buff_cut_400.png", {
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, path + "summon_shield_knight/spirit_warrior_shield_buff_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, path + "summon_shield_knight/spirit_warrior_shield_hurt_cut_400.png", {
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, path + "summon_shield_knight/spirit_warrior_shield_hurt_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -200,26 +187,22 @@ export function loadImagesMobs(scene: Scene) {
 
     // PIRATE 1
     //
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_1_ATTACK, path + "pirates/pirate_1/pirate_1_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_PIRATE_1_ATTACK, path + "pirates/pirate_1/pirate_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
     //
     // PIRATE 2
     //
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_2_ATTACK, path + "pirates/pirate_2/pirate_2_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_PIRATE_2_ATTACK, path + "pirates/pirate_2/pirate_2_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -228,36 +211,30 @@ export function loadImagesMobs(scene: Scene) {
 
     // WOLF 1
     //
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK, path + "wolves/wolf_1/wolf_1_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK, path + "wolves/wolf_1/wolf_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK_2, path + "wolves/wolf_1/wolf_1_attack_2_cut_400.png", {
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK_2, path + "wolves/wolf_1/wolf_1_attack_2_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
 
     // WOLF 2
     //
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.png", {
+    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK, path + "wolves/wolf_2/wolf_2_attack_cut_400.png", {
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK, path + "wolves/wolf_2/wolf_2_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK_2, path + "wolves/wolf_2/wolf_2_attack_2_cut_400.png", {
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK_2, path + "wolves/wolf_2/wolf_2_attack_2_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -266,27 +243,27 @@ export function loadImagesMobs(scene: Scene) {
 
     scene.load.image(IMAGE_BOSS_MINOTAUR, "assets/sprites/units/bosses/minotaur.webp");
 
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500.png", {
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500.webp", {
         frameWidth: 500,
         frameHeight: 500,
     });
 
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_cut_500.png", {
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_cut_500.webp", {
         frameWidth: 500,
         frameHeight: 500,
     });
 
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_cut_500.png", {
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_cut_500.webp", {
         frameWidth: 500,
         frameHeight: 500,
     });
 
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_cut_500.png", {
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_cut_500.webp", {
         frameWidth: 500,
         frameHeight: 500,
     });
 
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_cut_500.png", {
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_cut_500.webp", {
         frameWidth: 500,
         frameHeight: 500,
     });
@@ -305,8 +282,8 @@ export async function loadSummonWarriorImages(scene: Scene) {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_SUMMONKNIHGT_ATTACK, path + "summon_knight/knight_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -319,18 +296,18 @@ export async function loadSummonWarriorImages(scene: Scene) {
 
 // SUMMON SHIELD KNIHGT
 export async function loadSummonShieldWarriorImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE, path + "summon_shield_knight/spirit_warrior_shield_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, path + "summon_shield_knight/spirit_warrior_shield_buff_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_BUFF, path + "summon_shield_knight/spirit_warrior_shield_buff_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, path + "summon_shield_knight/spirit_warrior_shield_hurt_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_SUMMON_SHIELD_KNIHGT_HURT, path + "summon_shield_knight/spirit_warrior_shield_hurt_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -400,8 +377,8 @@ export async function loadSkeletonBattleImages(scene: Scene) {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.png", {
+
+    scene.load.spritesheet(IMAGE_SKELETON_ATTACK, "assets/sprites/units/mobs/skeleton_1/skeleton_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -429,13 +406,13 @@ export async function loadGoblinIdleImages(scene: Scene) {
 }
 //BATTLE
 export async function loadGoblinBattleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_GOBLIN_1_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_1/goblin_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.png", {
+
+    scene.load.spritesheet(IMAGE_GOBLIN_1_ATTACK, "assets/sprites/units/mobs/goblin_1/goblin_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -449,7 +426,7 @@ export async function loadGoblinBattleImages(scene: Scene) {
 // GOBLIN MAGE
 // IDLE
 export async function loadGoblinMageIdleImages(scene: Scene) {
-    //WEBP
+    //
     scene.load.image(IMAGE_GOBLIN_2, "assets/sprites/units/mobs/goblin_2/goblin_2.webp");
     //
     return new Promise((resolve) => {
@@ -459,8 +436,8 @@ export async function loadGoblinMageIdleImages(scene: Scene) {
 }
 // BATTLE
 export async function loadGoblinMageBattleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_GOBLIN_2_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_2/goblin_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -477,18 +454,18 @@ export async function loadGoblinMageBattleImages(scene: Scene) {
 
 // GOBLIN SHAMAN
 export async function loadGoblinShamanBattleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_BATTLE_IDLE, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.png", {
+
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_ATTACK, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.png", {
+
+    scene.load.spritesheet(IMAGE_GOBLIN_SHAMAN_SPELL, "assets/sprites/units/mobs/goblin_shaman/goblin_shaman_spell_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -517,15 +494,15 @@ export async function loadPeasantIdleImages(scene: Scene) {
 // BATTLE
 export async function loadPeasantBattleImages(scene: Scene) {
     console.log("loadPeasantBattleImages");
-    //WEBP
-    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_400.png", {
-        frameWidth: 400,
-        frameHeight: 400,
+    //
+    scene.load.spritesheet(IMAGE_PEASANT_BATTLE_IDLE, "assets/sprites/units/mobs/peasant/peasant_battle_idle_cut_350.png", {
+        frameWidth: 350,
+        frameHeight: 350,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_400.png", {
-        frameWidth: 400,
-        frameHeight: 400,
+    //
+    scene.load.spritesheet(IMAGE_PEASANT_ATTACK, "assets/sprites/units/mobs/peasant/peasant_attack_cut_350.png", {
+        frameWidth: 350,
+        frameHeight: 350,
     });
     //
     return new Promise((resolve) => {
@@ -537,8 +514,8 @@ export async function loadPeasantBattleImages(scene: Scene) {
 // PIRATE 1
 // IDLE
 export async function loadPirate1IdleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -550,13 +527,13 @@ export async function loadPirate1IdleImages(scene: Scene) {
 }
 // BATTLE
 export async function loadPirate1BattleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_PIRATE_1_BATTLE_IDLE, path + "pirates/pirate_1/pirate_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_1_ATTACK, path + "pirates/pirate_1/pirate_1_attack_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_PIRATE_1_ATTACK, path + "pirates/pirate_1/pirate_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -570,8 +547,8 @@ export async function loadPirate1BattleImages(scene: Scene) {
 // PIRATE 2
 // IDLE
 export async function loadPirate2IdleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -583,13 +560,13 @@ export async function loadPirate2IdleImages(scene: Scene) {
 }
 // BATTLE
 export async function loadPirate2BattleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_PIRATE_2_BATTLE_IDLE, path + "pirates/pirate_2/pirate_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_PIRATE_2_ATTACK, path + "pirates/pirate_2/pirate_2_attack_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_PIRATE_2_ATTACK, path + "pirates/pirate_2/pirate_2_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -603,8 +580,8 @@ export async function loadPirate2BattleImages(scene: Scene) {
 // WOLF 1
 // IDLE
 export async function loadWolf1IdleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -616,18 +593,18 @@ export async function loadWolf1IdleImages(scene: Scene) {
 }
 //BATTLE
 export async function loadWolf1BattleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_1_BATTLE_IDLE, path + "wolves/wolf_1/wolf_1_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK, path + "wolves/wolf_1/wolf_1_attack_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK, path + "wolves/wolf_1/wolf_1_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK_2, path + "wolves/wolf_1/wolf_1_attack_2_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_1_ATTACK_2, path + "wolves/wolf_1/wolf_1_attack_2_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -641,8 +618,8 @@ export async function loadWolf1BattleImages(scene: Scene) {
 // WOLF 2
 // IDLE
 export async function loadWolf2IdleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -654,18 +631,18 @@ export async function loadWolf2IdleImages(scene: Scene) {
 }
 // BATTLE
 export async function loadWolf2BattleImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_2_BATTLE_IDLE, path + "wolves/wolf_2/wolf_2_battle_idle_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK, path + "wolves/wolf_2/wolf_2_attack_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK, path + "wolves/wolf_2/wolf_2_attack_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
-    //WEBP
-    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK_2, path + "wolves/wolf_2/wolf_2_attack_2_cut_400.png", {
+    //
+    scene.load.spritesheet(IMAGE_WOLF_2_ATTACK_2, path + "wolves/wolf_2/wolf_2_attack_2_cut_400.webp", {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -678,34 +655,36 @@ export async function loadWolf2BattleImages(scene: Scene) {
 
 // BOSS MINOTAUR
 export async function loadBossMinotaurImages(scene: Scene) {
-    //WEBP
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-    //WEBP
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_cut_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-    //WEBP
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_cut_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-    //WEBP
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_cut_500.png", {
-        frameWidth: 500,
-        frameHeight: 500,
-    });
-    //WEBP
-    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_cut_500.png", {
+    //
+    console.log(">>> loadBossMinotaurImages");
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_IDLE, "assets/sprites/units/bosses/boss_minotuar_idle_500.webp", {
         frameWidth: 500,
         frameHeight: 500,
     });
     //
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_ATTACK, "assets/sprites/units/bosses/boss_minotuar_attack_cut_500.webp", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_STOMP, "assets/sprites/units/bosses/boss_minotuar_jump_cut_500.webp", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_SPELL, "assets/sprites/units/bosses/boss_minotuar_spell_cut_500.webp", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //
+    scene.load.spritesheet(IMAGE_BOSS_MINOTAUR_HURT, "assets/sprites/units/bosses/boss_minotuar_hurt_cut_500.webp", {
+        frameWidth: 500,
+        frameHeight: 500,
+    });
+    //
+    scene.load.start();
     return new Promise((resolve) => {
-        scene.load.once(COMPLETE, resolve);
-        scene.load.start();
+        scene.load.on(COMPLETE, resolve);
+        //scene.load.start();
     });
 }
