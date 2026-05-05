@@ -445,6 +445,9 @@ export const getMainUnitId = (unitId: string): string => {
             return "SHIELDWARRIORSUMMON";
         case "FIREFLY":
             return "FIREFLYSUMMON";
+        case "SKELETONMAGE":
+        case "SKELETONWARRIOR":
+            return "SKELETON";
     }
     return unitId;
 };

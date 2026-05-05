@@ -151,21 +151,21 @@ export const mobsLvl1: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: scrollOfSkill(regularWolfSkill), exp: 1 },
         ],
     },
-    {
-        name: i18n.mobs.level1.pirate,
-        level: 1,
-        description: "Brave pirate from the deepest ocean",
-        units: [pirate1Unit, null, null, null],
-        rewards: [
-            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            { type: IMobRewardType.GOLD, value: 1, exp: 1 },
-            //{ type: IMobRewardType.ITEM, item: basic_pants, exp: 1 },
-            //{ type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 1 },
-        ],
-    },
+    // {
+    //     name: i18n.mobs.level1.pirate,
+    //     level: 1,
+    //     description: "Brave pirate from the deepest ocean",
+    //     units: [pirate1Unit, null, null, null],
+    //     rewards: [
+    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+    //         { type: IMobRewardType.GOLD, value: 1, exp: 1 },
+    //         //{ type: IMobRewardType.ITEM, item: basic_pants, exp: 1 },
+    //         //{ type: IMobRewardType.ITEM, item: basic_ring_regen, exp: 1 },
+    //     ],
+    // },
 ];
 export const mobsLvl2: IMobsVariants[] = [
     {
@@ -262,7 +262,7 @@ export const mobsLvl2: IMobsVariants[] = [
         name: i18n.mobs.level2.pirates,
         level: 2,
         description: "Brave pirates from the deepest ocean",
-        units: [pirate1Unit, pirate1Unit, null],
+        units: [pirate1Unit, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },

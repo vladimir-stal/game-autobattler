@@ -276,12 +276,14 @@ export const getRooms = (
 
     let choiseRooms = choiseTypeRooms;
     switch (day) {
-        case 5: {
-            // on day 5 player can upgrade one item or skill to the next level
-            if (hour === 0) {
-                choiseRooms = [ERoomType.UPGRADE_SKILL_OR_ITEM];
+        case 5:
+            {
+                // on day 5 player can upgrade one item or skill to the next level
+                if (hour === 0) {
+                    choiseRooms = [ERoomType.UPGRADE_SKILL_OR_ITEM];
+                }
             }
-        }
+            break;
         case 6:
             {
                 if (hour === 0) {
@@ -701,15 +703,6 @@ export const getCards = (
                 isRerollAvailable = true;
                 hintTextType = ESelectCardHint.SELECT_SINGLE;
 
-                const skills = getAllClassesSkills(day).filter((skill) => !skill.isChained);
-                const randomSkills = getRandomArrayItems(skills, 3, true).map((skill) => {
-                    // const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
-                    // const enchancedSkill = { ...skill };
-                    // enchancedSkill[enchancedOption] = true;
-                    const enchancedSkill = { ...skill, isChained: true };
-                    return enchancedSkill;
-                });
-
                 // add skill to fit the player current hero
                 // get hero classes of heroes player currently has
                 const existingHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
@@ -719,10 +712,25 @@ export const getCards = (
                     return heroClasses;
                 }, [] as EHeroClass[]);
                 //
-                if (existingHeroClasses.length !== 0) {
-                    const skill = getRandomArrayItem(getHeroClassesSkills(existingHeroClasses, day));
-                    randomSkills.push({ ...skill, isChained: true });
-                }
+                //if (existingHeroClasses.length !== 0) {
+                const existingHeroSkill = getRandomArrayItem(getHeroClassesSkills(existingHeroClasses, day));
+
+                //}
+
+                const skills = getAllClassesSkills(day)
+                    .filter((skill) => !skill.isChained)
+                    .filter((skill) => skill.id !== existingHeroSkill.id);
+                const randomSkills = getRandomArrayItems(skills, 3, true).map((skill) => {
+                    // const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
+                    // const enchancedSkill = { ...skill };
+                    // enchancedSkill[enchancedOption] = true;
+                    const enchancedSkill = { ...skill, isChained: true };
+                    return enchancedSkill;
+                });
+
+                //if (existingHeroClasses.length !== 0) {
+                randomSkills.push({ ...existingHeroSkill, isChained: true });
+                //}
 
                 cards = randomSkills.map((skill) => {
                     return { skill, type: ECardType.SKILL, price: 0 };
@@ -812,7 +820,6 @@ export const getCards = (
             {
                 isSingleSelect = false;
                 isSelectRequired = false;
-                hintTextType = ESelectCardHint.SELECT_SINGLE;
 
                 const unit1 = copyUnit({ ...getRandomUnitForSell(day - 1) });
                 addMobItem(unit1);

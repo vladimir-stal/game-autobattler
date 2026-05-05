@@ -72,6 +72,7 @@ export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: numbe
             type: EHeroSkillType.SUMMON,
             summon: summon,
             condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+            //animation: AnimationType.NONE,
         },
     ];
 };
@@ -100,7 +101,7 @@ export const substituteSummonDescription = (skillset: IHeroSkillSet): string => 
                 if (sk.type === EHeroSkillType.SUMMON) return sk.summon;
                 else return sk.childSkill?.summon;
             });
-        console.log("Stats numbered",allSummons);
+        console.log("Stats numbered", allSummons);
         let descNew = desc;
         allSummons.forEach((summon, index) => {
             const atk = summon?.basicAttack || "0";

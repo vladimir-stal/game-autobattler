@@ -653,8 +653,9 @@ export enum EDebuffType {
     MARK_HUNTER = "MARK_HUNTER", // debuff hero with specific mark (HUNTER)
     MARK_PREDATOR = "MARK_PREDATOR", // debuff hero with specific mark (PREDATOR)
     MARK_BLADEDANCER = "MARK_BLADEDANCER", // debuff hero with specific mark (BLADEDANCER)
-    MAGIC_RESIST_DECREASE = "MAGIC_RESIST_DECREASE", // decrease hero magic resist
-    PHYSICAL_RESIST_DECREASE = "PHYSICAL_RESIST_DECREASE", // decrease hero physical resist
+    //MAGIC_RESIST_DECREASE = "MAGIC_RESIST_DECREASE", // decrease hero magic resist
+    //PHYSICAL_RESIST_DECREASE = "PHYSICAL_RESIST_DECREASE", // decrease hero physical resist
+    RESIST_DECREASE = "RESIST_DECREASE",
     DISABLE_SKILL = "DISABLE_SKILL", // enemy next skill is not performed
     BLIND = "BLIND", // enemy attacks have their target evasion chance +X
     MARK_WORTHY_FOE = "MARK_WORTHY_FOE",
