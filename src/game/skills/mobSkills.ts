@@ -711,7 +711,7 @@ export const peasantSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(15, 75, 3),
+    skills: peasantSkillset(10, 75, 3),
     //nextLevel: peasantSkill_2,
     image: IMAGE_SKILL_TEST,
 };
@@ -724,7 +724,7 @@ export const peasantSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(12, 60, 2),
+    skills: peasantSkillset(7, 60, 2),
     nextLevel: peasantSkill_3,
     image: IMAGE_SKILL_TEST,
 };
@@ -737,7 +737,7 @@ export const peasantSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(10, 50, 1),
+    skills: peasantSkillset(5, 50, 1),
     nextLevel: peasantSkill_2,
     image: IMAGE_SKILL_TEST,
 };

@@ -110,6 +110,7 @@ export const illusionistPassive: IPassiveSkill = {
         isHidden: true,
         cannotBeTargeted: true,
         appTrigger: {
+            allowCastFromDead: true,
             limitedRepeats: true,
             skillId: "Illusion",
             type: EAppTriggerType.DEATH,

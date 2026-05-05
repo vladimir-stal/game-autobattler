@@ -32,7 +32,7 @@ export const itemCoin3: IItem = {
     type: EItemType.COMMON,
     level: 3,
     priceLevel: 1, // calculated cost = (3+10)*2-1 = 25 ; sell cost = (25+1)/2 = 13
-    sellPrice: 8,
+    sellPrice: 11,
     heroClasses: [],
     bonuses: [],
     image: IMAGE_ITEM_COIN,
@@ -45,7 +45,7 @@ export const itemCoin2: IItem = {
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 1, // calculated cost = (2+3)*2-1 = 9 ; sell cost = (9+1)/2 = 5
-    sellPrice: 3,
+    sellPrice: 5,
     heroClasses: [],
     bonuses: [],
     image: IMAGE_ITEM_COIN,
@@ -59,7 +59,7 @@ export const itemCoin: IItem = {
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1, // calculated cost = (1+1)*2-1 = 3 ; sell cost = (3+1)/2 = 2
-    sellPrice: 1,
+    sellPrice: 2,
     heroClasses: [],
     bonuses: [],
     image: IMAGE_ITEM_COIN,

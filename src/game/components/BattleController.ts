@@ -276,6 +276,15 @@ export class BattleController {
     }
 
     performTriggerAction(bt: IBattleTrigger, at: IAppTrigger, bfodbf: IBuffOrDebuff) {
+        if (bt.originBattleUnit.hp<=0 && !at.allowCastFromDead) {
+            if (bfodbf.buff) {
+                removeBuff(bt.anchorTarget, bfodbf.buff, this.battleRecord);
+            } else {
+                removeDebuffSimple(bt.anchorTarget, bfodbf.debuff, this.battleRecord);
+            }
+            bt.type = EAppTriggerType.NONE;
+            return;
+        }
         console.log("-= Perform Trigger Action =-", bt, at, this.relevantTriggerUnitId);
         if (isTriggerReady(at)) {
             const triggerBattleAction: IBattleAction = {
@@ -451,6 +460,9 @@ export class BattleController {
      */
     executeAfterAction(unit: IBattleUnit, isPlayer1: boolean) {
         const { hpRegen, statuses, totem, debuffs, buffs } = unit;
+        if (unit.hp <= 0) {
+            return;
+        }
         // debuffs
         debuffs.forEach((debuff) => {
             if (eachTurnDebuffs.includes(debuff.type)) {

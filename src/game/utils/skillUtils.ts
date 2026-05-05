@@ -1,4 +1,4 @@
-import { ECardType, EHeroClass, EHeroClassType, IBattleUnit, IHeroSkill, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
+import { ECardType, EHeroClass, EHeroClassType, IBattleUnit, ICard, IHeroSkill, IHeroSkillSet, IUnit, THeroSkills } from "../../types";
 
 import { GameScene } from "../scenes/GameScene";
 import {
@@ -288,4 +288,17 @@ export const calculateSkillValue = (skill: IHeroSkill, caster: IBattleUnit): num
     const ppScaleValue = ppScale ? Math.floor((ppScale * caster.physicalPower) / 100) : 0;
     const percentFrom = valueFrom ? caster[valueFrom] : undefined;
     return calculateIncreaseValue(0, value || 0, valueType || "number", percentFrom) + mpScaleValue + ppScaleValue;
+};
+
+export const genShopSkillCards = (skills: IHeroSkillSet[], lastItemPriceUp: boolean = false): (ICard | null)[] => {
+    return skills.map((skill, index) => {
+                        if (!skill) {
+                            return null;
+                            //return { skill: {...mobNoSkill, name: "Oops! Something\nwent wrong"}, type: ECardType.SKILL, price: 0 }
+                        }
+                        const salePrice = Math.floor((getSkillPrice(skill.priceLevel) + 1) / 2);
+                        const price = index === 0 ? salePrice : getSkillPrice(skill.priceLevel, lastItemPriceUp && index === skills.length - 1 ? 1 : 0);
+                        return { skill, type: ECardType.SKILL, price: price };
+                    })
+                    .filter((card) => !!card?.skill);
 };

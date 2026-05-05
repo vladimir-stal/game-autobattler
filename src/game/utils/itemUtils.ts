@@ -579,7 +579,9 @@ export const genShopItemCards = (items: IItem[], lastItemPriceUp: boolean = fals
         if (!item) {
             return null;
         } else {
-            const price = getItemPrice(item, lastItemPriceUp && index === items.length - 1 ? 1 : 0);
+            const salePrice = item.sellPrice !== undefined ? item.sellPrice : Math.floor((getItemPrice(item) + 1) / 2);
+            // first item on sale
+            const price = index === 0 ? salePrice : getItemPrice(item, lastItemPriceUp && index === items.length - 1 ? 1 : 0);
             const shopItem = item.evolving ? createItemWoEvolve(item) : createItem(item);
             return { item: shopItem, type: ECardType.ITEM, price };
         }

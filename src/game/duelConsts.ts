@@ -12,6 +12,7 @@ import {
     basic_pants,
     basic_pants_2,
     basic_ring_damage,
+    basic_ring_regen,
 } from "./commonItemConsts";
 import {
     assasinHero,
@@ -34,17 +35,19 @@ import {
     zealotHero,
     inquisitorHero,
     bladedancerHero,
+    gladiatorHero,
+    doomsayerHero,
 } from "./mcHeroConsts";
 import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
-import { noBasicAttackSkill, phycisalAttackSkill, removeBuffSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
+import { heatUpSkill, noBasicAttackSkill, phycisalAttackSkill, phycisalAttackSkill_2, removeBuffSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
 import { magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
 import { buffNextBaXSelf } from "./skills/masterSkillConsts";
 import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf } from "./skills/orderSkillConsts";
-import { healFirst, healFirst_2, healSelf } from "./skills/priestSkillConsts";
+import { healFirst, healFirst_2, healLowHpSkill, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
-import { buffNextBa } from "./skills/warriorSkillConsts";
+import { buffNextBa, debuffWorthyFoe } from "./skills/warriorSkillConsts";
 import { attrDescArmor, totemAttackSkill, totemAttackSkill_2 } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
@@ -54,6 +57,7 @@ import {
     mace21,
     musical21,
     musical21_2,
+    scepter21,
     scepter22,
     shield22,
     shield22_2,
@@ -66,15 +70,16 @@ import {
     wand21_2,
 } from "./weaponItem2Consts";
 import { goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
-import { gloves_war2, hat21, jacket21 } from "./commonItemConsts2";
+import { gloves_war2, hat21, jacket21, jacket21_2 } from "./commonItemConsts2";
 import { strongWolfUnit } from "./units/wolfsMobUnits";
 import { minstrelSkill } from "./skills/mc/minstrelSkills";
-import { itemGoblinBoneDagger, itemPeasantPitchfork } from "./mobItemConsts";
-import { shield31, shield32 } from "./weaponItem3Consts";
+import { itemGoblinBoneDagger, itemPeasantPitchfork, regenMantle } from "./mobItemConsts";
+import { scepter31, shield31, shield32 } from "./weaponItem3Consts";
 import { buffSelfMPorPP } from "./skills/commonSkill3Consts";
 import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
 import { music5AddBuffTarget } from "./weaponItem5Consts";
+import { peasantSkill, skeletonPoisonedFlames } from "./skills/mobSkills";
 
 const addItem = (unit: IUnit, item: IItem) => {
     unit.items.push(item);
@@ -144,110 +149,148 @@ export const enemy1_test: TDuelEnemy = buildDuelEnemy([
 
 //////////////////////// ENEMY 2 //////////////////
 
-// 0
-
-const unit21 = createHero(wildHero);
-addItem(unit21, totem1);
-unit21.skills.push(totemAttackSkill);
-
-// 1
-
-const unit21_1 = { ...unit21 };
-unit21_1.basicCritChance += 1;
-
-// 2
-
-const unit21_2 = { ...unit21_1 };
-unit21_2.items = [...unit21_1.items];
-unit21_2.skills = [...unit21_1.skills];
-//levelUpUnit(unit21_2);
-
-const unit22_2 = createHero(darkHero);
-unit22_2.skills.push(magicAttackX3);
-
-// 3
-
-const unit21_3 = { ...unit21_2 };
-unit21_3.items = [...unit21_2.items];
-addItem(unit21_3, basic_hat);
-unit21_3.skills = [...unit21_2.skills];
-levelUpUnit(unit21_3);
-
-const unit22_3 = { ...unit22_2 };
-unit22_3.items = [...unit22_2.items];
-addItem(unit21_3, wand1);
-addItem(unit21_3, gloves_war2);
-unit22_3.skills = [...unit22_2.skills];
-levelUpUnit(unit22_3);
-
-// 4
-
-const unit21_4 = createHero(beastMasterHero);
-unit21_4.items = [...unit21_3.items];
-unit21_4.skills = unit21_4.skills.concat([...unit21_3.skills]);
-
-const unit22_4 = { ...unit22_3 };
-unit22_4.items = [wand21];
-unit22_4.skills = [...unit22_3.skills];
-levelUpUnit(unit22_4);
-
-const unit23_4 = createHero(wildHero);
-unit23_4.items = [wand1, gloves_war2];
-unit23_4.skills.push(magicAttack);
-
-// 5
-
-const unit21_5 = { ...unit21_4 };
-unit21_5.items = [...unit21_4.items];
-unit21_5.skills = [...unit21_4.skills];
-
-const unit22_5 = createHero(blackKnightHero);
-unit22_5.items = [...unit22_4.items];
-unit22_5.items.push(basic_hat);
-unit22_5.skills = unit22_5.skills.concat([...unit21_4.skills]);
-
-const unit23_5 = { ...unit23_4 };
-unit23_5.items = [gloves_war2, wand1_2];
-unit23_5.skills = [...unit23_4.skills];
-levelUpUnit(unit23_5);
-levelUpUnit(unit23_5);
-
-// 6
-
-const unit21_6 = { ...unit21_5 };
-unit21_6.items = [...unit21_5.items];
-unit21_6.skills = [...unit21_5.skills];
-levelUpUnit(unit21_6);
-
-const unit22_6 = { ...unit22_5 };
-unit22_6.items = [...unit22_5.items];
-unit22_6.items.push(basic_hat);
-unit22_6.items.push(basic_ring_damage);
-unit22_6.skills = [...unit22_5.skills];
-levelUpUnit(unit22_6);
-
-const unit23_6 = createHero(minstrelHero);
-unit23_6.items = [...unit23_5.items];
-unit23_6.skills = unit23_6.skills.concat([...unit23_5.skills, buffNextBaAll]);
-levelUpUnit(unit23_5);
-levelUpUnit(unit23_5);
-
-//
-
-/** Duel units for each day */
-export const enemy2: TDuelEnemy = {
-    0: [applyItems(unit21)],
-    1: [applyItems(unit21_1)],
-    2: [applyItems(unit21_2), applyItems(unit22_2)],
-    3: [applyItems(unit21_3), applyItems(unit22_3)],
-    4: [applyItems(unit21_4), applyItems(unit23_4), applyItems(unit22_4)],
-    5: [applyItems(unit21_5), applyItems(unit22_5), applyItems(unit23_5)],
-    6: [applyItems(unit21_6), applyItems(unit22_6), applyItems(unit23_6)],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-};
+export const enemy2: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    { 1: [{ unit: warriorHero }, { item: shield1 }, { item: basic_hat_2 }, { skill: buffNextBa }] },
+    // day 2
+    {
+        1: [{ unit: peasantUnit }, { item: basic_boots }],
+        2: [{ unit: priestHero }, { item: basic_ring_regen }, { item: basic_hat_2 }, { skill: healFirst }, { skill: healFirst_2 }],
+        3: [
+            { unit: warriorHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { item: shield1 },
+            { skill: buffNextBa },
+            { skill: peasantSkill },
+        ],
+    },
+    // day 3
+    {
+        1: [{ unit: peasantUnit }, { item: shield1 }],
+        2: [
+            { unit: priestHero },
+            { levelup: 1 },
+            { item: regenMantle },
+            { attribute: { a: "basicArmor", v: 2 } },
+            { item: basic_hat_2 },
+            { skill: healLowHpSkill, chained: true },
+            { skill: healFirst_2 },
+        ],
+        3: [
+            { unit: warriorHero },
+            { levelup: 2 },
+            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { item: sword1 },
+            { item: gloves_war2 },
+            { skill: peasantSkill },
+            { skill: debuffWorthyFoe },
+        ],
+    },
+    // day 4
+    {
+        1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 1 }],
+        2: [
+            { unit: priestHero },
+            { levelup: 2 },
+            { attribute: { a: "basicHpRegen", v: 1 } },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { item: regenMantle },
+            { attribute: { a: "basicArmor", v: 2 } },
+            { item: basic_hat_2 },
+            { skill: healLowHpSkill, chained: true },
+            { skill: healFirst_2 },
+        ],
+        3: [
+            { unit: gladiatorHero },
+            //{ levelup: 2 },
+            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 4 } },
+            { item: sword1 },
+            { item: sword1 },
+            { item: gloves_war2 },
+            { item: basic_ring_regen },
+            { skill: peasantSkill },
+            { skill: debuffWorthyFoe },
+        ],
+        4: [{ unit: bardHero }, { item: musical21 }, { item: jacket21 }, { skill: buffNextBaAll }],
+    },
+    // day 5
+    {
+        1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 1 }],
+        2: [
+            { unit: monkHero },
+            //{ levelup: 2 },
+            { attribute: { a: "basicHpRegen", v: 1 } },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { item: regenMantle },
+            { attribute: { a: "basicArmor", v: 2 } },
+            { item: basic_hat_2 },
+            { item: scepter21 },
+            { skill: healLowHpSkill, chained: true },
+            { skill: healFirst_2 },
+            { skill: heatUpSkill },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        3: [
+            { unit: gladiatorHero },
+            //{ levelup: 2 },
+            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attribute: { a: "basicPhysicalPower", v: 2 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 4 } },
+            { item: sword1 },
+            { item: sword1 },
+            { item: gloves_war2 },
+            { item: basic_ring_regen },
+            { skill: peasantSkill },
+            { skill: phycisalAttackSkill },
+            { skill: debuffWorthyFoe },
+        ],
+        4: [{ unit: bardHero }, { levelup: 1 }, { item: musical21 }, { item: jacket21 }, { skill: buffNextBaAll }, { skill: buffNextBaAll }],
+    },
+    // day 6
+    {
+        1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 2 }],
+        2: [
+            { unit: monkHero },
+            //{ levelup: 2 },
+            { attribute: { a: "basicHpRegen", v: 1 } },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attribute: { a: "basicArmor", v: 6 } },
+            { item: jacket21_2 },
+            { attribute: { a: "basicArmor", v: 2 } },
+            { item: basic_hat_2 },
+            { item: scepter21 },
+            { item: scepter31 },
+            { skill: healLowHpSkill, chained: true },
+            { skill: totemAttackSkill, chained: true },
+            { skill: healFirst_2 },
+            { moveMcSkillToSlotIndex: 3 },
+        ],
+        3: [
+            { unit: gladiatorHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attribute: { a: "basicPhysicalPower", v: 2 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 4 } },
+            { item: sword1 },
+            { item: sword1 },
+            { item: gloves_war2 },
+            { item: basic_ring_regen },
+            { skill: phycisalAttackSkill_2, chained: true },
+            { skill: peasantSkill },
+            { skill: debuffWorthyFoe },
+        ],
+        4: [{ unit: doomsayerHero }, { item: musical21 }, { item: regenMantle }, { skill: skeletonPoisonedFlames }, { skill: buffNextBaAll_2 }],
+    },
+]);
 
 //////////////////////// ENEMY 3 //////////////////
 
