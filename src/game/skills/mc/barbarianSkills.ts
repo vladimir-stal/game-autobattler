@@ -102,13 +102,13 @@ export const barbarianSkill: IHeroSkillSet = {
 };
 
 export const barbarianPassive: IPassiveSkill = {
-    desc: "Every 2nd incoming basic\nattack increase regen by 2",
+    desc: "Every incoming basic\nattack increase regen by 1\n(max +20)",
     preBattleBuff: {
         name: "Passive",
         targetType: ETargetType.SELF,
         timeType: EBuffTimeType.DUEL,
         type: EBuffType.BATTLE_TRIGGER,
-        value: 10,
+        value: 20,
         valueType: "number",
         cannotBeTargeted: true,
         isHidden: true,
@@ -116,14 +116,13 @@ export const barbarianPassive: IPassiveSkill = {
             limitedRepeats: true,
             skillId: "Undying rage",
             type: EAppTriggerType.TAKE_ATTACK,
-            targetNumber: 2,
             targetCheck: ETargetType.SELF,
             skill: [
                 {
                     type: EHeroSkillType.BUFF_INCREASE_VALUE,
                     targetType: ETargetType.SELF,
                     targetBuffId: "Undying",
-                    value: 2,
+                    value: 1,
                     valueType: "number"
                 },
                 {
@@ -135,7 +134,7 @@ export const barbarianPassive: IPassiveSkill = {
                         type: EBuffType.ATTRIBUTE_INCREASE,
                         timeType: EBuffTimeType.DURATION,
                         duration: 3,
-                        value: 2,
+                        value: 1,
                         valueType: "number",
                         attribute: "hpRegen",
                     }

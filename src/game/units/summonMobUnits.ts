@@ -50,7 +50,7 @@ export const warriorSummonMob_5: IUnit = {
 export const warriorSummonMob_3: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WARLOCK, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.SUMMON, EHeroClass.WARRIOR, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.HIGH_RADIATE_ENEMY,
     basicAttack: 5,

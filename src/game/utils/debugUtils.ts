@@ -25,7 +25,7 @@ import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
 import { skeletonPoisonedFlames } from "../skills/mobSkills";
 import { scrollOfSkill } from "../commonItemConsts3";
 
-export const debugHeroSelectRoom = true;
+export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
@@ -34,13 +34,14 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: forestSpiritHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: necromancerHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.UNIT, price: 0, unit: warriorSummonMob_3 },
+        { type: ECardType.UNIT, price: 0, unit: peasantUnit },
+        { type: ECardType.UNIT, price: 0, unit: peasantUnit },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },

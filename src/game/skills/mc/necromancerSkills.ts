@@ -15,13 +15,74 @@ const buffSummonRegen = (regen: number): IHeroSkill => {
     };
 };
 const skillSetSummonPositional = (summon_front: IUnit, summon_back: IUnit, atkPure: number, atkPercent: number, atkMpScale: number, hpPure: number, armorPure: number): IHeroSkill[] => {
-    const skset = skillsetSummon(summon_front,atkPure,atkPercent,atkMpScale,hpPure,armorPure);
+    const skset: IHeroSkill[] = [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "maxHp",
+            value: hpPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+            condition: ESkillCondition.HAS_SUMMON,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            value: hpPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+            condition: ESkillCondition.HAS_SUMMON,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "armor",
+            value: armorPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+            condition: ESkillCondition.HAS_SUMMON,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "attack",
+            value: atkPure,
+            valueType: "number",
+            targetType: ETargetType.SUMMON_CURRENT,
+            condition: ESkillCondition.HAS_SUMMON,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "+atk",
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "attack",
+                value: atkPercent,
+                valueType: "percent",
+                targetType: ETargetType.SUMMON_CURRENT,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                mpScale: atkMpScale,
+            },
+            condition: ESkillCondition.HAS_SUMMON,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            value: 1,
+            valueType: "number",
+            condition: ESkillCondition.ONE_OR_LESS_ALLY_IN_FRONT,
+        }
+    ];
     const infront:IHeroSkill = {
                 type: EHeroSkillType.REPEATING_SKILL,
                 value: 1,
                 valueType: "number",
-                condition: ESkillCondition.IN_FRONT_ROW,
-                childSkill: skset.pop(),
+                condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+                childSkill: {
+                    type: EHeroSkillType.SUMMON,
+                    summon: summon_front,
+                    condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+                },
                 targetType: ETargetType.SELF, // not used
                 animation: AnimationType.NONE,
             };
@@ -29,7 +90,7 @@ const skillSetSummonPositional = (summon_front: IUnit, summon_back: IUnit, atkPu
                 type: EHeroSkillType.REPEATING_SKILL,
                 value: 1,
                 valueType: "number",
-                condition: ESkillCondition.IN_BACK_ROW,
+                condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
                 childSkill: {
                     type: EHeroSkillType.SUMMON,
                     summon: summon_back,

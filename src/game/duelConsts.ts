@@ -41,25 +41,35 @@ import {
 } from "./mcHeroConsts";
 import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
-import { heatUpSkill, noBasicAttackSkill, phycisalAttackSkill, phycisalAttackSkill_2, removeBuffSkill, removeDebuffSkill } from "./skills/commonSkillConsts";
+import {
+    attackWithBleedSkill,
+    heatUpSkill,
+    noBasicAttackSkill,
+    phycisalAttackSkill,
+    phycisalAttackSkill_2,
+    removeBuffSkill,
+    removeDebuffSkill,
+} from "./skills/commonSkillConsts";
 import { concentrateThePoisonSkill, magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
-import { buffNextBaXSelf } from "./skills/masterSkillConsts";
+import { buffNextBaXSelf, riposteSkill_2 } from "./skills/masterSkillConsts";
 import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf, attrAttackSelf_2 } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2, healLowHpSkill, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
-import { buffNextBa, debuffWorthyFoe } from "./skills/warriorSkillConsts";
+import { buffNextBa, buffNextBa_2, buffNextBa_3, buffNextBaTimes_2, debuffWorthyFoe, mortalStrikeSkill } from "./skills/warriorSkillConsts";
 import { attrDescArmor, totemAttackSkill, totemAttackSkill_2 } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
 import {
     axe21,
     axe22,
+    dagger21,
     mace21,
     musical21,
     musical21_2,
     scepter21,
     scepter22,
+    shield21,
     shield22,
     shield22_2,
     staff22,
@@ -73,10 +83,10 @@ import {
 } from "./weaponItem2Consts";
 import { goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
 import { gloves_war2, hat21, jacket21, jacket21_2, ring_regen2, ring_regen2_2 } from "./commonItemConsts2";
-import { strongWolfUnit } from "./units/wolfsMobUnits";
+import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { minstrelSkill } from "./skills/mc/minstrelSkills";
 import { itemGoblinBoneDagger, itemPeasantPitchfork, regenMantle } from "./mobItemConsts";
-import { axe32, scepter31, shield31, shield32 } from "./weaponItem3Consts";
+import { axe32, dagger32, scepter31, shield31, shield32 } from "./weaponItem3Consts";
 import { buffSelfMPorPP, increaseMaxHpSkill } from "./skills/commonSkill3Consts";
 import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
@@ -560,113 +570,127 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
 
 //////////////////////// ENEMY 6 //////////////////
 
-// 0
-
-const unit61 = createHero(orderHero);
-addItem(unit61, shield1);
-unit61.skills.push(attrAttackSelf);
-
-// 1
-
-const unit61_1 = { ...unit61 };
-unit61_1.items = [...unit61.items, basic_exp_bag];
-unit61_1.skills = [...unit61.skills];
-
-// 2
-
-const unit61_2 = { ...unit61_1 };
-unit61_2.items = [...unit61_1.items];
-unit61_2.skills = [...unit61_1.skills];
-levelUpUnit(unit61_2);
-
-const unit62_2 = createHero(magicHero);
-unit62_2.items = [basic_ring_damage];
-unit62_2.skills = [magicAttack, magicAttack];
-
-const unit63_2 = { ...weakGoblinUnit };
-
-// 3
-
-const unit61_3 = { ...unit61_2 };
-unit61_3.items = [mace21, basic_boots];
-unit61_3.skills = [...unit61_2.skills];
-levelUpUnit(unit61_3);
-
-const unit62_3 = { ...unit62_2 };
-unit62_3.items = [staff1, basic_ring_damage];
-unit62_3.skills = [...unit62_2.skills];
-levelUpUnit(unit62_3);
-
-const unit63_3 = { ...weakGoblinUnit };
-
-// 4
-
-const unit61_4 = createHero(heraldHero);
-unit61_4.items = [mace21, shield1, basic_boots, basic_hat];
-unit61_4.skills = unit61_4.skills.concat([...unit61_3.skills, attrArmorSelf]);
-
-const unit62_4 = { ...unit62_3 };
-unit62_4.items = [...unit62_3.items];
-unit62_4.skills = [...unit62_3.skills];
-levelUpUnit(unit62_4);
-
-const unit63_4 = { ...weakGoblinUnit };
-
-const unit64_4 = createHero(darkHero);
-unit64_4.items = [basic_exp_bag];
-unit64_4.skills = [poisonRandom];
-
-// 5
-
-const unit61_5 = { ...unit61_4 };
-unit61_5.items = [mace21, shield22, basic_pants, basic_hat_2];
-unit61_5.skills = [...unit61_4.skills];
-levelUpUnit(unit61_5);
-
-const unit62_5 = createHero(druidHero);
-unit62_5.items = [basic_ring_damage, staff1];
-unit62_5.skills = unit62_5.skills.concat([...unit62_4.skills]);
-
-const unit63_5 = { ...weakGoblinUnit };
-
-const unit64_5 = { ...unit64_4 };
-unit64_5.items = [basic_exp_bag, totem1];
-unit64_5.skills = [...unit64_4.skills];
-
-// 6
-
-const unit61_6 = { ...unit61_5 };
-unit61_6.items = [...unit61_5.items];
-unit61_6.skills = [...unit61_4.skills];
-
-const unit62_6 = { ...unit62_5 };
-unit62_6.items = [...unit62_5.items];
-unit62_6.skills = [...unit62_5.skills];
-levelUpUnit(unit62_6);
-
-const unit64_6 = createHero(blackKnightHero);
-unit64_6.items = [...unit64_5.items, sword22_2];
-unit64_6.skills = unit64_6.skills.concat([...unit64_5.skills]);
-
-const unit63_6 = createHero(darkHero);
-unit63_6.items = [wand1];
-unit63_6.skills = [poisonRandom];
-
-/** Enemy 6 - Duel units for each day */
-export const enemy6: TDuelEnemy = {
-    0: [applyItems(unit61)],
-    1: [applyItems(unit61_1)],
-    2: [unit63_2, applyItems(unit61_2), applyItems(unit62_2)],
-    3: [unit63_3, applyItems(unit61_3), applyItems(unit62_3)],
-    4: [unit63_4, applyItems(unit61_4), applyItems(unit62_3), applyItems(unit64_4)],
-    5: [unit63_5, applyItems(unit61_5), applyItems(unit62_5), applyItems(unit64_5)],
-
-    6: [applyItems(unit61_6), applyItems(unit62_6), applyItems(unit64_6), applyItems(unit63_6)],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-};
+export const enemy6: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    {
+        1: [{ unit: masterHero }, { item: sword1 }, { item: basic_ring_regen }, { skill: buffNextBaXSelf }],
+    },
+    // day 2
+    {
+        1: [
+            { unit: masterHero },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attribute: { a: "basicMagicPower", v: 1 } },
+            { item: sword1 },
+            { item: basic_ring_regen },
+            { skill: buffNextBaXSelf },
+        ],
+        2: [{ unit: warriorHero }, { item: shield21 }, { item: basic_ring_damage }, { skill: buffNextBa }, { skill: buffNextBa }],
+        3: [{ unit: warriorSummonMob }],
+        4: [{ unit: goldGoblin1Unit }],
+    },
+    // day 3
+    {
+        1: [
+            { unit: masterHero },
+            { levelup: 2 },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attribute: { a: "basicArmor", v: 6 } },
+            { item: sword1 },
+            { item: basic_ring_regen },
+            { skill: buffNextBaXSelf },
+        ],
+        2: [{ unit: warriorHero }, { item: shield21 }, { item: ring_regen2 }, { skill: buffNextBa_2, chained: true }, { skill: buffNextBa_2, chained: true }],
+        3: [{ unit: warriorSummonMob }],
+        4: [{ unit: wolfUnit }],
+    },
+    // day 4
+    {
+        1: [
+            { unit: assasinHero },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attribute: { a: "basicMagicPower", v: 2 } },
+            { attribute: { a: "basicArmor", v: 9 } },
+            { attribute: { a: "basicCritChance", v: 10 } },
+            { item: axe32 },
+            { item: basic_ring_regen },
+            { skill: attackWithBleedSkill },
+            { skill: buffNextBaXSelf },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [
+            { unit: warriorHero },
+            { levelup: 2 },
+            { item: shield21 },
+            { item: ring_regen2 },
+            { skill: buffNextBa_2, chained: true },
+            { skill: buffNextBa_2, chained: true },
+        ],
+        3: [{ unit: wolfUnit }],
+        4: [{ unit: warriorSummonMob }, { attribute: { a: "basicMaxHp", v: 4 } }],
+    },
+    // day 5
+    {
+        1: [
+            { unit: assasinHero },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attribute: { a: "basicMagicPower", v: 2 } },
+            { attribute: { a: "basicArmor", v: 9 } },
+            { attribute: { a: "basicCritChance", v: 10 } },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { item: axe32 },
+            { item: basic_ring_regen },
+            { skill: attackWithBleedSkill },
+            { skill: buffNextBaXSelf },
+            { skill: riposteSkill_2 },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [
+            { unit: paladinHero },
+            { item: dagger32 },
+            { item: scepter31 },
+            { item: ring_regen2 },
+            { skill: buffNextBa_2, chained: true },
+            { skill: buffNextBa_2, chained: true },
+            { skill: buffNextBaTimes_2 },
+            { moveMcSkillToSlotIndex: 3},
+        ],
+        3: [{ unit: wolfUnit }],
+        4: [{ unit: warriorSummonMob }, {item: shield21}, { attribute: { a: "basicMaxHp", v: 4 } }],
+    },
+    // day 6
+    {
+        1: [
+            { unit: assasinHero }, {levelup: 1},
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attribute: { a: "basicMagicPower", v: 2 } },
+            { attribute: { a: "basicArmor", v: 9 } },
+            { attribute: { a: "basicCritChance", v: 10 } },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { item: axe32 },
+            { item: dagger21 },
+            { item: basic_ring_regen },
+            { skill: attackWithBleedSkill },
+            { skill: buffNextBaXSelf },
+            { skill: riposteSkill_2 },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [
+            { unit: paladinHero }, {levelup: 1},
+            { item: dagger32 },
+            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { item: scepter31 },
+            { item: ring_regen2 },
+            { skill: buffNextBa_3, chained: true },
+            { skill: mortalStrikeSkill, chained: true },
+            { skill: buffNextBaTimes_2 },
+            { moveMcSkillToSlotIndex: 3},
+        ],
+        3: [{ unit: wolfUnit }, { attribute: { a: "basicMaxHp", v: 4 } }],
+        4: [{ unit: warriorSummonMob }, {item: shield21}, { attribute: { a: "basicMaxHp", v: 4 } }],
+    },
+]);
 
 //////////////////////// ENEMY 7 //////////////////
 
@@ -894,7 +918,7 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
             { skill: concentrateThePoisonSkill, chained: true },
         ],
         3: [{ unit: warriorSummonMob_3 }],
-        4: [{ unit: skeletonWarriorUnit }, {item: totem22}],
+        4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
     },
     // day 6
     {
@@ -910,13 +934,13 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
             { item: basic_hat },
             { attribute: { a: "basicMaxHp", v: 4 } },
             { skill: attrAttackSelf_2 },
-            { skill: attrArmorSelf, chained: true},
+            { skill: attrArmorSelf, chained: true },
             { skill: increaseMaxHpSkill },
             { moveMcSkillToSlotIndex: 1 },
         ],
         2: [
             { unit: necromancerHero },
-            { levelup: 1},
+            { levelup: 1 },
             { attribute: { a: "basicMagicPower", v: 5 } },
             { item: totem1 },
             { item: wand22 },
@@ -927,7 +951,7 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
             { skill: concentrateThePoisonSkill, chained: true },
         ],
         3: [{ unit: warriorSummonMob_3 }],
-        4: [{ unit: skeletonWarriorUnit }, {item: totem22}],
+        4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
     },
 ]);
 

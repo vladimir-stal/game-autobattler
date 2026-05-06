@@ -50,6 +50,9 @@ import {
     goldGoblinBuff,
     peasantSkill,
     peasantsStronkSkill,
+    pirateCallTheCannons,
+    pirateDeadmansCurse,
+    pirateDragNDrown,
     skeletonArmorSelfAndLow,
     skeletonPoisonedFlames,
     skeletonUnholyLeap,
@@ -60,6 +63,7 @@ import {
 import { scrollOfSkill } from "./commonItemConsts3";
 import { regularWolfSkill } from "./skills/mobs/wolfMobSkills";
 import { bigWolfSummonSkill } from "./skills/mobs/bigWolfMobSkills";
+import { dagger21, dagger22 } from "./weaponItem2Consts";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -261,12 +265,14 @@ export const mobsLvl2: IMobsVariants[] = [
     {
         name: i18n.mobs.level2.pirates,
         level: 2,
-        description: "Brave pirates from the deepest ocean",
+        description: "Brave pirate from the deepest ocean",
         units: [pirate1Unit, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
             { type: IMobRewardType.GOLD, value: 2, exp: 2 },
             { type: IMobRewardType.GOLD, value: 3, exp: 2 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateDragNDrown), exp: 2 },
+            { type: IMobRewardType.UNIT, unit: pirate1Unit, exp: 1 },
         ],
     },
 ];
@@ -350,6 +356,22 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: scrollOfSkill(bigWolfSummonSkill), exp: 3 },
         ],
     },
+    {
+        name: i18n.mobs.level3.pirates,
+        level: 3,
+        description: "Brave pirates from the deepest ocean",
+        units: [pirate1Unit, pirate1Unit, pirate1Unit, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 1, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 2, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 3 },
+            { type: IMobRewardType.ITEM, item: itemCoin2, exp: 3 },
+            { type: IMobRewardType.ITEM, item: dagger21, exp: 3 },
+            { type: IMobRewardType.ITEM, item: dagger22, exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateDragNDrown), exp: 3 },
+            { type: IMobRewardType.UNIT, unit: pirate1Unit, exp: 3 },
+        ],
+    },
 ];
 
 export const mobsLvl4: IMobsVariants[] = [
@@ -424,6 +446,13 @@ export const mobsLvl4: IMobsVariants[] = [
         rewards: [
             { type: IMobRewardType.GOLD, value: 2, exp: 4 },
             { type: IMobRewardType.GOLD, value: 3, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 4, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 6, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 7, exp: 2 },
+            { type: IMobRewardType.GOLD, value: 8, exp: 1 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateCallTheCannons), exp: 3 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateDeadmansCurse), exp: 3 },
         ],
     },
     {
@@ -495,6 +524,25 @@ export const mobsLvl5: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinPocketSand), exp: 3 },
             { type: IMobRewardType.ITEM, item: scrollOfSkill(goblinShamanHpRegIncr), exp: 3 },
             { type: IMobRewardType.ITEM, item: scrollOfSkill(goldGoblinBuff), exp: 3 },
+        ],
+    },
+    {
+        name: i18n.mobs.level5.pirates,
+        level: 5,
+        description: "Pirate crew from the dippest ocean",
+        units: [pirate1Unit, pirate1Unit, pirate2Unit, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 4, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 6, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 7, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 8, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 9, exp: 3 },
+            { type: IMobRewardType.UNIT, unit: pirate1Unit, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: pirate2Unit, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateCallTheCannons), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateDeadmansCurse), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateDragNDrown), exp: 4 },
         ],
     },
 ];
@@ -578,10 +626,29 @@ export const mobsLvl6: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: scrollOfSkill(spiritTeamRevenge), exp: 4 },
         ],
     },
+    {
+        name: i18n.mobs.level6.pirates,
+        level: 6,
+        description: "Pirate crew from the dippest ocean",
+        units: [pirate1Unit, pirate1Unit, pirate2Unit, pirate2Unit],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 4, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 5, exp: 5 },
+            { type: IMobRewardType.GOLD, value: 6, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 7, exp: 4 },
+            { type: IMobRewardType.GOLD, value: 8, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 9, exp: 3 },
+            { type: IMobRewardType.UNIT, unit: pirate1Unit, exp: 4 },
+            { type: IMobRewardType.UNIT, unit: pirate2Unit, exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateCallTheCannons), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateDeadmansCurse), exp: 4 },
+            { type: IMobRewardType.ITEM, item: scrollOfSkill(pirateDragNDrown), exp: 4 },
+        ],
+    },
 ];
 
 export const unitsLvl1 = [peasantUnit, weakGoblinUnit, warriorSummonMob, fireflySummonMob];
-export const unitsLvl2 = [goblinUnit, shieldWarriorsSummonMob];
-export const unitsLvl3 = [goblinUnit, goldGoblin1Unit, skeletonUnit, wolfUnit, shieldWarriorsSummonMob];
-export const unitsLvl4 = [skeletonWarriorUnit, goldGoblin1Unit, warriorSummonMob_3, peasantUnit_4];
-export const unitsLvl5 = [skeletonWarriorUnit, skeletonMageUnit, strongWolfUnit, warriorSummonMob_5];
+export const unitsLvl2 = [goblinUnit, skeletonUnit, wolfUnit,];
+export const unitsLvl3 = [goldGoblin1Unit, shieldWarriorsSummonMob, pirate1Unit];
+export const unitsLvl4 = [skeletonWarriorUnit, warriorSummonMob_3, peasantUnit_4];
+export const unitsLvl5 = [skeletonMageUnit, strongWolfUnit, warriorSummonMob_5, pirate2Unit];

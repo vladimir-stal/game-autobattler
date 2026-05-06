@@ -655,40 +655,30 @@ const peasantSkillset = (hpBoost: number, ppScale: number, atkAndRegen: number):
     return [
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
-            targetType: ETargetType.ALL_ALLIES,
-            childSkill: {
-                type: EHeroSkillType.NONE,
-                condition: ESkillCondition.IN_FRONT_ROW,
-            }, // Calculate alive targets in front row
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.REPEATING_SKILL,
-            value: 1,
-            valueType: "number",
             targetType: ETargetType.SELF,
+            value: -1,
+            valueType: "number",
             animation: AnimationType.NONE,
-            condition: ESkillCondition.IN_BACK_ROW,
-            childSkill: {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                targetType: ETargetType.SELF,
-                attribute: "maxHp",
-                value: hpBoost,
-                valueType: "number",
-                condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
-                ppScale: ppScale,
-                animation: AnimationType.NONE,
-            }, // if in backrow position, but all frot row allies are dead - gain buff
         },
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
             targetType: ETargetType.ALL_ALLIES,
-            value: 50,
-            valueType: "percent",
+            childSkill: {
+                type: EHeroSkillType.NONE,
+                condition: ESkillCondition.NOT_BEFORE_COMBAT,
+            }, // Calculate alive allies -1
             animation: AnimationType.NONE,
-            condition: ESkillCondition.CUSTOM_NUMBER_NOT_ZERO,
-            // divide number of frontrow allies by 2
-            // if result is 0 then only one front row ally present (or zero)
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SELF,
+            attribute: "maxHp",
+            value: hpBoost,
+            valueType: "number",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            ppScale: ppScale,
+            animation: AnimationType.NONE,
+            // if all allies are dead - gain buff
         },
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
@@ -696,7 +686,7 @@ const peasantSkillset = (hpBoost: number, ppScale: number, atkAndRegen: number):
             attribute: "attack",
             value: atkAndRegen,
             valueType: "number",
-            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            condition: ESkillCondition.ONE_OR_LESS_ALLY_IN_FRONT,
             animation: AnimationType.NONE,
         },
         {
@@ -705,14 +695,14 @@ const peasantSkillset = (hpBoost: number, ppScale: number, atkAndRegen: number):
             attribute: "hpRegen",
             value: atkAndRegen,
             valueType: "number",
-            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            condition: ESkillCondition.ONE_OR_LESS_ALLY_IN_FRONT,
         },
     ];
 };
 export const peasantSkill_3: IHeroSkillSet = {
     id: "peasantSkill",
     name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [10+75%xPP]\nIf there's one or less\nalive frontrow allies\nget +[3] attack and regen",
+    desc: "If all allies are\ndead, increase Hp by [10+75%xPP]\nIf there's one or less\nallies in front\nget +[3] attack and regen",
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 3,
     priceLevel: 2,
@@ -725,7 +715,7 @@ export const peasantSkill_3: IHeroSkillSet = {
 export const peasantSkill_2: IHeroSkillSet = {
     id: "peasantSkill",
     name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [7+60%xPP]\nIf there's one or less\nalive frontrow allies\nget +[2] attack and regen",
+    desc: "If all allies are\ndead, increase Hp by [7+60%xPP]\nIf there's one or less\nallies in front\nget +[2] attack and regen",
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 2,
     priceLevel: 2,
@@ -738,7 +728,7 @@ export const peasantSkill_2: IHeroSkillSet = {
 export const peasantSkill: IHeroSkillSet = {
     id: "peasantSkill",
     name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [5+50%xPP]\nIf there's one or less\nalive frontrow allies\nget +[1] attack and regen",
+    desc: "If all allies are\ndead, increase Hp by [5+50%xPP]\nIf there's one or less\nallies in front\nget +[1] attack and regen",
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 1,
     priceLevel: 2,
@@ -753,72 +743,45 @@ const peasantStronkSkillset = (critAndHpBoost: number, atk: number, ppScale: num
     return [
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
-            targetType: ETargetType.ALL_ALLIES,
-            childSkill: {
-                type: EHeroSkillType.NONE,
-                condition: ESkillCondition.IN_BACK_ROW,
-            }, // Calculate alive targets in front row
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.REPEATING_SKILL,
-            value: 1,
-            valueType: "number",
             targetType: ETargetType.SELF,
-            animation: AnimationType.NONE,
-            condition: ESkillCondition.IN_FRONT_ROW,
-            childSkill: {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                targetType: ETargetType.ALLY_BEHIND,
-                attribute: "critChance",
-                value: critAndHpBoost,
-                valueType: "number",
-                condition: ESkillCondition.CUSTOM_NUMBER_NOT_ZERO,
-                animation: AnimationType.NONE,
-            }, // if in frontrow position, and have backrow allies - gain buff
-        },
-        {
-            type: EHeroSkillType.REPEATING_SKILL,
-            value: 1,
+            value: -1,
             valueType: "number",
-            targetType: ETargetType.SELF,
             animation: AnimationType.NONE,
-            condition: ESkillCondition.IN_FRONT_ROW,
-            childSkill: {
-                type: EHeroSkillType.ATTACK,
-                targetType: ETargetType.FIRST_ENEMY,
-                value: atk,
-                valueType: "number",
-                ppScale: ppScale,
-                condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
-                animation: AnimationType.UNIT_ATTACK,
-            }, // if in frontrow position, and have no backrow allies - do attack
         },
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
             targetType: ETargetType.ALL_ALLIES,
-            value: 50,
-            valueType: "percent",
+            childSkill: {
+                type: EHeroSkillType.NONE,
+                condition: ESkillCondition.NOT_BEFORE_COMBAT,
+            }, // Calculate alive allies -1
             animation: AnimationType.NONE,
-            condition: ESkillCondition.CUSTOM_NUMBER_NOT_ZERO,
-            // divide number of backrow allies by 2
-            // if result is 0 then only one backrow ally present (or zero)
         },
         {
-            type: EHeroSkillType.REPEATING_SKILL,
-            value: 1,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.ALLY_BEHIND,
+            attribute: "critChance",
+            value: critAndHpBoost,
             valueType: "number",
-            targetType: ETargetType.SELF,
+            condition: ESkillCondition.HAS_ALLY_BEHIND,
             animation: AnimationType.NONE,
-            condition: ESkillCondition.IN_BACK_ROW,
-            childSkill: {
-                type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                targetType: ETargetType.ALLY_IN_FRONT,
-                attribute: "maxHp",
-                value: critAndHpBoost,
-                valueType: "number",
-                condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
-            }, // if in backrow position, and is only backrow unit
+        },
+        {
+            type: EHeroSkillType.ATTACK,
+            targetType: ETargetType.FIRST_ENEMY,
+            value: atk,
+            valueType: "number",
+            ppScale: ppScale,
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            animation: AnimationType.UNIT_ATTACK,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.ALLY_IN_FRONT,
+            attribute: "maxHp",
+            value: critAndHpBoost,
+            valueType: "number",
+            condition: ESkillCondition.HAS_ALLY_IN_FRONT,
         },
     ];
 };
@@ -826,11 +789,7 @@ const peasantStronkSkillset = (critAndHpBoost: number, atk: number, ppScale: num
 export const peasantsStronkSkill_3: IHeroSkillSet = {
     id: "peasantsStronk",
     name: "Strong together",
-    desc:
-        "While in frontrow and\nbackrow allies are alive\n" +
-        "ally behind crit +[5]\nOtherwise strike [7+80%xPP]\n" +
-        "physical attack. While only\none in backrow, ally in front\n" +
-        "get +[5] Max Hp",
+    desc: "Ally behind get +[5] crit\nAlly in front get +[5] maxHp\n" + "Otherwise strike [7+80%xPP]\nphysical attack.",
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
     level: 3,
     priceLevel: 3,
@@ -842,11 +801,7 @@ export const peasantsStronkSkill_3: IHeroSkillSet = {
 export const peasantsStronkSkill_2: IHeroSkillSet = {
     id: "peasantsStronk",
     name: "Strong together",
-    desc:
-        "While in frontrow and\nbackrow allies are alive\n" +
-        "ally behind crit +[4]\nOtherwise strike [6+65%xPP]\n" +
-        "physical attack. While only\none in backrow, ally in front\n" +
-        "get +[4] Max Hp",
+    desc: "Ally behind get +[4] crit\nAlly in front get +[4] maxHp\n" + "Otherwise strike [6+65%xPP]\nphysical attack.",
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
     level: 2,
     priceLevel: 3,
@@ -859,11 +814,7 @@ export const peasantsStronkSkill_2: IHeroSkillSet = {
 export const peasantsStronkSkill: IHeroSkillSet = {
     id: "peasantsStronk",
     name: "Strong together",
-    desc:
-        "While in frontrow and\nbackrow allies are alive\n" +
-        "ally behind crit +[3]\nOtherwise strike [5+50%xPP]\n" +
-        "physical attack. While only\none in backrow, ally in front\n" +
-        "get +[3] Max Hp",
+    desc: "Ally behind get +[3] crit\nAlly in front get +[3] maxHp\n" + "Otherwise strike [5+50%xPP]\nphysical attack.",
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
     level: 1,
     priceLevel: 3,
@@ -1395,4 +1346,251 @@ export const spiritWarriorPassive: IPassiveSkill = {
             ],
         },
     },
+};
+
+// pirate skills
+const pirateDragNDrownSkillset = (atkReduce: number, ppmpReduce: number, duration: number): IHeroSkill[] => {
+    //~ debuff -atk -pp -mp
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Drag",
+                targetType: ETargetType.RANDOM_ENEMY,
+                timeType: EBuffTimeType.DURATION,
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                value: atkReduce,
+                valueType: "number",
+                attribute: "attack",
+                duration: duration,
+            },
+            //animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "and",
+                targetType: ETargetType.SAME_LAST_TARGET,
+                timeType: EBuffTimeType.DURATION,
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                value: ppmpReduce,
+                valueType: "number",
+                attribute: "physicalPower",
+                duration: duration,
+            },
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Drown",
+                targetType: ETargetType.SAME_LAST_TARGET,
+                timeType: EBuffTimeType.DURATION,
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                value: ppmpReduce,
+                valueType: "number",
+                attribute: "magicPower",
+                duration: duration,
+            },
+            animation: AnimationType.NONE,
+        },
+    ];
+};
+
+export const pirateDragNDrown_3: IHeroSkillSet = {
+    id: "pirateDragNDrown",
+    name: "Drag and drown",
+    desc: "Random enemy gets\n-[5] attack, -[7] PP & MP\nfor 2 turns",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.DARK],
+    isBasicAttack: true,
+    skills: pirateDragNDrownSkillset(5, 7, 2),
+    //nextLevel: pirateDragNDrown_2,
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const pirateDragNDrown_2: IHeroSkillSet = {
+    id: "pirateDragNDrown",
+    name: "Drag and drown",
+    desc: "Random enemy gets\n-[4] attack, -[5] PP & MP\nfor 2 turns",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.DARK],
+    isBasicAttack: true,
+    skills: pirateDragNDrownSkillset(4, 5, 2),
+    nextLevel: pirateDragNDrown_3,
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const pirateDragNDrown: IHeroSkillSet = {
+    id: "pirateDragNDrown",
+    name: "Drag and drown",
+    desc: "Random enemy gets\n-[3] attack, -[3] PP & MP\nfor 2 turns",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.DARK],
+    isBasicAttack: true,
+    skills: pirateDragNDrownSkillset(3, 3, 2),
+    nextLevel: pirateDragNDrown_2,
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+// pirate captain skills
+const pirateCallTheCannonsSkillset = (damage: number, burnNbleed: number): IHeroSkill[] => {
+    //~ AoE physical, bleed + fire
+    return [
+        {
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.PHYSICAL,
+            value: damage,
+            valueType: "number",
+            targetType: ETargetType.ALL_ENEMIES, // ?? one random enemy
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            status: EStatusType.BURN,
+            value: burnNbleed,
+            valueType: "number",
+            targetType: ETargetType.ALL_ENEMIES,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            status: EStatusType.BLEED,
+            value: burnNbleed,
+            valueType: "number",
+            targetType: ETargetType.ALL_ENEMIES,
+            animation: AnimationType.NONE,
+        },
+    ];
+};
+
+export const pirateCallTheCannons_3: IHeroSkillSet = {
+    id: "pirateCallTheCannons",
+    name: "Call cannons",
+    desc: "Deal [8] physical damage\nand apply [3] burn and\nbleed to all enemies",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: pirateCallTheCannonsSkillset(8, 3),
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const pirateCallTheCannons_2: IHeroSkillSet = {
+    id: "pirateCallTheCannons",
+    name: "Call cannons",
+    desc: "Deal [6] physical damage\nand apply [2] burn and\nbleed to all enemies",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: pirateCallTheCannonsSkillset(6, 2),
+    nextLevel: pirateCallTheCannons_3,
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const pirateCallTheCannons: IHeroSkillSet = {
+    id: "pirateCallTheCannons",
+    name: "Call cannons",
+    desc: "Deal [4] physical damage\nand apply [2] burn and\nbleed to all enemies",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD, EHeroClass.WARRIOR],
+    isBasicAttack: false,
+    skills: pirateCallTheCannonsSkillset(4, 2),
+    nextLevel: pirateCallTheCannons_2,
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+const pirateDeadmansCurseSkillset = (multiplier: number, ppmpScale: number): IHeroSkill[] => {
+    //~ per buffs number -> apply debuff
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALL_ENEMIES,
+            childSkill: {
+                type: EHeroSkillType.BUFF,
+            },
+            animation: AnimationType.NONE,
+        }, // count number of buffs in enemy team
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.RANDOM_ENEMY,
+            attribute: "customNumber",
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            ppScale: ppmpScale, // base 20%, each 5 power -> +1% blind
+            mpScale: ppmpScale,
+        }, // save value on target
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Deadman",
+                timeType: EBuffTimeType.DUEL,
+                targetType: ETargetType.SAME_LAST_TARGET,
+                type: EDebuffType.BLIND,
+                value: multiplier, // at 100% multiplier, 4 buffs -> 4% blind
+                valueType: "percent",
+                attribute: "customNumber", // read saved value on target
+            },
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "curse",
+                timeType: EBuffTimeType.DUEL,
+                targetType: ETargetType.SAME_LAST_TARGET,
+                type: EDebuffType.RESIST_DECREASE,
+                value: 1,
+                valueType: "number",
+            },
+        },
+    ];
+};
+
+export const pirateDeadmansCurse_3: IHeroSkillSet = {
+    id: "pirateDeadmansCurse",
+    name: "Deadmans curse",
+    desc: "Random enemy gets blind\nstacks x[2.0] number of\nbuffs in his team plus\n[40%xPP+40%xMP] and gets\n1 vulnerability for the\nrest of the duel",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD],
+    skills: pirateDeadmansCurseSkillset(200, 40),
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const pirateDeadmansCurse_2: IHeroSkillSet = {
+    id: "pirateDeadmansCurse",
+    name: "Deadmans curse",
+    desc: "Random enemy gets blind\nstacks x[1.5] number of\nbuffs in his team plus\n[30%xPP+30%xMP] and gets\n1 vulnerability for the\nrest of the duel",
+    level: 2,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD],
+    skills: pirateDeadmansCurseSkillset(150, 30),
+    nextLevel: pirateDeadmansCurse_3,
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
+};
+
+export const pirateDeadmansCurse: IHeroSkillSet = {
+    id: "pirateDeadmansCurse",
+    name: "Deadmans curse",
+    desc: "Random enemy gets blind\nstacks x[1.0] number of\nbuffs in his team plus\n[20%xPP+20%xMP] and gets\n1 vulnerability for the\nrest of the duel",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.BARD],
+    skills: pirateDeadmansCurseSkillset(100, 20),
+    nextLevel: pirateDeadmansCurse_2,
+    image: IMAGE_SKILL_TEST,
+    animationType: AnimationType.UNIT_ATTACK,
 };
