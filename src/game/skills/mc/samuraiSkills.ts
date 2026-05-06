@@ -71,6 +71,7 @@ export const samuraiPassive: IPassiveSkill = {
         isHidden: true,
         appTrigger: {
             limitedRepeats: false,
+            allowCastFromDead: true,
             skillId: "SUDOKU",
             type: EAppTriggerType.DEATH,
             //targetCheck: ETargetType.SELF,

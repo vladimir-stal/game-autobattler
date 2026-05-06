@@ -214,6 +214,7 @@ export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroA
     const { heroClassType, skills, unitType, items } = unitTemplate;
     const newSkills = unitType === EUnitType.UNIT || heroClassType === EHeroClassType.MULTI ? [...skills] : [];
     const newItems = unitType === EUnitType.HERO ? [] : [...items];
+    //console.log(">>> create unit",unitTemplate.id,unitTemplate)
     const unit: IUnit = { ...unitTemplate, id, skills: newSkills, items: newItems, addedAttributes: [] };
     // add random hero class skill to basic hero
     if (unit.unitType === EUnitType.HERO && unit.heroClassType === EHeroClassType.BASIC) {
@@ -223,6 +224,7 @@ export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroA
     if (addedAttributes && addedAttributes.length > 0) {
         addedAttributes.forEach(({ attr, value }) => {
             unit[attr] += value;
+            unit.addedAttributes.push({attr, value})
         });
     }
     // autolevel

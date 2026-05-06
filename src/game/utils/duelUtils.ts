@@ -1,4 +1,4 @@
-import { IUnit, ICard, TDuelCards, TDuelEnemy, EUnitType, IItem, EHeroClassType, ESelectCardHint } from "../../types";
+import { IUnit, ICard, TDuelCards, TDuelEnemy, EUnitType, IItem, EHeroClassType, ESelectCardHint, IHeroSkillSet } from "../../types";
 import { duelEnemies } from "../duelConsts";
 import { debugAlwaysOneEnemy, debugEnemy } from "./debugUtils";
 import { applyItemBonuses, createItem } from "./itemUtils";
@@ -43,7 +43,7 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
                 if (unitTemplate && unitTemplate.unitType === EUnitType.HERO) {
                     unit = createHero(unitTemplate);
                 } else if (unitTemplate && unitTemplate.unitType === EUnitType.UNIT) {
-                    unit = { ...unitTemplate };
+                    unit = { ...unitTemplate, items: [] };
                 }
                 if (unit) {
                     dc[unitSlot].forEach((v) => {
@@ -51,11 +51,28 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
                         if (!!v.item) {
                             addItem(unit, v.item);
                         } else if (!!v.skill) {
-                            unit.skills.push(v.skill);
+                            //if (v.chained) {
+                            unit.skills.push({ ...v.skill, isChained: v.chained });
+                            //} else {
+                            //    unit.skills.push(v.skill);
+                            //}
                         } else if (!!v.attribute) {
                             unit[v.attribute.a] += v.attribute.v;
                         } else if (!!v.levelup) {
                             for (let r = 0; r < v.levelup; r++) levelUpUnit(unit);
+                        } else if (!!v.moveMcSkillToSlotIndex) {
+                            const nonmc = unit.skills.filter((sk) => !!sk && sk.isMcSkill);
+                            const mcSkill = unit.skills.find(sk => sk.isMcSkill);
+                            unit.skills = [];
+                            nonmc.forEach((sk, idx) => {
+                                if (idx === v.moveMcSkillToSlotIndex) {
+                                    unit.skills.push(mcSkill);
+                                }
+                                unit.skills.push(sk);
+                            })
+                            if (unit.skills.length === v.moveMcSkillToSlotIndex) {
+                                unit.skills.push(mcSkill);
+                            }
                         }
                     });
                     result[day].push(applyItems(unit));

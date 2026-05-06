@@ -56,6 +56,7 @@ import {
 } from "./itemUtils";
 import { getMobs } from "./mobsUtils";
 import {
+    genShopSkillCards,
     getAllClassesSkills,
     getAllHoldingSkills,
     getHeroClassesSkills,
@@ -645,16 +646,7 @@ export const getCards = (
 
                 console.log("SKILLS_SELL skills", skills);
 
-                cards = skills
-                    .map((skill, index) => {
-                        if (!skill) {
-                            return null;
-                            //return { skill: {...mobNoSkill, name: "Oops! Something\nwent wrong"}, type: ECardType.SKILL, price: 0 }
-                        }
-                        const price = getSkillPrice(skill.priceLevel, holdingSkill && index === skills.length - 1 ? 1 : 0);
-                        return { skill, type: ECardType.SKILL, price: price };
-                    })
-                    .filter((card) => !!card?.skill);
+                cards = genShopSkillCards(skills,!!holdingSkill);
             }
             break;
         case ERoomType.SKILLS_SELL_MIXED_CLASSES:
@@ -663,9 +655,7 @@ export const getCards = (
 
                 const randomSkills = getRandomArrayItems(getMixedClassesSkills(day), 4, true);
 
-                cards = randomSkills.map((skill) => {
-                    return { skill, type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel) };
-                });
+                cards = genShopSkillCards(randomSkills,false);
             }
             break;
         case ERoomType.SKILLS_CLASS_SELL:
@@ -686,13 +676,7 @@ export const getCards = (
                     const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), num, true);
 
                     const allSkills = [...skills, topLevelSkill, holdingSkill];
-                    cards = allSkills.map((skill, index) => {
-                        if (!skill) {
-                            return null;
-                        }
-                        const price = getSkillPrice(skill.priceLevel, holdingSkill && index === allSkills.length - 1 ? 1 : 0);
-                        return { skill, type: ECardType.SKILL, price: price };
-                    });
+                    cards = genShopSkillCards(allSkills,!!holdingSkill);
                 }
             }
             break;
@@ -831,8 +815,9 @@ export const getCards = (
                 addMobItem(unit3);
 
                 const randomUnits = [unit1, unit2, unit3];
-                cards = randomUnits.map((unit) => {
-                    return { unit, type: ECardType.UNIT, price: getUnitCardPrice(unit, day, hour) };
+                cards = randomUnits.map((unit, index) => {
+                    const price = index === 0 ? Math.floor((getUnitCardPrice(unit, 24, 7) + 1) / 2) : getUnitCardPrice(unit, day, hour);
+                    return { unit, type: ECardType.UNIT, price };
                 });
             }
             break;

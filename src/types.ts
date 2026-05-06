@@ -1049,6 +1049,7 @@ export interface IAppTrigger {
     currentNumber?: number; // increase this every time trigger happens
     targetNumber?: number; // perform skill cast after currentNumber reach this number
     limitedRepeats: boolean;
+    allowCastFromDead?: boolean;
 }
 
 export interface IBattleTrigger {
@@ -1188,6 +1189,8 @@ export interface IMixedDuelCard {
     unit?: IUnit;
     item?: IItem;
     skill?: IHeroSkillSet;
+    chained?: boolean;
     attribute?: IAttrModify;
     levelup?: number;
+    moveMcSkillToSlotIndex?: number;
 }

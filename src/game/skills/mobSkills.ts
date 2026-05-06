@@ -712,12 +712,12 @@ const peasantSkillset = (hpBoost: number, ppScale: number, atkAndRegen: number):
 export const peasantSkill_3: IHeroSkillSet = {
     id: "peasantSkill",
     name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [15+75%xPP]\nIf there's one or less\nalive frontrow allies\nget +[3] attack and regen",
+    desc: "If frontrow allies are\ndead, increase Hp by [10+75%xPP]\nIf there's one or less\nalive frontrow allies\nget +[3] attack and regen",
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 3,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(15, 75, 3),
+    skills: peasantSkillset(10, 75, 3),
     //nextLevel: peasantSkill_2,
     image: IMAGE_SKILL_TEST,
 };
@@ -725,12 +725,12 @@ export const peasantSkill_3: IHeroSkillSet = {
 export const peasantSkill_2: IHeroSkillSet = {
     id: "peasantSkill",
     name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [12+60%xPP]\nIf there's one or less\nalive frontrow allies\nget +[2] attack and regen",
+    desc: "If frontrow allies are\ndead, increase Hp by [7+60%xPP]\nIf there's one or less\nalive frontrow allies\nget +[2] attack and regen",
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 2,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(12, 60, 2),
+    skills: peasantSkillset(7, 60, 2),
     nextLevel: peasantSkill_3,
     image: IMAGE_SKILL_TEST,
 };
@@ -738,12 +738,12 @@ export const peasantSkill_2: IHeroSkillSet = {
 export const peasantSkill: IHeroSkillSet = {
     id: "peasantSkill",
     name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [10+50%xPP]\nIf there's one or less\nalive frontrow allies\nget +[1] attack and regen",
+    desc: "If frontrow allies are\ndead, increase Hp by [5+50%xPP]\nIf there's one or less\nalive frontrow allies\nget +[1] attack and regen",
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 1,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(10, 50, 1),
+    skills: peasantSkillset(5, 50, 1),
     nextLevel: peasantSkill_2,
     image: IMAGE_SKILL_TEST,
 };
@@ -1059,6 +1059,7 @@ const spiritTeamFlurrySkillset = (ppScale: number): IHeroSkill[] => {
             type: EHeroSkillType.CALCULATE_NUMBER,
             targetType: ETargetType.SELF,
             value: -1,
+            valueType: "number",
             animation: AnimationType.NONE,
         }, // start with customNumber = -1
         {
