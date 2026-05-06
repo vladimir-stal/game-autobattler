@@ -70,7 +70,6 @@ export class UnitCard extends Phaser.GameObjects.Container {
 
         //const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position
         const { height } = this.gameScene.camera;
-        console.log("height >>> ", height);
         const btyp = height >= MIDDLE_HEIGHT ? -80 : height >= MIN_HEIGHT ? -50 : 0;
 
         const title = name + " " + level + "(" + exp + "/" + getUnitNextLevelExp(this.unit) + ")";
@@ -250,7 +249,6 @@ export class UnitCard extends Phaser.GameObjects.Container {
 
     refreshAfterResize() {
         const { height } = this.gameScene.camera;
-        console.log("height >>> ", height);
         const scale = height < MAX_HEIGHT ? height / MAX_HEIGHT : 1;
         this.imageObject.setScale(scale);
         this.imgHeight = this.imageObject.displayHeight;
@@ -271,5 +269,15 @@ export class UnitCard extends Phaser.GameObjects.Container {
     setUnit(unit: IUnit) {
         this.unit = unit;
         this.refresh();
+    }
+
+    // ANIMATIONS
+
+    playAddSkill() {
+        this.skillSlots[this.unit.skills.length - 1].playAddSkill();
+    }
+
+    playAddItem(index: number) {
+        this.itemSlots[index].playAddItem();
     }
 }

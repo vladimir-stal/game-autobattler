@@ -10,12 +10,15 @@ export class ImageLoadController {
     loadedBattleSkills: Record<string, boolean>; // ids of skill which battle animations spritesheets images are already loaded
     loadedBattleTotems: Record<string, boolean>; // ids of totems which battle animations spritesheets images are already loaded
 
+    loadedImages: Record<string, boolean>; // ids of all loaded images
+
     constructor(scene: GameScene) {
         this.gameScene = scene;
         this.loadedUnits = {};
         this.loadedBattleUnits = {};
         this.loadedBattleSkills = {};
         this.loadedBattleTotems = {};
+        this.loadedImages = {};
         //this.init();
     }
 
@@ -82,18 +85,18 @@ export class ImageLoadController {
             return;
         }
 
-        await loadUnitImagesForSelect(this.gameScene, initUnitId);
+        await loadUnitImagesForSelect(this.gameScene, initUnitId, this.loadedImages);
         this.loadedUnits[initUnitId] = true;
     }
 
     private async loadBattleUnit(unitId: string) {
         const initUnitId = getMainUnitId(unitId);
-
+        console.log("loadBattleUnit", unitId, initUnitId);
         if (this.loadedBattleUnits[initUnitId]) {
             return;
         }
 
-        await loadUnitImagesForDuel(this.gameScene, initUnitId);
+        await loadUnitImagesForDuel(this.gameScene, initUnitId, this.loadedImages);
         this.loadedBattleUnits[initUnitId] = true;
     }
 

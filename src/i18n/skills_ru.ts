@@ -267,9 +267,9 @@ export const SKILLS_RU = {
         },
         concentrateThePoison: {
             name: "Концентрат яда",
-            desc1: `[color=${colors.POISON}]Отравляет [50%xMP][/color] врага с наибольшим\n накоплением яда\nи наносит [color=${colors.MAGIC_ATTACK}]магический урон[/color]\nравный накоплению яда`,
-            desc2: `[color=${colors.POISON}]Отравляет [65%xMP][/color] врага с наибольшим\n накоплением яда\nи наносит [color=${colors.MAGIC_ATTACK}]магический урон[/color]\nравный накоплению яда`,
-            desc3: `[color=${colors.POISON}]Отравляет [75%xMP][/color] врага с наибольшим\n накоплением яда\nи наносит [color=${colors.MAGIC_ATTACK}]магический урон[/color]\nравный накоплению яда`,
+            desc1: `[color=${colors.POISON}]Отравляет [50%xMP][/color] врага\nс наибольшим ядом\nи наносит [color=${colors.MAGIC_ATTACK}]магический урон[/color]\nравный накоплению яда`,
+            desc2: `[color=${colors.POISON}]Отравляет [65%xMP][/color] врага\nс наибольшим ядом\nи наносит [color=${colors.MAGIC_ATTACK}]магический урон[/color]\nравный накоплению яда`,
+            desc3: `[color=${colors.POISON}]Отравляет [75%xMP][/color] врага\nс наибольшим ядом\nи наносит [color=${colors.MAGIC_ATTACK}]магический урон[/color]\nравный накоплению яда`,
         },
         debuffBaNextBaAll: {
             name: "Слабость",

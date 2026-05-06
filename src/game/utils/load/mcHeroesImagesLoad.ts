@@ -383,7 +383,7 @@ export function loadMcHeroesImages(scene: Scene) {
     //
 }
 
-export function loadMcHeroIdleImages(scene: Scene, mcHeroClass: EHeroClass) {
+export function loadMcHeroIdleImages(scene: Scene, mcHeroClass: EHeroClass, loadedImages: Record<string, boolean>) {
     switch (mcHeroClass) {
         case EHeroClass.JESTER:
             {
@@ -870,6 +870,16 @@ export function loadMcHeroBattleImages(scene: Scene, mcHeroClass: EHeroClass) {
                     frameWidth: 300,
                     frameHeight: 300,
                 });
+            }
+            break;
+        case EHeroClass.WITCH:
+            {
+                scene.load.image(IMAGE_WITCH, "assets/sprites/units/witch.png");
+            }
+            break;
+        case EHeroClass.ZEALOT:
+            {
+                scene.load.image(IMAGE_ZEALOT, "assets/sprites/units/zealot.png");
             }
             break;
     }

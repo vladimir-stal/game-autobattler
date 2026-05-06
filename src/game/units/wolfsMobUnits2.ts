@@ -2,6 +2,7 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../.
 import { i18n } from "../consts";
 import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
 import { mobNoSkill } from "../skills/mobSkills";
+import { WOLF_ID } from "./mobUnitConsts";
 
 export const wolfUnitSmol: IUnit = {
     unitType: EUnitType.UNIT,
@@ -19,7 +20,7 @@ export const wolfUnitSmol: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.WOLF,
-    id: "WOLF1",
+    id: WOLF_ID,
     skills: [mobNoSkill, regularWolfSkill],
     items: [],
     level: 1,

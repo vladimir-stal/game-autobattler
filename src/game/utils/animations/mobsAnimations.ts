@@ -30,6 +30,8 @@ import {
     IMAGE_PIRATE_2_BATTLE_IDLE,
     IMAGE_SKELETON_ATTACK,
     IMAGE_SKELETON_BATTLE_IDLE,
+    IMAGE_SKELETON_MAGE_ATTACK,
+    IMAGE_SKELETON_MAGE_BATTLE_IDLE,
     IMAGE_SUMMON_SHIELD_KNIHGT_BATTLE_IDLE,
     IMAGE_SUMMON_SHIELD_KNIHGT_BUFF,
     IMAGE_SUMMON_SHIELD_KNIHGT_HURT,
@@ -813,16 +815,34 @@ export function createFireflyAnimations(scene: Scene) {
 export function createSkeletonAnimations(scene: Scene) {
     //
     scene.anims.create({
-        key: AnimationType.MOB_SKELETON_BATTLE_IDLE,
-        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_BATTLE_IDLE, { start: 0, end: 99 }),
+        key: AnimationType.MOB_SKELETON_MAGE_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_MAGE_BATTLE_IDLE, { start: 0, end: 99 }),
         frameRate: 20,
         repeat: -1,
     });
 
     scene.anims.create({
-        key: AnimationType.MOB_SKELETON_ATTACK,
-        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_ATTACK, { start: 0, end: 25 }),
+        key: AnimationType.MOB_SKELETON_MAGE_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_MAGE_ATTACK, { start: 0, end: 99 }),
         frameRate: 40,
+    });
+}
+
+// SKELETON MAGE
+export function createSkeletonMageAnimations(scene: Scene) {
+    //
+    scene.anims.create({
+        key: AnimationType.MOB_SKELETON_MAGE_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_MAGE_BATTLE_IDLE, { start: 0, end: 87 }), //start: 11, end: 98
+        frameRate: 15,
+        repeat: -1,
+    });
+
+    scene.anims.create({
+        key: AnimationType.MOB_SKELETON_MAGE_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_MAGE_ATTACK, { start: 0, end: 43 }), //  start: 22, end: 65
+        frameRate: 30,
+        //repeat: -1,
     });
 }
 

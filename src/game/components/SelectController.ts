@@ -415,6 +415,7 @@ export class SelectController {
                     applyItemBonuses(card.item, unit, units);
 
                     items.push(card.item);
+                    // weapons go first, common items second
                     items.sort((aItem, bItem) => (bItem.weaponType ? 1 : 0) - (aItem.weaponType ? 1 : 0));
 
                     if (card.item.bonuses.find((bonus) => bonus.targetType === EItemTargetType.ALL_ALLIES)) {
@@ -422,6 +423,8 @@ export class SelectController {
                     } else {
                         targetCard.refresh();
                     }
+                    // animation
+                    targetCard.heroCard?.playAddItem(items.findIndex((item) => item.id === card.item?.id));
                 }
                 break;
             case ECardType.SKILL:
@@ -452,6 +455,8 @@ export class SelectController {
                     skills.push(card.skill);
 
                     targetCard.refresh();
+                    // animation
+                    targetCard.heroCard?.playAddSkill();
                 }
                 break;
             default: {

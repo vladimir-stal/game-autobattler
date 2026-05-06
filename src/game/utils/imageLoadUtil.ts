@@ -32,6 +32,8 @@ import {
     loadPirate2IdleImages,
     loadSkeletonBattleImages,
     loadSkeletonIdleImages,
+    loadSkeletonMageBattleImages,
+    loadSkeletonMageIdleImages,
     loadSummonFireflyIdleImages,
     loadSummonFireflyImages,
     loadSummonShieldWarriorIdleImages,
@@ -96,6 +98,7 @@ import {
     createPirate2Animations,
     createPirate2IdleAnimations,
     createSkeletonAnimations,
+    createSkeletonMageAnimations,
     createSpiritShieldWarriorAnimations,
     createSpiritShieldWarriorIdleAnimations,
     createSpiritWarriorAnimations,
@@ -109,7 +112,7 @@ import { loadBasicWildTotemImages } from "./load/totemsImagesLoad";
 import { createWildBasicTotemAnimations } from "./animations/totemAnimations";
 import { EHeroClass } from "../../types";
 import { createMcHeroBattleAnimations, createMcHeroIdleAnimations } from "./animations/mcHeroesAnimations";
-import { BOSS_MINOTAUR_ID, PEASANT_ID } from "../units/mobUnitConsts";
+import { BOSS_MINOTAUR_ID, PEASANT_ID, WOLF_ID } from "../units/mobUnitConsts";
 
 // UNITS
 
@@ -382,7 +385,7 @@ export function loadImages(scene: Scene) {
  * loads all spritesheet images for unit animations for select
  */
 
-export async function loadUnitImagesForSelect(scene: Scene, unitId: string) {
+export async function loadUnitImagesForSelect(scene: Scene, unitId: string, loadedImages: Record<string, boolean>) {
     console.log(">>> loadUnitImagesForSelect", unitId);
     // MOB UNIT
     let isMob = false;
@@ -391,71 +394,76 @@ export async function loadUnitImagesForSelect(scene: Scene, unitId: string) {
         case "GOBLINSHAMAN":
         case "GOLDGOBLIN1":
             {
-                await loadGoblinIdleImages(scene);
+                await loadGoblinIdleImages(scene, loadedImages);
                 isMob = true;
             }
             break;
         case "GOBLIN": {
-            await loadGoblinMageIdleImages(scene);
+            await loadGoblinMageIdleImages(scene, loadedImages);
             isMob = true;
         }
         case "PEASANT":
             {
-                await loadPeasantIdleImages(scene);
+                await loadPeasantIdleImages(scene, loadedImages);
                 isMob = true;
             }
             break;
         case "SKELETON":
         case "SKELETONWARRIOR":
-        case "SKELETONMAGE":
             {
-                await loadSkeletonIdleImages(scene);
+                await loadSkeletonIdleImages(scene, loadedImages);
                 isMob = true;
             }
             break;
+        case "SKELETONMAGE": {
+            console.log("load for select skeletonmage");
+            await loadSkeletonMageIdleImages(scene, loadedImages);
+            //createSkeletonMageAnimations(scene);
+            isMob = true;
+        }
         case "WOLF1":
             {
-                await loadWolf1IdleImages(scene);
+                await loadWolf1IdleImages(scene, loadedImages);
                 createWolf1IdleAnimations(scene);
                 isMob = true;
             }
             break;
         case "WOLF2":
             {
-                await loadWolf2IdleImages(scene);
+                await loadWolf2IdleImages(scene, loadedImages);
                 createWolf2IdleAnimations(scene);
                 isMob = true;
             }
             break;
         case "PIRATE1":
             {
-                await loadPirate1IdleImages(scene);
+                await loadPirate1IdleImages(scene, loadedImages);
                 createPirate1IdleAnimations(scene);
                 isMob = true;
             }
             break;
         case "PIRATE2":
             {
-                await loadPirate2IdleImages(scene);
+                await loadPirate2IdleImages(scene, loadedImages);
                 createPirate2IdleAnimations(scene);
                 isMob = true;
             }
             break;
         case "FIREFLYSUMMON":
             {
-                await loadSummonFireflyIdleImages(scene);
+                await loadSummonFireflyIdleImages(scene, loadedImages);
                 createFireflyIdleAnimations(scene);
             }
             break;
         case "WARRIORSUMMON":
             {
-                await loadSummonWarriorIdleImages(scene);
+                await loadSummonWarriorIdleImages(scene, loadedImages);
                 createFireflyIdleAnimations(scene);
             }
             break;
         case "SHIELDWARRIORSUMMON":
             {
-                await loadSummonShieldWarriorIdleImages(scene);
+                await loadSummonShieldWarriorIdleImages(scene, loadedImages);
                 createSpiritShieldWarriorIdleAnimations(scene);
             }
             break;
@@ -466,14 +474,14 @@ export async function loadUnitImagesForSelect(scene: Scene, unitId: string) {
     }
 
     // MC HERO
-    await loadMcHeroIdleImages(scene, unitId as EHeroClass);
+    await loadMcHeroIdleImages(scene, unitId as EHeroClass, loadedImages);
     createMcHeroIdleAnimations(scene, unitId as EHeroClass);
 }
 
 /**
  * loads all spritesheet images for unit animations in battle
  */
-export async function loadUnitImagesForDuel(scene: Scene, unitId: string) {
+export async function loadUnitImagesForDuel(scene: Scene, unitId: string, loadedImages: Record<string, boolean>) {
     console.log(">>>> loadUnitImagesForDuel", unitId);
     // case basic class hero
     let isBasicHero = false;
@@ -568,21 +576,21 @@ export async function loadUnitImagesForDuel(scene: Scene, unitId: string) {
         //
         case "FIREFLYSUMMON":
             {
-                await loadSummonFireflyImages(scene);
+                await loadSummonFireflyImages(scene, loadedImages);
                 createFireflyAnimations(scene);
                 isMob = true;
             }
             break;
         case "WARRIORSUMMON":
             {
-                await loadSummonWarriorImages(scene);
+                await loadSummonWarriorImages(scene, loadedImages);
                 createSpiritWarriorAnimations(scene);
                 isMob = true;
             }
             break;
         case "SHIELDWARRIORSUMMON":
             {
-                await loadSummonShieldWarriorImages(scene);
+                await loadSummonShieldWarriorImages(scene, loadedImages);
                 createSpiritShieldWarriorAnimations(scene);
                 isMob = true;
             }
@@ -592,66 +600,72 @@ export async function loadUnitImagesForDuel(scene: Scene, unitId: string) {
         //
         case "SKELETON":
         case "SKELETONWARRIOR":
+            {
+                const loadRequired = await loadSkeletonBattleImages(scene, loadedImages);
+                loadRequired && createSkeletonAnimations(scene);
+                isMob = true;
+            }
+            break;
         case "SKELETONMAGE":
             {
-                await loadSkeletonBattleImages(scene);
-                createSkeletonAnimations(scene);
+                await loadSkeletonMageBattleImages(scene, loadedImages);
+                createSkeletonMageAnimations(scene);
                 isMob = true;
             }
             break;
         case "WEAKGOBLIN":
         case "GOLDGOBLIN1":
             {
-                await loadGoblinBattleImages(scene);
+                await loadGoblinBattleImages(scene, loadedImages);
                 createGoblinAnimations(scene);
                 isMob = true;
             }
             break;
         case "GOBLIN":
             {
-                await loadGoblinMageBattleImages(scene);
+                await loadGoblinMageBattleImages(scene, loadedImages);
                 createGoblinMageAnimations(scene);
                 isMob = true;
             }
             break;
         case "GOBLINSHAMAN":
             {
-                await loadGoblinShamanBattleImages(scene);
+                await loadGoblinShamanBattleImages(scene, loadedImages);
                 createGoblinShamanAnimations(scene);
                 isMob = true;
             }
             break;
         case PEASANT_ID:
             {
-                await loadPeasantBattleImages(scene);
+                await loadPeasantBattleImages(scene, loadedImages);
                 createPeasantAnimations(scene);
                 isMob = true;
             }
             break;
         case "PIRATE1":
             {
-                await loadPirate1BattleImages(scene);
+                await loadPirate1BattleImages(scene, loadedImages);
                 createPirate1Animations(scene);
                 isMob = true;
             }
             break;
         case "PIRATE2":
             {
-                await loadPirate2BattleImages(scene);
+                await loadPirate2BattleImages(scene, loadedImages);
                 createPirate2Animations(scene);
                 isMob = true;
             }
             break;
         case "WOLF1":
             {
-                await loadWolf1BattleImages(scene);
+                await loadWolf1BattleImages(scene, loadedImages);
                 createWolf1Animations(scene);
                 isMob = true;
             }
             break;
         case "WOLF2":
             {
-                await loadWolf2BattleImages(scene);
+                await loadWolf2BattleImages(scene, loadedImages);
                 createWolf2Animations(scene);
                 isMob = true;
             }
@@ -662,7 +676,7 @@ export async function loadUnitImagesForDuel(scene: Scene, unitId: string) {
         case BOSS_MINOTAUR_ID:
             {
                 console.log("minotaur start loading");
-                await loadBossMinotaurImages(scene);
+                await loadBossMinotaurImages(scene, loadedImages);
                 console.log("minotaur loaded");
                 await createBossMinotaurAnimations(scene);
                 isMob = true;
@@ -706,6 +720,9 @@ export function getUnitIdsBySkill(skillId: string): string[] {
             break;
         case "radiantWallSkill":
             unitsIds.push("SHIELDWARRIORSUMMON");
+            break;
+        case "bigWolfSummon":
+            unitsIds.push(WOLF_ID);
             break;
     }
     return unitsIds;

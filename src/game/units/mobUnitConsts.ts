@@ -5,6 +5,8 @@ import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { mobNoSkill, peasantSkill, peasantsStronkSkill } from "../skills/mobSkills";
 
 export const PEASANT_ID = "PEASANT";
+export const WOLF_ID = "WOLF1";
+export const STRONG_WOLF_ID = "WOLF2";
 export const BOSS_MINOTAUR_ID = "BOSSMINOTAUR";
 
 export const peasantUnit_4: IUnit = {
