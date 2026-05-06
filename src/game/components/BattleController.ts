@@ -694,7 +694,6 @@ export class BattleController {
             skill,
             isStartBattle,
         };
-        this.battleRecord.push(attackRecord);
 
         let lastAliveTargetId: string | undefined = undefined;
         targets.forEach((target) => {
@@ -721,12 +720,18 @@ export class BattleController {
                 //return lastAliveTargetId || sameLastTargetId;
                 return;
             }
+            // triggers
+            triggerBattleTrigger(EAppTriggerType.TAKE_SKILL_ATTACK, this, finalTarget, unit.id);
+            if (unit.hp <= 0) {
+                return;
+            }
 
             this.dealDamage(unit, finalTarget, attackDamage, skill.attackType!, parentUnit, attackRecord);
             if (finalTarget.hp > 0) {
                 lastAliveTargetId = finalTarget.id;
             }
         });
+        this.battleRecord.push(attackRecord);
         if (isCrit) {
             triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastAliveTargetId);
         }
@@ -1827,7 +1832,6 @@ export class BattleController {
             isCrit,
             targets: [],
         };
-        this.battleRecord.push(attackRecord);
 
         const statusesOnAttack: Map<EStatusType, number> = new Map();
         unit.buffs.forEach((buff) => {
@@ -1946,6 +1950,7 @@ export class BattleController {
             this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
             this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
+        this.battleRecord.push(attackRecord);
         if (isCrit) {
             triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastTargetId);
         }

@@ -599,5 +599,11 @@ export const SKILLS_EN = {
             desc2: "Blind first enemy for\n[50+1.4xPP] (1 turn) and\nincrease own next basic\nattack by [2+75%xPP]",
             desc3: "Blind first enemy for\n[60+1.8xPP] (1 turn) and\nincrease own next basic\nattack by [2+PP]",
         },
+        goblinApplyShock: {
+            name: "Goblin shock",
+            desc1: "Apply [1] shock to the\nenemy with most shock or\na random enemy",
+            desc2: "Apply [2] shock to the\nenemy with most shock or\na random enemy",
+            desc3: "Apply [3] shock to the\nenemy with most shock or\na random enemy",
+        },
     },
 };

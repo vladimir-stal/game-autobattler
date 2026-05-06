@@ -4,7 +4,7 @@ import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summo
 import { jacket21_3 } from "../commonItemConsts2";
 import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
-import { barbarianHero, doomsayerHero, illusionistHero, mimicHero, necromancerHero, oracleHero, samuraiHero, witchHero } from "../mcHeroConsts";
+import { barbarianHero, doomsayerHero, forestSpiritHero, illusionistHero, mimicHero, necromancerHero, oracleHero, samuraiHero, witchHero } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { onlyBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
@@ -25,7 +25,7 @@ import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
 import { skeletonPoisonedFlames } from "../skills/mobSkills";
 import { scrollOfSkill } from "../commonItemConsts3";
 
-export const debugHeroSelectRoom = false;
+export const debugHeroSelectRoom = true;
 export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
@@ -34,7 +34,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: forestSpiritHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {

@@ -194,9 +194,9 @@ const goblinApplyShockSkillset = (stacks: number): IHeroSkill[] => {
 };
 
 export const goblinApplyShock_3: IHeroSkillSet = {
-    id: "applyShock",
-    name: i18n.skills.level2.applyShock.name,
-    desc: i18n.skills.level2.applyShock.desc3,
+    id: "goblinApplyShock",
+    name: i18n.skills.mobs.goblinApplyShock.name,
+    desc: i18n.skills.mobs.goblinApplyShock.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
@@ -207,9 +207,9 @@ export const goblinApplyShock_3: IHeroSkillSet = {
 };
 
 export const goblinApplyShock_2: IHeroSkillSet = {
-    id: "applyShock",
-    name: i18n.skills.level2.applyShock.name,
-    desc: i18n.skills.level2.applyShock.desc2,
+    id: "goblinApplyShock",
+    name: i18n.skills.mobs.goblinApplyShock.name,
+    desc: i18n.skills.mobs.goblinApplyShock.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
@@ -221,9 +221,9 @@ export const goblinApplyShock_2: IHeroSkillSet = {
 };
 
 export const goblinApplyShock: IHeroSkillSet = {
-    id: "applyShock",
-    name: i18n.skills.level2.applyShock.name,
-    desc: i18n.skills.level2.applyShock.desc1,
+    id: "goblinApplyShock",
+    name: i18n.skills.mobs.goblinApplyShock.name,
+    desc: i18n.skills.mobs.goblinApplyShock.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.MAGIC],
