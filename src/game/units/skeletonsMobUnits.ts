@@ -23,7 +23,7 @@ export const skeletonUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETON,
     id: "SKELETON",
-    skills: [mobNoSkill,skeletonUnholyLeap,noBasicAttackSkill],
+    skills: [mobNoSkill, skeletonUnholyLeap, noBasicAttackSkill],
     // cast no skill 1st round, cast unique skill 2nd round, then fast forward to make skill rotation 3 rounds instead of 4
     items: [],
     level: 2,
@@ -34,14 +34,14 @@ export const skeletonUnit: IUnit = {
         { item: basic_pants, probability: 12 }, // 10% ~ 10/0.9/0.89
         { item: basic_boots, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
         // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
-        { skill: skeletonUnholyLeap, probability: 16 }
+        { skill: skeletonUnholyLeap, probability: 16 },
     ],
 };
 
 export const skeletonWarriorUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.DARK, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 7,
@@ -55,7 +55,7 @@ export const skeletonWarriorUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONWARRIOR,
     id: "SKELETONWARRIOR",
-    skills: [noBasicAttackSkill,skeletonArmorSelfAndLow],
+    skills: [noBasicAttackSkill, skeletonArmorSelfAndLow],
     items: [],
     level: 3,
     exp: 0,
@@ -65,14 +65,14 @@ export const skeletonWarriorUnit: IUnit = {
         { item: totem1, probability: 12 }, // 10% ~ 10/0.9/0.89
         { item: basic_ring_damage, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
         // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
-        { skill: skeletonArmorSelfAndLow, probability: 16}, // ~10%
+        { skill: skeletonArmorSelfAndLow, probability: 16 }, // ~10%
     ],
 };
 
 export const skeletonMageUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.DARK, EHeroClass.MAGIC, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.DARK, EHeroClass.MOB],
     attackType: EHeroAttackType.MAGIC,
     attackTargetType: ETargetType.RANDOM_ENEMY,
     basicAttack: 8,
@@ -86,7 +86,7 @@ export const skeletonMageUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONMAGE,
     id: "SKELETONMAGE",
-    skills: [mobNoSkill,skeletonPoisonedFlames,noBasicAttackSkill],
+    skills: [mobNoSkill, skeletonPoisonedFlames, noBasicAttackSkill],
     items: [],
     level: 3,
     exp: 0,
@@ -96,6 +96,6 @@ export const skeletonMageUnit: IUnit = {
         { item: dagger1, probability: 12 }, // 10% ~ 10/0.9/0.89
         { item: basic_exp_bag, probability: 14 }, // 10% ~ 10/0.9/0.89/0.88
         // nothing ~ 100*0.90*0.89*0.88*0.86 = 60%
-        { skill: skeletonPoisonedFlames, probability: 16}, // ~10%
+        { skill: skeletonPoisonedFlames, probability: 16 }, // ~10%
     ],
 };

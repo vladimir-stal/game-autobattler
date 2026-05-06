@@ -646,7 +646,7 @@ export const getCards = (
 
                 console.log("SKILLS_SELL skills", skills);
 
-                cards = genShopSkillCards(skills,!!holdingSkill);
+                cards = genShopSkillCards(skills, !!holdingSkill);
             }
             break;
         case ERoomType.SKILLS_SELL_MIXED_CLASSES:
@@ -655,7 +655,7 @@ export const getCards = (
 
                 const randomSkills = getRandomArrayItems(getMixedClassesSkills(day), 4, true);
 
-                cards = genShopSkillCards(randomSkills,false);
+                cards = genShopSkillCards(randomSkills, false);
             }
             break;
         case ERoomType.SKILLS_CLASS_SELL:
@@ -676,7 +676,7 @@ export const getCards = (
                     const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), num, true);
 
                     const allSkills = [...skills, topLevelSkill, holdingSkill];
-                    cards = genShopSkillCards(allSkills,!!holdingSkill);
+                    cards = genShopSkillCards(allSkills, !!holdingSkill);
                 }
             }
             break;

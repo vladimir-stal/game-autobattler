@@ -279,7 +279,7 @@ export class BattleController {
         if (bt.originBattleUnit.hp <= 0 && !at.allowCastFromDead) {
             if (bfodbf.buff) {
                 removeBuff(bt.anchorTarget, bfodbf.buff, this.battleRecord);
-            } else {
+            } else if (bfodbf.debuff) {
                 removeDebuffSimple(bt.anchorTarget, bfodbf.debuff, this.battleRecord);
             }
             bt.type = EAppTriggerType.NONE;
@@ -1693,7 +1693,10 @@ export class BattleController {
         let lastTargetId;
         if (skill.childSkill) {
             targets.forEach((t) => {
-                if (skill.childSkill?.condition && (skill.childSkill.condition === ESkillCondition.NOT_BEFORE_COMBAT || checkSkillCondition(t, skill.childSkill.condition))) {
+                if (
+                    skill.childSkill?.condition &&
+                    (skill.childSkill.condition === ESkillCondition.NOT_BEFORE_COMBAT || checkSkillCondition(t, skill.childSkill.condition))
+                ) {
                     unit.customNumber++;
                     lastTargetId = t.id;
                 }

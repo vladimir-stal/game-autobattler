@@ -224,7 +224,7 @@ export const createUnit = (unitTemplate: IUnit, addedAttributes?: { attr: THeroA
     if (addedAttributes && addedAttributes.length > 0) {
         addedAttributes.forEach(({ attr, value }) => {
             unit[attr] += value;
-            unit.addedAttributes.push({attr, value})
+            unit.addedAttributes?.push({ attr, value });
         });
     }
     // autolevel
@@ -449,6 +449,8 @@ export const getMainUnitId = (unitId: string): string => {
             return "FIREFLYSUMMON";
         case "SKELETONWARRIOR":
             return "SKELETON";
+        case "GOLDGOBLIN1":
+            return "GOBLIN";
     }
     return unitId;
 };

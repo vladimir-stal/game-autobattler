@@ -21,13 +21,13 @@ export const weakGoblinUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN,
     id: "WEAKGOBLIN",
-    skills: [mobNoSkill,goblinPocketSand,noBasicAttackSkill],
+    skills: [mobNoSkill, goblinPocketSand, noBasicAttackSkill],
     items: [],
     level: 1,
     exp: 0,
     mobItems: [
         { item: itemCoin, probability: 40 },
-        { skill: goblinPocketSand, probability: 17} // ~10%
+        { skill: goblinPocketSand, probability: 17 }, // ~10%
     ],
 };
 
@@ -48,7 +48,7 @@ export const goblinUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOBLIN,
     id: "GOBLIN",
-    skills: [noBasicAttackSkill,goblinApplyShock],
+    skills: [noBasicAttackSkill, goblinApplyShock],
     items: [],
     level: 2,
     exp: 0,
@@ -57,14 +57,14 @@ export const goblinUnit: IUnit = {
         { item: itemGoblinBoneDagger, probability: 12 },
         { item: itemCoin2, probability: 14 },
         // 100*0.80*0.88*0.86 = 60% not to get anything
-        { skill: goblinApplyShock, probability: 16},
+        { skill: goblinApplyShock, probability: 16 },
     ],
 };
 
 export const goblinShamanUnit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.MAGIC, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY, //??? ETargetType.MARKED_ENEMY
     //basicAttackMarkType: EDebuffType.MARK_WORTHY_FOE,
@@ -88,7 +88,7 @@ export const goblinShamanUnit: IUnit = {
         { item: itemGoblinSilverCoin, probability: 17 },
         { item: itemGoblinBoneDagger, probability: 14 },
         // 100*0.85*0.83*0.86 = 60% not to get anything
-        { skill: goblinShamanHpRegIncr, probability: 16}
+        { skill: goblinShamanHpRegIncr, probability: 16 },
     ],
 };
 
@@ -179,7 +179,7 @@ export const cheeringGoblinUnit_skills: IUnit = {
 export const cheeringGoblinUnit_attacks: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.BARD, EHeroClass.WARRIOR, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.BARD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 2,

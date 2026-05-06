@@ -12,7 +12,7 @@ export const BOSS_MINOTAUR_ID = "BOSSMINOTAUR";
 export const peasantUnit_4: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.WILD, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.ORDER, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 5,
