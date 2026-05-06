@@ -1,4 +1,4 @@
-import { Input } from "phaser";
+import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { colors } from "../consts";
 import { ECardType, ICard, ICardToMove, IHeroSkill, IHeroSkillSet } from "../../types";
@@ -12,6 +12,8 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
     hint: HintPanel;
     onItemRemoved: () => void;
     parentUnitId: string;
+
+    animationRect: GameObjects.Rectangle;
 
     constructor(scene: GameScene, x: number, y: number, parentUnitId: string, skillSet: IHeroSkillSet | undefined, onItemRemoved: () => void) {
         super(scene, x, y);
@@ -30,7 +32,7 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
         }
 
         const { isMcSkill } = this.skillSet;
-        const simpleColor = 0x5b8dc5;
+        const simpleColor = 0x5b8dc5; //"#5b8dc5"
         const mcColor = 0x9966cc; //0x9933cc;
         const color = isMcSkill ? mcColor : simpleColor;
         const rect = this.scene.add.rectangle(0, 0, 30, 30, color).setOrigin(0, 0);
@@ -76,5 +78,31 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
         const hintText = this.skillSet ? this.skillSet.name + "\n" + this.skillSet.desc : "no skill";
         this.hint = new HintPanel(this.gameScene, 35, 0, hintText).setVisible(false);
         this.add(this.hint);
+        //
+        this.animationRect = this.scene.add.rectangle(15, 15, 50, 50, color, 0).setOrigin(0.5, 0.5).setVisible(false).setStrokeStyle(2, colors.WHITE_LIGHT);
+        this.add(this.animationRect);
+    }
+
+    // ANIMATIONS
+    playAddSkill() {
+        this.animationRect.setVisible(true);
+
+        this.gameScene.tweens.add({
+            targets: this.animationRect,
+            width: 30,
+            height: 30,
+            //strokeColor: 0x5b8dc5,
+            ease: "Bounce", // '"Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 200,
+            repeat: 0, // -1: infinity
+            yoyo: false,
+            onUpdate: () => {
+                // Required for some shape objects to redraw correctly during the tween
+                this.animationRect.setSize(this.animationRect.width, this.animationRect.height);
+            },
+            onComplete: () => {
+                this.animationRect.setVisible(false);
+            },
+        });
     }
 }

@@ -117,6 +117,7 @@ export const i18n: Ii18n = {
         GOLDGOBLIN1: "Гоблин торговец",
         PEASANT: "Крестьянин",
         WARRIORSUMMON: "Дух воина",
+        SHIELDWARRIORSUMMON: "Дух защитника",
         FIREFLY: "Светлячок",
         WOLF: "Волк",
         STRONGWOLF: "Сильный волк",

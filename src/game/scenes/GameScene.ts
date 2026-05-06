@@ -252,6 +252,7 @@ export class GameScene extends Phaser.Scene {
 
     cancelCardMove() {
         this.setIsCardMoveMode(false);
+        this.setIsCardBuyMode(false);
         this.isCardMoveAfterUpgrade = false;
         this.cardToMove = undefined;
     }

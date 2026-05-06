@@ -37,6 +37,7 @@ export interface Ii18n {
         GOLDGOBLIN1: string;
         PEASANT: string;
         WARRIORSUMMON: string;
+        SHIELDWARRIORSUMMON: string;
         FIREFLY: string;
         WOLF: string;
         STRONGWOLF: string;
@@ -359,6 +360,7 @@ export const i18n: Ii18n = {
         GOLDGOBLIN1: "Goblin merchant",
         PEASANT: "Peasant",
         WARRIORSUMMON: "Spirit warrior",
+        SHIELDWARRIORSUMMON: "Spirit defender",
         FIREFLY: "Firefly",
         WOLF: "Wolf",
         STRONGWOLF: "Strong wolf",

@@ -55,6 +55,7 @@ import {
     IMAGE_GOBLIN_2,
     IMAGE_PEASANT_1,
     IMAGE_SKELETON_1,
+    IMAGE_SKELETON_MAGE,
     IMAGE_SUMMONKNIHGT_BATTLE_IDLE,
     IMAGE_WOLF_1,
     IMAGE_WOLF_2,
@@ -62,7 +63,7 @@ import {
 import { IMAGE_ASSASSIN_IDLE, IMAGE_HUNTER, IMAGE_HUNTER_IDLE, IMAGE_NECROMANCER_IDLE } from "./load/mcHeroesImagesLoad";
 
 /**
- * @constant animation Unit idle animation
+ * @constant animation Unit idle animation in select phase
  * @constant attackAnimation Basic attack animation spritesheet
  * @constant healAnimation Using heal skill animation
  * @constant deadImage Animation unit defeated
@@ -575,13 +576,21 @@ export const getUnitImage = (unitId: string): IAnimations => {
             };
         case "SKELETON":
         case "SKELETONWARRIOR":
-        case "SKELETONMAGE":
             return {
                 distance: -40,
                 distanceEnemy: -20,
                 image: IMAGE_SKELETON_1,
                 idleBattleAnimation: AnimationType.MOB_SKELETON_BATTLE_IDLE,
                 attackAnimation: AnimationType.MOB_SKELETON_ATTACK,
+            };
+        case "SKELETONMAGE":
+            return {
+                distance: -10,
+                distanceEnemy: -70,
+                image: IMAGE_SKELETON_MAGE,
+                animation: AnimationType.MOB_SKELETON_MAGE_BATTLE_IDLE,
+                idleBattleAnimation: AnimationType.MOB_SKELETON_MAGE_BATTLE_IDLE,
+                attackAnimation: AnimationType.MOB_SKELETON_MAGE_ATTACK,
             };
         case "WOLF1":
             return {

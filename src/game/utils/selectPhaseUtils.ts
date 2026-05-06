@@ -992,7 +992,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
                         return;
                     }
 
-                    // PLACE ON THE SAME ITEM IN INVENTORY TO UPGRADE
+                    // PLACE ON THE COPY OF ITEM IN INVENTORY TO UPGRADE
                     if (slot.isInventory && !slot.isEmpty) {
                         const { type, item: slotItem } = slot.card?.card || {};
                         if (type === ECardType.ITEM && slotItem && slotItem.id === item.id && slotItem.level === item.level && item.nextLevel) {
@@ -1121,7 +1121,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
                         return;
                     }
 
-                    // place on the same skill in inventory to upgrade
+                    // place on the copy of skill in inventory to upgrade
                     if (slot.isInventory && !slot.isEmpty) {
                         const { type, skill: slotSkill } = slot.card?.card || {};
                         if (type === ECardType.SKILL && slotSkill && slotSkill.id === skill.id && slotSkill.level === skill.level) {
@@ -1141,6 +1141,12 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
 
                     // case move target is unit
                     if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT && unitType === EUnitType.HERO) {
+                        // case moving skill from unit to same unit
+                        if (parentUnitId && slot.card?.card.unit?.id === parentUnitId) {
+                            slot.setIsActive(true, "equip");
+                            return;
+                        }
+
                         if (!unitType || !heroClassType || !heroClass) {
                             return;
                         }

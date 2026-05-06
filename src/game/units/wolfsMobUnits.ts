@@ -7,6 +7,7 @@ import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { bigWolfSummonSkill } from "../skills/mobs/bigWolfMobSkills";
 import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
 import { mobNoSkill } from "../skills/mobSkills";
+import { STRONG_WOLF_ID, WOLF_ID } from "./mobUnitConsts";
 
 export const wolfUnit: IUnit = {
     unitType: EUnitType.UNIT,
@@ -24,7 +25,7 @@ export const wolfUnit: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.WOLF,
-    id: "WOLF1",
+    id: WOLF_ID,
     skills: [mobNoSkill, regularWolfSkill, noBasicAttackSkill],
     items: [],
     level: 2,
@@ -54,7 +55,7 @@ export const strongWolfUnit: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.STRONGWOLF,
-    id: "WOLF2",
+    id: STRONG_WOLF_ID,
     skills: [noBasicAttackSkill, regularWolfSkill, mobNoSkill, bigWolfSummonSkill],
     items: [],
     level: 3,

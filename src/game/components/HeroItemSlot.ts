@@ -16,6 +16,8 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
     onItemRemoved: () => void;
     parentUnitId: string;
 
+    animationRect: GameObjects.Rectangle;
+
     constructor(scene: GameScene, x: number, y: number, parentUnitId: string, isWeaponSlot: boolean, item: IItem | undefined, onItemRemoved: () => void) {
         console.log("HeroItemSlot > constructor", parentUnitId);
         super(scene, x, y);
@@ -81,5 +83,32 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
             this.hint = new ItemHintPanel(this.gameScene, 0, -100, this.item, true).setVisible(false);
             this.add(this.hint);
         }
+        //
+        this.animationRect = this.scene.add.rectangle(15, 15, 50, 50, color, 0).setOrigin(0.5, 0.5).setVisible(false).setStrokeStyle(2, colors.WHITE_LIGHT);
+        this.add(this.animationRect);
+    }
+
+    // ANIMATIONS
+
+    playAddItem() {
+        this.animationRect.setVisible(true);
+
+        this.gameScene.tweens.add({
+            targets: this.animationRect,
+            width: 30,
+            height: 30,
+            //strokeColor: 0x5b8dc5,
+            ease: "Bounce", // '"Linear', 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 500,
+            repeat: 0, // -1: infinity
+            yoyo: false,
+            onUpdate: () => {
+                // Required for some shape objects to redraw correctly during the tween
+                this.animationRect.setSize(this.animationRect.width, this.animationRect.height);
+            },
+            onComplete: () => {
+                this.animationRect.setVisible(false);
+            },
+        });
     }
 }
