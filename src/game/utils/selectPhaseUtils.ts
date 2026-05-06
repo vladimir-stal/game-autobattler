@@ -689,21 +689,31 @@ export const getCards = (
 
                 // add skill to fit the player current hero
                 // get hero classes of heroes player currently has
-                const existingHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
+                const allHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
+                        if (unit.unitType === EUnitType.HERO) {
+                            const whatClass = getAnyClassSubclasses(unit.heroClass);
+                            whatClass.forEach((c) => {
+                                if (!heroClasses.includes(c)) heroClasses.push(c);
+                            });
+                            //heroClasses.push(unit.heroClass);
+                        }
+                        return heroClasses;
+                    }, [] as EHeroClass[]);
+                /*const existingHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
                     if (unit.unitType === EUnitType.HERO && !heroClasses.includes(unit.heroClass)) {
                         heroClasses.push(unit.heroClass);
                     }
                     return heroClasses;
-                }, [] as EHeroClass[]);
+                }, [] as EHeroClass[]);*/
                 //
                 //if (existingHeroClasses.length !== 0) {
-                const existingHeroSkill = getRandomArrayItem(getHeroClassesSkills(existingHeroClasses, day));
+                const existingHeroSkill = getRandomArrayItem(getHeroClassesSkills(allHeroClasses, day));
 
                 //}
 
                 const skills = getAllClassesSkills(day)
                     .filter((skill) => !skill.isChained)
-                    .filter((skill) => skill.id !== existingHeroSkill.id);
+                    .filter((skill) => skill.id !== existingHeroSkill?.id);
                 const randomSkills = getRandomArrayItems(skills, 3, true).map((skill) => {
                     // const enchancedOption = getRandomArrayItem(["isActivateOnStart", "isChained"]);
                     // const enchancedSkill = { ...skill };

@@ -1028,6 +1028,7 @@ export enum EAppTriggerType {
     NONE = "NONE",
     BASIC_ATTACK = "BASIC_ATTACK", // after making all basic attacks
     TAKE_ATTACK = "TAKE_ATTACK", // before taking damage of basic attack
+    TAKE_SKILL_ATTACK = "TAKE_SKILL_ATTACK", // before taking damage of attack skill
     SUMMON = "SUMMON", // after summon
     ROUND_CYCLE = "ROUND_CYCLE", // end of the round
     DEATH = "DEATH", // after reduced to 0 hp

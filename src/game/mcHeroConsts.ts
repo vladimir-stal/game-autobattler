@@ -15,7 +15,7 @@ import { doomsayerSkills } from "./skills/mc/doomsayerSkills";
 import { druidSkills } from "./skills/mc/druidSkills";
 import { duelistSkills } from "./skills/mc/duelistSkills";
 import { exorcistSkills } from "./skills/mc/exorcistSkills";
-import { forestSpititSkills } from "./skills/mc/forestSpiritSkills";
+import { forestSpiritPassive, forestSpititSkills } from "./skills/mc/forestSpiritSkills";
 import { gladiatorSkills } from "./skills/mc/gladiatorSkills";
 import { heraldPassive, heraldSkills } from "./skills/mc/heraldSkills";
 import { hunterSkills } from "./skills/mc/hunterSkills";
@@ -514,9 +514,7 @@ export const forestSpiritHero: IUnit = {
     name: i18n.heroes.FORESTSPIRIT,
     id: EHeroClass.FOREST_SPIRIT,
     skills: forestSpititSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: forestSpiritPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

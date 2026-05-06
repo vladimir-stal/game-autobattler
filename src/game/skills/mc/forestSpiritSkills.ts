@@ -1,5 +1,37 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const forestSpititSkillset = (conversionRate:number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "hpRegen",
+            value: conversionRate,
+            valueType: "percent",
+            valueFrom: "armor",
+            targetType: ETargetType.SELF,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "armor",
+            value: 100,
+            valueType: "percent",
+            targetType: ETargetType.SELF,
+            animation: AnimationType.NONE,
+        },
+    ];
+}
+
+export const forestSpititSkill_3: IHeroSkillSet = {
+    id: "forestSpiritSacrifice",
+    name: i18n.skills.mc.forestSpititSkill.name,
+    desc: i18n.skills.mc.forestSpititSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.FOREST_SPIRIT],
+    isMcSkill: true,
+    skills: forestSpititSkillset(40),
+};
 
 export const forestSpititSkill_2: IHeroSkillSet = {
     id: "forestSpiritSacrifice",
@@ -11,25 +43,8 @@ export const forestSpititSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.FOREST_SPIRIT],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
-            attribute: "hpRegen",
-            value: 30,
-            valueType: "percent",
-            valueFrom: "armor",
-            targetType: ETargetType.SELF,
-        },
-        {
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            isBasicAttack: true,
-            attribute: "armor",
-            value: 100,
-            valueType: "percent",
-            targetType: ETargetType.SELF,
-        },
-    ],
+    skills: forestSpititSkillset(30),
+    nextLevel: forestSpititSkill_3,
 };
 
 export const forestSpititSkill: IHeroSkillSet = {
@@ -42,26 +57,101 @@ export const forestSpititSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.FOREST_SPIRIT],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
-            attribute: "hpRegen",
-            value: 20,
-            valueType: "percent",
-            valueFrom: "armor",
-            targetType: ETargetType.SELF,
-        },
-        {
-            type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            isBasicAttack: true,
-            attribute: "armor",
-            value: 100,
-            valueType: "percent",
-            targetType: ETargetType.SELF,
-        },
-    ],
+    skills: forestSpititSkillset(20),
     nextLevel: forestSpititSkill_2,
 };
+
+export const forestSpiritPassive: IPassiveSkill = {
+    desc: "Cannot be healed, trigger\n50% hpRegen when attacked",
+    // HEALING_DECREASE
+    preBattleBuff: {
+        name: "Passive",
+        isHidden: true,
+        cannotBeTargeted: true,
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        appTrigger: {
+            limitedRepeats: true,
+            type: EAppTriggerType.PRE_BATTLE,
+            skillId: "Initate self buff and debuff",
+            skill: [
+                {
+                    type: EHeroSkillType.DEBUFF,
+                    debuff: {
+                        name: "Reject healing",
+                        targetType: ETargetType.SELF,
+                        timeType: EBuffTimeType.DUEL,
+                        type: EDebuffType.HEALING_DECREASE,
+                        value: 100,
+                        valueType: "percent",
+                        isHidden: true,
+                        cannotBeTargeted: true,
+                    },
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.BUFF,
+                    buff: {
+                        name: "Embrace hpRegen",
+                        targetType: ETargetType.SELF,
+                        timeType: EBuffTimeType.DUEL,
+                        type: EBuffType.BATTLE_TRIGGER,
+                        value: 1,
+                        isHidden: true,
+                        cannotBeTargeted: true,
+                        appTrigger: {
+                            limitedRepeats: false,
+                            skillId: "I can take the beating",
+                            type: EAppTriggerType.TAKE_ATTACK,
+                            skill: [
+                                {
+                                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                                    animation: AnimationType.NONE,
+                                    attribute: "hp",
+                                    targetType: ETargetType.SELF,
+                                    value: 50,
+                                    valueFrom: "hpRegen",
+                                    valueType: "percent",
+                                }
+                            ],
+                        }
+                    },
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.BUFF,
+                    buff: {
+                        name: "Embrace hpRegen 2: return of hpRegen",
+                        targetType: ETargetType.SELF,
+                        timeType: EBuffTimeType.DUEL,
+                        type: EBuffType.BATTLE_TRIGGER,
+                        value: 1,
+                        isHidden: true,
+                        cannotBeTargeted: true,
+                        appTrigger: {
+                            limitedRepeats: false,
+                            skillId: "I can take the beating",
+                            type: EAppTriggerType.TAKE_SKILL_ATTACK,
+                            skill: [
+                                {
+                                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                                    animation: AnimationType.NONE,
+                                    attribute: "hp",
+                                    targetType: ETargetType.SELF,
+                                    value: 50,
+                                    valueFrom: "hpRegen",
+                                    valueType: "percent",
+                                }
+                            ],
+                        }
+                    },
+                    animation: AnimationType.NONE,
+                },
+            ],
+        }
+    }
+}
 
 export const forestSpititSkills: THeroSkills = [forestSpititSkill];
