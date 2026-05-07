@@ -350,7 +350,7 @@ export const nextBAArea_3: IHeroSkillSet = {
     name: i18n.skills.basic.nextBAArea.name,
     desc: i18n.skills.basic.nextBAArea.desc3,
     // reduce next ba by [35%/20%/0%] but next ba target first 2 eneimes
-    level: 1,
+    level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
     skills: [
@@ -375,7 +375,7 @@ export const nextBAArea_2: IHeroSkillSet = {
     name: i18n.skills.basic.nextBAArea.name,
     desc: i18n.skills.basic.nextBAArea.desc2,
     // reduce next ba by [35%/20%/0%] but next ba target first 2 eneimes
-    level: 1,
+    level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
     skills: [

@@ -10,7 +10,7 @@ import {
     IItem,
 } from "../types";
 import { i18n } from "./consts";
-import { skeletonArmorSelfAndLow } from "./skills/mobSkills";
+import { skeletonArmorSelfAndLow } from "./skills/mobs/skeletonMobSkills";
 import { IMAGE_CARD_EXP } from "./utils/imageLoadUtil";
 import {
     IMAGE_ITEM_AMULET_CRIT_3,

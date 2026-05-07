@@ -2,7 +2,8 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterD
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinGoldCoin, itemGoblinSilverCoin } from "../mobItemConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { mobNoSkill, goblinApplyShock, goblinShamanHpRegIncr, goldGoblinBuff, mobCheerSkill, mobAmbushSkill, goblinPocketSand } from "../skills/mobSkills";
+import { goblinApplyShock, goblinPocketSand, goblinShamanHpRegIncr, goldGoblinBuff } from "../skills/mobs/goblinMobSkills";
+import { mobNoSkill, mobCheerSkill, mobAmbushSkill } from "../skills/mobSkills";
 
 export const weakGoblinUnit: IUnit = {
     unitType: EUnitType.UNIT,

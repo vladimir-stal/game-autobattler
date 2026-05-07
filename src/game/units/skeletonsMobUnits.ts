@@ -4,7 +4,8 @@ import { basic_boots, basic_exp_bag, basic_hat, basic_pants, basic_ring_damage }
 import { i18n } from "../consts";
 import { itemCoin } from "../mobItemConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { mobNoSkill, skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap } from "../skills/mobSkills";
+import { skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap } from "../skills/mobs/skeletonMobSkills";
+import { mobNoSkill } from "../skills/mobSkills";
 
 export const skeletonUnit: IUnit = {
     unitType: EUnitType.UNIT,
