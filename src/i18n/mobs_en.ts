@@ -22,6 +22,7 @@ export const MOBS_EN = {
         goblinshamans: "Goblin shamans",
         spiritwarrirors: "Spirit warrirors",
         wolves: "Wolves",
+        pirates: "Pirates",
     },
     level4: {
         goblins: "Goblins",
@@ -36,6 +37,7 @@ export const MOBS_EN = {
         goblins: "Goblins",
         skeletons: "Skeletons",
         spiritwarrirors: "Spirit warrirors",
+        pirates: "Pirates",
     },
     level6: {
         skeletons: "Skeletons",
@@ -43,6 +45,7 @@ export const MOBS_EN = {
         infernoflies: "Infernoflies",
         wolves: "Wolves",
         spiritwarrirors: "Spirit warrirors",
+        pirates: "Pirates",
     },
     level7: {},
     level8: {},
