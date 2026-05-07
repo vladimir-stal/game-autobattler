@@ -2230,7 +2230,7 @@ export class BattleController {
     }
 
     getUnitsInFrontOrBehind(origin: IBattleUnit, getBehind: boolean): IBattleUnit[] {
-        let combatPosition;
+        let combatPosition: number;
         let isPlayer1;
         if (origin.isSummon) {
             const p1index = this.player1BattleUnits.findIndex((bu) => bu?.summon?.id === origin.id);
@@ -2243,9 +2243,15 @@ export class BattleController {
         }
         if (combatPosition >= 0) {
             if (isPlayer1) {
-                return this.player1BattleUnits.filter((bu, index) => (getBehind ? index > combatPosition && bu.hp > 0 : index < combatPosition && bu.hp > 0));
+                // @ts-ignore
+                return this.player1BattleUnits.filter(
+                    (bu, index) => bu?.hp && (getBehind ? index > combatPosition && bu.hp > 0 : index < combatPosition && bu.hp > 0),
+                );
             } else {
-                return this.player2BattleUnits.filter((bu, index) => (getBehind ? index > combatPosition && bu.hp > 0 : index < combatPosition && bu.hp > 0));
+                // @ts-ignore
+                return this.player2BattleUnits.filter(
+                    (bu, index) => bu?.hp && (getBehind ? index > combatPosition && bu?.hp && bu.hp > 0 : index < combatPosition && bu?.hp && bu.hp > 0),
+                );
             }
         } else return [];
     }

@@ -1268,7 +1268,7 @@ export const prepareUniqueSummonToBattle = (unit: IBattleUnit): void => {
     }
 };
 
-export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillCondition, battleController?:BattleController) => {
+export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillCondition, battleController: BattleController) => {
     switch (condition) {
         case ESkillCondition.MP_IS_EQUALS_PP:
             return unit.magicPower === unit.physicalPower;
@@ -1295,13 +1295,13 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
         case ESkillCondition.IN_FRONT_ROW:
             return !unit.isBackRowPosition;
         case ESkillCondition.HAS_ALLY_BEHIND:
-            return battleController.getUnitsInFrontOrBehind(unit,true).length>0;
+            return battleController.getUnitsInFrontOrBehind(unit, true).length > 0;
         case ESkillCondition.HAS_ALLY_IN_FRONT:
-            return battleController.getUnitsInFrontOrBehind(unit,false).length>0;
+            return battleController.getUnitsInFrontOrBehind(unit, false).length > 0;
         case ESkillCondition.ONE_OR_LESS_ALLY_IN_FRONT:
-            return battleController.getUnitsInFrontOrBehind(unit,false).length<2;
+            return battleController.getUnitsInFrontOrBehind(unit, false).length < 2;
         case ESkillCondition.ONE_OR_LESS_ALLY_BEHIND:
-            return battleController.getUnitsInFrontOrBehind(unit,true).length<2;
+            return battleController.getUnitsInFrontOrBehind(unit, true).length < 2;
     }
 };
 
