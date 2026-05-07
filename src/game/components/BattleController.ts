@@ -24,6 +24,7 @@ import {
     IBuffOrDebuff,
     ITotem,
     IBattleTrigger,
+    INestedBuffEffect,
 } from "../../types";
 import { allyTargets, eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -949,7 +950,15 @@ export class BattleController {
             if (!buff) {
                 return;
             }
-
+            buff.nestedEffects = buff.nestedEffects?.map(ne => {
+                const copyNestedEffect: INestedBuffEffect = {...ne}
+                return copyNestedEffect;
+            })
+            buff.nestedEffects?.forEach(ne => {
+                const addValue = calculateIncreaseValue(ne.totalValue || 0, value, valueType);
+                ne.value = buff.timeType === EBuffTimeType.DURATION ? (ne.totalValue || 0) + addValue : addValue;
+                ne.valueType = "number";
+            })
             const addValue = calculateIncreaseValue(buff.totalValue || 0, value, valueType);
             buff.value = buff.timeType === EBuffTimeType.DURATION ? (buff.totalValue || 0) + addValue : addValue;
             buff.valueType = "number";
@@ -999,6 +1008,10 @@ export class BattleController {
                 console.log("no buff found for copy!");
                 return;
             }
+            buff.nestedEffects = buff.nestedEffects?.map(ne => {
+                const copyNestedEffect: INestedBuffEffect = {...ne}
+                return copyNestedEffect;
+            })
 
             lastTargetId = this.performBuff(unit, skill, buff, isPlayer1, isStartBattle, sameLastTargetId) || lastTargetId;
         });
@@ -1262,17 +1275,17 @@ export class BattleController {
                 lastTargetId = target.id;
                 let finalReduction = 0;
                 // BLEED & POISON interaction
-                target.statuses.forEach((status) => {
+                /*target.statuses.forEach((status) => {
                     if (status.type === EStatusType.BLEED) {
                         const reduction = Math.min(Math.floor(finalHeal / 5) + 1, status.value);
                         reduceStatus(target, target, status.type, reduction, this.battleRecord);
                     }
                     if (status.type === EStatusType.POISON) {
-                        const finalReduction = Math.min(finalHeal, Math.floor(status.value / 2) + 1, status.value);
+                        finalReduction = Math.min(finalHeal, Math.floor(status.value / 2) + 1, status.value);
                         reduceStatus(target, target, status.type, finalReduction, this.battleRecord);
                         //finalHeal -= reduction;
                     }
-                });
+                });*/
                 //
                 target.hp += finalHeal - finalReduction;
                 if (target.hp > target.maxHp) {

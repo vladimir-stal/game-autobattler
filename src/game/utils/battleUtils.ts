@@ -21,6 +21,7 @@ import {
     IDebuff,
     IHeroSkill,
     IItemBattleBonus,
+    INestedBuffEffect,
     ITotem,
     IUnit,
     TBattleRecord,
@@ -500,8 +501,8 @@ export const getAllyTotems = (unit: IBattleUnit, units: TBattleUnits, targetType
     }
 };
 
-export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff: IBuff) => {
-    const { value, valueType, mpScale, ppScale } = buff;
+export const calculateEffectValue = (unit: IBattleUnit, initialValue: number, eff: INestedBuffEffect) => {
+    const { value, valueType, mpScale, ppScale } = eff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
     console.log("calc buff value", value, mpScaleValue, ppScaleValue, valueType, initialValue);
@@ -515,19 +516,14 @@ export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff
     return 0;
 };
 
+export const calculateBuffValue = (unit: IBattleUnit, initialValue: number, buff: IBuff) => {
+    const { value, valueType, mpScale, ppScale } = buff;
+    return calculateEffectValue(unit, initialValue, { value, valueType, mpScale, ppScale });
+};
+
 export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, debuff: IDebuff): number => {
-    //console.log("calculateDebuffValue", initialValue, debuff);
-    // add MP or PP scaling
     const { value, valueType, mpScale, ppScale } = debuff;
-    const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
-    const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-    if (!valueType || valueType === "number" || valueType === "evolvedNumber") {
-        return value + mpScaleValue + ppScaleValue;
-    } else if (valueType === "percent" || valueType === "evolvedPercent") {
-        const debuffValue = Math.floor((initialValue * value) / 100);
-        return (debuffValue || 1) + mpScaleValue + ppScaleValue;
-    }
-    return 0;
+    return calculateEffectValue(unit, initialValue, { value, valueType, mpScale, ppScale });
 };
 
 export const calculateIncreaseValue = (initialValue: number, increaseValue: number, increaseType: TValueType, percentOfValue?: number) => {
@@ -554,6 +550,29 @@ export const getBattleAttribute = (attribute: THeroAttribute): THeroBattleAttrib
     }
 };
 
+const undoAttributeChanges = (unit:IBattleUnit, attribute:THeroBattleAttribute, value:number, wasIncrease:boolean, battleRecord: TBattleRecord) => {
+    if (!attribute || !value) {
+            return;
+        }
+    if (wasIncrease) {
+        unit[attribute] -= value;
+        battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_DECREASE, attribute, value });
+    } else {
+        unit[attribute] += value;
+        battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value });
+    }
+}
+const undoAttributeChangesForNestedEffects = (unit:IBattleUnit, effects:INestedBuffEffect[], battleRecord: TBattleRecord) => {
+    effects?.forEach(ne => {
+        if (ne.buffType === EBuffType.ATTRIBUTE_INCREASE) {
+            undoAttributeChanges(unit,ne.attribute,ne.totalValue,true,battleRecord);
+        }
+        if (ne.debuffType === EDebuffType.ATTRIBUTE_DECREASE) {
+            undoAttributeChanges(unit,ne.attribute,ne.totalValue,false,battleRecord);
+        }
+    })
+}
+
 export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattleRecord) => {
     const index = unit.buffs.findIndex((b) => b === buff);
     if (index !== -1) {
@@ -562,13 +581,9 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
 
     const { type, attribute, totalValue } = buff;
     if (type === EBuffType.ATTRIBUTE_INCREASE) {
-        // decrease attribute back
-        if (!attribute || totalValue === undefined) {
-            return;
-        }
-        unit[attribute] -= totalValue;
-        battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_DECREASE, attribute, value: totalValue });
+        undoAttributeChanges(unit,attribute,totalValue,true,battleRecord);
     }
+    undoAttributeChangesForNestedEffects(unit,buff.nestedEffects,battleRecord);
     battleRecord.push({ unitId: unit.id, type: EBattleActionType.BUFF_REMOVED, buff });
 };
 
@@ -579,18 +594,10 @@ export const removeDebuffSimple = (unit: IBattleUnit, debuff: IDebuff, battleRec
     }
 
     const { type, attribute, totalValue } = debuff;
-    switch (type) {
-        case EDebuffType.ATTRIBUTE_DECREASE:
-            {
-                // decrease attribute back
-                if (!attribute || totalValue === undefined) {
-                    return;
-                }
-                unit[attribute] += totalValue;
-                battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value: totalValue });
-            }
-            break;
+    if (type === EDebuffType.ATTRIBUTE_DECREASE) {
+        undoAttributeChanges(unit,attribute,totalValue,false,battleRecord);
     }
+    undoAttributeChangesForNestedEffects(unit,debuff.nestedEffects,battleRecord);
     battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.DEBUFF_REMOVE, debuff });
 };
 
@@ -876,142 +883,6 @@ export const reduceStatus = (
     target.statuses.push({ type: statusType, value });
 };
 
-export const applyDebuff = (
-    target: IBattleUnit,
-    debuff: IDebuff,
-    debuffAction: IBattleAction,
-    battleCtrl: BattleController,
-    caster?: IBattleUnit,
-    isPlayer1?: boolean,
-) => {
-    //
-    const { attribute, duration, timeType, type, appTrigger } = debuff;
-    // if same debuff already on target, dont apply new one, but empower existing one instead
-    const existingDebuff = target.debuffs.find(
-        (dbf) =>
-            dbf.type === type &&
-            dbf.attribute === attribute &&
-            dbf.timeType === timeType &&
-            dbf.appTrigger?.type === appTrigger?.type &&
-            dbf.appTrigger?.targetCheck === appTrigger?.targetCheck &&
-            dbf.appTrigger?.skillId === appTrigger?.skillId,
-    );
-
-    if (existingDebuff) {
-        //console.log("existing debuff found", target.id, debuff.type, debuff.attribute, debuff.timeType);
-
-        if (existingDebuff.totalValue === undefined) {
-            console.log("ERROR applyDebuff existingDebuff.totalValue is undefined");
-            return;
-        }
-
-        switch (debuff.type) {
-            case EDebuffType.MARK_BLADEDANCER:
-                {
-                    existingDebuff.value += 1;
-                    if (existingDebuff.totalValue) {
-                        existingDebuff.totalValue += 1;
-                    }
-                    debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingDebuff.totalValue });
-                }
-                break;
-            case EDebuffType.ATTRIBUTE_DECREASE:
-                // caster & battleCtrl should be defined
-                if (!attribute) {
-                    console.log("ERROR applyDebuff attribute is undefined");
-                    return;
-                }
-                //const initValue = debuff.valueFrom ? target[debuff.valueFrom] : target[debuff.attribute];
-                const newValue = calculateDebuffValue(caster || target, attribute ? target[attribute] : 0, debuff);
-                const oldValue = existingDebuff.totalValue;
-                if (debuff.timeType === EBuffTimeType.DURATION && existingDebuff.duration && duration) {
-                    //existingDebuff.totalValue = Math.max(newValue, oldValue);
-                    existingDebuff.duration += duration;
-                    const diff = newValue - oldValue;
-                    const ta = Math.min(diff, target[attribute]);
-                    if (diff > 0) {
-                        target[attribute] -= ta;
-                        existingDebuff.totalValue += ta;
-                        battleCtrl &&
-                            battleCtrl.battleRecord.push({
-                                unitId: caster?.id || target.id,
-                                targetId: target.id,
-                                type: EBattleActionType.ATTRIBUTE_DECREASE,
-                                attribute: debuff.attribute,
-                                value: ta,
-                            });
-                    }
-                } else {
-                    const ta = Math.min(newValue, target[attribute]);
-                    existingDebuff.totalValue += ta;
-                    target[attribute] -= ta;
-                    battleCtrl &&
-                        battleCtrl.battleRecord.push({
-                            unitId: caster?.id || target.id,
-                            targetId: target.id,
-                            type: EBattleActionType.ATTRIBUTE_DECREASE,
-                            attribute: debuff.attribute,
-                            value: ta,
-                        });
-                }
-                debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true });
-                break;
-            case EDebuffType.BATTLE_TRIGGER:
-                const newValue2 = calculateDebuffValue(caster || target, attribute ? target[attribute] : 0, debuff);
-                const oldValue2 = existingDebuff.totalValue;
-                existingDebuff.totalValue = Math.max(newValue2, oldValue2);
-                break;
-            default: {
-                const initValue = debuff.attribute ? target[debuff.attribute] : 100;
-                const newValue = calculateDebuffValue(caster || target, initValue, debuff);
-                const oldValue = existingDebuff.totalValue;
-                if (debuff.timeType === EBuffTimeType.DURATION && existingDebuff.duration && duration) {
-                    existingDebuff.totalValue = Math.max(newValue, oldValue);
-                    existingDebuff.duration += duration;
-                } else {
-                    existingDebuff.totalValue += newValue;
-                }
-                debuffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingDebuff.totalValue });
-            }
-        }
-    } else {
-        const initValue = debuff.attribute ? target[debuff.attribute] : 100;
-        const debuffValue = calculateDebuffValue(caster || target, initValue, debuff);
-        if (debuff.type === EDebuffType.ATTRIBUTE_DECREASE) {
-            if (!attribute) {
-                console.log("ERROR applyDebuff attribute is undefined");
-                return;
-            }
-            const ta = Math.min(debuffValue, target[attribute]);
-            // do not decrease attribute below 0
-            // so when debuff is removed, attribute won't become
-            // more than it was initially
-            target[attribute] -= ta;
-            battleCtrl.battleRecord.push({
-                unitId: caster?.id || target.id,
-                targetId: target.id,
-                type: EBattleActionType.ATTRIBUTE_DECREASE,
-                attribute: debuff.attribute,
-                value: ta,
-            });
-            target.debuffs.push({ ...debuff, totalValue: ta });
-        } else {
-            target.debuffs.push({ ...debuff, totalValue: debuffValue });
-        }
-        if (debuff.type === EDebuffType.BATTLE_TRIGGER && appTrigger) {
-            battleCtrl.addTrigger({
-                anchorTarget: target,
-                originBattleUnit: caster || target,
-                isBuff: false,
-                isPlayer1: !!isPlayer1,
-                targetCheck: appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
-                type: appTrigger.type,
-            });
-        }
-        debuffAction.buffTargets?.push({ targetId: target.id, value: debuffValue });
-    }
-};
-
 export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex: number, battleRecord: TBattleRecord, isStartBattle?: boolean) => {
     const debuff = target.debuffs[debuffIndex];
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.DEBUFF_REMOVE, value: debuffIndex, debuff });
@@ -1040,92 +911,25 @@ export const removeDebuff = (unit: IBattleUnit, target: IBattleUnit, debuffIndex
     target.debuffs = target.debuffs.filter((_, index) => index !== debuffIndex);
 };
 
-export const applyBuff = (
+const applyNewNestedEffects = (
+    effect: INestedBuffEffect,
     target: IBattleUnit,
-    buff: IBuff,
-    buffAction: IBattleAction,
     battleCtrl: BattleController,
+    buffAction?: IBattleAction,
     caster?: IBattleUnit,
+    isParentEffect?: boolean,
+    parentBuff?: IBuff,
+    parentDebuff?: IDebuff,
     isPlayer1?: boolean,
 ) => {
-    //if (buff.valueFrom === "customNumber")
-    const { attribute, duration, timeType, type, appTrigger, statusType } = buff;
-    //    console.log("-= Debug buff from calculated number =-",target,caster);
-    const existingBuff = target?.buffs?.find(
-        (bf) =>
-            bf.type === type &&
-            bf.attribute === attribute &&
-            bf.timeType === timeType &&
-            bf.appTrigger?.type === appTrigger?.type &&
-            bf.appTrigger?.targetCheck === appTrigger?.targetCheck &&
-            bf.appTrigger?.skillId === appTrigger?.skillId &&
-            bf.statusType === statusType,
-    );
-    if (existingBuff) {
-        if (existingBuff.totalValue === undefined) {
-            console.log("ERROR applyDebuff existingDebuff.totalValue is undefined");
-            return;
-        }
-        //console.log("existing buff found", target.id, buff.type, buff.attribute, buff.timeType);
-        if (buff.type === EBuffType.ATTRIBUTE_INCREASE) {
-            if (!attribute) {
-                console.log("ERROR applyBuff attribute is undefined");
-                return;
-            }
-            // caster & battleCtrl should be defined
-            const initValue = buff.valueFrom ? target[buff.valueFrom] : target[attribute];
-            const newValue = calculateBuffValue(caster || target, initValue, buff);
-            const oldValue = existingBuff.totalValue;
-            //if (buff.valueFrom === "customNumber") console.log("init", initValue, "new", newValue, "old", oldValue);
-            if (buff.timeType === EBuffTimeType.DURATION && existingBuff.duration && duration) {
-                existingBuff.totalValue = Math.max(newValue, oldValue);
-                existingBuff.duration += duration;
-                const diff = newValue - oldValue;
-                if (diff > 0) {
-                    target[attribute] += diff;
-                    battleCtrl &&
-                        battleCtrl.battleRecord.push({
-                            unitId: caster?.id || target.id,
-                            targetId: target.id,
-                            type: EBattleActionType.ATTRIBUTE_INCREASE,
-                            attribute: buff.attribute,
-                            value: diff,
-                        });
-                }
-            } else {
-                existingBuff.totalValue += newValue;
-                target[attribute] += newValue;
-                battleCtrl &&
-                    battleCtrl.battleRecord.push({
-                        unitId: caster?.id || target.id,
-                        targetId: target.id,
-                        type: EBattleActionType.ATTRIBUTE_INCREASE,
-                        attribute: buff.attribute,
-                        value: newValue,
-                    });
-            }
-            buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingBuff.totalValue });
-        } else if (buff.type === EBuffType.BATTLE_TRIGGER) {
-            const initValue = buff.valueFrom ? target[buff.valueFrom] : buff.attribute ? target[buff.attribute] : 100;
-            const newValue = calculateBuffValue(caster || target, initValue, buff);
-            const oldValue = existingBuff.totalValue;
-            existingBuff.totalValue = Math.max(newValue, oldValue);
-        } else {
-            const initValue = buff.valueFrom ? target[buff.valueFrom] : buff.attribute ? target[buff.attribute] : 100;
-            const newValue = calculateBuffValue(caster || target, initValue, buff);
-            const oldValue = existingBuff.totalValue;
-            if (buff.timeType === EBuffTimeType.DURATION && existingBuff.duration && duration) {
-                existingBuff.totalValue = Math.max(newValue, oldValue);
-                existingBuff.duration += duration;
-            } else {
-                existingBuff.totalValue += newValue;
-            }
-            buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: existingBuff.totalValue });
-        }
-    } else {
-        const initValue = buff.valueFrom ? target[buff.valueFrom] : buff.attribute ? target[buff.attribute] : 100;
-        const buffValue = calculateBuffValue(caster || target, initValue, buff);
-        if (buff.type === EBuffType.ATTRIBUTE_INCREASE) {
+    if (effect.buffType) {
+        const type = effect.buffType;
+        const { attribute, valueFrom } = effect;
+
+        const initValue = valueFrom ? target[valueFrom] : attribute ? target[attribute] : 100;
+        const buffValue = calculateEffectValue(caster || target, initValue, effect);
+
+        if (type === EBuffType.ATTRIBUTE_INCREASE) {
             if (!attribute) {
                 console.log("ERROR applyBuff attribute is undefined");
                 return;
@@ -1135,22 +939,361 @@ export const applyBuff = (
                 unitId: caster?.id || target.id,
                 targetId: target.id,
                 type: EBattleActionType.ATTRIBUTE_INCREASE,
-                attribute: buff.attribute,
+                attribute: attribute,
                 value: buffValue,
             });
-        } else if (buff.type === EBuffType.BATTLE_TRIGGER && appTrigger) {
-            battleCtrl.listOfTriggers.push({
-                anchorTarget: target,
-                originBattleUnit: caster || target,
-                isBuff: true,
-                isPlayer1: !!isPlayer1,
-                targetCheck: appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
-                type: appTrigger.type,
-            });
-            console.log("-= Battle trigger Buff =-", buffValue, buff);
+        } else if (type === EBuffType.BATTLE_TRIGGER) {
+            if (isParentEffect && parentBuff?.appTrigger) {
+                battleCtrl.listOfTriggers.push({
+                    anchorTarget: target,
+                    originBattleUnit: caster || target,
+                    isBuff: true,
+                    isPlayer1: !!isPlayer1,
+                    targetCheck: parentBuff.appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
+                    type: parentBuff.appTrigger.type,
+                });
+            } else {
+                console.log("ERROR do not use BATTLE_TRIGGER in nested effects");
+                return;
+            }
         }
-        target.buffs.push({ ...buff, totalValue: buffValue });
-        buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });
+        if (isParentEffect) {
+            const newParent = { ...parentBuff, totalValue: buffValue, nestedEffects: [] };
+            target.buffs.push(newParent);
+            buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });
+            !!parentBuff &&
+                parentBuff.nestedEffects?.forEach((ne) => {
+                    applyNewNestedEffects(ne, target, battleCtrl, buffAction, caster, false, newParent, undefined);
+                });
+        } else {
+            !!parentBuff && parentBuff.nestedEffects.push({ ...effect, totalValue: buffValue });
+            !!parentDebuff && parentDebuff.nestedEffects.push({ ...effect, totalValue: buffValue });
+        }
+    } else if (effect.debuffType) {
+        const type = effect.debuffType;
+        const { attribute, valueFrom } = effect;
+        const initValue = valueFrom ? target[valueFrom] : attribute ? target[attribute] : 100;
+        let debuffValue = calculateEffectValue(caster || target, initValue, effect);
+        if (type === EDebuffType.ATTRIBUTE_DECREASE) {
+            if (!attribute) {
+                console.log("ERROR applyDebuff attribute is undefined");
+                return;
+            }
+            const ta = Math.min(debuffValue, target[attribute]);
+            // do not decrease attribute below 0
+            // so when debuff is removed, attribute won't become
+            // more than it was initially
+            target[attribute] -= ta;
+            battleCtrl.battleRecord.push({
+                unitId: caster?.id || target.id,
+                targetId: target.id,
+                type: EBattleActionType.ATTRIBUTE_DECREASE,
+                attribute: attribute,
+                value: ta,
+            });
+            debuffValue = ta;
+        } else if (type === EDebuffType.BATTLE_TRIGGER) {
+            if (isParentEffect && parentDebuff?.appTrigger) {
+                battleCtrl.addTrigger({
+                    anchorTarget: target,
+                    originBattleUnit: caster || target,
+                    isBuff: false,
+                    isPlayer1: !!isPlayer1,
+                    targetCheck: parentDebuff.appTrigger.targetCheck || ETargetType.ANCHOR_TARGET,
+                    type: parentDebuff.appTrigger.type,
+                });
+            } else {
+                console.log("ERROR do not use BATTLE_TRIGGER in nested effects");
+                return;
+            }
+        }
+        if (isParentEffect) {
+            const newParent = { ...parentDebuff, totalValue: debuffValue, nestedEffects: [] };
+            target.debuffs.push(newParent);
+            buffAction.buffTargets?.push({ targetId: target.id, value: debuffValue });
+            !!parentDebuff &&
+                parentDebuff.nestedEffects?.forEach((ne) => {
+                    applyNewNestedEffects(ne, target, battleCtrl, buffAction, caster, false, undefined, newParent);
+                });
+        } else {
+            !!parentBuff && parentBuff.nestedEffects.push({ ...effect, totalValue: debuffValue });
+            !!parentDebuff && parentDebuff.nestedEffects.push({ ...effect, totalValue: debuffValue });
+        }
+    }
+};
+
+const applyExistingNestedEffects = (
+    effect: INestedBuffEffect,
+    target: IBattleUnit,
+    battleCtrl: BattleController,
+    timeType: EBuffTimeType,
+    buffAction?: IBattleAction,
+    duration?: number,
+    caster?: IBattleUnit,
+    isParentEffect?: boolean,
+    parentBuff?: IBuff,
+    parentDebuff?: IDebuff,
+) => {
+    if (effect.buffType) {
+        const type = effect.buffType;
+        const { attribute, valueFrom, totalValue } = effect;
+
+        const initValue = valueFrom ? target[valueFrom] : attribute ? target[attribute] : 100;
+        const newValue = calculateEffectValue(caster || target, initValue, effect);
+        const oldValue = effect.totalValue;
+
+        if (totalValue === undefined) {
+            console.log("ERROR applyBuff existingBuff.totalValue is undefined");
+            return;
+        }
+        //console.log("existing buff found", target.id, buff.type, buff.attribute, buff.timeType);
+        if (type === EBuffType.ATTRIBUTE_INCREASE) {
+            if (!attribute) {
+                console.log("ERROR applyBuff attribute is undefined");
+                return;
+            }
+            // caster & battleCtrl should be defined
+
+            //if (buff.valueFrom === "customNumber") console.log("init", initValue, "new", newValue, "old", oldValue);
+            if (timeType === EBuffTimeType.DURATION) {
+                effect.totalValue = Math.max(newValue, oldValue);
+                const diff = newValue - oldValue;
+                if (diff > 0) {
+                    target[attribute] += diff;
+                    battleCtrl &&
+                        battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_INCREASE,
+                            attribute: attribute,
+                            value: diff,
+                        });
+                }
+            } else {
+                effect.totalValue += newValue;
+                target[attribute] += newValue;
+                battleCtrl &&
+                    battleCtrl.battleRecord.push({
+                        unitId: caster?.id || target.id,
+                        targetId: target.id,
+                        type: EBattleActionType.ATTRIBUTE_INCREASE,
+                        attribute: attribute,
+                        value: newValue,
+                    });
+            }
+        } else if (type === EBuffType.BATTLE_TRIGGER) {
+            effect.totalValue = Math.max(newValue, oldValue);
+        } else {
+            if (timeType === EBuffTimeType.DURATION) {
+                effect.totalValue = Math.max(newValue, oldValue);
+            } else {
+                effect.totalValue += newValue;
+            }
+        }
+        if (isParentEffect) {
+            buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: effect.totalValue });
+            if (!!parentBuff) {
+                if (timeType === EBuffTimeType.DURATION) {
+                    parentBuff.duration += duration;
+                }
+                parentBuff.totalValue = effect.totalValue;
+                parentBuff.nestedEffects.forEach((ne) => {
+                    applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, parentBuff, undefined);
+                });
+            }
+            if (!!parentDebuff) {
+                if (timeType === EBuffTimeType.DURATION) {
+                    parentDebuff.duration += duration;
+                }
+                parentDebuff.totalValue = effect.totalValue;
+                parentDebuff.nestedEffects.forEach((ne) => {
+                    applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, undefined, parentDebuff);
+                });
+            }
+        }
+    } else if (effect.debuffType) {
+        const { attribute, valueFrom, totalValue } = effect;
+        if (totalValue === undefined) {
+            console.log("ERROR applyDebuff existingDebuff.totalValue is undefined");
+            return;
+        }
+        const initValue = valueFrom ? target[valueFrom] : attribute ? target[attribute] : 100;
+        const newValue = calculateEffectValue(caster || target, initValue, effect);
+        const oldValue = effect.totalValue;
+
+        switch (effect.debuffType) {
+            case EDebuffType.MARK_BLADEDANCER:
+                {
+                    effect.totalValue += 1;
+                }
+                break;
+            case EDebuffType.ATTRIBUTE_DECREASE:
+                // caster & battleCtrl should be defined
+                if (!attribute) {
+                    console.log("ERROR applyDebuff attribute is undefined");
+                    return;
+                }
+                if (timeType === EBuffTimeType.DURATION) {
+                    const diff = newValue - oldValue;
+                    const ta = Math.min(diff, target[attribute]);
+                    if (diff > 0) {
+                        target[attribute] -= ta;
+                        effect.totalValue += ta;
+                        battleCtrl &&
+                            battleCtrl.battleRecord.push({
+                                unitId: caster?.id || target.id,
+                                targetId: target.id,
+                                type: EBattleActionType.ATTRIBUTE_DECREASE,
+                                attribute: attribute,
+                                value: ta,
+                            });
+                    }
+                } else {
+                    const ta = Math.min(newValue, target[attribute]);
+                    effect.totalValue += ta;
+                    target[attribute] -= ta;
+                    battleCtrl &&
+                        battleCtrl.battleRecord.push({
+                            unitId: caster?.id || target.id,
+                            targetId: target.id,
+                            type: EBattleActionType.ATTRIBUTE_DECREASE,
+                            attribute: effect.attribute,
+                            value: ta,
+                        });
+                }
+                break;
+            case EDebuffType.BATTLE_TRIGGER:
+                effect.totalValue = Math.max(newValue, oldValue);
+                break;
+            default: {
+                timeType === EBuffTimeType.DURATION ? 
+                    effect.totalValue = Math.max(newValue, oldValue) :
+                    effect.totalValue += newValue;
+            }
+        }
+        if (isParentEffect) {
+            buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: effect.totalValue });
+            if (!!parentBuff) {
+                if (timeType === EBuffTimeType.DURATION) {
+                    parentBuff.duration += duration;
+                }
+                parentBuff.totalValue = effect.totalValue;
+                parentBuff.nestedEffects.forEach((ne) => {
+                    applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, parentBuff, undefined);
+                });
+            }
+            if (!!parentDebuff) {
+                if (timeType === EBuffTimeType.DURATION) {
+                    parentDebuff.duration += duration;
+                }
+                parentDebuff.totalValue = effect.totalValue;
+                parentDebuff.nestedEffects.forEach((ne) => {
+                    applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, undefined, parentDebuff);
+                });
+            }
+        }
+    }
+};
+
+export const applyBuff = (
+    target: IBattleUnit,
+    buff: IBuff,
+    buffAction: IBattleAction,
+    battleCtrl: BattleController,
+    caster?: IBattleUnit,
+    isPlayer1?: boolean,
+) => {
+    //if (buff.valueFrom === "customNumber")
+    const { attribute, duration, timeType, type, appTrigger, statusType, nestedEffects, value, mpScale, ppScale, totalValue, valueFrom, valueType } = buff;
+    //    console.log("-= Debug buff from calculated number =-",target,caster);
+    const existingBuff = target?.buffs?.find(
+        (bf) =>
+            bf.type === type &&
+            bf.attribute === attribute &&
+            bf.timeType === timeType &&
+            bf.appTrigger?.type === appTrigger?.type &&
+            bf.appTrigger?.targetCheck === appTrigger?.targetCheck &&
+            bf.appTrigger?.skillId === appTrigger?.skillId &&
+            bf.statusType === statusType &&
+            !!bf.nestedEffects === !!nestedEffects &&
+            (!nestedEffects || (!!nestedEffects && bf.name === buff.name)),
+    );
+    if (existingBuff) {
+        applyExistingNestedEffects(
+            { value, attribute, buffType: type, mpScale, ppScale, totalValue, valueFrom, valueType },
+            target,
+            battleCtrl,
+            timeType,
+            buffAction,
+            duration,
+            caster,
+            true,
+            existingBuff,
+            undefined,
+        );
+    } else {
+        applyNewNestedEffects(
+            { value, attribute, buffType: type, mpScale, ppScale, totalValue, valueFrom, valueType },
+            target,
+            battleCtrl,
+            buffAction,
+            caster,
+            true,
+            buff,
+            undefined,
+            isPlayer1,
+        );
+    }
+};
+
+export const applyDebuff = (
+    target: IBattleUnit,
+    debuff: IDebuff,
+    debuffAction: IBattleAction,
+    battleCtrl: BattleController,
+    caster?: IBattleUnit,
+    isPlayer1?: boolean,
+) => {
+    //
+    const { attribute, duration, timeType, type, appTrigger, value, valueType, mpScale, ppScale, totalValue, nestedEffects } = debuff;
+    // if same debuff already on target, dont apply new one, but empower existing one instead
+    const existingDebuff = target.debuffs.find(
+        (dbf) =>
+            dbf.type === type &&
+            dbf.attribute === attribute &&
+            dbf.timeType === timeType &&
+            dbf.appTrigger?.type === appTrigger?.type &&
+            dbf.appTrigger?.targetCheck === appTrigger?.targetCheck &&
+            dbf.appTrigger?.skillId === appTrigger?.skillId &&
+            !!dbf.nestedEffects === !!nestedEffects &&
+            (!nestedEffects || (!!nestedEffects && dbf.name === debuff.name)),
+    );
+
+    if (existingDebuff) {
+        applyExistingNestedEffects(
+            { value, attribute, debuffType: type, mpScale, ppScale, totalValue, valueType },
+            target,
+            battleCtrl,
+            timeType,
+            debuffAction,
+            duration,
+            caster,
+            true,
+            undefined,
+            existingDebuff,
+        );
+    } else {
+        applyNewNestedEffects(
+            { value, attribute, debuffType: type, mpScale, ppScale, totalValue, valueType },
+            target,
+            battleCtrl,
+            debuffAction,
+            caster,
+            true,
+            undefined,
+            debuff,
+            isPlayer1,
+        );
     }
 };
 

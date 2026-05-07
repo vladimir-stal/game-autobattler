@@ -49,8 +49,8 @@ import {
 import { scrollOfSkill } from "../commonItemConsts3";
 import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
 
-export const debugHeroSelectRoom = false;
-export const debugStartingItemsRoom = false;
+export const debugHeroSelectRoom = true;
+export const debugStartingItemsRoom = true;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -58,7 +58,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: necromancerHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: warriorHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
@@ -70,13 +70,13 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
         { type: ECardType.SKILL, price: 0, skill: peasantLastStandSkill },
-        { type: ECardType.SKILL, price: 0, skill: goldGoblinBuff },
+        { type: ECardType.SKILL, price: 0, skill: mortalStrikeSkill },
 
-        { type: ECardType.SKILL, price: 0, skill: regularWolfSkill },
-        { type: ECardType.SKILL, price: 0, skill: peasantsStronkSkill },
-        { type: ECardType.SKILL, price: 0, skill: fireflyConfusingMistSkill },
-        { type: ECardType.SKILL, price: 0, skill: spiritTeamRevenge },
-        { type: ECardType.SKILL, price: 0, skill: spiritTeamFlurry },
+        //{ type: ECardType.SKILL, price: 0, skill: regularWolfSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: peasantsStronkSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: fireflyConfusingMistSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: spiritTeamRevenge },
+        //{ type: ECardType.SKILL, price: 0, skill: spiritTeamFlurry },
 
         /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
@@ -98,6 +98,6 @@ export const customStartingItemsRoom = (): ICard[] => {
         },
         { type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
          */
-        //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };
