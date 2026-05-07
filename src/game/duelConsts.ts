@@ -81,7 +81,7 @@ import { buffSelfMPorPP, increaseMaxHpSkill } from "./skills/commonSkill3Consts"
 import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
 import { music5AddBuffTarget } from "./weaponItem5Consts";
-import { peasantSkill, skeletonPoisonedFlames } from "./skills/mobSkills";
+import { peasantLastStandSkill, skeletonPoisonedFlames } from "./skills/mobSkills";
 import { warriorSummonMob, warriorSummonMob_3 } from "./units/summonMobUnits";
 import { skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 
@@ -167,7 +167,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
             { attribute: { a: "basicPhysicalPower", v: 1 } },
             { item: shield1 },
             { skill: buffNextBa },
-            { skill: peasantSkill },
+            { skill: peasantLastStandSkill },
         ],
     },
     // day 3
@@ -190,7 +190,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
             { attribute: { a: "basicArmor", v: 3 } },
             { item: sword1 },
             { item: gloves_war2 },
-            { skill: peasantSkill },
+            { skill: peasantLastStandSkill },
             { skill: debuffWorthyFoe },
         ],
     },
@@ -219,7 +219,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
             { item: sword1 },
             { item: gloves_war2 },
             { item: basic_ring_regen },
-            { skill: peasantSkill },
+            { skill: peasantLastStandSkill },
             { skill: debuffWorthyFoe },
         ],
         4: [{ unit: bardHero }, { item: musical21 }, { item: jacket21 }, { skill: buffNextBaAll }],
@@ -252,7 +252,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
             { item: sword1 },
             { item: gloves_war2 },
             { item: basic_ring_regen },
-            { skill: peasantSkill },
+            { skill: peasantLastStandSkill },
             { skill: phycisalAttackSkill },
             { skill: debuffWorthyFoe },
         ],
@@ -289,7 +289,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
             { item: gloves_war2 },
             { item: basic_ring_regen },
             { skill: phycisalAttackSkill_2, chained: true },
-            { skill: peasantSkill },
+            { skill: peasantLastStandSkill },
             { skill: debuffWorthyFoe },
         ],
         4: [{ unit: doomsayerHero }, { item: musical21 }, { item: regenMantle }, { skill: skeletonPoisonedFlames }, { skill: buffNextBaAll_2 }],
@@ -894,7 +894,7 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
             { skill: concentrateThePoisonSkill, chained: true },
         ],
         3: [{ unit: warriorSummonMob_3 }],
-        4: [{ unit: skeletonWarriorUnit }, {item: totem22}],
+        4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
     },
     // day 6
     {
@@ -910,13 +910,13 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
             { item: basic_hat },
             { attribute: { a: "basicMaxHp", v: 4 } },
             { skill: attrAttackSelf_2 },
-            { skill: attrArmorSelf, chained: true},
+            { skill: attrArmorSelf, chained: true },
             { skill: increaseMaxHpSkill },
             { moveMcSkillToSlotIndex: 1 },
         ],
         2: [
             { unit: necromancerHero },
-            { levelup: 1},
+            { levelup: 1 },
             { attribute: { a: "basicMagicPower", v: 5 } },
             { item: totem1 },
             { item: wand22 },
@@ -927,7 +927,7 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
             { skill: concentrateThePoisonSkill, chained: true },
         ],
         3: [{ unit: warriorSummonMob_3 }],
-        4: [{ unit: skeletonWarriorUnit }, {item: totem22}],
+        4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
     },
 ]);
 

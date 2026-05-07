@@ -22,6 +22,16 @@ import {
     IMAGE_SKILL_BARD_BUFF_1,
     IMAGE_SKILL_DOUBLE_SWORD,
     IMAGE_SKILL_KNIGHT_SHIELD,
+    IMAGE_SKILL_MOB_FIREFLY_MIST,
+    IMAGE_SKILL_MOB_GOBLIN_REGEN,
+    IMAGE_SKILL_MOB_GOBLIN_SAND,
+    IMAGE_SKILL_MOB_GOBLIN_SHOCK,
+    IMAGE_SKILL_MOB_GOBLIN_SONG,
+    IMAGE_SKILL_MOB_LAST_STAND,
+    IMAGE_SKILL_MOB_POISON_BLADE,
+    IMAGE_SKILL_MOB_POISON_FLAME,
+    IMAGE_SKILL_MOB_SKELETON_SHIELD,
+    IMAGE_SKILL_MOB_SPIRIT_SPEARS,
     IMAGE_SKILL_PHYS_ATTACK,
     IMAGE_SKILL_REGEN,
     IMAGE_SKILL_TEST,
@@ -70,7 +80,7 @@ export const goblinPocketSand_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.BARD],
     skills: goblinPocketSandSkillset(60, 180, 2, 100),
     isBasicAttack: false,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_GOBLIN_SAND,
 };
 
 export const goblinPocketSand_2: IHeroSkillSet = {
@@ -85,7 +95,7 @@ export const goblinPocketSand_2: IHeroSkillSet = {
     skills: goblinPocketSandSkillset(50, 140, 2, 75),
     isBasicAttack: false,
     nextLevel: goblinPocketSand_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_GOBLIN_SAND,
 };
 
 export const goblinPocketSand: IHeroSkillSet = {
@@ -100,7 +110,7 @@ export const goblinPocketSand: IHeroSkillSet = {
     skills: goblinPocketSandSkillset(40, 100, 2, 50),
     isBasicAttack: false,
     nextLevel: goblinPocketSand_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_GOBLIN_SAND,
 };
 
 // GOBLIN SHAMAN /////////////////////////////////////////////// GOBLIN SHAMAN
@@ -122,7 +132,7 @@ export const goblinShamanHpRegIncr_3: IHeroSkillSet = {
             targetType: ETargetType.ALL_ALLIES,
         },
     ],
-    image: IMAGE_SKILL_REGEN,
+    image: IMAGE_SKILL_MOB_GOBLIN_REGEN,
 };
 
 export const goblinShamanHpRegIncr_2: IHeroSkillSet = {
@@ -142,7 +152,7 @@ export const goblinShamanHpRegIncr_2: IHeroSkillSet = {
             targetType: ETargetType.ALL_ALLIES,
         },
     ],
-    image: IMAGE_SKILL_REGEN,
+    image: IMAGE_SKILL_MOB_GOBLIN_REGEN,
     nextLevel: goblinShamanHpRegIncr_3,
 };
 
@@ -163,7 +173,7 @@ export const goblinShamanHpRegIncr: IHeroSkillSet = {
         },
     ],
     nextLevel: goblinShamanHpRegIncr_2,
-    image: IMAGE_SKILL_REGEN,
+    image: IMAGE_SKILL_MOB_GOBLIN_REGEN,
 };
 
 // GOBLIN APPLY SHOCK /////////////////////////////////////////////// GOBLIN APPLY SHOCK
@@ -203,7 +213,7 @@ export const goblinApplyShock_3: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     isBasicAttack: false,
     skills: goblinApplyShockSkillset(3),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_GOBLIN_SHOCK,
 };
 
 export const goblinApplyShock_2: IHeroSkillSet = {
@@ -216,7 +226,7 @@ export const goblinApplyShock_2: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     isBasicAttack: false,
     skills: goblinApplyShockSkillset(2),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_GOBLIN_SHOCK,
     nextLevel: goblinApplyShock_3,
 };
 
@@ -230,7 +240,7 @@ export const goblinApplyShock: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     isBasicAttack: false,
     skills: goblinApplyShockSkillset(1),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_GOBLIN_SHOCK,
     nextLevel: goblinApplyShock_2,
 };
 
@@ -259,43 +269,49 @@ const skeletonUnholyLeapSkillset = (atk: number, atkScale: number, poison: numbe
 
 export const skeletonUnholyLeap_3: IHeroSkillSet = {
     id: "skeletonUnholyLeap",
-    name: "Unholy leap",
-    desc: "Attacks enemy with lowest\nhealth percent physically\nfor [5+PP] and apply\n[3+60%xPP] poison",
+    //name: "Unholy leap",
+    //desc: "Attacks enemy with lowest\nhealth percent physically\nfor [5+PP] and apply\n[3+60%xPP] poison",
+    name: i18n.skills.mobs.skeletonUnholyLeap.name,
+    desc: i18n.skills.mobs.skeletonUnholyLeap.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR],
     isBasicAttack: false,
     type: ESkillSetType.PHYSICAL_ATTACK,
     skills: skeletonUnholyLeapSkillset(5, 100, 3, 60),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_POISON_BLADE,
     //nextLevel: skeletonUnholyLeap_2
 };
 
 export const skeletonUnholyLeap_2: IHeroSkillSet = {
     id: "skeletonUnholyLeap",
-    name: "Unholy leap",
-    desc: "Attacks enemy with lowest\nhealth percent physically\nfor [4+65%xPP] and apply\n[2+40%xPP] poison",
+    //name: "Unholy leap",
+    //desc: "Attacks enemy with lowest\nhealth percent physically\nfor [4+65%xPP] and apply\n[2+40%xPP] poison",
+    name: i18n.skills.mobs.skeletonUnholyLeap.name,
+    desc: i18n.skills.mobs.skeletonUnholyLeap.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR],
     isBasicAttack: false,
     type: ESkillSetType.PHYSICAL_ATTACK,
     skills: skeletonUnholyLeapSkillset(4, 65, 2, 40),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_POISON_BLADE,
     nextLevel: skeletonUnholyLeap_3,
 };
 
 export const skeletonUnholyLeap: IHeroSkillSet = {
     id: "skeletonUnholyLeap",
-    name: "Unholy leap",
-    desc: "Attacks enemy with lowest\nhealth percent physically\nfor [3+35%xPP] and apply\n[1+20%xPP] poison",
+    //name: "Unholy leap",
+    //desc: "Attacks enemy with lowest\nhealth percent physically\nfor [3+35%xPP] and apply\n[1+20%xPP] poison",
+    name: i18n.skills.mobs.skeletonUnholyLeap.name,
+    desc: i18n.skills.mobs.skeletonUnholyLeap.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.WARRIOR],
     isBasicAttack: false,
     type: ESkillSetType.PHYSICAL_ATTACK,
     skills: skeletonUnholyLeapSkillset(3, 35, 1, 20),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_POISON_BLADE,
     nextLevel: skeletonUnholyLeap_2,
 };
 
@@ -324,37 +340,43 @@ const skeletonArmorSelfAndLowSkillset = (base: number, ppScale: number): IHeroSk
 };
 
 export const skeletonArmorSelfAndLow_3: IHeroSkillSet = {
-    id: "attrIncArmorSelfAndLow",
-    name: "+armor all",
-    desc: "Armor Self and low Hp ally\nfor [8+PP]",
+    id: "skeletonArmorSelfAndLow",
+    //name: "+armor all",
+    //desc: "Armor Self and low Hp ally\nfor [8+PP]",
+    name: i18n.skills.mobs.skeletonArmorSelfAndLow.name,
+    desc: i18n.skills.mobs.skeletonArmorSelfAndLow.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: skeletonArmorSelfAndLowSkillset(8, 100),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_SKELETON_SHIELD,
 };
 
 export const skeletonArmorSelfAndLow_2: IHeroSkillSet = {
-    id: "attrIncArmorSelfAndLow",
-    name: "+armor all",
-    desc: "Armor Self and low Hp ally\nfor [6+50%xPP]",
+    id: "skeletonArmorSelfAndLow",
+    //name: "+armor all",
+    //desc: "Armor Self and low Hp ally\nfor [6+50%xPP]",
+    name: i18n.skills.mobs.skeletonArmorSelfAndLow.name,
+    desc: i18n.skills.mobs.skeletonArmorSelfAndLow.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: skeletonArmorSelfAndLowSkillset(6, 50),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_SKELETON_SHIELD,
     nextLevel: skeletonArmorSelfAndLow_3,
 };
 
 export const skeletonArmorSelfAndLow: IHeroSkillSet = {
-    id: "attrIncArmorSelfAndLow",
-    name: "+armor all",
-    desc: "Armor Self and low Hp ally\nfor [4+20%xPP]",
+    id: "skeletonArmorSelfAndLow",
+    //name: "+armor all",
+    //desc: "Armor Self and low Hp ally\nfor [4+20%xPP]",
+    name: i18n.skills.mobs.skeletonArmorSelfAndLow.name,
+    desc: i18n.skills.mobs.skeletonArmorSelfAndLow.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR],
     skills: skeletonArmorSelfAndLowSkillset(4, 20),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_SKELETON_SHIELD,
     nextLevel: skeletonArmorSelfAndLow_2,
 };
 
@@ -390,42 +412,48 @@ const skeletonPoisonedFlamesSkillset = (atk: number, mpScale: number, stacks: nu
 
 export const skeletonPoisonedFlames_3: IHeroSkillSet = {
     id: "poisonedFlames",
-    name: "Poisoned flames",
-    desc: "Attack random enemy with\nmagic [10+MP] and apply\n[4] poison and burn",
+    //name: "Poisoned flames",
+    //desc: "Attack random enemy with\nmagic [10+MP] and apply\n[4] poison and burn",
+    name: i18n.skills.mobs.poisonedFlames.name,
+    desc: i18n.skills.mobs.poisonedFlames.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     isBasicAttack: false,
     skills: skeletonPoisonedFlamesSkillset(10, 100, 4),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_POISON_FLAME,
 };
 
 export const skeletonPoisonedFlames_2: IHeroSkillSet = {
     id: "poisonedFlames",
-    name: "Poisoned flames",
-    desc: "Attack random enemy with\nmagic [8+65%xMP] and apply\n[3] poison and burn",
+    //name: "Poisoned flames",
+    //desc: "Attack random enemy with\nmagic [8+65%xMP] and apply\n[3] poison and burn",
+    name: i18n.skills.mobs.poisonedFlames.name,
+    desc: i18n.skills.mobs.poisonedFlames.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     isBasicAttack: false,
     skills: skeletonPoisonedFlamesSkillset(8, 65, 3),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_POISON_FLAME,
     nextLevel: skeletonPoisonedFlames_3,
 };
 
 export const skeletonPoisonedFlames: IHeroSkillSet = {
     id: "poisonedFlames",
-    name: "Poisoned flames",
-    desc: "Attack random enemy with\nmagic [6+35%xMP] and apply\n[2] poison and burn",
+    //name: "Poisoned flames",
+    //desc: "Attack random enemy with\nmagic [6+35%xMP] and apply\n[2] poison and burn",
+    name: i18n.skills.mobs.poisonedFlames.name,
+    desc: i18n.skills.mobs.poisonedFlames.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.DARK, EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     isBasicAttack: false,
     skills: skeletonPoisonedFlamesSkillset(6, 35, 2),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_POISON_FLAME,
     nextLevel: skeletonPoisonedFlames_2,
 };
 
@@ -531,42 +559,48 @@ const goldGoblinBuffSkillset = (atkBuff: number, armorBuff: number): IHeroSkill[
 
 export const goldGoblinBuff_3: IHeroSkillSet = {
     id: "goldGoblinBuff",
-    name: "High morale",
-    desc: "Increase next basic attack\nof all allies and armor\nby [3]",
+    //name: "High morale",
+    //desc: "Increase next basic attack\nof all allies and armor\nby [3]",
+    name: i18n.skills.mobs.goldGoblinBuff.name,
+    desc: i18n.skills.mobs.goldGoblinBuff.desc2,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD, EHeroClass.ORDER],
     isBasicAttack: true,
     isActivateOnStart: true,
     skills: goldGoblinBuffSkillset(3, 3),
-    image: IMAGE_SKILL_BARD_BUFF_1,
+    image: IMAGE_SKILL_MOB_GOBLIN_SONG,
 };
 
 export const goldGoblinBuff_2: IHeroSkillSet = {
     id: "goldGoblinBuff",
-    name: "High morale",
-    desc: "Increase next basic attack\nof all allies and armor\nby [2]",
+    //name: "High morale",
+    //desc: "Increase next basic attack\nof all allies and armor\nby [2]",
+    name: i18n.skills.mobs.goldGoblinBuff.name,
+    desc: i18n.skills.mobs.goldGoblinBuff.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD, EHeroClass.ORDER],
     isBasicAttack: true,
     isActivateOnStart: true,
     skills: goldGoblinBuffSkillset(2, 2),
-    image: IMAGE_SKILL_BARD_BUFF_1,
+    image: IMAGE_SKILL_MOB_GOBLIN_SONG,
     nextLevel: goldGoblinBuff_3,
 };
 
 export const goldGoblinBuff: IHeroSkillSet = {
     id: "goldGoblinBuff",
-    name: "High morale",
-    desc: "Increase next basic attack\nof all allies and armor\nby [1]",
+    //name: "High morale",
+    //desc: "Increase next basic attack\nof all allies and armor\nby [1]",
+    name: i18n.skills.mobs.goldGoblinBuff.name,
+    desc: i18n.skills.mobs.goldGoblinBuff.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD, EHeroClass.ORDER],
     isBasicAttack: true,
     isActivateOnStart: true,
     skills: goldGoblinBuffSkillset(1, 1),
-    image: IMAGE_SKILL_BARD_BUFF_1,
+    image: IMAGE_SKILL_MOB_GOBLIN_SONG,
     nextLevel: goldGoblinBuff_2,
 };
 
@@ -651,7 +685,7 @@ export const mobAmbushSkill: IHeroSkillSet = {
 };
 
 // peasants
-const peasantSkillset = (hpBoost: number, ppScale: number, atkAndRegen: number): IHeroSkill[] => {
+const peasantLastStandSkillset = (hpBoost: number, ppScale: number, atkAndRegen: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
@@ -709,43 +743,48 @@ const peasantSkillset = (hpBoost: number, ppScale: number, atkAndRegen: number):
         },
     ];
 };
-export const peasantSkill_3: IHeroSkillSet = {
-    id: "peasantSkill",
-    name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [10+75%xPP]\nIf there's one or less\nalive frontrow allies\nget +[3] attack and regen",
+export const peasantLastStandSkill_3: IHeroSkillSet = {
+    id: "lastStandSkill",
+    //name: "Last stand",
+    //desc: "If frontrow allies are\ndead, increase Hp by [10+75%xPP]\nIf there's one or less\nalive frontrow allies\nget +[3] attack and regen",
+    name: i18n.skills.mobs.lastStandSkill.name,
+    desc: i18n.skills.mobs.lastStandSkill.desc3,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 3,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(10, 75, 3),
-    //nextLevel: peasantSkill_2,
-    image: IMAGE_SKILL_TEST,
+    skills: peasantLastStandSkillset(10, 75, 3),
+    image: IMAGE_SKILL_MOB_LAST_STAND,
 };
 
-export const peasantSkill_2: IHeroSkillSet = {
-    id: "peasantSkill",
-    name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [7+60%xPP]\nIf there's one or less\nalive frontrow allies\nget +[2] attack and regen",
+export const peasantLastStandSkill_2: IHeroSkillSet = {
+    id: "lastStandSkill",
+    //name: "Last stand",
+    //desc: "If frontrow allies are\ndead, increase Hp by [7+60%xPP]\nIf there's one or less\nalive frontrow allies\nget +[2] attack and regen",
+    name: i18n.skills.mobs.lastStandSkill.name,
+    desc: i18n.skills.mobs.lastStandSkill.desc2,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 2,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(7, 60, 2),
-    nextLevel: peasantSkill_3,
-    image: IMAGE_SKILL_TEST,
+    skills: peasantLastStandSkillset(7, 60, 2),
+    nextLevel: peasantLastStandSkill_3,
+    image: IMAGE_SKILL_MOB_LAST_STAND,
 };
 
-export const peasantSkill: IHeroSkillSet = {
-    id: "peasantSkill",
-    name: "Last stand",
-    desc: "If frontrow allies are\ndead, increase Hp by [5+50%xPP]\nIf there's one or less\nalive frontrow allies\nget +[1] attack and regen",
+export const peasantLastStandSkill: IHeroSkillSet = {
+    id: "lastStandSkill",
+    //name: "Last stand",
+    //desc: "If frontrow allies are\ndead, increase Hp by [5+50%xPP]\nIf there's one or less\nalive frontrow allies\nget +[1] attack and regen",
+    name: i18n.skills.mobs.lastStandSkill.name,
+    desc: i18n.skills.mobs.lastStandSkill.desc1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
     level: 1,
     priceLevel: 2,
     type: ESkillSetType.BUFF,
-    skills: peasantSkillset(5, 50, 1),
-    nextLevel: peasantSkill_2,
-    image: IMAGE_SKILL_TEST,
+    skills: peasantLastStandSkillset(5, 50, 1),
+    nextLevel: peasantLastStandSkill_2,
+    image: IMAGE_SKILL_MOB_LAST_STAND,
 };
 
 // stronk peasant
@@ -921,7 +960,7 @@ export const fireflyConfusingMistSkill_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.SUMMON, EHeroClass.BARD],
     skills: fireflyConfusingMistSkillset(35, 35),
     //nextLevel: fireflyConfusingMistSkill_2,
-    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_MOB_FIREFLY_MIST,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -934,7 +973,7 @@ export const fireflyConfusingMistSkill_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.SUMMON, EHeroClass.BARD],
     skills: fireflyConfusingMistSkillset(25, 25),
     nextLevel: fireflyConfusingMistSkill_3,
-    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_MOB_FIREFLY_MIST,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -947,7 +986,7 @@ export const fireflyConfusingMistSkill: IHeroSkillSet = {
     heroClasses: [EHeroClass.SUMMON, EHeroClass.BARD],
     skills: fireflyConfusingMistSkillset(20, 20),
     nextLevel: fireflyConfusingMistSkill_2,
-    image: IMAGE_FIREFLY_SELF_POISON, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_MOB_FIREFLY_MIST,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -1109,8 +1148,7 @@ export const spiritTeamFlurry_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.MASTER, EHeroClass.WARRIOR],
     isBasicAttack: false,
     skills: spiritTeamFlurrySkillset(65),
-    //nextLevel: spiritTeamFlurry_2,
-    image: IMAGE_SKILL_DOUBLE_SWORD, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_MOB_SPIRIT_SPEARS,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -1124,7 +1162,7 @@ export const spiritTeamFlurry_2: IHeroSkillSet = {
     isBasicAttack: false,
     skills: spiritTeamFlurrySkillset(50),
     nextLevel: spiritTeamFlurry_3,
-    image: IMAGE_SKILL_DOUBLE_SWORD, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_MOB_SPIRIT_SPEARS,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -1138,7 +1176,7 @@ export const spiritTeamFlurry: IHeroSkillSet = {
     isBasicAttack: false,
     skills: spiritTeamFlurrySkillset(35),
     nextLevel: spiritTeamFlurry_2,
-    image: IMAGE_SKILL_DOUBLE_SWORD, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_MOB_SPIRIT_SPEARS,
     animationType: AnimationType.UNIT_ATTACK,
 };
 

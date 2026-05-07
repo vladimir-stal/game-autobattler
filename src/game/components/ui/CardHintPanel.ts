@@ -303,7 +303,11 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         if (isFromHero) {
             const { image, isMcSkill } = skillSet;
             if (image) {
-                this.skillImage.setTexture(IMAGE_MULTIATALAS_SKILLS, image);
+                if (image.startsWith("IMAGE_SKILL_MOB")) {
+                    this.skillImage.setTexture(image);
+                } else {
+                    this.skillImage.setTexture(IMAGE_MULTIATALAS_SKILLS, image);
+                }
                 this.skillImage.setVisible(true);
             } else {
                 this.skillImage.setVisible(false);

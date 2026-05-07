@@ -201,6 +201,6 @@ export const fireflySummonMob_6: IUnit = {
         { item: itemCoin2, probability: 12 }, // 10% ~ 10/0.8
         { item: basic_heal, probability: 14 }, // 10% ~ 10/0.8/0.88
         // nothing = 100*0.80*0.88*0.86
-        { skill: fireflyUnfairExchange, probability: 16 },
+        //{ skill: fireflyUnfairExchange, probability: 16 },
     ],
 };

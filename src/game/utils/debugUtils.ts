@@ -4,7 +4,17 @@ import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summo
 import { jacket21_3 } from "../commonItemConsts2";
 import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
-import { barbarianHero, doomsayerHero, forestSpiritHero, illusionistHero, mimicHero, necromancerHero, oracleHero, samuraiHero, witchHero } from "../mcHeroConsts";
+import {
+    barbarianHero,
+    doomsayerHero,
+    forestSpiritHero,
+    illusionistHero,
+    mimicHero,
+    necromancerHero,
+    oracleHero,
+    samuraiHero,
+    witchHero,
+} from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { onlyBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
@@ -22,10 +32,24 @@ import { ringOfHealingSkill } from "../skills/priestSkillConsts";
 import { mortalStrikeSkill } from "../skills/warriorSkillConsts";
 import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
 import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
-import { skeletonPoisonedFlames } from "../skills/mobSkills";
+import {
+    fireflyConfusingMistSkill,
+    goblinApplyShock,
+    goblinPocketSand,
+    goblinShamanHpRegIncr,
+    goldGoblinBuff,
+    peasantLastStandSkill,
+    peasantsStronkSkill,
+    skeletonArmorSelfAndLow,
+    skeletonPoisonedFlames,
+    skeletonUnholyLeap,
+    spiritTeamFlurry,
+    spiritTeamRevenge,
+} from "../skills/mobSkills";
 import { scrollOfSkill } from "../commonItemConsts3";
+import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
 
-export const debugHeroSelectRoom = true;
+export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
@@ -40,13 +64,21 @@ export const customHeroSelectRoom = (): (ICard | null)[] => {
 export const customStartingItemsRoom = (): ICard[] => {
     return [
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.UNIT, price: 0, unit: warriorSummonMob_3 },
+        //{ type: ECardType.UNIT, price: 0, unit: warriorSummonMob_3 },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
-        //{ type: ECardType.SKILL, price: 0, skill: magicAttackX3 },
+        { type: ECardType.SKILL, price: 0, skill: peasantLastStandSkill },
+        { type: ECardType.SKILL, price: 0, skill: goldGoblinBuff },
+
+        { type: ECardType.SKILL, price: 0, skill: regularWolfSkill },
+        { type: ECardType.SKILL, price: 0, skill: peasantsStronkSkill },
+        { type: ECardType.SKILL, price: 0, skill: fireflyConfusingMistSkill },
+        { type: ECardType.SKILL, price: 0, skill: spiritTeamRevenge },
+        { type: ECardType.SKILL, price: 0, skill: spiritTeamFlurry },
+
         /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: warriorHero },

@@ -605,5 +605,35 @@ export const SKILLS_EN = {
             desc2: "Apply [2] shock to the\nenemy with most shock or\na random enemy",
             desc3: "Apply [3] shock to the\nenemy with most shock or\na random enemy",
         },
+        skeletonUnholyLeap: {
+            name: "Unholy leap",
+            desc1: `Attacks enemy with lowest\nhealth percent physically\nfor [3+35%xPP] and apply\n[1+20%xPP] poison`,
+            desc2: `Attacks enemy with lowest\nhealth percent physically\nfor [4+65%xPP] and apply\n[2+40%xPP] poison`,
+            desc3: `Attacks enemy with lowest\nhealth percent physically\nfor [5+PP] and apply\n[3+60%xPP] poison`,
+        },
+        skeletonArmorSelfAndLow: {
+            name: "Decayed shell",
+            desc1: `Armor Self and low Hp ally\nfor [4+20%xPP]`,
+            desc2: `Armor Self and low Hp ally\nfor [6+50%xPP]`,
+            desc3: `Armor Self and low Hp ally\nfor [8+PP]`,
+        },
+        poisonedFlames: {
+            name: "Poisoned flames",
+            desc1: `Attack random enemy with\nmagic [6+35%xMP] and apply\n[2] poison and burn`,
+            desc2: `Attack random enemy with\nmagic [8+65%xMP] and apply\n[3] poison and burn`,
+            desc3: `Attack random enemy with\nmagic [10+MP] and apply\n[4] poison and burn`,
+        },
+        goldGoblinBuff: {
+            name: "High morale",
+            desc1: `Increase next basic attack\nof all allies and armor\nby [1]`,
+            desc2: `Increase next basic attack\nof all allies and armor\nby [2]`,
+            desc3: `Increase next basic attack\nof all allies and armor\nby [3]`,
+        },
+        lastStandSkill: {
+            name: "Last stand",
+            desc1: `If frontrow allies are\ndead, increase Hp by [5+50%xPP]\nIf there's one or less\nalive frontrow allies\nget +[1] attack and regen`,
+            desc2: `If frontrow allies are\ndead, increase Hp by [7+60%xPP]\nIf there's one or less\nalive frontrow allies\nget +[2] attack and regen`,
+            desc3: `If frontrow allies are\ndead, increase Hp by [10+75%xPP]\nIf there's one or less\nalive frontrow allies\nget +[3] attack and regen`,
+        },
     },
 };

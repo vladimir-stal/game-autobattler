@@ -389,7 +389,7 @@ export const i18n: Ii18n = {
         GOLD: "ЗОЛОТО",
         CHAINED_SKILL: "ЦЕПНОЙ НАВЫК",
         ON_START_SKILL: "НАЧАЛО ДУЭЛИ",
-        NO_BA_SKILL: "Без последующей базовой атаки",
+        NO_BA_SKILL: "Без последующей\nбазовой атаки",
         //
         DEAD: "МЁРТВ",
         VICTORY: "ПОБЕДА",

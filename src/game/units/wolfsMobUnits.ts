@@ -65,7 +65,7 @@ export const strongWolfUnit: IUnit = {
         { item: hp_amulet, probability: 17 }, // 15% ~ 15/0.85
         { item: itemCoin2, probability: 14 }, // 10% ~ 10/(0.85*0.83)
         // 100*0.85*0.83*0.86 = 60% not to get anything
-        { skill: bigWolfSummonSkill, probability: 8 }, // ~5%
+        //{ skill: bigWolfSummonSkill, probability: 8 }, // ~5%
         { skill: regularWolfSkill, probability: 9 }, // ~5%
     ],
 };

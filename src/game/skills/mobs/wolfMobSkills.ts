@@ -1,16 +1,5 @@
-import {
-    AnimationType,
-    EHeroAttackType,
-    EHeroClass,
-    EHeroSkillType,
-    ESkillCondition,
-    ESkillSetType,
-    EStatusType,
-    ETargetType,
-    IHeroSkill,
-    IHeroSkillSet,
-} from "../../../types";
-import { IMAGE_SKILL_PHYS_ATTACK } from "../../utils/load/skillImagesLoad";
+import { AnimationType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillSetType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet } from "../../../types";
+import { IMAGE_SKILL_MOB_WOLF_CLAWS, IMAGE_SKILL_PHYS_ATTACK } from "../../utils/load/skillImagesLoad";
 
 // wolf skill
 const regularWolfSkillset = (atk: number, bleed: number, ppScale: number): IHeroSkill[] => {
@@ -60,8 +49,7 @@ export const regularWolfSkill_3: IHeroSkillSet = {
     type: ESkillSetType.PHYSICAL_ATTACK,
     isBasicAttack: false,
     skills: regularWolfSkillset(2, 2, 40),
-    //nextLevel: regularWolfSkill_2,
-    image: IMAGE_SKILL_PHYS_ATTACK,
+    image: IMAGE_SKILL_MOB_WOLF_CLAWS,
     animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
 };
 
@@ -76,7 +64,7 @@ export const regularWolfSkill_2: IHeroSkillSet = {
     isBasicAttack: false,
     skills: regularWolfSkillset(2, 1, 30),
     nextLevel: regularWolfSkill_3,
-    image: IMAGE_SKILL_PHYS_ATTACK,
+    image: IMAGE_SKILL_MOB_WOLF_CLAWS,
     animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
 };
 
@@ -91,6 +79,6 @@ export const regularWolfSkill: IHeroSkillSet = {
     isBasicAttack: false,
     skills: regularWolfSkillset(1, 1, 20),
     nextLevel: regularWolfSkill_2,
-    image: IMAGE_SKILL_PHYS_ATTACK,
+    image: IMAGE_SKILL_MOB_WOLF_CLAWS,
     animationType: AnimationType.UNIT_PHYSICAL_ATTACK_SKILL,
 };

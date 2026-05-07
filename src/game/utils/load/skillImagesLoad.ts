@@ -62,11 +62,45 @@ export const IMAGE_SKILL_BURNING_MAN = "2/burning_man.png";
 
 export const IMAGE_MULTIATALAS_SKILLS = "IMAGE_MULTIATALAS_SKILLS";
 
+//TODO: pack in atlas
+// MOB SKILLS
+export const IMAGE_SKILL_MOB_GOBLIN_REGEN = "IMAGE_SKILL_MOB_GOBLIN_REGEN";
+export const IMAGE_SKILL_MOB_GOBLIN_SONG = "IMAGE_SKILL_MOB_GOBLIN_SONG";
+export const IMAGE_SKILL_MOB_GOBLIN_SHOCK = "IMAGE_SKILL_MOB_GOBLIN_SHOCK";
+export const IMAGE_SKILL_MOB_GOBLIN_SAND = "IMAGE_SKILL_MOB_GOBLIN_SAND";
+export const IMAGE_SKILL_MOB_LAST_STAND = "IMAGE_SKILL_MOB_LAST_STAND";
+export const IMAGE_SKILL_MOB_POISON_FLAME = "IMAGE_SKILL_MOB_POISON_FLAME";
+export const IMAGE_SKILL_MOB_POISON_BLADE = "IMAGE_SKILL_MOB_POISON_BLADE";
+export const IMAGE_SKILL_MOB_SKELETON_SHIELD = "IMAGE_SKILL_MOB_SKELETON_SHIELD";
+
+export const IMAGE_SKILL_MOB_PIRATE_BLACK_MARK = "IMAGE_SKILL_MOB_PIRATE_BLACK_MARK";
+export const IMAGE_SKILL_MOB_WOLF_CLAWS = "IMAGE_SKILL_MOB_WOLF_CLAWS";
+export const IMAGE_SKILL_MOB_FIREFLY_SHOCK = "IMAGE_SKILL_MOB_FIREFLY_SHOCK";
+export const IMAGE_SKILL_MOB_FIREFLY_MIST = "IMAGE_SKILL_MOB_FIREFLY_MIST";
+export const IMAGE_SKILL_MOB_SPIRIT_SPEARS = "IMAGE_SKILL_MOB_SPIRIT_SPEARS";
+
 const prefix = "assets/sprites/skills/";
 
 export function loadSkillImages(scene: Scene) {
     scene.load.multiatlas(IMAGE_MULTIATALAS_SKILLS, "assets/sprites/skills/skill_atlas.json", "assets/sprites/skills");
     //scene.load.atlas(IMAGE_MULTIATALAS_SKILLS, "assets/sprites/skills/skill_atlas.json", "assets/sprites/skills");
+
+    // MOBS
+
+    scene.load.image(IMAGE_SKILL_MOB_GOBLIN_REGEN, "assets/sprites/skills/mobs/goblin_regen.png");
+    scene.load.image(IMAGE_SKILL_MOB_GOBLIN_SONG, "assets/sprites/skills/mobs/goblin_song.png");
+    scene.load.image(IMAGE_SKILL_MOB_GOBLIN_SHOCK, "assets/sprites/skills/mobs/goblin_shock.png");
+    scene.load.image(IMAGE_SKILL_MOB_GOBLIN_SAND, "assets/sprites/skills/mobs/goblin_pocket_sand.png");
+    scene.load.image(IMAGE_SKILL_MOB_LAST_STAND, "assets/sprites/skills/mobs/last_stand.png");
+    scene.load.image(IMAGE_SKILL_MOB_POISON_FLAME, "assets/sprites/skills/mobs/posion_flame.png");
+    scene.load.image(IMAGE_SKILL_MOB_POISON_BLADE, "assets/sprites/skills/mobs/skeleton_leap.png");
+    scene.load.image(IMAGE_SKILL_MOB_SKELETON_SHIELD, "assets/sprites/skills/mobs/skeleton_shield.png");
+
+    scene.load.image(IMAGE_SKILL_MOB_PIRATE_BLACK_MARK, "assets/sprites/skills/mobs/black_mark.png");
+    scene.load.image(IMAGE_SKILL_MOB_WOLF_CLAWS, "assets/sprites/skills/mobs/claws.png");
+    scene.load.image(IMAGE_SKILL_MOB_FIREFLY_SHOCK, "assets/sprites/skills/mobs/firefly_shock.png");
+    scene.load.image(IMAGE_SKILL_MOB_FIREFLY_MIST, "assets/sprites/skills/mobs/mist.png");
+    scene.load.image(IMAGE_SKILL_MOB_SPIRIT_SPEARS, "assets/sprites/skills/mobs/spirit_spears.png");
 
     // LEVEL 1
     // scene.load.image(IMAGE_SKILL_PHYS_ATTACK, "assets/sprites/skills/sword_attack_100.png");

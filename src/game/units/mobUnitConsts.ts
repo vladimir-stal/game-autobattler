@@ -2,7 +2,7 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardT
 import { i18n } from "../consts";
 import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobItemConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { mobNoSkill, peasantSkill, peasantsStronkSkill } from "../skills/mobSkills";
+import { mobNoSkill, peasantLastStandSkill, peasantsStronkSkill } from "../skills/mobSkills";
 
 export const PEASANT_ID = "PEASANT";
 export const WOLF_ID = "WOLF1";
@@ -56,7 +56,7 @@ export const peasantUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
     id: PEASANT_ID,
-    skills: [mobNoSkill, peasantSkill, noBasicAttackSkill],
+    skills: [mobNoSkill, peasantLastStandSkill, noBasicAttackSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -64,6 +64,6 @@ export const peasantUnit: IUnit = {
         { item: itemPeasantPitchfork, probability: 25 },
         { item: itemCoin, probability: 20 }, // 15% ~ 15/(100-25)
         // nothing = 100*0.75*0.80
-        { skill: peasantSkill, probability: 16 }, // ~10%
+        { skill: peasantLastStandSkill, probability: 16 }, // ~10%
     ],
 };
