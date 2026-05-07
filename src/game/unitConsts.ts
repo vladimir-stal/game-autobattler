@@ -41,29 +41,16 @@ import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { musical31 } from "./weaponItem3Consts";
 import { i18n } from "./consts";
 import { pirate1Unit, pirate2Unit } from "./units/piratesMobUnits";
-import {
-    fireflyConfusingMistSkill,
-    fireflyUnfairExchange,
-    goblinApplyShock,
-    goblinPocketSand,
-    goblinShamanHpRegIncr,
-    goldGoblinBuff,
-    peasantLastStandSkill,
-    peasantsStronkSkill,
-    pirateCallTheCannons,
-    pirateDeadmansCurse,
-    pirateDragNDrown,
-    skeletonArmorSelfAndLow,
-    skeletonPoisonedFlames,
-    skeletonUnholyLeap,
-    spiritShieldRadiate,
-    spiritTeamFlurry,
-    spiritTeamRevenge,
-} from "./skills/mobSkills";
 import { scrollOfSkill } from "./commonItemConsts3";
 import { regularWolfSkill } from "./skills/mobs/wolfMobSkills";
 import { bigWolfSummonSkill } from "./skills/mobs/bigWolfMobSkills";
 import { dagger21, dagger22 } from "./weaponItem2Consts";
+import { peasantLastStandSkill, peasantsStronkSkill } from "./skills/mobs/peasantMobSkills";
+import { pirateCallTheCannons, pirateDeadmansCurse, pirateDragNDrown } from "./skills/mobs/pirateMobSkills";
+import { fireflyConfusingMistSkill, fireflyUnfairExchange } from "./skills/mobs/fireflyMobSkills";
+import { spiritShieldRadiate, spiritTeamFlurry, spiritTeamRevenge } from "./skills/mobs/spiritWarriorMobSkills";
+import { skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap } from "./skills/mobs/skeletonMobSkills";
+import { goblinApplyShock, goblinPocketSand, goblinShamanHpRegIncr, goldGoblinBuff } from "./skills/mobs/goblinMobSkills";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -648,7 +635,7 @@ export const mobsLvl6: IMobsVariants[] = [
 ];
 
 export const unitsLvl1 = [peasantUnit, weakGoblinUnit, warriorSummonMob, fireflySummonMob];
-export const unitsLvl2 = [goblinUnit, skeletonUnit, wolfUnit,];
+export const unitsLvl2 = [goblinUnit, skeletonUnit, wolfUnit];
 export const unitsLvl3 = [goldGoblin1Unit, shieldWarriorsSummonMob, pirate1Unit];
 export const unitsLvl4 = [skeletonWarriorUnit, warriorSummonMob_3, peasantUnit_4];
 export const unitsLvl5 = [skeletonMageUnit, strongWolfUnit, warriorSummonMob_5, pirate2Unit];

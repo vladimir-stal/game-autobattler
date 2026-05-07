@@ -32,22 +32,12 @@ import { ringOfHealingSkill } from "../skills/priestSkillConsts";
 import { mortalStrikeSkill } from "../skills/warriorSkillConsts";
 import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
 import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
-import {
-    fireflyConfusingMistSkill,
-    goblinApplyShock,
-    goblinPocketSand,
-    goblinShamanHpRegIncr,
-    goldGoblinBuff,
-    peasantLastStandSkill,
-    peasantsStronkSkill,
-    skeletonArmorSelfAndLow,
-    skeletonPoisonedFlames,
-    skeletonUnholyLeap,
-    spiritTeamFlurry,
-    spiritTeamRevenge,
-} from "../skills/mobSkills";
-import { scrollOfSkill } from "../commonItemConsts3";
+import {} from "../skills/mobSkills";
 import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
+import { peasantsStronkSkill } from "../skills/mobs/peasantMobSkills";
+import { pirateCallTheCannons, pirateDeadmansCurse, pirateDragNDrown } from "../skills/mobs/pirateMobSkills";
+import { fireflyConfusingMistSkill } from "../skills/mobs/fireflyMobSkills";
+import { spiritTeamFlurry, spiritTeamRevenge } from "../skills/mobs/spiritWarriorMobSkills";
 
 export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
@@ -69,14 +59,8 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
-        { type: ECardType.SKILL, price: 0, skill: peasantLastStandSkill },
-        { type: ECardType.SKILL, price: 0, skill: goldGoblinBuff },
-
-        { type: ECardType.SKILL, price: 0, skill: regularWolfSkill },
-        { type: ECardType.SKILL, price: 0, skill: peasantsStronkSkill },
-        { type: ECardType.SKILL, price: 0, skill: fireflyConfusingMistSkill },
-        { type: ECardType.SKILL, price: 0, skill: spiritTeamRevenge },
-        { type: ECardType.SKILL, price: 0, skill: spiritTeamFlurry },
+        { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
+        { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
 
         /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },

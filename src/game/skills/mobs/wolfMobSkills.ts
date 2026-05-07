@@ -1,4 +1,5 @@
 import { AnimationType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillSetType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet } from "../../../types";
+import { i18n } from "../../consts";
 import { IMAGE_SKILL_MOB_WOLF_CLAWS, IMAGE_SKILL_PHYS_ATTACK } from "../../utils/load/skillImagesLoad";
 
 // wolf skill
@@ -41,8 +42,10 @@ const regularWolfSkillset = (atk: number, bleed: number, ppScale: number): IHero
 
 export const regularWolfSkill_3: IHeroSkillSet = {
     id: "regularWolfSkill",
-    name: "Claws and fangs",
-    desc: "Attack two random enemies\ndealing [2+40%xPP] physical\ndamage and [2] bleed each",
+    //name: "Claws and fangs",
+    //desc: "Attack two random enemies\ndealing [2+40%xPP] physical\ndamage and [2] bleed each",
+    name: i18n.skills.mobs.regularWolfSkill.name,
+    desc: i18n.skills.mobs.regularWolfSkill.desc3,
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
@@ -55,8 +58,10 @@ export const regularWolfSkill_3: IHeroSkillSet = {
 
 export const regularWolfSkill_2: IHeroSkillSet = {
     id: "regularWolfSkill",
-    name: "Claws and fangs",
-    desc: "Attack two random enemies\ndealing [2+30%xPP] physical\ndamage and [1] bleed each",
+    //name: "Claws and fangs",
+    //desc: "Attack two random enemies\ndealing [2+30%xPP] physical\ndamage and [1] bleed each",
+    name: i18n.skills.mobs.regularWolfSkill.name,
+    desc: i18n.skills.mobs.regularWolfSkill.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],
@@ -70,8 +75,10 @@ export const regularWolfSkill_2: IHeroSkillSet = {
 
 export const regularWolfSkill: IHeroSkillSet = {
     id: "regularWolfSkill",
-    name: "Claws and fangs",
-    desc: "Attack two random enemies\ndealing [1+20%xPP] physical\ndamage and [1] bleed each",
+    //name: "Claws and fangs",
+    //desc: "Attack two random enemies\ndealing [1+20%xPP] physical\ndamage and [1] bleed each",
+    name: i18n.skills.mobs.regularWolfSkill.name,
+    desc: i18n.skills.mobs.regularWolfSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD, EHeroClass.MASTER],

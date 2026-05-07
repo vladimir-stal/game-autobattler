@@ -2,7 +2,8 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, IMobRewardT
 import { i18n } from "../consts";
 import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobItemConsts";
 import { noBasicAttackSkill } from "../skills/commonSkillConsts";
-import { mobNoSkill, peasantLastStandSkill, peasantsStronkSkill } from "../skills/mobSkills";
+import { peasantLastStandSkill, peasantsStronkSkill } from "../skills/mobs/peasantMobSkills";
+import { mobNoSkill } from "../skills/mobSkills";
 
 export const PEASANT_ID = "PEASANT";
 export const WOLF_ID = "WOLF1";

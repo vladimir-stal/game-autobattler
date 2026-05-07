@@ -3,16 +3,9 @@ import { basic_heal } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemConsts";
 import { noBasicAttackSkill as chainToNextSkill, noBasicAttackSkill } from "../skills/commonSkillConsts";
-import {
-    mobNoSkill,
-    fireflyConfusingMistSkill,
-    fireflyUnfairExchange,
-    infernoFlyPassive,
-    spiritShieldRadiate,
-    spiritTeamFlurry,
-    spiritWarriorPassive,
-    spiritTeamRevenge,
-} from "../skills/mobSkills";
+import { fireflyConfusingMistSkill, fireflyUnfairExchange, infernoFlyPassive } from "../skills/mobs/fireflyMobSkills";
+import { spiritShieldRadiate, spiritTeamFlurry, spiritTeamRevenge, spiritWarriorPassive } from "../skills/mobs/spiritWarriorMobSkills";
+import { mobNoSkill } from "../skills/mobSkills";
 
 //////////// SPIRIT WARRIOR //////////////////////////
 

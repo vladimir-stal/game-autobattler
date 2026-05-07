@@ -92,12 +92,14 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         rect.setStrokeStyle(1, 0x777777);
         this.add(rect);
 
-        this.titleText = this.scene.add.text(40, 10, "", {
-            fontFamily: "Arial Black",
-            fontSize: 14,
-            color: "#ffffff",
-            fontStyle: "bold",
-        });
+        this.titleText = this.scene.add
+            .text(100, 10, "", {
+                fontFamily: "Arial Black",
+                fontSize: 14,
+                color: "#ffffff",
+                fontStyle: "bold",
+            })
+            .setOrigin(0.5, 0);
         this.add(this.titleText);
 
         //
@@ -113,7 +115,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         //
 
-        this.descrText = this.scene.add.rexBBCodeText(20, 40, "", {
+        this.descrText = this.scene.add.rexBBCodeText(10, 40, "", {
             //this.scene.add.text(20, 40, "", {
             //fontFamily: "Arial Black",
             fontSize: 12,

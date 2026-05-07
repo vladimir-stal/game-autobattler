@@ -91,9 +91,10 @@ import { buffSelfMPorPP, increaseMaxHpSkill } from "./skills/commonSkill3Consts"
 import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
 import { music5AddBuffTarget } from "./weaponItem5Consts";
-import { peasantLastStandSkill, skeletonPoisonedFlames } from "./skills/mobSkills";
 import { warriorSummonMob, warriorSummonMob_3 } from "./units/summonMobUnits";
 import { skeletonWarriorUnit } from "./units/skeletonsMobUnits";
+import { peasantLastStandSkill } from "./skills/mobs/peasantMobSkills";
+import { skeletonPoisonedFlames } from "./skills/mobs/skeletonMobSkills";
 
 const addItem = (unit: IUnit, item: IItem) => {
     unit.items.push(item);
@@ -654,15 +655,16 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
             { skill: buffNextBa_2, chained: true },
             { skill: buffNextBa_2, chained: true },
             { skill: buffNextBaTimes_2 },
-            { moveMcSkillToSlotIndex: 3},
+            { moveMcSkillToSlotIndex: 3 },
         ],
         3: [{ unit: wolfUnit }],
-        4: [{ unit: warriorSummonMob }, {item: shield21}, { attribute: { a: "basicMaxHp", v: 4 } }],
+        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attribute: { a: "basicMaxHp", v: 4 } }],
     },
     // day 6
     {
         1: [
-            { unit: assasinHero }, {levelup: 1},
+            { unit: assasinHero },
+            { levelup: 1 },
             { attribute: { a: "basicPhysicalPower", v: 1 } },
             { attribute: { a: "basicMagicPower", v: 2 } },
             { attribute: { a: "basicArmor", v: 9 } },
@@ -677,7 +679,8 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
             { moveMcSkillToSlotIndex: 1 },
         ],
         2: [
-            { unit: paladinHero }, {levelup: 1},
+            { unit: paladinHero },
+            { levelup: 1 },
             { item: dagger32 },
             { attribute: { a: "basicPhysicalPower", v: 1 } },
             { item: scepter31 },
@@ -685,10 +688,10 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
             { skill: buffNextBa_3, chained: true },
             { skill: mortalStrikeSkill, chained: true },
             { skill: buffNextBaTimes_2 },
-            { moveMcSkillToSlotIndex: 3},
+            { moveMcSkillToSlotIndex: 3 },
         ],
         3: [{ unit: wolfUnit }, { attribute: { a: "basicMaxHp", v: 4 } }],
-        4: [{ unit: warriorSummonMob }, {item: shield21}, { attribute: { a: "basicMaxHp", v: 4 } }],
+        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attribute: { a: "basicMaxHp", v: 4 } }],
     },
 ]);
 
