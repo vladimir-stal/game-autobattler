@@ -37,7 +37,6 @@ export const debuffBaNextBaAll_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
             debuff: {
                 name: "debuff ba all",
                 type: EDebuffType.ATTRIBUTE_DECREASE,
@@ -65,7 +64,6 @@ export const debuffBaNextBaAll_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
             debuff: {
                 name: "debuff ba all",
                 type: EDebuffType.ATTRIBUTE_DECREASE,
@@ -94,7 +92,6 @@ export const debuffBaNextBaAll: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
             debuff: {
                 name: "debuff ba all",
                 type: EDebuffType.ATTRIBUTE_DECREASE,
@@ -182,15 +179,13 @@ export const magicAttackX3_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.REPEATING_SKILL,
             value: 3, // how many repeats, can be calculated
             targetType: ETargetType.SELF, // not used
             animation: AnimationType.NONE,
             childSkill: {
-                isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
-                value: 4,
+                value: 3,
                 targetType: ETargetType.RANDOM_ENEMY,
                 attackType: EHeroAttackType.MAGIC,
                 animation: AnimationType.NONE,
@@ -214,13 +209,11 @@ export const magicAttackX3_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.REPEATING_SKILL,
-            value: 3, // how many repeats, can be calculated
+            value: 2, // how many repeats, can be calculated
             targetType: ETargetType.SELF, // not used
             animation: AnimationType.NONE,
             childSkill: {
-                isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
                 value: 3,
                 targetType: ETargetType.RANDOM_ENEMY,
@@ -238,8 +231,6 @@ export const magicAttackX3_2: IHeroSkillSet = {
 
 export const magicAttackX3: IHeroSkillSet = {
     id: "magicAttackX3",
-    //name: "Magic Attack x3",
-    //desc: "Deal [2] magic damage to random enemy 3 times",
     name: i18n.skills.basic.magicAttackX3.name,
     desc: i18n.skills.basic.magicAttackX3.desc1,
     level: 1,
@@ -248,7 +239,7 @@ export const magicAttackX3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.REPEATING_SKILL,
-            value: 3, // how many repeats, can be calculated
+            value: 2, // how many repeats, can be calculated
             targetType: ETargetType.SELF, // not used
             animation: AnimationType.NONE,
             childSkill: {
@@ -276,33 +267,68 @@ const stealPPorMPSkillset = (amount: number): IHeroSkill[] => {
     return [
         {
             condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            value: -1,
+            valueType: "number",
+            animation: AnimationType.NONE,
+        },
+        {
+            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            value: 1,
+            valueType: "number",
+            animation: AnimationType.NONE,
+        },
+        // MP_IS_HIGHER_THAN_PP
+        {
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_NEGATIVE,
             type: EHeroSkillType.ATTRIBUTE_DECREASE,
             attribute: "magicPower",
             value: amount,
             valueType: "number",
             targetType: ETargetType.HIGH_MP_ENEMY,
+            animation: AnimationType.NONE,
         },
         {
-            condition: ESkillCondition.MP_IS_HIGHER_THAN_PP,
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_NEGATIVE,
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
             attribute: "magicPower",
             value: amount,
             valueType: "number",
             targetType: ETargetType.SELF,
         },
-        //
+        // PP_IS_HIGHER_THAN_MP
         {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
             type: EHeroSkillType.ATTRIBUTE_DECREASE,
             attribute: "physicalPower",
             value: amount,
             valueType: "number",
             targetType: ETargetType.HIGH_PP_ENEMY,
+            animation: AnimationType.NONE,
         },
         {
-            condition: ESkillCondition.PP_IS_HIGHER_THAN_MP,
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
             attribute: "physicalPower",
+            value: amount,
+            valueType: "number",
+            targetType: ETargetType.SELF,
+        },
+        // EQUAL
+        {
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            attribute: "magicPower",
+            value: amount,
+            valueType: "number",
+            targetType: ETargetType.HIGH_MP_ENEMY,
+            animation: AnimationType.NONE,
+        },
+        {
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "magicPower",
             value: amount,
             valueType: "number",
             targetType: ETargetType.SELF,
@@ -364,14 +390,12 @@ export const magicRain_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.REPEATING_SKILL,
             value: 3, // how many repeats, can be calculated (max 20)
             targetType: ETargetType.SELF, // not used
             animation: AnimationType.NONE,
             mpScale: 60,
             childSkill: {
-                isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
                 value: 2,
                 targetType: ETargetType.RANDOM_ENEMY,
@@ -396,14 +420,12 @@ export const magicRain_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.REPEATING_SKILL,
             value: 2, // how many repeats, can be calculated (max 20)
             targetType: ETargetType.SELF, // not used
             animation: AnimationType.NONE,
             mpScale: 50,
             childSkill: {
-                isBasicAttack: false,
                 type: EHeroSkillType.ATTACK,
                 value: 2,
                 targetType: ETargetType.RANDOM_ENEMY,
@@ -429,7 +451,6 @@ export const magicRain: IHeroSkillSet = {
     heroClasses: [EHeroClass.DARK],
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.REPEATING_SKILL,
             value: 1, // how many repeats, can be calculated (max 20)
             targetType: ETargetType.SELF, // not used

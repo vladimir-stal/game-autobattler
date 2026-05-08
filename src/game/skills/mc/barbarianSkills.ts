@@ -25,7 +25,6 @@ export const barbarianSkill_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "hpReg2atk",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -54,7 +53,6 @@ export const barbarianSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "hpReg2atk",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -84,7 +82,6 @@ export const barbarianSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "hpReg2atk",
                 type: EBuffType.ATTRIBUTE_INCREASE,

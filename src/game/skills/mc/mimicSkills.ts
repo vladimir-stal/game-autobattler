@@ -47,8 +47,8 @@ const mimicSummonSkillset3 = (index:number): IHeroSkill[] => {
 
 const copycatSkill: IHeroSkillSet = {
     id: "mimicCopySkill",
-    name: "Copy skill",
-    desc: "Copy 4th skill of random ally",
+    name: "Copycat skill",
+    desc: "Copy 4th skill of a random\nally or make basic attack\notherwise",
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MOB],
@@ -59,8 +59,8 @@ const copycatSkill: IHeroSkillSet = {
 
 const mimicSkill_3: IHeroSkillSet = {
     id: "mimicCopySkill",
-    name: "Copy skill",
-    desc: "Copy 2nd skill of ally\nCopy 4th skill of random ally",
+    name: i18n.skills.mc.mimicSkill.name,
+    desc: i18n.skills.mc.mimicSkill.desc3,
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.MIMIC],
@@ -71,8 +71,8 @@ const mimicSkill_3: IHeroSkillSet = {
 
 const mimicSkill_2: IHeroSkillSet = {
     id: "mimicCopySkill",
-    name: "Copy skill",
-    desc: "Copy 2nd skill of ally",
+    name: i18n.skills.mc.mimicSkill.name,
+    desc: i18n.skills.mc.mimicSkill.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.MIMIC],
@@ -84,8 +84,8 @@ const mimicSkill_2: IHeroSkillSet = {
 
 const mimicSkill: IHeroSkillSet = {
     id: "mimicCopySkill",
-    name: "Copy skill",
-    desc: "Copy 2nd skill of ally\nMake no basic attack",
+    name: i18n.skills.mc.mimicSkill.name,
+    desc: i18n.skills.mc.mimicSkill.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MIMIC],

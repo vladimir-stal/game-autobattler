@@ -1,28 +1,88 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import {
+    AnimationType,
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
 
-// TODO: how to improve skill on lvl up?
+const duelistSkillset1: IHeroSkill = {
+    type: EHeroSkillType.BUFF_COPY,
+    value: 1,
+    valueType: "number",
+    targetFromType: ETargetType.BUFFED_ALLY_RANDOM,
+    targetType: ETargetType.SELF,
+    condition: ESkillCondition.NOT_BEFORE_COMBAT,
+};
+const duelistSkillset2: IHeroSkill = {
+    type: EHeroSkillType.BUFF,
+    buff: {
+        name: "Buff",
+        type: EBuffType.BATTLE_TRIGGER,
+        targetType: ETargetType.SELF,
+        value: 1,
+        timeType: EBuffTimeType.DUEL,
+        cannotBeTargeted: true,
+        appTrigger: {
+            limitedRepeats: true,
+            skillId: "Duelist copy buff",
+            targetCheck: ETargetType.ALL_ALLIES,
+            type: EAppTriggerType.RECIEVE_BUFF,
+            skill: [
+                {
+                    type: EHeroSkillType.BUFF_COPY,
+                    value: 1,
+                    valueType: "number",
+                    targetFromType: ETargetType.BY_RELEVANT_ID,
+                    targetType: ETargetType.SELF,
+                },
+            ],
+        },
+    },
+    animation: AnimationType.NONE,
+};
+
+export const duelistSkill_3: IHeroSkillSet = {
+    id: "DuelistCopyBuff",
+    name: i18n.skills.mc.duelistSkill.name,
+    desc: i18n.skills.mc.duelistSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.DUELIST],
+    isMcSkill: true,
+    isActivateOnStart: true,
+    skills: [duelistSkillset1,duelistSkillset2],
+};
+
+export const duelistSkill_2: IHeroSkillSet = {
+    id: "DuelistCopyBuff",
+    name: i18n.skills.mc.duelistSkill.name,
+    desc: i18n.skills.mc.duelistSkill.desc2,
+    level: 2,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.DUELIST],
+    isMcSkill: true,
+    skills: [duelistSkillset1,duelistSkillset2],
+    nextLevel: duelistSkill_3,
+};
 
 export const duelistSkill: IHeroSkillSet = {
     id: "DuelistCopyBuff",
-    //name: "Copy buff",
-    //desc: "Copy random buff\nfrom ally to self",
     name: i18n.skills.mc.duelistSkill.name,
     desc: i18n.skills.mc.duelistSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.DUELIST],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF_COPY,
-            isBasicAttack: true,
-            value: 1,
-            valueType: "number",
-            targetFromType: ETargetType.BUFFED_ALLY_RANDOM,
-            targetType: ETargetType.SELF,
-        },
-    ],
+    skills: [duelistSkillset1],
+    nextLevel: duelistSkill_2,
 };
 
 export const duelistSkills: THeroSkills = [duelistSkill];

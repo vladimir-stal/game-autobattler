@@ -14,7 +14,6 @@ export const bladedancerSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "Blade dance",
                 type: EBuffType.BLADEDANCE,
@@ -39,7 +38,6 @@ export const bladedancerSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "Blade dance",
                 type: EBuffType.BLADEDANCE,

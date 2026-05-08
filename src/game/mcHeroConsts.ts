@@ -897,7 +897,7 @@ export const zealotHero: IUnit = {
     exp: 0,
 };
 
-// EXORCIST (priest + order)
+// EXORCIST (priest + summon)
 export const exorcistHero: IUnit = {
     heroClass: EHeroClass.EXORCIST,
     attackType: EHeroAttackType.MAGIC,

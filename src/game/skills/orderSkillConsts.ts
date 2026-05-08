@@ -17,7 +17,6 @@ export const attrArmorSelf_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "armor",
             value: 7,
             valueType: "number",
@@ -38,7 +37,6 @@ export const attrArmorSelf_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "armor",
             value: 5,
             valueType: "number",
@@ -60,7 +58,6 @@ export const attrArmorSelf: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "armor",
             value: 3,
             valueType: "number",
@@ -84,7 +81,6 @@ export const attrAttackSelf_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "attack",
             value: 3,
             valueType: "number",
@@ -105,7 +101,6 @@ export const attrAttackSelf_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "attack",
             value: 2,
             valueType: "number",
@@ -127,7 +122,6 @@ export const attrAttackSelf: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "attack",
             value: 1,
             valueType: "number",
@@ -150,10 +144,10 @@ export const attrArmorAll_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
+    isBasicAttack: false,
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             attribute: "armor",
             value: 5,
             valueType: "number",
@@ -173,10 +167,10 @@ export const attrArmorAll_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
+    isBasicAttack: false,
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             attribute: "armor",
             value: 5,
             valueType: "number",
@@ -197,10 +191,10 @@ export const attrArmorAll: IHeroSkillSet = {
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
+    isBasicAttack: false,
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             attribute: "armor",
             value: 5,
             valueType: "number",
@@ -224,7 +218,6 @@ export const attrArmorBigSelf_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "armor",
             value: 5,
             valueType: "number",
@@ -248,7 +241,6 @@ export const attrArmorBigSelf_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "armor",
             value: 5,
             valueType: "number",
@@ -272,7 +264,6 @@ export const attrArmorBigSelf: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "armor",
             value: 5,
             valueType: "number",

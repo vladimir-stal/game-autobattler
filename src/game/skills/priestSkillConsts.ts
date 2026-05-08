@@ -19,7 +19,6 @@ export const healSelf_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 9, // TODO MP: add MP modifier to value
             targetType: ETargetType.SELF,
             mpScale: 50,
@@ -40,7 +39,6 @@ export const healSelf_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 6,
             targetType: ETargetType.SELF,
             mpScale: 35,
@@ -62,7 +60,6 @@ export const healSelf: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 4,
             targetType: ETargetType.SELF,
             //
@@ -89,7 +86,6 @@ export const healFirst_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 7, // TODO: mp power
             targetType: ETargetType.FIRST_ALLY,
             mpScale: 50,
@@ -110,7 +106,6 @@ export const healFirst_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 5, // TODO: mp power
             targetType: ETargetType.FIRST_ALLY,
             mpScale: 35,
@@ -131,7 +126,6 @@ export const healFirst: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 3, // TODO: mp power
             targetType: ETargetType.FIRST_ALLY,
             //
@@ -158,7 +152,6 @@ export const healLowHpSkill_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 5,
             targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 100,
@@ -179,7 +172,6 @@ export const healLowHpSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 5,
             targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 75,
@@ -201,7 +193,6 @@ export const healLowHpSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.HEAL,
-            isBasicAttack: true,
             value: 5,
             targetType: ETargetType.LOW_PERCENT_ALLY,
             mpScale: 50,

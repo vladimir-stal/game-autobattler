@@ -36,7 +36,6 @@ const buffNextBaXSelf_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "x1.8 next",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -61,7 +60,6 @@ const buffNextBaXSelf_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "x1.6 next",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -87,7 +85,6 @@ export const buffNextBaXSelf: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
                 name: "x1.4 next",
                 type: EBuffType.ATTRIBUTE_INCREASE,
@@ -99,8 +96,6 @@ export const buffNextBaXSelf: IHeroSkillSet = {
             },
         },
     ],
-    //isChained: true,
-    //isActivateOnStart: true,
     nextLevel: buffNextBaXSelf_2,
     image: IMAGE_SKILL_AXE_BUFF,
 };
@@ -110,7 +105,6 @@ const feintAttackSkillset = (atkPaercent: number, ppScale: number): IHeroSkill[]
     return [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             value: atkPaercent,
             valueFrom: "attack",
             valueType: "percent",
@@ -121,7 +115,6 @@ const feintAttackSkillset = (atkPaercent: number, ppScale: number): IHeroSkill[]
         },
         {
             type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
             debuff: {
                 name: "-atk",
                 type: EDebuffType.ATTRIBUTE_DECREASE,

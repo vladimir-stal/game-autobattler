@@ -1,5 +1,35 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const runecasterSkillset = (base:number, mpScale:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Fire shield",
+                type: EBuffType.THORNS_SHIELD,
+                statusType: EStatusType.BURN,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+                value: base,
+                mpScale: mpScale,
+            },
+        },
+    ]
+}
+
+export const runecasterSkill_3: IHeroSkillSet = {
+    id: "runecasterFireShield",
+    //name: "Fire shield(2)",
+    //desc: "Shield self with magic\nfirewhich burns every\nattacker [1]+[70%xMP]",
+    name: i18n.skills.mc.runecasterSkill.name,
+    desc: i18n.skills.mc.runecasterSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.RUNECASTER],
+    isMcSkill: true,
+    skills: runecasterSkillset(1,100),
+};
 
 export const runecasterSkill_2: IHeroSkillSet = {
     id: "runecasterFireShield",
@@ -11,20 +41,8 @@ export const runecasterSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.RUNECASTER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "Fire shield",
-                type: EBuffType.FIRE_SHIELD,
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-                value: 1,
-                mpScale: 70,
-            },
-        },
-    ],
+    skills: runecasterSkillset(1,70),
+    nextLevel: runecasterSkill_3,
 };
 
 export const runecasterSkill: IHeroSkillSet = {
@@ -37,21 +55,7 @@ export const runecasterSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.RUNECASTER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "Fire shield",
-                type: EBuffType.FIRE_SHIELD,
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-                value: 1,
-                valueType: "number",
-                mpScale: 50,
-            },
-        },
-    ],
+    skills: runecasterSkillset(1,50),
     nextLevel: runecasterSkill_2,
 };
 

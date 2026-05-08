@@ -26,9 +26,9 @@ export const SKILLS_EN = {
         },
         magicAttackX3: {
             name: "Magic missiles",
-            desc1: "Deal [2] magic damage \nto random enemy 3 times",
-            desc2: "Deal [3] magic damage \nto random enemy 3 times",
-            desc3: "Deal [4] magic damage \nto random enemy 3 times",
+            desc1: "Deal [2] magic damage to\nrandom enemy [2] times",
+            desc2: "Deal [3] magic damage to\nrandom enemy [2] times",
+            desc3: "Deal [3] magic damage to\nrandom enemy [3] times",
         },
         //
         // MASTER
@@ -50,9 +50,9 @@ export const SKILLS_EN = {
         //
         magicAttack: {
             name: "Magic Attack",
-            desc1: "Deal [5] magic damage to first enemy",
-            desc2: "Deal [7] magic damage to first enemy",
-            desc3: "Deal [9] magic damage to first enemy",
+            desc1: "Deal [4] magic damage to\nfirst enemy",
+            desc2: "Deal [6+35%xMP] magic\ndamage to first enemy",
+            desc3: "Deal [8+50%xMP] magic\ndamage to first enemy",
         },
         applyBurn: {
             name: "Apply Burn",
@@ -86,9 +86,9 @@ export const SKILLS_EN = {
         //
         statusesIntoHeal: {
             name: "Overcome",
-            desc1: "Remove [50%] stacks of\nevery status, heal same\namount",
-            desc2: "Remove [65%] stacks of\nevery status, heal same\namount",
-            desc3: "Remove [80%] stacks of\nevery status, heal same\namount",
+            desc1: "Remove [50%] stacks of\nevery status, recover [2]\nhealth and get [20%] of\nlost hp as armor",
+            desc2: "Remove [65%] stacks of\nevery status, recover [3]\nhealth and get [25%] of\nlost hp as armor",
+            desc3: "Remove [80%] stacks of\nevery status, recover [4]\nhealth and get [35%] of\nlost hp as armor",
         },
         //
         // ORDER
@@ -141,9 +141,9 @@ export const SKILLS_EN = {
         //
         buffNextBa: {
             name: "Next BA+ buff",
-            desc1: "Buff [4] self next basic attack",
-            desc2: "Buff [6]+[PPx30%] self next basic attack",
-            desc3: "Buff [8]+[PPx30%] self next basic attack",
+            desc1: "Buff [4] next basic attack",
+            desc2: "Buff [5+PPx40%] next\nbasic attack",
+            desc3: "Buff [6+PPx65%] next\nbasic attack",
         },
         debuffWorthyFoe: {
             name: "Worthy foe",
@@ -455,13 +455,13 @@ export const SKILLS_EN = {
         },
         duelistSkill: {
             name: "Copy buff",
-            desc1: "Copy random buff\nfrom ally to self",
-            desc2: "Copy random buff\nfrom ally to self",
-            desc3: "Copy random buff\nfrom ally to self",
+            desc1: "Copy random buff from ally\nto self",
+            desc2: "Copy random buff from ally\nto self. And may copy next\nbuff casted on an ally",
+            desc3: "Copy random buff from ally\nto self. And may copy next\nbuff casted on an ally",
         },
         exorcistSkill: {
             name: "Ritual of exorcism",
-            desc1: "Remove a summon and remove a totem\n from enemies",
+            desc1: "Remove one summon and one totem\n from enemies",
             desc2: "Remove a summon and remove a totem\n from enemies",
             desc3: "Remove a summon and remove a totem\n from enemies",
         },
@@ -485,9 +485,9 @@ export const SKILLS_EN = {
         },
         hunterSkill: {
             name: "Hunter mark",
-            desc1: "Mark second enemy and\ndecrease physical resistance -[10]%\nTarget marked enemy\nwith basic attacks",
-            desc2: "Mark second enemy and\ndecrease physical resistance -[20]%\nTarget marked enemy\nwith basic attacky",
-            desc3: "Mark second enemy and\ndecrease physical resistance -[30]%\nTarget marked enemy\nwith basic attacky",
+            desc1: "Mark second enemy and\ndecrease physical resist\nby -[15]% and basic\nattacks aim him",
+            desc2: "Mark second enemy and\ndecrease physical resist\nby -[25]% and basic\nattacks aim him",
+            desc3: "Mark second enemy and\ndecrease physical resist\nby -[35]% and basic\nattacks aim him",
         },
         illusionistSkill: {
             name: "Illusion",
@@ -515,21 +515,21 @@ export const SKILLS_EN = {
         },
         mimicSkill: {
             name: "Mimicry",
-            desc1: "<NOT IMPLEMENTED>",
-            desc2: "<NOT IMPLEMENTED>",
-            desc3: "<NOT IMPLEMENTED>",
+            desc1: "Copy 2nd skill of ally",
+            desc2: "Copy 2nd skill of ally",
+            desc3: "Copy 2nd skill of ally\nCopy 4th skill of random ally",
         },
         minstrelSkill: {
             name: "Double buff",
-            desc1: "Doubles value of\na random buff on ally",
-            desc2: "Tripls value of\na random buff on ally",
-            desc3: "Tripls value of\na random buff on ally",
+            desc1: "Increase value of a\nrandom buff on ally by\n[80%]",
+            desc2: "Increase value of a\nrandom buff on ally by\n[150%]",
+            desc3: "Increase value of a\nrandom buff on ally by\n[220%]",
         },
         monkSkill: {
             name: "Serenity",
             desc1: "Remove negative status\nfrom self.\nRemove debuff from self",
-            desc2: "Remove negative status\nfrom self twice.\nRemove debuff from self twice",
-            desc3: "Remove negative status\nfrom self twice.\nRemove debuff from self twice",
+            desc2: "Remove negative status\nfrom self.\nRemove debuff from self x2",
+            desc3: "Remove negative status\nfrom self twice.\nRemove debuff from self x2",
         },
         necromancerSkill: {
             name: "Undead call",
@@ -563,39 +563,39 @@ export const SKILLS_EN = {
         },
         shadowMasterSkill: {
             name: "Unholy pact",
-            desc1: "Apply bufff that allows\nto use heal skills as\ndamage skills",
-            desc2: "Apply bufff that allows\nto use heal skills as\ndamage skills",
-            desc3: "Apply bufff that allows\nto use heal skills as\ndamage skills",
+            desc1: "Apply buff that allows\nto use heal skills as\ndamage skills with [+15%]\ndamage increase",
+            desc2: "Apply buff that allows\nto use heal skills as\ndamage skills with [+30%]\ndamage increase",
+            desc3: "Apply buff that allows\nto use heal skills as\ndamage skills with [+45%]\ndamage increase",
         },
         shamanTotemEmpower: {
             name: "Empower all totems",
-            desc1: "Increase all totems value by [1]+[MP*50%]",
-            desc2: "Increase all totems value by [1]+[MP*70%]",
-            desc3: "Increase all totems value by [1]+[MP]",
+            desc1: "Increase all totems' values\nby [1+MPx50%]",
+            desc2: "Increase all totems' values\nby [1+MPx70%]",
+            desc3: "Increase all totems' values\nby [1+MP]",
         },
         sorcererSkill: {
             name: "Sorcerer attack",
-            desc1: "Deal [5]+[MP*30%] magic damage\n to first two enemies.",
-            desc2: "Deal [5]+[MP*30%] magic damage\n to first three enemies.",
-            desc3: "Deal [5]+[MP*30%] magic damage\n to all enemies.",
+            desc1: "Deal [5+MPx30%] magic\ndamage to first 2 enemies",
+            desc2: "Deal [5+MPx30%] magic\ndamage to first 3 enemies",
+            desc3: "Deal [5+MPx30%] magic\ndamage to all enemies",
         },
         warlockSkill: {
             name: "Warlock curse",
-            desc1: "Debuff highest attack enemy\n -[20]% basic attack damage.\n Apply [1]+[MPx50%] poison.",
-            desc2: "Debuff highest attack enemy\n -[20]% basic attack damage.\n Apply [1]+[MP] poison.",
-            desc3: "Increase all totems value by [1]+[MP]",
+            desc1: "Curse highest attack enemy\nfor -[20]% attack damage\nApply [1+MPx50%] poison",
+            desc2: "Curse highest attack enemy\nfor -[20]% attack damage\nApply [1+MP] poison",
+            desc3: "Curse highest attack enemy\nfor -[20]% attack damage\nApply [1+MPx150%] poison",
         },
         witchSkill: {
             name: "Curse circle",
-            desc1: "Apply [1]+[MPx50%] bleed\n to all enemies",
-            desc2: "Apply [1]+[MPx70%] bleed\n to all enemies",
-            desc3: "Apply [1]+[MP] bleed\n to all enemies",
+            desc1: "Apply [1+MPx50%] bleed\nto all enemies",
+            desc2: "Apply [1+MPx70%] bleed\nto all enemies",
+            desc3: "Apply [1+MP] bleed\nto all enemies",
         },
         zealotSkill: {
             name: "Antiheal",
-            desc1: "Curse first enemy with\nantiheal which transforms next incoming\nheal into damage",
-            desc2: "Curse first enemy with\nantiheal which transforms next incoming\nheal into damage",
-            desc3: "Curse first enemy with\nantiheal which transforms next incoming\nheal into damage",
+            desc1: "Curse [first] enemy with\nantiheal which transforms\nnext incoming heal into\ndamage",
+            desc2: "Curse [first 2] enemies\nwith antiheal which\ntransforms next incoming\nheal into damage",
+            desc3: "Curse [first 3] enemies\nwith antiheal which\ntransforms next incoming\nheal into damage",
         },
     },
     mobs: {

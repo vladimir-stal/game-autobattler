@@ -1,56 +1,54 @@
-import { EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const hunterSkillset = (markPercent:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Hunter mark",
+                type: EDebuffType.MARK_HUNTER,
+                targetType: ETargetType.SECOND_ENEMY,
+                timeType: EBuffTimeType.DUEL,
+                value: markPercent,
+                valueType: "percent",
+            },
+        }
+    ]
+}
+
+export const hunterSkill_3: IHeroSkillSet = {
+    id: "HunterMark",
+    name: i18n.skills.mc.hunterSkill.name,
+    desc: i18n.skills.mc.hunterSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.HUNTER],
+    isMcSkill: true,
+    skills: hunterSkillset(25),
+};
 
 export const hunterSkill_2: IHeroSkillSet = {
     id: "HunterMark",
-    //name: "Hunter mark(2)",
-    //desc: "Mark second enemy and\ndecrease physical resistance -[20]%\nTarget basic attacks to marked enemy",
     name: i18n.skills.mc.hunterSkill.name,
     desc: i18n.skills.mc.hunterSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.HUNTER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "Hunter mark",
-                type: EDebuffType.MARK_HUNTER,
-                targetType: ETargetType.SECOND_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-                value: 20,
-                valueType: "percent",
-            },
-        },
-    ],
+    skills: hunterSkillset(25),
+    nextLevel: hunterSkill_3,
 };
 
 export const hunterSkill: IHeroSkillSet = {
     id: "HunterMark",
-    //name: "Hunter mark",
-    //desc: "Mark second enemy and\ndecrease physical resistance -[10]%\nTarget basic attacks to marked enemy",
     name: i18n.skills.mc.hunterSkill.name,
     desc: i18n.skills.mc.hunterSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.HUNTER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "Hunter mark",
-                type: EDebuffType.MARK_HUNTER,
-                targetType: ETargetType.SECOND_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-                value: 10,
-                valueType: "percent",
-            },
-        },
-    ],
+    skills: hunterSkillset(15),
     nextLevel: hunterSkill_2,
 };
 

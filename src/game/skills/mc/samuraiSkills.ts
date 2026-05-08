@@ -1,5 +1,49 @@
-import { EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import {
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroClass,
+    EHeroSkillType,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IPassiveSkill,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
+
+const samuraiSkillset = (bleed: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Bleed+",
+                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                statusType: EStatusType.BLEED,
+                value: bleed,
+                valueType: "number",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+            },
+        },
+    ];
+};
+
+export const samuraiSkill_3: IHeroSkillSet = {
+    id: "SamuraiSharpBlade",
+    //name: "Sharp blade",
+    //desc: "Applies [2] bleed on basic attacks",
+    name: i18n.skills.mc.samuraiSkill.name,
+    desc: i18n.skills.mc.samuraiSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.SAMURAI],
+    isMcSkill: true,
+    skills: samuraiSkillset(4),
+    isChained: true,
+    //nextLevel: samuraiSkill_3,
+};
 
 export const samuraiSkill_2: IHeroSkillSet = {
     id: "SamuraiSharpBlade",
@@ -7,27 +51,13 @@ export const samuraiSkill_2: IHeroSkillSet = {
     //desc: "Applies [2] bleed on basic attacks",
     name: i18n.skills.mc.samuraiSkill.name,
     desc: i18n.skills.mc.samuraiSkill.desc2,
-    level: 1,
+    level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.SAMURAI],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "+3 bleed on ba",
-                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
-                statusType: EStatusType.BLEED,
-                value: 3,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-    ],
+    skills: samuraiSkillset(3),
     isChained: true,
-    //nextLevel: samuraiSkill_3,
+    nextLevel: samuraiSkill_3,
 };
 
 export const samuraiSkill: IHeroSkillSet = {
@@ -40,21 +70,7 @@ export const samuraiSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.SAMURAI],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "+2 bleed on ba",
-                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
-                statusType: EStatusType.BLEED,
-                value: 2,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-    ],
+    skills: samuraiSkillset(2),
     isChained: true,
     nextLevel: samuraiSkill_2,
 };
@@ -91,10 +107,10 @@ export const samuraiPassive: IPassiveSkill = {
                     valueType: "percent",
                     valueFrom: "physicalPower",
                     targetType: ETargetType.ALL_ENEMIES,
-                }
-            ]
-        }
-    }
+                },
+            ],
+        },
+    },
 };
 
 export const samuraiSkills: THeroSkills = [samuraiSkill];

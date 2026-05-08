@@ -31,16 +31,15 @@ export const buffNextBa_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
-                name: "+6 next ba",
+                name: "Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 6,
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 50,
+                ppScale: 65,
             },
         },
     ],
@@ -59,16 +58,15 @@ export const buffNextBa_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
-                name: "+5 next ba",
+                name: "Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 5,
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: 30,
+                ppScale: 40,
             },
         },
     ],
@@ -88,16 +86,14 @@ export const buffNextBa: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
-                name: "+4 next ba",
+                name: "Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 4,
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                //ppScale: 35,
             },
         },
     ],
@@ -119,9 +115,8 @@ export const buffNextBaTimes_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
             buff: {
-                name: "flurry",
+                name: "Flurry",
                 type: EBuffType.BASIC_ATTACK_ADD_TIMES,
                 value: 2,
                 valueType: "number",
@@ -147,7 +142,7 @@ export const buffNextBaTimes_2: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "flurry",
+                name: "Flurry",
                 type: EBuffType.BASIC_ATTACK_ADD_TIMES,
                 value: 1,
                 valueType: "number",
@@ -175,7 +170,7 @@ export const buffNextBaTimes: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "flurry",
+                name: "Flurry",
                 type: EBuffType.BASIC_ATTACK_ADD_TIMES,
                 value: 1,
                 valueType: "number",
@@ -194,47 +189,33 @@ const wortyFoeSkillset = (atkMinus: number, ppScale: number, vulStacks: number):
         {
             type: EHeroSkillType.DEBUFF,
             debuff: {
-                name: "foe",
+                name: "Foe",
                 type: EDebuffType.MARK_WORTHY_FOE,
                 value: 1,
                 valueType: "number",
                 targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.TILL_GOT_HIT,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "-2 next ba",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: atkMinus,
-                valueType: "number",
-                targetType: ETargetType.MARKED_ENEMY,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
-                ppScale: ppScale,
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                        attribute: "attack",
+                        value: atkMinus,
+                        valueType: "number",
+                        ppScale: ppScale,
+                    },
+                    {
+                        debuffType: EDebuffType.RESIST_DECREASE,
+                        value: vulStacks,
+                        valueType: "number",
+                    }
+                ],
             },
             animation: AnimationType.NONE,
-            markType: EDebuffType.MARK_WORTHY_FOE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "vulnerable",
-                type: EDebuffType.RESIST_DECREASE,
-                value: vulStacks,
-                valueType: "number",
-                targetType: ETargetType.MARKED_ENEMY,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-            animation: AnimationType.NONE,
-            markType: EDebuffType.MARK_WORTHY_FOE,
         },
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "duel",
+                name: "Duel",
                 type: EBuffType.CHANGE_TARGET_TYPE,
                 changeTargetTypeTo: ETargetType.MARKED_ENEMY,
                 changeTargetMarkType: EDebuffType.MARK_WORTHY_FOE,
@@ -242,6 +223,7 @@ const wortyFoeSkillset = (atkMinus: number, ppScale: number, vulStacks: number):
                 valueType: "number",
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
+                isHidden: true,
             },
         },
     ];
