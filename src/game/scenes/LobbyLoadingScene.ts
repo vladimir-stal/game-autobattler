@@ -1,11 +1,11 @@
 import { EScene } from "../../types";
 import { Cameras, GameObjects, Scale, Scene, Scenes, Structs } from "phaser";
 import { getRandomArrayIndex } from "../utils/commonUtils";
+import { i18n } from "../consts";
 
 //const IMAGE_LOBBY_LOADING = "IMAGE_LOBBY_LOADING";
 //const IMAGE_LOBBY_FOX_SMILE = "IMAGE_LOBBY_FOX_SMILE";
 
-const LOADING_LINE2 = "Подождите. Загрузка ресурсов может занять несколько минут.";
 export class LobbyLoadingScene extends Scene {
     camera: Cameras.Scene2D.Camera;
     background: GameObjects.Image;
@@ -53,15 +53,15 @@ export class LobbyLoadingScene extends Scene {
     //     }
     // }
     updateDescr(): void {
-        this.descrText.setText(LOADING_LINE2 + "\n\n" + (this.line1 || "") + " " + this.line2 + "\n" + (this.line3 || ""));
+        this.descrText.setText(i18n.ui.LOADING_DESCR + "\n\n" + (this.line1 || "") + " " + this.line2 + "\n" + (this.line3 || ""));
     }
 
     create() {
         this.initHints();
 
-        this.events.on("create", () => {
-            console.log("SCENE LOADING IS CREATED");
-        });
+        // this.events.on("create", () => {
+        //     console.log("SCENE LOADING IS CREATED");
+        // });
 
         this.events.on("destroy", () => {
             console.log("SCENE LOADING IS DESTROYED");
@@ -70,9 +70,9 @@ export class LobbyLoadingScene extends Scene {
             this.events.off("progress-info3");
         });
 
-        this.events.on("pause", () => {
-            console.log("SCENE LOADING IS PAUSED");
-        });
+        // this.events.on("pause", () => {
+        //     console.log("SCENE LOADING IS PAUSED");
+        // });
 
         this.events.on("shutdown", () => {
             console.log("SCENE LOADING IS shutdown");
@@ -81,13 +81,13 @@ export class LobbyLoadingScene extends Scene {
             this.events.off("progress-info3");
         });
 
-        this.events.on("sleep", () => {
-            console.log("SCENE LOADING IS sleep");
-        });
+        // this.events.on("sleep", () => {
+        //     console.log("SCENE LOADING IS sleep");
+        // });
 
-        this.events.on("start", () => {
-            console.log("SCENE LOADING IS start");
-        });
+        // this.events.on("start", () => {
+        //     console.log("SCENE LOADING IS start");
+        // });
 
         this.events.on("progress-info", (data: string) => {
             this.line1 = data;
@@ -142,11 +142,11 @@ export class LobbyLoadingScene extends Scene {
         // this.loadingImage.anims.play(AnimationType.LOBBY_LOADING);
 
         this.loadingText = this.add
-            .text(screenCenterX, screenCenterY - 200, "ЗАГРУЗКА...", { fontFamily: "Arial Black", fontSize: 24, color: "#ffffff" })
+            .text(screenCenterX, screenCenterY - 200, i18n.ui.LOADING + "...", { fontFamily: "Arial Black", fontSize: 24, color: "#ffffff" })
             .setOrigin(0.5, 0); //LOADING...
 
         this.descrText = this.add
-            .text(screenCenterX, screenCenterY - 150, LOADING_LINE2, {
+            .text(screenCenterX, screenCenterY - 150, i18n.ui.LOADING_DESCR, {
                 fontFamily: "Arial Black",
                 fontSize: 16,
                 //fontStyle: "bold",

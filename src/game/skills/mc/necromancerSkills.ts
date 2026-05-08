@@ -1,7 +1,25 @@
-import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IPassiveSkill, IUnit, THeroSkills } from "../../../types";
+import {
+    AnimationType,
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    EUnitType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IPassiveSkill,
+    IUnit,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
-import { skeletonUnit, skeletonWarriorUnit } from "../../units/skeletonsMobUnits";
-import { skillsetSummon } from "../../utils/skillUtils2";
+
+export const NECROMANCER_MC_SKILL_ID = "NecromancerSkeletonSkill";
+export const NECROMANCER_SKELTON_FRONT_ID = "SkeletonFrontSummon";
+export const NECROMANCER_SKELTON_BACK_ID = "SkeletonBackSummon";
 
 const buffSummonRegen = (regen: number): IHeroSkill => {
     return {
@@ -14,7 +32,15 @@ const buffSummonRegen = (regen: number): IHeroSkill => {
         animation: AnimationType.NONE,
     };
 };
-const skillSetSummonPositional = (summon_front: IUnit, summon_back: IUnit, atkPure: number, atkPercent: number, atkMpScale: number, hpPure: number, armorPure: number): IHeroSkill[] => {
+const skillSetSummonPositional = (
+    summon_front: IUnit,
+    summon_back: IUnit,
+    atkPure: number,
+    atkPercent: number,
+    atkMpScale: number,
+    hpPure: number,
+    armorPure: number,
+): IHeroSkill[] => {
     const skset: IHeroSkill[] = [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
@@ -71,36 +97,36 @@ const skillSetSummonPositional = (summon_front: IUnit, summon_back: IUnit, atkPu
             value: 1,
             valueType: "number",
             condition: ESkillCondition.ONE_OR_LESS_ALLY_IN_FRONT,
-        }
+        },
     ];
-    const infront:IHeroSkill = {
-                type: EHeroSkillType.REPEATING_SKILL,
-                value: 1,
-                valueType: "number",
-                condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
-                childSkill: {
-                    type: EHeroSkillType.SUMMON,
-                    summon: summon_front,
-                    condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
-                },
-                targetType: ETargetType.SELF, // not used
-                animation: AnimationType.NONE,
-            };
-    const inback:IHeroSkill = {
-                type: EHeroSkillType.REPEATING_SKILL,
-                value: 1,
-                valueType: "number",
-                condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
-                childSkill: {
-                    type: EHeroSkillType.SUMMON,
-                    summon: summon_back,
-                    condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
-                },
-                targetType: ETargetType.SELF, // not used
-                animation: AnimationType.NONE,
-            };
-    return skset.concat(infront,inback);
-}
+    const infront: IHeroSkill = {
+        type: EHeroSkillType.REPEATING_SKILL,
+        value: 1,
+        valueType: "number",
+        condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+        childSkill: {
+            type: EHeroSkillType.SUMMON,
+            summon: summon_front,
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+        targetType: ETargetType.SELF, // not used
+        animation: AnimationType.NONE,
+    };
+    const inback: IHeroSkill = {
+        type: EHeroSkillType.REPEATING_SKILL,
+        value: 1,
+        valueType: "number",
+        condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+        childSkill: {
+            type: EHeroSkillType.SUMMON,
+            summon: summon_back,
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+        targetType: ETargetType.SELF, // not used
+        animation: AnimationType.NONE,
+    };
+    return skset.concat(infront, inback);
+};
 
 export const skeletonFrontSummon: IUnit = {
     unitType: EUnitType.UNIT,
@@ -118,7 +144,7 @@ export const skeletonFrontSummon: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.SKELETON,
-    id: "SkeletonFrontSummon",
+    id: NECROMANCER_SKELTON_FRONT_ID,
     skills: [],
     items: [],
     level: 2,
@@ -141,7 +167,7 @@ export const skeletonBackSummon: IUnit = {
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONMAGE,
-    id: "SkeletonBackSummon",
+    id: NECROMANCER_SKELTON_BACK_ID,
     skills: [],
     items: [],
     level: 2,
@@ -150,7 +176,7 @@ export const skeletonBackSummon: IUnit = {
 };
 
 export const necromancerSkill_3: IHeroSkillSet = {
-    id: "NecromancerSkeleton",
+    id: NECROMANCER_MC_SKILL_ID,
     //name: "Necromancer skeleton",
     //desc: "Summon a skeleton champion [stats]",
     name: i18n.skills.mc.necromancerSkill.name,
@@ -160,12 +186,12 @@ export const necromancerSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.NECROMANCER],
     isMcSkill: true,
-    skills: [buffSummonRegen(3), ...skillSetSummonPositional(skeletonFrontSummon,skeletonBackSummon, 3, 50, 50, 8, 7)],
+    skills: [buffSummonRegen(3), ...skillSetSummonPositional(skeletonFrontSummon, skeletonBackSummon, 3, 50, 50, 8, 7)],
     isActivateOnStart: true,
 };
 
 export const necromancerSkill_2: IHeroSkillSet = {
-    id: "NecromancerSkeleton",
+    id: NECROMANCER_MC_SKILL_ID,
     //name: "Necromancer skeleton",
     //desc: "Summon a skeleton warrior [stats]",
     name: i18n.skills.mc.necromancerSkill.name,
@@ -176,13 +202,13 @@ export const necromancerSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.NECROMANCER],
     isMcSkill: true,
-    skills: [buffSummonRegen(2), ...skillSetSummonPositional(skeletonFrontSummon,skeletonBackSummon, 2, 35, 50, 5, 5)],
+    skills: [buffSummonRegen(2), ...skillSetSummonPositional(skeletonFrontSummon, skeletonBackSummon, 2, 35, 50, 5, 5)],
     isActivateOnStart: true,
     nextLevel: necromancerSkill_3,
 };
 
 export const necromancerSkill: IHeroSkillSet = {
-    id: "NecromancerSkeleton",
+    id: NECROMANCER_MC_SKILL_ID,
     //name: "Necromancer skeleton",
     //desc: "Summon a skeleton [stats]",
     name: i18n.skills.mc.necromancerSkill.name,
@@ -192,37 +218,37 @@ export const necromancerSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.NECROMANCER],
     isMcSkill: true,
-    skills: [buffSummonRegen(1), ...skillSetSummonPositional(skeletonFrontSummon,skeletonBackSummon, 1, 20, 50, 3, 3)],
+    skills: [buffSummonRegen(1), ...skillSetSummonPositional(skeletonFrontSummon, skeletonBackSummon, 1, 20, 50, 3, 3)],
     isActivateOnStart: true,
     nextLevel: necromancerSkill_2,
 };
 
 export const necromancerPassive: IPassiveSkill = {
-        desc: "Gain 3 MP when unit dies",
-        preBattleBuff: {
-            name: "Passive",
-            targetType: ETargetType.SELF,
-            timeType: EBuffTimeType.DUEL,
-            type: EBuffType.BATTLE_TRIGGER,
-            value: 1,
-            cannotBeTargeted: true,
-            isHidden: true,
-            appTrigger: {
-                skillId: "NecromancerPassive",
-                type: EAppTriggerType.DEATH,
-                targetCheck: ETargetType.EVERY_UNIT,
-                skill: [
-                    {
-                        type: EHeroSkillType.ATTRIBUTE_INCREASE,
-                        attribute: "magicPower",
-                        value: 3,
-                        valueType: "number",
-                        targetType: ETargetType.SELF,
-                    },
-                ],
-                limitedRepeats: false,
-            },
+    desc: "Gain 3 MP when unit dies",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            skillId: "NecromancerPassive",
+            type: EAppTriggerType.DEATH,
+            targetCheck: ETargetType.EVERY_UNIT,
+            skill: [
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    attribute: "magicPower",
+                    value: 3,
+                    valueType: "number",
+                    targetType: ETargetType.SELF,
+                },
+            ],
+            limitedRepeats: false,
         },
-    };
+    },
+};
 
 export const necromancerSkills: THeroSkills = [necromancerSkill];

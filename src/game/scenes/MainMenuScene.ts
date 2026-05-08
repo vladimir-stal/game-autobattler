@@ -113,6 +113,18 @@ export class MainMenuScene extends Scene {
         // bg1.displayOriginY = 0;
         // this.mainContainer.add(bg1);
 
+        const gameTitleText = this.add
+            .text(0, 120, "ECLIPSE CROWN version 0.12", {
+                fontFamily: "Arial Black",
+                fontSize: 16,
+                color: "#ffffff",
+                stroke: "#000000",
+                strokeThickness: 8,
+                align: "center",
+            })
+            .setOrigin(0.5);
+        this.mainContainer.add(gameTitleText);
+
         const titleText = this.add
             .text(0, -250, i18n.ui.mainMenu.START_GAME, {
                 fontFamily: "Arial Black",

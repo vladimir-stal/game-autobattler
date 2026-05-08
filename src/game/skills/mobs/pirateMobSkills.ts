@@ -11,7 +11,12 @@ import {
     IHeroSkillSet,
 } from "../../../types";
 import { i18n } from "../../consts";
-import { IMAGE_SKILL_MOB_PIRATE_BLACK_MARK, IMAGE_SKILL_TEST } from "../../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_MOB_PIRATE_BLACK_MARK,
+    IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE,
+    IMAGE_SKILL_MOB_PIRATE_DRAG_DROWN,
+    IMAGE_SKILL_TEST,
+} from "../../utils/load/skillImagesLoad";
 
 const pirateDragNDrownSkillset = (atkReduce: number, ppmpReduce: number, duration: number): IHeroSkill[] => {
     //~ debuff -atk -pp -mp
@@ -58,8 +63,7 @@ export const pirateDragNDrown_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.MASTER, EHeroClass.DARK],
     isBasicAttack: true,
     skills: pirateDragNDrownSkillset(5, 7, 2),
-    //nextLevel: pirateDragNDrown_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_PIRATE_DRAG_DROWN,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -75,7 +79,7 @@ export const pirateDragNDrown_2: IHeroSkillSet = {
     isBasicAttack: true,
     skills: pirateDragNDrownSkillset(4, 5, 2),
     nextLevel: pirateDragNDrown_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_PIRATE_DRAG_DROWN,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -91,7 +95,7 @@ export const pirateDragNDrown: IHeroSkillSet = {
     isBasicAttack: true,
     skills: pirateDragNDrownSkillset(3, 3, 2),
     nextLevel: pirateDragNDrown_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_PIRATE_DRAG_DROWN,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -136,7 +140,7 @@ export const pirateCallTheCannons_3: IHeroSkillSet = {
     heroClasses: [EHeroClass.BARD, EHeroClass.WARRIOR],
     isBasicAttack: false,
     skills: pirateCallTheCannonsSkillset(8, 3),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -152,7 +156,7 @@ export const pirateCallTheCannons_2: IHeroSkillSet = {
     isBasicAttack: false,
     skills: pirateCallTheCannonsSkillset(6, 2),
     nextLevel: pirateCallTheCannons_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE,
     animationType: AnimationType.UNIT_ATTACK,
 };
 
@@ -168,7 +172,7 @@ export const pirateCallTheCannons: IHeroSkillSet = {
     isBasicAttack: false,
     skills: pirateCallTheCannonsSkillset(4, 2),
     nextLevel: pirateCallTheCannons_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE,
     animationType: AnimationType.UNIT_ATTACK,
 };
 

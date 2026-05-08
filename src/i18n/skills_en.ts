@@ -372,6 +372,12 @@ export const SKILLS_EN = {
             desc2: "Steal [7] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
             desc3: "Steal [12] PP or MP\n from highest PP/MP enemy.\nDepending on which\nattribute is highest",
         },
+        meteoriteFall: {
+            name: "Meteorite fall",
+            desc1: "At the end of the round\ndeals [3+40%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[1] round",
+            desc2: "At the end of the round\ndeals [3+70%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[2] rounds",
+            desc3: "At the end of the round\ndeals [3+MP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[3] rounds",
+        },
     },
     level4: {},
     mc: {

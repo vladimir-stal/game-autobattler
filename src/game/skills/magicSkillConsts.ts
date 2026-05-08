@@ -15,6 +15,7 @@ import {
 } from "../../types";
 import { i18n } from "../consts";
 import {
+    IMAGE_SKILL_3_INFERNO,
     IMAGE_SKILL_BURN,
     IMAGE_SKILL_DRAGON_FIRE,
     IMAGE_SKILL_LIGHTNING,
@@ -226,6 +227,10 @@ export const magicAttackAll: IHeroSkillSet = {
             targetType: ETargetType.ALL_ENEMIES,
             attackType: EHeroAttackType.MAGIC,
             mpScale: 20,
+            //
+            effectAnimationType: EEffectAnimationType.EFFECT_LIGHTNING_1,
+            effectAnimationDelay: 800,
+            effectAnimDistanceInverted: { x: 250 },
         },
     ],
     nextLevel: magicAttackAll_2,
@@ -336,40 +341,46 @@ const meteoriteFallSkillset = (baseDmg: number, mpScale: number, burnStacks: num
 
 export const meteoriteFallSkill_3: IHeroSkillSet = {
     id: "meteoriteFall",
-    name: "Meteorite fall",
-    desc: "At the end of the round\ndeals [3+MP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[3] rounds",
+    //name: "Meteorite fall",
+    //desc: "At the end of the round\ndeals [3+MP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[3] rounds",
+    name: i18n.skills.level3.meteoriteFall.name,
+    desc: i18n.skills.level3.meteoriteFall.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     skills: meteoriteFallSkillset(3, 100, 3, 3),
-    image: IMAGE_SKILL_YELLOW_EXPLOSION, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_3_INFERNO,
     //nextLevel: applyShock_2,
 };
 
 export const meteoriteFallSkill_2: IHeroSkillSet = {
     id: "meteoriteFall",
-    name: "Meteorite fall",
-    desc: "At the end of the round\ndeals [3+70%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[2] rounds",
+    //name: "Meteorite fall",
+    //desc: "At the end of the round\ndeals [3+70%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[2] rounds",
+    name: i18n.skills.level3.meteoriteFall.name,
+    desc: i18n.skills.level3.meteoriteFall.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     skills: meteoriteFallSkillset(3, 70, 3, 2),
-    image: IMAGE_SKILL_YELLOW_EXPLOSION, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_3_INFERNO,
     nextLevel: meteoriteFallSkill_3,
 };
 
 export const meteoriteFallSkill: IHeroSkillSet = {
     id: "meteoriteFall",
-    name: "Meteorite fall",
-    desc: "At the end of the round\ndeals [3+40%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[1] round",
+    //name: "Meteorite fall",
+    //desc: "At the end of the round\ndeals [3+40%xMP] physical\ndamage to all enemies and\napply [3] burn. Lasts\n[1] round",
+    name: i18n.skills.level3.meteoriteFall.name,
+    desc: i18n.skills.level3.meteoriteFall.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.MAGIC],
     type: ESkillSetType.MAGIC_ATTACK,
     skills: meteoriteFallSkillset(3, 40, 3, 1),
-    image: IMAGE_SKILL_YELLOW_EXPLOSION, // IMAGE_SKILL_TEST
+    image: IMAGE_SKILL_3_INFERNO,
     nextLevel: meteoriteFallSkill_2,
 };
 

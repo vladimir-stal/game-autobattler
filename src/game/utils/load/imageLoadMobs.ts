@@ -503,10 +503,10 @@ export async function loadGoblinBattleImages(scene: Scene, loadedImages: Record<
         });
     //
     if (!(loadRequired1 || loadRequired2)) {
-        return;
+        return false;
     }
     return new Promise((resolve) => {
-        scene.load.once(COMPLETE, resolve);
+        scene.load.once(COMPLETE, () => resolve(true));
         scene.load.start();
     });
 }

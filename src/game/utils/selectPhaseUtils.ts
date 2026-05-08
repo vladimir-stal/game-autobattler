@@ -690,15 +690,15 @@ export const getCards = (
                 // add skill to fit the player current hero
                 // get hero classes of heroes player currently has
                 const allHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
-                        if (unit.unitType === EUnitType.HERO) {
-                            const whatClass = getAnyClassSubclasses(unit.heroClass);
-                            whatClass.forEach((c) => {
-                                if (!heroClasses.includes(c)) heroClasses.push(c);
-                            });
-                            //heroClasses.push(unit.heroClass);
-                        }
-                        return heroClasses;
-                    }, [] as EHeroClass[]);
+                    if (unit.unitType === EUnitType.HERO) {
+                        const whatClass = getAnyClassSubclasses(unit.heroClass);
+                        whatClass.forEach((c) => {
+                            if (!heroClasses.includes(c)) heroClasses.push(c);
+                        });
+                        //heroClasses.push(unit.heroClass);
+                    }
+                    return heroClasses;
+                }, [] as EHeroClass[]);
                 /*const existingHeroClasses = gameScene.units.reduce((heroClasses, unit) => {
                     if (unit.unitType === EUnitType.HERO && !heroClasses.includes(unit.heroClass)) {
                         heroClasses.push(unit.heroClass);

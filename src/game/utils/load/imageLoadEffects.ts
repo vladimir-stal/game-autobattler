@@ -27,7 +27,7 @@ export function loadImagesEffects(scene: Scene) {
     //
     // LIGHTNING
     //
-    scene.load.spritesheet(IMAGE_EFFECT_LIGHTNING_1, `${path}magic_lightning_1_cut_400.webp`, {
+    scene.load.spritesheet(IMAGE_EFFECT_LIGHTNING_1, `${path}magic/magic_lightning_1_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -45,7 +45,7 @@ export function loadImagesEffects(scene: Scene) {
         frameHeight: 300,
     });
     // MAGIC
-    scene.load.spritesheet(IMAGE_EFFECT_MAGIC_ATTACK, `${path}lightning03_cut_400.webp`, {
+    scene.load.spritesheet(IMAGE_EFFECT_MAGIC_ATTACK, `${path}magic/lightning03_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -100,7 +100,8 @@ export function loadCommonImagesEffects(scene: Scene) {
     //
     // LIGHTNING
     //
-    scene.load.spritesheet(IMAGE_EFFECT_LIGHTNING_1, `${path}magic_lightning_1_cut_400.webp`, {
+    //WEBP
+    scene.load.spritesheet(IMAGE_EFFECT_LIGHTNING_1, `${path}magic/magic_lightning_1_cut_400.png`, {
         frameWidth: 400,
         frameHeight: 400,
     });
@@ -143,7 +144,7 @@ export async function loadDarkEffectsImages(scene: Scene) {
 // MAGIC
 export async function loadMagicEffectsImages(scene: Scene) {
     //
-    scene.load.spritesheet(IMAGE_EFFECT_MAGIC_ATTACK, `${path}lightning03_cut_400.webp`, {
+    scene.load.spritesheet(IMAGE_EFFECT_MAGIC_ATTACK, `${path}magic/lightning03_cut_400.webp`, {
         frameWidth: 400,
         frameHeight: 400,
     });

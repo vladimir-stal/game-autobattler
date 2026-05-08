@@ -450,7 +450,7 @@ export const getMainUnitId = (unitId: string): string => {
         case "SKELETONWARRIOR":
             return "SKELETON";
         case "GOLDGOBLIN1":
-            return "GOBLIN";
+            return "WEAKGOBLIN";
     }
     return unitId;
 };

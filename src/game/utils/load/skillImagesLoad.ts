@@ -80,6 +80,11 @@ export const IMAGE_SKILL_MOB_SPIRIT_SPEARS = "IMAGE_SKILL_MOB_SPIRIT_SPEARS";
 export const IMAGE_SKILL_MOB_SPIRIT_SPEAR_REVENGE = "IMAGE_SKILL_MOB_SPIRIT_SPEAR_REVENGE";
 export const IMAGE_SKILL_MOB_STRONG_TOGEATHER = "IMAGE_SKILL_MOB_STRONG_TOGEATHER";
 
+export const IMAGE_SKILL_MOB_PIRATE_DRAG_DROWN = "IMAGE_SKILL_MOB_PIRATE_DRAG_DROWN";
+export const IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE = "IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE";
+export const IMAGE_SKILL_3_TOTAL_BUFF = "IMAGE_SKILL_3_TOTAL_BUFF";
+export const IMAGE_SKILL_3_INFERNO = "IMAGE_SKILL_3_INFERNO";
+
 const prefix = "assets/sprites/skills/";
 
 export function loadSkillImages(scene: Scene) {
@@ -103,6 +108,10 @@ export function loadSkillImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_MOB_SPIRIT_SPEARS, "assets/sprites/skills/mobs/spirit_spears.png");
     scene.load.image(IMAGE_SKILL_MOB_SPIRIT_SPEAR_REVENGE, "assets/sprites/skills/mobs/revenge_poke.png");
     scene.load.image(IMAGE_SKILL_MOB_STRONG_TOGEATHER, "assets/sprites/skills/mobs/strong_togeather.png");
+    scene.load.image(IMAGE_SKILL_MOB_PIRATE_DRAG_DROWN, "assets/sprites/skills/mobs/drag_drown.png");
+    scene.load.image(IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE, "assets/sprites/skills/mobs/cannon.png");
+    scene.load.image(IMAGE_SKILL_3_TOTAL_BUFF, "assets/sprites/skills/3/total_buff.png");
+    scene.load.image(IMAGE_SKILL_3_INFERNO, "assets/sprites/skills/3/inferno.png");
 
     // LEVEL 1
     // scene.load.image(IMAGE_SKILL_PHYS_ATTACK, "assets/sprites/skills/sword_attack_100.png");

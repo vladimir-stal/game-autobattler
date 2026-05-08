@@ -11,7 +11,14 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_BARD_BUFF_1, IMAGE_SKILL_BARD_BUFF_2, IMAGE_SKILL_BURNING_MAN, IMAGE_SKILL_KNIGHT_MAGIC, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_SKILL_3_TOTAL_BUFF,
+    IMAGE_SKILL_BARD_BUFF_1,
+    IMAGE_SKILL_BARD_BUFF_2,
+    IMAGE_SKILL_BURNING_MAN,
+    IMAGE_SKILL_KNIGHT_MAGIC,
+    IMAGE_SKILL_TEST,
+} from "../utils/load/skillImagesLoad";
 import { outHealBuffSkill } from "./commonSkill3Consts";
 import { blindingBeamSkill, toxicTuneSkill } from "./commonSkillConsts";
 
@@ -288,7 +295,7 @@ export const buffTotalDmgSkill_3: IHeroSkillSet = {
     priceLevel: 3,
     heroClasses: [EHeroClass.BARD],
     skills: buffTotalDmgSkillset(10, 100),
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_3_TOTAL_BUFF,
 };
 
 export const buffTotalDmgSkill_2: IHeroSkillSet = {
@@ -300,7 +307,7 @@ export const buffTotalDmgSkill_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.BARD],
     skills: buffTotalDmgSkillset(10, 75),
     nextLevel: buffTotalDmgSkill_3,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_3_TOTAL_BUFF,
 };
 
 export const buffTotalDmgSkill: IHeroSkillSet = {
@@ -312,7 +319,7 @@ export const buffTotalDmgSkill: IHeroSkillSet = {
     heroClasses: [EHeroClass.BARD],
     skills: buffTotalDmgSkillset(10, 50),
     nextLevel: buffTotalDmgSkill_2,
-    image: IMAGE_SKILL_TEST,
+    image: IMAGE_SKILL_3_TOTAL_BUFF,
 };
 
 //
@@ -354,7 +361,6 @@ export const totemGiveArmorSkill_3: IHeroSkillSet = {
     image: IMAGE_SKILL_BURNING_MAN, // IMAGE_SKILL_TEST
     //nextLevel: totemGiveArmorSkill_2,
 };
-
 
 export const totemGiveArmorSkill_2: IHeroSkillSet = {
     id: "totemGiveArmorSkill",

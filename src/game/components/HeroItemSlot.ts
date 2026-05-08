@@ -19,7 +19,6 @@ export class HeroItemSlot extends Phaser.GameObjects.Container {
     animationRect: GameObjects.Rectangle;
 
     constructor(scene: GameScene, x: number, y: number, parentUnitId: string, isWeaponSlot: boolean, item: IItem | undefined, onItemRemoved: () => void) {
-        console.log("HeroItemSlot > constructor", parentUnitId);
         super(scene, x, y);
         this.gameScene = scene;
         this.item = item;

@@ -4,7 +4,7 @@ import { getRandomArrayItem } from "../../utils/commonUtils";
 import { Card } from "../Card";
 import { colors, i18n } from "../../consts";
 import { GameObjects, Input } from "phaser";
-import { createUnit, generateUnitId } from "../../utils/unitUtils";
+import { createUnit } from "../../utils/unitUtils";
 import { getRerollPrice } from "../../utils/selectPhaseUtils";
 import { MIN_WIDTH } from "./uiPanels";
 import { createItem } from "../../utils/itemUtils";
@@ -45,6 +45,8 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
     hintText: GameObjects.Text;
     hintTextType: ESelectCardHint | undefined;
 
+    loadingText: GameObjects.Text;
+
     constructor(scene: GameScene, x: number, y: number) {
         super(scene, x, y);
         this.gameScene = scene;
@@ -74,6 +76,15 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
 
     hide() {
         this.setVisible(false);
+    }
+
+    showLoading() {
+        this.removeAll(true);
+        this.loadingText = this.scene.add
+            .text(350, 100, i18n.ui.LOADING + "...", { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" })
+            .setOrigin(0.5, 0.5);
+        this.add(this.loadingText);
+        this.setVisible(true);
     }
 
     render() {
