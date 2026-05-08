@@ -32,7 +32,7 @@ import {
 } from "../../types";
 import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
 import { BattleController } from "../components/BattleController";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
 import { getHeroClassesWeaponItems } from "./itemUtils";
@@ -1399,14 +1399,14 @@ export const prepareUniqueSummonToBattle = (unit: IBattleUnit): void => {
     if (unit.summon.id.startsWith("ILLUSIONSUMMON")) {
         unit.skills.forEach((skill) => {
             if (skill.isMcSkill) {
-                unit.summon?.skills.push(noBasicAttackSkill);
+                unit.summon?.skills.push(chainToNextSkill);
                 return;
             }
             if (skill.type === ESkillSetType.MAGIC_ATTACK) {
                 unit.summon?.skills.push({ ...skill, isBasicAttack: false, isChained: false });
                 return;
             }
-            unit.summon?.skills.push(noBasicAttackSkill);
+            unit.summon?.skills.push(chainToNextSkill);
         });
     }
 };

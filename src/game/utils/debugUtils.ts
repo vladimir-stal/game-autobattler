@@ -16,7 +16,7 @@ import {
     witchHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
-import { onlyBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
+import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { incrSummonBa } from "../skills/summonSkillConsts2";

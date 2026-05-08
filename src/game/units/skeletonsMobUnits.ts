@@ -3,7 +3,7 @@ import { dagger1, staff1, sword1, totem1 } from "../basicWeaponItemConsts";
 import { basic_boots, basic_exp_bag, basic_hat, basic_pants, basic_ring_damage } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin } from "../mobItemConsts";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap } from "../skills/mobs/skeletonMobSkills";
 import { mobNoSkill } from "../skills/mobSkills";
 
@@ -24,7 +24,7 @@ export const skeletonUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETON,
     id: "SKELETON",
-    skills: [mobNoSkill, skeletonUnholyLeap, noBasicAttackSkill],
+    skills: [mobNoSkill, skeletonUnholyLeap, chainToNextSkill],
     // cast no skill 1st round, cast unique skill 2nd round, then fast forward to make skill rotation 3 rounds instead of 4
     items: [],
     level: 2,
@@ -56,7 +56,7 @@ export const skeletonWarriorUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONWARRIOR,
     id: "SKELETONWARRIOR",
-    skills: [noBasicAttackSkill, skeletonArmorSelfAndLow],
+    skills: [chainToNextSkill, skeletonArmorSelfAndLow],
     items: [],
     level: 3,
     exp: 0,
@@ -87,7 +87,7 @@ export const skeletonMageUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.SKELETONMAGE,
     id: "SKELETONMAGE",
-    skills: [mobNoSkill, skeletonPoisonedFlames, noBasicAttackSkill],
+    skills: [mobNoSkill, skeletonPoisonedFlames, chainToNextSkill],
     items: [],
     level: 3,
     exp: 0,

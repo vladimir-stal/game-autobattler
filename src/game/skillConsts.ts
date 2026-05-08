@@ -2,8 +2,8 @@ import { bardSkills, bardSkills_2, bardSkills_3 } from "./skills/bardSkillConsts
 import {
     attackWithBleedSkill,
     mixedClassSkills1,
-    noBasicAttackSkill,
-    onlyBasicAttackSkill,
+    chainToNextSkill,
+    chainBasicAttackSkill,
     phycisalAttackSkill,
     statusesIntoHeal,
 } from "./skills/commonSkillConsts";
@@ -64,7 +64,7 @@ export const allClassesSkills_2 = [
     ...summonSkills_2,
     ...warriorSkills_2,
     ...wildSkills_2,
-    noBasicAttackSkill,
+    chainToNextSkill,
     //onlyBasicAttackSkill, // level 3
 ].filter(function (item, pos, self) {
     return self.indexOf(item) === pos;
@@ -81,8 +81,8 @@ export const allClassesSkills_3 = [
     ...summonSkills_3,
     ...warriorSkills_3,
     ...wildSkills_3,
-    noBasicAttackSkill,
-    onlyBasicAttackSkill,
+    chainToNextSkill,
+    chainBasicAttackSkill,
 ].filter(function (item, pos, self) {
     return self.indexOf(item) === pos;
 });

@@ -39,10 +39,8 @@ import { radiantWallNoAttackButArmorSkill } from "./mobSkills";
 // NO BASIC ATTACK
 // always chained. to circle fast through skills
 
-export const noBasicAttackSkill: IHeroSkillSet = {
-    id: "noBasicAttack",
-    //name: "No basic attack",
-    //desc: "Perform no basic attack",
+export const chainToNextSkill: IHeroSkillSet = {
+    id: "chainToNextSkill",
     name: i18n.skills.level2.noBasicAttackSkill.name,
     desc: i18n.skills.level2.noBasicAttackSkill.desc1,
     level: 1,
@@ -61,10 +59,10 @@ export const noBasicAttackSkill: IHeroSkillSet = {
 // ONLY BASIC ATTACK
 // always chained. to circle fast through skills
 
-export const onlyBasicAttackSkill: IHeroSkillSet = {
-    id: "onlyBasicAttack",
-    name: "Combo attack",
-    desc: "Perform a basic attack",
+export const chainBasicAttackSkill: IHeroSkillSet = {
+    id: "chainBasicAttackSkill",
+    name: i18n.skills.level2.chainBasicAttackSkill.name,
+    desc: i18n.skills.level2.chainBasicAttackSkill.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.ALL],
@@ -133,7 +131,7 @@ const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] 
 export const statusesIntoHeal_3: IHeroSkillSet = {
     id: "statusesIntoHeal",
     //name: "Overcome",
-    //desc: "Remove [65%] stacks of\nevery status, heal same\namount",
+    //desc: "Remove [80%] stacks of\nevery status, heal same\namount",
     name: i18n.skills.basic.statusesIntoHeal.name,
     desc: i18n.skills.basic.statusesIntoHeal.desc3,
     level: 3,
@@ -965,6 +963,6 @@ export const mixedClassSkills1 = [
     heatUpSkill,
 ];
 
-export const mixedClassSkills2 = [removeBuffSkill, removeDebuffSkill];
+export const mixedClassSkills2 = [removeBuffSkill, removeDebuffSkill, chainToNextSkill];
 
-export const mixedClassSkills3 = [outHealBuffSkill, shieldAttackSkill, buffSelfMPorPP, increaseMaxHpSkill, buffSummonCritSkill];
+export const mixedClassSkills3 = [outHealBuffSkill, shieldAttackSkill, buffSelfMPorPP, increaseMaxHpSkill, buffSummonCritSkill, chainBasicAttackSkill];

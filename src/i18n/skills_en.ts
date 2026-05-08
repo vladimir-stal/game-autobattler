@@ -330,6 +330,12 @@ export const SKILLS_EN = {
             desc2: "Buff total damage\n ([10]+[60%xMP])% ally in front",
             desc3: "Buff total damage\n ([10]+[80%xMP])% ally in front",
         },
+        chainBasicAttackSkill: {
+            name: "Fluid strike",
+            desc1: "Make a basic attack and\nchain to the next skill",
+            desc2: "Make a basic attack and\nchain to the next skill",
+            desc3: "Make a basic attack and\nchain to the next skill",
+        },
         increaseMaxHpSkill: {
             name: "Nature grow",
             desc1: "Increase [5]+[20%xMP]+[20%xPP]\nself max hp and\nheal same amount",
@@ -350,15 +356,15 @@ export const SKILLS_EN = {
         },
         outHealBuffSkill: {
             name: "Out heal",
-            desc1: "Buff outgoing heal\n([10]+[40%xMP])% ally in front",
-            desc2: "Buff outgoing heal\n([10]+[60%xMP])% ally in front",
-            desc3: "Buff outgoing heal\n([10]+[80%xMP])% ally in front",
+            desc1: "Buff outgoing heal by\n[10+40%xMP]% to one ally in\nfront and one behind",
+            desc2: "Buff outgoing heal by\n[10+60%xMP]% to one ally in\nfront and one behind",
+            desc3: "Buff outgoing heal by\n[10+80%xMP]% to one ally in\nfront and one behind",
         },
         shieldAttackSkill: {
             name: "Shield bash",
-            desc1: "Deal [20%xArmor] to first enemy",
-            desc2: "Deal [30%xArmor] to first enemy",
-            desc3: "Deal [50%xArmor] to first enemy",
+            desc1: "Deal [35%xArmor+30%xPP]\nphysical damage to first\nenemy",
+            desc2: "Deal [50%xArmor+40%xPP]\nphysical damage to first\nenemy",
+            desc3: "Deal [65%xArmor+50%xPP]\nphysical damage to first\nenemy",
         },
         stealPPorMPSkill: {
             name: "Steal power",
