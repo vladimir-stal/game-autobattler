@@ -319,40 +319,26 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction: numb
                             type: EHeroSkillType.DEBUFF,
                             debuff: {
                                 type: EDebuffType.RESIST_DECREASE,
-                                name: "vulnerable",
+                                name: "mortal",
                                 value: bleedAndVulnerability,
                                 valueType: "number",
                                 targetType: ETargetType.BY_RELEVANT_ID,
                                 timeType: EBuffTimeType.DURATION,
                                 duration: debuffDuration,
-                            },
-                            animation: AnimationType.NONE,
-                        },
-                        {
-                            type: EHeroSkillType.DEBUFF,
-                            debuff: {
-                                type: EDebuffType.ATTRIBUTE_DECREASE,
-                                name: "-MP",
-                                attribute: "magicPower",
-                                value: statReduction,
-                                valueType: "number",
-                                targetType: ETargetType.BY_RELEVANT_ID,
-                                timeType: EBuffTimeType.DURATION,
-                                duration: debuffDuration,
-                            },
-                            animation: AnimationType.NONE,
-                        },
-                        {
-                            type: EHeroSkillType.DEBUFF,
-                            debuff: {
-                                type: EDebuffType.ATTRIBUTE_DECREASE,
-                                name: "-PP",
-                                attribute: "physicalPower",
-                                value: statReduction,
-                                valueType: "number",
-                                targetType: ETargetType.BY_RELEVANT_ID,
-                                timeType: EBuffTimeType.DURATION,
-                                duration: debuffDuration,
+                                nestedEffects: [
+                                    {
+                                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                                        attribute: "magicPower",
+                                        value: statReduction,
+                                        valueType: "number"
+                                    },
+                                    {
+                                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                                        attribute: "physicalPower",
+                                        value: statReduction,
+                                        valueType: "number"
+                                    },
+                                ],
                             },
                             animation: AnimationType.NONE,
                         },

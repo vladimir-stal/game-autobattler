@@ -24,7 +24,7 @@ const pirateDragNDrownSkillset = (atkReduce: number, ppmpReduce: number, duratio
         {
             type: EHeroSkillType.DEBUFF,
             debuff: {
-                name: "Drag",
+                name: "Drag and drown",
                 targetType: ETargetType.RANDOM_ENEMY,
                 timeType: EBuffTimeType.DURATION,
                 type: EDebuffType.ATTRIBUTE_DECREASE,
@@ -32,36 +32,22 @@ const pirateDragNDrownSkillset = (atkReduce: number, ppmpReduce: number, duratio
                 valueType: "number",
                 attribute: "attack",
                 duration: duration,
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                        value: ppmpReduce,
+                        valueType: "number",
+                        attribute: "physicalPower",
+                    },
+                    {
+                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                        value: ppmpReduce,
+                        valueType: "number",
+                        attribute: "magicPower",
+                    },
+                ],
             },
             //animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "and",
-                targetType: ETargetType.SAME_LAST_TARGET,
-                timeType: EBuffTimeType.DURATION,
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                value: ppmpReduce,
-                valueType: "number",
-                attribute: "physicalPower",
-                duration: duration,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "Drown",
-                targetType: ETargetType.SAME_LAST_TARGET,
-                timeType: EBuffTimeType.DURATION,
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                value: ppmpReduce,
-                valueType: "number",
-                attribute: "magicPower",
-                duration: duration,
-            },
-            animation: AnimationType.NONE,
         },
     ];
 };
@@ -214,24 +200,20 @@ const pirateDeadmansCurseSkillset = (multiplier: number, ppmpScale: number): IHe
         {
             type: EHeroSkillType.DEBUFF,
             debuff: {
-                name: "Deadman",
+                name: "Deadman curse",
                 timeType: EBuffTimeType.DUEL,
                 targetType: ETargetType.SAME_LAST_TARGET,
                 type: EDebuffType.BLIND,
                 value: multiplier, // at 100% multiplier, 4 buffs -> 4% blind
                 valueType: "percent",
                 attribute: "customNumber", // read saved value on target
-            },
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "curse",
-                timeType: EBuffTimeType.DUEL,
-                targetType: ETargetType.SAME_LAST_TARGET,
-                type: EDebuffType.RESIST_DECREASE,
-                value: 1,
-                valueType: "number",
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.RESIST_DECREASE,
+                        value: 1,
+                        valueType: "number",
+                    },
+                ],
             },
         },
     ];

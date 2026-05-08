@@ -1091,6 +1091,7 @@ export interface IBuff {
     appTrigger?: IAppTrigger;
     cannotBeTargeted?: boolean; // cannot be dispelled or copied
     isHidden?: boolean; // do not display on battle card info panel
+    nestedEffects?: INestedBuffEffect[];
 }
 
 export interface IDebuff {
@@ -1108,6 +1109,20 @@ export interface IDebuff {
     appTrigger?: IAppTrigger;
     cannotBeTargeted?: boolean; // cannot be dispelled or copied
     isHidden?: boolean; // do not display on battle card info panel
+    nestedEffects?: INestedBuffEffect[];
+}
+
+export interface INestedBuffEffect {
+    buffType?: EBuffType,
+    debuffType?: EDebuffType,
+    value: number;
+    valueType?: TValueType;
+    valueFrom?: THeroBattleAttribute;
+    attribute?: THeroBattleAttribute;
+    totalValue?: number;
+    mpScale?: number;
+    ppScale?: number;
+    // inherits duration, name, timeType, targetType
 }
 
 /**
