@@ -1225,6 +1225,8 @@ export const getStatusItemBonusType = (status: EStatusType) => {
             return EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE;
         case EStatusType.POISON:
             return EItemBattleBonusType.STATUS_POISON_APPLY_INCREASE;
+        case EStatusType.SHOCK:
+            return;
         default: {
             console.log("ERROR No item status bonus for status type", status);
         }

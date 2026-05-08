@@ -1,5 +1,5 @@
 import { AnimationType, ERoomStatus, EScene } from "../../types";
-import { ANIMATION_COMPLETE, IMAGE_LOBBY_FOX_SMILE, IMAGE_LOBBY_LOADING } from "../consts";
+import { ANIMATION_COMPLETE, i18n, IMAGE_LOBBY_FOX_SMILE, IMAGE_LOBBY_LOADING } from "../consts";
 import { EventBus, EventType } from "../EventBus";
 import { Cameras, GameObjects, Scene } from "phaser";
 
@@ -33,7 +33,7 @@ export class GameLoadingScene extends Scene {
             .setOrigin(0.5, 0.5);
         this.loadingImage.anims.play(AnimationType.LOBBY_LOADING);
 
-        this.add.text(screenCenterX - 40, screenCenterY + 200, "LOADING...", {});
+        this.add.text(screenCenterX - 40, screenCenterY + 200, i18n.ui.LOADING + "...", {});
 
         EventBus.on(EventType.ROOM_STATUS_CHANGED, (status: ERoomStatus) => {
             if (status === ERoomStatus.GAME_CREATED) {

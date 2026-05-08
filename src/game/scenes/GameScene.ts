@@ -518,8 +518,7 @@ export class GameScene extends Phaser.Scene {
                 duelUnitsIds.push(unitId);
             }
         });
-        const result = await this.imageLoadController.loadBattleUnits(duelUnitsIds);
-        console.log("RESULT ==", result);
+        await this.imageLoadController.loadBattleUnits(duelUnitsIds);
         //
         // load unit animations for skills (summons)
         const skillsIds: string[] = [];

@@ -199,6 +199,8 @@ export interface Ii18n {
         SELECT_UPGRADE: string;
         LEVEL: string;
         LOADING: string;
+        LOADING_DESCR: string;
+        DUEL: string;
         //
         SKILL: string;
         ITEM: string;
@@ -545,18 +547,18 @@ export const i18n: Ii18n = {
         RADIATE: "radiate",
     },
     tags: {
-        BARD: "bard",
-        DARK: "dark",
-        MAGIC: "magic",
-        MASTER: "master",
-        ORDER: "order",
-        PRIEST: "holy",
-        SUMMON: "mystic",
-        WARRIOR: "war",
-        WILD: "wild",
-        MOB: "mob",
+        BARD: "BARD",
+        DARK: "DARK",
+        MAGIC: "MAGIC",
+        MASTER: "MASTER",
+        ORDER: "ORDER",
+        PRIEST: "HOLY",
+        SUMMON: "MYSTIC",
+        WARRIOR: "WARRIOR",
+        WILD: "WILD",
+        MOB: "MOB",
         //
-        ALL: "all",
+        ALL: "ALL",
     },
     ui: {
         BUY: "BUY",
@@ -582,6 +584,8 @@ export const i18n: Ii18n = {
         SELECT_UPGRADE: "SELECT UPGRADE",
         LEVEL: "Level",
         LOADING: "LOADING",
+        LOADING_DESCR: "Please, wait. Resource loading can take several minutes",
+        DUEL: "DUEL",
         //
         WEAPON: "weapon",
         COMMON: "common",

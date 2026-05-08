@@ -265,7 +265,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
 
             this.resultRect.setVisible(true);
             this.resultText.setVisible(true);
-            this.resultText.setText("ДУЭЛЬ"); //START DUEL
+            this.resultText.setText(i18n.ui.DUEL);
 
             await new Promise((resolve) => {
                 setTimeout(() => {

@@ -188,6 +188,11 @@ export class TopPanel extends Phaser.GameObjects.Container {
         this.startSelectButton.setVisible(true);
         //this.calculateBattleButton.setVisible(true);
         this.nextRoomButton.setVisible(false);
+        //
+        this.goldText.setVisible(false);
+        this.incomeText.setVisible(false);
+        this.dayText.setVisible(false);
+        this.hourText.setVisible(false);
     }
 
     changeToSelectPhase() {
@@ -195,6 +200,11 @@ export class TopPanel extends Phaser.GameObjects.Container {
         this.startSelectButton.setVisible(false);
         //this.calculateBattleButton.setVisible(false);
         this.nextRoomButton.setVisible(true);
+        //
+        this.goldText.setVisible(true);
+        this.incomeText.setVisible(true);
+        this.dayText.setVisible(true);
+        this.hourText.setVisible(true);
     }
 
     showNextRoomButton() {

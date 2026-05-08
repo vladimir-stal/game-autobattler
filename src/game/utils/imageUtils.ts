@@ -287,6 +287,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.BARBARIAN:
             return {
                 image: IMAGE_BARBARIAN,
+                distance: -20,
                 imageBattle: IMAGE_BARBARIAN_BATTLE_IDLE,
                 animation: AnimationType.BARBARIAN_IDLE,
                 idleBattleAnimation: AnimationType.BARBARIAN_BATTLE_IDLE,
@@ -317,7 +318,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             return { image: IMAGE_MONK };
         case EHeroClass.NECROMANCER:
             return {
-                distance: -20,
+                distance: -30,
                 distanceEnemy: -40,
                 image: IMAGE_NECROMANCER_IDLE,
                 animation: AnimationType.NECROMANCER_IDLE,

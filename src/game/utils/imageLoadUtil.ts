@@ -113,6 +113,7 @@ import { createWildBasicTotemAnimations } from "./animations/totemAnimations";
 import { EHeroClass } from "../../types";
 import { createMcHeroBattleAnimations, createMcHeroIdleAnimations } from "./animations/mcHeroesAnimations";
 import { BOSS_MINOTAUR_ID, PEASANT_ID, WOLF_ID } from "../units/mobUnitConsts";
+import { NECROMANCER_MC_SKILL_ID } from "../skills/mc/necromancerSkills";
 
 // UNITS
 
@@ -602,6 +603,7 @@ export async function loadUnitImagesForDuel(scene: Scene, unitId: string, loaded
         case "SKELETONWARRIOR":
             {
                 const loadRequired = await loadSkeletonBattleImages(scene, loadedImages);
+                console.log("LOAD SKELETON", loadRequired);
                 loadRequired && createSkeletonAnimations(scene);
                 isMob = true;
             }
@@ -616,8 +618,9 @@ export async function loadUnitImagesForDuel(scene: Scene, unitId: string, loaded
         case "WEAKGOBLIN":
         case "GOLDGOBLIN1":
             {
-                await loadGoblinBattleImages(scene, loadedImages);
-                createGoblinAnimations(scene);
+                const loadRequired = await loadGoblinBattleImages(scene, loadedImages);
+                console.log("LOAD WEAKGOBLIN", loadRequired);
+                loadRequired && createGoblinAnimations(scene);
                 isMob = true;
             }
             break;
@@ -723,6 +726,12 @@ export function getUnitIdsBySkill(skillId: string): string[] {
             break;
         case "bigWolfSummon":
             unitsIds.push(WOLF_ID);
+            break;
+        case NECROMANCER_MC_SKILL_ID:
+            {
+                unitsIds.push("SKELETON");
+                unitsIds.push("SKELETONMAGE");
+            }
             break;
     }
     return unitsIds;

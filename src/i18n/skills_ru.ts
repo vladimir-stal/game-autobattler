@@ -381,6 +381,12 @@ export const SKILLS_RU = {
             desc2: "Ворует [7] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкакой атрибут выше",
             desc3: "Ворует [12] ФС или МС\n у врага с самой высокой ФС/МС\nВ зависимости то того\nкакой атрибут выше",
         },
+        meteoriteFall: {
+            name: "Метеор",
+            desc1: `В конце раунда наносит\n[color=${colors.PHYSICAL_ATTACK}][3+40%xMP] физ. урона[/color]\nи [color=${colors.BURN}]поджигает [3][/color]\nвсех врагов.`,
+            desc2: `В конце [2] раундов наносит\n[color=${colors.PHYSICAL_ATTACK}][3+70%xMP] физ. урона[/color]\nи [color=${colors.BURN}]поджигает [3][/color]\nвсех врагов.`,
+            desc3: `В конце [3] раундов наносит\n[color=${colors.PHYSICAL_ATTACK}][3+MP] физ. урона[/color]\nи [color=${colors.BURN}]поджигает [3][/color]\nвсех врагов.`,
+        },
     },
     level4: {},
     mc: {
@@ -696,7 +702,7 @@ export const SKILLS_RU = {
             name: "Пушечный залп",
             desc1: `Наносит [color=${colors.PHYSICAL_ATTACK}][4] физ. урона[/color]\nи накладывает [color=${colors.BURN}][2] горения[/color]\nи [color=${colors.BLEED}][2] кровотеченияа[/color]\nна всех врагов`,
             desc2: `Наносит [color=${colors.PHYSICAL_ATTACK}][6] физ. урона[/color]\nи накладывает [color=${colors.BURN}][2] горения[/color]\nи [color=${colors.BLEED}][2] кровотеченияа[/color]\nна всех врагов`,
-            desc13: `Наносит [color=${colors.PHYSICAL_ATTACK}][8] физ. урона[/color]\nи накладывает [color=${colors.BURN}][3] горения[/color]\nи [color=${colors.BLEED}][3] кровотеченияа[/color]\nна всех врагов`,
+            desc3: `Наносит [color=${colors.PHYSICAL_ATTACK}][8] физ. урона[/color]\nи накладывает [color=${colors.BURN}][3] горения[/color]\nи [color=${colors.BLEED}][3] кровотеченияа[/color]\nна всех врагов`,
         },
     },
 };

@@ -815,15 +815,15 @@ export function createFireflyAnimations(scene: Scene) {
 export function createSkeletonAnimations(scene: Scene) {
     //
     scene.anims.create({
-        key: AnimationType.MOB_SKELETON_MAGE_BATTLE_IDLE,
-        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_MAGE_BATTLE_IDLE, { start: 0, end: 99 }),
+        key: AnimationType.MOB_SKELETON_BATTLE_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_BATTLE_IDLE, { start: 0, end: 99 }),
         frameRate: 20,
         repeat: -1,
     });
 
     scene.anims.create({
-        key: AnimationType.MOB_SKELETON_MAGE_ATTACK,
-        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_MAGE_ATTACK, { start: 0, end: 99 }),
+        key: AnimationType.MOB_SKELETON_ATTACK,
+        frames: scene.anims.generateFrameNumbers(IMAGE_SKELETON_ATTACK, { start: 0, end: 25 }),
         frameRate: 40,
     });
 }

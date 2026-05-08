@@ -17,7 +17,7 @@ import {
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { onlyBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
-import { magicAttack } from "../skills/magicSkillConsts";
+import { magicAttack, magicAttackAll, meteoriteFallSkill } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { incrSummonBa } from "../skills/summonSkillConsts2";
 import { totemAttackSkill } from "../skills/wildSkillConsts";
@@ -38,6 +38,7 @@ import { peasantsStronkSkill } from "../skills/mobs/peasantMobSkills";
 import { pirateCallTheCannons, pirateDeadmansCurse, pirateDragNDrown } from "../skills/mobs/pirateMobSkills";
 import { fireflyConfusingMistSkill } from "../skills/mobs/fireflyMobSkills";
 import { spiritTeamFlurry, spiritTeamRevenge } from "../skills/mobs/spiritWarriorMobSkills";
+import { buffTotalDmgSkill } from "../skills/bardSkillConsts";
 
 export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
@@ -48,20 +49,22 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: necromancerHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: magicHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
+        // { type: ECardType.UNIT, price: 0, unit: magicHero },
+        // { type: ECardType.UNIT, price: 0, unit: barbarianHero },
+        // { type: ECardType.UNIT, price: 0, unit: necromancerHero },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
+        //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
+        { type: ECardType.SKILL, price: 0, skill: meteoriteFallSkill },
         { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
-        { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
-
+        { type: ECardType.SKILL, price: 0, skill: buffTotalDmgSkill },
         /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: warriorHero },

@@ -74,7 +74,7 @@ export class SelectController {
     }
 
     init() {
-        this.day = 1; //0;
+        this.day = 1;
         this.hour = 0;
         this.maxHours = 6;
         this.prevRooms = [];
@@ -191,6 +191,7 @@ export class SelectController {
         );
 
         // load images
+        this.gameScene.cardSelectPanel.showLoading();
         const unitsToLoad = cards.filter((card) => !!card && card.type === ECardType.UNIT && card.unit).map((card) => card!.unit!.id);
         await this.gameScene.imageLoadController.loadIdleUnits(unitsToLoad);
         //
@@ -252,9 +253,11 @@ export class SelectController {
                             //         return b;
                             //     }
                             // }),
-                            addedBonuses: item.bonuses.filter((b) => !!b && (b.valueType === "evolvedNumber" || b.valueType === "evolvedPercent")).map(ib => {
-                                return {...ib}
-                            }),
+                            addedBonuses: item.bonuses
+                                .filter((b) => !!b && (b.valueType === "evolvedNumber" || b.valueType === "evolvedPercent"))
+                                .map((ib) => {
+                                    return { ...ib };
+                                }),
                         };
                         //}
                     }),
