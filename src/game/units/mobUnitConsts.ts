@@ -1,5 +1,5 @@
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
 import { peasantLastStandSkill } from "../skills/mobs/peasantMobSkills";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { mobNoSkill } from "../skills/mobSkills";
 import { peasantUnit } from "./peasantMobUnits";
 
@@ -11,4 +11,4 @@ export const BOSS_MINOTAUR_ID = "BOSSMINOTAUR";
 
 export const peasantUnit_1 = { ...peasantUnit, skills: [] };
 
-export const peasantUnit_2 = { ...peasantUnit, skills: [mobNoSkill, peasantLastStandSkill, noBasicAttackSkill] };
+export const peasantUnit_2 = { ...peasantUnit, skills: [mobNoSkill, peasantLastStandSkill, chainToNextSkill] };

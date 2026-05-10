@@ -37,11 +37,11 @@ export const magicAttack_3: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
-            value: 9, // TODO: mp power
+            value: 8,
             targetType: ETargetType.FIRST_ENEMY,
             attackType: EHeroAttackType.MAGIC,
+            mpScale: 50,
         },
     ],
     image: IMAGE_SKILL_LIGHTNING,
@@ -57,11 +57,11 @@ export const magicAttack_2: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
-            value: 7, // TODO: mp power
+            value: 6,
             targetType: ETargetType.FIRST_ENEMY,
             attackType: EHeroAttackType.MAGIC,
+            mpScale: 35,
         },
     ],
     nextLevel: magicAttack_3,
@@ -75,13 +75,11 @@ export const magicAttack: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.MAGIC],
-    //isActivateOnStart: true,
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.ATTACK,
-            value: 5, // TODO: mp power
+            value: 4, // TODO: mp power
             targetType: ETargetType.FIRST_ENEMY,
             attackType: EHeroAttackType.MAGIC,
             effectAnimationType: EEffectAnimationType.EFFECT_LIGHTNING_1,
@@ -105,7 +103,6 @@ export const applyBurn_3: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.BURN,
             value: 6,
@@ -125,7 +122,6 @@ export const applyBurn_2: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.BURN,
             value: 4,
@@ -147,7 +143,6 @@ export const applyBurn: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: true,
             type: EHeroSkillType.STATUS_APPLY,
             status: EStatusType.BURN,
             value: 3,
@@ -174,7 +169,6 @@ export const magicAttackAll_3: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
             value: 1,
             targetType: ETargetType.ALL_ENEMIES,
@@ -197,7 +191,6 @@ export const magicAttackAll_2: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
             value: 1,
             targetType: ETargetType.ALL_ENEMIES,
@@ -221,7 +214,6 @@ export const magicAttackAll: IHeroSkillSet = {
     type: ESkillSetType.MAGIC_ATTACK,
     skills: [
         {
-            isBasicAttack: false,
             type: EHeroSkillType.ATTACK,
             value: 1,
             targetType: ETargetType.ALL_ENEMIES,

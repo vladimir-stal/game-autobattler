@@ -39,10 +39,8 @@ import { radiantWallNoAttackButArmorSkill } from "./mobSkills";
 // NO BASIC ATTACK
 // always chained. to circle fast through skills
 
-export const noBasicAttackSkill: IHeroSkillSet = {
-    id: "noBasicAttack",
-    //name: "No basic attack",
-    //desc: "Perform no basic attack",
+export const chainToNextSkill: IHeroSkillSet = {
+    id: "chainToNextSkill",
     name: i18n.skills.level2.noBasicAttackSkill.name,
     desc: i18n.skills.level2.noBasicAttackSkill.desc1,
     level: 1,
@@ -61,10 +59,10 @@ export const noBasicAttackSkill: IHeroSkillSet = {
 // ONLY BASIC ATTACK
 // always chained. to circle fast through skills
 
-export const onlyBasicAttackSkill: IHeroSkillSet = {
-    id: "onlyBasicAttack",
-    name: "Combo attack",
-    desc: "Perform a basic attack",
+export const chainBasicAttackSkill: IHeroSkillSet = {
+    id: "chainBasicAttackSkill",
+    name: i18n.skills.level3.chainBasicAttackSkill.name,
+    desc: i18n.skills.level3.chainBasicAttackSkill.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.ALL],
@@ -91,97 +89,81 @@ export const onlyBasicAttackSkill: IHeroSkillSet = {
     bard + magic = magic atk [1/2/3] + debuff blind 2? duration
 */
 
-const overcomeSkillStack = (status: EStatusType, percent: number): IHeroSkill[] => {
+const overcomeSkillStack = (percent: number, heal: number, armorPercent: number): IHeroSkill[] => {
     return [
         {
-            type: EHeroSkillType.CALCULATE_NUMBER,
-            value: 0, // sets battleUnit.customNumber = 0
+            type: EHeroSkillType.STATUS_MODIFY_AMOUNT,
+            targetType: ETargetType.SELF,
+            value: -percent,
+            valueType: "percent",
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "hp",
+            value: heal,
             valueType: "number",
             targetType: ETargetType.SELF,
             animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
-            status: status, // summs number of status stacks into battleUnit.customNumber
-            value: 1, // not used
-            valueType: "number",
             targetType: ETargetType.SELF,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "maxHp",
             animation: AnimationType.NONE,
         },
         {
-            type: EHeroSkillType.STATUS_APPLY,
-            status: status,
-            value: -percent, // multiply battleUnit.customNumber by negative %percent
-            valueFrom: "customNumber",
-            valueType: "percent",
+            type: EHeroSkillType.CALCULATE_NUMBER,
             targetType: ETargetType.SELF,
+            value: -100,
+            valueType: "percent",
+            valueFrom: "hp",
             animation: AnimationType.NONE,
-            condition: ESkillCondition.CUSTOM_NUMBER_NOT_ZERO,
         },
         {
-            type: EHeroSkillType.HEAL,
-            value: percent, // multiply battleUnit.customNumber by positive %percent
-            valueFrom: "customNumber",
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "armor",
+            value: armorPercent,
             valueType: "percent",
+            valueFrom: "customNumber",
             targetType: ETargetType.SELF,
             animation: AnimationType.NONE,
-            condition: ESkillCondition.CUSTOM_NUMBER_NOT_ZERO,
         },
     ];
 };
 
 export const statusesIntoHeal_3: IHeroSkillSet = {
     id: "statusesIntoHeal",
-    //name: "Overcome",
-    //desc: "Remove [65%] stacks of\nevery status, heal same\namount",
     name: i18n.skills.basic.statusesIntoHeal.name,
     desc: i18n.skills.basic.statusesIntoHeal.desc3,
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
-    skills: [
-        ...overcomeSkillStack(EStatusType.BLEED, 80),
-        ...overcomeSkillStack(EStatusType.BURN, 80),
-        ...overcomeSkillStack(EStatusType.POISON, 80),
-        ...overcomeSkillStack(EStatusType.SHOCK, 80),
-    ],
+    skills: overcomeSkillStack(80, 4, 35),
     image: IMAGE_SKILL_CLEAR,
 };
 
 export const statusesIntoHeal_2: IHeroSkillSet = {
     id: "statusesIntoHeal",
-    //name: "Overcome",
-    //desc: "Remove [65%] stacks of\nevery status, heal same\namount",
     name: i18n.skills.basic.statusesIntoHeal.name,
     desc: i18n.skills.basic.statusesIntoHeal.desc2,
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
-    skills: [
-        ...overcomeSkillStack(EStatusType.BLEED, 65),
-        ...overcomeSkillStack(EStatusType.BURN, 65),
-        ...overcomeSkillStack(EStatusType.POISON, 65),
-        ...overcomeSkillStack(EStatusType.SHOCK, 65),
-    ],
+    skills: overcomeSkillStack(65, 3, 25),
     nextLevel: statusesIntoHeal_3,
     image: IMAGE_SKILL_CLEAR,
 };
 
 export const statusesIntoHeal: IHeroSkillSet = {
     id: "statusesIntoHeal",
-    //name: "Overcome",
-    //desc: "Remove [50%] stacks of\nevery status, heal same\namount",
     name: i18n.skills.basic.statusesIntoHeal.name,
     desc: i18n.skills.basic.statusesIntoHeal.desc1,
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.ORDER, EHeroClass.WILD],
-    skills: [
-        ...overcomeSkillStack(EStatusType.BLEED, 50),
-        ...overcomeSkillStack(EStatusType.BURN, 50),
-        ...overcomeSkillStack(EStatusType.POISON, 50),
-        ...overcomeSkillStack(EStatusType.SHOCK, 50),
-    ],
+    skills: overcomeSkillStack(50, 2, 20),
     image: IMAGE_SKILL_CLEAR,
     nextLevel: statusesIntoHeal_2,
 };
@@ -380,19 +362,6 @@ export const nextBAArea_2: IHeroSkillSet = {
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
     skills: [
         {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "-atk",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 20,
-                valueType: "percent",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
             type: EHeroSkillType.BUFF,
             buff: {
                 name: "cleave",
@@ -402,6 +371,14 @@ export const nextBAArea_2: IHeroSkillSet = {
                 type: EBuffType.CHANGE_TARGET_TYPE,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
                 changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                        attribute: "attack",
+                        value: 20,
+                        valueType: "percent",
+                    },
+                ],
             },
         },
     ],
@@ -419,19 +396,6 @@ export const nextBAArea: IHeroSkillSet = {
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
     skills: [
         {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "-atk",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 35,
-                valueType: "percent",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
             type: EHeroSkillType.BUFF,
             buff: {
                 name: "cleave",
@@ -441,6 +405,14 @@ export const nextBAArea: IHeroSkillSet = {
                 type: EBuffType.CHANGE_TARGET_TYPE,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
                 changeTargetTypeTo: ETargetType.FIRST_TWO_ENEMIES,
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                        attribute: "attack",
+                        value: 35,
+                        valueType: "percent",
+                    },
+                ],
             },
         },
     ],
@@ -965,6 +937,6 @@ export const mixedClassSkills1 = [
     heatUpSkill,
 ];
 
-export const mixedClassSkills2 = [removeBuffSkill, removeDebuffSkill];
+export const mixedClassSkills2 = [removeBuffSkill, removeDebuffSkill, chainToNextSkill];
 
-export const mixedClassSkills3 = [outHealBuffSkill, shieldAttackSkill, buffSelfMPorPP, increaseMaxHpSkill, buffSummonCritSkill];
+export const mixedClassSkills3 = [outHealBuffSkill, shieldAttackSkill, buffSelfMPorPP, increaseMaxHpSkill, buffSummonCritSkill, chainBasicAttackSkill];

@@ -16,8 +16,8 @@ import {
     witchHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
-import { onlyBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
-import { magicAttack, magicAttackAll, meteoriteFallSkill } from "../skills/magicSkillConsts";
+import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
+import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { incrSummonBa, warriorSummonSkill } from "../skills/summonSkillConsts2";
 import { totemAttackSkill } from "../skills/wildSkillConsts";
@@ -59,16 +59,28 @@ export const customStartingItemsRoom = (): ICard[] => {
         // { type: ECardType.UNIT, price: 0, unit: summonHero },
         // { type: ECardType.UNIT, price: 0, unit: barbarianHero },
         // { type: ECardType.UNIT, price: 0, unit: necromancerHero },
+        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
+        //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
         { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
-        { type: ECardType.ITEM, price: 0, item: basic_jacket_2 },
+        {
+            type: ECardType.ITEM,
+            price: 0,
+            item: basic_jacket_2,
+        },
+        {
+            type: ECardType.ITEM,
+            price: 0,
+            item: basic_jacket_2,
+        },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
-        { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
-        { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
-        { type: ECardType.SKILL, price: 0, skill: buffTotalDmgSkill },
+        // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
+        // { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
+        // { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
+
         /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: warriorHero },

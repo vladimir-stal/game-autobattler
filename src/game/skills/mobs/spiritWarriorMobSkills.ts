@@ -214,7 +214,7 @@ export const spiritTeamRevenge: IHeroSkillSet = {
 };
 
 // Shield warrior
-const spiritShieldRadiateSkillset = (armor: number, ppScale: number, radiateStacks: number): IHeroSkill[] => {
+const spiritShieldRadiateSkillset = (armor: number, ppScale: number, vStacks: number, crit:number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
@@ -243,36 +243,23 @@ const spiritShieldRadiateSkillset = (armor: number, ppScale: number, radiateStac
                                 name: "Guilty",
                                 targetType: ETargetType.BY_RELEVANT_ID, // attacker
                                 timeType: EBuffTimeType.DURATION,
-                                type: EDebuffType.BATTLE_TRIGGER,
-                                value: 3,
-                                appTrigger: {
-                                    limitedRepeats: true,
-                                    skillId: "Guilty amp",
-                                    type: EAppTriggerType.TURN_START,
-                                    targetCheck: ETargetType.ALL_ALLIES,
-                                    skill: [
-                                        {
-                                            type: EHeroSkillType.STATUS_APPLY,
-                                            targetType: ETargetType.ANCHOR_TARGET,
-                                            status: EStatusType.RADIATE,
-                                            value: radiateStacks,
-                                            valueType: "number",
-                                        },
-                                    ],
-                                },
+                                type: EDebuffType.RESIST_DECREASE,
+                                duration: 2,
+                                value: vStacks,
+                                valueType: "number",                                
                             },
                         },
                         {
                             type: EHeroSkillType.BUFF,
                             buff: {
                                 name: "Shiny",
-                                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                                type: EBuffType.ATTRIBUTE_INCREASE,
+                                attribute: "critChance",
                                 targetType: ETargetType.ALL_ALLIES,
                                 timeType: EBuffTimeType.DURATION,
-                                duration: 2,
-                                value: 1,
+                                duration: 1,
+                                value: crit,
                                 valueType: "number",
-                                statusType: EStatusType.RADIATE,
                             },
                         },
                     ],
@@ -285,12 +272,12 @@ const spiritShieldRadiateSkillset = (armor: number, ppScale: number, radiateStac
 export const spiritShieldRadiate_3: IHeroSkillSet = {
     id: "spiritShieldRadiate",
     name: "Sanctuary",
-    desc: "Gain [5+65%xPP] armor\nAnd next time get hit by\nbasic attack, buff allies'\nattacks to apply 1 Radiate\nAnd attacker gets [3]\nRadiate stacks each turn",
+    desc: "Gain [5+65%xPP] armor\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round",
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
     isBasicAttack: true,
-    skills: spiritShieldRadiateSkillset(5, 65, 3),
+    skills: spiritShieldRadiateSkillset(5, 65, 2, 25),
     //nextLevel: spiritShieldRadiate_2,
     image: IMAGE_SKILL_KNIGHT_SHIELD, // IMAGE_SKILL_TEST
     animationType: AnimationType.UNIT_ATTACK,
@@ -299,12 +286,12 @@ export const spiritShieldRadiate_3: IHeroSkillSet = {
 export const spiritShieldRadiate_2: IHeroSkillSet = {
     id: "spiritShieldRadiate",
     name: "Sanctuary",
-    desc: "Gain [4+50%xPP] armor\nAnd next time get hit by\nbasic attack, buff allies'\nattacks to apply 1 Radiate\nAnd attacker gets [2]\nRadiate stacks each turn",
+    desc: "Gain [4+50%xPP] armor\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round",
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
     isBasicAttack: true,
-    skills: spiritShieldRadiateSkillset(4, 50, 2),
+    skills: spiritShieldRadiateSkillset(4, 50, 1, 25),
     nextLevel: spiritShieldRadiate_3,
     image: IMAGE_SKILL_KNIGHT_SHIELD, // IMAGE_SKILL_TEST
     animationType: AnimationType.UNIT_ATTACK,
@@ -313,12 +300,12 @@ export const spiritShieldRadiate_2: IHeroSkillSet = {
 export const spiritShieldRadiate: IHeroSkillSet = {
     id: "spiritShieldRadiate",
     name: "Sanctuary",
-    desc: "Gain [3+35%xPP] armor\nAnd next time get hit by\nbasic attack, buff allies'\nattacks to apply 1 Radiate\nAnd attacker gets [1]\nRadiate stacks each turn",
+    desc: "Gain [3+35%xPP] armor\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round",
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
     isBasicAttack: true,
-    skills: spiritShieldRadiateSkillset(3, 35, 1),
+    skills: spiritShieldRadiateSkillset(3, 35, 1, 25),
     nextLevel: spiritShieldRadiate_2,
     image: IMAGE_SKILL_KNIGHT_SHIELD, // IMAGE_SKILL_TEST
     animationType: AnimationType.UNIT_ATTACK,

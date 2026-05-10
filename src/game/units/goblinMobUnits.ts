@@ -1,7 +1,7 @@
 import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EItemAfterDuelBonusType, EDebuffType } from "../../types";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemGoblinBoneDagger, itemGoblinGoldCoin, itemGoblinSilverCoin } from "../mobItemConsts";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { goblinApplyShock, goblinPocketSand, goblinShamanHpRegIncr, goldGoblinBuff } from "../skills/mobs/goblinMobSkills";
 import { mobNoSkill, mobCheerSkill, mobAmbushSkill } from "../skills/mobSkills";
 
@@ -22,7 +22,7 @@ export const weakGoblinUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN,
     id: "WEAKGOBLIN",
-    skills: [mobNoSkill, goblinPocketSand, noBasicAttackSkill],
+    skills: [mobNoSkill, goblinPocketSand, chainToNextSkill],
     items: [],
     level: 1,
     exp: 0,
@@ -49,7 +49,7 @@ export const goblinUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOBLIN,
     id: "GOBLIN",
-    skills: [noBasicAttackSkill, goblinApplyShock],
+    skills: [chainToNextSkill, goblinApplyShock],
     items: [],
     level: 2,
     exp: 0,
@@ -80,7 +80,7 @@ export const goblinShamanUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOBLINSHAMAN,
     id: "GOBLINSHAMAN",
-    skills: [noBasicAttackSkill, goblinShamanHpRegIncr],
+    skills: [chainToNextSkill, goblinShamanHpRegIncr],
     items: [],
     level: 2,
     exp: 0,
@@ -145,7 +145,7 @@ export const goldGoblinBattleUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.GOLDGOBLIN1, //name: "Goblin trader"
     id: "GOLDGOBLIN1",
-    skills: [mobNoSkill, goldGoblinBuff, noBasicAttackSkill, noBasicAttackSkill],
+    skills: [mobNoSkill, goldGoblinBuff, chainToNextSkill, chainToNextSkill],
     items: [],
     level: 3,
     exp: 0,
@@ -170,7 +170,7 @@ export const cheeringGoblinUnit_skills: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN, // Cheer goblin
     id: "WEAKGOBLIN",
-    skills: [mobNoSkill, mobCheerSkill, noBasicAttackSkill, noBasicAttackSkill], // rotation 2 rounds
+    skills: [mobNoSkill, mobCheerSkill, chainToNextSkill, chainToNextSkill], // rotation 2 rounds
     items: [],
     level: 1,
     exp: 0,
@@ -194,7 +194,7 @@ export const cheeringGoblinUnit_attacks: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WEAKGOBLIN, // Cheer goblin
     id: "WEAKGOBLIN",
-    skills: [noBasicAttackSkill, mobAmbushSkill, mobNoSkill, noBasicAttackSkill], // rotation 2 rounds
+    skills: [chainToNextSkill, mobAmbushSkill, mobNoSkill, chainToNextSkill], // rotation 2 rounds
     items: [],
     level: 1,
     exp: 0,

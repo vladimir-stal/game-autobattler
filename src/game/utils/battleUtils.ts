@@ -32,7 +32,7 @@ import {
 } from "../../types";
 import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
 import { BattleController } from "../components/BattleController";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
 import { getHeroClassesWeaponItems } from "./itemUtils";
@@ -568,10 +568,10 @@ const undoAttributeChanges = (unit: IBattleUnit, attribute: THeroBattleAttribute
 };
 const undoAttributeChangesForNestedEffects = (unit: IBattleUnit, effects: INestedBuffEffect[], battleRecord: TBattleRecord) => {
     effects?.forEach((ne) => {
-        if (ne.buffType === EBuffType.ATTRIBUTE_INCREASE) {
+        if (ne.buffType === EBuffType.ATTRIBUTE_INCREASE && ne.attribute && ne.totalValue) {
             undoAttributeChanges(unit, ne.attribute, ne.totalValue, true, battleRecord);
         }
-        if (ne.debuffType === EDebuffType.ATTRIBUTE_DECREASE) {
+        if (ne.debuffType === EDebuffType.ATTRIBUTE_DECREASE && ne.attribute && ne.totalValue) {
             undoAttributeChanges(unit, ne.attribute, ne.totalValue, false, battleRecord);
         }
     });
@@ -584,10 +584,10 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
     }
 
     const { type, attribute, totalValue } = buff;
-    if (type === EBuffType.ATTRIBUTE_INCREASE) {
+    if (type === EBuffType.ATTRIBUTE_INCREASE && attribute && totalValue) {
         undoAttributeChanges(unit, attribute, totalValue, true, battleRecord);
     }
-    undoAttributeChangesForNestedEffects(unit, buff.nestedEffects, battleRecord);
+    buff.nestedEffects && undoAttributeChangesForNestedEffects(unit, buff.nestedEffects, battleRecord);
     battleRecord.push({ unitId: unit.id, type: EBattleActionType.BUFF_REMOVED, buff });
 };
 
@@ -598,10 +598,10 @@ export const removeDebuffSimple = (unit: IBattleUnit, debuff: IDebuff, battleRec
     }
 
     const { type, attribute, totalValue } = debuff;
-    if (type === EDebuffType.ATTRIBUTE_DECREASE) {
+    if (type === EDebuffType.ATTRIBUTE_DECREASE && attribute && totalValue) {
         undoAttributeChanges(unit, attribute, totalValue, false, battleRecord);
     }
-    undoAttributeChangesForNestedEffects(unit, debuff.nestedEffects, battleRecord);
+    debuff.nestedEffects && undoAttributeChangesForNestedEffects(unit, debuff.nestedEffects, battleRecord);
     battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.DEBUFF_REMOVE, debuff });
 };
 
@@ -961,17 +961,17 @@ const applyNewNestedEffects = (
                 return;
             }
         }
-        if (isParentEffect) {
-            const newParent = { ...parentBuff, totalValue: buffValue, nestedEffects: [] };
+        if (isParentEffect && parentBuff) {
+            const newParent: IBuff = { ...parentBuff, totalValue: buffValue, nestedEffects: [] };
             target.buffs.push(newParent);
-            buffAction.buffTargets?.push({ targetId: target.id, value: buffValue });
+            buffAction?.buffTargets?.push({ targetId: target.id, value: buffValue });
             !!parentBuff &&
                 parentBuff.nestedEffects?.forEach((ne) => {
                     applyNewNestedEffects(ne, target, battleCtrl, buffAction, caster, false, newParent, undefined);
                 });
         } else {
-            !!parentBuff && parentBuff.nestedEffects.push({ ...effect, totalValue: buffValue });
-            !!parentDebuff && parentDebuff.nestedEffects.push({ ...effect, totalValue: buffValue });
+            !!parentBuff && parentBuff.nestedEffects?.push({ ...effect, totalValue: buffValue });
+            !!parentDebuff && parentDebuff.nestedEffects?.push({ ...effect, totalValue: buffValue });
         }
     } else if (effect.debuffType) {
         const type = effect.debuffType;
@@ -1011,17 +1011,17 @@ const applyNewNestedEffects = (
                 return;
             }
         }
-        if (isParentEffect) {
+        if (isParentEffect && parentDebuff) {
             const newParent = { ...parentDebuff, totalValue: debuffValue, nestedEffects: [] };
             target.debuffs.push(newParent);
-            buffAction.buffTargets?.push({ targetId: target.id, value: debuffValue });
+            buffAction?.buffTargets?.push({ targetId: target.id, value: debuffValue });
             !!parentDebuff &&
                 parentDebuff.nestedEffects?.forEach((ne) => {
                     applyNewNestedEffects(ne, target, battleCtrl, buffAction, caster, false, undefined, newParent);
                 });
         } else {
-            !!parentBuff && parentBuff.nestedEffects.push({ ...effect, totalValue: debuffValue });
-            !!parentDebuff && parentDebuff.nestedEffects.push({ ...effect, totalValue: debuffValue });
+            !!parentBuff && parentBuff.nestedEffects?.push({ ...effect, totalValue: debuffValue });
+            !!parentDebuff && parentDebuff.nestedEffects?.push({ ...effect, totalValue: debuffValue });
         }
     }
 };
@@ -1059,7 +1059,7 @@ const applyExistingNestedEffects = (
             // caster & battleCtrl should be defined
 
             //if (buff.valueFrom === "customNumber") console.log("init", initValue, "new", newValue, "old", oldValue);
-            if (timeType === EBuffTimeType.DURATION) {
+            if (timeType === EBuffTimeType.DURATION && oldValue) {
                 effect.totalValue = Math.max(newValue, oldValue);
                 const diff = newValue - oldValue;
                 if (diff > 0) {
@@ -1074,7 +1074,10 @@ const applyExistingNestedEffects = (
                         });
                 }
             } else {
-                effect.totalValue += newValue;
+                if (effect.totalValue) {
+                    effect.totalValue += newValue;
+                }
+
                 target[attribute] += newValue;
                 battleCtrl &&
                     battleCtrl.battleRecord.push({
@@ -1085,32 +1088,34 @@ const applyExistingNestedEffects = (
                         value: newValue,
                     });
             }
-        } else if (type === EBuffType.BATTLE_TRIGGER) {
+        } else if (type === EBuffType.BATTLE_TRIGGER && oldValue) {
             effect.totalValue = Math.max(newValue, oldValue);
-        } else {
+        } else if (oldValue) {
             if (timeType === EBuffTimeType.DURATION) {
                 effect.totalValue = Math.max(newValue, oldValue);
             } else {
-                effect.totalValue += newValue;
+                if (effect.totalValue) {
+                    effect.totalValue += newValue;
+                }
             }
         }
         if (isParentEffect) {
             buffAction?.buffTargets?.push({ targetId: target.id, isExisting: true, value: effect.totalValue });
             if (!!parentBuff) {
-                if (timeType === EBuffTimeType.DURATION) {
+                if (timeType === EBuffTimeType.DURATION && parentBuff.duration && duration) {
                     parentBuff.duration += duration;
                 }
                 parentBuff.totalValue = effect.totalValue;
-                parentBuff.nestedEffects.forEach((ne) => {
+                parentBuff.nestedEffects?.forEach((ne) => {
                     applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, parentBuff, undefined);
                 });
             }
             if (!!parentDebuff) {
-                if (timeType === EBuffTimeType.DURATION) {
+                if (timeType === EBuffTimeType.DURATION && parentDebuff.duration && duration) {
                     parentDebuff.duration += duration;
                 }
                 parentDebuff.totalValue = effect.totalValue;
-                parentDebuff.nestedEffects.forEach((ne) => {
+                parentDebuff.nestedEffects?.forEach((ne) => {
                     applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, undefined, parentDebuff);
                 });
             }
@@ -1128,7 +1133,9 @@ const applyExistingNestedEffects = (
         switch (effect.debuffType) {
             case EDebuffType.MARK_BLADEDANCER:
                 {
-                    effect.totalValue += 1;
+                    if (effect.totalValue) {
+                        effect.totalValue += 1;
+                    }
                 }
                 break;
             case EDebuffType.ATTRIBUTE_DECREASE:
@@ -1137,12 +1144,14 @@ const applyExistingNestedEffects = (
                     console.log("ERROR applyDebuff attribute is undefined");
                     return;
                 }
-                if (timeType === EBuffTimeType.DURATION) {
+                if (timeType === EBuffTimeType.DURATION && oldValue) {
                     const diff = newValue - oldValue;
                     const ta = Math.min(diff, target[attribute]);
                     if (diff > 0) {
                         target[attribute] -= ta;
-                        effect.totalValue += ta;
+                        if (effect.totalValue) {
+                            effect.totalValue += ta;
+                        }
                         battleCtrl &&
                             battleCtrl.battleRecord.push({
                                 unitId: caster?.id || target.id,
@@ -1154,7 +1163,9 @@ const applyExistingNestedEffects = (
                     }
                 } else {
                     const ta = Math.min(newValue, target[attribute]);
-                    effect.totalValue += ta;
+                    if (effect.totalValue) {
+                        effect.totalValue += ta;
+                    }
                     target[attribute] -= ta;
                     battleCtrl &&
                         battleCtrl.battleRecord.push({
@@ -1167,29 +1178,35 @@ const applyExistingNestedEffects = (
                 }
                 break;
             case EDebuffType.BATTLE_TRIGGER:
-                effect.totalValue = Math.max(newValue, oldValue);
+                if (oldValue) {
+                    effect.totalValue = Math.max(newValue, oldValue);
+                }
                 break;
             default: {
-                timeType === EBuffTimeType.DURATION ? (effect.totalValue = Math.max(newValue, oldValue)) : (effect.totalValue += newValue);
+                if (timeType === EBuffTimeType.DURATION && oldValue) {
+                    effect.totalValue = Math.max(newValue, oldValue);
+                } else if (effect.totalValue) {
+                    effect.totalValue += newValue;
+                }
             }
         }
         if (isParentEffect) {
-            buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: effect.totalValue });
+            buffAction?.buffTargets?.push({ targetId: target.id, isExisting: true, value: effect.totalValue });
             if (!!parentBuff) {
-                if (timeType === EBuffTimeType.DURATION) {
+                if (timeType === EBuffTimeType.DURATION && parentBuff.duration && duration) {
                     parentBuff.duration += duration;
                 }
                 parentBuff.totalValue = effect.totalValue;
-                parentBuff.nestedEffects.forEach((ne) => {
+                parentBuff.nestedEffects?.forEach((ne) => {
                     applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, parentBuff, undefined);
                 });
             }
             if (!!parentDebuff) {
-                if (timeType === EBuffTimeType.DURATION) {
+                if (timeType === EBuffTimeType.DURATION && parentDebuff.duration && duration) {
                     parentDebuff.duration += duration;
                 }
                 parentDebuff.totalValue = effect.totalValue;
-                parentDebuff.nestedEffects.forEach((ne) => {
+                parentDebuff.nestedEffects?.forEach((ne) => {
                     applyExistingNestedEffects(ne, target, battleCtrl, timeType, buffAction, duration, caster, false, undefined, parentDebuff);
                 });
             }
@@ -1403,14 +1420,14 @@ export const prepareUniqueSummonToBattle = (unit: IBattleUnit): void => {
     if (unit.summon.id.startsWith("ILLUSIONSUMMON")) {
         unit.skills.forEach((skill) => {
             if (skill.isMcSkill) {
-                unit.summon?.skills.push(noBasicAttackSkill);
+                unit.summon?.skills.push(chainToNextSkill);
                 return;
             }
             if (skill.type === ESkillSetType.MAGIC_ATTACK) {
                 unit.summon?.skills.push({ ...skill, isBasicAttack: false, isChained: false });
                 return;
             }
-            unit.summon?.skills.push(noBasicAttackSkill);
+            unit.summon?.skills.push(chainToNextSkill);
         });
     }
 };

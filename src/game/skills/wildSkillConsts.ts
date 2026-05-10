@@ -26,7 +26,6 @@ export const attrIncrHpReg_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             value: 4,
             valueType: "number",
             attribute: "hpRegen",
@@ -48,7 +47,6 @@ export const attrIncrHpReg_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             value: 2,
             valueType: "number",
             attribute: "hpRegen",
@@ -72,7 +70,6 @@ export const attrIncrHpReg: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             value: 1,
             valueType: "number",
             attribute: "hpRegen",
@@ -163,7 +160,6 @@ export const attrDescArmor_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            isBasicAttack: true,
             value: 26, //TODO MP: add MP to armor decrease
             valueType: "number",
             attribute: "armor",
@@ -185,7 +181,6 @@ export const attrDescArmor_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            isBasicAttack: true,
             value: 14, //TODO MP: add MP to armor decrease
             valueType: "number",
             attribute: "armor",
@@ -208,7 +203,6 @@ export const attrDescArmor: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_DECREASE,
-            isBasicAttack: true,
             value: 8, //TODO MP: add MP to armor decrease
             valueType: "number",
             attribute: "armor",
@@ -234,7 +228,6 @@ export const incrTotemValueSkill_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.TOTEM_INCREASE_VALUE,
-            isBasicAttack: true,
             value: 1,
             valueType: "number",
             targetType: ETargetType.TOTEM_ALLY_CURRENT,
@@ -257,7 +250,6 @@ export const incrTotemValueSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.TOTEM_INCREASE_VALUE,
-            isBasicAttack: true,
             value: 1,
             valueType: "number",
             targetType: ETargetType.TOTEM_ALLY_CURRENT,
@@ -281,7 +273,6 @@ export const incrTotemValueSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.TOTEM_INCREASE_VALUE,
-            isBasicAttack: true,
             value: 1,
             valueType: "number",
             targetType: ETargetType.TOTEM_ALLY_CURRENT,

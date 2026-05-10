@@ -78,7 +78,6 @@ const skeletonArmorSelfAndLowSkillset = (base: number, ppScale: number): IHeroSk
     return [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: false,
             attribute: "armor",
             value: base,
             valueType: "number",
@@ -87,7 +86,6 @@ const skeletonArmorSelfAndLowSkillset = (base: number, ppScale: number): IHeroSk
         },
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             attribute: "armor",
             value: base,
             valueType: "number",

@@ -514,7 +514,13 @@ export const getWeaponItemTop = (weaponType: EWeaponItemType, day: number): IIte
     }
 };
 
-export const upgradeItem = (item: IItem): IItem => {
+/**
+ *
+ * @param item first item to upgrade
+ * @param item2 second items if upgrade is coming from merging two items
+ * @returns item upgraded to the next level
+ */
+export const upgradeItem = (item: IItem, item2?: IItem): IItem => {
     if (item.level === ITEM_MAX_LEVEL) {
         return item;
     }
@@ -527,6 +533,9 @@ export const upgradeItem = (item: IItem): IItem => {
     nextCopy.previousLevel = item;
     //if (item.evolving) {
     nextCopy.bonuses.push(...item.bonuses.filter((b) => b.isEvolved)); //b.valueType === "evolvedNumber"
+    if (item2) {
+        nextCopy.bonuses.push(...item2.bonuses.filter((b) => b.isEvolved));
+    }
     //}
     return nextCopy;
 };
@@ -566,13 +575,12 @@ export const getItemPrice = (item: IItem, additionalLevel: number = 0) => {
 };
 
 export const createItem = (item: IItem): IItem => {
-    return { ...item, bonuses: [...item.bonuses.filter((b) => !b.isEvolved)] };
+    return { ...item, bonuses: [...item.bonuses] };
 };
 
-// export const createItemWoEvolve = (item: IItem): IItem => {
-//     const bb = item.bonuses.filter((b) => b.valueType === "number" || b.valueType === "percent");
-//     return { ...item, bonuses: bb };
-// };
+export const createItemForShop = (item: IItem): IItem => {
+    return { ...item, bonuses: [...item.bonuses.filter((b) => !b.isEvolved)] };
+};
 
 export const genShopItemCards = (items: IItem[], firstItemDiscount: boolean = true, lastItemPriceUp: boolean = false): (ICard | null)[] => {
     return items.map((item, index) => {
@@ -585,7 +593,7 @@ export const genShopItemCards = (items: IItem[], firstItemDiscount: boolean = tr
             const isDiscount = index === 0 && firstItemDiscount;
             const price = isDiscount ? salePrice : getItemPrice(item, lastItemPriceUp && isLastItem ? 1 : 0);
             //const shopItem = item.evolving ? createItemWoEvolve(item) : createItem(item);
-            const shopItem = createItem(item);
+            const shopItem = createItemForShop(item);
             return { item: shopItem, type: ECardType.ITEM, price };
         }
     });

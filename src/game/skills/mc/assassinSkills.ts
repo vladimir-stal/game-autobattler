@@ -1,5 +1,47 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const assassinSkillset = (poison:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Poison+",
+                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
+                statusType: EStatusType.POISON,
+                value: poison,
+                valueType: "number",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+            },
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Aim",
+                type: EBuffType.CHANGE_TARGET_TYPE,
+                changeTargetTypeTo: ETargetType.LOW_HP_ENEMY,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+            },
+        },
+    ]
+}
+
+export const assassinSkill_3: IHeroSkillSet = {
+    id: "AssassinPoisonBlade",
+    //name: "Poison blade(2)",
+    //desc: "Apply poison [2] on basic attack.\nTarget lowest hp enemy on next basic attack.",
+    name: i18n.skills.mc.assassinSkill.name,
+    desc: i18n.skills.mc.assassinSkill.desc3,
+    level: 2,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.ASSASSIN],
+    isMcSkill: true,
+    skills: assassinSkillset(3),
+};
 
 export const assassinSkill_2: IHeroSkillSet = {
     id: "AssassinPoisonBlade",
@@ -11,35 +53,8 @@ export const assassinSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.ASSASSIN],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: false,
-            buff: {
-                name: "+2 poison on ba",
-                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
-                statusType: EStatusType.POISON,
-                value: 2,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "weak point",
-                type: EBuffType.CHANGE_TARGET_TYPE,
-                //statusType: EStatusType.POISON,
-                changeTargetTypeTo: ETargetType.LOW_HP_ENEMY,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA, /// 2 next basic attacks ????
-            },
-        },
-    ],
+    skills: assassinSkillset(2),
+    nextLevel: assassinSkill_3,
 };
 
 export const assassinSkill: IHeroSkillSet = {
@@ -52,35 +67,7 @@ export const assassinSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.ASSASSIN],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: false,
-            buff: {
-                name: "+1 poison on ba",
-                type: EBuffType.ADD_STATUS_ON_BASIC_ATTACK,
-                statusType: EStatusType.POISON,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-        {
-            type: EHeroSkillType.BUFF,
-            isBasicAttack: true,
-            buff: {
-                name: "weak point",
-                type: EBuffType.CHANGE_TARGET_TYPE,
-                //statusType: EStatusType.POISON,
-                changeTargetTypeTo: ETargetType.LOW_HP_ENEMY,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.SELF,
-                timeType: EBuffTimeType.TILL_NEXT_BA,
-            },
-        },
-    ],
+    skills: assassinSkillset(1),
     nextLevel: assassinSkill_2,
 };
 

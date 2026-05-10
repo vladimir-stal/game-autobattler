@@ -399,8 +399,8 @@ export class SelectController {
                     ) {
                         // upgrade item
                         console.log("UPGRADE ITEM");
-                        const upgradedItem = upgradeItem(targetCard.card.item);
-                        console.log("new item:", upgradedItem.name);
+                        const upgradedItem = upgradeItem(targetCard.card.item, card.item);
+                        console.log("new item:", upgradedItem);
                         targetCard.setItem(upgradedItem);
                         return;
                     }

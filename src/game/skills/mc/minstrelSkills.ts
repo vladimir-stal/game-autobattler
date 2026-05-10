@@ -1,5 +1,30 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const minstrelSkillset = (percent:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF_INCREASE_VALUE,
+            value: percent,
+            valueType: "percent",
+            targetFromType: ETargetType.BUFFED_ALLY_RANDOM,
+            targetType: ETargetType.BUFFED_ALLY_RANDOM,
+        },
+    ]
+}
+
+export const minstrelSkill_3: IHeroSkillSet = {
+    id: "minstrelBuff",
+    //name: "Double buff(2)",
+    //desc: "Tripls value of a random buff on ally",
+    name: i18n.skills.mc.minstrelSkill.name,
+    desc: i18n.skills.mc.minstrelSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.MINSTREL],
+    isMcSkill: true,
+    skills: minstrelSkillset(220),
+};
 
 export const minstrelSkill_2: IHeroSkillSet = {
     id: "minstrelBuff",
@@ -11,16 +36,8 @@ export const minstrelSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.MINSTREL],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF_INCREASE_VALUE,
-            isBasicAttack: true,
-            value: 200,
-            valueType: "percent",
-            targetFromType: ETargetType.BUFFED_ALLY_RANDOM,
-            targetType: ETargetType.BUFFED_ALLY_RANDOM,
-        },
-    ],
+    skills: minstrelSkillset(150),
+    nextLevel: minstrelSkill_3,
 };
 
 export const minstrelSkill: IHeroSkillSet = {
@@ -33,17 +50,7 @@ export const minstrelSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.MINSTREL],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.BUFF_INCREASE_VALUE,
-            isBasicAttack: true,
-            value: 100,
-            valueType: "percent",
-            //targetFromType: ETargetType.BUFFED_ALLY_RANDOM, // not used?
-            targetType: ETargetType.BUFFED_ALLY_RANDOM,
-
-        },
-    ],
+    skills: minstrelSkillset(80),
     nextLevel: minstrelSkill_2,
 };
 

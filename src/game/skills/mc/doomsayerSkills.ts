@@ -1,5 +1,51 @@
-import { AnimationType, EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, ESkillSetType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import {
+    AnimationType,
+    EBuffTimeType,
+    EDebuffType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillSetType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
+
+const doomsayerSkillset = (repeats: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            targetType: ETargetType.SELF,
+            value: repeats,
+            valueType: "number",
+            childSkill: {
+                type: EHeroSkillType.DEBUFF,
+                debuff: {
+                    name: "Doom",
+                    type: EDebuffType.DISABLE_SKILL,
+                    value: 1,
+                    valueType: "number",
+                    targetType: ETargetType.RANDOM_ENEMY,
+                    timeType: EBuffTimeType.DUEL,
+                },
+                animation: AnimationType.NONE,
+            },
+        },
+    ];
+};
+
+export const doomsayerSkill_3: IHeroSkillSet = {
+    id: "DoomsayerCurse",
+    name: i18n.skills.mc.doomsayerSkill.name,
+    desc: i18n.skills.mc.doomsayerSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.DOOMSAYER],
+    isMcSkill: true,
+    skills: doomsayerSkillset(3),
+    animationType: AnimationType.UNIT_DEBUFF,
+};
 
 export const doomsayerSkill_2: IHeroSkillSet = {
     id: "DoomsayerCurse",
@@ -11,35 +57,8 @@ export const doomsayerSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.DOOMSAYER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "Doom",
-                type: EDebuffType.DISABLE_SKILL,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.RANDOM_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-            animation: AnimationType.NONE,
-        },
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "Doom",
-                type: EDebuffType.DISABLE_SKILL,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.RANDOM_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-            animation: AnimationType.NONE,
-        },
-    ],
-    //
+    skills: doomsayerSkillset(2),
+    nextLevel: doomsayerSkill_3,
     animationType: AnimationType.UNIT_DEBUFF,
 };
 
@@ -53,21 +72,7 @@ export const doomsayerSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.DOOMSAYER],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "Doom",
-                type: EDebuffType.DISABLE_SKILL,
-                value: 1,
-                valueType: "number",
-                targetType: ETargetType.RANDOM_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-            animation: AnimationType.NONE,
-        },
-    ],
+    skills: doomsayerSkillset(1),
     nextLevel: doomsayerSkill_2,
     //
     animationType: AnimationType.UNIT_DEBUFF,

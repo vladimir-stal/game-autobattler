@@ -2,7 +2,7 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../.
 import { basic_boots, basic_hat, basic_hat_2, basic_pants, basic_pants_2 } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2 } from "../mobItemConsts";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { pirateCallTheCannons, pirateDeadmansCurse, pirateDragNDrown } from "../skills/mobs/pirateMobSkills";
 import { mobNoSkill } from "../skills/mobSkills";
 
@@ -23,7 +23,7 @@ export const pirate1Unit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PIRATE_1,
     id: "PIRATE1",
-    skills: [mobNoSkill, pirateDragNDrown, noBasicAttackSkill],
+    skills: [mobNoSkill, pirateDragNDrown, chainToNextSkill],
     items: [],
     level: 2,
     exp: 0,
@@ -56,7 +56,7 @@ export const pirate2Unit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PIRATE_2,
     id: "PIRATE2",
-    skills: [noBasicAttackSkill, pirateCallTheCannons, mobNoSkill, pirateDeadmansCurse],
+    skills: [chainToNextSkill, pirateCallTheCannons, mobNoSkill, pirateDeadmansCurse],
     items: [],
     level: 4,
     exp: 0,

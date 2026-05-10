@@ -1,7 +1,7 @@
 import { EHeroAttackType, EHeroClass, ETargetType, EUnitType, IUnit } from "../../types";
 import { i18n } from "../consts";
 import { itemCoin, itemPeasantPitchfork, itemPeasantPitchfork_2 } from "../mobItemConsts";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { peasantLastStandSkill, peasantsStronkSkill } from "../skills/mobs/peasantMobSkills";
 import { mobNoSkill } from "../skills/mobSkills";
 
@@ -24,7 +24,7 @@ export const peasantUnit_4: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
     id: PEASANT_ID,
-    skills: [noBasicAttackSkill, peasantsStronkSkill],
+    skills: [chainToNextSkill, peasantsStronkSkill],
     items: [],
     level: 4,
     exp: 0,
@@ -54,7 +54,7 @@ export const peasantUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PEASANT,
     id: PEASANT_ID,
-    skills: [mobNoSkill, peasantLastStandSkill, noBasicAttackSkill],
+    skills: [mobNoSkill, peasantLastStandSkill, chainToNextSkill],
     items: [],
     level: 1,
     exp: 0,

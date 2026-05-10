@@ -1,5 +1,40 @@
-import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const warlockSkillset = (percentDecrease:number, mpScale:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "-20% ba",
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                attribute: "attack",
+                value: percentDecrease,
+                valueType: "percent",
+                targetType: ETargetType.HIGH_ATTACK_ENEMY,
+                timeType: EBuffTimeType.DUEL,
+            },
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            status: EStatusType.POISON,
+            value: 1,
+            targetType: ETargetType.HIGH_ATTACK_ENEMY,
+            mpScale: mpScale,
+        },
+    ]
+}
+
+export const warlockSkill_3: IHeroSkillSet = {
+    id: "WarlockCurse",
+    name: i18n.skills.mc.warlockSkill.name,
+    desc: i18n.skills.mc.warlockSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.WARLOCK],
+    isMcSkill: true,
+    skills: warlockSkillset(20,150),
+};
 
 export const warlockSkill_2: IHeroSkillSet = {
     id: "WarlockCurse",
@@ -11,29 +46,8 @@ export const warlockSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.WARLOCK],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "-20% ba",
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 20,
-                valueType: "percent",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
-            status: EStatusType.POISON,
-            value: 1,
-            targetType: ETargetType.HIGH_ATTACK_ENEMY,
-            mpScale: 100,
-        },
-    ],
+    skills: warlockSkillset(20,100),
+    nextLevel: warlockSkill_3,
 };
 
 export const warlockSkill: IHeroSkillSet = {
@@ -46,29 +60,7 @@ export const warlockSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.WARLOCK],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "-20% ba", // +MP ????
-                type: EDebuffType.ATTRIBUTE_DECREASE,
-                attribute: "attack",
-                value: 20,
-                valueType: "percent",
-                targetType: ETargetType.HIGH_ATTACK_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
-            status: EStatusType.POISON,
-            value: 1,
-            targetType: ETargetType.HIGH_ATTACK_ENEMY,
-            mpScale: 50,
-        },
-    ],
+    skills: warlockSkillset(20,50),
     nextLevel: warlockSkill_2,
 };
 

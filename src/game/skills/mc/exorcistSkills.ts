@@ -1,53 +1,85 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+
+const exorcistSkillset = (heal:number, mpScale:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALL_ENEMIES,
+            childSkill: {
+                type: EHeroSkillType.NONE,
+                condition: ESkillCondition.HAS_SUMMON,
+            }
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALL_ENEMIES,
+            childSkill: {
+                type: EHeroSkillType.NONE,
+                condition: ESkillCondition.HAS_TOTEM,
+            }
+        },
+        {
+            type: EHeroSkillType.TOTEM_REMOVE,
+            targetType: ETargetType.ALL_ENEMIES,
+            value: 1,
+        },
+        {
+            type: EHeroSkillType.SUMMON_REMOVE,
+            targetType: ETargetType.ALL_ENEMIES,
+            value: 1,
+        },
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            targetType: ETargetType.SELF,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            childSkill: {
+                type: EHeroSkillType.HEAL,
+                targetType: ETargetType.ALL_ALLIES,
+                value: heal,
+                valueType: "number",
+                mpScale: mpScale,
+            },
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE
+        },
+    ];
+}
+
+export const exorcistSkill_3: IHeroSkillSet = {
+    id: "ExorcistClear",
+    name: i18n.skills.mc.exorcistSkill.name,
+    desc: i18n.skills.mc.exorcistSkill.desc3,
+    level: 2,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.EXORCIST],
+    isMcSkill: true,
+    skills: exorcistSkillset(2,50),
+    //nextLevel: exorcistSkill_2
+};
 
 export const exorcistSkill_2: IHeroSkillSet = {
     id: "ExorcistClear",
-    //name: "Exorcist clear(2)",
-    //desc: "Remove a summon and remove a totem\n from enemies",
     name: i18n.skills.mc.exorcistSkill.name,
     desc: i18n.skills.mc.exorcistSkill.desc2,
     level: 2,
     priceLevel: 4,
     heroClasses: [EHeroClass.EXORCIST],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM_REMOVE,
-            targetType: ETargetType.ALL_ENEMIES,
-            value: 1,
-        },
-        {
-            type: EHeroSkillType.SUMMON_REMOVE,
-            targetType: ETargetType.ALL_ENEMIES,
-            value: 1,
-        },
-    ],
-    //nextLevel: exorcistSkill_2
+    skills: exorcistSkillset(1,35),
+    nextLevel: exorcistSkill_3
 };
 
 export const exorcistSkill: IHeroSkillSet = {
     id: "ExorcistClear",
-    //name: "Exorcist clear",
-    //desc: "Remove a summon and remove a totem\n from enemies",
     name: i18n.skills.mc.exorcistSkill.name,
     desc: i18n.skills.mc.exorcistSkill.desc1,
     level: 1,
     priceLevel: 4,
     heroClasses: [EHeroClass.EXORCIST],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.TOTEM_REMOVE,
-            isBasicAttack: false,
-            targetType: ETargetType.CUSTOM,
-        },
-        {
-            type: EHeroSkillType.SUMMON_REMOVE,
-            isBasicAttack: true,
-            targetType: ETargetType.CUSTOM,
-        },
-    ],
+    skills: exorcistSkillset(0,25),
     nextLevel: exorcistSkill_2,
 };
 

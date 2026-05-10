@@ -12,7 +12,6 @@ export const knightSkill_3: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             value: 20,
             valueType: "number",
             attribute: "armor",
@@ -33,7 +32,6 @@ export const knightSkill_2: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             value: 15,
             valueType: "number",
             attribute: "armor",
@@ -55,7 +53,6 @@ export const knightSkill: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            isBasicAttack: true,
             value: 12, //TODO PP: add pp to armor
             valueType: "number",
             attribute: "armor",

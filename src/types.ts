@@ -598,6 +598,7 @@ export enum EHeroSkillType {
     NONE = "NONE", // use this skill type to trigger basic attack without a skill, or to trigger no skill and no basic attack
     STATUS_APPLY = "STATUS_APPLY", // apply a status to target
     STATUS_REMOVE = "STATUS_REMOVE", // remove one random status from target
+    STATUS_MODIFY_AMOUNT = "STATUS_MODIFY_AMOUNT", // modify stacks size of one specific (or all current) status(es) by flat amount or percent
     SUMMON = "SUMMON", // summon a unit to the battle
     SUMMON_REMOVE = "SUMMON_REMOVE", // remove one random summon from an enemy unit
     SWAP_HP = "SWAP_HP", // swap hp values with another ally
@@ -634,7 +635,7 @@ export enum EBuffType {
     DIVINE_SHIELD = "DIVINE_SHIELD", // ignores incoming damage below stacks
     COSMIC_SHIELD = "COSMIC_SHIELD", // ignores first incoming damage
     ANTISKILL_MIRROR = "ANTISKILL_MIRROR", // reflects first enemy skill back to attacker
-    FIRE_SHIELD = "FIRE_SHIELD", // on taking damage applies burn to enemy
+    THORNS_SHIELD = "THORNS_SHIELD", // on taking damage applies (buff.statusType) to enemy or deal damage if no statusType
     DARK_HEAL = "DARK_HEAL", // transforms heal spells into magic attack spells
     BLADEDANCE = "BLADEDANCE", // consecutive attacks deal more damage
     IGNORE_ARMOR = "IGNORE_ARMOR",
@@ -1141,7 +1142,6 @@ export interface INestedBuffEffect {
  */
 export interface IHeroSkill {
     type: EHeroSkillType;
-    isBasicAttack?: boolean;
     attackType?: EHeroAttackType;
     attribute?: THeroBattleAttribute;
     buff?: IBuff;

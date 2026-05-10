@@ -25,6 +25,7 @@ import {
     ITotem,
     IBattleTrigger,
     INestedBuffEffect,
+    AnimationType,
 } from "../../types";
 import { allyTargets, eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -566,6 +567,8 @@ export class BattleController {
                 return this.performApplyStatus(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.STATUS_REMOVE:
                 return this.performRemoveStatus(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
+            case EHeroSkillType.STATUS_MODIFY_AMOUNT:
+                return this.performStatusModifyAmount(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
             case EHeroSkillType.SUMMON:
                 this.performSummon(unit, skill, isPlayer1, isStartBattle);
                 return sameLastTargetId;
@@ -891,7 +894,7 @@ export class BattleController {
             if (target) {
                 applyBuff(target, buff, buffAction, this, unit, isPlayer1);
                 if (!buff.cannotBeTargeted) {
-                    triggerBattleTrigger(EAppTriggerType.RECIEVE_BUFF, this, target);
+                    triggerBattleTrigger(EAppTriggerType.RECIEVE_BUFF, this, target, target.id);
                 }
                 lastTargetId = target.id;
             }
@@ -1054,6 +1057,72 @@ export class BattleController {
         targets.forEach((target) => {
             //console.log("APPLY STATUS", unit, target, status, finalValue);
             applyStatus(unit, target, status, finalValue, this.battleRecord, isStartBattle);
+            lastTargetId = target.id;
+        });
+        return lastTargetId || sameLastTargetId;
+    }
+
+    performStatusModifyAmount(
+        unit: IBattleUnit,
+        skill: IHeroSkill,
+        isPlayer1: boolean,
+        isStartBattle?: boolean,
+        sameLastTargetId?: string,
+    ): string | undefined {
+        const { status, targetType, targetUnitId, value, mpScale, ppScale, valueFrom, valueType, markType } = skill;
+        if (!targetType || value === undefined) {
+            return sameLastTargetId;
+        }
+
+        const targets = this.getTargetsSimple(unit, targetType, isPlayer1, markType, targetUnitId, sameLastTargetId);
+        //getTargets(unit, allyUnits, opponentUnits, targetType, targetUnitId);
+
+        if (!targets) {
+            return sameLastTargetId;
+        }
+
+        // check scaling from MP and PP
+        const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
+        const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+        const baseValue = !valueType || valueType === "number" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0; //|| valueType === "evolvedNumber"
+
+        let finalValue = baseValue + mpScaleValue + ppScaleValue;
+
+        /*const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
+        if (itemBonus) {
+            finalValue += calculateIncreaseValue(1, itemBonus.value, itemBonus.valueType);
+        }*/
+
+        let lastTargetId;
+        targets.forEach((target) => {
+            //console.log("APPLY STATUS", unit, target, status, finalValue);
+            if (valueType === "percent") {
+                //|| valueType === "evolvedPercent"
+                const finalPercent = finalValue < 0 ? (finalValue > -100 ? 100 + finalValue : 0) : 100 + finalValue;
+                target.statuses?.forEach((st) => {
+                    if (((!!status && st.type === status) || !status) && st.value > 0) {
+                        const newValue = Math.floor((st.value * finalPercent) / 100 + 0.5);
+                        if (newValue < st.value) {
+                            reduceStatus(unit, target, st.type, st.value - newValue, this.battleRecord);
+                            st.value = newValue > 0 ? newValue : 0;
+                        } else if (status) {
+                            applyStatus(unit, target, status, newValue - st.value, this.battleRecord, isStartBattle);
+                        }
+                    }
+                });
+            } else {
+                target.statuses?.forEach((st) => {
+                    if (((!!status && st.type === status) || !status) && st.value > 0) {
+                        const newValue = st.value + finalValue;
+                        if (newValue < st.value) {
+                            reduceStatus(unit, target, st.type, st.value - newValue, this.battleRecord);
+                            st.value = newValue > 0 ? newValue : 0;
+                        } else if (status) {
+                            applyStatus(unit, target, status, newValue - st.value, this.battleRecord, isStartBattle);
+                        }
+                    }
+                });
+            }
             lastTargetId = target.id;
         });
         return lastTargetId || sameLastTargetId;
@@ -1229,9 +1298,15 @@ export class BattleController {
         });
 
         // check for DARK_HEAL buff
-        const darkHealBuff = unit.buffs.find((buff) => buff.type === EBuffType.DARK_HEAL);
-        if (darkHealBuff) {
-            this.performDarkHealAttack(unit, skill, finalHeal, isPlayer1, isStartBattle);
+        let darkHealMod = 0;
+        unit.buffs.forEach((buff) => {
+            if (buff?.type === EBuffType.DARK_HEAL && buff.totalValue) {
+                darkHealMod += buff.totalValue;
+            }
+        });
+        if (darkHealMod > 0) {
+            const damageValue = Math.floor((finalHeal * darkHealMod) / 100 + 0.5);
+            this.performDarkHealAttack(unit, skill, damageValue, isPlayer1, isStartBattle);
             return sameLastTargetId;
         }
         // OVERHEAL_TO_DAMAGE
@@ -1310,7 +1385,7 @@ export class BattleController {
     }
 
     performDarkHealAttack(unit: IBattleUnit, skill: IHeroSkill, value: number, isPlayer1: boolean, isStartBattle?: boolean) {
-        const { targetType, isBasicAttack } = skill;
+        const { targetType } = skill;
 
         let newTargetType = ETargetType.FIRST_ENEMY;
         switch (targetType) {
@@ -1326,7 +1401,6 @@ export class BattleController {
         }
 
         const attackSkill: IHeroSkill = {
-            isBasicAttack,
             type: EHeroSkillType.ATTACK,
             attackType: EHeroAttackType.MAGIC,
             targetType: newTargetType,
@@ -1765,6 +1839,21 @@ export class BattleController {
                 return sameLastTargetId;
             }
             unit.customNumber = Math.floor((value * unit.customNumber) / 100);
+        } else if (skill.targetBuffId) {
+            targets.forEach((t) => {
+                t?.buffs.forEach((b) => {
+                    if (b?.name === skill.targetBuffId && b.totalValue) {
+                        unit.customNumber += b.totalValue;
+                        lastTargetId = t.id;
+                    }
+                });
+                t?.debuffs.forEach((d) => {
+                    if (d?.name === skill.targetBuffId && d.totalValue) {
+                        unit.customNumber += d.totalValue;
+                        lastTargetId = t.id;
+                    }
+                });
+            });
         } else {
             console.log("Error. Wrong calculation arguments.", skill);
             return sameLastTargetId;
@@ -1921,22 +2010,33 @@ export class BattleController {
                 }
             }
             // check if target has on-basic-attack buffs (like FIRE_SHIELD)
-            const fireShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.FIRE_SHIELD);
-            if (fireShieldBuff) {
-                //console.log("basicAttack >>> fireShieldBuff FOUND");
-                //removeBuff(target, antiskillShieldBuff, this.battleRecord);
-                const burnSkill: IHeroSkill = {
-                    type: EHeroSkillType.STATUS_APPLY,
-                    status: EStatusType.BURN,
-                    value: fireShieldBuff.value,
-                    valueType: "number",
-                    targetType: ETargetType.BY_UNIT_ID,
-                    targetUnitId: unit.id,
-                    isBasicAttack: false,
-                };
-                this.performApplyStatus(target, burnSkill, !isPlayer1, false);
-            }
-            //
+            finalTarget.buffs.forEach((buff) => {
+                if (buff?.type === EBuffType.THORNS_SHIELD) {
+                    if (buff.statusType) {
+                        const burnSkill: IHeroSkill = {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            status: buff.statusType,
+                            value: buff.totalValue,
+                            valueType: "number",
+                            targetType: ETargetType.BY_UNIT_ID,
+                            targetUnitId: unit.id,
+                            animation: AnimationType.NONE,
+                        };
+                        this.performApplyStatus(finalTarget, burnSkill, !isPlayer1, false);
+                    } else {
+                        const thornsSkill: IHeroSkill = {
+                            type: EHeroSkillType.ATTACK,
+                            attackType: finalTarget.attackType,
+                            value: buff.totalValue,
+                            valueType: "number",
+                            targetType: ETargetType.BY_UNIT_ID,
+                            targetUnitId: unit.id,
+                            animation: AnimationType.NONE,
+                        };
+                        this.performAttack(finalTarget, thornsSkill, !isPlayer1, false);
+                    }
+                }
+            });
             // check if target has on-basic debuffs (like BLADEDANCER_MARK)
             const bladedanceBuff = unit.buffs.find((buff) => buff.type === EBuffType.BLADEDANCE);
             if (bladedanceBuff) {

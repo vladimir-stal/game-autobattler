@@ -3,7 +3,7 @@ import { basic_pants, basic_ring_regen } from "../commonItemConsts";
 import { hp_amulet } from "../commonItemConsts2";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2 } from "../mobItemConsts";
-import { noBasicAttackSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { bigWolfSummonSkill } from "../skills/mobs/bigWolfMobSkills";
 import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
 import { mobNoSkill } from "../skills/mobSkills";
@@ -26,7 +26,7 @@ export const wolfUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WOLF,
     id: WOLF_ID,
-    skills: [mobNoSkill, regularWolfSkill, noBasicAttackSkill],
+    skills: [mobNoSkill, regularWolfSkill, chainToNextSkill],
     items: [],
     level: 2,
     exp: 0,
@@ -56,7 +56,7 @@ export const strongWolfUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.STRONGWOLF,
     id: STRONG_WOLF_ID,
-    skills: [noBasicAttackSkill, regularWolfSkill, mobNoSkill, bigWolfSummonSkill],
+    skills: [chainToNextSkill, regularWolfSkill, mobNoSkill, bigWolfSummonSkill],
     items: [],
     level: 3,
     exp: 0,

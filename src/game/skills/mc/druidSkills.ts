@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 // export const druidSkill_2: IHeroSkillSet = {
@@ -44,6 +44,37 @@ import { i18n } from "../../consts";
 
 // TODO: make times depend on MP!
 
+const druidSkillset = (repeats: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            targetType: ETargetType.SELF,
+            value: repeats,
+            valueType: "number",
+            childSkill: {
+                type: EHeroSkillType.STATUS_APPLY,
+                status: EStatusType.SHOCK,
+                value: 1,
+                valueType: "number",
+                targetType: ETargetType.RANDOM_ENEMY,
+            },
+        },
+    ];
+};
+
+export const druidSkill_3: IHeroSkillSet = {
+    id: "DruidShock",
+    //name: "Chain lightning(2)",
+    //desc: "Apply [1] shock to\nrandom enemy 3 times",
+    name: i18n.skills.mc.druidSkill.name,
+    desc: i18n.skills.mc.druidSkill.desc3,
+    level: 3,
+    priceLevel: 4,
+    heroClasses: [EHeroClass.DRUID],
+    isMcSkill: true,
+    skills: druidSkillset(5),
+};
+
 export const druidSkill_2: IHeroSkillSet = {
     id: "DruidShock",
     //name: "Chain lightning(2)",
@@ -54,36 +85,8 @@ export const druidSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.DRUID],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: false,
-            status: EStatusType.SHOCK,
-            value: 1,
-            valueType: "number",
-            targetType: ETargetType.RANDOM_ENEMY,
-            //mpScale: 50,
-        },
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: false,
-            status: EStatusType.SHOCK,
-            value: 1,
-            valueType: "number",
-            targetType: ETargetType.RANDOM_ENEMY,
-            //mpScale: 50,
-        },
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
-            status: EStatusType.SHOCK,
-            value: 1,
-            valueType: "number",
-            targetType: ETargetType.RANDOM_ENEMY,
-            //mpScale: 50,
-        },
-    ],
-    //nextLevel: druidSkill_2,
+    skills: druidSkillset(4),
+    nextLevel: druidSkill_3,
 };
 
 export const druidSkill: IHeroSkillSet = {
@@ -96,35 +99,7 @@ export const druidSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.DRUID],
     isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: false,
-            status: EStatusType.SHOCK,
-            value: 1,
-            valueType: "number",
-            targetType: ETargetType.RANDOM_ENEMY,
-            //mpScale: 50,
-        },
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: false,
-            status: EStatusType.SHOCK,
-            value: 1,
-            valueType: "number",
-            targetType: ETargetType.RANDOM_ENEMY,
-            //mpScale: 50,
-        },
-        {
-            type: EHeroSkillType.STATUS_APPLY,
-            isBasicAttack: true,
-            status: EStatusType.SHOCK,
-            value: 1,
-            valueType: "number",
-            targetType: ETargetType.RANDOM_ENEMY,
-            //mpScale: 50,
-        },
-    ],
+    skills: druidSkillset(3),
     nextLevel: druidSkill_2,
 };
 

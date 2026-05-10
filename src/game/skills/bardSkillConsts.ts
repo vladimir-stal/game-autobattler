@@ -35,7 +35,7 @@ export const buffNextBaAll_3: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "+4 next ba all",
+                name: "next Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 4,
@@ -59,7 +59,7 @@ export const buffNextBaAll_2: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "+3 next ba all",
+                name: "next Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 3,
@@ -84,7 +84,7 @@ export const buffNextBaAll: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "+2 next ba all",
+                name: "next Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 2,
@@ -111,7 +111,7 @@ export const buffBaSelf_3: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "buff self ba",
+                name: "Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 3,
@@ -135,7 +135,7 @@ export const buffBaSelf_2: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "buff self ba",
+                name: "Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 2,
@@ -160,7 +160,7 @@ export const buffBaSelf: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "buff self ba",
+                name: "Ba+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "attack",
                 value: 1,
@@ -188,7 +188,7 @@ export const buffPPAll_3: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "buff pp all",
+                name: "PP+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "physicalPower",
                 value: 1,
@@ -213,7 +213,7 @@ export const buffPPAll_2: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "buff pp all",
+                name: "PP+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "physicalPower",
                 value: 1,
@@ -239,7 +239,7 @@ export const buffPPAll: IHeroSkillSet = {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "buff pp all",
+                name: "PP+",
                 type: EBuffType.ATTRIBUTE_INCREASE,
                 attribute: "physicalPower",
                 value: 1,
@@ -261,7 +261,7 @@ const buffTotalDmgSkillset = (base: number, mpScale: number): IHeroSkill[] => {
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "Total dmg%",
+                name: "Dmg%+",
                 targetType: ETargetType.ALLY_IN_FRONT,
                 timeType: EBuffTimeType.DUEL,
                 type: EBuffType.TOTAL_DAMAGE_INCREASE,
@@ -269,12 +269,12 @@ const buffTotalDmgSkillset = (base: number, mpScale: number): IHeroSkill[] => {
                 valueType: "percent",
                 mpScale: mpScale,
             },
-            condition: ESkillCondition.IN_BACK_ROW,
+            condition: ESkillCondition.HAS_ALLY_IN_FRONT,
         },
         {
             type: EHeroSkillType.BUFF,
             buff: {
-                name: "Total dmg%",
+                name: "Dmg%+",
                 targetType: ETargetType.ALLY_BEHIND,
                 timeType: EBuffTimeType.DUEL,
                 type: EBuffType.TOTAL_DAMAGE_INCREASE,
@@ -282,7 +282,7 @@ const buffTotalDmgSkillset = (base: number, mpScale: number): IHeroSkill[] => {
                 valueType: "percent",
                 mpScale: mpScale,
             },
-            condition: ESkillCondition.IN_FRONT_ROW,
+            condition: ESkillCondition.HAS_ALLY_BEHIND,
         },
     ];
 };
