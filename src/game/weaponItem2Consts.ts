@@ -214,7 +214,7 @@ export const mace21_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR, value: 2, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR, value: 3, valueType: "number" }],
 };
 
 export const mace21_2: IItem = {
@@ -227,7 +227,7 @@ export const mace21_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.MACE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR, value: 2, valueType: "number" }],
     nextLevel: mace21_3,
 };
 
@@ -386,8 +386,8 @@ export const staff21_3: IItem = {
     image: IMAGE_ITEM_STAFF_2,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 4, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 8, valueType: "number" }],
 };
 
 export const staff21_2: IItem = {
@@ -399,8 +399,8 @@ export const staff21_2: IItem = {
     image: IMAGE_ITEM_STAFF_2,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 2, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 4, valueType: "number" }],
     nextLevel: staff21_3,
 };
 
@@ -413,8 +413,8 @@ export const staff21: IItem = {
     image: IMAGE_ITEM_STAFF_2,
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
-    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 1, valueType: "number" }],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_SUMMON_ATTACK, value: 2, valueType: "number" }],
     nextLevel: staff21_2,
 };
 

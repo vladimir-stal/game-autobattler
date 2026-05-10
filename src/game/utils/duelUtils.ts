@@ -62,16 +62,16 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
                             for (let r = 0; r < v.levelup; r++) levelUpUnit(unit);
                         } else if (!!v.moveMcSkillToSlotIndex) {
                             const nonmc = unit.skills.filter((sk) => !!sk && sk.isMcSkill);
-                            const mcSkill = unit.skills.find(sk => sk.isMcSkill);
+                            const mcSkill = unit.skills.find((sk) => sk.isMcSkill);
                             unit.skills = [];
                             nonmc.forEach((sk, idx) => {
                                 if (idx === v.moveMcSkillToSlotIndex) {
-                                    unit.skills.push(mcSkill);
+                                    mcSkill && unit.skills.push(mcSkill);
                                 }
                                 unit.skills.push(sk);
-                            })
+                            });
                             if (unit.skills.length === v.moveMcSkillToSlotIndex) {
-                                unit.skills.push(mcSkill);
+                                mcSkill && unit.skills.push(mcSkill);
                             }
                         }
                     });

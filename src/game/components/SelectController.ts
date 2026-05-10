@@ -254,7 +254,7 @@ export class SelectController {
                             //     }
                             // }),
                             addedBonuses: item.bonuses
-                                .filter((b) => !!b && (b.valueType === "evolvedNumber" || b.valueType === "evolvedPercent"))
+                                .filter((b) => !!b && b.isEvolved) //(b.valueType === "evolvedNumber" || b.valueType === "evolvedPercent"))
                                 .map((ib) => {
                                     return { ...ib };
                                 }),

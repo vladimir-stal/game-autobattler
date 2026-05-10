@@ -110,7 +110,7 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
                     return;
                 }
                 if (item.nextLevel) {
-                    const newItem = upgradeItem(item);                    
+                    const newItem = upgradeItem(item);
                     this.cardSlot.placeCard({ type: ECardType.ITEM, price: 0, item: newItem }, undefined);
                     //this.moveButton.setVisible(true);
                     this.upgradeButton.setVisible(false);
@@ -122,7 +122,7 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
                     return;
                 }
                 if (skill.nextLevel) {
-                    const newSkill = upgradeSkillSet(skill,skill);
+                    const newSkill = upgradeSkillSet(skill, skill);
                     //newSkill.isActivateOnStart = skill.isActivateOnStart;
                     //newSkill.isChained = skill.isChained;
                     this.cardSlot.placeCard({ type: ECardType.SKILL, price: 0, skill: newSkill }, undefined);
@@ -151,5 +151,9 @@ export class CardUpgradetPanel extends Phaser.GameObjects.Container {
         const y = 220;
         this.hintText = this.scene.add.text(0, y, text, { fontFamily: "Arial Black", fontSize: 18, color: "#eeeeee" }).setOrigin(0.5, 0);
         this.add(this.hintText);
+    }
+
+    restart() {
+        this.gameScene.allCardSlots.push(this.cardSlot);
     }
 }

@@ -359,8 +359,10 @@ const riposteSkillset = (atk: number, ppScale: number): IHeroSkill[] => {
 //
 export const riposteSkill_3: IHeroSkillSet = {
     id: "riposteSkill",
-    name: "Master Riposte",
-    desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+65%xPP] increase attack",
+    //name: "Master Riposte",
+    //desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+65%xPP] increase attack",
+    name: i18n.skills.level2.riposteSkill.name,
+    desc: i18n.skills.level2.riposteSkill.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
@@ -371,8 +373,10 @@ export const riposteSkill_3: IHeroSkillSet = {
 
 export const riposteSkill_2: IHeroSkillSet = {
     id: "riposteSkill",
-    name: "Master Riposte",
-    desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+35%xPP] increase attack",
+    //name: "Master Riposte",
+    //desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+35%xPP] increase attack",
+    name: i18n.skills.level2.riposteSkill.name,
+    desc: i18n.skills.level2.riposteSkill.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],
@@ -384,8 +388,10 @@ export const riposteSkill_2: IHeroSkillSet = {
 
 export const riposteSkill: IHeroSkillSet = {
     id: "riposteSkill",
-    name: "Master Riposte",
-    desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1] increase attack",
+    //name: "Master Riposte",
+    //desc: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1] increase attack",
+    name: i18n.skills.level2.riposteSkill.name,
+    desc: i18n.skills.level2.riposteSkill.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.MASTER],

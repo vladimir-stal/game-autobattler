@@ -27,8 +27,11 @@ export const applyAfterDuelBonuses = (gameScene: GameScene, units: TUnits, isBat
         unit.items.forEach((item) => {
             if (item.afterDuelBonuses) {
                 item.afterDuelBonuses.forEach((bonus) => {
-                    if (item.evolving) applyAfterDuelBonusEvolve(gameScene, bonus, item, isBattleWin, unit);
-                    else applyAfterDuelBonus(gameScene, bonus, unit, isBattleWin);
+                    if (bonus.isEvolving) {
+                        applyAfterDuelBonusEvolve(gameScene, bonus, item, isBattleWin, unit);
+                    } else {
+                        applyAfterDuelBonus(gameScene, bonus, unit, isBattleWin);
+                    }
                 });
             }
         });
@@ -124,7 +127,7 @@ const applyAfterDuelBonus = (gameScene: GameScene, bonus: IAfterDuelBonus, unit:
 const evolveBonus = (bonuses: IItemBonus[], attribute: THeroAttribute, value: number) => {
     let found = false;
     bonuses
-        .filter((b) => b.attribute === attribute && b.valueType === "evolvedNumber")
+        .filter((b) => b.attribute === attribute && b.isEvolved) //b.valueType === "evolvedNumber"
         .forEach((b) => {
             b.value += value;
             found = true;
@@ -134,7 +137,8 @@ const evolveBonus = (bonuses: IItemBonus[], attribute: THeroAttribute, value: nu
             type: EItemBonusType.ATTRIBUTE,
             value: value,
             attribute: attribute,
-            valueType: "evolvedNumber",
+            valueType: "number",
+            isEvolved: true,
         });
     }
 };

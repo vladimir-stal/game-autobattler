@@ -2,7 +2,7 @@ import { GameObjects } from "phaser";
 import { GameScene } from "../../scenes/GameScene";
 import { colors, i18n } from "../../consts";
 import { CardSlot } from "../CardSlot";
-import { ECardType, EUnitType } from "../../../types";
+import { ECardType, EUnitType, ICard, IHeroSkill, IHeroSkillSet, IItem, IUnit } from "../../../types";
 import { MIN_WIDTH } from "./uiPanels";
 import { getItemPrice } from "../../utils/itemUtils";
 import { getSkillPrice } from "../../utils/skillUtils";
@@ -53,39 +53,7 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
                 previousSlot.removeCard();
             }
 
-            let price = 0;
-            switch (card.type) {
-                case ECardType.ITEM:
-                    {
-                        if (!card.item) {
-                            price = 0;
-                        } else {
-                            price = card.item.sellPrice !== undefined ? card.item.sellPrice : Math.floor((getItemPrice(card.item) + 1) / 2);
-                        }
-                        //price = card.item.level || 0;
-                    }
-                    break;
-                case ECardType.SKILL:
-                    {
-                        if (!card.skill) {
-                            price = 0;
-                        } else {
-                            //price = card.skill.level || 0;
-                            price = Math.floor((getSkillPrice(card.skill.priceLevel) + 1) / 2);
-                        }
-                    }
-                    break;
-                case ECardType.UNIT:
-                    {
-                        if (card.unit) {
-                            //const { unitType, level } = card.unit;
-                            //price = unitType === EUnitType.HERO ? level : 1;
-                            price = Math.floor((getUnitCardPrice(card.unit, 24, 7) + 1) / 2);
-                        }
-                    }
-                    break;
-            }
-
+            const price = this.getCardPrice(card);
             this.gameScene.bankController.addToBank(price);
         });
         this.add(this.borderRect);
@@ -115,6 +83,23 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
         this.add(this.sellTtextObject);
     }
 
+    highlight(value: boolean) {
+        const color = value ? colors.GREEN_DARK : colors.BLACK;
+        this.borderRect.setFillStyle(color);
+        const textColor = value ? "#FFFFFF" : "#888888";
+        this.sellTtextObject.setColor(textColor);
+        if (value) {
+            const { card } = this.gameScene.cardToMove || {};
+            if (!card) {
+                return;
+            }
+            const price = this.getCardPrice(card);
+            this.sellTtextObject.setText(i18n.ui.SELL + "\n" + price + " " + i18n.ui.GOLD);
+        } else {
+            this.sellTtextObject.setText(i18n.ui.SELL);
+        }
+    }
+
     refreshAfterResize() {
         const rectWidth = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth : borderMiddleWidth;
         const rectHeight = 150;
@@ -122,5 +107,29 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
         //
         const x = this.gameScene.camera.width >= MIN_WIDTH ? borderMaxWidth / 2 : borderMiddleWidth / 2;
         this.sellTtextObject.setX(x);
+    }
+
+    private getCardPrice(card: ICard): number {
+        switch (card.type) {
+            case ECardType.ITEM:
+                return card.item ? this.getItemPrice(card.item) : 0;
+            case ECardType.SKILL:
+                return card.skill ? this.getSkillPrice(card.skill) : 0;
+            case ECardType.UNIT:
+                return card.unit ? this.getUnitPrice(card.unit) : 0;
+        }
+        return 0;
+    }
+
+    private getItemPrice(item: IItem): number {
+        return item.sellPrice !== undefined ? item.sellPrice : Math.floor((getItemPrice(item) + 1) / 2);
+    }
+
+    private getSkillPrice(skill: IHeroSkillSet): number {
+        return Math.floor((getSkillPrice(skill.priceLevel) + 1) / 2);
+    }
+
+    private getUnitPrice(unit: IUnit): number {
+        return Math.floor((getUnitCardPrice(unit, 24, 7) + 1) / 2);
     }
 }

@@ -35,6 +35,17 @@ const peasantLastStandSkillset = (hpBoost: number, ppScale: number, atkAndRegen:
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
             targetType: ETargetType.SELF,
+            attribute: "hp",
+            value: hpBoost,
+            valueType: "number",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            ppScale: ppScale,
+            animation: AnimationType.NONE,
+            // if all allies are dead - gain buff
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SELF,
             attribute: "attack",
             value: atkAndRegen,
             valueType: "number",

@@ -79,7 +79,6 @@ export const itemPeasantPitchfork_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.SPEAR,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: -4, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 25, valueType: "number", attribute: "basicCritChance" },
         { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicMaxHp" },
     ],
@@ -94,10 +93,7 @@ export const itemPeasantPitchfork_2: IItem = {
     priceLevel: 2,
     heroClasses: [],
     weaponType: EWeaponItemType.SPEAR,
-    bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: -2, valueType: "number", attribute: "basicAttack" },
-        { type: EItemBonusType.ATTRIBUTE, value: 20, valueType: "number", attribute: "basicCritChance" },
-    ],
+    bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 20, valueType: "number", attribute: "basicCritChance" }],
     image: IMAGE_ITEM_PEASANTS_PITCHFORK,
     nextLevel: itemPeasantPitchfork_3,
 };
@@ -342,10 +338,9 @@ export const itemSpiritSpear_3: IItem = {
     heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
-    evolving: true,
     afterDuelBonuses: [
         { type: EItemAfterDuelBonusType.STAT_MP, value: 1 },
-        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON },
+        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON },
     ],
     image: IMAGE_ITEM_SPIRIT_SPEAR,
 };
@@ -359,8 +354,7 @@ export const itemSpiritSpear_2: IItem = {
     heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, isEvolving: true, value: 1 }],
     image: IMAGE_ITEM_SPIRIT_SPEAR,
     nextLevel: itemSpiritSpear_3,
 };
@@ -374,8 +368,7 @@ export const itemSpiritSpear: IItem = {
     heroClasses: [EHeroClass.ALL],
     weaponType: EWeaponItemType.SPEAR,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
-    evolving: true,
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MP, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     image: IMAGE_ITEM_SPIRIT_SPEAR,
     nextLevel: itemSpiritSpear_2,
 };

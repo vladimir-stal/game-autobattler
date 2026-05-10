@@ -157,14 +157,12 @@ export const getRooms = (
                     return debugHeroSelectRoom ? [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null] : [null, { roomType: ERoomType.HEROES_SELL }, null];
                     // Go change in debugUtils.ts for custom room
                 } else if (hour === 1) {
+                    //return [null, { roomType: ERoomType.DUEL }, null];
                     return debugStartingItemsRoom
                         ? [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null]
                         : [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
                     // Go change in debugUtils.ts for custom room
                 } else if (hour === 2) {
-                    //const boss = getRandomArrayItem(bosses);
-                    //return [null, { roomType: ERoomType.BOSS, roomOptions: { boss: boss } }, null];
-                    //return [null, { roomType: ERoomType.DUEL }, null];
                     return [null, { roomType: ERoomType.MOBS }, null];
                 } else if (hour === 5) {
                     return [null, { roomType: ERoomType.DUEL }, null];
@@ -548,6 +546,8 @@ export const getCards = (
             break;
         case ERoomType.ITEM_SELECT:
             {
+                isRerollAvailable = true;
+                //
                 const topItem = getAllItemTop(day);
                 const holdingItem = isAfterReroll ? null : getRandomArrayItem(getAllHoldingItems(gameScene));
                 const num = holdingItem ? 2 : 3;
@@ -556,14 +556,15 @@ export const getCards = (
                     items.push(holdingItem);
                 }
 
-                cards = genShopItemCards(items, !!holdingItem);
+                cards = genShopItemCards(items, true, !!holdingItem);
             }
             break;
         case ERoomType.ITEM_LEGEND_SELL:
             {
                 isSingleSelect = true;
+                isRerollAvailable = true;
                 const items = getRandomArrayItems(itemsLvl5, 3, true);
-                cards = genShopItemCards(items);
+                cards = genShopItemCards(items, false);
             }
             break;
         case ERoomType.ITEM_CLASS_SELL:
@@ -675,7 +676,7 @@ export const getCards = (
                     // and then 3 random skills instead of 2
                     const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), num, true);
 
-                    const allSkills = [...skills, topLevelSkill, holdingSkill];
+                    const allSkills = [...skills, topLevelSkill, { ...holdingSkill, isChained: false }];
                     cards = genShopSkillCards(allSkills, !!holdingSkill);
                 }
             }
@@ -976,6 +977,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
                     // PLACE ITEM ON UPGRADE PANEL
 
                     if (slot.isUpgradePanel && slot.isEmpty) {
+                        console.log(">>>> UPGRADE PANEL activate");
                         slot.setIsActive(true);
                         return;
                     }
@@ -1181,13 +1183,16 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
 
 export const getMobRewardCard = (reward: IMobReward): ICard => {
     console.log("getMobRewardCard >>> ", reward);
-    const { type, value, item, unit } = reward;
+    const { type, value, item, skill, unit } = reward;
     switch (type) {
         case IMobRewardType.GOLD: {
             return { price: 0, type: ECardType.GOLD, value };
         }
         case IMobRewardType.ITEM: {
             return { price: 0, type: ECardType.ITEM, item };
+        }
+        case IMobRewardType.SKILL: {
+            return { price: 0, type: ECardType.SKILL, skill };
         }
         case IMobRewardType.UNIT: {
             const rewardUnit = copyUnit(unit!);

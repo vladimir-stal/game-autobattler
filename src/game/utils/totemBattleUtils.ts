@@ -98,8 +98,7 @@ const performTotemStatusApply = (
     // check scaling from MP and PP
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-    const baseValue =
-        !valueType || valueType === "number" || valueType === "evolvedNumber" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0;
+    const baseValue = !valueType || valueType === "number" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0; //|| valueType === "evolvedNumber"
 
     let finalValue = baseValue + totemValueBonus + mpScaleValue + ppScaleValue;
 

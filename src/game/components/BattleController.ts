@@ -679,7 +679,7 @@ export class BattleController {
         }
 
         const baseValue =
-            !valueType || valueType === "number" || valueType === "evolvedNumber"
+            !valueType || valueType === "number" // || valueType === "evolvedNumber"
                 ? value
                 : valueFrom
                   ? Math.floor((unit[valueFrom] * value) / 100)
@@ -698,6 +698,7 @@ export class BattleController {
             skill,
             isStartBattle,
         };
+        this.battleRecord.push(attackRecord);
 
         let lastAliveTargetId: string | undefined = undefined;
         targets.forEach((target) => {
@@ -735,7 +736,7 @@ export class BattleController {
                 lastAliveTargetId = finalTarget.id;
             }
         });
-        this.battleRecord.push(attackRecord);
+
         if (isCrit) {
             triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastAliveTargetId);
         }
@@ -774,28 +775,30 @@ export class BattleController {
             //console.log("INCR ATTR TARGET", attribute, target);
             const increaseValue = calculateIncreaseValue(target[attribute], value || 0, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
 
-            if (attribute === "maxHp") {
-                const percent = target.hp / target.maxHp;
-                target.maxHp += increaseValue;
-                target.hp = Math.min(target.maxHp, Math.floor(target.maxHp * percent) + 1);
-                battleAction.targets?.push({
-                    targetId: target.id,
-                    attribute: "maxHp",
-                    value: increaseValue,
-                });
-                battleAction.targets?.push({
-                    targetId: target.id,
-                    attribute: "hp",
-                    value: increaseValue,
-                });
-            } else {
-                target[attribute] += increaseValue;
-                battleAction.targets?.push({
-                    targetId: target.id,
-                    attribute,
-                    value: increaseValue,
-                });
-            }
+            // if (attribute === "maxHp") {
+            //     const percent = target.hp / target.maxHp;
+            //     target.maxHp += increaseValue;
+            //     target.hp = Math.min(target.maxHp, Math.floor(target.maxHp * percent) + 1);
+            //     battleAction.targets?.push({
+            //         targetId: target.id,
+            //         attribute: "maxHp",
+            //         value: increaseValue,
+            //     });
+            //     battleAction.targets?.push({
+            //         targetId: target.id,
+            //         attribute: "hp",
+            //         value: increaseValue,
+            //     });
+            // } else {
+            target[attribute] += increaseValue;
+            battleAction.targets?.push({
+                targetId: target.id,
+                attribute,
+                value: increaseValue,
+                // @ts-ignore
+                ATTR: target[attribute],
+            });
+            // }
             lastTargetId = target.id;
         });
         return lastTargetId || sameLastTargetId;
@@ -950,15 +953,15 @@ export class BattleController {
             if (!buff) {
                 return;
             }
-            buff.nestedEffects = buff.nestedEffects?.map(ne => {
-                const copyNestedEffect: INestedBuffEffect = {...ne}
+            buff.nestedEffects = buff.nestedEffects?.map((ne) => {
+                const copyNestedEffect: INestedBuffEffect = { ...ne };
                 return copyNestedEffect;
-            })
-            buff.nestedEffects?.forEach(ne => {
+            });
+            buff.nestedEffects?.forEach((ne) => {
                 const addValue = calculateIncreaseValue(ne.totalValue || 0, value, valueType);
                 ne.value = buff.timeType === EBuffTimeType.DURATION ? (ne.totalValue || 0) + addValue : addValue;
                 ne.valueType = "number";
-            })
+            });
             const addValue = calculateIncreaseValue(buff.totalValue || 0, value, valueType);
             buff.value = buff.timeType === EBuffTimeType.DURATION ? (buff.totalValue || 0) + addValue : addValue;
             buff.valueType = "number";
@@ -1008,10 +1011,10 @@ export class BattleController {
                 console.log("no buff found for copy!");
                 return;
             }
-            buff.nestedEffects = buff.nestedEffects?.map(ne => {
-                const copyNestedEffect: INestedBuffEffect = {...ne}
+            buff.nestedEffects = buff.nestedEffects?.map((ne) => {
+                const copyNestedEffect: INestedBuffEffect = { ...ne };
                 return copyNestedEffect;
-            })
+            });
 
             lastTargetId = this.performBuff(unit, skill, buff, isPlayer1, isStartBattle, sameLastTargetId) || lastTargetId;
         });
@@ -1038,8 +1041,7 @@ export class BattleController {
         // check scaling from MP and PP
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-        const baseValue =
-            !valueType || valueType === "number" || valueType === "evolvedNumber" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0;
+        const baseValue = !valueType || valueType === "number" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0; // || valueType === "evolvedNumber"
 
         let finalValue = baseValue + mpScaleValue + ppScaleValue;
 
@@ -1204,8 +1206,7 @@ export class BattleController {
         // calculate outgoing heal value
         const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
-        const baseValue =
-            !valueType || valueType === "number" || valueType === "evolvedNumber" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0;
+        const baseValue = !valueType || valueType === "number" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0; // || valueType === "evolvedNumber"
         //console.log("Heal base value ",baseValue,value,valueType,valueFrom);
         let finalHeal = baseValue + mpScaleValue + ppScaleValue;
 
@@ -1745,9 +1746,11 @@ export class BattleController {
                     lastTargetId = t.id;
                 }
             });
-        } else if (skill.valueType === "number" || skill.valueType === "evolvedNumber") {
+        } else if (skill.valueType === "number") {
+            // || skill.valueType === "evolvedNumber"
             unit.customNumber = value || 0;
-        } else if ((skill.valueType === "percent" || skill.valueType === "evolvedPercent") && skill.valueFrom) {
+        } else if (skill.valueType === "percent" && skill.valueFrom) {
+            //|| skill.valueType === "evolvedPercent"
             targets.forEach((t) => {
                 if (skill.valueFrom) {
                     const v = Math.floor(((value || 100) * t[skill.valueFrom]) / 100);
@@ -1755,7 +1758,8 @@ export class BattleController {
                     lastTargetId = t.id;
                 }
             });
-        } else if (skill.valueType === "percent" || skill.valueType === "evolvedPercent") {
+        } else if (skill.valueType === "percent") {
+            // || skill.valueType === "evolvedPercent"
             if (value === undefined) {
                 console.log("NO PERCENT VALUE WAS SET");
                 return sameLastTargetId;
@@ -1859,8 +1863,9 @@ export class BattleController {
             isCrit,
             targets: [],
         };
+        this.battleRecord.push(attackRecord);
 
-        const statusesOnAttack: Map<EStatusType, number> = new Map();
+        const statusesOnAttack: Map<EStatusType, number> = new Map<EStatusType, number>();
         unit.buffs.forEach((buff) => {
             if (buff.type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK) {
                 const { statusType, value } = buff;
@@ -1875,6 +1880,9 @@ export class BattleController {
                 }
             }
         });
+
+        console.log("unit.itemBonuses", unit.itemBonuses);
+
         unit.itemBonuses
             .filter((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK)
             .forEach((applyStatusBonus) => {
@@ -1883,12 +1891,14 @@ export class BattleController {
                     return;
                 }
                 if (statusesOnAttack.has(status)) {
-                    // @ts-ignore
-                    statusesOnAttack.set(status, statusesOnAttack[status] + value);
+                    // @ts-ignore;
+                    statusesOnAttack.set(status, statusesOnAttack.get(status) + value);
                 } else {
                     statusesOnAttack.set(status, value);
                 }
             });
+
+        console.log("unit.itemBonuses", unit.itemBonuses);
 
         let lastTargetId: string | undefined;
         //
@@ -1977,7 +1987,7 @@ export class BattleController {
             this.removeBuffs(target, EBuffTimeType.TILL_GOT_HIT);
             this.removeDebuffs(target, EBuffTimeType.TILL_GOT_HIT);
         });
-        this.battleRecord.push(attackRecord);
+
         if (isCrit) {
             triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastTargetId);
         }
@@ -2181,6 +2191,8 @@ export class BattleController {
 
     takeDamage(target: IBattleUnit, damageValue: number, parentUnit: IBattleUnit | undefined, recordTarget: IActionTarget) {
         target.hp -= damageValue;
+        // @ts-ignore
+        recordTarget.HP = target.hp;
 
         //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp });
         recordTarget.damageValue = damageValue;

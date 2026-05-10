@@ -149,7 +149,6 @@ export const skeletonFrontSummon: IUnit = {
     items: [],
     level: 2,
     exp: 0,
-    mobItems: [],
 };
 export const skeletonBackSummon: IUnit = {
     unitType: EUnitType.UNIT,
@@ -172,7 +171,6 @@ export const skeletonBackSummon: IUnit = {
     items: [],
     level: 2,
     exp: 0,
-    mobItems: [],
 };
 
 export const necromancerSkill_3: IHeroSkillSet = {

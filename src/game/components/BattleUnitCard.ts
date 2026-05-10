@@ -1,12 +1,11 @@
 import { GameObjects } from "phaser";
 import { GameScene } from "../scenes/GameScene";
-import { ANIMATION_COMPLETE, colors, GAME_MODE, i18n } from "../consts";
+import { ANIMATION_COMPLETE, colors, i18n } from "../consts";
 import {
     AnimationType,
     EEffectAnimationType,
     EHeroAttackType,
     EHeroClass,
-    EHeroClassType,
     EStatusType,
     EUnitType,
     IActionBuffTarget,
@@ -24,8 +23,7 @@ import { BattleDebuffCard } from "./BattleDebuffCard";
 import { getHeroImage, getUnitImage } from "../utils/imageUtils";
 import { BattleStatusCard } from "./BattleStatusCard";
 import { IMAGE_EFFECT_LIGHTNING_1 } from "../utils/load/imageLoadEffects";
-import { IMAGE_EFFECT_UI_BUFF_0 } from "../utils/load/imageLoadUIEffects";
-import { IMAGE_ICON_ATTACK, IMAGE_ICON_HEALTH, IMAGE_ICON_SHIELD } from "../utils/imageLoadUtil";
+import { IMAGE_ICON_ATTACK, IMAGE_ICON_SHIELD } from "../utils/imageLoadUtil";
 
 /** Card to show unit in battle  */
 export class BattleUnitCard extends Phaser.GameObjects.Container {
@@ -87,10 +85,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     //
 
-    //uiEffectImageObject: GameObjects.Sprite; // for attack and skill effects
-
-    //
-
     constructor(scene: GameScene, x: number, y: number, unit: IBattleUnit | null, isInverted: boolean) {
         super(scene, x, y);
         this.isInverted = isInverted;
@@ -106,19 +100,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             this.renderEffectImage();
         }
         this.renderPanels();
-        //this.renderUIEffects();
     }
-
-    // renderUIEffects() {
-    //     this.uiEffectImageObject = this.gameScene.add
-    //         .sprite(0, 0, IMAGE_EFFECT_UI_BUFF_0)
-    //         .setOrigin(0.5, 0.5)
-    //         //.setDisplaySize(displaySize, displaySize)
-    //         //.setFlipX(this.isInverted)
-    //         .setDepth(200)
-    //         .setVisible(false);
-    //     this.add(this.uiEffectImageObject);
-    // }
 
     renderEffectImage() {
         //
@@ -269,18 +251,13 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.add(this.titleText);
         this.titleText.setText(this.title);
 
-        //
+        // RENDER HP BAR
 
         const graphics = this.scene.add.graphics();
 
-        //graphics.fillStyle(0x333333, 1);
-        //graphics.fillRect(x, y, width, height);
         graphics.lineStyle(3, 0xffffff, 1);
         graphics.lineBetween(0, 205, 0, 220);
         graphics.lineBetween(100, 205, 100, 220);
-
-        //graphics.lineBetween(0, 225, 0, 240);
-        //graphics.lineBetween(100, 225, 100, 240);
 
         ////////
 
@@ -290,15 +267,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         this.hpRect = this.scene.add.rectangle(0, 205, 100, 15, colors.RED_DARK_2).setOrigin(0, 0);
         //this.hpRect.setStrokeStyle(1, 0x777777);
         this.add(this.hpRect);
-
-        //graphics.lineStyle(2, 0x666666, 1);
-        //graphics.lineBetween(25, 205, 25, 220);
-        //graphics.lineBetween(50, 205, 50, 220);
-        //graphics.lineBetween(75, 205, 75, 220);
-
-        //graphics.lineBetween(25, 225, 25, 240);
-        //graphics.lineBetween(50, 225, 50, 240);
-        //graphics.lineBetween(75, 225, 75, 240);
 
         this.hpText = this.scene.add.text(50, 205, hp + "/" + maxHp + "", { fontSize: 12, color: "#ffffff" }).setOrigin(0.5, 0);
 
@@ -334,18 +302,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
         //////////////
 
-        //this.hpText = this.scene.add.text(15, -110, hp + "/" + maxHp + "", { fontSize: 12, color: "#ddffdd" });
-
         this.attackText = this.scene.add.text(20, -110, "" + basicAttack, { fontSize: 12, color: "#ffffff" }); //ffdddd
         this.add(this.attackText);
 
         const attackIcon = this.scene.add.image(0, -115, IMAGE_ICON_ATTACK).setDisplaySize(25, 25).setOrigin(0, 0);
         this.add(attackIcon);
-
-        // const itemsTextContent = items.length > 0 ? "Items: " + items.map((item) => item.name).join(", ") : "";
-        // const itemsText = this.scene.add.text(10, 90, itemsTextContent, { fontSize: 12, color: "#dddddd" });
-        // itemsText.setVisible(items.length > 0);
-        // this.add(itemsText);
 
         this.renderStatuses();
     }
@@ -664,6 +625,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playRegenHp(value: number) {
+        console.log("playRegenHp ", value, this.unit?.id);
         this.changeHp(value);
         this.setAction("REGEN " + value, colors.GREEN);
         this.actionRect.fillColor = colors.GREEN;
@@ -896,6 +858,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
     }
 
     playDead() {
+        console.log("playDead", this.unit?.id);
         this.isDead = true;
         //this.setAction(i18n.ui.DEAD, colors.RED);
         //this.actionText.setVisible(true);
@@ -1018,7 +981,8 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
 
     /** Increase or descrease unit hp by value (negative value to decrease) */
     changeHp(value: number) {
-        if (!this.unit) {
+        console.log("CHANGE HP", value, this.unit?.id);
+        if (!this.unit || this.isDead) {
             return;
         }
         this.unit.hp += value;
@@ -1068,7 +1032,6 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
             //
             this.armorText.setText(this.unit.armor + "");
             const armorRectWidth = Math.min(Math.floor((100 * this.unit.armor) / this.unit.maxHp), 100);
-            armorRectWidth;
             this.armorRect.setSize(armorRectWidth, 15);
             this.armorRect.setPosition(100 - armorRectWidth, 205);
         }
@@ -1172,6 +1135,11 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
                     // this.armorText.setText(this.unit.armor + "arm");
                     // this.armorText.setVisible(this.unit.armor > 0);
                     this.changeArmor(value);
+                }
+                break;
+            case "hp":
+                {
+                    this.changeHp(value);
                 }
                 break;
             case "maxHp":

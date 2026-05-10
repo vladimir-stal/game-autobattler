@@ -781,7 +781,8 @@ export enum EItemTargetType {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export type TValueType = "number" | "percent" | "evolvedNumber" | "evolvedPercent";
+export type TValueType = "number" | "percent";
+//| "evolvedNumber" | "evolvedPercent";
 // evolvedNumber is used for items with evolve mechanics; acts the same way as "number", but is carried over to upgraded item
 
 export type TUnits = (IUnit | null)[];
@@ -799,6 +800,7 @@ export interface IMobReward {
     value?: number;
     unit?: IUnit;
     item?: IItem;
+    skill?: IHeroSkillSet;
 }
 
 export interface IMobs {
@@ -949,12 +951,15 @@ export interface IItemBonus {
     valueType: TValueType;
     attribute?: THeroAttribute;
     targetType?: EItemTargetType;
+    isEvolved?: boolean;
 }
 
+/** @property isEvolving - after duel bonus is applied to the item itself, not to the unit */
 export interface IAfterDuelBonus {
     type: EItemAfterDuelBonusType;
     value: number;
     condition?: EItemAfterDuelBonusCondition;
+    isEvolving?: boolean;
 }
 
 export interface IItemBattleBonus {
@@ -986,7 +991,7 @@ export interface IItem {
     priceLevel: number;
     nextLevel?: IItem;
     previousLevel?: IItem;
-    evolving?: boolean;
+    //evolving?: boolean;
     desc?: string;
     sellPrice?: number;
 }
@@ -1113,8 +1118,8 @@ export interface IDebuff {
 }
 
 export interface INestedBuffEffect {
-    buffType?: EBuffType,
-    debuffType?: EDebuffType,
+    buffType?: EBuffType;
+    debuffType?: EDebuffType;
     value: number;
     valueType?: TValueType;
     valueFrom?: THeroBattleAttribute;

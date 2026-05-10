@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroClassType, EItemBonusType, IItem, IUnit, TDuelCards, TDuelEnemy } from "../types";
+import { EHeroClass, EHeroClassType, EItemBonusType, EUnitType, IItem, IUnit, TDuelCards, TDuelEnemy } from "../types";
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "./basicHeroConsts";
 import { axe1, mace1, musical1, musical1_2, scepter1, scepter1_2, shield1, staff1, sword1, sword1_2, totem1, wand1, wand1_2 } from "./basicWeaponItemConsts";
 import {
@@ -39,7 +39,6 @@ import {
     gladiatorHero,
     doomsayerHero,
 } from "./mcHeroConsts";
-import { peasantUnit } from "./units/mobUnitConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import {
     attackWithBleedSkill,
@@ -95,6 +94,7 @@ import { warriorSummonMob, warriorSummonMob_3 } from "./units/summonMobUnits";
 import { skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 import { peasantLastStandSkill } from "./skills/mobs/peasantMobSkills";
 import { skeletonPoisonedFlames } from "./skills/mobs/skeletonMobSkills";
+import { peasantUnit } from "./units/peasantMobUnits";
 
 const addItem = (unit: IUnit, item: IItem) => {
     unit.items.push(item);
@@ -108,10 +108,11 @@ const applyItems = (unit: IUnit): IUnit => {
     return resulUnit;
 };
 
-const createHero = (templateUnit: IUnit) => {
+const createUnit = (templateUnit: IUnit) => {
+    const { heroClassType, unitType, skills } = templateUnit;
     const hero = { ...templateUnit };
     hero.items = [];
-    hero.skills = templateUnit.heroClassType === EHeroClassType.MULTI ? [templateUnit.skills[0]] : [];
+    hero.skills = unitType === EUnitType.HERO && heroClassType === EHeroClassType.MULTI ? [skills[0]] : [];
     return hero;
 };
 
@@ -311,7 +312,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
 
 // 0
 
-const unit31 = createHero(bardHero);
+const unit31 = createUnit(bardHero);
 addItem(unit31, musical1);
 unit31.skills.push(buffNextBaAll);
 
@@ -330,7 +331,7 @@ unit31_2.items = [...unit31_1.items];
 unit31_2.skills = [...unit31_1.skills];
 levelUpUnit(unit31_1);
 
-const unit32_2 = { ...peasantUnit };
+const unit32_2 = createUnit(peasantUnit);
 
 const unit33_2 = { ...wildHero };
 unit33_2.items = [axe1];
@@ -351,7 +352,7 @@ unit33_3.skills = [...unit33_2.skills];
 
 // 4
 
-const unit31_4 = createHero(jesterHero);
+const unit31_4 = createUnit(jesterHero);
 unit31_4.items = [musical1_2, basic_hat];
 unit31_4.skills = unit31_4.skills.concat([...unit31_3.skills]);
 
@@ -362,7 +363,7 @@ unit33_4.items = [...unit33_3.items];
 unit33_4.skills = [...unit33_3.skills];
 levelUpUnit(unit33_4);
 
-const unit34_4 = createHero(masterHero);
+const unit34_4 = createUnit(masterHero);
 addItem(unit34_4, sword1_2);
 unit34_4.skills.push(phycisalAttackSkill);
 unit34_4.skills.push(phycisalAttackSkill);
@@ -375,7 +376,7 @@ unit31_5.skills = [...unit31_4.skills];
 
 const unit32_5 = { ...peasantUnit };
 
-const unit33_5 = createHero(forestSpiritHero);
+const unit33_5 = createUnit(forestSpiritHero);
 unit33_5.items = [basic_hat, shield1, totem21];
 unit33_5.skills = unit33_5.skills.concat([...unit33_4.skills]);
 
@@ -398,7 +399,7 @@ const unit33_6 = { ...unit33_5 };
 unit33_6.items = [...unit33_5.items];
 unit33_6.skills = [...unit33_5.skills];
 
-const unit34_6 = createHero(hunterHero);
+const unit34_6 = createUnit(hunterHero);
 unit34_6.items = [...unit34_5.items, totem1];
 unit34_6.skills = unit34_6.skills.concat([...unit34_5.skills]);
 
@@ -699,11 +700,11 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
 
 // 1
 
-const unit71_magic = createHero(magicHero);
+const unit71_magic = createUnit(magicHero);
 addItem(unit71_magic, wand1);
 unit71_magic.skills.push(magicAttack);
 
-const unit72_goblin = { ...goblinUnit };
+const unit72_goblin = createUnit(goblinUnit);
 
 // 2
 
@@ -713,7 +714,7 @@ unit71_magic_2.skills = [applyBurn, magicAttack];
 const unit72_goblin_2 = { ...unit72_goblin };
 addItem(unit72_goblin_2, itemGoblinBoneDagger);
 
-const unit73_order_2 = createHero(orderHero);
+const unit73_order_2 = createUnit(orderHero);
 unit73_order_2.skills.push(attrArmorSelf);
 addItem(unit73_order_2, basic_jacket);
 
@@ -733,12 +734,12 @@ unit73_order_3.basicArmor += 3;
 unit73_order_3.skills = [attrArmorAll, attrArmorSelf];
 unit73_order_3.items.push(hat21);
 
-const unit74_goblin_3 = { ...goblinUnit };
+const unit74_goblin_3 = createUnit(goblinUnit);
 
 // 4
 
 //const unit71_magic_4 = { ...unit71_magic_3 };
-const unit71_druid_4 = createHero(druidHero);
+const unit71_druid_4 = createUnit(druidHero);
 unit71_druid_4.basicMagicPower = 3;
 unit71_druid_4.skills.push({ ...applyShock, isMcSkill: true });
 unit71_druid_4.skills.push(applyShock);
@@ -750,7 +751,7 @@ const unit72_goblin_4 = { ...unit72_goblin_3 };
 levelUpUnit(unit72_goblin_4);
 
 //const unit73_order_4 = { ...unit73_order_3 };
-const unit73_knight_4 = createHero(knightHero);
+const unit73_knight_4 = createUnit(knightHero);
 unit73_knight_4.basicArmor = 24;
 unit73_knight_4.basicArmor = 25;
 unit73_knight_4.skills.push(attrArmorAll);

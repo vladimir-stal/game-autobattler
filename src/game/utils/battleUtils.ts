@@ -506,9 +506,11 @@ export const calculateEffectValue = (unit: IBattleUnit, initialValue: number, ef
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
     console.log("calc buff value", value, mpScaleValue, ppScaleValue, valueType, initialValue);
-    if (!valueType || valueType === "number" || valueType === "evolvedNumber") {
+    if (!valueType || valueType === "number") {
+        // || valueType === "evolvedNumber"
         return value + mpScaleValue + ppScaleValue;
-    } else if (valueType === "percent" || valueType === "evolvedPercent") {
+    } else if (valueType === "percent") {
+        // || valueType === "evolvedPercent"
         //const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
         let buffValue = Math.floor((initialValue * value) / 100);
         return (buffValue || 1) + mpScaleValue + ppScaleValue;
@@ -527,9 +529,11 @@ export const calculateDebuffValue = (unit: IBattleUnit, initialValue: number, de
 };
 
 export const calculateIncreaseValue = (initialValue: number, increaseValue: number, increaseType: TValueType, percentOfValue?: number) => {
-    if (increaseType === "number" || increaseType === "evolvedNumber") {
+    if (increaseType === "number") {
+        // || increaseType === "evolvedNumber"
         return increaseValue;
-    } else if (increaseType === "percent" || increaseType === "evolvedPercent") {
+    } else if (increaseType === "percent") {
+        // || increaseType === "evolvedPercent"
         const initValue = percentOfValue !== undefined ? percentOfValue : initialValue;
         let incValue = Math.floor((initValue * increaseValue) / 100);
         return incValue;
@@ -550,10 +554,10 @@ export const getBattleAttribute = (attribute: THeroAttribute): THeroBattleAttrib
     }
 };
 
-const undoAttributeChanges = (unit:IBattleUnit, attribute:THeroBattleAttribute, value:number, wasIncrease:boolean, battleRecord: TBattleRecord) => {
+const undoAttributeChanges = (unit: IBattleUnit, attribute: THeroBattleAttribute, value: number, wasIncrease: boolean, battleRecord: TBattleRecord) => {
     if (!attribute || !value) {
-            return;
-        }
+        return;
+    }
     if (wasIncrease) {
         unit[attribute] -= value;
         battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_DECREASE, attribute, value });
@@ -561,17 +565,17 @@ const undoAttributeChanges = (unit:IBattleUnit, attribute:THeroBattleAttribute, 
         unit[attribute] += value;
         battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.ATTRIBUTE_INCREASE, attribute, value });
     }
-}
-const undoAttributeChangesForNestedEffects = (unit:IBattleUnit, effects:INestedBuffEffect[], battleRecord: TBattleRecord) => {
-    effects?.forEach(ne => {
+};
+const undoAttributeChangesForNestedEffects = (unit: IBattleUnit, effects: INestedBuffEffect[], battleRecord: TBattleRecord) => {
+    effects?.forEach((ne) => {
         if (ne.buffType === EBuffType.ATTRIBUTE_INCREASE) {
-            undoAttributeChanges(unit,ne.attribute,ne.totalValue,true,battleRecord);
+            undoAttributeChanges(unit, ne.attribute, ne.totalValue, true, battleRecord);
         }
         if (ne.debuffType === EDebuffType.ATTRIBUTE_DECREASE) {
-            undoAttributeChanges(unit,ne.attribute,ne.totalValue,false,battleRecord);
+            undoAttributeChanges(unit, ne.attribute, ne.totalValue, false, battleRecord);
         }
-    })
-}
+    });
+};
 
 export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattleRecord) => {
     const index = unit.buffs.findIndex((b) => b === buff);
@@ -581,9 +585,9 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
 
     const { type, attribute, totalValue } = buff;
     if (type === EBuffType.ATTRIBUTE_INCREASE) {
-        undoAttributeChanges(unit,attribute,totalValue,true,battleRecord);
+        undoAttributeChanges(unit, attribute, totalValue, true, battleRecord);
     }
-    undoAttributeChangesForNestedEffects(unit,buff.nestedEffects,battleRecord);
+    undoAttributeChangesForNestedEffects(unit, buff.nestedEffects, battleRecord);
     battleRecord.push({ unitId: unit.id, type: EBattleActionType.BUFF_REMOVED, buff });
 };
 
@@ -595,9 +599,9 @@ export const removeDebuffSimple = (unit: IBattleUnit, debuff: IDebuff, battleRec
 
     const { type, attribute, totalValue } = debuff;
     if (type === EDebuffType.ATTRIBUTE_DECREASE) {
-        undoAttributeChanges(unit,attribute,totalValue,false,battleRecord);
+        undoAttributeChanges(unit, attribute, totalValue, false, battleRecord);
     }
-    undoAttributeChangesForNestedEffects(unit,debuff.nestedEffects,battleRecord);
+    undoAttributeChangesForNestedEffects(unit, debuff.nestedEffects, battleRecord);
     battleRecord.push({ unitId: unit.id, targetId: unit.id, type: EBattleActionType.DEBUFF_REMOVE, debuff });
 };
 
@@ -1091,7 +1095,7 @@ const applyExistingNestedEffects = (
             }
         }
         if (isParentEffect) {
-            buffAction.buffTargets?.push({ targetId: target.id, isExisting: true, value: effect.totalValue });
+            buffAction?.buffTargets?.push({ targetId: target.id, isExisting: true, value: effect.totalValue });
             if (!!parentBuff) {
                 if (timeType === EBuffTimeType.DURATION) {
                     parentBuff.duration += duration;
@@ -1166,9 +1170,7 @@ const applyExistingNestedEffects = (
                 effect.totalValue = Math.max(newValue, oldValue);
                 break;
             default: {
-                timeType === EBuffTimeType.DURATION ? 
-                    effect.totalValue = Math.max(newValue, oldValue) :
-                    effect.totalValue += newValue;
+                timeType === EBuffTimeType.DURATION ? (effect.totalValue = Math.max(newValue, oldValue)) : (effect.totalValue += newValue);
             }
         }
         if (isParentEffect) {

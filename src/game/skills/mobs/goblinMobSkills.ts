@@ -175,6 +175,7 @@ const goblinApplyShockSkillset = (stacks: number): IHeroSkill[] => {
             value: stacks,
             targetType: ETargetType.RANDOM_ENEMY,
             condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.STATUS_APPLY,
@@ -182,6 +183,7 @@ const goblinApplyShockSkillset = (stacks: number): IHeroSkill[] => {
             value: stacks,
             targetType: ETargetType.HIGH_SHOCK_ENEMY,
             condition: ESkillCondition.CUSTOM_NUMBER_NOT_ZERO,
+            animation: AnimationType.NONE,
         },
     ];
 };
@@ -197,6 +199,8 @@ export const goblinApplyShock_3: IHeroSkillSet = {
     isBasicAttack: false,
     skills: goblinApplyShockSkillset(3),
     image: IMAGE_SKILL_MOB_GOBLIN_SHOCK,
+    //
+    animationType: AnimationType.MAGIC_ATTACK,
 };
 
 export const goblinApplyShock_2: IHeroSkillSet = {
@@ -211,6 +215,8 @@ export const goblinApplyShock_2: IHeroSkillSet = {
     skills: goblinApplyShockSkillset(2),
     image: IMAGE_SKILL_MOB_GOBLIN_SHOCK,
     nextLevel: goblinApplyShock_3,
+    //
+    animationType: AnimationType.MAGIC_ATTACK,
 };
 
 export const goblinApplyShock: IHeroSkillSet = {
@@ -225,6 +231,8 @@ export const goblinApplyShock: IHeroSkillSet = {
     skills: goblinApplyShockSkillset(1),
     image: IMAGE_SKILL_MOB_GOBLIN_SHOCK,
     nextLevel: goblinApplyShock_2,
+    //
+    animationType: AnimationType.MAGIC_ATTACK,
 };
 
 const goldGoblinBuffSkillset = (atkBuff: number, armorBuff: number): IHeroSkill[] => {

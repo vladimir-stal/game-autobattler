@@ -309,7 +309,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                             } else {
                                 setTimeout(() => {
                                     this.cards[targetId].playAttrIncreaseTarget(value, attribute);
-                                }, 1500);
+                                }, 1000);
                             }
                         });
                     } else {
@@ -319,7 +319,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         }
                         setTimeout(() => {
                             this.cards[targetId].playAttrIncreaseTarget(value, attribute);
-                        }, 1500);
+                        }, 1000);
                     }
 
                     await this.cards[unitId].playAttrIncrease(skill);

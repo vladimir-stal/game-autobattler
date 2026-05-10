@@ -19,10 +19,9 @@ import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { onlyBasicAttackSkill, phycisalAttackSkill, radiantWallSkill } from "../skills/commonSkillConsts";
 import { magicAttack, magicAttackAll, meteoriteFallSkill } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
-import { incrSummonBa } from "../skills/summonSkillConsts2";
+import { incrSummonBa, warriorSummonSkill } from "../skills/summonSkillConsts2";
 import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
-import { peasantUnit } from "../units/mobUnitConsts";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
 import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from "../units/summonMobUnits";
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
@@ -34,11 +33,14 @@ import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
 import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
 import {} from "../skills/mobSkills";
 import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
-import { peasantsStronkSkill } from "../skills/mobs/peasantMobSkills";
+import { peasantLastStandSkill, peasantsStronkSkill } from "../skills/mobs/peasantMobSkills";
 import { pirateCallTheCannons, pirateDeadmansCurse, pirateDragNDrown } from "../skills/mobs/pirateMobSkills";
 import { fireflyConfusingMistSkill } from "../skills/mobs/fireflyMobSkills";
 import { spiritTeamFlurry, spiritTeamRevenge } from "../skills/mobs/spiritWarriorMobSkills";
 import { buffTotalDmgSkill } from "../skills/bardSkillConsts";
+import { dagger1, shield1, sword1 } from "../basicWeaponItemConsts";
+import { goblinPocketSand } from "../skills/mobs/goblinMobSkills";
+import { basic_jacket_2 } from "../commonItemConsts";
 
 export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
@@ -49,20 +51,22 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: magicHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: samuraiHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        // { type: ECardType.UNIT, price: 0, unit: magicHero },
+        // { type: ECardType.UNIT, price: 0, unit: summonHero },
         // { type: ECardType.UNIT, price: 0, unit: barbarianHero },
         // { type: ECardType.UNIT, price: 0, unit: necromancerHero },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.SKILL, price: 0, skill: skeletonPoisonedFlames },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(skeletonPoisonedFlames) },
+        { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
+        { type: ECardType.ITEM, price: 0, item: basic_jacket_2 },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
-        { type: ECardType.SKILL, price: 0, skill: meteoriteFallSkill },
+        { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
         { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
         { type: ECardType.SKILL, price: 0, skill: buffTotalDmgSkill },
         /*{

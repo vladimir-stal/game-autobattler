@@ -278,8 +278,7 @@ export const dagger32_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 3 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 3, isEvolving: true }],
 };
 
 export const dagger32_2: IItem = {
@@ -292,8 +291,7 @@ export const dagger32_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 2 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 2, isEvolving: true }],
     nextLevel: dagger32_3,
 };
 
@@ -307,8 +305,7 @@ export const dagger32: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicPhysicalPower" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 1 }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_PP, value: 1, isEvolving: true }],
     nextLevel: dagger32_2,
 };
 

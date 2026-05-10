@@ -36,7 +36,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     skillContainer: GameObjects.Container;
     // item
     bonusTextObject: GameObjects.Text;
-    attrTextObject: GameObjects.Text;
+    attrTextObject: BBCodeText;
     heroClassBonusTextObject: GameObjects.Text;
     afterDuelBonusesTextObject: GameObjects.Text;
     itemImage: GameObjects.Image;
@@ -161,8 +161,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         this.bonusTextObject = this.scene.add.text(10, 80, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.bonusTextObject);
+        this.attrTextObject = this.scene.add.rexBBCodeText(10, 50, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
 
-        this.attrTextObject = this.scene.add.text(10, 50, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
         this.add(this.attrTextObject);
 
         this.heroClassBonusTextObject = this.scene.add.text(10, 110, "", { fontSize: 12, color: "#dddddd" }).setOrigin(0, 0).setVisible(false);
@@ -380,10 +380,14 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         const attrsText =
             bonuses?.reduce((text, bonus) => {
-                const { attribute, value, targetType } = bonus;
+                const { attribute, value, targetType, isEvolved } = bonus;
                 if (attribute) {
                     const targetText = targetType === EItemTargetType.ALL_ALLIES ? " " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
-                    text += i18n.attributes.attribute[attribute] + " " + value + targetText + "\n";
+                    //[color=${colors.PHYSICAL_ATTACK}]
+                    const colorTagOpen = isEvolved ? "[color=#99cc55]" : "";
+                    const colorTagClose = isEvolved ? "[/color]" : "";
+
+                    text += colorTagOpen + i18n.attributes.attribute[attribute] + " " + value + targetText + colorTagClose + "\n";
                 }
                 return text;
             }, "") || "";
@@ -432,7 +436,8 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         const afterDuelBonusesText =
             afterDuelBonuses?.reduce((text, bonus) => {
                 const conditionText = bonus.condition ? i18n.ui[bonus.condition] + ": " : "";
-                text += conditionText + i18n.attributes.afterDuelBonus[bonus.type] + " +" + bonus.value + "\n";
+                const evolvingText = (bonus.isEvolving ? i18n.ui.ITEM.toLowerCase() : i18n.ui.HERO.toLowerCase()) + " ";
+                text += conditionText + evolvingText + i18n.attributes.afterDuelBonus[bonus.type] + " +" + bonus.value + "\n";
                 return text;
             }, "") || "";
         if (afterDuelBonusesText) {

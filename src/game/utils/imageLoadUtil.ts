@@ -112,8 +112,9 @@ import { loadBasicWildTotemImages } from "./load/totemsImagesLoad";
 import { createWildBasicTotemAnimations } from "./animations/totemAnimations";
 import { EHeroClass } from "../../types";
 import { createMcHeroBattleAnimations, createMcHeroIdleAnimations } from "./animations/mcHeroesAnimations";
-import { BOSS_MINOTAUR_ID, PEASANT_ID, WOLF_ID } from "../units/mobUnitConsts";
+import { BOSS_MINOTAUR_ID, WOLF_ID } from "../units/mobUnitConsts";
 import { NECROMANCER_MC_SKILL_ID } from "../skills/mc/necromancerSkills";
+import { PEASANT_ID } from "../units/peasantMobUnits";
 
 // UNITS
 

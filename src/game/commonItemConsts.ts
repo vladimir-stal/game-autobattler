@@ -25,8 +25,7 @@ export const basic_hat_3: IItem = {
     image: IMAGE_ITEM_HELM_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicArmor" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 2, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 2, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
 };
 
 export const basic_hat_2: IItem = {
@@ -38,8 +37,7 @@ export const basic_hat_2: IItem = {
     image: IMAGE_ITEM_HELM_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicArmor" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     nextLevel: basic_hat_3,
 };
 
@@ -66,8 +64,7 @@ export const basic_jacket_3: IItem = {
     image: IMAGE_ITEM_ARMOR_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicMaxHp" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 2, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 2, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
 };
 
 export const basic_jacket_2: IItem = {
@@ -79,8 +76,7 @@ export const basic_jacket_2: IItem = {
     image: IMAGE_ITEM_ARMOR_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 7, valueType: "number", attribute: "basicMaxHp" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     nextLevel: basic_jacket_3,
 };
 
@@ -110,10 +106,9 @@ export const basic_pants_3: IItem = {
         { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicMaxHp" },
         { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicArmor" },
     ],
-    evolving: true,
     afterDuelBonuses: [
-        { type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 1, condition: EItemAfterDuelBonusCondition.WON },
-        { type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, condition: EItemAfterDuelBonusCondition.WON },
+        { type: EItemAfterDuelBonusType.STAT_MAX_HP, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON },
+        { type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON },
     ],
 };
 
@@ -129,10 +124,7 @@ export const basic_pants_2: IItem = {
         { type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicMaxHp" },
         { type: EItemBonusType.ATTRIBUTE, value: 2, valueType: "number", attribute: "basicArmor" },
     ],
-    evolving: true,
-    afterDuelBonuses: [
-        { type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, condition: EItemAfterDuelBonusCondition.WON },
-    ],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_ARMOR, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     nextLevel: basic_pants_3,
 };
 
@@ -162,8 +154,7 @@ export const basic_boots_3: IItem = {
     image: IMAGE_ITEM_BOOTS_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 14, valueType: "number", attribute: "basicEvasionChance" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 2, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 2, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
 };
 
 export const basic_boots_2: IItem = {
@@ -175,8 +166,7 @@ export const basic_boots_2: IItem = {
     image: IMAGE_ITEM_BOOTS_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 7, valueType: "number", attribute: "basicEvasionChance" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_EVAS_CHANCE, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     nextLevel: basic_boots_3,
 };
 
@@ -242,8 +232,7 @@ export const basic_ring_damage_3: IItem = {
     image: IMAGE_ITEM_RING_ATTACK_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 2, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 2, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
 };
 
 export const basic_ring_damage_2: IItem = {
@@ -255,8 +244,7 @@ export const basic_ring_damage_2: IItem = {
     image: IMAGE_ITEM_RING_ATTACK_1,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 1, valueType: "number", attribute: "basicAttack" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     nextLevel: basic_ring_damage_3,
 };
 

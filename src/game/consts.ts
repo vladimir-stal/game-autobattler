@@ -23,6 +23,7 @@ export const colors = {
     GREY_BLUE: 0x6688aa, // "#6688aa"
     GREEN: 0x339933, // "#339933"
     GREEN_2: 0x339933,
+    GREEN_LIGHT: 0x669966, // "#336633"
     GREEN_DARK: 0x002200, // "#002200"
     WHITE_PURE: 0xffffff,
     WHITE_LIGHT: 0xdddddd,

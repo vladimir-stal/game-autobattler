@@ -432,10 +432,9 @@ export const ring_damage2_3: IItem = {
     image: IMAGE_ITEM_RING_ATTACK_2,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
-    evolving: true,
     afterDuelBonuses: [
-        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1 },
-        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON },
+        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, isEvolving: true },
+        { type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON },
     ],
 };
 
@@ -448,8 +447,7 @@ export const ring_damage2_2: IItem = {
     image: IMAGE_ITEM_RING_ATTACK_2,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicAttack" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_BASIC_ATTACK, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     nextLevel: ring_damage2_3,
 };
 
@@ -476,10 +474,9 @@ export const ring_regen2_3: IItem = {
     image: IMAGE_ITEM_RING_REGEN_2,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicHpRegen" }],
-    evolving: true,
     afterDuelBonuses: [
         { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1 },
-        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, condition: EItemAfterDuelBonusCondition.WON },
+        { type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON },
     ],
 };
 
@@ -492,8 +489,7 @@ export const ring_regen2_2: IItem = {
     image: IMAGE_ITEM_RING_REGEN_2,
     heroClasses: [],
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 3, valueType: "number", attribute: "basicHpRegen" }],
-    evolving: true,
-    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, condition: EItemAfterDuelBonusCondition.WON }],
+    afterDuelBonuses: [{ type: EItemAfterDuelBonusType.STAT_HP_REGEN, value: 1, isEvolving: true, condition: EItemAfterDuelBonusCondition.WON }],
     nextLevel: ring_regen2_3,
 };
 

@@ -386,6 +386,7 @@ export const i18n: Ii18n = {
         ATTRIBUTE: "АТРИБУТ",
         SKILL: "НАВЫК",
         ITEM: "ПРЕДМЕТ",
+        HERO: "ГЕРОЙ",
         EXP: "ОПЫТ",
         EXP_PARTY: "ОПЫТ ВСЕМ",
         GOLD: "ЗОЛОТО",
@@ -413,7 +414,7 @@ export const i18n: Ii18n = {
         [EItemAfterDuelBonusCondition.WON]: "Победа",
         [EItemAfterDuelBonusCondition.LOST]: "Поражение",
         [EItemAfterDuelBonusCondition.IS_HERO]: "Герой",
-        [EItemAfterDuelBonusCondition.IS_MOB]: "Не герой",
+        [EItemAfterDuelBonusCondition.IS_MOB]: "Моб",
         //
         [EItemTargetType.ALL_ALLIES]: "для всех союзников",
         mainMenu: {

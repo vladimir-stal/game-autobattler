@@ -94,7 +94,7 @@ export class GameScene extends Phaser.Scene {
 
         // initial house and players creation
         // EventBus.on(
-        //     EventType.GET_HOUSE_RESPONSE,
+        //     EventType.GET_HOUSE_createUnit(PONSE,
         //     (house: House, mainDude: IDude, dudes: IDude[], houseItems: IHouseItem[], inventory: IInventoryItem[], players: Player[]) => {
         //         // init UI
         //         createUIPanels(this);
@@ -102,7 +102,7 @@ export class GameScene extends Phaser.Scene {
         //         this.floorCount = house.floors.length;
         //         //const floorY = getFloorY(mainDude.floor, this.floorCount);
 
-        //         console.log(">>> GET_HOUSE_RESPONSE");
+        //         console.log(">>> GET_HOUSE_createUnit(PONSE");
         //         console.log(">>> mainDude", mainDude);
         //         console.log(">>> dudes", dudes);
         //         console.log(">>> players", players);
@@ -238,6 +238,12 @@ export class GameScene extends Phaser.Scene {
         }
 
         activateSlots(this.allCardSlots, value, this, this.cardToMove);
+
+        if (value && !this.isCardBuyMode && this.cardToMove?.card && [ECardType.ITEM, ECardType.SKILL].includes(this.cardToMove.card.type)) {
+            this.sellCardPanel.highlight(true);
+        } else {
+            this.sellCardPanel.highlight(false);
+        }
     }
 
     disableCardMoving() {
@@ -304,8 +310,8 @@ export class GameScene extends Phaser.Scene {
     }
 
     selectCardToBuy(card: ICardToMove) {
-        this.selectCardToMove(card);
         this.setIsCardBuyMode(true);
+        this.selectCardToMove(card);
     }
 
     addCardSlot(slot: CardSlot) {
@@ -320,6 +326,7 @@ export class GameScene extends Phaser.Scene {
 
     restartGame() {
         this.allCardSlots = [];
+        this.cardUpgradePanel.restart();
         if (this.phase !== "SELECT") {
             this.battlePanel.hide();
             this.battlePanel.stopBattle();

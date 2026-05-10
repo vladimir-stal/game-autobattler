@@ -148,15 +148,18 @@ const addAttributesOnLevelUp = (unit: IUnit) => {
     // TODO: calculate attributes increase considering unit class and level
     //TODO: use addAttributeToUnit func?
     //TODO different attr incr for basic and mc heroes
-    if (unit.heroClassType === EHeroClassType.BASIC) {
-        unit.basicMaxHp += 2;
-        unit.basicAttack += 1;
-    }
-    if (unit.heroClassType === EHeroClassType.MULTI) {
-        unit.basicMaxHp += 5;
-        unit.basicAttack += 1;
-    }
-    if (unit.unitType == EUnitType.UNIT) {
+    if (unit.unitType == EUnitType.HERO) {
+        if (unit.heroClassType === EHeroClassType.BASIC) {
+            unit.basicMaxHp += 2;
+            unit.basicAttack += 1;
+            //
+            increaseStatsByHeroClass(unit);
+        }
+        if (unit.heroClassType === EHeroClassType.MULTI) {
+            unit.basicMaxHp += 5;
+            unit.basicAttack += 1;
+        }
+    } else if (unit.unitType == EUnitType.UNIT) {
         const attr = getRandomIntFromInterval(0, 3);
         unit.basicArmor += 2;
         unit.basicMaxHp += 1;
@@ -167,6 +170,56 @@ const addAttributesOnLevelUp = (unit: IUnit) => {
             unit.basicMagicPower++;
         }
         if (attr == 3) unit.basicAttack += 1;
+    }
+};
+
+const increaseStatsByHeroClass = (unit: IUnit) => {
+    switch (unit.heroClass) {
+        case EHeroClass.BARD:
+            {
+                unit.basicMagicPower += 1;
+            }
+            break;
+        case EHeroClass.DARK:
+            {
+                unit.basicMagicPower += 1;
+            }
+            break;
+        case EHeroClass.MAGIC:
+            {
+                unit.basicMagicPower += 1;
+            }
+            break;
+        case EHeroClass.MASTER:
+            {
+                unit.basicCritChance += 1;
+            }
+            break;
+        case EHeroClass.ORDER:
+            {
+                unit.basicPhysicalPower += 1;
+            }
+            break;
+        case EHeroClass.PRIEST:
+            {
+                unit.basicMagicPower += 1;
+            }
+            break;
+        case EHeroClass.SUMMON:
+            {
+                unit.basicMagicPower += 1;
+            }
+            break;
+        case EHeroClass.WARRIOR:
+            {
+                unit.basicPhysicalPower += 1;
+            }
+            break;
+        case EHeroClass.WILD:
+            {
+                unit.basicPhysicalPower += 1;
+            }
+            break;
     }
 };
 
@@ -404,7 +457,6 @@ export const getUnitNextLevelExp = (unit: IUnit) => {
 
 /** With some probability add mob item to unit when buying or receiving its card */
 export const addMobItem = (unit: IUnit) => {
-    //console.log(">>>>> addMobItem");
     if (!unit.mobItems) {
         //console.log(">>>>> no mob items");
         return;
@@ -412,15 +464,12 @@ export const addMobItem = (unit: IUnit) => {
 
     for (let i = 0; i < unit.mobItems.length; i++) {
         const { item, skill, probability } = unit.mobItems[i];
-        //console.log("check item", item.name);
         const isItemAdded = checkProbability(probability);
         if (isItemAdded && item) {
             unit.items.push({ ...item, bonuses: [...item.bonuses] });
-            //console.log("add item to unit", unit);
             break;
         } else if (isItemAdded && skill) {
             unit.items.push(scrollOfSkill(skill));
-            //console.log("add item to unit", unit);
             break;
         }
     }

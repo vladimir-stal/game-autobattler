@@ -11,9 +11,9 @@ export const SKILLS_EN = {
         },
         buffBaSelf: {
             name: "Buff self BA",
-            desc1: "Buff self basic attack [1]",
-            desc2: "Buff self basic attack [2]",
-            desc3: "Buff self basic attack [3]",
+            desc1: "Buff random ally\nbasic attack [1]",
+            desc2: "Buff random ally\nbasic  attack [2]",
+            desc3: "Buff random ally\nbasic attack [3]",
         },
         //
         // DARK
@@ -302,6 +302,12 @@ export const SKILLS_EN = {
             desc1: "Remove [1] debuff from ally",
             desc2: "Remove [2] debuffs from ally",
             desc3: "Remove [3] debuff from ally",
+        },
+        riposteSkill: {
+            name: "Master Riposte",
+            desc1: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1] increase attack",
+            desc2: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+35%xPP] increase attack",
+            desc3: "Forgo basic attack to\nmake preemptive strike\nagainst opponent with\n[1+65%xPP] increase attack",
         },
     },
     level3: {

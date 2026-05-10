@@ -525,9 +525,9 @@ export const upgradeItem = (item: IItem): IItem => {
     }
     const nextCopy = createItem(item.nextLevel);
     nextCopy.previousLevel = item;
-    if (item.evolving) {
-        nextCopy.bonuses.push(...item.bonuses.filter((b) => b.valueType === "evolvedNumber"));
-    }
+    //if (item.evolving) {
+    nextCopy.bonuses.push(...item.bonuses.filter((b) => b.isEvolved)); //b.valueType === "evolvedNumber"
+    //}
     return nextCopy;
 };
 
@@ -566,23 +566,26 @@ export const getItemPrice = (item: IItem, additionalLevel: number = 0) => {
 };
 
 export const createItem = (item: IItem): IItem => {
-    return { ...item, bonuses: [...item.bonuses] };
+    return { ...item, bonuses: [...item.bonuses.filter((b) => !b.isEvolved)] };
 };
 
-export const createItemWoEvolve = (item: IItem): IItem => {
-    const bb = item.bonuses.filter((b) => b.valueType === "number" || b.valueType === "percent");
-    return { ...item, bonuses: bb };
-};
+// export const createItemWoEvolve = (item: IItem): IItem => {
+//     const bb = item.bonuses.filter((b) => b.valueType === "number" || b.valueType === "percent");
+//     return { ...item, bonuses: bb };
+// };
 
-export const genShopItemCards = (items: IItem[], lastItemPriceUp: boolean = false): (ICard | null)[] => {
+export const genShopItemCards = (items: IItem[], firstItemDiscount: boolean = true, lastItemPriceUp: boolean = false): (ICard | null)[] => {
     return items.map((item, index) => {
         if (!item) {
             return null;
         } else {
             const salePrice = item.sellPrice !== undefined ? item.sellPrice : Math.floor((getItemPrice(item) + 1) / 2);
             // first item on sale
-            const price = index === 0 ? salePrice : getItemPrice(item, lastItemPriceUp && index === items.length - 1 ? 1 : 0);
-            const shopItem = item.evolving ? createItemWoEvolve(item) : createItem(item);
+            const isLastItem = index === items.length - 1;
+            const isDiscount = index === 0 && firstItemDiscount;
+            const price = isDiscount ? salePrice : getItemPrice(item, lastItemPriceUp && isLastItem ? 1 : 0);
+            //const shopItem = item.evolving ? createItemWoEvolve(item) : createItem(item);
+            const shopItem = createItem(item);
             return { item: shopItem, type: ECardType.ITEM, price };
         }
     });
