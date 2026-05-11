@@ -67,10 +67,13 @@ import {
     isTriggerReady,
     triggerBattleTrigger,
     dealOverhealDamage,
+    checkBuffToRemove,
+    checkDebuffToRemove,
 } from "../utils/battleUtils";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomIntFromInterval } from "../utils/commonUtils";
 import { calculateSkillValue } from "../utils/skillUtils";
 import { performTotemSkill } from "../utils/totemBattleUtils";
+import { forEachNestedEffects } from "../utils/unitUtils";
 
 const slotCount = 4;
 
@@ -398,11 +401,16 @@ export class BattleController {
 
             // check for disable skill debuffs (DISABLE_SKILL)
             if (!skillSet.isMcSkill) {
-                //console.log("skillset: ", skillSet.name);
-                const disableSkillDebuffIndex = unit.debuffs.findIndex((db) => db.type === EDebuffType.DISABLE_SKILL);
-                if (disableSkillDebuffIndex !== -1) {
+                let disableSkillDebuff = false;
+                forEachNestedEffects(unit, (ne) => {
+                    if (ne.debuffType === EDebuffType.DISABLE_SKILL && ne.totalValue > 0 && !disableSkillDebuff) {
+                        ne.totalValue -= 1;
+                        disableSkillDebuff = true;
+                    }
+                });
+                if (disableSkillDebuff) {
                     isSkillDisabled = true;
-                    removeDebuff(unit, unit, disableSkillDebuffIndex, this.battleRecord);
+                    checkDebuffToRemove(unit, EDebuffType.DISABLE_SKILL, this.battleRecord);
                 }
             }
 
@@ -631,8 +639,14 @@ export class BattleController {
             return;
         }
 
-        const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
-        const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
+        let additionalBaTimes = 0;
+        forEachNestedEffects(unit, (ne) => {
+            if (ne.buffType === EBuffType.BASIC_ATTACK_ADD_TIMES) {
+                additionalBaTimes += ne.totalValue;
+            }
+        });
+        //const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
+        //const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
         const twiceAttackMods = unit.itemBonuses.filter((ib) => ib.type == EItemBattleBonusType.BASIC_ATTACK_TWICE).map((ib) => ib.value);
         twiceAttackMods.sort((a, b) => b - a);
         //console.log("DEBUG: twice attacks: " + twiceAttackMods.join(", "));
@@ -721,11 +735,16 @@ export class BattleController {
                 }
             }
             // check if target unit has antiskill shield
-            const antiskillShieldBuff = finalTarget.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_MIRROR);
+            let antiskillShieldBuff = false;
+            forEachNestedEffects(finalTarget, (ne) => {
+                if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue > 0 && !antiskillShieldBuff) {
+                    ne.totalValue -= 1;
+                    this.dealDamage(unit, unit, attackDamage, skill.attackType!, parentUnit, attackRecord);
+                    antiskillShieldBuff = true;
+                }
+            });
             if (antiskillShieldBuff) {
-                removeBuff(target, antiskillShieldBuff, this.battleRecord);
-                this.dealDamage(unit, unit, attackDamage, skill.attackType!, parentUnit, attackRecord);
-                //return lastAliveTargetId || sameLastTargetId;
+                checkBuffToRemove(target, EBuffType.ANTISKILL_MIRROR, this.battleRecord);
                 return;
             }
             // triggers
@@ -1184,15 +1203,27 @@ export class BattleController {
             targets.forEach((target) => {
                 if (target) {
                     // check if target unit has antis debuff bonuses (ANTISKILL_SHIELD, IGNORE_NEXT_DEBUFF)
-                    const antiskillShieldBuff = target.buffs.find((buff) => buff.type === EBuffType.ANTISKILL_MIRROR);
+                    let antiskillShieldBuff = false;
+                    forEachNestedEffects(target, (ne) => {
+                        if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue > 0 && !antiskillShieldBuff) {
+                            ne.totalValue -= 1;
+                            applyDebuff(unit, debuff, debuffAction, this, unit, isPlayer1);
+                            antiskillShieldBuff = true;
+                        }
+                    });
                     if (antiskillShieldBuff) {
-                        removeBuff(target, antiskillShieldBuff, this.battleRecord);
-                        applyDebuff(unit, debuff, debuffAction, this, unit, isPlayer1);
+                        checkBuffToRemove(target, EBuffType.ANTISKILL_MIRROR, this.battleRecord);
                         return;
                     }
-                    const ignoreDebuffBuff = target.buffs.find((buff) => buff.type === EBuffType.IGNORE_NEXT_DEBUFF);
+                    let ignoreDebuffBuff = false;
+                    forEachNestedEffects(target, (ne) => {
+                        if (ne.buffType === EBuffType.IGNORE_NEXT_DEBUFF && ne.totalValue > 0 && !ignoreDebuffBuff) {
+                            ne.totalValue -= 1;
+                            ignoreDebuffBuff = true;
+                        }
+                    });
                     if (ignoreDebuffBuff) {
-                        changeBuffValue(target, ignoreDebuffBuff, -1, this.battleRecord);
+                        checkBuffToRemove(target, EBuffType.IGNORE_NEXT_DEBUFF, this.battleRecord);
                         return;
                     }
                     applyDebuff(target, debuff, debuffAction, this, unit, isPlayer1);
@@ -1280,14 +1311,13 @@ export class BattleController {
         let finalHeal = baseValue + mpScaleValue + ppScaleValue;
 
         // calculate outgoing heal value accordint to buffs and debuffs
-        unit.buffs.forEach((buff) => {
-            if (buff.type === EBuffType.OUTGOING_HEAL) {
-                const { value, valueType, valueFrom } = buff;
-                if (!valueType || value === undefined) {
+        forEachNestedEffects(unit, (ne) => {
+            if (ne.buffType === EBuffType.OUTGOING_HEAL) {
+                const { totalValue, valueType } = ne;
+                if (!valueType || totalValue === undefined) {
                     return;
                 }
-                const percentFrom = valueFrom ? unit[valueFrom] : undefined;
-                finalHeal += calculateIncreaseValue(finalHeal, value, valueType, percentFrom);
+                finalHeal += calculateIncreaseValue(finalHeal, totalValue, valueType);
             }
         });
         // calculate outgoing heal bonuses from items
@@ -1299,9 +1329,9 @@ export class BattleController {
 
         // check for DARK_HEAL buff
         let darkHealMod = 0;
-        unit.buffs.forEach((buff) => {
-            if (buff?.type === EBuffType.DARK_HEAL && buff.totalValue) {
-                darkHealMod += buff.totalValue;
+        forEachNestedEffects(unit, (ne) => {
+            if (ne.buffType === EBuffType.DARK_HEAL) {
+                darkHealMod += ne.totalValue;
             }
         });
         if (darkHealMod > 0) {
@@ -1316,20 +1346,27 @@ export class BattleController {
         targets.forEach((target) => {
             if (target) {
                 // calculate incoming heal value from target buffs and debuffs
-                target.debuffs.forEach((debuff) => {
-                    if (debuff.type === EDebuffType.HEALING_DECREASE) {
-                        finalHeal = finalHeal - calculateDebuffValue(unit, finalHeal, debuff);
+                forEachNestedEffects(unit, (ne) => {
+                    if (ne.debuffType === EDebuffType.HEALING_DECREASE && ne.totalValue > 0) {
+                        const { totalValue, valueType } = ne;
+                        if (!valueType) {
+                            return;
+                        }
+                        finalHeal -= calculateIncreaseValue(finalHeal, totalValue, valueType);
                     }
                 });
                 //console.log("FINAL HEAL after buffs/debuffs", finalHeal);
 
                 // check if target has antiheal debuffs (like ANTIHEAL)
-                const antihealDebuffIndex = target.debuffs.findIndex((debuff) => debuff.type === EDebuffType.ANTIHEAL);
-
-                if (antihealDebuffIndex !== -1) {
-                    removeDebuff(target, target, antihealDebuffIndex, this.battleRecord);
-                    //const antihealDebuff = target.debuffs[antihealDebuffIndex];
-                    //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
+                let antihealDebuff = false;
+                forEachNestedEffects(target, (ne) => {
+                    if (ne.debuffType === EDebuffType.ANTIHEAL && ne.totalValue > 0 && !antihealDebuff) {
+                        ne.totalValue -= 1;
+                        antihealDebuff = true;
+                    }
+                });
+                if (antihealDebuff) {
+                    checkDebuffToRemove(target, EDebuffType.ANTIHEAL, this.battleRecord);
                     // record
                     const attackRecord: IBattleAction = {
                         unitId: target.id,
@@ -1955,6 +1992,7 @@ export class BattleController {
         this.battleRecord.push(attackRecord);
 
         const statusesOnAttack: Map<EStatusType, number> = new Map<EStatusType, number>();
+        //forEachNestedEffects(unit,ne => {}) // cannot be statusType in nestedEffects
         unit.buffs.forEach((buff) => {
             if (buff.type === EBuffType.ADD_STATUS_ON_BASIC_ATTACK) {
                 const { statusType, value } = buff;
@@ -2113,7 +2151,13 @@ export class BattleController {
         let finalDamageValue = damageValue;
 
         // check if cosmic shield is active
-        const cosmicShield = target.buffs.find((buff) => buff.type === EBuffType.COSMIC_SHIELD);
+        let cosmicShield = false;
+        forEachNestedEffects(target, ne => {
+            if (ne.buffType === EBuffType.COSMIC_SHIELD && ne.totalValue > 0 && !cosmicShield) {
+                ne.totalValue -= 1;
+                cosmicShield = true;
+            }
+        })
         if (cosmicShield) {
             this.battleRecord.push({
                 unitId: target.id,
@@ -2121,36 +2165,35 @@ export class BattleController {
                 value: 0,
                 value2: target.hp,
             });
-            changeBuffValue(target, cosmicShield, -1, this.battleRecord);
-
-            //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
+            checkBuffToRemove(target,EBuffType.COSMIC_SHIELD,this.battleRecord);
             return;
         }
-
-        if (damageType === EHeroAttackType.MAGIC) {
-            // calculate defense debuffs
-            target.debuffs.forEach((debuff) => {
-                if (debuff.type === EDebuffType.RESIST_DECREASE) {
-                    const { value, valueType } = debuff;
-                    if (!valueType) {
-                        console.log("ERROR! No valueType");
-                        return;
+        let resistDecreasePercent = 0;
+        let resistDecreaseAbsolute = 0;
+        forEachNestedEffects(target, (ne) => {
+            if (ne.debuffType === EDebuffType.RESIST_DECREASE && ne.totalValue > 0) {
+                const { totalValue, valueType } = ne;
+                if (valueType === "percent") {
+                    resistDecreasePercent += totalValue;
+                } else {
+                    resistDecreaseAbsolute += totalValue;
+                }
+            }
+        });
+        if (damageType === EHeroAttackType.PHYSICAL) {
+            forEachNestedEffects(target, (ne) => {
+                if ((ne.debuffType === EDebuffType.MARK_HUNTER || ne.debuffType === EDebuffType.MARK_PREDATOR) && ne.totalValue > 0) {
+                    const { totalValue, valueType } = ne;
+                    if (valueType === "percent") {
+                        resistDecreasePercent += totalValue;
+                    } else {
+                        resistDecreaseAbsolute += totalValue;
                     }
-                    finalDamageValue += calculateIncreaseValue(finalDamageValue, value, valueType);
                 }
             });
-        } else if (damageType === EHeroAttackType.PHYSICAL) {
-            // calculate defense debuffs
-            target.debuffs.forEach((debuff) => {
-                if (PHYSICAL_RESIST_DESCREASE_DEBUFFS.includes(debuff.type)) {
-                    const { value, valueType, totalValue } = debuff;
-                    if (!valueType) {
-                        console.log("ERROR! No valueType");
-                        return;
-                    }
-                    finalDamageValue += calculateIncreaseValue(finalDamageValue, totalValue || value, valueType);
-                }
-            });
+        }
+        if (resistDecreasePercent > 0 || resistDecreaseAbsolute) {
+            finalDamageValue = Math.floor(finalDamageValue*(100+resistDecreasePercent)/100 + resistDecreaseAbsolute);
         }
 
         // check bonus damage to summons
@@ -2185,42 +2228,63 @@ export class BattleController {
 
         // EVASION
         // by default evasion only works versus physical attacks and skills
-        const evadeBuff = target.buffs.find((buff) => buff.type === EBuffType.EVADE);
-        const blindDebuff = unit.debuffs.find((debuff) => debuff.type === EDebuffType.BLIND)?.totalValue || 0;
-        const possibleEvasion = (damageType === EHeroAttackType.PHYSICAL ? target.evasionChance : 0) + blindDebuff;
+        let blindDebuff2 = 0;
+        forEachNestedEffects(target, (ne) => {
+            if (ne.debuffType === EDebuffType.BLIND && ne.totalValue > 0) {
+                blindDebuff2 += ne.totalValue;
+            }
+        });
+
+        const possibleEvasion = (damageType === EHeroAttackType.PHYSICAL ? target.evasionChance : 0) + blindDebuff2;
         // magic attacks ignore [target.evasionChance], but can be dodged due BLIND debuff stacks
         if (possibleEvasion > 0) {
             if (getRandomIntFromInterval(0, 100) <= possibleEvasion) {
                 finalDamageValue = Math.floor(finalDamageValue * EVASION_MODIFIER);
                 recordTarget.isEvasion = true;
             }
-        } else if (evadeBuff) {
-            changeBuffValue(target, evadeBuff, -1, this.battleRecord);
-            finalDamageValue = Math.floor(finalDamageValue * EVASION_MODIFIER);
-            recordTarget.isEvasion = true;
+        }
+        if (!recordTarget.isEvasion) {
+            let evadeBuff = false;
+            forEachNestedEffects(target, (ne) => {
+                if (ne.buffType === EBuffType.EVADE && ne.totalValue > 0 && !evadeBuff) {
+                    evadeBuff = true;
+                    ne.totalValue -= 1;
+                }
+            });
+            if (evadeBuff) {
+                finalDamageValue = Math.floor(finalDamageValue * EVASION_MODIFIER);
+                recordTarget.isEvasion = true;
+                checkBuffToRemove(target, EBuffType.EVADE, this.battleRecord);
+            }
         }
 
-        // check if divine shield is active
-        const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
-        if (divineShield) {
-            const stacks = divineShield.totalValue;
-            if (stacks) {
-                if (finalDamageValue <= stacks) {
-                    this.battleRecord.push({
-                        unitId: target.id,
-                        type: EBattleActionType.TAKE_DAMAGE,
-                        value: 0,
-                        value2: target.hp,
-                    });
-                    return;
-                } else {
-                    changeBuffValue(target, divineShield, stacks - finalDamageValue, this.battleRecord);
+        let divineShield2 = false;
+        forEachNestedEffects(target, (ne) => {
+            if (ne.buffType === EBuffType.DIVINE_SHIELD && ne.totalValue > 0 && !divineShield2) {
+                if (finalDamageValue > ne.totalValue) {
+                    ne.totalValue = 0;
                 }
+                divineShield2 = true;
             }
+        });
+        if (divineShield2) {
+            this.battleRecord.push({
+                unitId: target.id,
+                type: EBattleActionType.TAKE_DAMAGE,
+                value: 0,
+                value2: target.hp,
+            });
+            checkBuffToRemove(target, EBuffType.DIVINE_SHIELD, this.battleRecord);
+            return;
         }
         // ARMOR
 
-        const ignoreArmorBuff = unit.buffs.find((buff) => buff.type === EBuffType.IGNORE_ARMOR);
+        let ignoreArmorBuff = false;
+        forEachNestedEffects(unit, (ne) => {
+            if (ne.buffType == EBuffType.IGNORE_ARMOR && ne.totalValue > 0) {
+                ignoreArmorBuff = true;
+            }
+        });
         if (ignoreArmorBuff) {
             // check for pure hp damage bonuses
             unit.itemBonuses &&

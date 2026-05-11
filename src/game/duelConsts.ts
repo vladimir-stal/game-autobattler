@@ -1,6 +1,6 @@
 import { EHeroClass, EHeroClassType, EItemBonusType, EUnitType, IItem, IUnit, TDuelCards, TDuelEnemy } from "../types";
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "./basicHeroConsts";
-import { axe1, mace1, musical1, musical1_2, scepter1, scepter1_2, shield1, staff1, sword1, sword1_2, totem1, wand1, wand1_2 } from "./basicWeaponItemConsts";
+import { axe1, axe1_2, mace1, musical1, musical1_2, scepter1, scepter1_2, shield1, staff1, sword1, sword1_2, totem1, wand1, wand1_2 } from "./basicWeaponItemConsts";
 import {
     basic_boots,
     basic_exp_bag,
@@ -38,6 +38,7 @@ import {
     bladedancerHero,
     gladiatorHero,
     doomsayerHero,
+    mimicHero,
 } from "./mcHeroConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import {
@@ -48,6 +49,9 @@ import {
     phycisalAttackSkill_2,
     removeBuffSkill,
     removeDebuffSkill,
+    attackWithBleedSkill_2,
+    attackWithBleedSkill_3,
+    phycisalAttackSkill_3,
 } from "./skills/commonSkillConsts";
 import { concentrateThePoisonSkill, magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
@@ -85,7 +89,7 @@ import { gloves_war2, hat21, jacket21, jacket21_2, ring_regen2, ring_regen2_2 } 
 import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { minstrelSkill } from "./skills/mc/minstrelSkills";
 import { itemGoblinBoneDagger, itemPeasantPitchfork, regenMantle } from "./mobItemConsts";
-import { axe32, dagger32, scepter31, shield31, shield32 } from "./weaponItem3Consts";
+import { axe32, dagger32, scepter31, shield31, shield32, sword31 } from "./weaponItem3Consts";
 import { buffSelfMPorPP, increaseMaxHpSkill } from "./skills/commonSkill3Consts";
 import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
@@ -959,8 +963,109 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
     },
 ]);
 
+
+export const enemy9: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    { 
+        1: [{ unit: masterHero }, { item: sword1 }, { skill: buffNextBaXSelf }],
+        2: [{ unit: warriorSummonMob }, {item: staff1}],
+        3: [{ unit: warriorSummonMob}],
+        4: [{ unit: warriorSummonMob}]
+    },
+    // day 2
+    { 
+        1: [
+            { unit: masterHero }, {levelup: 2},
+            { attribute: {a:"basicMaxHp", v:3}},
+            { attribute: {a:"basicEvasionChance", v:2}},
+            { item: axe1 }, {skill: phycisalAttackSkill},
+            { skill: buffNextBaXSelf }],
+        2: [{ unit: warriorSummonMob}, {item: staff1}],
+        3: [{ unit: warriorSummonMob}, {item: sword1}],
+        4: [{ unit: warriorSummonMob}]
+    },
+    // day 3
+    { 
+        1: [
+            { unit: mimicHero },
+            { attribute: {a:"basicMaxHp", v:9}},
+            { attribute: {a:"basicEvasionChance", v:4}},
+            { attribute: {a:"basicArmor", v:3}},
+            { item: axe1_2 }, {item: jacket21},
+            { item: regenMantle }, {item: basic_pants},
+            { skill: attackWithBleedSkill, chained: true },
+            { skill: phycisalAttackSkill},
+            { moveMcSkillToSlotIndex: 1}],
+        2: [{ unit: warriorSummonMob}, {levelup:1}, {item: staff1}],
+        3: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}],
+        4: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}]
+    },
+    // day 4
+    { 
+        1: [
+            { unit: mimicHero }, {levelup: 1},
+            { attribute: {a:"basicMaxHp", v:9}},
+            { attribute: {a:"basicEvasionChance", v:4}},
+            { attribute: {a:"basicArmor", v:3}},
+            { attribute: {a:"basicHpRegen", v:1}},
+            { attribute: {a:"basicCritChance", v:2}},
+            { attribute: {a:"basicPhysicalPower", v:3}},
+            { item: axe1_2 }, {item: jacket21},
+            { item: regenMantle }, {item: basic_pants},
+            { skill: attackWithBleedSkill_2, chained: true },
+            { skill: chainToNextSkill, chained: true},
+            { skill: phycisalAttackSkill_2},
+            { moveMcSkillToSlotIndex: 1}],
+        2: [{ unit: warriorSummonMob}, {levelup:1}, {item: staff1}],
+        3: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}],
+        4: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}]
+    },
+    // day 5
+    { 
+        1: [
+            { unit: mimicHero }, {levelup: 1},
+            { attribute: {a:"basicMaxHp", v:9}},
+            { attribute: {a:"basicEvasionChance", v:4}},
+            { attribute: {a:"basicArmor", v:3}},
+            { attribute: {a:"basicHpRegen", v:2}},
+            { attribute: {a:"basicCritChance", v:2}},
+            { attribute: {a:"basicPhysicalPower", v:3}},
+            { attribute: {a:"basicMagicPower", v:2}},
+            { item: axe1_2 }, {item: jacket21},
+            { item: regenMantle }, {item: sword22},
+            { skill: attackWithBleedSkill_3, chained: true },
+            { skill: chainToNextSkill, chained: true},
+            { skill: phycisalAttackSkill_2},
+            { moveMcSkillToSlotIndex: 1}],
+        2: [{ unit: warriorSummonMob}, {levelup:1}, {item: staff1}],
+        3: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}],
+        4: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}]
+    },
+    // day 6
+    { 
+        1: [
+            { unit: mimicHero }, {levelup: 1},
+            { attribute: {a:"basicMaxHp", v:9}},
+            { attribute: {a:"basicEvasionChance", v:4}},
+            { attribute: {a:"basicArmor", v:3}},
+            { attribute: {a:"basicHpRegen", v:3}},
+            { attribute: {a:"basicCritChance", v:2}},
+            { attribute: {a:"basicPhysicalPower", v:3}},
+            { attribute: {a:"basicMagicPower", v:2}},
+            { item: axe1_2 }, {item: jacket21},
+            { item: regenMantle }, {item: sword31},
+            { skill: attackWithBleedSkill_3, chained: true },
+            { skill: attackWithBleedSkill, chained: true},
+            { skill: phycisalAttackSkill_3},
+            { moveMcSkillToSlotIndex: 1}],
+        2: [{ unit: warriorSummonMob}, {levelup:2}, {item: sword22}],
+        3: [{ unit: warriorSummonMob}, {levelup:2}, {item: staff1}],
+        4: [{ unit: warriorSummonMob}, {levelup:2}, {item: sword1_2}]
+    },
+]);
+
 ///////////////////////////////////////////////////////////
 
 //
 
-export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy8];
+export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy8, enemy9];

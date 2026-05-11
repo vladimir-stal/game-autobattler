@@ -9,11 +9,12 @@ import {
     ETargetType,
     IHeroSkill,
     IHeroSkillSet,
+    IPassiveSkill,
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
 
-const commanderSkillset = (atk: number, ppScale: number): IHeroSkill[] => {
+const commanderSkillsetOld = (atk: number, ppScale: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.BUFF,
@@ -56,6 +57,21 @@ const commanderSkillset = (atk: number, ppScale: number): IHeroSkill[] => {
     ];
 };
 
+const commanderSkillset = (repeats: number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.REPEATING_SKILL,
+            targetType: ETargetType.SELF,
+            value: repeats,
+            valueType: "number",
+            childSkill: {
+                type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+                targetType: ETargetType.RANDOM_ALLY_WITH_SUMMON,
+            }
+        }
+    ]
+}
+
 export const commanderSkill_3: IHeroSkillSet = {
     id: "CommanderHorn",
     name: i18n.skills.mc.commanderSkill.name,
@@ -64,8 +80,7 @@ export const commanderSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.COMMANDER],
     isMcSkill: true,
-    skills: commanderSkillset(2, 100),
-    isActivateOnStart: true,
+    skills: commanderSkillset(3),
 };
 
 export const commanderSkill_2: IHeroSkillSet = {
@@ -78,8 +93,7 @@ export const commanderSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.COMMANDER],
     isMcSkill: true,
-    skills: commanderSkillset(2, 70),
-    isActivateOnStart: true,
+    skills: commanderSkillset(2),
     nextLevel: commanderSkill_3,
 };
 
@@ -93,9 +107,27 @@ export const commanderSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.COMMANDER],
     isMcSkill: true,
-    skills: commanderSkillset(2, 50),
-    isActivateOnStart: true,
+    skills: commanderSkillset(1),
     nextLevel: commanderSkill_2,
 };
+
+export const commanderPassive: IPassiveSkill = {
+    desc: "Increase all summons basic\nattack damage [2]+[MPx50%]",
+    preBattleBuff: {
+        name: "Passive",
+        type: EBuffType.BATTLE_TRIGGER,
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        value: 1,
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Commander's banner",
+            type: EAppTriggerType.PRE_BATTLE,
+            skill: commanderSkillsetOld(2, 50),
+        }
+    }
+}
 
 export const commanderSkills: THeroSkills = [commanderSkill];

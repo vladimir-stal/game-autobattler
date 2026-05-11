@@ -354,6 +354,10 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             const target = getRandomArrayItem(units.filter((unit) => unit !== null && unit.id !== targetUnitId));
             return target ? [] : null;
         }
+        case ETargetType.RANDOM_ALLY_WITH_SUMMON: {
+            const target = getRandomArrayItem(units.filter((unit) => !!unit?.summon));
+            return target ? [] : null;
+        }
         case ETargetType.SELF:
             return [unit];
         case ETargetType.SUMMON_CURRENT:
@@ -575,6 +579,19 @@ const undoAttributeChangesForNestedEffects = (unit: IBattleUnit, effects: INeste
             undoAttributeChanges(unit, ne.attribute, ne.totalValue, false, battleRecord);
         }
     });
+};
+
+export const checkBuffToRemove = (unit: IBattleUnit, buffType: EBuffType, battleRecord: TBattleRecord) => {
+    const topBuff = unit.buffs?.find((buff) => buff.type === buffType && buff.totalValue <= 0);
+    if (topBuff) {
+        removeBuff(unit, topBuff, battleRecord);
+    }
+};
+export const checkDebuffToRemove = (unit: IBattleUnit, debuffType: EDebuffType, battleRecord: TBattleRecord) => {
+    const topBuff = unit.debuffs?.find((debuff) => debuff.type === debuffType && debuff.totalValue <= 0);
+    if (topBuff) {
+        removeDebuffSimple(unit, topBuff, battleRecord);
+    }
 };
 
 export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattleRecord) => {
