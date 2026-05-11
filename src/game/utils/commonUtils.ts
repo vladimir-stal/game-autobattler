@@ -38,6 +38,13 @@ export function getRandomArrayItems<T>(array: T[], count: number, isUnique: bool
     return result;
 }
 
+export function shuffleArray<T>(array: T[]) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        let r = Math.floor(Math.random() * i);
+        [array[i], array[r]] = [array[r], array[i]]
+    }
+}
+
 /** Check if probability worked */
 export function checkProbability(chance: number) {
     const random100 = getRandomIntFromInterval(0, 100);

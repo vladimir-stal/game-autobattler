@@ -1069,3 +1069,15 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
 //
 
 export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy8, enemy9];
+
+export const duelEnemyNames = [
+    "Lolodin87",
+    "xXxRatWarxXx",
+    "MeAndMySon",
+    "CuteWitch99",
+    "NobodyExpects",
+    "Holy_Dagger_13",
+    "shocKING",
+    "MisterDETH",
+    "ClownSticks",
+]

@@ -1,3 +1,4 @@
+import { duelEnemyNames } from "../duelConsts";
 import { GameScene } from "../scenes/GameScene";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomArrayItems } from "../utils/commonUtils";
 
@@ -22,9 +23,17 @@ export class LeaderController {
     init() {
         this.hp = START_HP;
         this.leaders = [];
+        const potentialPlayers = []
+        duelEnemyNames.forEach((n, i) => potentialPlayers.push(i));
         for (let i = 0; i < INITIAL_PLAYERS_COUNT; i++) {
-            const playerName = i === 0 ? "YOU" : "PLAYER " + (i + 1);
-            this.leaders.push({ id: i, hp: START_HP, name: playerName });
+            if (i>0) {
+                const index = getRandomArrayIndex(potentialPlayers);
+                const pick = potentialPlayers[index];
+                potentialPlayers.splice(index,1);
+                this.leaders.push({ id: pick, hp: START_HP, name: duelEnemyNames[pick] });
+            } else {
+                this.leaders.push({ id: 0, hp: START_HP, name: "YOU" });
+            }
         }
     }
 
