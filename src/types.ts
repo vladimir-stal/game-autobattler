@@ -689,6 +689,7 @@ export enum ETargetType {
     HIGH_MP_ALLY = "HIGH_MP_ALLY",
     HIGH_PP_ALLY = "HIGH_PP_ALLY",
     RANDOM_ALLY_EXCEPT_ID = "RANDOM_ALLY_EXCEPT_ID", // get random ally except ally with id
+    RANDOM_ALLY_WITH_SUMMON = "RANDOM_ALLY_WITH_SUMMON",
     SELF = "SELF",
     TOTEM_ALLY_ALL = "TOTEM_ALLY_ALL", // all totems on ally side
     TOTEM_ALLY_CURRENT = "TOTEM_ALLY_CURRENT",
@@ -722,6 +723,7 @@ export enum ETargetType {
     BY_RELEVANT_ID = "BY_RELEVANT_ID", // triggerBattleTrigger() ~ relevantUnitId parameter
     CUSTOM = "CUSTOM",
     SAME_LAST_TARGET = "SAME_LAST_TARGET", // in skill set, repeat same target for next steps of set
+    // ---
 }
 
 export enum EWeaponType {
@@ -1219,3 +1221,5 @@ export interface IMixedDuelCard {
     levelup?: number;
     moveMcSkillToSlotIndex?: number;
 }
+
+export type battleUnitIterateThruNestedEffects = (eff: INestedBuffEffect, bod?: IBuffOrDebuff) => void;

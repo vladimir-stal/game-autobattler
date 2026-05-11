@@ -24,5 +24,6 @@ export const allyTargets = [
     ETargetType.TOTEM_ALLY_ALL,
     ETargetType.TOTEM_ALLY_CURRENT,
     ETargetType.SUMMON_CURRENT,
-    //ETargetType.
+    ETargetType.RANDOM_ALLY_EXCEPT_ID,
+    ETargetType.RANDOM_ALLY_WITH_SUMMON,
 ];

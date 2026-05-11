@@ -1,12 +1,15 @@
 import {
+    battleUnitIterateThruNestedEffects,
     EHeroAttackType,
     EHeroClass,
     EHeroClassType,
     EItemBattleBonusType,
     ETargetType,
     EUnitType,
+    IBattleUnit,
     IHeroSkill,
     IHeroSkillSet,
+    INestedBuffEffect,
     IUnit,
     THeroAttribute,
     TUnits,
@@ -502,4 +505,36 @@ export const getMainUnitId = (unitId: string): string => {
             return "WEAKGOBLIN";
     }
     return unitId;
+};
+
+export const forEachNestedEffects = (unit: IBattleUnit, func: battleUnitIterateThruNestedEffects) => {
+    unit.buffs?.forEach((buff) => {
+        buff?.nestedEffects.forEach((ne) => func(ne, { buff }));
+        const parentEffect: INestedBuffEffect = {
+                value: buff.value,
+                buffType: buff.type,
+                attribute: buff.attribute,
+                mpScale: buff.mpScale,
+                ppScale: buff.ppScale,
+                totalValue : buff.totalValue,
+                valueFrom: buff.valueFrom,
+                valueType: buff.valueType,
+            };
+        func(parentEffect, { buff });
+        buff.totalValue = parentEffect.totalValue;
+    });
+    unit.debuffs?.forEach((debuff) => {
+        debuff?.nestedEffects.forEach((ne) => func(ne, { debuff }));
+        const parentEffect: INestedBuffEffect = {
+                value: debuff.value,
+                debuffType: debuff.type,
+                attribute: debuff.attribute,
+                mpScale: debuff.mpScale,
+                ppScale: debuff.ppScale,
+                totalValue : debuff.totalValue,
+                valueType: debuff.valueType,
+            };
+        func(parentEffect, { debuff });
+        debuff.totalValue = parentEffect.totalValue;
+    });
 };

@@ -217,21 +217,7 @@ const performTotemHeal = (
 
     let overhealTotal = 0;
     targets.forEach((target) => {
-        let finalReduction = 0;
-        // BLEED & POISON interaction
-        target.statuses.forEach((status) => {
-            if (status.type === EStatusType.BLEED) {
-                const reduction = Math.min(Math.floor(finalValue / 5) + 1, status.value);
-                reduceStatus(target, target, status.type, reduction, battleRecord);
-            }
-            if (status.type === EStatusType.POISON) {
-                finalReduction = Math.min(finalValue, Math.floor(status.value / 2) + 1, status.value);
-                reduceStatus(target, target, status.type, finalReduction, battleRecord);
-                //finalHeal -= finalReduction;
-            }
-        });
-
-        target.hp += finalValue - finalReduction;
+        target.hp += finalValue;
         if (target.hp > target.maxHp) {
             overhealTotal += target.hp - target.maxHp;
             target.hp = target.maxHp;

@@ -28,7 +28,7 @@ import {
 export const itemCoin3: IItem = {
     id: "coin",
     name: i18n.items.coin,
-    desc: i18n.items.coin_description + "8",
+    desc: i18n.items.coin_description + "11",
     type: EItemType.COMMON,
     level: 3,
     priceLevel: 1, // calculated cost = (3+10)*2-1 = 25 ; sell cost = (25+1)/2 = 13
@@ -41,7 +41,7 @@ export const itemCoin3: IItem = {
 export const itemCoin2: IItem = {
     id: "coin",
     name: i18n.items.coin, // "Монета(2)",
-    desc: i18n.items.coin_description + "3",
+    desc: i18n.items.coin_description + "5",
     type: EItemType.COMMON,
     level: 2,
     priceLevel: 1, // calculated cost = (2+3)*2-1 = 9 ; sell cost = (9+1)/2 = 5
@@ -55,7 +55,7 @@ export const itemCoin2: IItem = {
 export const itemCoin: IItem = {
     id: "coin",
     name: i18n.items.coin,
-    desc: i18n.items.coin_description + "1",
+    desc: i18n.items.coin_description + "2",
     type: EItemType.COMMON,
     level: 1,
     priceLevel: 1, // calculated cost = (1+1)*2-1 = 3 ; sell cost = (3+1)/2 = 2
