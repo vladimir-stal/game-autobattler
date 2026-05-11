@@ -467,7 +467,7 @@ export class BattleController {
     }
 
     /** Execute all after action activities every round:
-     * statuses actication (poison, bleed, burn, hpRegen);
+     * statuses activation (poison, bleed, burn, hpRegen);
      * totem actions;
      * every turn buffs and debufs actions
      */
@@ -523,11 +523,18 @@ export class BattleController {
                 removeStatus(unit, unit, st.type, this.battleRecord);
                 return;
             }
-            if (st.type === EStatusType.BLEED && hpRegen > 0) {
-                const reduction = Math.min(Math.floor(hpRegen / 5) + 1, st.value);
+            if (st.type === EStatusType.BLEED) {
+                /** Bleed lose half stacks every round, but not below 1 */
+                /** (but Bleed can be increased with physical crits or physical attack skills) */
+                const reduction = Math.floor(st.value / 2); // half round down
+                // e.g. 1-0=1, 2-1=1, 3-1=2, 4-2=2...
                 reduceStatus(unit, unit, st.type, reduction, this.battleRecord);
-                // BLEED may reduce hp regeneration
-                unit.hpRegen -= Math.max(0, Math.min(hpRegen, Math.floor(reduction / 2)));
+            }
+            if (st.type === EStatusType.POISON) {
+                /** Poison lose 1 stack every round, but not below 1 */
+                if (st.value > 1) {
+                    reduceStatus(unit, unit, st.type, 1, this.battleRecord);
+                }
             }
             takeStatusDamage(unit, value, type, this.battleRecord);
         });
@@ -1386,21 +1393,8 @@ export class BattleController {
                     return;
                 }
                 lastTargetId = target.id;
-                let finalReduction = 0;
-                // BLEED & POISON interaction
-                /*target.statuses.forEach((status) => {
-                    if (status.type === EStatusType.BLEED) {
-                        const reduction = Math.min(Math.floor(finalHeal / 5) + 1, status.value);
-                        reduceStatus(target, target, status.type, reduction, this.battleRecord);
-                    }
-                    if (status.type === EStatusType.POISON) {
-                        finalReduction = Math.min(finalHeal, Math.floor(status.value / 2) + 1, status.value);
-                        reduceStatus(target, target, status.type, finalReduction, this.battleRecord);
-                        //finalHeal -= reduction;
-                    }
-                });*/
-                //
-                target.hp += finalHeal - finalReduction;
+
+                target.hp += finalHeal;
                 if (target.hp > target.maxHp) {
                     overhealTotal += target.hp - target.maxHp;
                     target.hp = target.maxHp;
