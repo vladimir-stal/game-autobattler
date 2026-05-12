@@ -229,7 +229,7 @@ export const dagger31_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 16, valueType: "number", attribute: "basicEvasionChance" },
     ],
 };
@@ -244,7 +244,7 @@ export const dagger31_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicEvasionChance" },
     ],
     nextLevel: dagger31_3,
@@ -260,7 +260,7 @@ export const dagger31: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.DAGGER,
     bonuses: [
-        { type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" },
+        { type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" },
         { type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicEvasionChance" },
     ],
     nextLevel: dagger31_2,

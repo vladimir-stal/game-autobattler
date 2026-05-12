@@ -272,6 +272,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.ASSASSIN:
             return {
                 distance: -30,
+                distanceEnemy: -20,
                 image: IMAGE_ASSASSIN_IDLE,
                 animation: AnimationType.ASSASSIN_IDLE,
                 idleBattleAnimation: AnimationType.ASSASSIN_BATTLE_IDLE,

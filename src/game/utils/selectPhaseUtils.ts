@@ -271,6 +271,13 @@ export const getRooms = (
                 sellRooms = hour === 0 ? sellHeroRoom : sellTypeRoomsWithoutHeroes;
             }
             break;
+        case 8:
+            {
+                if (hour === 0) {
+                    sellRooms = [ERoomType.ITEM_LEGEND_SELL];
+                }
+            }
+            break;
     }
 
     let choiseRooms = choiseTypeRooms;
@@ -287,6 +294,13 @@ export const getRooms = (
             {
                 if (hour === 0) {
                     choiseRooms = [ERoomType.SKILLS_SELL_ENHANCED];
+                }
+            }
+            break;
+        case 9:
+            {
+                if (hour === 0) {
+                    choiseRooms = [ERoomType.UPGRADE_SKILL_OR_ITEM];
                 }
             }
             break;

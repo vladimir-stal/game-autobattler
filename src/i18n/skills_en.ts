@@ -360,6 +360,12 @@ export const SKILLS_EN = {
             desc2: "Deal [2] magic damage \nto random enemy [2+MP*50%] times",
             desc3: "Deal [2] magic damage \nto random enemy [3+MP*60%] times",
         },
+        mortalStrikeSkill: {
+            name: "Mortal strike",
+            desc1: "Next BA apply [3] bleed\n and physical vulnerability,\nreduce targets PP & MP\nby [4] for 3 turns",
+            desc2: "Next BA apply [5] bleed\n and physical vulnerability,\nreduce targets PP & MP\nby [7] for 3 turns",
+            desc3: "Next BA apply [8] bleed\n and physical vulnerability,\nreduce targets PP & MP\nby [11] for 3 turns",
+        },
         outHealBuffSkill: {
             name: "Out heal",
             desc1: "Buff outgoing heal by\n[10+40%xMP]% to one ally in\nfront and one behind",
@@ -607,9 +613,9 @@ export const SKILLS_EN = {
     mobs: {
         goblinShamanHpRegIncr: {
             name: "Increase regen all",
-            desc1: "Increase regeneration [2] for all allies",
-            desc2: "Increase regeneration [4] for all allies",
-            desc3: "Increase regeneration [8] for all allies",
+            desc1: "Increase regeneration [1] for all allies",
+            desc2: "Increase regeneration [2] for all allies",
+            desc3: "Increase regeneration [3] for all allies",
         },
         goblinPocketSand: {
             name: "Pocket sand",

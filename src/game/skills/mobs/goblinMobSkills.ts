@@ -149,7 +149,7 @@ export const goblinShamanHpRegIncr: IHeroSkillSet = {
     skills: [
         {
             type: EHeroSkillType.ATTRIBUTE_INCREASE,
-            value: 2,
+            value: 1,
             valueType: "number",
             attribute: "hpRegen",
             targetType: ETargetType.ALL_ALLIES,

@@ -1,4 +1,16 @@
-import { AnimationType, EBuffTimeType, EBuffType, EEffectAnimationType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
+import {
+    AnimationType,
+    EBuffTimeType,
+    EBuffType,
+    EEffectAnimationType,
+    EHeroClass,
+    EHeroSkillType,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../types";
 import { i18n } from "../consts";
 import { IMAGE_SKILL_HEAL_1, IMAGE_SKILL_HEAL_2 } from "../utils/load/skillImagesLoad";
 import { outHealBuffSkill } from "./commonSkill3Consts";
@@ -111,6 +123,7 @@ export const healFirst_2: IHeroSkillSet = {
             mpScale: 35,
         },
     ],
+    nextLevel: healFirst_3,
     image: IMAGE_SKILL_HEAL_1,
 };
 
@@ -204,7 +217,7 @@ export const healLowHpSkill: IHeroSkillSet = {
 
 // tier 3
 //   + overheal
-const ringOfHealingSkillset = (hpPercent:number): IHeroSkill[] => {
+const ringOfHealingSkillset = (hpPercent: number): IHeroSkill[] => {
     return [
         selfBuffOverheal(2, EStatusType.BURN),
         {
@@ -235,8 +248,8 @@ const ringOfHealingSkillset = (hpPercent:number): IHeroSkill[] => {
             valueFrom: "customNumber",
             animation: AnimationType.NONE,
         },
-    ]
-}
+    ];
+};
 
 export const ringOfHealingSkill_3: IHeroSkillSet = {
     id: "ringOfHealing",
@@ -248,7 +261,7 @@ export const ringOfHealingSkill_3: IHeroSkillSet = {
     skills: ringOfHealingSkillset(25),
     //nextLevel: healLowHpSkill_2,
     image: IMAGE_SKILL_HEAL_2,
-}
+};
 
 export const ringOfHealingSkill_2: IHeroSkillSet = {
     id: "ringOfHealing",
@@ -260,7 +273,7 @@ export const ringOfHealingSkill_2: IHeroSkillSet = {
     skills: ringOfHealingSkillset(20),
     nextLevel: ringOfHealingSkill_3,
     image: IMAGE_SKILL_HEAL_2,
-}
+};
 
 export const ringOfHealingSkill: IHeroSkillSet = {
     id: "ringOfHealing",
@@ -272,7 +285,7 @@ export const ringOfHealingSkill: IHeroSkillSet = {
     skills: ringOfHealingSkillset(15),
     nextLevel: ringOfHealingSkill_2,
     image: IMAGE_SKILL_HEAL_2,
-}
+};
 
 export const priestSkills: THeroSkills = [healSelf, healFirst];
 
