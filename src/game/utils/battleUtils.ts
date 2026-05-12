@@ -20,6 +20,7 @@ import {
     IBuff,
     IDebuff,
     IHeroSkill,
+    IHeroSkillSet,
     IItemBattleBonus,
     INestedBuffEffect,
     ITotem,
@@ -639,6 +640,60 @@ export const changeBuffValue = (unit: IBattleUnit, buff: IBuff, value: number, b
         });
 };
 
+const prepareBattleMageNested = (ne: INestedBuffEffect): INestedBuffEffect => {
+    const npp = ne.ppScale || ne.mpScale;
+    const nmp = ne.mpScale || ne.ppScale;
+    return {
+        ...ne,
+        ppScale: npp,
+        mpScale: nmp,
+    }
+}
+
+const prepareBattleMageSkill = (skill: IHeroSkill): IHeroSkill => {
+    const npp = skill.ppScale || skill.mpScale;
+    const nmp = skill.mpScale || skill.ppScale;
+    //console.log(" ~ ~ ~ ~ ~ ",skill.type,skill.ppScale,skill.mpScale,npp,nmp);
+    const scopy: IHeroSkill = {
+        ...skill,
+        ppScale: npp,
+        mpScale: nmp,
+    };
+    if (skill.buff) {
+        const bpp = skill.buff.ppScale || skill.buff.mpScale;
+        const bmp = skill.buff.mpScale || skill.buff.ppScale;
+        scopy.buff = {
+            ...skill.buff, 
+            ppScale: bpp,
+            mpScale: bmp,
+        };
+        if (skill.buff.nestedEffects) {
+            scopy.buff.nestedEffects.map(ne => prepareBattleMageNested(ne));
+        }
+        if (skill.buff.appTrigger) {
+            scopy.buff.appTrigger.skill.map(sk => prepareBattleMageSkill(sk));
+        }
+    }
+    if (skill.debuff) {
+        const bpp = skill.debuff.ppScale || skill.debuff.mpScale;
+        const bmp = skill.debuff.mpScale || skill.debuff.ppScale;
+        scopy.debuff = { ...skill.debuff, 
+            ppScale: bpp,
+            mpScale: bmp,
+         };
+        if (skill.debuff.nestedEffects) {
+            scopy.debuff.nestedEffects.map(ne => prepareBattleMageNested(ne));
+        }
+        if (skill.debuff.appTrigger) {
+            scopy.debuff.appTrigger.skill.map(sk => prepareBattleMageSkill(sk));
+        }
+    }
+    if (skill.childSkill) {
+        scopy.childSkill = prepareBattleMageSkill(skill.childSkill);
+    }
+    return scopy;
+};
+
 export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBattleUnit => {
     const { basicArmor, basicMaxHp, basicAttack, basicHpRegen, basicEvasionChance, basicCritChance, basicMagicPower, basicPhysicalPower, items } = unit;
     const itemBonuses: IItemBattleBonus[] = items.reduce((bonuses, item) => {
@@ -662,30 +717,68 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
         return bonuses;
     }, [] as IItemBattleBonus[]);
 
-    return {
-        ...unit,
-        maxHp: basicMaxHp,
-        hp: basicMaxHp,
-        attack: basicAttack,
-        hpRegen: basicHpRegen,
-        armor: basicArmor,
-        critChance: basicCritChance,
-        evasionChance: basicEvasionChance,
-        magicPower: basicMagicPower,
-        physicalPower: basicPhysicalPower,
-        customNumber: 0,
-        isBackRowPosition: backrow,
-        //
-        buffs: [],
-        debuffs: [],
-        summon: undefined,
-        totem: undefined,
-        statuses: [],
-        itemBonuses,
-        isSummon: false,
-        //
-        currentSkillIndex: 0,
-    };
+    if (unit.heroClass === EHeroClass.BATTLE_MAGE) {
+        // Battlemage passive: add ppScale or mpScale to skills with one but w/o other
+        return {
+            ...unit,
+            maxHp: basicMaxHp,
+            hp: basicMaxHp,
+            attack: basicAttack,
+            hpRegen: basicHpRegen,
+            armor: basicArmor,
+            critChance: basicCritChance,
+            evasionChance: basicEvasionChance,
+            magicPower: basicMagicPower,
+            physicalPower: basicPhysicalPower,
+            customNumber: 0,
+            isBackRowPosition: backrow,
+            //
+            buffs: [],
+            debuffs: [],
+            summon: undefined,
+            totem: undefined,
+            statuses: [],
+            itemBonuses,
+            isSummon: false,
+            //
+            currentSkillIndex: 0,
+            //
+            skills: unit.skills.map((sk) => {
+                const skcopy: IHeroSkillSet = {
+                    ...sk,
+                    nextLevel: undefined,
+                    previousLevel: undefined,
+                    skills: sk.skills.map((s) => prepareBattleMageSkill(s)),
+                };
+                return skcopy;
+            }),
+        };
+    } else {
+        return {
+            ...unit,
+            maxHp: basicMaxHp,
+            hp: basicMaxHp,
+            attack: basicAttack,
+            hpRegen: basicHpRegen,
+            armor: basicArmor,
+            critChance: basicCritChance,
+            evasionChance: basicEvasionChance,
+            magicPower: basicMagicPower,
+            physicalPower: basicPhysicalPower,
+            customNumber: 0,
+            isBackRowPosition: backrow,
+            //
+            buffs: [],
+            debuffs: [],
+            summon: undefined,
+            totem: undefined,
+            statuses: [],
+            itemBonuses,
+            isSummon: false,
+            //
+            currentSkillIndex: 0,
+        };
+    }
 };
 
 export const prepareSummonToBattle = (unit: IUnit, backrow: boolean = true): IBattleUnit => {

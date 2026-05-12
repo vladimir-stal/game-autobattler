@@ -1,47 +1,88 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import {
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EDebuffType,
+    EHeroAttackType,
+    EHeroClass,
+    EHeroSkillType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IPassiveSkill,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
 
-// {
-//         id: "BattlemageDebuff",
-//         name: "Battlemage debuff",
-//         desc: "Debuff magic resist -[20]% to first enemy",
-//         level: 1,
-//         heroClasses: [EHeroClass.BATTLE_MAGE],
-//         isMcSkill: true,
-//         skills: [
-//             {
-//                 type: EHeroSkillType.DEBUFF,
-//                 isBasicAttack: true,
-//                 debuff: {
-//                     name: "-20% magic resist",
-//                     type: EDebuffType.MAGIC_RESIST_DECREASE,
-//                     value: 20,
-//                     valueType: "percent",
-//                     targetType: ETargetType.FIRST_ENEMY,
-//                     timeType: EBuffTimeType.DUEL,
-//                 },
-//             },
-//         ],
-//     },
+const battleMageNoAttack = (atk: number, scale: number): IHeroSkill => {
+    return {
+        type: EHeroSkillType.BUFF,
+        buff: {
+            name: "Power+",
+            timeType: EBuffTimeType.DURATION,
+            duration: 2,
+            type: EBuffType.BATTLE_TRIGGER,
+            targetType: ETargetType.SELF,
+            value: 1,
+            appTrigger: {
+                limitedRepeats: false,
+                skillId: "Skills go brrr",
+                type: EAppTriggerType.TURN_END,
+                skill: [
+                    {
+                        type: EHeroSkillType.ATTACK,
+                        attackType: EHeroAttackType.MAGIC,
+                        targetType: ETargetType.FIRST_ENEMY,
+                        value: atk,
+                        ppScale: scale,
+                        mpScale: scale,
+                    },
+                ],
+            },
+            nestedEffects: [
+                {
+                    debuffType: EDebuffType.SKILL_SKIP_BASIC_ATTACK,
+                    value: 1,
+                    valueType: "number",
+                },
+                {
+                    buffType: EBuffType.ATTRIBUTE_INCREASE,
+                    attribute: "magicPower",
+                    value: 35,
+                    valueType: "percent",
+                    valueFrom: "attack",
+                },
+                {
+                    buffType: EBuffType.ATTRIBUTE_INCREASE,
+                    attribute: "physicalPower",
+                    value: 35,
+                    valueType: "percent",
+                    valueFrom: "attack",
+                },
+                {
+                    debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                    attribute: "attack",
+                    value: 65,
+                    valueType: "percent",
+                },
+            ],
+        },
+    };
+};
 
-const battleMageSkillset = (atk:number, ppScale: number, mpScale: number): IHeroSkill[] => {
+const battleMageSkillset = (atk: number, scale: number): IHeroSkill[] => {
     return [
+        battleMageNoAttack(atk,scale),
         {
             type: EHeroSkillType.ATTACK,
             value: atk,
             targetType: ETargetType.RANDOM_ENEMY,
             attackType: EHeroAttackType.PHYSICAL,
-            ppScale: ppScale,
+            mpScale: scale,
+            ppScale: scale,
         },
-        {
-            type: EHeroSkillType.ATTACK,
-            value: atk,
-            targetType: ETargetType.RANDOM_ENEMY,
-            attackType: EHeroAttackType.MAGIC,
-            mpScale: mpScale,
-        },
-    ]
-}
+    ];
+};
 
 export const battleMageSkill_3: IHeroSkillSet = {
     id: "BattlemageAttack",
@@ -53,7 +94,7 @@ export const battleMageSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BATTLE_MAGE],
     isMcSkill: true,
-    skills: battleMageSkillset(9, 65, 65),
+    skills: battleMageSkillset(1, 65),
     isBasicAttack: false,
 };
 
@@ -67,7 +108,7 @@ export const battleMageSkill_2: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BATTLE_MAGE],
     isMcSkill: true,
-    skills: battleMageSkillset(6, 50, 50),
+    skills: battleMageSkillset(1, 50),
     isBasicAttack: false,
     nextLevel: battleMageSkill_3,
 };
@@ -82,9 +123,14 @@ export const battleMageSkill: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.BATTLE_MAGE],
     isMcSkill: true,
-    skills: battleMageSkillset(4, 35, 35),
+    skills: battleMageSkillset(1, 35),
     isBasicAttack: false,
     nextLevel: battleMageSkill_2,
+};
+
+export const battleMagePassive: IPassiveSkill = {
+    desc: "Skills with MP scaling get equal PP scaling and vice versa (skill with both scaling are not affected)",
+    preBattleBuff: undefined,
 };
 
 export const battleMageSkills: THeroSkills = [battleMageSkill];

@@ -665,6 +665,8 @@ export enum EDebuffType {
     BLIND = "BLIND", // enemy attacks have their target evasion chance +X
     MARK_WORTHY_FOE = "MARK_WORTHY_FOE",
     BATTLE_TRIGGER = "BATTLE_TRIGGER", // uses appTrigger field to do stuff
+    SKILL_SKIP_BASIC_ATTACK = "SKILL_SKIP_BASIC_ATTACK", // make no basic attack after skill
+    // ..
 }
 
 export enum EBuffTimeType {
@@ -1051,6 +1053,8 @@ export enum EAppTriggerType {
     AFTER_EVADE = "AFTER_EVADE", // after successful evade
     AFTER_CRIT = "AFTER_CRIT",
     PRE_BATTLE = "PRE_BATTLE", // once pre battle (as non-repeatable skill)
+    AFTER_SKILL_ATTACK = "AFTER_SKILL_ATTACK",
+    TURN_END = "TURN_END",
 }
 
 export interface IAppTrigger {

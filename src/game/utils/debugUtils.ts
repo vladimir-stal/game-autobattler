@@ -6,6 +6,7 @@ import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
 import {
     barbarianHero,
+    battleMageHero,
     doomsayerHero,
     forestSpiritHero,
     illusionistHero,
@@ -51,7 +52,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: samuraiHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: battleMageHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {

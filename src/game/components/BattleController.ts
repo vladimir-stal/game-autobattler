@@ -429,7 +429,18 @@ export class BattleController {
                 });
                 this.performAction(unit, round, isPlayer1, recurseDeep + 1);
             } else if (skillSet.isBasicAttack || skillSet.isBasicAttack === undefined) {
-                this.performBasicAttack(unit, undefined, isPlayer1);
+                let skipAttackDebuff = false;
+                forEachNestedEffects(unit, ne => {
+                    if (ne.debuffType === EDebuffType.SKILL_SKIP_BASIC_ATTACK && ne.value > 0 && !skipAttackDebuff) {
+                        ne.value -= 1;
+                        skipAttackDebuff = true;
+                    }
+                })
+                if (skipAttackDebuff) {
+                    checkDebuffToRemove(unit,EDebuffType.SKILL_SKIP_BASIC_ATTACK,this.battleRecord);
+                } else {
+                    this.performBasicAttack(unit, undefined, isPlayer1);
+                }
             }
         } else {
             // if there is no skill for the round perform basic attack
@@ -476,6 +487,7 @@ export class BattleController {
         if (unit.hp <= 0) {
             return;
         }
+        triggerBattleTrigger(EAppTriggerType.TURN_END,this,unit,unit.id);
         // debuffs
         debuffs.forEach((debuff) => {
             if (eachTurnDebuffs.includes(debuff.type)) {
@@ -769,6 +781,7 @@ export class BattleController {
         if (isCrit) {
             triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastAliveTargetId);
         }
+        triggerBattleTrigger(EAppTriggerType.AFTER_SKILL_ATTACK, this, unit, lastAliveTargetId);
         return lastAliveTargetId || sameLastTargetId;
     }
 

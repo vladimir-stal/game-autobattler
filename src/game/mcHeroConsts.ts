@@ -5,7 +5,7 @@ import { LANG } from "./consts";
 import { alchemistSkills } from "./skills/mc/alchemistSkills";
 import { assassinSkills } from "./skills/mc/assassinSkills";
 import { barbarianPassive, barbarianSkills } from "./skills/mc/barbarianSkills";
-import { battleMageSkills } from "./skills/mc/battleMageSkills";
+import { battleMagePassive, battleMageSkills } from "./skills/mc/battleMageSkills";
 import { beastMasterSkills } from "./skills/mc/beastmasterSkills";
 import { bishopSkills } from "./skills/mc/bishopSkills";
 import { blackKnightSkills } from "./skills/mc/blackKnightSkills";
@@ -618,9 +618,7 @@ export const battleMageHero: IUnit = {
     name: i18n.heroes.BATTLEMAGE,
     id: EHeroClass.BATTLE_MAGE,
     skills: battleMageSkills,
-    passiveSkill: {
-        desc: "Skills get bonuses both\nfrom MP and PP.\nBut cannot basic attack.",
-    },
+    passiveSkill: battleMagePassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
