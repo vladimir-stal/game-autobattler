@@ -1208,16 +1208,13 @@ export type THeroSkills = IHeroSkillSet[];
 export type TDuelEnemy = Record<number, (IUnit | null)[]>;
 export type TDuelCards = Record<number, IMixedDuelCard[]>;
 
-export interface IAttrModify {
-    a: THeroAttribute;
-    v: number;
-}
 export interface IMixedDuelCard {
     unit?: IUnit;
     item?: IItem;
     skill?: IHeroSkillSet;
     chained?: boolean;
-    attribute?: IAttrModify;
+    attr?: THeroAttribute;
+    incr?: number;
     levelup?: number;
     moveMcSkillToSlotIndex?: number;
 }

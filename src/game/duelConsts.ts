@@ -54,7 +54,8 @@ import {
     gladiatorHero,
     doomsayerHero,
     mimicHero,
-    oracleHero,
+    shamanHero,
+    barbarianHero,
 } from "./mcHeroConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import {
@@ -68,15 +69,22 @@ import {
     attackWithBleedSkill_2,
     attackWithBleedSkill_3,
     phycisalAttackSkill_3,
+    statusesIntoHeal,
+    statusesIntoHeal_2,
+    chainBasicAttackSkill,
+    toxicTuneSkill,
+    toxicTuneSkill_2,
+    radiantWallSkill,
+    nextBAArea,
 } from "./skills/commonSkillConsts";
 import { concentrateThePoisonSkill, magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack } from "./skills/magicSkillConsts";
-import { buffNextBaXSelf, riposteSkill_2 } from "./skills/masterSkillConsts";
+import { buffNextBaBeCritSelf_2, buffNextBaXSelf, feintAttack, riposteSkill_2 } from "./skills/masterSkillConsts";
 import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf, attrAttackSelf_2 } from "./skills/orderSkillConsts";
 import { healFirst, healFirst_2, healLowHpSkill, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
 import { buffNextBa, buffNextBa_2, buffNextBa_3, buffNextBaTimes_2, debuffWorthyFoe, mortalStrikeSkill } from "./skills/warriorSkillConsts";
-import { attrDescArmor, totemAttackSkill, totemAttackSkill_2 } from "./skills/wildSkillConsts";
+import { attrDescArmor, attrIncrHpReg, totemAttackSkill, totemAttackSkill_2 } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
 import {
@@ -91,17 +99,20 @@ import {
     shield21,
     shield22,
     shield22_2,
+    staff21,
+    staff21_2,
     staff22,
     sword22,
     sword22_2,
     totem21,
+    totem21_2,
     totem22,
     wand21,
     wand21_2,
     wand22,
 } from "./weaponItem2Consts";
 import { goblinUnit, goldGoblin1Unit, weakGoblinUnit } from "./units/goblinMobUnits";
-import { gloves_war2, hat21, jacket21, jacket21_2, ring_regen2, ring_regen2_2 } from "./commonItemConsts2";
+import { gloves_magic2, gloves_war2, hat21, jacket21, jacket21_2, ring_regen2, ring_regen2_2 } from "./commonItemConsts2";
 import { strongWolfUnit, wolfUnit } from "./units/wolfsMobUnits";
 import { minstrelSkill } from "./skills/mc/minstrelSkills";
 import { itemGoblinBoneDagger, itemPeasantPitchfork, regenMantle } from "./mobItemConsts";
@@ -109,12 +120,13 @@ import { axe32, dagger32, scepter31, shield31, shield32, sword31 } from "./weapo
 import { buffSelfMPorPP, increaseMaxHpSkill } from "./skills/commonSkill3Consts";
 import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
-import { music5AddBuffTarget } from "./weaponItem5Consts";
+import { music5AddBuffTarget, totem5HptoDmg } from "./weaponItem5Consts";
 import { warriorSummonMob, warriorSummonMob_3 } from "./units/summonMobUnits";
 import { skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 import { peasantLastStandSkill } from "./skills/mobs/peasantMobSkills";
 import { skeletonPoisonedFlames } from "./skills/mobs/skeletonMobSkills";
 import { peasantUnit } from "./units/peasantMobUnits";
+import { pirate1Unit } from "./units/piratesMobUnits";
 
 const addItem = (unit: IUnit, item: IItem) => {
     unit.items.push(item);
@@ -195,8 +207,8 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         3: [
             { unit: warriorHero },
             { levelup: 1 },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicPhysicalPower", incr: 1 },
             { item: shield1 },
             { skill: buffNextBa },
             { skill: peasantLastStandSkill },
@@ -209,7 +221,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
             { unit: priestHero },
             { levelup: 1 },
             { item: regenMantle },
-            { attribute: { a: "basicArmor", v: 2 } },
+            { attr: "basicArmor", incr: 2 },
             { item: basic_hat_2 },
             { skill: healLowHpSkill, chained: true },
             { skill: healFirst_2 },
@@ -217,9 +229,9 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         3: [
             { unit: warriorHero },
             { levelup: 2 },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
-            { attribute: { a: "basicArmor", v: 3 } },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicArmor", incr: 3 },
             { item: sword1 },
             { item: gloves_war2 },
             { skill: peasantLastStandSkill },
@@ -232,10 +244,10 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         2: [
             { unit: priestHero },
             { levelup: 2 },
-            { attribute: { a: "basicHpRegen", v: 1 } },
-            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attr: "basicHpRegen", incr: 1 },
+            { attr: "basicMaxHp", incr: 3 },
             { item: regenMantle },
-            { attribute: { a: "basicArmor", v: 2 } },
+            { attr: "basicArmor", incr: 2 },
             { item: basic_hat_2 },
             { skill: healLowHpSkill, chained: true },
             { skill: healFirst_2 },
@@ -243,10 +255,10 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         3: [
             { unit: gladiatorHero },
             //{ levelup: 2 },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 4 } },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicCritChance", incr: 4 },
             { item: sword1 },
             { item: sword1 },
             { item: gloves_war2 },
@@ -262,10 +274,10 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         2: [
             { unit: monkHero },
             //{ levelup: 2 },
-            { attribute: { a: "basicHpRegen", v: 1 } },
-            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attr: "basicHpRegen", incr: 1 },
+            { attr: "basicMaxHp", incr: 3 },
             { item: regenMantle },
-            { attribute: { a: "basicArmor", v: 2 } },
+            { attr: "basicArmor", incr: 2 },
             { item: basic_hat_2 },
             { item: scepter21 },
             { skill: healLowHpSkill, chained: true },
@@ -276,10 +288,10 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         3: [
             { unit: gladiatorHero },
             //{ levelup: 2 },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicPhysicalPower", v: 2 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 4 } },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicPhysicalPower", incr: 2 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicCritChance", incr: 4 },
             { item: sword1 },
             { item: sword1 },
             { item: gloves_war2 },
@@ -296,11 +308,11 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         2: [
             { unit: monkHero },
             //{ levelup: 2 },
-            { attribute: { a: "basicHpRegen", v: 1 } },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicArmor", v: 6 } },
+            { attr: "basicHpRegen", incr: 1 },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicArmor", incr: 6 },
             { item: jacket21_2 },
-            { attribute: { a: "basicArmor", v: 2 } },
+            { attr: "basicArmor", incr: 2 },
             { item: basic_hat_2 },
             { item: scepter21 },
             { item: scepter31 },
@@ -312,10 +324,10 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
         3: [
             { unit: gladiatorHero },
             { levelup: 1 },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicPhysicalPower", v: 2 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 4 } },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicPhysicalPower", incr: 2 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicCritChance", incr: 4 },
             { item: sword1 },
             { item: sword1 },
             { item: gloves_war2 },
@@ -442,7 +454,7 @@ export const enemy3: TDuelEnemy = {
 
 export const enemy4_test: TDuelEnemy = buildDuelEnemy([
     // day 1
-    { 1: [{ unit: oracleHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
+    { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
     // day 2
     {
         1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],
@@ -489,7 +501,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
     { 1: [{ unit: priestHero }, { item: mace1 }, { item: basic_heal }, { skill: healSelf }, { levelup: 1 }] },
     // day 2
     {
-        1: [{ unit: priestHero }, { item: scepter22 }, { item: basic_heal_2 }, { skill: healSelf }, { levelup: 2 }, { attribute: { a: "basicMaxHp", v: 3 } }],
+        1: [{ unit: priestHero }, { item: scepter22 }, { item: basic_heal_2 }, { skill: healSelf }, { levelup: 2 }, { attr: "basicMaxHp", incr: 3 }],
         2: [{ unit: wildHero }, { item: basic_ring_damage }, { item: basic_hat }, { skill: totemAttackSkill }],
         3: [{ unit: goldGoblin1Unit }],
     },
@@ -502,8 +514,8 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { item: basic_ring_damage },
             { skill: chainToNextSkill },
             { skill: healSelf },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicMagicPower", incr: 1 },
         ],
         2: [{ unit: wildHero }, { item: axe21 }, { item: basic_hat }, { skill: totemAttackSkill }, { skill: removeBuffSkill }, { levelup: 1 }],
         3: [{ unit: peasantUnit }, { item: itemPeasantPitchfork }],
@@ -520,10 +532,10 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { skill: chainToNextSkill },
             { skill: healSelf },
             { skill: attrArmorAll },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicEvasionChance", incr: 2 },
         ],
         2: [{ unit: druidHero }, { item: axe21 }, { item: basic_hat }, { item: basic_pants }, { skill: totemAttackSkill }, { skill: removeBuffSkill }],
         3: [{ unit: bardHero }, { skill: buffNextBaAll }],
@@ -540,10 +552,10 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { skill: chainToNextSkill },
             { skill: healSelf },
             { skill: attrArmorAll },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicEvasionChance", incr: 2 },
         ],
         2: [
             { unit: druidHero },
@@ -552,7 +564,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { item: basic_pants },
             { skill: totemAttackSkill_2 },
             { skill: removeBuffSkill },
-            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attr: "basicMagicPower", incr: 1 },
         ],
         3: [{ unit: bardHero }, { skill: buffNextBaAll }, { item: music5AddBuffTarget }],
         4: [{ unit: goldGoblin1Unit }, { item: musical21 }],
@@ -568,11 +580,11 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { skill: chainToNextSkill },
             { skill: healSelf },
             { skill: attrArmorAll },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicEvasionChance", v: 2 } },
-            { attribute: { a: "basicCritChance", v: 2 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicEvasionChance", incr: 2 },
+            { attr: "basicCritChance", incr: 2 },
             { levelup: 1 },
         ],
         2: [
@@ -582,7 +594,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { item: basic_pants_2 },
             { skill: totemAttackSkill_2 },
             { skill: removeBuffSkill },
-            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attr: "basicMagicPower", incr: 1 },
             { levelup: 1 },
         ],
         3: [{ unit: bladedancerHero }, { skill: buffNextBaAll }, { item: music5AddBuffTarget }, { item: musical21 }],
@@ -601,8 +613,8 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
     {
         1: [
             { unit: masterHero },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
-            { attribute: { a: "basicMagicPower", v: 1 } },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 1 },
             { item: sword1 },
             { item: basic_ring_regen },
             { skill: buffNextBaXSelf },
@@ -616,9 +628,9 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: masterHero },
             { levelup: 2 },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
-            { attribute: { a: "basicMagicPower", v: 1 } },
-            { attribute: { a: "basicArmor", v: 6 } },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicArmor", incr: 6 },
             { item: sword1 },
             { item: basic_ring_regen },
             { skill: buffNextBaXSelf },
@@ -631,10 +643,10 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
     {
         1: [
             { unit: assasinHero },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
-            { attribute: { a: "basicMagicPower", v: 2 } },
-            { attribute: { a: "basicArmor", v: 9 } },
-            { attribute: { a: "basicCritChance", v: 10 } },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 9 },
+            { attr: "basicCritChance", incr: 10 },
             { item: axe32 },
             { item: basic_ring_regen },
             { skill: attackWithBleedSkill },
@@ -650,17 +662,17 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
             { skill: buffNextBa_2, chained: true },
         ],
         3: [{ unit: wolfUnit }],
-        4: [{ unit: warriorSummonMob }, { attribute: { a: "basicMaxHp", v: 4 } }],
+        4: [{ unit: warriorSummonMob }, { attr: "basicMaxHp", incr: 4 }],
     },
     // day 5
     {
         1: [
             { unit: assasinHero },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
-            { attribute: { a: "basicMagicPower", v: 2 } },
-            { attribute: { a: "basicArmor", v: 9 } },
-            { attribute: { a: "basicCritChance", v: 10 } },
-            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 9 },
+            { attr: "basicCritChance", incr: 10 },
+            { attr: "basicMaxHp", incr: 3 },
             { item: axe32 },
             { item: basic_ring_regen },
             { skill: attackWithBleedSkill },
@@ -679,18 +691,18 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
             { moveMcSkillToSlotIndex: 3 },
         ],
         3: [{ unit: wolfUnit }],
-        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attribute: { a: "basicMaxHp", v: 4 } }],
+        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attr: "basicMaxHp", incr: 4 }],
     },
     // day 6
     {
         1: [
             { unit: assasinHero },
             { levelup: 1 },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
-            { attribute: { a: "basicMagicPower", v: 2 } },
-            { attribute: { a: "basicArmor", v: 9 } },
-            { attribute: { a: "basicCritChance", v: 10 } },
-            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 9 },
+            { attr: "basicCritChance", incr: 10 },
+            { attr: "basicMaxHp", incr: 3 },
             { item: axe32 },
             { item: dagger21 },
             { item: basic_ring_regen },
@@ -703,7 +715,7 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
             { unit: paladinHero },
             { levelup: 1 },
             { item: dagger32 },
-            { attribute: { a: "basicPhysicalPower", v: 1 } },
+            { attr: "basicPhysicalPower", incr: 1 },
             { item: scepter31 },
             { item: ring_regen2 },
             { skill: buffNextBa_3, chained: true },
@@ -711,8 +723,8 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
             { skill: buffNextBaTimes_2 },
             { moveMcSkillToSlotIndex: 3 },
         ],
-        3: [{ unit: wolfUnit }, { attribute: { a: "basicMaxHp", v: 4 } }],
-        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attribute: { a: "basicMaxHp", v: 4 } }],
+        3: [{ unit: wolfUnit }, { attr: "basicMaxHp", incr: 4 }],
+        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attr: "basicMaxHp", incr: 4 }],
     },
 ]);
 
@@ -861,8 +873,8 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: orderHero },
             { levelup: 1 },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 4 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicCritChance", incr: 4 },
             { item: shield1 },
             { item: basic_jacket_2 },
             { skill: attrAttackSelf_2 },
@@ -874,11 +886,11 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: orderHero },
             { levelup: 2 },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 4 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicCritChance", incr: 4 },
             { item: shield1 },
             { item: basic_jacket_2 },
-            { attribute: { a: "basicMaxHp", v: 1 } },
+            { attr: "basicMaxHp", incr: 1 },
             { skill: attrAttackSelf_2 },
         ],
         2: [{ unit: darkHero }, { item: totem1 }, { item: ring_regen2_2 }, { skill: magicAttackX3, chained: true }, { skill: poisonRandom }],
@@ -889,23 +901,23 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: forestSpiritHero },
             //{ levelup: 2 },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 8 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicCritChance", incr: 8 },
             { item: shield1 },
             { item: totem22 },
             { item: basic_jacket_2 },
             { item: basic_hat },
-            { attribute: { a: "basicMaxHp", v: 2 } },
+            { attr: "basicMaxHp", incr: 2 },
             { skill: attrAttackSelf_2 },
             { moveMcSkillToSlotIndex: 1 },
         ],
         2: [
             { unit: necromancerHero },
-            { attribute: { a: "basicMagicPower", v: 5 } },
+            { attr: "basicMagicPower", incr: 5 },
             { item: totem1 },
             { item: wand22 },
             { item: ring_regen2_2 },
-            { attribute: { a: "basicHpRegen", v: 1 } },
+            { attr: "basicHpRegen", incr: 1 },
             { skill: magicAttackX3, chained: true },
             { skill: poisonRandom },
             { skill: poisonRandom },
@@ -918,25 +930,25 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: forestSpiritHero },
             { levelup: 1 },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 8 } },
-            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicCritChance", incr: 8 },
+            { attr: "basicEvasionChance", incr: 2 },
             { item: shield1 },
             { item: totem1 },
             { item: basic_jacket_2 },
             { item: basic_hat },
-            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attr: "basicMaxHp", incr: 3 },
             { skill: attrAttackSelf_2 },
             { skill: increaseMaxHpSkill },
             { moveMcSkillToSlotIndex: 1 },
         ],
         2: [
             { unit: necromancerHero },
-            { attribute: { a: "basicMagicPower", v: 5 } },
+            { attr: "basicMagicPower", incr: 5 },
             { item: totem1 },
             { item: wand22 },
             { item: ring_regen2_2 },
-            { attribute: { a: "basicHpRegen", v: 2 } },
+            { attr: "basicHpRegen", incr: 2 },
             { skill: magicAttackX3, chained: true },
             { skill: poisonRandom_2 },
             { skill: concentrateThePoisonSkill, chained: true },
@@ -949,14 +961,14 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: forestSpiritHero },
             { levelup: 1 },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 8 } },
-            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicCritChance", incr: 8 },
+            { attr: "basicEvasionChance", incr: 2 },
             { item: axe32 },
             { item: totem1 },
             { item: basic_jacket_2 },
             { item: basic_hat },
-            { attribute: { a: "basicMaxHp", v: 4 } },
+            { attr: "basicMaxHp", incr: 4 },
             { skill: attrAttackSelf_2 },
             { skill: attrArmorSelf, chained: true },
             { skill: increaseMaxHpSkill },
@@ -965,11 +977,11 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
         2: [
             { unit: necromancerHero },
             { levelup: 1 },
-            { attribute: { a: "basicMagicPower", v: 5 } },
+            { attr: "basicMagicPower", incr: 5 },
             { item: totem1 },
             { item: wand22 },
             { item: ring_regen2_2 },
-            { attribute: { a: "basicHpRegen", v: 3 } },
+            { attr: "basicHpRegen", incr: 3 },
             { skill: magicAttackX3, chained: true },
             { skill: poisonRandom_2 },
             { skill: concentrateThePoisonSkill, chained: true },
@@ -992,8 +1004,8 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: masterHero },
             { levelup: 2 },
-            { attribute: { a: "basicMaxHp", v: 3 } },
-            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicEvasionChance", incr: 2 },
             { item: axe1 },
             { skill: phycisalAttackSkill },
             { skill: buffNextBaXSelf },
@@ -1006,9 +1018,9 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
     {
         1: [
             { unit: mimicHero },
-            { attribute: { a: "basicMaxHp", v: 9 } },
-            { attribute: { a: "basicEvasionChance", v: 4 } },
-            { attribute: { a: "basicArmor", v: 3 } },
+            { attr: "basicMaxHp", incr: 9 },
+            { attr: "basicEvasionChance", incr: 4 },
+            { attr: "basicArmor", incr: 3 },
             { item: axe1_2 },
             { item: jacket21 },
             { item: regenMantle },
@@ -1026,12 +1038,12 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: mimicHero },
             { levelup: 1 },
-            { attribute: { a: "basicMaxHp", v: 9 } },
-            { attribute: { a: "basicEvasionChance", v: 4 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicHpRegen", v: 1 } },
-            { attribute: { a: "basicCritChance", v: 2 } },
-            { attribute: { a: "basicPhysicalPower", v: 3 } },
+            { attr: "basicMaxHp", incr: 9 },
+            { attr: "basicEvasionChance", incr: 4 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicHpRegen", incr: 1 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 3 },
             { item: axe1_2 },
             { item: jacket21 },
             { item: regenMantle },
@@ -1050,13 +1062,13 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: mimicHero },
             { levelup: 1 },
-            { attribute: { a: "basicMaxHp", v: 9 } },
-            { attribute: { a: "basicEvasionChance", v: 4 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicHpRegen", v: 2 } },
-            { attribute: { a: "basicCritChance", v: 2 } },
-            { attribute: { a: "basicPhysicalPower", v: 3 } },
-            { attribute: { a: "basicMagicPower", v: 2 } },
+            { attr: "basicMaxHp", incr: 9 },
+            { attr: "basicEvasionChance", incr: 4 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicHpRegen", incr: 2 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 3 },
+            { attr: "basicMagicPower", incr: 2 },
             { item: axe1_2 },
             { item: jacket21 },
             { item: regenMantle },
@@ -1075,13 +1087,13 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
         1: [
             { unit: mimicHero },
             { levelup: 1 },
-            { attribute: { a: "basicMaxHp", v: 9 } },
-            { attribute: { a: "basicEvasionChance", v: 4 } },
-            { attribute: { a: "basicArmor", v: 3 } },
-            { attribute: { a: "basicHpRegen", v: 3 } },
-            { attribute: { a: "basicCritChance", v: 2 } },
-            { attribute: { a: "basicPhysicalPower", v: 3 } },
-            { attribute: { a: "basicMagicPower", v: 2 } },
+            { attr: "basicMaxHp", incr: 9 },
+            { attr: "basicEvasionChance", incr: 4 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicHpRegen", incr: 3 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 3 },
+            { attr: "basicMagicPower", incr: 2 },
             { item: axe1_2 },
             { item: jacket21 },
             { item: regenMantle },
@@ -1097,8 +1109,291 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
     },
 ]);
 
+export const enemy10: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    {
+        1: [{ unit: wildHero }, { levelup: 1 }, { item: totem1 }, { skill: totemAttackSkill }],
+    },
+    // day 2
+    {
+        1: [{ unit: wildHero }, { levelup: 1 }, { attr: "basicCritChance", incr: 2 }, { item: totem1 }, { skill: totemAttackSkill }, { skill: attrIncrHpReg }],
+        2: [{ unit: wildHero }, { item: axe22 }, { skill: totemAttackSkill }, { skill: peasantLastStandSkill }],
+        3: [{ unit: pirate1Unit }, { item: axe1 }],
+        4: [{ unit: peasantUnit }],
+    },
+    // day 3
+    {
+        1: [
+            { unit: shamanHero },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { item: totem1 },
+            { skill: totemAttackSkill },
+            { skill: statusesIntoHeal, chained: true },
+            { skill: attrIncrHpReg },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        2: [{ unit: wildHero }, { levelup: 1 }, { item: axe22 }, { item: ring_regen2 }, { skill: totemAttackSkill }, { skill: peasantLastStandSkill }],
+        3: [{ unit: pirate1Unit }, { item: axe1 }],
+        4: [{ unit: pirate1Unit }],
+    },
+    // day 4
+    {
+        1: [
+            { unit: shamanHero },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { item: totem1 },
+            { item: musical1_2 },
+            { skill: totemAttackSkill },
+            { skill: statusesIntoHeal, chained: true },
+            { skill: attrIncrHpReg },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        2: [
+            { unit: hunterHero },
+            { item: axe22 },
+            { item: ring_regen2 },
+            { skill: totemAttackSkill },
+            { skill: attackWithBleedSkill },
+            { skill: peasantLastStandSkill },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        3: [{ unit: pirate1Unit }, { item: axe1 }],
+        4: [{ unit: pirate1Unit }],
+    },
+    // day 5
+    {
+        1: [
+            { unit: shamanHero },
+            { levelup: 1 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 3 },
+            { item: totem1 },
+            { item: musical1_2 },
+            { skill: totemAttackSkill },
+            { skill: statusesIntoHeal, chained: true },
+            { skill: attrIncrHpReg },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        2: [
+            { unit: hunterHero },
+            { item: axe22 },
+            { item: ring_regen2 },
+            { item: totem5HptoDmg },
+            { item: ring_regen2 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { skill: totemAttackSkill },
+            { skill: attackWithBleedSkill },
+            { skill: peasantLastStandSkill },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        3: [{ unit: pirate1Unit }, { item: axe1 }],
+        4: [{ unit: pirate1Unit }],
+    },
+    // day 6
+    {
+        1: [
+            { unit: shamanHero },
+            { levelup: 1 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicMaxHp", incr: 3 },
+            { item: totem21_2 },
+            { item: totem1 },
+            { skill: statusesIntoHeal_2, chained: true },
+            { skill: chainBasicAttackSkill },
+            { skill: chainBasicAttackSkill },
+            { moveMcSkillToSlotIndex: 3 },
+        ],
+        2: [
+            { unit: hunterHero },
+            { levelup: 1 },
+            { item: axe22 },
+            { item: ring_regen2 },
+            { item: totem5HptoDmg },
+            { item: ring_regen2 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMaxHp", incr: 3 },
+            { skill: totemAttackSkill },
+            { skill: attackWithBleedSkill },
+            { skill: peasantLastStandSkill },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        3: [{ unit: pirate1Unit }, { levelup: 1 }, { item: axe1 }],
+        4: [{ unit: pirate1Unit }, { levelup: 1 }],
+    },
+]);
+
+export const enemy11: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    {
+        1: [{ unit: darkHero }, { item: wand1 }, { skill: poisonRandom }, { skill: toxicTuneSkill }],
+    },
+    // day 2
+    {
+        1: [
+            { unit: darkHero },
+            { levelup: 1 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { item: wand1 },
+            { item: basic_jacket },
+            { skill: poisonRandom },
+            { skill: toxicTuneSkill },
+        ],
+        2: [
+            { unit: wildHero },
+            { attr: "basicCritChance", incr: 2 },
+            { item: axe21 },
+            { item: basic_ring_regen },
+            { skill: attrIncrHpReg },
+            { skill: peasantLastStandSkill },
+        ],
+    },
+    // day 3
+    {
+        1: [
+            { unit: darkHero },
+            { levelup: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 1 },
+            { attr: "basicArmor", incr: 3 },
+            { item: wand1 },
+            { item: basic_jacket },
+            { skill: poisonRandom },
+            { skill: toxicTuneSkill_2 },
+        ],
+        2: [
+            { unit: wildHero },
+            { levelup: 1 },
+            { attr: "basicCritChance", incr: 2 },
+            { item: axe21 },
+            { item: basic_ring_regen },
+            { skill: attrIncrHpReg },
+            { skill: peasantLastStandSkill },
+        ],
+    },
+    // day 4
+    {
+        1: [
+            { unit: necromancerHero },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 6 },
+            { attr: "basicEvasionChance", incr: 4 },
+            { item: totem1 },
+            { item: staff21 },
+            { item: basic_jacket },
+            { skill: poisonRandom },
+            { skill: toxicTuneSkill_2 },
+        ],
+        2: [
+            { unit: wildHero },
+            { levelup: 2 },
+            { attr: "basicCritChance", incr: 2 },
+            { item: totem21 },
+            { item: basic_ring_regen },
+            { skill: attrIncrHpReg },
+            { skill: peasantLastStandSkill },
+        ],
+        3: [{ unit: masterHero }, { levelup: 1 }, { item: axe21 }, { skill: buffNextBaBeCritSelf_2, chained: true }, { skill: feintAttack }],
+        4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+    },
+    // day 5
+    {
+        1: [
+            { unit: necromancerHero },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 6 },
+            { attr: "basicEvasionChance", incr: 4 },
+            { item: totem1 },
+            { item: staff21_2 },
+            { item: basic_jacket },
+            { item: basic_jacket },
+            { skill: poisonRandom },
+            { skill: toxicTuneSkill_2 },
+            { skill: radiantWallSkill },
+        ],
+        2: [
+            { unit: barbarianHero },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { item: totem21 },
+            { item: sword31 },
+            { item: basic_ring_regen },
+            { skill: attrIncrHpReg },
+            { skill: peasantLastStandSkill },
+            { moveMcSkillToSlotIndex: 2 },
+        ],
+        3: [{ unit: masterHero }, { levelup: 1 }, { item: axe21 }, { skill: buffNextBaBeCritSelf_2, chained: true }, { skill: feintAttack }],
+        4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+    },
+    // day 6
+    {
+        1: [
+            { unit: necromancerHero },
+            { levelup: 1 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { attr: "basicMagicPower", incr: 2 },
+            { attr: "basicArmor", incr: 6 },
+            { attr: "basicEvasionChance", incr: 4 },
+            { item: totem1 },
+            { item: staff21_2 },
+            { item: basic_jacket },
+            { item: basic_jacket },
+            { skill: poisonRandom },
+            { skill: toxicTuneSkill_2 },
+            { skill: radiantWallSkill },
+        ],
+        2: [
+            { unit: barbarianHero },
+            { levelup: 1 },
+            { attr: "basicCritChance", incr: 2 },
+            { attr: "basicPhysicalPower", incr: 1 },
+            { item: totem21 },
+            { item: sword31 },
+            { item: basic_ring_regen },
+            { skill: attrIncrHpReg },
+            { skill: peasantLastStandSkill },
+            { skill: nextBAArea, chained: true },
+            { moveMcSkillToSlotIndex: 3 },
+        ],
+        3: [
+            { unit: assasinHero },
+            { item: axe21 },
+            { item: dagger21 },
+            { item: gloves_magic2 },
+            { skill: buffNextBaBeCritSelf_2, chained: true },
+            { skill: feintAttack },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+    },
+]);
 ///////////////////////////////////////////////////////////
 
 //
 
-export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy8, enemy9];
+export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10, enemy11];
+
+export const duelEnemyNames = [
+    "Lolodin87",
+    "xXxRatWarxXx",
+    "MeAndMySon",
+    "CuteWitch99",
+    "NobodyExpects",
+    "Holy_Dagger_13",
+    "shocKING",
+    "MisterDETH",
+    "ClownSticks",
+    "WiLdPiRaTe",
+    "_toxxic_edgy_",
+];
