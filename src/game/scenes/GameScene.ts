@@ -473,19 +473,18 @@ export class GameScene extends Phaser.Scene {
                 this.leaderController.decreasePlayerHp(this.leaderController.nextOpponentId, day + 1);
             }
             this.leaderController.decreaseRandomPlayersHp(day + 1);
-            this.leadersPanel.refresh();
         } else if (this.phase === "BOSS_DUEL") {
             if (!isBattleWin) {
                 this.leaderController.decreaseMainPlayerHp(day + 1);
             }
             this.leaderController.decreaseRandomPlayersHp(day + 1);
-            this.leadersPanel.refresh();
         }
         //
         // REWARDS
         //
         if (this.phase === "DUEL" || this.phase === "BOSS_DUEL") {
             this.startNewDay();
+            this.leadersPanel.refresh();
         } else if (this.phase === "MOB_DUEL") {
             if (isBattleWin) {
                 this.selectController.showMobRewards();

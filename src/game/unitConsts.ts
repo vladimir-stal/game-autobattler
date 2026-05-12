@@ -1,8 +1,9 @@
 import { IMobRewardType, IMobsVariants } from "../types";
-import { dagger1, shield1, staff1, wand1, wand1_2 } from "./basicWeaponItemConsts";
+import { dagger1, shield1, staff1, totem1, wand1, wand1_2 } from "./basicWeaponItemConsts";
 import {
     basic_boots,
     basic_exp_bag_2,
+    basic_gold_bag,
     basic_hat,
     basic_heal,
     basic_jacket,
@@ -51,7 +52,7 @@ import { spiritShieldRadiate, spiritTeamFlurry, spiritTeamRevenge } from "./skil
 import { skeletonArmorSelfAndLow, skeletonPoisonedFlames, skeletonUnholyLeap } from "./skills/mobs/skeletonMobSkills";
 import { goblinApplyShock, goblinPocketSand, goblinShamanHpRegIncr, goldGoblinBuff } from "./skills/mobs/goblinMobSkills";
 import { peasantUnit, peasantUnit_4 } from "./units/peasantMobUnits";
-import { peasantUnit_1 } from "./units/mobUnitConsts";
+import { peasantUnit_1, peasantUnit_2 } from "./units/mobUnitConsts";
 
 export const BASIC_CLASS_MAX_ITEM_COUNT = 2;
 export const MC_CLASS_MAX_ITEM_COUNT = 4;
@@ -171,7 +172,7 @@ export const mobsLvl2: IMobsVariants[] = [
         level: 2,
         description: "A trio of filthy peasants", // stat 1/3
         // 1 2 3 attacks ~ 6 dmg, hp 9
-        units: [peasantUnit_1, peasantUnit_1, peasantUnit_1, null],
+        units: [peasantUnit_2, peasantUnit_2, peasantUnit_2, null],
         rewards: [
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
             { type: IMobRewardType.GOLD, value: 1, exp: 2 },
@@ -310,6 +311,22 @@ export const mobsLvl3: IMobsVariants[] = [
             { type: IMobRewardType.ITEM, item: basic_jacket, exp: 3 },
             //{ type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonUnholyLeap), exp: 3 },
             { type: IMobRewardType.SKILL, skill: skeletonUnholyLeap, exp: 3 },
+        ],
+    },
+    {
+        name: i18n.mobs.level3.skeletons,
+        level: 3,
+        description: "A wizard that was somewhat late",
+        units: [skeletonMageUnit, null, null, null],
+        rewards: [
+            { type: IMobRewardType.GOLD, value: 2, exp: 3 },
+            { type: IMobRewardType.GOLD, value: 3, exp: 3 },
+            { type: IMobRewardType.ITEM, item: totem1, exp: 3 },
+            { type: IMobRewardType.ITEM, item: basic_ring_damage, exp: 3 },
+            { type: IMobRewardType.ITEM, item: basic_gold_bag, exp: 3 },
+            { type: IMobRewardType.ITEM, item: staff1, exp: 3 },
+            //{ type: IMobRewardType.ITEM, item: scrollOfSkill(skeletonUnholyLeap), exp: 3 },
+            { type: IMobRewardType.SKILL, skill: skeletonPoisonedFlames, exp: 3 },
         ],
     },
     {

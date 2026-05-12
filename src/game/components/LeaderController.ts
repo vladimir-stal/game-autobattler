@@ -45,7 +45,10 @@ export class LeaderController {
     }
 
     decreasePlayerHp(playerId: number, value: number) {
-        this.leaders[playerId].hp -= value;
+        const player = this.leaders.find(ld => ld.id === playerId);
+        if (player) {
+            player.hp -= value;
+        }        
     }
 
     /** Descrese random players hp to imitate looby */
