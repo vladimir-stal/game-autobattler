@@ -298,7 +298,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         //
 
-        this.noBAText.setVisible(isBasicAttack === false);
+        this.noBAText.setVisible(isBasicAttack === false || !!isChained);
 
         //
 

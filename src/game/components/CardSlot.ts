@@ -1,8 +1,9 @@
 import { GameObjects, Input } from "phaser";
 import { GameScene } from "../scenes/GameScene";
 import { colors, i18n } from "../consts";
-import { ECardType, ICard, IUnit } from "../../types";
+import { ECardType, EItemBattleBonusType, ICard, IUnit } from "../../types";
 import { Card } from "./Card";
+import { getSkillPrice } from "../utils/skillUtils";
 
 export type TSlotActiveType = "default" | "merge" | "equip" | "apply";
 
@@ -142,11 +143,20 @@ export class CardSlot extends Phaser.GameObjects.Container {
             return;
         }
 
+        let finalCard: ICard = card;
+        const isItemSkillScrollToInventory = card.type === ECardType.ITEM && card.item?.id === "scroll_of_skill" && !this.card && this.isInventory;
+        if (isItemSkillScrollToInventory) {
+            const skill = card.item?.battleBonuses?.find((bb) => bb.type === EItemBattleBonusType.UNPACK_SKILL_IN_STASH && bb.relatedSkill)?.relatedSkill;
+            if (skill) {
+                finalCard = { type: ECardType.SKILL, price: getSkillPrice(skill.priceLevel), skill: { ...skill } };
+            }
+        }
+
         if (onCardMoved) {
             onCardMoved();
         }
         this.gameScene.finishCardMove();
-        this.placeCard(card, cardSlot);
+        this.placeCard(finalCard, cardSlot);
     }
 
     placeCard(card: ICard, previousSlot: CardSlot | undefined) {

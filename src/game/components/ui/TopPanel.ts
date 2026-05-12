@@ -185,7 +185,7 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
     changeToDuelPhase() {
         //this.startDuelButton.setVisible(false);
-        this.startSelectButton.setVisible(true);
+        //this.startSelectButton.setVisible(true);
         //this.calculateBattleButton.setVisible(true);
         this.nextRoomButton.setVisible(false);
         //
@@ -197,6 +197,7 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
     changeToSelectPhase() {
         //this.startDuelButton.setVisible(true);
+        this.restartButton.setVisible(false);
         this.startSelectButton.setVisible(false);
         //this.calculateBattleButton.setVisible(false);
         this.nextRoomButton.setVisible(true);
@@ -217,6 +218,14 @@ export class TopPanel extends Phaser.GameObjects.Container {
 
     changeSelectButtonToNext() {
         this.startSelectButton.setText(i18n.ui.NEXT);
+    }
+
+    showSkipButton() {
+        this.startSelectButton.setVisible(true);
+    }
+
+    showRestartButton() {
+        this.restartButton.setVisible(true);
     }
 
     refreshAfterResize() {

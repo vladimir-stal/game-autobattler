@@ -1,7 +1,7 @@
 import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
 
-export const LANG: "eng" | "ru" = "ru";
+export const LANG: "eng" | "ru" = "eng";
 // @ts-ignore: TS2367
 export const i18n = LANG === "eng" ? i18n_eng : i18n_ru;
 

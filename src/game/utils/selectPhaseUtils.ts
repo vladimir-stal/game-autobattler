@@ -157,7 +157,6 @@ export const getRooms = (
                     return debugHeroSelectRoom ? [null, { roomType: ERoomType.GIVE_TEST_ITEM_2 }, null] : [null, { roomType: ERoomType.HEROES_SELL }, null];
                     // Go change in debugUtils.ts for custom room
                 } else if (hour === 1) {
-                    //return [null, { roomType: ERoomType.DUEL }, null];
                     return debugStartingItemsRoom
                         ? [null, { roomType: ERoomType.GIVE_TEST_ITEM }, null]
                         : [null, { roomType: ERoomType.ITEM_WEAPON_BASIC_RANDOM }, null];
@@ -577,6 +576,8 @@ export const getCards = (
             {
                 isSingleSelect = true;
                 isRerollAvailable = true;
+                hintTextType = ESelectCardHint.SELECT_SINGLE;
+
                 const items = getRandomArrayItems(itemsLvl5, 3, true);
                 cards = genShopItemCards(items, false);
             }
@@ -690,7 +691,10 @@ export const getCards = (
                     // and then 3 random skills instead of 2
                     const skills = getRandomArrayItems(getHeroClassesSkills(heroClasses, day), num, true);
 
-                    const allSkills = [...skills, topLevelSkill, { ...holdingSkill, isChained: false }];
+                    const allSkills = [...skills, topLevelSkill];
+                    if (holdingSkill) {
+                        allSkills.push({ ...holdingSkill, isChained: false });
+                    }
                     cards = genShopSkillCards(allSkills, !!holdingSkill);
                 }
             }

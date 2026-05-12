@@ -1,6 +1,21 @@
 import { EHeroClass, EHeroClassType, EItemBonusType, EUnitType, IItem, IUnit, TDuelCards, TDuelEnemy } from "../types";
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "./basicHeroConsts";
-import { axe1, axe1_2, mace1, musical1, musical1_2, scepter1, scepter1_2, shield1, staff1, sword1, sword1_2, totem1, wand1, wand1_2 } from "./basicWeaponItemConsts";
+import {
+    axe1,
+    axe1_2,
+    mace1,
+    musical1,
+    musical1_2,
+    scepter1,
+    scepter1_2,
+    shield1,
+    staff1,
+    sword1,
+    sword1_2,
+    totem1,
+    wand1,
+    wand1_2,
+} from "./basicWeaponItemConsts";
 import {
     basic_boots,
     basic_exp_bag,
@@ -39,6 +54,7 @@ import {
     gladiatorHero,
     doomsayerHero,
     mimicHero,
+    oracleHero,
 } from "./mcHeroConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import {
@@ -426,7 +442,7 @@ export const enemy3: TDuelEnemy = {
 
 export const enemy4_test: TDuelEnemy = buildDuelEnemy([
     // day 1
-    { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
+    { 1: [{ unit: oracleHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
     // day 2
     {
         1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],
@@ -963,104 +979,121 @@ export const enemy8: TDuelEnemy = buildDuelEnemy([
     },
 ]);
 
-
 export const enemy9: TDuelEnemy = buildDuelEnemy([
     // day 1
-    { 
+    {
         1: [{ unit: masterHero }, { item: sword1 }, { skill: buffNextBaXSelf }],
-        2: [{ unit: warriorSummonMob }, {item: staff1}],
-        3: [{ unit: warriorSummonMob}],
-        4: [{ unit: warriorSummonMob}]
+        2: [{ unit: warriorSummonMob }, { item: staff1 }],
+        3: [{ unit: warriorSummonMob }],
+        4: [{ unit: warriorSummonMob }],
     },
     // day 2
-    { 
+    {
         1: [
-            { unit: masterHero }, {levelup: 2},
-            { attribute: {a:"basicMaxHp", v:3}},
-            { attribute: {a:"basicEvasionChance", v:2}},
-            { item: axe1 }, {skill: phycisalAttackSkill},
-            { skill: buffNextBaXSelf }],
-        2: [{ unit: warriorSummonMob}, {item: staff1}],
-        3: [{ unit: warriorSummonMob}, {item: sword1}],
-        4: [{ unit: warriorSummonMob}]
+            { unit: masterHero },
+            { levelup: 2 },
+            { attribute: { a: "basicMaxHp", v: 3 } },
+            { attribute: { a: "basicEvasionChance", v: 2 } },
+            { item: axe1 },
+            { skill: phycisalAttackSkill },
+            { skill: buffNextBaXSelf },
+        ],
+        2: [{ unit: warriorSummonMob }, { item: staff1 }],
+        3: [{ unit: warriorSummonMob }, { item: sword1 }],
+        4: [{ unit: warriorSummonMob }],
     },
     // day 3
-    { 
+    {
         1: [
             { unit: mimicHero },
-            { attribute: {a:"basicMaxHp", v:9}},
-            { attribute: {a:"basicEvasionChance", v:4}},
-            { attribute: {a:"basicArmor", v:3}},
-            { item: axe1_2 }, {item: jacket21},
-            { item: regenMantle }, {item: basic_pants},
+            { attribute: { a: "basicMaxHp", v: 9 } },
+            { attribute: { a: "basicEvasionChance", v: 4 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { item: axe1_2 },
+            { item: jacket21 },
+            { item: regenMantle },
+            { item: basic_pants },
             { skill: attackWithBleedSkill, chained: true },
-            { skill: phycisalAttackSkill},
-            { moveMcSkillToSlotIndex: 1}],
-        2: [{ unit: warriorSummonMob}, {levelup:1}, {item: staff1}],
-        3: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}],
-        4: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}]
+            { skill: phycisalAttackSkill },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+        3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+        4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
     },
     // day 4
-    { 
+    {
         1: [
-            { unit: mimicHero }, {levelup: 1},
-            { attribute: {a:"basicMaxHp", v:9}},
-            { attribute: {a:"basicEvasionChance", v:4}},
-            { attribute: {a:"basicArmor", v:3}},
-            { attribute: {a:"basicHpRegen", v:1}},
-            { attribute: {a:"basicCritChance", v:2}},
-            { attribute: {a:"basicPhysicalPower", v:3}},
-            { item: axe1_2 }, {item: jacket21},
-            { item: regenMantle }, {item: basic_pants},
+            { unit: mimicHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMaxHp", v: 9 } },
+            { attribute: { a: "basicEvasionChance", v: 4 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { attribute: { a: "basicHpRegen", v: 1 } },
+            { attribute: { a: "basicCritChance", v: 2 } },
+            { attribute: { a: "basicPhysicalPower", v: 3 } },
+            { item: axe1_2 },
+            { item: jacket21 },
+            { item: regenMantle },
+            { item: basic_pants },
             { skill: attackWithBleedSkill_2, chained: true },
-            { skill: chainToNextSkill, chained: true},
-            { skill: phycisalAttackSkill_2},
-            { moveMcSkillToSlotIndex: 1}],
-        2: [{ unit: warriorSummonMob}, {levelup:1}, {item: staff1}],
-        3: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}],
-        4: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}]
+            { skill: chainToNextSkill, chained: true },
+            { skill: phycisalAttackSkill_2 },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+        3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+        4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
     },
     // day 5
-    { 
+    {
         1: [
-            { unit: mimicHero }, {levelup: 1},
-            { attribute: {a:"basicMaxHp", v:9}},
-            { attribute: {a:"basicEvasionChance", v:4}},
-            { attribute: {a:"basicArmor", v:3}},
-            { attribute: {a:"basicHpRegen", v:2}},
-            { attribute: {a:"basicCritChance", v:2}},
-            { attribute: {a:"basicPhysicalPower", v:3}},
-            { attribute: {a:"basicMagicPower", v:2}},
-            { item: axe1_2 }, {item: jacket21},
-            { item: regenMantle }, {item: sword22},
+            { unit: mimicHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMaxHp", v: 9 } },
+            { attribute: { a: "basicEvasionChance", v: 4 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { attribute: { a: "basicHpRegen", v: 2 } },
+            { attribute: { a: "basicCritChance", v: 2 } },
+            { attribute: { a: "basicPhysicalPower", v: 3 } },
+            { attribute: { a: "basicMagicPower", v: 2 } },
+            { item: axe1_2 },
+            { item: jacket21 },
+            { item: regenMantle },
+            { item: sword22 },
             { skill: attackWithBleedSkill_3, chained: true },
-            { skill: chainToNextSkill, chained: true},
-            { skill: phycisalAttackSkill_2},
-            { moveMcSkillToSlotIndex: 1}],
-        2: [{ unit: warriorSummonMob}, {levelup:1}, {item: staff1}],
-        3: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}],
-        4: [{ unit: warriorSummonMob}, {levelup:1}, {item: sword1}]
+            { skill: chainToNextSkill, chained: true },
+            { skill: phycisalAttackSkill_2 },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+        3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+        4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
     },
     // day 6
-    { 
+    {
         1: [
-            { unit: mimicHero }, {levelup: 1},
-            { attribute: {a:"basicMaxHp", v:9}},
-            { attribute: {a:"basicEvasionChance", v:4}},
-            { attribute: {a:"basicArmor", v:3}},
-            { attribute: {a:"basicHpRegen", v:3}},
-            { attribute: {a:"basicCritChance", v:2}},
-            { attribute: {a:"basicPhysicalPower", v:3}},
-            { attribute: {a:"basicMagicPower", v:2}},
-            { item: axe1_2 }, {item: jacket21},
-            { item: regenMantle }, {item: sword31},
+            { unit: mimicHero },
+            { levelup: 1 },
+            { attribute: { a: "basicMaxHp", v: 9 } },
+            { attribute: { a: "basicEvasionChance", v: 4 } },
+            { attribute: { a: "basicArmor", v: 3 } },
+            { attribute: { a: "basicHpRegen", v: 3 } },
+            { attribute: { a: "basicCritChance", v: 2 } },
+            { attribute: { a: "basicPhysicalPower", v: 3 } },
+            { attribute: { a: "basicMagicPower", v: 2 } },
+            { item: axe1_2 },
+            { item: jacket21 },
+            { item: regenMantle },
+            { item: sword31 },
             { skill: attackWithBleedSkill_3, chained: true },
-            { skill: attackWithBleedSkill, chained: true},
-            { skill: phycisalAttackSkill_3},
-            { moveMcSkillToSlotIndex: 1}],
-        2: [{ unit: warriorSummonMob}, {levelup:2}, {item: sword22}],
-        3: [{ unit: warriorSummonMob}, {levelup:2}, {item: staff1}],
-        4: [{ unit: warriorSummonMob}, {levelup:2}, {item: sword1_2}]
+            { skill: attackWithBleedSkill, chained: true },
+            { skill: phycisalAttackSkill_3 },
+            { moveMcSkillToSlotIndex: 1 },
+        ],
+        2: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: sword22 }],
+        3: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: staff1 }],
+        4: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: sword1_2 }],
     },
 ]);
 

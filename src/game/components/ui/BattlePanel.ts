@@ -365,7 +365,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
 
                     buffTargets.forEach((buffTarget) => {
                         setTimeout(() => {
-                            this.cards[buffTarget.targetId].addBuff(buff, buffTarget);
+                            this.cards[buffTarget.targetId]?.addBuff(buff, buffTarget);
                         }, 1000);
                     });
 
@@ -703,7 +703,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     //console.log("ACTION > TURN_START", unitId, this.cards);
                     if (this.currentActiveUnitId) {
                         console.log("ACTION > TURN_START currentActiveUnitId > ", this.currentActiveUnitId);
-                        this.cards[this.currentActiveUnitId].setIsActive(false);
+                        this.cards[this.currentActiveUnitId]?.setIsActive(false);
                     }
                     this.currentActiveUnitId = unitId;
                     this.cards[unitId]?.setIsActive(true);
