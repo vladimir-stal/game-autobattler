@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ESkillCondition, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const witchSkillset = (base:number, mpScale:number):IHeroSkill[] => {
@@ -52,5 +52,45 @@ export const witchSkill: IHeroSkillSet = {
     skills: witchSkillset(1,50),
     nextLevel: witchSkill_2,
 };
+
+export const witchPassive: IPassiveSkill = {
+    desc: "Increase MP by 35% of total bleed on all enemies",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Blood check",
+            type: EAppTriggerType.TURN_START,
+            targetCheck: ETargetType.SELF,
+            skill: [
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.ALL_ENEMIES,
+                    status: EStatusType.BLEED,
+                },
+                {
+                    type: EHeroSkillType.BUFF,
+                    buff: {
+                        name: "MP+",
+                        targetType: ETargetType.SELF,
+                        timeType: EBuffTimeType.DURATION,
+                        type: EBuffType.ATTRIBUTE_INCREASE,
+                        attribute: "magicPower",
+                        value: 35,
+                        valueFrom: "customNumber",
+                        valueType: "percent",
+                        duration: 1,
+                    }
+                }
+            ]
+        }
+    }
+}
 
 export const witchSkills: THeroSkills = [witchSkill];

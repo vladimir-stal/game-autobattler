@@ -130,7 +130,7 @@ export const battleMageSkill: IHeroSkillSet = {
 
 export const battleMagePassive: IPassiveSkill = {
     desc: "Skills with MP scaling get equal PP scaling and vice versa (skill with both scaling are not affected)",
-    preBattleBuff: undefined,
+    preBattleBuff: undefined, // battleUtils .prepareUnitToBattle()
 };
 
 export const battleMageSkills: THeroSkills = [battleMageSkill];
