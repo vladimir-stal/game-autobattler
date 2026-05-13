@@ -9,6 +9,7 @@ import {
     ETargetType,
     IHeroSkill,
     IHeroSkillSet,
+    IPassiveSkill,
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
@@ -84,5 +85,49 @@ export const duelistSkill: IHeroSkillSet = {
     skills: [duelistSkillset1],
     nextLevel: duelistSkill_2,
 };
+
+export const duelistPassive: IPassiveSkill = {
+    desc: "Add crit.chance to evasion and evasion to crit.chance",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            limitedRepeats: true,
+            type: EAppTriggerType.PRE_BATTLE,
+            skillId: "Duelist stance",
+            skill: [
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.SELF,
+                    attribute: "critChance",
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    targetType: ETargetType.SELF,
+                    attribute: "critChance",
+                    value: 100,
+                    valueType: "percent",
+                    valueFrom: "evasionChance",
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    targetType: ETargetType.SELF,
+                    attribute: "evasionChance",
+                    value: 100,
+                    valueType: "percent",
+                    valueFrom: "customNumber",
+                    animation: AnimationType.NONE,
+                }
+            ]
+        }
+    }
+}
 
 export const duelistSkills: THeroSkills = [duelistSkill];

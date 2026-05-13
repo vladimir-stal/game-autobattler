@@ -647,8 +647,8 @@ const prepareBattleMageNested = (ne: INestedBuffEffect): INestedBuffEffect => {
         ...ne,
         ppScale: npp,
         mpScale: nmp,
-    }
-}
+    };
+};
 
 const prepareBattleMageSkill = (skill: IHeroSkill): IHeroSkill => {
     const npp = skill.ppScale || skill.mpScale;
@@ -663,29 +663,26 @@ const prepareBattleMageSkill = (skill: IHeroSkill): IHeroSkill => {
         const bpp = skill.buff.ppScale || skill.buff.mpScale;
         const bmp = skill.buff.mpScale || skill.buff.ppScale;
         scopy.buff = {
-            ...skill.buff, 
+            ...skill.buff,
             ppScale: bpp,
             mpScale: bmp,
         };
         if (skill.buff.nestedEffects) {
-            scopy.buff.nestedEffects.map(ne => prepareBattleMageNested(ne));
+            scopy.buff.nestedEffects.map((ne) => prepareBattleMageNested(ne));
         }
         if (skill.buff.appTrigger) {
-            scopy.buff.appTrigger.skill.map(sk => prepareBattleMageSkill(sk));
+            scopy.buff.appTrigger.skill.map((sk) => prepareBattleMageSkill(sk));
         }
     }
     if (skill.debuff) {
         const bpp = skill.debuff.ppScale || skill.debuff.mpScale;
         const bmp = skill.debuff.mpScale || skill.debuff.ppScale;
-        scopy.debuff = { ...skill.debuff, 
-            ppScale: bpp,
-            mpScale: bmp,
-         };
+        scopy.debuff = { ...skill.debuff, ppScale: bpp, mpScale: bmp };
         if (skill.debuff.nestedEffects) {
-            scopy.debuff.nestedEffects.map(ne => prepareBattleMageNested(ne));
+            scopy.debuff.nestedEffects.map((ne) => prepareBattleMageNested(ne));
         }
         if (skill.debuff.appTrigger) {
-            scopy.debuff.appTrigger.skill.map(sk => prepareBattleMageSkill(sk));
+            scopy.debuff.appTrigger.skill.map((sk) => prepareBattleMageSkill(sk));
         }
     }
     if (skill.childSkill) {
@@ -716,6 +713,28 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
             });
         return bonuses;
     }, [] as IItemBattleBonus[]);
+
+    if (unit.heroClass === EHeroClass.BISHOP) {
+        itemBonuses.push({
+            type: EItemBattleBonusType.CRIT_WITH_HEAL,
+            value: 1,
+            valueType: "number",
+        });
+    }
+    if (unit.heroClass === EHeroClass.SORCERER) {
+        itemBonuses.push({
+            type: EItemBattleBonusType.CRIT_WITH_MAGIC,
+            value: 1,
+            valueType: "number",
+        });
+    }
+    if (unit.heroClass === EHeroClass.GLADIATOR) {
+        itemBonuses.push({
+            type: EItemBattleBonusType.CRIT_WITH_PHYSICAL,
+            value: 1,
+            valueType: "number",
+        });
+    }
 
     if (unit.heroClass === EHeroClass.BATTLE_MAGE) {
         // Battlemage passive: add ppScale or mpScale to skills with one but w/o other
@@ -965,6 +984,7 @@ export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statu
     if (target.hp <= 0) {
         target.hp = 0;
         battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
+        //triggerBattleTrigger(EAppTriggerType.DEATH,this,target);
     }
 };
 
@@ -1599,12 +1619,12 @@ export const calculateDamageBonuses = (
     const bonusType = attackType === EHeroAttackType.MAGIC ? EItemBattleBonusType.INCREASE_MAGIC_DAMAGE : EItemBattleBonusType.INCREASE_PHYSICAL_DAMAGE;
     unit.itemBonuses.forEach((bonus) => {
         if (bonus.type === bonusType) {
-            attackDamage += calculateIncreaseValue(attackDamage, bonus.value, bonus.valueType);
+            attackDamage += calculateIncreaseValue(attackDamage, getItemBonusValue(unit,bonus), bonus.valueType);
         }
     });
     unit.itemBonuses.forEach((bonus) => {
-        if (bonus.type === EItemBattleBonusType.INCREASE_TOTAL_DAMAGE_FROM_HP) {
-            attackDamage += Math.floor((attackDamage * (unit.hp * bonus.value)) / 100 / 100);
+        if (bonus.type === EItemBattleBonusType.INCREASE_TOTAL_DAMAGE) {
+            attackDamage += Math.floor((attackDamage * getItemBonusValue(unit,bonus)) / 100);
             //attackDamage *= calculateIncreaseValue(attackDamage, bonus.value, bonus.valueType, unit.hp);
         }
     });
@@ -1671,13 +1691,29 @@ export const triggerBattleTrigger = (type: EAppTriggerType, battleController: Ba
                 battleController.relevantTriggerUnitId = relevantUnitId;
                 checkBattleTriggerBuffDebuff(bt, battleController);
                 battleController.relevantTriggerUnitId = undefined;
-            } else if (!!unit && unit.isSummon && type === EAppTriggerType.DEATH) {
-                if (bt.targetCheck === ETargetType.ALL_ALLY_SUMMONS && battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
-                    battleController.relevantTriggerUnitId = relevantUnitId;
-                    checkBattleTriggerBuffDebuff(bt, battleController);
-                    battleController.relevantTriggerUnitId = undefined;
-                } else {
-                    return; // Summons do not usually trigger DEATH
+            } else if (!!unit && type === EAppTriggerType.DEATH) {
+                if (unit.isSummon) {
+                    if (bt.targetCheck === ETargetType.ALL_ALLY_SUMMONS && battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
+                        battleController.relevantTriggerUnitId = relevantUnitId;
+                        checkBattleTriggerBuffDebuff(bt, battleController);
+                        battleController.relevantTriggerUnitId = undefined;
+                    } else {
+                        return; // Summons do not usually trigger DEATH
+                    }
+                } else if (bt.targetCheck === ETargetType.ALL_ENEMIES) {
+                    const enemyUnits = bt.isPlayer1 ? battleController.player2BattleUnits : battleController.player1BattleUnits;
+                    if (enemyUnits.some((eu) => eu?.id === unit.id)) {
+                        battleController.relevantTriggerUnitId = relevantUnitId;
+                        checkBattleTriggerBuffDebuff(bt, battleController);
+                        battleController.relevantTriggerUnitId = undefined;
+                    }
+                } else if (bt.targetCheck === ETargetType.ALL_ALLIES) {
+                    const allyUnits = bt.isPlayer1 ? battleController.player1BattleUnits : battleController.player2BattleUnits;
+                    if (allyUnits.some((eu) => eu?.id === unit.id)) {
+                        battleController.relevantTriggerUnitId = relevantUnitId;
+                        checkBattleTriggerBuffDebuff(bt, battleController);
+                        battleController.relevantTriggerUnitId = undefined;
+                    }
                 }
             } else if (!unit || battleController.isTarget(unit, bt.originBattleUnit, bt.targetCheck, bt.isPlayer1)) {
                 battleController.relevantTriggerUnitId = relevantUnitId;
@@ -1747,3 +1783,7 @@ export const dealOverhealDamage = (
         }
     }
 };
+
+export const getItemBonusValue = (unit:IBattleUnit, ib:IItemBattleBonus):number => {
+    return ib.valueFrom ? Math.floor(unit[ib.valueFrom]*ib.value/100) : ib.value;
+}

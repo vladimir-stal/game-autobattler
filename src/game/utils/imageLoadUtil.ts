@@ -750,7 +750,7 @@ export function getTotemIdsBySkill(skillId: string): string[] {
         case "wildBasicTotemSkill":
         case "toxicTuneSkill":
         case "MinotaurTotemSkill":
-        case "MinotaurTotemSkill":
+        case "beastMasterSkill":
         case "GladiatorTotem":
             unitsIds.push(TOTEM_ID_WILD_BASIC);
             break;

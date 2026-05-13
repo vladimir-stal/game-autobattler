@@ -1,4 +1,4 @@
-import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const warlockSkillset = (percentDecrease:number, mpScale:number):IHeroSkill[] => {
@@ -63,5 +63,40 @@ export const warlockSkill: IHeroSkillSet = {
     skills: warlockSkillset(20,50),
     nextLevel: warlockSkill_2,
 };
+
+export const warlockPassive: IPassiveSkill = {
+    desc: "Every enemy that dies with poison stacks spread 65% poison to every other enemy",
+    preBattleBuff: {
+        name: "Passive",
+        type: EBuffType.BATTLE_TRIGGER,
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        value: 1,
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Toxic death",
+            type: EAppTriggerType.DEATH,
+            targetCheck: ETargetType.ALL_ENEMIES,
+            skill: [
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.BY_RELEVANT_ID,
+                    status: EStatusType.POISON,
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.STATUS_APPLY,
+                    status: EStatusType.POISON,
+                    targetType: ETargetType.ALL_ENEMIES,
+                    value: 65,
+                    valueType: "percent",
+                    valueFrom: "customNumber",
+                }
+            ],
+        }
+    }
+}
 
 export const warlockSkills: THeroSkills = [warlockSkill];

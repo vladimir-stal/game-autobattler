@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 import { phycisalAttackSkill } from "../commonSkillConsts";
 
@@ -65,5 +65,10 @@ const gladiatorSkill: IHeroSkillSet = {
     skills: gladiatorSkillset(2),
     nextLevel: gladiatorSkill_2,
 };
+
+export const gladiatorPassive: IPassiveSkill = {
+    desc: "Can crit with physical attack skills",
+    // battleUtils - prepareUnitToBattle()
+}
 
 export const gladiatorSkills: THeroSkills = [gladiatorSkill];

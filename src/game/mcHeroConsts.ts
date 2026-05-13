@@ -7,35 +7,35 @@ import { assassinSkills } from "./skills/mc/assassinSkills";
 import { barbarianPassive, barbarianSkills } from "./skills/mc/barbarianSkills";
 import { battleMagePassive, battleMageSkills } from "./skills/mc/battleMageSkills";
 import { beastMasterSkills } from "./skills/mc/beastmasterSkills";
-import { bishopSkills } from "./skills/mc/bishopSkills";
+import { bishopPassive, bishopSkills } from "./skills/mc/bishopSkills";
 import { blackKnightSkills } from "./skills/mc/blackKnightSkills";
 import { bladedancerSkills } from "./skills/mc/bladedancerSkills";
 import { commanderSkills } from "./skills/mc/commanderSkills";
 import { doomsayerSkills } from "./skills/mc/doomsayerSkills";
 import { druidSkills } from "./skills/mc/druidSkills";
-import { duelistSkills } from "./skills/mc/duelistSkills";
+import { duelistPassive, duelistSkills } from "./skills/mc/duelistSkills";
 import { exorcistSkills } from "./skills/mc/exorcistSkills";
 import { forestSpiritPassive, forestSpititSkills } from "./skills/mc/forestSpiritSkills";
-import { gladiatorSkills } from "./skills/mc/gladiatorSkills";
+import { gladiatorPassive, gladiatorSkills } from "./skills/mc/gladiatorSkills";
 import { heraldPassive, heraldSkills } from "./skills/mc/heraldSkills";
 import { hunterSkills } from "./skills/mc/hunterSkills";
 import { illusionistPassive, illusionistSkills } from "./skills/mc/illusionistSkills";
 import { inquisitorPassive, inquisitorSkills } from "./skills/mc/inquisitorSkills";
-import { knightSkills } from "./skills/mc/knightSkills";
+import { knightPassive, knightSkills } from "./skills/mc/knightSkills";
 import { jesterSkills } from "./skills/mc/magicBardSkills";
 import { mimicPassive, mimicSkills } from "./skills/mc/mimicSkills";
 import { minstrelSkills } from "./skills/mc/minstrelSkills";
-import { monkSkills } from "./skills/mc/monkSkills";
+import { monkPassive, monkSkills } from "./skills/mc/monkSkills";
 import { necromancerPassive, necromancerSkills } from "./skills/mc/necromancerSkills";
 import { oraclePassive, oracleSkills } from "./skills/mc/oracleSkills";
-import { paladinSkills } from "./skills/mc/paladinSkills";
+import { paladinPassive, paladinSkills } from "./skills/mc/paladinSkills";
 import { predatorSkills } from "./skills/mc/predatorSkills";
 import { runecasterSkills } from "./skills/mc/runecasterSkills";
 import { samuraiPassive, samuraiSkills } from "./skills/mc/samuraiSkills";
 import { shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
 import { shamanSkills } from "./skills/mc/shamanSkills";
-import { sorcererSkills } from "./skills/mc/sorcererSkills";
-import { warlockSkills } from "./skills/mc/warlockSkills";
+import { sorcererPassive, sorcererSkills } from "./skills/mc/sorcererSkills";
+import { warlockPassive, warlockSkills } from "./skills/mc/warlockSkills";
 import { witchSkills } from "./skills/mc/witchSkills";
 import { zealotSkills } from "./skills/mc/zealotSkills";
 
@@ -65,9 +65,7 @@ export const paladinHero: IUnit = {
     name: i18n.heroes.PALADIN,
     id: EHeroClass.PALADIN,
     skills: paladinSkills,
-    passiveSkill: {
-        desc: "Heal low hp unit when block or negate damage",
-    },
+    passiveSkill: paladinPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -117,9 +115,7 @@ export const knightHero: IUnit = {
     name: i18n.heroes.KNIGHT,
     id: EHeroClass.KNIGHT,
     skills: knightSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: knightPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -273,9 +269,7 @@ export const gladiatorHero: IUnit = {
     name: i18n.heroes.GLADIATOR,
     id: EHeroClass.GLADIATOR,
     skills: gladiatorSkills,
-    passiveSkill: {
-        desc: "Can crit with physical attack skills",
-    },
+    passiveSkill: gladiatorPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -300,9 +294,7 @@ export const warlockHero: IUnit = {
     name: i18n.heroes.WARLOCK,
     id: EHeroClass.WARLOCK,
     skills: warlockSkills,
-    passiveSkill: {
-        desc: "Enemy dies from poison increase\nnext magic attack on poison value",
-    },
+    passiveSkill: warlockPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -455,16 +447,14 @@ export const duelistHero: IUnit = {
     basicMaxHp: 24,
     basicHpRegen: 0,
     basicArmor: 0,
-    basicCritChance: 10,
-    basicEvasionChance: 0,
+    basicCritChance: 7, // was 10
+    basicEvasionChance: 0, // will be increased by +7 by passive skill
     basicMagicPower: 0,
     basicPhysicalPower: 0,
     name: i18n.heroes.DUELIST,
     id: EHeroClass.DUELIST,
     skills: duelistSkills,
-    passiveSkill: {
-        desc: "Gets bonus when using sword",
-    },
+    passiveSkill: duelistPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -643,9 +633,7 @@ export const sorcererHero: IUnit = {
     name: i18n.heroes.SORCERER,
     id: EHeroClass.SORCERER,
     skills: sorcererSkills,
-    passiveSkill: {
-        desc: "Can crit with magic attack skills",
-    },
+    passiveSkill: sorcererPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -749,9 +737,7 @@ export const monkHero: IUnit = {
     name: i18n.heroes.MONK,
     id: EHeroClass.MONK,
     skills: monkSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: monkPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -992,9 +978,7 @@ export const bishopHero: IUnit = {
     name: i18n.heroes.BISHOP,
     id: EHeroClass.BISHOP,
     skills: bishopSkills,
-    passiveSkill: {
-        desc: "Can crit with heal skills",
-    },
+    passiveSkill: bishopPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

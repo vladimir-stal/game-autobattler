@@ -1,4 +1,4 @@
-import { AnimationType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 export const monkSkill_3: IHeroSkillSet = {
@@ -86,5 +86,37 @@ export const monkSkill: IHeroSkillSet = {
     ],
     nextLevel: monkSkill_2,
 };
+
+export const monkPassive: IPassiveSkill = {
+    desc: "Healing skills additionally restore 2 health to self and activate a totem",
+    preBattleBuff: {
+        name: "Passive",
+        targetType: ETargetType.SELF,
+        timeType: EBuffTimeType.DUEL,
+        type: EBuffType.BATTLE_TRIGGER,
+        value: 1,
+        cannotBeTargeted: true,
+        isHidden: true,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Totem healing push",
+            type: EAppTriggerType.AFTER_HEAL,
+            skill: [
+                {
+                    type: EHeroSkillType.FORCE_TOTEM_ACTION,
+                    targetType: ETargetType.SELF,
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    targetType: ETargetType.SELF,
+                    attribute: "hp",
+                    value: 2,
+                    valueType: "number",
+                },
+            ],
+        }
+    }
+}
 
 export const monkSkills: THeroSkills = [monkSkill];

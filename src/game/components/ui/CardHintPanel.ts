@@ -359,11 +359,18 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
             (battleBonuses?.reduce((text, bonus) => {
                 if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND) {
                     text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill?.name || "" + ")\n";
+                } else if (bonus.type === EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK) {
+                    const stats = [];
+                    bonus.value && stats.push(bonus.value + "");
+                    bonus.status && stats.push(i18n.statuses[bonus.status]);
+                    text += insertStats(i18n.attributes.bonusType[bonus.type], stats) + "\n";
                 } else {
                     //text += i18n.attributes.bonusType[bonus.type] + (bonus.status ? " " + i18n.statuses[bonus.status] : "") + " [" + bonus.value + "]\n";
                     const stats = [];
                     bonus.value && stats.push(bonus.value + "");
-                    bonus.status && stats.push(i18n.statuses[bonus.status]);
+                    if (bonus.valueFrom) {
+                        stats.push(" " + i18n.ui.OFSTAT + " " + i18n.attributes.battleAttribute[bonus.valueFrom]);
+                    }
                     text += insertStats(i18n.attributes.bonusType[bonus.type], stats) + "\n";
                 }
                 return text;

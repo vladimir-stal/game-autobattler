@@ -11,6 +11,7 @@ import {
     ESelectRoomHint,
     EStatusType,
     THeroAttribute,
+    THeroBattleAttribute,
 } from "../types";
 import { MOBS_EN } from "./mobs_en";
 import { SKILLS_EN } from "./skills_en";
@@ -20,6 +21,7 @@ type TSkillI18n = Record<number | "name" | "desc1" | "desc2" | "desc3", string>;
 export interface Ii18n {
     attributes: {
         attribute: Record<THeroAttribute, string>;
+        battleAttribute: Record<THeroBattleAttribute, string>;
         afterDuelBonus: Record<EItemAfterDuelBonusType, string>;
         bonusType: Record<EItemBattleBonusType, string>;
         itemBonusType: Record<EItemBonusType, string>;
@@ -216,6 +218,7 @@ export interface Ii18n {
         //
         WEAPON: string;
         COMMON: string;
+        OFSTAT: string;
         //
         [EHeroAttackType.MAGIC]: string;
         [EHeroAttackType.PHYSICAL]: string;
@@ -261,6 +264,18 @@ export const i18n: Ii18n = {
             basicMaxHp: "health",
             basicPhysicalPower: "basicPhysicalPower",
         },
+        battleAttribute: {
+            armor: "armor",
+            attack: "basic attack",
+            critChance: "crit.chance",
+            evasionChance: "evasion",
+            hpRegen: "regeneration",
+            magicPower: "magic power",
+            maxHp: "health",
+            physicalPower: "physical power",
+            customNumber: "some number",
+            hp: "current health",
+        },
         afterDuelBonusesText: "Get after each duel:",
         afterDuelBonus: {
             EXP: "EXP",
@@ -275,30 +290,32 @@ export const i18n: Ii18n = {
             STAT_BASIC_ATTACK: "BASIC_ATTACK",
         },
         bonusType: {
-            ADDITIONAL_BUFF_TARGET: "ADDITIONAL_BUFF_TARGET",
-            APPLY_STATUS_ON_BASIC_ATTACK: "APPLY_STATUS_ON_BASIC_ATTACK",
+            ADDITIONAL_BUFF_TARGET: "Buff skills get random\nally as an additional\ntarget",
+            APPLY_STATUS_ON_BASIC_ATTACK: "Apply {2} [{1}]\non basic attacks",
             //APPLY_POISON_ON_HIT: "APPLY_POISON_ON_HIT",
-            BASIC_ATTACK_TWICE: "BASIC_ATTACK_TWICE",
+            BASIC_ATTACK_TWICE: "Attacks twice but with\nstrength reduced to\n{1}%{2}",
             BASIC_ONCE_IN_TWO_TURNS: "BASIC_ONCE_IN_TWO_TURNS",
             CRIT_EVERY_TWO_TURNS: "CRIT_EVERY_TWO_TURNS",
-            CRIT_INCR_NONCRIT_DECR: "CRIT_INCR_NONCRIT_DECR",
-            CRIT_WITH_MAGIC: "CRIT_WITH_MAGIC",
-            HEAL_INCREASE: "HEAL_INCREASE",
-            INCREASE_DAMAGE_TO_ARMOR: "INCREASE_DAMAGE_TO_ARMOR",
-            INCREASE_DAMAGE_TO_BLEEDING: "INCREASE_DAMAGE_TO_BLEEDING",
-            INCREASE_DAMAGE_TO_HP: "INCREASE_DAMAGE_TO_HP",
-            INCREASE_DAMAGE_TO_POISONED: "INCREASE_DAMAGE_TO_POISONED",
-            INCREASE_DAMAGE_TO_SUMMON: "INCREASE_DAMAGE_TO_SUMMON",
-            INCREASE_MAGIC_DAMAGE: "INCREASE_MAGIC_DAMAGE",
-            INCREASE_PHYSICAL_DAMAGE: "INCREASE_PHYSICAL_DAMAGE",
-            INCREASE_SUMMON_ATTACK: "INCREASE_SUMMON_ATTACK",
-            INCREASE_SUMMON_HP: "INCREASE_SUMMON_HP",
-            INCREASE_TOTAL_DAMAGE_FROM_HP: "INCREASE_TOTAL_DAMAGE_FROM_HP",
-            STATUS_BLEED_APPLY_INCREASE: "STATUS_BLEED_APPLY_INCREASE",
-            STATUS_BURN_APPLY_INCREASE: "STATUS_BURN_APPLY_INCREASE",
-            STATUS_POISON_APPLY_INCREASE: "STATUS_POISON_APPLY_INCREASE",
+            CRIT_INCR_NONCRIT_DECR: "Increase critical damage,\nbut reduce non-critical\ndamage by {1}{2}",
+            CRIT_WITH_MAGIC: "Magical attack skills\ncan be critical",
+            CRIT_WITH_PHYSICAL: "Physical attack skills\ncan be critical",
+            CRIT_WITH_HEAL: "Healing skills can be\ncritical",
+            HEAL_INCREASE: "Increase healing by {1}{2}",
+            INCREASE_DAMAGE_TO_ARMOR: "Increase damage to armor\nby {1}{2}",
+            INCREASE_DAMAGE_TO_BLEEDING: "Increase damage to bleeding\ntargets by {1}{2}",
+            INCREASE_DAMAGE_TO_HP: "Increase damage to health\nby {1}{2}",
+            INCREASE_DAMAGE_TO_POISONED: "Increase damage to poisoned\ntargets by {1}{2}",
+            INCREASE_DAMAGE_TO_SUMMON: "Increase damage to summons\nby {1}{2}",
+            INCREASE_MAGIC_DAMAGE: "Increase magic damage\nby {1}{2}",
+            INCREASE_PHYSICAL_DAMAGE: "Increase physical damage\nby {1}{2}",
+            INCREASE_SUMMON_ATTACK: "Increase summons' attack\nby {1}{2}",
+            INCREASE_SUMMON_HP: "Increase summons' health\nby {1}{2}",
+            INCREASE_TOTAL_DAMAGE: "Increase total damage\nby {1}%{2}",
+            STATUS_BLEED_APPLY_INCREASE: "Increase applied bleed\nby {1}{2}",
+            STATUS_BURN_APPLY_INCREASE: "Increase applied burn\nby {1}{2}",
+            STATUS_POISON_APPLY_INCREASE: "Increase applied poison\nby {1}{2}",
             SUMMON_INCREASE_DAMAGE: "SUMMON_INCREASE_DAMAGE",
-            TOTEM_INCREASE_VALUE: "TOTEM_INCREASE_VALUE",
+            TOTEM_INCREASE_VALUE: "Increase totem values\nby {1}{2}",
             CAST_SKILL_X_ROUND: "Once per combat, applies\neffect at the end of round",
             UNPACK_SKILL_IN_STASH: "Move this item into stash\nto unpack a skill",
         },
@@ -595,6 +612,7 @@ export const i18n: Ii18n = {
         //
         WEAPON: "weapon",
         COMMON: "common",
+        OFSTAT: "of",
         //
         [EHeroAttackType.MAGIC]: "magic",
         [EHeroAttackType.PHYSICAL]: "phys",

@@ -46,9 +46,10 @@ import { goblinPocketSand } from "../skills/mobs/goblinMobSkills";
 import { basic_jacket_2 } from "../commonItemConsts";
 import { outHealBuffSkill } from "../skills/commonSkill3Consts";
 import { scrollOfSkill } from "../commonItemConsts3";
+import { totem5HptoDmg } from "../weaponItem5Consts";
 
-export const debugHeroSelectRoom = false;
-export const debugStartingItemsRoom = false;
+export const debugHeroSelectRoom = true;
+export const debugStartingItemsRoom = true;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -56,7 +57,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: doomsayerHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
@@ -64,16 +65,11 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit:  },
         //{ type: ECardType.UNIT, price: 0, unit: predatorHero },
         //{ type: ECardType.UNIT, price: 0, unit: commanderHero },
-        //{ type: ECardType.UNIT, price: 0, unit: necromancerHero },
-        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
-        //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
-        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.SKILL, price: 0, skill: toxicTuneSkill },
-        { type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
-        { type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
-
-        { type: ECardType.ITEM, price: 0, item: scrollOfSkill(goblinPocketSand) },
+        //{ type: ECardType.SKILL, price: 0, skill: toxicTuneSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
+        { type: ECardType.ITEM, price: 0, item: totem5HptoDmg },
+        //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(goblinPocketSand) },
         // { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
         // {
         //     type: ECardType.ITEM,
