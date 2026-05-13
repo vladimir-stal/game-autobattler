@@ -1373,7 +1373,7 @@ export const enemy11: TDuelEnemy = buildDuelEnemy([
             { item: gloves_magic2 },
             { skill: buffNextBaBeCritSelf_2, chained: true },
             { skill: feintAttack },
-            { moveMcSkillToSlotIndex: 1},
+            { moveMcSkillToSlotIndex: 1 },
         ],
         4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
     },

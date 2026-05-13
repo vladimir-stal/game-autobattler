@@ -231,8 +231,11 @@ export const i18n: Ii18n = {
         goblin_gold_coin: "Золотая монета",
         goblin_silver_coin: "Серебряная монета",
         peasantPitchfork: "Крестьянские вилы",
+        // unique items
         coin: "Монета",
         coin_description: "Собери еще чтобы увеличить\nценность, или продай за ",
+        scrollOfSkill: "Книга навыка: ",
+        scrollOfSkill_description: "",
     },
     totems: {
         basicWildTotem: "Дикий тотем",
@@ -311,6 +314,7 @@ export const i18n: Ii18n = {
         [ERoomType.ITEM_WEAPON_CLASS_SELL]: "КУПИТЬ ОРУЖИЕ КЛАССА",
         [ERoomType.HEROES_SELL]: "НАНЯТЬ ГЕРОЯ",
         [ERoomType.ITEM_LEGEND_SELL]: "КУПИТЬ ЛЕГЕНДАРНЫЙ ПРЕДМЕТ",
+        [ERoomType.ITEM_WEAPON_CLASS_RANDOM]: "СЛУЧАЙНОЕ ОРУЖИЕ КЛАССА",
         // SKILLS
         [ERoomType.SKILLS_SELL]: "КУПИТЬ НАВЫКИ",
         [ERoomType.SKILLS_CLASS_SELL]: "КУПИТЬ НАВЫКИ КЛАССА",

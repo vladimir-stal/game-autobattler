@@ -102,6 +102,7 @@ import {
     createSpiritShieldWarriorAnimations,
     createSpiritShieldWarriorIdleAnimations,
     createSpiritWarriorAnimations,
+    createSpiritWarriorIdleAnimations,
     createWolf1Animations,
     createWolf1IdleAnimations,
     createWolf2Animations,
@@ -400,10 +401,12 @@ export async function loadUnitImagesForSelect(scene: Scene, unitId: string, load
                 isMob = true;
             }
             break;
-        case "GOBLIN": {
-            await loadGoblinMageIdleImages(scene, loadedImages);
-            isMob = true;
-        }
+        case "GOBLIN":
+            {
+                await loadGoblinMageIdleImages(scene, loadedImages);
+                isMob = true;
+            }
+            break;
         case "PEASANT":
             {
                 await loadPeasantIdleImages(scene, loadedImages);
@@ -417,12 +420,14 @@ export async function loadUnitImagesForSelect(scene: Scene, unitId: string, load
                 isMob = true;
             }
             break;
-        case "SKELETONMAGE": {
-            console.log("load for select skeletonmage");
-            await loadSkeletonMageIdleImages(scene, loadedImages);
-            //createSkeletonMageAnimations(scene);
-            isMob = true;
-        }
+        case "SKELETONMAGE":
+            {
+                console.log("load for select skeletonmage");
+                await loadSkeletonMageIdleImages(scene, loadedImages);
+                //createSkeletonMageAnimations(scene);
+                isMob = true;
+            }
+            break;
         case "WOLF1":
             {
                 await loadWolf1IdleImages(scene, loadedImages);
@@ -460,7 +465,7 @@ export async function loadUnitImagesForSelect(scene: Scene, unitId: string, load
         case "WARRIORSUMMON":
             {
                 await loadSummonWarriorIdleImages(scene, loadedImages);
-                createFireflyIdleAnimations(scene);
+                createSpiritWarriorIdleAnimations(scene);
             }
             break;
         case "SHIELDWARRIORSUMMON":
@@ -745,6 +750,8 @@ export function getTotemIdsBySkill(skillId: string): string[] {
         case "wildBasicTotemSkill":
         case "toxicTuneSkill":
         case "MinotaurTotemSkill":
+        case "MinotaurTotemSkill":
+        case "GladiatorTotem":
             unitsIds.push(TOTEM_ID_WILD_BASIC);
             break;
     }

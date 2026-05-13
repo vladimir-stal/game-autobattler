@@ -297,7 +297,8 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
             this.add(this.unitImageObject);
         } else {
             // object created => set visible and change content
-            this.unitImageObject.setTexture(this.unitImage).setDisplaySize(displaySize, displaySize).setVisible(true);
+            this.unitImageObject.setTexture(this.unitImage).setVisible(true);
+            //setDisplaySize(displaySize, displaySize).
         }
 
         if (this.appearAnimation) {
@@ -687,19 +688,19 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     //     this.hpText.setText(this.unit.hp + "/" + this.unit.maxHp);
     // }
 
-    // setHp(value: number) {
-    //     if (!this.unit) {
-    //         return;
-    //     }
-    //     this.unit.hp = value;
-    //     if (this.unit.hp < 0) {
-    //         this.unit.hp = 0;
-    //     }
-    //     if (this.unit.hp > this.unit.maxHp) {
-    //         this.unit.hp = this.unit.maxHp;
-    //     }
-    //     this.hpText.setText(this.unit.hp + "/" + this.unit.maxHp);
-    // }
+    setHp(value: number) {
+        if (!this.unit) {
+            return;
+        }
+        this.unit.hp = value;
+        if (this.unit.hp < 0) {
+            this.unit.hp = 0;
+        }
+        if (this.unit.hp > this.unit.maxHp) {
+            this.unit.hp = this.unit.maxHp;
+        }
+        this.hpText.setText(this.unit.hp + "/" + this.unit.maxHp);
+    }
 
     /** Increase or descrease unit hp by value (negative value to decrease) */
     changeHp(value: number) {

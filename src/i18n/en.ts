@@ -61,6 +61,8 @@ export interface Ii18n {
     items: {
         coin: string;
         coin_description: string;
+        scrollOfSkill: string;
+        scrollOfSkill_description: string;
         peasantPitchfork: string;
         goblin_silver_coin: string;
         goblin_gold_coin: string;
@@ -481,8 +483,11 @@ export const i18n: Ii18n = {
         goblin_gold_coin: "Gold coin",
         goblin_silver_coin: "Silver coin",
         peasantPitchfork: "Pitchfork",
+        // unique items
         coin: "The Coin",
         coin_description: "Collect to increase its\nprice, or sell it for ",
+        scrollOfSkill: "Skill book of ",
+        scrollOfSkill_description: "",
     },
     rooms: {
         //

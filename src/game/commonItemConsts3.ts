@@ -166,7 +166,8 @@ export const scrollSkillArmor: IItem = {
 export const scrollOfSkill = (skill: IHeroSkillSet): IItem => {
     return {
         id: "scroll_of_skill",
-        name: "Skill book of " + skill.name,
+        //name: "Skill book of " + skill.name,
+        name: i18n.items.scrollOfSkill + "\n" + i18n.skills.mobs[skill.id].name,
         type: EItemType.COMMON,
         level: skill.level,
         priceLevel: skill.priceLevel,

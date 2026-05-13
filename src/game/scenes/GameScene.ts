@@ -239,7 +239,7 @@ export class GameScene extends Phaser.Scene {
 
         activateSlots(this.allCardSlots, value, this, this.cardToMove);
 
-        if (value && !this.isCardBuyMode && this.cardToMove?.card && [ECardType.ITEM, ECardType.SKILL].includes(this.cardToMove.card.type)) {
+        if (value && !this.isCardBuyMode && this.cardToMove?.card && [ECardType.ITEM, ECardType.SKILL, ECardType.UNIT].includes(this.cardToMove.card.type)) {
             this.sellCardPanel.highlight(true);
         } else {
             this.sellCardPanel.highlight(false);
@@ -542,5 +542,7 @@ export class GameScene extends Phaser.Scene {
         if (skillsIds.length !== 0) {
             await this.imageLoadController.loadBattleSkills(skillsIds);
         }
+        this.topPanel.showSkipButton();
+        this.topPanel.showRestartButton();
     }
 }
