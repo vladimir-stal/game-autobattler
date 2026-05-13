@@ -825,27 +825,19 @@ export class BattleController {
         targets.forEach((target) => {
             //console.log("INCR ATTR TARGET", attribute, target);
             const increaseValue = calculateIncreaseValue(target[attribute], value || 0, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
-
-            // if (attribute === "maxHp") {
-            //     const percent = target.hp / target.maxHp;
-            //     target.maxHp += increaseValue;
-            //     target.hp = Math.min(target.maxHp, Math.floor(target.maxHp * percent) + 1);
-            //     battleAction.targets?.push({
-            //         targetId: target.id,
-            //         attribute: "maxHp",
-            //         value: increaseValue,
-            //     });
-            //     battleAction.targets?.push({
-            //         targetId: target.id,
-            //         attribute: "hp",
-            //         value: increaseValue,
-            //     });
-            // } else {
-            target[attribute] += increaseValue;
+            let addValue = 0;
+            if (attribute === "armor") {
+                target.itemBonuses.forEach(bonus => {
+                    if (bonus.type === EItemBattleBonusType.INCREASE_ARMOR_GAIN) {
+                        addValue += calculateIncreaseValue(increaseValue, getItemBonusValue(target,bonus), bonus.valueType);
+                    }
+                })
+            }
+            target[attribute] += increaseValue + addValue;
             battleAction.targets?.push({
                 targetId: target.id,
                 attribute,
-                value: increaseValue,
+                value: increaseValue + addValue,
                 // @ts-ignore
                 ATTR: target[attribute],
             });

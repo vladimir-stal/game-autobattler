@@ -714,26 +714,8 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
         return bonuses;
     }, [] as IItemBattleBonus[]);
 
-    if (unit.heroClass === EHeroClass.BISHOP) {
-        itemBonuses.push({
-            type: EItemBattleBonusType.CRIT_WITH_HEAL,
-            value: 1,
-            valueType: "number",
-        });
-    }
-    if (unit.heroClass === EHeroClass.SORCERER) {
-        itemBonuses.push({
-            type: EItemBattleBonusType.CRIT_WITH_MAGIC,
-            value: 1,
-            valueType: "number",
-        });
-    }
-    if (unit.heroClass === EHeroClass.GLADIATOR) {
-        itemBonuses.push({
-            type: EItemBattleBonusType.CRIT_WITH_PHYSICAL,
-            value: 1,
-            valueType: "number",
-        });
+    if (unit.passiveSkill?.itemPassive) {
+        itemBonuses.push(unit.passiveSkill.itemPassive);
     }
 
     if (unit.heroClass === EHeroClass.BATTLE_MAGE) {
@@ -1068,13 +1050,21 @@ const applyNewNestedEffects = (
                 console.log("ERROR applyBuff attribute is undefined");
                 return;
             }
-            target[attribute] += buffValue;
+            let addValue = 0;
+            if (attribute === "armor") {
+                target.itemBonuses.forEach(bonus => {
+                    if (bonus.type === EItemBattleBonusType.INCREASE_ARMOR_GAIN) {
+                        addValue += calculateIncreaseValue(buffValue, getItemBonusValue(target,bonus), bonus.valueType);
+                    }
+                })
+            }
+            target[attribute] += buffValue + addValue;
             battleCtrl.battleRecord.push({
                 unitId: caster?.id || target.id,
                 targetId: target.id,
                 type: EBattleActionType.ATTRIBUTE_INCREASE,
                 attribute: attribute,
-                value: buffValue,
+                value: buffValue + addValue,
             });
         } else if (type === EBuffType.BATTLE_TRIGGER) {
             if (isParentEffect && parentBuff?.appTrigger) {
@@ -1186,12 +1176,18 @@ const applyExistingNestedEffects = (
                 console.log("ERROR applyBuff attribute is undefined");
                 return;
             }
-            // caster & battleCtrl should be defined
-
+            let addValue = 0;
+            if (attribute === "armor") {
+                target.itemBonuses.forEach(bonus => {
+                    if (bonus.type === EItemBattleBonusType.INCREASE_ARMOR_GAIN) {
+                        addValue += calculateIncreaseValue(newValue, getItemBonusValue(target,bonus), bonus.valueType);
+                    }
+                })
+            }
             //if (buff.valueFrom === "customNumber") console.log("init", initValue, "new", newValue, "old", oldValue);
             if (timeType === EBuffTimeType.DURATION && oldValue) {
-                effect.totalValue = Math.max(newValue, oldValue);
-                const diff = newValue - oldValue;
+                effect.totalValue = Math.max(newValue + addValue, oldValue);
+                const diff = newValue + addValue - oldValue;
                 if (diff > 0) {
                     target[attribute] += diff;
                     battleCtrl &&
@@ -1205,17 +1201,17 @@ const applyExistingNestedEffects = (
                 }
             } else {
                 if (effect.totalValue) {
-                    effect.totalValue += newValue;
+                    effect.totalValue += newValue + addValue;
                 }
 
-                target[attribute] += newValue;
+                target[attribute] += newValue + addValue;
                 battleCtrl &&
                     battleCtrl.battleRecord.push({
                         unitId: caster?.id || target.id,
                         targetId: target.id,
                         type: EBattleActionType.ATTRIBUTE_INCREASE,
                         attribute: attribute,
-                        value: newValue,
+                        value: newValue + addValue,
                     });
             }
         } else if (type === EBuffType.BATTLE_TRIGGER && oldValue) {

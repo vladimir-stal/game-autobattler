@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, EItemBattleBonusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const bishopSkillset = (heal: number, mpScale: number, repeats: number): IHeroSkill[] => {
@@ -61,6 +61,11 @@ export const bishopSkill: IHeroSkillSet = {
 export const bishopPassive: IPassiveSkill = {
     desc: "Can crit with healing skills",
     // battleUtils - prepareUnitToBattle()
-}
+    itemPassive: {
+        type: EItemBattleBonusType.CRIT_WITH_HEAL,
+        value: 1,
+        valueType: "number",
+    },
+};
 
 export const bishopSkills: THeroSkills = [bishopSkill];

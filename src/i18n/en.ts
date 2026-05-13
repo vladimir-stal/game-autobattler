@@ -311,6 +311,7 @@ export const i18n: Ii18n = {
             INCREASE_SUMMON_ATTACK: "Increase summons' attack\nby {1}{2}",
             INCREASE_SUMMON_HP: "Increase summons' health\nby {1}{2}",
             INCREASE_TOTAL_DAMAGE: "Increase total damage\nby {1}%{2}",
+            INCREASE_ARMOR_GAIN: "Increase amount of gained\narmor by {1}{2}",
             STATUS_BLEED_APPLY_INCREASE: "Increase applied bleed\nby {1}{2}",
             STATUS_BURN_APPLY_INCREASE: "Increase applied burn\nby {1}{2}",
             STATUS_POISON_APPLY_INCREASE: "Increase applied poison\nby {1}{2}",

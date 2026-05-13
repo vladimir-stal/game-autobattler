@@ -20,6 +20,7 @@ import {
     dealOverhealDamage,
     emptyBattleUnit,
     getAllyTargets,
+    getItemBonusValue,
     getOpponentTargets,
     getStatusItemBonusType,
     reduceStatus,
@@ -261,14 +262,22 @@ const performTotemAttrIncrease = (
     targets.forEach((target) => {
         const attrValue = target[attribute];
         const increaseValue = calculateIncreaseValue(attrValue, value, valueType) + totemValueBonus + ppScaleValue + mpScaleValue;
-        target[attribute] = attrValue + increaseValue;
+        let addValue = 0;
+        if (attribute === "armor") {
+            target.itemBonuses.forEach((bonus) => {
+                if (bonus.type === EItemBattleBonusType.INCREASE_ARMOR_GAIN) {
+                    addValue += calculateIncreaseValue(increaseValue, getItemBonusValue(target, bonus), bonus.valueType);
+                }
+            });
+        }
+        target[attribute] = attrValue + increaseValue + addValue;
 
         battleRecord.push({
             unitId: totem.id,
             targetId: target.id,
             type: EBattleActionType.ATTRIBUTE_INCREASE,
             attribute,
-            value: increaseValue,
+            value: increaseValue + addValue,
         });
     });
 };

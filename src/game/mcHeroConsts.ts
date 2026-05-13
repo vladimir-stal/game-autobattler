@@ -3,7 +3,7 @@ import { i18n as i18n_ru } from "../i18n/ru";
 import { ETargetType, EDebuffType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EHeroClassType } from "../types";
 import { LANG } from "./consts";
 import { alchemistSkills } from "./skills/mc/alchemistSkills";
-import { assassinSkills } from "./skills/mc/assassinSkills";
+import { assassinPassive, assassinSkills } from "./skills/mc/assassinSkills";
 import { barbarianPassive, barbarianSkills } from "./skills/mc/barbarianSkills";
 import { battleMagePassive, battleMageSkills } from "./skills/mc/battleMageSkills";
 import { beastMasterSkills } from "./skills/mc/beastmasterSkills";
@@ -30,7 +30,7 @@ import { necromancerPassive, necromancerSkills } from "./skills/mc/necromancerSk
 import { oraclePassive, oracleSkills } from "./skills/mc/oracleSkills";
 import { paladinPassive, paladinSkills } from "./skills/mc/paladinSkills";
 import { predatorSkills } from "./skills/mc/predatorSkills";
-import { runecasterSkills } from "./skills/mc/runecasterSkills";
+import { runecasterPassive, runecasterSkills } from "./skills/mc/runecasterSkills";
 import { samuraiPassive, samuraiSkills } from "./skills/mc/samuraiSkills";
 import { shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
 import { shamanSkills } from "./skills/mc/shamanSkills";
@@ -319,9 +319,7 @@ export const runecasterHero: IUnit = {
     name: i18n.heroes.RUNECASTER,
     id: EHeroClass.RUNECASTER,
     skills: runecasterSkills,
-    passiveSkill: {
-        desc: "Gain armor increases from MP",
-    },
+    passiveSkill: runecasterPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -658,9 +656,7 @@ export const assasinHero: IUnit = {
     name: i18n.heroes.ASSASSIN,
     id: EHeroClass.ASSASSIN,
     skills: assassinSkills,
-    passiveSkill: {
-        desc: "Increased chance of critical\nattack on poisoned target",
-    },
+    passiveSkill: assassinPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

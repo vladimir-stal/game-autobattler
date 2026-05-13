@@ -542,6 +542,7 @@ export enum EItemBattleBonusType {
     INCREASE_SUMMON_ATTACK = "INCREASE_SUMMON_ATTACK",
     INCREASE_SUMMON_HP = "INCREASE_SUMMON_HP",
     INCREASE_TOTAL_DAMAGE = "INCREASE_TOTAL_DAMAGE",
+    INCREASE_ARMOR_GAIN = "INCREASE_ARMOR_GAIN",
     BASIC_ATTACK_TWICE = "BASIC_ATTACK_TWICE",
     BASIC_ONCE_IN_TWO_TURNS = "BASIC_ONCE_IN_TWO_TURNS", // TODO: implement
     SUMMON_INCREASE_DAMAGE = "SUMMON_INCREASE_DAMAGE", // TODO: implement
@@ -849,6 +850,7 @@ export interface ICardToMove {
 export interface IPassiveSkill {
     desc: string;
     preBattleBuff?: IBuff;
+    itemPassive?: IItemBattleBonus;
 }
 
 /**

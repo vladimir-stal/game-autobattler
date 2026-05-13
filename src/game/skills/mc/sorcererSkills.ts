@@ -1,4 +1,4 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import { EHeroAttackType, EHeroClass, EHeroSkillType, EItemBattleBonusType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 // TODO: increase targets to 3 and 4 with level, decrease scaling from MP ???
@@ -67,6 +67,11 @@ export const sorcererSkill: IHeroSkillSet = {
 export const sorcererPassive: IPassiveSkill = {
     desc: "Can crit with magical attack skills",
     // battleUtils - prepareUnitToBattle()
-}
+    itemPassive: {
+        type: EItemBattleBonusType.CRIT_WITH_MAGIC,
+        value: 1,
+        valueType: "number",
+    },
+};
 
 export const sorcererSkills: THeroSkills = [sorcererSkill];

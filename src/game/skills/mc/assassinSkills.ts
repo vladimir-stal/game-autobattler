@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EItemBattleBonusType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const assassinSkillset = (poison:number):IHeroSkill[] => {
@@ -70,5 +70,14 @@ export const assassinSkill: IHeroSkillSet = {
     skills: assassinSkillset(1),
     nextLevel: assassinSkill_2,
 };
+
+export const assassinPassive: IPassiveSkill = {
+    desc: "Deal [20%] increased\ndamage to poisoned targets",
+    itemPassive: {
+        type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED,
+        value: 20,
+        valueType: "percent",
+    }
+}
 
 export const assassinSkills: THeroSkills = [assassinSkill];
