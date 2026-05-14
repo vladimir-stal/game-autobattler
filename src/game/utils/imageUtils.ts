@@ -1,4 +1,5 @@
 import { AnimationType, EEffectAnimationType, EHeroClass } from "../../types";
+import { TOTEM_ID_BARD_HEROICTUNE, TOTEM_ID_BOSS_MINOTAUR, TOTEM_ID_WILD_BASIC } from "../totemConsts";
 import {
     IMAGE_ALHEMIST,
     IMAGE_BARBARIAN,
@@ -42,7 +43,9 @@ import {
     IMAGE_SHAMAN,
     IMAGE_SORCERER,
     IMAGE_SUMMON_IDLE,
+    IMAGE_TOTEM_4,
     IMAGE_TOTEM_ATTACK,
+    IMAGE_TOTEM_BOSS_MINOTAUR,
     IMAGE_WARLOCK,
     IMAGE_WARRIOR_IDLE,
     IMAGE_WILD_IDLE,
@@ -112,6 +115,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
                 attackAnimation: AnimationType.BARD_ATTACK,
                 defeatedAnimation: AnimationType.BARD_DEFEATED,
                 buffAnimation: AnimationType.BARD_BUFF,
+                summonTotemAnimation: AnimationType.BARD_BUFF,
                 hurtAnimation: AnimationType.BARD_HURT,
                 //
                 attackEnemyAnimation: EEffectAnimationType.EFFECT_BARD_ATTACK,
@@ -643,11 +647,26 @@ export const getTotemImage = (totemId: string): IAnimations => {
     const id = totemId.split("_")[0];
     console.log(">>>>>>>>>>> GET TOTEM IMAGE BY ID", totemId);
     switch (id) {
-        case "basicWildTotem":
+        case TOTEM_ID_WILD_BASIC:
             return {
+                //image: IMAGE_TOTEM_ATTACK,
+                //idleBattleAnimation: AnimationType.TOTEM_WILD_1_IDLE,
                 image: IMAGE_TOTEM_ATTACK,
-                idleBattleAnimation: AnimationType.TOTEM_WILD_1_IDLE,
+                distance: -40,
             };
+        case TOTEM_ID_BOSS_MINOTAUR:
+            return {
+                image: IMAGE_TOTEM_BOSS_MINOTAUR,
+                distance: -40,
+                distanceEnemy: -80,
+            };
+        case TOTEM_ID_BARD_HEROICTUNE: {
+            return {
+                image: IMAGE_TOTEM_4,
+                distance: -20,
+                distanceEnemy: -40,
+            };
+        }
         default:
             return { image: IMAGE_SKELETON_1 };
     }

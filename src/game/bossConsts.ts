@@ -12,6 +12,7 @@ import {
     ESkillCondition,
 } from "../types";
 import { i18n } from "./consts";
+import { TOTEM_ID_BOSS_MINOTAUR } from "./totemConsts";
 import { cheeringGoblinUnit_attacks, cheeringGoblinUnit_skills, goldGoblinBattleUnit } from "./units/goblinMobUnits";
 import { BOSS_MINOTAUR_ID } from "./units/mobUnitConsts";
 
@@ -58,7 +59,7 @@ const minotaurTotemSkill: IHeroSkillSet = {
         {
             type: EHeroSkillType.TOTEM,
             totem: {
-                id: "MinotaurTotem",
+                id: TOTEM_ID_BOSS_MINOTAUR,
                 name: "Minotaur Totem",
                 skills: [
                     {

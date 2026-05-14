@@ -10,6 +10,7 @@ import {
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
+import { TOTEM_ID_GLADIATOR } from "../../totemConsts";
 import { phycisalAttackSkill } from "../commonSkillConsts";
 
 const gladiatorSkillset = (pp: number): IHeroSkill[] => {
@@ -22,7 +23,7 @@ const gladiatorSkillset = (pp: number): IHeroSkill[] => {
         {
             type: EHeroSkillType.TOTEM,
             totem: {
-                id: "GLADIATORTOTEM",
+                id: TOTEM_ID_GLADIATOR,
                 name: "Тотем гладиатора",
                 skills: [
                     {

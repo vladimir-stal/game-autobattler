@@ -126,7 +126,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
         const scale = height < MAX_HEIGHT ? height / MAX_HEIGHT : 1;
         const { image, animation } = this.unit.unitType === EUnitType.HERO ? getHeroImage(this.unit.heroClass) : getUnitImage(this.unit.id);
 
-        this.imageObject = this.gameScene.add.sprite(0, 200, image, 0).setOrigin(0.5, 1).setScale(scale); //setDisplaySize(300, 300)
+        this.imageObject = this.gameScene.add.sprite(0, 200, image, 0).setOrigin(0.5, 1); //.setScale(scale); //setDisplaySize(300, 300)
         this.imgHeight = this.imageObject.displayHeight;
 
         if (animation) {
@@ -250,7 +250,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
     refreshAfterResize() {
         const { height } = this.gameScene.camera;
         const scale = height < MAX_HEIGHT ? height / MAX_HEIGHT : 1;
-        this.imageObject.setScale(scale);
+        //this.imageObject.setScale(scale);
         this.imgHeight = this.imageObject.displayHeight;
 
         //const btyp = Math.FloorTo(300 - this.imgHeight) - 100; // base text Y position

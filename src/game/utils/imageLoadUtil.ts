@@ -108,8 +108,15 @@ import {
     createWolf2Animations,
     createWolf2IdleAnimations,
 } from "./animations/mobsAnimations";
-import { TOTEM_ID_WILD_BASIC } from "../totemConsts";
-import { loadBasicWildTotemImages } from "./load/totemsImagesLoad";
+import {
+    TOTEM_ID_BARD_DARK_TOXICTUNE,
+    TOTEM_ID_BARD_HEROICTUNE,
+    TOTEM_ID_BEASTMASTER_CROWS,
+    TOTEM_ID_BOSS_MINOTAUR,
+    TOTEM_ID_GLADIATOR,
+    TOTEM_ID_WILD_BASIC,
+} from "../totemConsts";
+import { loadBardHeroictuneTotemImages, loadBasicWildTotemImages, loadBossMinotaurTotemImages } from "./load/totemsImagesLoad";
 import { createWildBasicTotemAnimations } from "./animations/totemAnimations";
 import { EHeroClass } from "../../types";
 import { createMcHeroBattleAnimations, createMcHeroIdleAnimations } from "./animations/mcHeroesAnimations";
@@ -285,6 +292,8 @@ export const IMAGE_BOSS_MINOTAUR_HURT = "IMAGE_BOSS_MINOTAUR_HURT";
 // TOTEMS
 
 export const IMAGE_TOTEM_ATTACK = "IMAGE_TOTEM_ATTACK";
+export const IMAGE_TOTEM_BOSS_MINOTAUR = "IMAGE_TOTEM_BOSS_MINOTAUR";
+export const IMAGE_TOTEM_4 = "IMAGE_TOTEM_4";
 
 // ICONS
 //
@@ -708,10 +717,20 @@ export async function loadUnitImagesForDuel(scene: Scene, unitId: string, loaded
 export async function loadTotemImagesForDuel(scene: Scene, totemId: string) {
     //
     switch (totemId) {
+        case TOTEM_ID_BOSS_MINOTAUR:
+            {
+                await loadBossMinotaurTotemImages(scene);
+            }
+            break;
+        case TOTEM_ID_BARD_HEROICTUNE:
+            {
+                await loadBardHeroictuneTotemImages(scene);
+            }
+            break;
         case TOTEM_ID_WILD_BASIC:
             {
                 await loadBasicWildTotemImages(scene);
-                createWildBasicTotemAnimations(scene);
+                //createWildBasicTotemAnimations(scene);
             }
             break;
     }
@@ -748,11 +767,18 @@ export function getTotemIdsBySkill(skillId: string): string[] {
     const unitsIds: string[] = [];
     switch (skillId) {
         case "wildBasicTotemSkill":
-        case "toxicTuneSkill":
-        case "MinotaurTotemSkill":
-        case "beastMasterSkill":
         case "GladiatorTotem":
+        case "BeastmasterCrows":
+        case "toxicTuneSkill":
             unitsIds.push(TOTEM_ID_WILD_BASIC);
+            break;
+        case "MinotaurTotemSkill":
+            unitsIds.push(TOTEM_ID_BOSS_MINOTAUR);
+            break;
+        case "totemGiveArmorSkill":
+            {
+                unitsIds.push(TOTEM_ID_BARD_HEROICTUNE);
+            }
             break;
     }
     return unitsIds;

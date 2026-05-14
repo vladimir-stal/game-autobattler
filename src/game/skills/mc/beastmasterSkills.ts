@@ -1,5 +1,6 @@
 import { EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { TOTEM_ID_BEASTMASTER_CROWS } from "../../totemConsts";
 
 const beastMasterSkillset = (atk: number, repeats: number): IHeroSkill[] => {
     return [
@@ -11,7 +12,7 @@ const beastMasterSkillset = (atk: number, repeats: number): IHeroSkill[] => {
         {
             type: EHeroSkillType.TOTEM,
             totem: {
-                id: "CROWS_TOTEM",
+                id: TOTEM_ID_BEASTMASTER_CROWS,
                 name: "Crows",
                 skills: [
                     {
