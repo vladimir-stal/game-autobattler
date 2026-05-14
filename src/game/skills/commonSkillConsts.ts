@@ -16,6 +16,7 @@ import {
     IUnit,
 } from "../../types";
 import { i18n } from "../consts";
+import { TOTEM_ID_BARD_DARK_TOXICTUNE } from "../totemConsts";
 import {
     IMAGE_SKILL_MAGIC_HAND,
     IMAGE_SKILL_PHYS_ATTACK,
@@ -618,7 +619,7 @@ const toxicTuneSkillset = (first: number, rand?: number): IHeroSkill[] => {
             {
                 type: EHeroSkillType.TOTEM,
                 totem: {
-                    id: "ToxicTune",
+                    id: TOTEM_ID_BARD_DARK_TOXICTUNE,
                     name: "Токсичный мотив",
                     skills: [
                         {
@@ -650,7 +651,7 @@ const toxicTuneSkillset = (first: number, rand?: number): IHeroSkill[] => {
             {
                 type: EHeroSkillType.TOTEM,
                 totem: {
-                    id: "ToxicTune",
+                    id: TOTEM_ID_BARD_DARK_TOXICTUNE,
                     name: "Токсичный мотив",
                     skills: [
                         {

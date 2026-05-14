@@ -56,6 +56,7 @@ import {
     mimicHero,
     shamanHero,
     barbarianHero,
+    oracleHero,
 } from "./mcHeroConsts";
 import { buffNextBaAll, buffNextBaAll_2 } from "./skills/bardSkillConsts";
 import {
@@ -454,7 +455,7 @@ export const enemy3: TDuelEnemy = {
 
 export const enemy4_test: TDuelEnemy = buildDuelEnemy([
     // day 1
-    { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
+    { 1: [{ unit: oracleHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
     // day 2
     {
         1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],

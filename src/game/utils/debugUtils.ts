@@ -40,7 +40,7 @@ import { peasantLastStandSkill, peasantsStronkSkill } from "../skills/mobs/peasa
 import { pirateCallTheCannons, pirateDeadmansCurse, pirateDragNDrown } from "../skills/mobs/pirateMobSkills";
 import { fireflyConfusingMistSkill } from "../skills/mobs/fireflyMobSkills";
 import { spiritTeamFlurry, spiritTeamRevenge } from "../skills/mobs/spiritWarriorMobSkills";
-import { buffTotalDmgSkill } from "../skills/bardSkillConsts";
+import { buffTotalDmgSkill, totemGiveArmorSkill } from "../skills/bardSkillConsts";
 import { dagger1, shield1, sword1 } from "../basicWeaponItemConsts";
 import { goblinPocketSand } from "../skills/mobs/goblinMobSkills";
 import { basic_jacket_2 } from "../commonItemConsts";
@@ -56,7 +56,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: doomsayerHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: bardHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
@@ -69,11 +69,11 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.SKILL, price: 0, skill: toxicTuneSkill },
-        { type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
-        { type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
+        { type: ECardType.SKILL, price: 0, skill: totemGiveArmorSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
 
-        { type: ECardType.ITEM, price: 0, item: scrollOfSkill(goblinPocketSand) },
+        // { type: ECardType.ITEM, price: 0, item: scrollOfSkill(goblinPocketSand) },
         // { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
         // {
         //     type: ECardType.ITEM,

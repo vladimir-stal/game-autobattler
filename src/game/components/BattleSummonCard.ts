@@ -343,13 +343,21 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
             return;
         }
 
-        const totemImage = this.scene.add.sprite(0, -200, IMAGE_TOTEM_ATTACK).setOrigin(0, 1).setDepth(-1); //.setDisplaySize(150, 269);
+        const { distance, distanceEnemy, image } = getTotemImage(this.totem.id);
+        const x = this.isInverted ? distanceEnemy : distance;
 
-        const { idleBattleAnimation } = getTotemImage(this.totem.id);
+        console.log("renderTotemImage >> this.distance", distance);
 
-        if (idleBattleAnimation) {
-            totemImage.anims.play(idleBattleAnimation);
-        }
+        const totemImage = this.scene.add
+            .sprite(x || 0, 0, image || IMAGE_TOTEM_ATTACK)
+            .setOrigin(0, 1)
+            .setDepth(-1); //.setDisplaySize(150, 269);
+
+        // const { idleBattleAnimation } = getTotemImage(this.totem.id);
+
+        // if (idleBattleAnimation) {
+        //     totemImage.anims.play(idleBattleAnimation);
+        // }
 
         this.add(totemImage);
     }

@@ -11,6 +11,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
+import { TOTEM_ID_BARD_HEROICTUNE } from "../totemConsts";
 import {
     IMAGE_SKILL_3_TOTAL_BUFF,
     IMAGE_SKILL_BARD_BUFF_1,
@@ -333,7 +334,7 @@ const totemGiveArmorSkillset = (amount: number): IHeroSkill[] => {
         {
             type: EHeroSkillType.TOTEM,
             totem: {
-                id: "HeroicTune",
+                id: TOTEM_ID_BARD_HEROICTUNE,
                 name: "Героический мотив",
                 skills: [
                     {

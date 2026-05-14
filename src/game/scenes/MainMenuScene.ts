@@ -114,7 +114,7 @@ export class MainMenuScene extends Scene {
         // this.mainContainer.add(bg1);
 
         const gameTitleText = this.add
-            .text(0, 120, "ECLIPSE CROWN version 0.12", {
+            .text(0, 120, "ECLIPSE CROWN version 0.13", {
                 fontFamily: "Arial Black",
                 fontSize: 16,
                 color: "#ffffff",

@@ -105,6 +105,8 @@ export class ImageLoadController {
             return;
         }
 
+        console.log(">>>>>>>>> loadBattleTotem", totemId);
+
         await loadTotemImagesForDuel(this.gameScene, totemId);
         this.loadedBattleTotems[totemId] = true;
     }
