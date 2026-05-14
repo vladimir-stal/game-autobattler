@@ -958,9 +958,13 @@ export interface IItemBonus {
     type: EItemBonusType;
     value: number;
     valueType: TValueType;
+    valueFrom?: THeroAttribute; // if set, value will be recalculated as unit[valueFrom]*value/100
+        // then if valueType is "number" - result is added to attribute
+        // if valueType is "percent" - attribute will get % increase of calculated value
     attribute?: THeroAttribute;
     targetType?: EItemTargetType;
     isEvolved?: boolean;
+    calculatedValue?: number; // should be set to 0; is used when valueFrom is present 
 }
 
 /** @property isEvolving - after duel bonus is applied to the item itself, not to the unit */

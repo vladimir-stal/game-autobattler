@@ -387,14 +387,35 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         const attrsText =
             bonuses?.reduce((text, bonus) => {
-                const { attribute, value, targetType, isEvolved } = bonus;
+                const { attribute, value, targetType, isEvolved, valueType, valueFrom } = bonus;
                 if (attribute) {
-                    const targetText = targetType === EItemTargetType.ALL_ALLIES ? " " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
-                    //[color=${colors.PHYSICAL_ATTACK}]
-                    const colorTagOpen = isEvolved ? "[color=#99cc55]" : "";
-                    const colorTagClose = isEvolved ? "[/color]" : "";
+                    if (valueFrom) {
+                        const targetText = targetType === EItemTargetType.ALL_ALLIES ? "\n  " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
+                        const colorTagOpen = isEvolved ? "[color=#99cc55]" : "";
+                        const colorTagClose = isEvolved ? "[/color]" : "";
+                        const valuePrefix = " " + (valueType === "percent" ? "%" : "") + (value < 0 ? "-" : "+");
 
-                    text += colorTagOpen + i18n.attributes.attribute[attribute] + " " + value + targetText + colorTagClose + "\n";
+                        text +=
+                            colorTagOpen +
+                            i18n.attributes.attribute[attribute] +
+                            valuePrefix +
+                            value +
+                            "% " +
+                            i18n.ui.OFSTAT +
+                            " " +
+                            i18n.attributes.attribute[valueFrom] +
+                            targetText +
+                            colorTagClose +
+                            "\n";
+                    } else {
+                        const targetText = targetType === EItemTargetType.ALL_ALLIES ? " " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
+                        //[color=${colors.PHYSICAL_ATTACK}]
+                        const colorTagOpen = isEvolved ? "[color=#99cc55]" : "";
+                        const colorTagClose = isEvolved ? "[/color]" : "";
+                        const valueText = valueType === "percent" ? (value < 0 ? "-" : "+") + value + "%" : value;
+
+                        text += colorTagOpen + i18n.attributes.attribute[attribute] + " " + valueText + targetText + colorTagClose + "\n";
+                    }
                 }
                 return text;
             }, "") || "";

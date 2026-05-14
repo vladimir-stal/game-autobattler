@@ -85,12 +85,12 @@ export const customStartingItemsRoom = (): ICard[] => {
         // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
         // { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
         // { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
-
-        /*{
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: warriorHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
-        { type: ECardType.SKILL, price: 0, skill: mortalStrikeSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: mortalStrikeSkill },
+        
+        //{ type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
         {
 
             type: ECardType.ITEM,
@@ -99,13 +99,17 @@ export const customStartingItemsRoom = (): ICard[] => {
                 ...jacket21_3,
                 bonuses: [
                     ...jacket21_3.bonuses,
-                    { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "evolvedNumber", attribute: "basicMagicPower", targetType: EItemTargetType.SELF },
+                    {
+                        type: EItemBonusType.ATTRIBUTE,
+                        value: 50, 
+                        valueType: "number",
+                        attribute: "basicMagicPower", 
+                        targetType: EItemTargetType.ALL_ALLIES,
+                        valueFrom: "basicMaxHp",
+                    },
                 ],
-                battleBonuses: [{ type: EItemBattleBonusType.SUMMON_INCREASE_DAMAGE, value: 4, valueType: "number" }],
             },
         },
-        { type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
-         */
         //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

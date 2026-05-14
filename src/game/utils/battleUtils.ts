@@ -8,6 +8,7 @@ import {
     EHeroClass,
     EHeroClassType,
     EItemBattleBonusType,
+    EItemBonusType,
     ESkillCondition,
     ESkillSetType,
     EStatusType,
@@ -718,9 +719,7 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
         itemBonuses.push(unit.passiveSkill.itemPassive);
     }
 
-    if (unit.heroClass === EHeroClass.BATTLE_MAGE) {
-        // Battlemage passive: add ppScale or mpScale to skills with one but w/o other
-        return {
+    const result = {
             ...unit,
             maxHp: basicMaxHp,
             hp: basicMaxHp,
@@ -743,7 +742,12 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
             isSummon: false,
             //
             currentSkillIndex: 0,
-            //
+        };
+
+    if (unit.heroClass === EHeroClass.BATTLE_MAGE) {
+        // Battlemage passive: add ppScale or mpScale to skills with one but w/o other
+        return {
+            ...result,
             skills: unit.skills.map((sk) => {
                 const skcopy: IHeroSkillSet = {
                     ...sk,
@@ -755,30 +759,7 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
             }),
         };
     } else {
-        return {
-            ...unit,
-            maxHp: basicMaxHp,
-            hp: basicMaxHp,
-            attack: basicAttack,
-            hpRegen: basicHpRegen,
-            armor: basicArmor,
-            critChance: basicCritChance,
-            evasionChance: basicEvasionChance,
-            magicPower: basicMagicPower,
-            physicalPower: basicPhysicalPower,
-            customNumber: 0,
-            isBackRowPosition: backrow,
-            //
-            buffs: [],
-            debuffs: [],
-            summon: undefined,
-            totem: undefined,
-            statuses: [],
-            itemBonuses,
-            isSummon: false,
-            //
-            currentSkillIndex: 0,
-        };
+        return result;
     }
 };
 

@@ -255,14 +255,14 @@ export interface Ii18n {
 export const i18n: Ii18n = {
     attributes: {
         attribute: {
-            basicArmor: "armor",
-            basicAttack: "basicAttack",
-            basicCritChance: "basicCritChance",
-            basicEvasionChance: "basicEvasionChance",
-            basicHpRegen: "basicHpRegen",
-            basicMagicPower: "basicMagicPower",
-            basicMaxHp: "health",
-            basicPhysicalPower: "basicPhysicalPower",
+            basicArmor: "Armor",
+            basicAttack: "Basic attack",
+            basicCritChance: "Crit chance",
+            basicEvasionChance: "Evasion chance",
+            basicHpRegen: "Regeneration",
+            basicMagicPower: "Magic power",
+            basicMaxHp: "Health",
+            basicPhysicalPower: "Physical power",
         },
         battleAttribute: {
             armor: "armor",
