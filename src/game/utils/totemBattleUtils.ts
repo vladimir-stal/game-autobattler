@@ -35,22 +35,12 @@ export const performTotemSkill = (
     battleRecord: TBattleRecord,
     battleController: BattleController,
 ) => {
-    let totemValueBonus = 0;
-
-    // check item bonuses
-
-    unit.itemBonuses.forEach((bonus) => {
-        if (bonus.type === EItemBattleBonusType.TOTEM_INCREASE_VALUE) {
-            totemValueBonus += calculateIncreaseValue(1, bonus.value, bonus.valueType);
-        }
-    });
-
     switch (skill.type) {
         case EHeroSkillType.ATTACK:
-            performTotemAttack(unit, totem, skill, opponentUnits, totemValueBonus, battleController);
+            performTotemAttack(unit, totem, skill, opponentUnits, battleController);
             break;
         case EHeroSkillType.ATTRIBUTE_INCREASE:
-            performTotemAttrIncrease(unit, totem, skill, allyUnits, totemValueBonus, battleRecord);
+            performTotemAttrIncrease(unit, totem, skill, allyUnits, battleRecord);
             break;
         // case EHeroSkillType.BUFF:
         //     this.performBuff(unit, skill.buff, isPlayer1);
@@ -59,10 +49,10 @@ export const performTotemSkill = (
         //     this.performDebuff(unit, skill, isPlayer1);
         //     break;
         case EHeroSkillType.HEAL:
-            performTotemHeal(unit, totem, skill, allyUnits, opponentUnits, totemValueBonus, battleRecord, battleController);
+            performTotemHeal(unit, totem, skill, allyUnits, opponentUnits, battleRecord, battleController);
             break;
         case EHeroSkillType.STATUS_APPLY:
-            performTotemStatusApply(unit, totem, skill, opponentUnits, totemValueBonus, battleController);
+            performTotemStatusApply(unit, totem, skill, opponentUnits, battleController);
             break;
         // case EHeroSkillType.TOTEM:
         //     this.performTotem(unit, skill, isPlayer1);
@@ -72,14 +62,11 @@ export const performTotemSkill = (
     }
 };
 
-const performTotemStatusApply = (
-    unit: IBattleUnit,
-    totem: ITotem,
-    skill: IHeroSkill,
-    opponentUnits: TBattleUnits,
-    totemValueBonus: number,
-    battleController: BattleController,
-) => {
+const calcTotemValue = (base: number, mpv: number, ppv: number, totem: ITotem): number => {
+    return Math.floor(((base + mpv + ppv) * (100 + (totem.valuesIncreasePercent || 0))) / 100) + (totem.valuesIncreaseFlat || 0);
+};
+
+const performTotemStatusApply = (unit: IBattleUnit, totem: ITotem, skill: IHeroSkill, opponentUnits: TBattleUnits, battleController: BattleController) => {
     const { targetType, value, ppScale, mpScale, status, valueType, valueFrom } = skill;
     if (!targetType || value === undefined || !status) {
         console.log("NO TARGET TYPE, VALUE OR STATUS");
@@ -101,7 +88,7 @@ const performTotemStatusApply = (
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
     const baseValue = !valueType || valueType === "number" ? value : valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : 0; //|| valueType === "evolvedNumber"
 
-    let finalValue = baseValue + totemValueBonus + mpScaleValue + ppScaleValue;
+    let finalValue = calcTotemValue(baseValue, mpScaleValue, ppScaleValue, totem);
 
     const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
     if (itemBonus) {
@@ -113,14 +100,7 @@ const performTotemStatusApply = (
     });
 };
 
-const performTotemAttack = (
-    unit: IBattleUnit,
-    totem: ITotem,
-    skill: IHeroSkill,
-    opponentUnits: TBattleUnits,
-    totemValueBonus: number,
-    battleController: BattleController,
-) => {
+const performTotemAttack = (unit: IBattleUnit, totem: ITotem, skill: IHeroSkill, opponentUnits: TBattleUnits, battleController: BattleController) => {
     const { targetType, value, attackType, ppScale, mpScale } = skill;
     if (!targetType || !attackType || value === undefined) {
         console.log("NO TARGET TYPE OR VALUE");
@@ -136,18 +116,11 @@ const performTotemAttack = (
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
+    const bladedanceBuff = unit.buffs.find((buff) => buff.type === EBuffType.BLADEDANCE);
+
     // calculate attack damage according to buffs and debuffs
-    let attackDamage = value + totemValueBonus + mpScaleValue + ppScaleValue;
-    // unit.buffs.forEach((buff) => {
-    //     if (buff.type === EBuffType.TOTAL_DAMAGE_INCREASE) {
-    //         const { value, valueType, valueFrom } = buff;
-    //         if (!valueType || value === undefined) {
-    //             return;
-    //         }
-    //         const percentFrom = valueFrom ? unit[valueFrom] : undefined;
-    //         attackDamage = calculateIncreasedValue(attackDamage!, value, valueType, percentFrom);
-    //     }
-    // });
+    let attackDamage = calcTotemValue(value, mpScaleValue, ppScaleValue, totem);
+
     const attackRecord: IBattleAction = {
         unitId: totem.id,
         targets: [],
@@ -160,6 +133,19 @@ const performTotemAttack = (
         let finalTarget = target;
         if (target.summon) {
             finalTarget = target.summon;
+        }
+        if (bladedanceBuff) {
+            if (finalTarget.id === bladedanceBuff.targetUnitId) {
+                attackDamage += bladedanceBuff.totalValue;
+                attackRecord.value = attackDamage;
+                bladedanceBuff.totalValue = (bladedanceBuff.totalValue || 0) + bladedanceBuff.value;
+                battleController.battleRecord.push({
+                    unitId: unit.id,
+                    type: EBattleActionType.BUFF,
+                    buff: bladedanceBuff,
+                    buffTargets: [{ targetId: unit.id, isExisting: true, value: bladedanceBuff.totalValue }],
+                });
+            }
         }
         battleController.dealDamage(emptyBattleUnit, finalTarget, attackDamage, skill.attackType!, undefined, attackRecord);
     });
@@ -194,7 +180,6 @@ const performTotemHeal = (
     skill: IHeroSkill,
     allyUnits: TBattleUnits,
     opponentUnits: TBattleUnits,
-    totemValueBonus: number,
     battleRecord: TBattleRecord,
     battleController: BattleController,
 ) => {
@@ -214,7 +199,7 @@ const performTotemHeal = (
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
     // Totem heal recieve healing bonuses from Hero
-    const finalValue = calcHealBonuses(unit, value + totemValueBonus + mpScaleValue + ppScaleValue);
+    const finalValue = calcHealBonuses(unit, calcTotemValue(value, mpScaleValue, ppScaleValue, totem));
 
     let overhealTotal = 0;
     targets.forEach((target) => {
@@ -228,7 +213,7 @@ const performTotemHeal = (
             unitId: totem.id,
             targetId: target.id,
             type: EBattleActionType.HEAL,
-            value,
+            value: finalValue,
         });
     });
 
@@ -236,14 +221,7 @@ const performTotemHeal = (
     dealOverhealDamage(overhealTotal, unit, totem.id, skill, opponentUnits, battleController);
 };
 
-const performTotemAttrIncrease = (
-    unit: IBattleUnit,
-    totem: ITotem,
-    skill: IHeroSkill,
-    allyUnits: TBattleUnits,
-    totemValueBonus: number,
-    battleRecord: TBattleRecord,
-) => {
+const performTotemAttrIncrease = (unit: IBattleUnit, totem: ITotem, skill: IHeroSkill, allyUnits: TBattleUnits, battleRecord: TBattleRecord) => {
     const { targetType, value, attribute, valueType, ppScale, mpScale } = skill;
     if (!targetType || value === undefined || !attribute || !valueType) {
         console.log("NO TARGET TYPE OR VALUE OR ATTR OR VALUETYPE");
@@ -261,7 +239,7 @@ const performTotemAttrIncrease = (
 
     targets.forEach((target) => {
         const attrValue = target[attribute];
-        const increaseValue = calculateIncreaseValue(attrValue, value, valueType) + totemValueBonus + ppScaleValue + mpScaleValue;
+        const increaseValue = calcTotemValue(calculateIncreaseValue(attrValue, value, valueType), mpScaleValue, ppScaleValue, totem);
         let addValue = 0;
         if (attribute === "armor") {
             target.itemBonuses.forEach((bonus) => {

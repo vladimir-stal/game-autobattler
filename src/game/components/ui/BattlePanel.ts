@@ -380,17 +380,12 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     // }
                 }
                 break;
-            // case EBattleActionType.BUFF_VALUE_CHANGED:
-            //     {
-            //         if (!buff) {
-            //             console.error("ERROR! no buff", type);
-            //             return;
-            //         }
-
-            //         this.cards[unitId].changeBuffValue(buff);
-            //         this.playNextAction();
-            //     }
-            //     break;
+            case EBattleActionType.BUFF_VALUE_CHANGED:
+                {
+                    this.cards[targetId]?.renderBuffs();
+                    this.playNextAction();
+                }
+                break;
             case EBattleActionType.BUFF_REMOVED:
                 {
                     if (!buff) {

@@ -9,7 +9,7 @@ import { battleMagePassive, battleMageSkills } from "./skills/mc/battleMageSkill
 import { beastMasterSkills } from "./skills/mc/beastmasterSkills";
 import { bishopPassive, bishopSkills } from "./skills/mc/bishopSkills";
 import { blackKnightSkills } from "./skills/mc/blackKnightSkills";
-import { bladedancerSkills } from "./skills/mc/bladedancerSkills";
+import { bladedancerPassive, bladedancerSkills } from "./skills/mc/bladedancerSkills";
 import { commanderSkills } from "./skills/mc/commanderSkills";
 import { doomsayerSkills } from "./skills/mc/doomsayerSkills";
 import { druidSkills } from "./skills/mc/druidSkills";
@@ -33,7 +33,7 @@ import { predatorSkills } from "./skills/mc/predatorSkills";
 import { runecasterPassive, runecasterSkills } from "./skills/mc/runecasterSkills";
 import { samuraiPassive, samuraiSkills } from "./skills/mc/samuraiSkills";
 import { shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
-import { shamanSkills } from "./skills/mc/shamanSkills";
+import { shamanPassive, shamanSkills } from "./skills/mc/shamanSkills";
 import { sorcererPassive, sorcererSkills } from "./skills/mc/sorcererSkills";
 import { warlockPassive, warlockSkills } from "./skills/mc/warlockSkills";
 import { witchSkills } from "./skills/mc/witchSkills";
@@ -165,9 +165,7 @@ export const shamanHero: IUnit = {
     name: i18n.heroes.SHAMAN,
     id: EHeroClass.SHAMAN,
     skills: shamanSkills,
-    passiveSkill: {
-        desc: "Increase MP for each totem",
-    },
+    passiveSkill: shamanPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -800,7 +798,8 @@ export const predatorHero: IUnit = {
 export const bladedancerHero: IUnit = {
     heroClass: EHeroClass.BLADEDANCER,
     attackType: EHeroAttackType.PHYSICAL,
-    attackTargetType: ETargetType.FIRST_ENEMY,
+    attackTargetType: ETargetType.MARKED_ENEMY,
+    basicAttackMarkType: EDebuffType.MARK_BLADEDANCER,
     heroClassType: EHeroClassType.MULTI,
     basicAttack: 3,
     basicAttackTimes: 1,
@@ -814,9 +813,7 @@ export const bladedancerHero: IUnit = {
     name: i18n.heroes.BLADEDANCER,
     id: EHeroClass.BLADEDANCER,
     skills: bladedancerSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: bladedancerPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

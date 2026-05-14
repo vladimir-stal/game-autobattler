@@ -1023,6 +1023,7 @@ export interface IActionBuffTarget {
     targetId: string;
     isExisting?: boolean;
     value?: number;
+    duration?: number;
 }
 
 export interface IBattleAction {
@@ -1215,6 +1216,8 @@ export interface ITotem {
     id: string;
     name: string;
     skills: IHeroSkill[];
+    valuesIncreaseFlat?: number;
+    valuesIncreasePercent?: number;
 }
 
 export type TBattleRecord = IBattleAction[];

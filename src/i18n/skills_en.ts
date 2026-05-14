@@ -581,9 +581,9 @@ export const SKILLS_EN = {
         },
         shamanTotemEmpower: {
             name: "Empower all totems",
-            desc1: "Increase all totems' values\nby [1+MPx50%]",
-            desc2: "Increase all totems' values\nby [1+MPx70%]",
-            desc3: "Increase all totems' values\nby [1+MP]",
+            desc1: "Increase all totems' values\nby [MPx50%]",
+            desc2: "Increase all totems' values\nby [MPx70%]",
+            desc3: "Increase all totems' values\nby [MP]",
         },
         sorcererSkill: {
             name: "Sorcerer attack",

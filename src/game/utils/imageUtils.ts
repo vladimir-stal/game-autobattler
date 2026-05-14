@@ -668,6 +668,9 @@ export const getTotemImage = (totemId: string): IAnimations => {
             };
         }
         default:
-            return { image: IMAGE_SKELETON_1 };
+            return { 
+                image: IMAGE_TOTEM_ATTACK,
+                distance: -40,
+            };
     }
 };

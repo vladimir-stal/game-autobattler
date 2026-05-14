@@ -6,6 +6,7 @@ import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
 import {
     barbarianHero,
+    bladedancerHero,
     commanderHero,
     doomsayerHero,
     forestSpiritHero,
@@ -16,6 +17,7 @@ import {
     oracleHero,
     predatorHero,
     samuraiHero,
+    shamanHero,
     witchHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
@@ -31,7 +33,7 @@ import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { dagger31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
 import { healFirst, healSelf, ringOfHealingSkill } from "../skills/priestSkillConsts";
-import { mortalStrikeSkill } from "../skills/warriorSkillConsts";
+import { buffNextBaTimes, buffNextBaTimes_2, mortalStrikeSkill } from "../skills/warriorSkillConsts";
 import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
 import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
 import {} from "../skills/mobSkills";
@@ -57,7 +59,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: bladedancerHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
@@ -68,7 +70,7 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.SKILL, price: 0, skill: toxicTuneSkill },
         //{ type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
         //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
-        { type: ECardType.ITEM, price: 0, item: totem5HptoDmg },
+        //{ type: ECardType.ITEM, price: 0, item: totem5HptoDmg },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(goblinPocketSand) },
         // { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
         // {
@@ -76,11 +78,11 @@ export const customStartingItemsRoom = (): ICard[] => {
         //     price: 0,
         //     item: basic_jacket_2,
         // },
-        // {
-        //     type: ECardType.ITEM,
-        //     price: 0,
-        //     item: basic_jacket_2,
-        // },
+        {
+             type: ECardType.ITEM,
+             price: 0,
+             item: basic_jacket_2,
+        },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
         // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
         // { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
@@ -88,10 +90,11 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: warriorHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
-        //{ type: ECardType.SKILL, price: 0, skill: mortalStrikeSkill },
+        { type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes, isChained: true} },
+        { type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes_2, isChained: true} },
         
         //{ type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
-        {
+        /*{
 
             type: ECardType.ITEM,
             price: 0,
@@ -109,7 +112,7 @@ export const customStartingItemsRoom = (): ICard[] => {
                     },
                 ],
             },
-        },
+        },*/
         //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

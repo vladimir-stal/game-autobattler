@@ -841,6 +841,23 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
         this.renderBuffs();
     }
 
+    changeBuffValue(buff: IBuff, buffTatget: IActionBuffTarget) {
+        const { isExisting, value } = buffTatget;
+        //
+        if (!value) {
+            return;
+        }
+        //
+        if (isExisting) {
+            const currentBuff = this.buffs.find((b) => b.type === buff.type);
+            if (currentBuff) {
+                currentBuff.totalValue = value;
+                currentBuff.value = value;
+                this.renderBuffs();
+            }
+        }
+    }
+
     addDebuff(debuff: IDebuff) {}
 
     removeSummon() {}
