@@ -2,7 +2,7 @@ import { i18n as i18n_eng } from "../i18n/en";
 import { i18n as i18n_ru } from "../i18n/ru";
 import { ETargetType, EDebuffType, EHeroAttackType, EHeroClass, IUnit, EUnitType, EHeroClassType } from "../types";
 import { LANG } from "./consts";
-import { alchemistSkills } from "./skills/mc/alchemistSkills";
+import { alchemistPassive, alchemistSkills } from "./skills/mc/alchemistSkills";
 import { assassinPassive, assassinSkills } from "./skills/mc/assassinSkills";
 import { barbarianPassive, barbarianSkills } from "./skills/mc/barbarianSkills";
 import { battleMagePassive, battleMageSkills } from "./skills/mc/battleMageSkills";
@@ -10,21 +10,21 @@ import { beastMasterPassive, beastMasterSkills } from "./skills/mc/beastmasterSk
 import { bishopPassive, bishopSkills } from "./skills/mc/bishopSkills";
 import { blackKnightPassive, blackKnightSkills } from "./skills/mc/blackKnightSkills";
 import { bladedancerPassive, bladedancerSkills } from "./skills/mc/bladedancerSkills";
-import { commanderSkills } from "./skills/mc/commanderSkills";
-import { doomsayerSkills } from "./skills/mc/doomsayerSkills";
+import { commanderPassive, commanderSkills } from "./skills/mc/commanderSkills";
+import { doomsayerPassive, doomsayerSkills } from "./skills/mc/doomsayerSkills";
 import { druidPassive, druidSkills } from "./skills/mc/druidSkills";
 import { duelistPassive, duelistSkills } from "./skills/mc/duelistSkills";
 import { exorcistPassive, exorcistSkills } from "./skills/mc/exorcistSkills";
 import { forestSpiritPassive, forestSpititSkills } from "./skills/mc/forestSpiritSkills";
 import { gladiatorPassive, gladiatorSkills } from "./skills/mc/gladiatorSkills";
 import { heraldPassive, heraldSkills } from "./skills/mc/heraldSkills";
-import { hunterSkills } from "./skills/mc/hunterSkills";
+import { hunterPassive, hunterSkills } from "./skills/mc/hunterSkills";
 import { illusionistPassive, illusionistSkills } from "./skills/mc/illusionistSkills";
 import { inquisitorPassive, inquisitorSkills } from "./skills/mc/inquisitorSkills";
 import { knightPassive, knightSkills } from "./skills/mc/knightSkills";
-import { jesterSkills } from "./skills/mc/magicBardSkills";
+import { jesterPassive, jesterSkills } from "./skills/mc/magicBardSkills";
 import { mimicPassive, mimicSkills } from "./skills/mc/mimicSkills";
-import { minstrelSkills } from "./skills/mc/minstrelSkills";
+import { ministrelPassive, minstrelSkills } from "./skills/mc/minstrelSkills";
 import { monkPassive, monkSkills } from "./skills/mc/monkSkills";
 import { necromancerPassive, necromancerSkills } from "./skills/mc/necromancerSkills";
 import { oraclePassive, oracleSkills } from "./skills/mc/oracleSkills";
@@ -32,11 +32,11 @@ import { paladinPassive, paladinSkills } from "./skills/mc/paladinSkills";
 import { predatorPassive, predatorSkills } from "./skills/mc/predatorSkills";
 import { runecasterPassive, runecasterSkills } from "./skills/mc/runecasterSkills";
 import { samuraiPassive, samuraiSkills } from "./skills/mc/samuraiSkills";
-import { shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
+import { shadowMasterPassive, shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
 import { shamanPassive, shamanSkills } from "./skills/mc/shamanSkills";
 import { sorcererPassive, sorcererSkills } from "./skills/mc/sorcererSkills";
 import { warlockPassive, warlockSkills } from "./skills/mc/warlockSkills";
-import { witchSkills } from "./skills/mc/witchSkills";
+import { witchPassive, witchSkills } from "./skills/mc/witchSkills";
 import { zealotPassive, zealotSkills } from "./skills/mc/zealotSkills";
 
 const i18n = LANG === "eng" ? i18n_eng : i18n_ru;
@@ -340,9 +340,7 @@ export const commanderHero: IUnit = {
     name: i18n.heroes.COMMANDER,
     id: EHeroClass.COMMANDER,
     skills: commanderSkills,
-    passiveSkill: {
-        desc: "Apply buffs to hero's summon\ninstead of hero",
-    },
+    passiveSkill: commanderPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -367,9 +365,7 @@ export const doomsayerHero: IUnit = {
     name: i18n.heroes.DOOMSAYER,
     id: EHeroClass.DOOMSAYER,
     skills: doomsayerSkills,
-    passiveSkill: {
-        desc: "Increase MP from\neach debuff on enemies",
-    },
+    passiveSkill: doomsayerPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -394,9 +390,7 @@ export const minstrelHero: IUnit = {
     name: i18n.heroes.MINSTREL,
     id: EHeroClass.MINSTREL,
     skills: minstrelSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: ministrelPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -421,9 +415,7 @@ export const jesterHero: IUnit = {
     name: i18n.heroes.JESTER,
     id: EHeroClass.JESTER,
     skills: jesterSkills, // Fire fists
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: jesterPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -548,9 +540,7 @@ export const shadowMasterHero: IUnit = {
     name: i18n.heroes.SHADOWMASTER,
     id: EHeroClass.SHADOW_MASTER,
     skills: shadowMasterSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: shadowMasterPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -700,9 +690,7 @@ export const witchHero: IUnit = {
     name: i18n.heroes.WITCH,
     id: EHeroClass.WITCH,
     skills: witchSkills,
-    passiveSkill: {
-        desc: "Increase MP depending on\ntotal bleed on all enemies",
-    },
+    passiveSkill: witchPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -753,9 +741,7 @@ export const hunterHero: IUnit = {
     name: i18n.heroes.HUNTER,
     id: EHeroClass.HUNTER,
     skills: hunterSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: hunterPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -832,9 +818,7 @@ export const alchemistHero: IUnit = {
     name: i18n.heroes.ALCHEMIST,
     id: EHeroClass.ALCHEMIST,
     skills: alchemistSkills,
-    passiveSkill: {
-        desc: "Gets double value from potions",
-    },
+    passiveSkill: alchemistPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

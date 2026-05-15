@@ -69,6 +69,10 @@ export const IMAGE_HUNTER = "IMAGE_HUNTER";
 export const IMAGE_HUNTER_IDLE = "IMAGE_HUNTER_IDLE";
 export const IMAGE_HUNTER_BATTLE_IDLE = "IMAGE_HUNTER_BATTLE_IDLE";
 export const IMAGE_HUNTER_ATTACK = "IMAGE_HUNTER_ATTACK";
+//INQUISITOR
+export const IMAGE_INQUISITOR_IDLE = "IMAGE_INQUISITOR_IDLE";
+export const IMAGE_INQUISITOR_BATTLE_IDLE = "IMAGE_INQUISITOR_BATTLE_IDLE";
+export const IMAGE_INQUISITOR_ATTACK = "IMAGE_INQUISITOR_ATTACK";
 // JESTER
 export const IMAGE_JESTER_IDLE = "IMAGE_JESTER_IDLE";
 export const IMAGE_JESTER_BATTLE_IDLE = "IMAGE_JESTER_BATTLE_IDLE";
@@ -89,6 +93,10 @@ export const IMAGE_ORACLE_BATTLE_IDLE = "IMAGE_ORACLE_BATTLE_IDLE";
 export const IMAGE_ORACLE_ATTACK = "IMAGE_ORACLE_ATTACK";
 export const IMAGE_ORACLE_SKILL_1 = "IMAGE_ORACLE_SKILL_1";
 export const IMAGE_ORACLE_SKILL_2 = "IMAGE_ORACLE_SKILL_2";
+// SHAMAN
+export const IMAGE_SHAMAN_IDLE = "IMAGE_SHAMAN_IDLE";
+export const IMAGE_SHAMAN_BATTLE_IDLE = "IMAGE_SHAMAN_BATTLE_IDLE";
+export const IMAGE_SHAMAN_ATTACK = "IMAGE_SHAMAN_ATTACK";
 // SORCERER
 export const IMAGE_SORCERER_IDLE = "IMAGE_SORCERER_IDLE";
 export const IMAGE_SORCERER_BATTLE_IDLE = "IMAGE_SORCERER_BATTLE_IDLE";
@@ -506,7 +514,14 @@ export function loadMcHeroIdleImages(scene: Scene, mcHeroClass: EHeroClass, load
             scene.load.image(IMAGE_ILLUSIONIST, "assets/sprites/units/magician.png");
             break;
         case EHeroClass.INQUISITOR:
-            scene.load.image(IMAGE_INQUISITOR, "assets/sprites/units/inquisitor.png");
+            {
+                scene.load.image(IMAGE_INQUISITOR, "assets/sprites/units/inquisitor.png");
+                // WEBP
+                scene.load.spritesheet(IMAGE_INQUISITOR_IDLE, "assets/sprites/units/mc/inquisitor/inquisitor_idle_2_cut_300.png", {
+                    frameWidth: 300,
+                    frameHeight: 300,
+                });
+            }
             break;
         case EHeroClass.KNIGHT:
             scene.load.image(IMAGE_KNIGHT, "assets/sprites/units/knight.png");
@@ -550,7 +565,14 @@ export function loadMcHeroIdleImages(scene: Scene, mcHeroClass: EHeroClass, load
             }
             break;
         case EHeroClass.SHAMAN:
-            scene.load.image(IMAGE_SHAMAN, "assets/sprites/units/shaman2.png");
+            {
+                scene.load.image(IMAGE_SHAMAN, "assets/sprites/units/shaman2.png");
+                // WEBP
+                scene.load.spritesheet(IMAGE_SHAMAN_IDLE, "assets/sprites/units/mc/shaman/shaman_idle_2_cut_300.png", {
+                    frameWidth: 300,
+                    frameHeight: 300,
+                });
+            }
             break;
         case EHeroClass.SORCERER:
             {
@@ -721,7 +743,17 @@ export function loadMcHeroBattleImages(scene: Scene, mcHeroClass: EHeroClass) {
             break;
         case EHeroClass.INQUISITOR:
             {
-                scene.load.image(IMAGE_INQUISITOR, "assets/sprites/units/inquisitor.png");
+                //scene.load.image(IMAGE_INQUISITOR, "assets/sprites/units/inquisitor.png");
+                //WEBP
+                scene.load.spritesheet(IMAGE_INQUISITOR_BATTLE_IDLE, "assets/sprites/units/mc/inquisitor/inquisitor_battle_idle_cut_400.png", {
+                    frameWidth: 400,
+                    frameHeight: 400,
+                });
+                //WEBP
+                scene.load.spritesheet(IMAGE_INQUISITOR_ATTACK, "assets/sprites/units/mc/inquisitor/inquisitor_attack_cut_400.png", {
+                    frameWidth: 400,
+                    frameHeight: 400,
+                });
             }
             break;
         case EHeroClass.JESTER:
