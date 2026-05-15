@@ -1,5 +1,6 @@
 import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 export const monkSkill_3: IHeroSkillSet = {
     id: "MonkSelfClear",
@@ -90,13 +91,7 @@ export const monkSkill: IHeroSkillSet = {
 export const monkPassive: IPassiveSkill = {
     desc: "Healing skills additionally restore 2 health to self and activate a totem",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             skillId: "Totem healing push",

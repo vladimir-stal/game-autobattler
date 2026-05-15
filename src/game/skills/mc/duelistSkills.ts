@@ -13,6 +13,7 @@ import {
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const duelistSkillset1: IHeroSkill = {
     type: EHeroSkillType.BUFF_COPY,
@@ -89,13 +90,7 @@ export const duelistSkill: IHeroSkillSet = {
 export const duelistPassive: IPassiveSkill = {
     desc: "Add crit.chance to evasion and evasion to crit.chance",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: true,
             type: EAppTriggerType.PRE_BATTLE,

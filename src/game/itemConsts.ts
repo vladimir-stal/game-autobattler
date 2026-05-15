@@ -175,7 +175,7 @@ export const itemsLvl5 = weaponsLvl5.concat(commonItemsLvl5);
 
 export const itemBattleBonuseTypes = [
     EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR,
-    EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING,
+    EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS,
     EItemBattleBonusType.INCREASE_DAMAGE_TO_HP,
     EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED,
     EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON,

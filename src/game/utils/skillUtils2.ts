@@ -6,8 +6,10 @@ import {
     EHeroSkillType,
     ESkillCondition,
     ETargetType,
+    IBuff,
     IHeroSkill,
     IHeroSkillSet,
+    IPassiveSkill,
     IUnit,
 } from "../../types";
 /*
@@ -15,6 +17,16 @@ import {
     if a function from here is moved to skillUtil.ts - it would create
     circular reference and game will fail to load
 */
+
+export const heroPassiveTemplate: IBuff = {
+    name: "Passive",
+    targetType: ETargetType.SELF,
+    timeType: EBuffTimeType.DUEL,
+    type: EBuffType.BATTLE_TRIGGER,
+    value: 1,
+    cannotBeTargeted: true,
+    isHidden: true,
+};
 
 export const skillsetSummon = (summon: IUnit, atkPure: number, atkPercent: number, atkMpScale: number, hpPure: number, armorPure: number): IHeroSkill[] => {
     return [

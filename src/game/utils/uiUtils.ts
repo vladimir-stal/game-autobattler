@@ -4,7 +4,7 @@ export const insertStats = (text: string, stats: (string | undefined)[]): string
     stats.forEach((stat, index) => {
         const num = index + 1;
         const replaceString = "{" + num + "}";
-        if (stat) {
+        if (stat !== undefined) {
             //console.log(`replace  ${replaceString} with ${stat}`);
             newText = newText.replace(replaceString, stat);
         }

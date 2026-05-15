@@ -1,89 +1,38 @@
-import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import {
+    AnimationType,
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EDebuffType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    EStatusType,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IPassiveSkill,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
-/*export const inquisitorSkill_3: IHeroSkillSet = {
-    id: "InquisitorBurn",
-    name: i18n.skills.mc.inquisitorSkill.name,
-    desc: i18n.skills.mc.inquisitorSkill.desc2,
-    level: 3,
-    priceLevel: 4,
-    heroClasses: [EHeroClass.INQUISITOR],
-    isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "Burn mark(3)",
-                type: EDebuffType.MARK_BURN,
-                value: 15,
-                valueType: "number",
-                targetType: ETargetType.HIGH_MP_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-    ],
-};
-
-export const inquisitorSkill_2: IHeroSkillSet = {
-    id: "InquisitorBurn",
-    name: i18n.skills.mc.inquisitorSkill.name,
-    desc: i18n.skills.mc.inquisitorSkill.desc3,
-    level: 2,
-    priceLevel: 4,
-    heroClasses: [EHeroClass.INQUISITOR],
-    isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            isBasicAttack: true,
-            debuff: {
-                name: "Burn mark(2)",
-                type: EDebuffType.MARK_BURN,
-                value: 10,
-                valueType: "number",
-                targetType: ETargetType.HIGH_MP_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-    ],
-    nextLevel: inquisitorSkill_3,
-};
-
-export const inquisitorSkill: IHeroSkillSet = {
-    id: "InquisitorBurn",
-    //name: "Inquisitor Burn",
-    //desc: "Debuff highest MP enemy \nwith mark that applies\n [5] burn every turn.",
-    name: i18n.skills.mc.inquisitorSkill.name,
-    desc: i18n.skills.mc.inquisitorSkill.desc1,
-    level: 1,
-    priceLevel: 4,
-    heroClasses: [EHeroClass.INQUISITOR],
-    isMcSkill: true,
-    skills: [
-        {
-            type: EHeroSkillType.DEBUFF,
-            debuff: {
-                name: "Burn mark",
-                type: EDebuffType.MARK_BURN,
-                value: 5,
-                valueType: "number",
-                targetType: ETargetType.HIGH_MP_ENEMY,
-                timeType: EBuffTimeType.DUEL,
-            },
-        },
-    ],
-    nextLevel: inquisitorSkill_2,
-};*/
+const MARK_BURN_DEBUFF_NAME = "Burn mark";
 
 // alternative EDebuffType.MARK_BURN
-const inquisitorSkillset = (burns:number):IHeroSkill[] => {
+const inquisitorSkillset = (burns: number): IHeroSkill[] => {
     return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetBuffId: MARK_BURN_DEBUFF_NAME,
+            targetType: ETargetType.HIGH_MP_ENEMY,
+            animation: AnimationType.NONE,
+        },
         {
             type: EHeroSkillType.DEBUFF,
             debuff: {
                 type: EDebuffType.BATTLE_TRIGGER,
-                name: "Burn mark",
+                name: MARK_BURN_DEBUFF_NAME,
                 targetType: ETargetType.HIGH_MP_ENEMY,
                 timeType: EBuffTimeType.DUEL,
                 value: 1,
@@ -98,13 +47,22 @@ const inquisitorSkillset = (burns:number):IHeroSkill[] => {
                             targetType: ETargetType.ANCHOR_TARGET,
                             value: burns,
                             valueType: "number",
-                        }
-                    ]
-                }
-            }
-        }
-    ]
-}
+                        },
+                    ],
+                },
+            },
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            status: EStatusType.BURN,
+            targetType: ETargetType.HIGH_MP_ENEMY,
+            value: burns,
+            valueType: "number",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+        },
+    ];
+};
 
 export const inquisitorSkill_3: IHeroSkillSet = {
     id: "InquisitorBurn",
@@ -140,18 +98,12 @@ export const inquisitorSkill: IHeroSkillSet = {
 };
 
 export const inquisitorPassive: IPassiveSkill = {
-    desc: "At the end of every round\ngain armor equal to 30%\nof burn stacks on all\nenemies",
+    desc: "At the end of turn\ngain armor equal to 30%\nof burn stacks on all\nenemies",
     preBattleBuff: {
-        type: EBuffType.BATTLE_TRIGGER,
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        value: 5,
-        isHidden: true,
-        cannotBeTargeted: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
-            type: EAppTriggerType.ROUND_CYCLE,
+            type: EAppTriggerType.TURN_END,
             skillId: "Inquisition",
             skill: [
                 {
@@ -167,10 +119,10 @@ export const inquisitorPassive: IPassiveSkill = {
                     value: 30,
                     valueType: "percent",
                     valueFrom: "customNumber",
-                }
-            ]
-        }
-    }
-}
+                },
+            ],
+        },
+    },
+};
 
 export const inquisitorSkills: THeroSkills = [inquisitorSkill];

@@ -18,6 +18,7 @@ import {
 } from "../../../types";
 import { i18n } from "../../consts";
 import { IMAGE_SKILL_SUMMON_FIREFLY } from "../../utils/load/skillImagesLoad";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 export const illusionSummon: IUnit = {
     unitType: EUnitType.UNIT,
@@ -101,14 +102,7 @@ export const illusionistSkill: IHeroSkillSet = {
 export const illusionistPassive: IPassiveSkill = {
     desc: "Once per each ally, when\nthey die, a random team\nsummon dies instead",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.ALL_ALLIES,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        valueType: "number",
-        isHidden: true,
-        cannotBeTargeted: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             allowCastFromDead: true,
             limitedRepeats: true,

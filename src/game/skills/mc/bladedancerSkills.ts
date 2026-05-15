@@ -17,6 +17,7 @@ import {
 } from "../../../types";
 import { i18n } from "../../consts";
 import { TOTEM_ID_BLADEDANCER } from "../../totemConsts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const bladedancerSkillset = (atk:number, scale:number):IHeroSkill[] => {
     return [
@@ -84,13 +85,7 @@ export const bladedancerSkill: IHeroSkillSet = {
 export const bladedancerPassive: IPassiveSkill = {
     desc: "Consecutive basic attacks at the same target increase damage by 1; makes +1 basic attack after evasion, but reduce attack by 40%",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             skillId: "Let the dance speak for me",

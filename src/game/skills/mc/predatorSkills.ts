@@ -1,5 +1,6 @@
-import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ESkillCondition, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 // [
 //     {
@@ -12,12 +13,14 @@ import { i18n } from "../../consts";
 //     },
 // ],
 
+const MARK_PREDATOR_DEBUFF_NAME = "Predator mark";
+
 const predatorSkillset = (markStrength: number): IHeroSkill[] => {
     return [
         {
             type: EHeroSkillType.DEBUFF,
             debuff: {
-                name: "Predator mark",
+                name: MARK_PREDATOR_DEBUFF_NAME,
                 type: EDebuffType.MARK_PREDATOR,
                 targetType: ETargetType.HIGH_BLEED_ENEMY,
                 timeType: EBuffTimeType.DUEL,
@@ -67,5 +70,43 @@ export const predatorSkill: IHeroSkillSet = {
     skills: predatorSkillset(15),
     nextLevel: predatorSkill_2,
 };
+
+export const predatorPassive: IPassiveSkill = {
+    desc: "Killing enemy with predator's mark, heals him 25% health and increase PP by 5",
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Hunt complete",
+            type: EAppTriggerType.DEATH,
+            targetCheck: ETargetType.ALL_ENEMIES,
+            skill: [
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.BY_RELEVANT_ID,
+                    targetBuffId: MARK_PREDATOR_DEBUFF_NAME,
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.HEAL,
+                    targetType: ETargetType.SELF,
+                    value: 25,
+                    valueType: "percent",
+                    valueFrom: "maxHp",
+                    animation: AnimationType.NONE,
+                    condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+                },
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    targetType: ETargetType.SELF,
+                    attribute: "physicalPower",
+                    value: 5,
+                    valueType: "number",
+                    condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+                }
+            ],
+        }
+    }
+}
 
 export const predatorSkills: THeroSkills = [predatorSkill];

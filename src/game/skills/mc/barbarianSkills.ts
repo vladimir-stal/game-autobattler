@@ -11,6 +11,7 @@ import {
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 export const barbarianSkill_3: IHeroSkillSet = {
     id: "BarbarianShout",
@@ -101,14 +102,9 @@ export const barbarianSkill: IHeroSkillSet = {
 export const barbarianPassive: IPassiveSkill = {
     desc: "Every incoming basic\nattack increase regen by 1\n(max +20)",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
+        ...heroPassiveTemplate,
         value: 20,
         valueType: "number",
-        cannotBeTargeted: true,
-        isHidden: true,
         appTrigger: {
             limitedRepeats: true,
             skillId: "Undying rage",

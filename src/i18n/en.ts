@@ -178,6 +178,7 @@ export interface Ii18n {
         mc: Record<string, TSkillI18n>;
     };
     statuses: Record<EStatusType, string>;
+    statuses2: Record<EStatusType, string>;
     tags: Partial<Record<EHeroClass, string>>;
     ui: {
         BUY: string;
@@ -296,15 +297,15 @@ export const i18n: Ii18n = {
             BASIC_ATTACK_TWICE: "Attacks twice but with\nstrength reduced to\n{1}%{2}",
             BASIC_ONCE_IN_TWO_TURNS: "BASIC_ONCE_IN_TWO_TURNS",
             CRIT_EVERY_TWO_TURNS: "CRIT_EVERY_TWO_TURNS",
-            CRIT_INCR_NONCRIT_DECR: "Increase critical damage,\nbut reduce non-critical\ndamage by {1}{2}",
+            CRIT_INCREASE: "Increase critical damage\nby {1}{2}",
+            NONCRIT_INCREASE: "Increase non-critical\ndamage by {1}{2}",
             CRIT_WITH_MAGIC: "Magical attack skills\ncan be critical",
             CRIT_WITH_PHYSICAL: "Physical attack skills\ncan be critical",
             CRIT_WITH_HEAL: "Healing skills can be\ncritical",
             HEAL_INCREASE: "Increase healing by {1}{2}",
             INCREASE_DAMAGE_TO_ARMOR: "Increase damage to armor\nby {1}{2}",
-            INCREASE_DAMAGE_TO_BLEEDING: "Increase damage to bleeding\ntargets by {1}{2}",
+            INCREASE_DAMAGE_TO_TARGET_WITH_STATUS: "Increase damage to {3}\ntargets by {1}{2}",
             INCREASE_DAMAGE_TO_HP: "Increase damage to health\nby {1}{2}",
-            INCREASE_DAMAGE_TO_POISONED: "Increase damage to poisoned\ntargets by {1}{2}",
             INCREASE_DAMAGE_TO_SUMMON: "Increase damage to summons\nby {1}{2}",
             INCREASE_MAGIC_DAMAGE: "Increase magic damage\nby {1}{2}",
             INCREASE_PHYSICAL_DAMAGE: "Increase physical damage\nby {1}{2}",
@@ -312,9 +313,7 @@ export const i18n: Ii18n = {
             INCREASE_SUMMON_HP: "Increase summons' health\nby {1}{2}",
             INCREASE_TOTAL_DAMAGE: "Increase total damage\nby {1}%{2}",
             INCREASE_ARMOR_GAIN: "Increase amount of gained\narmor by {1}{2}",
-            STATUS_BLEED_APPLY_INCREASE: "Increase applied bleed\nby {1}{2}",
-            STATUS_BURN_APPLY_INCREASE: "Increase applied burn\nby {1}{2}",
-            STATUS_POISON_APPLY_INCREASE: "Increase applied poison\nby {1}{2}",
+            STATUS_APPLY_INCREASE: "Increase applied {3}\nby {1}{2}",
             SUMMON_INCREASE_DAMAGE: "SUMMON_INCREASE_DAMAGE",
             TOTEM_INCREASE_VALUE: "Increase totem values\nby {1}{2}",
             CAST_SKILL_X_ROUND: "Once per combat, applies\neffect at the end of round",
@@ -569,6 +568,13 @@ export const i18n: Ii18n = {
         POISON: "poison",
         SHOCK: "shock",
         RADIATE: "radiate",
+    },
+    statuses2: {
+        BLEED: "bleeding",
+        BURN: "burning",
+        POISON: "poisoned",
+        SHOCK: "shocked",
+        RADIATE: "radiated",
     },
     tags: {
         BARD: "BARD",

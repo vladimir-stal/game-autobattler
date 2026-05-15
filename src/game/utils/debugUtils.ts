@@ -1,4 +1,4 @@
-import { ECardType, EItemBattleBonusType, EItemBonusType, EItemTargetType, ICard, TDuelEnemy } from "../../types";
+import { ECardType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EStatusType, ICard, TDuelEnemy } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { jacket21_3 } from "../commonItemConsts2";
@@ -30,7 +30,7 @@ import { goblinUnit } from "../units/goblinMobUnits";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
 import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from "../units/summonMobUnits";
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
-import { dagger31 } from "../weaponItem3Consts";
+import { axe31, dagger31, staff31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
 import { healFirst, healSelf, ringOfHealingSkill } from "../skills/priestSkillConsts";
 import { buffNextBaTimes, buffNextBaTimes_2, mortalStrikeSkill } from "../skills/warriorSkillConsts";
@@ -59,7 +59,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: bladedancerHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: warriorHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
@@ -78,11 +78,7 @@ export const customStartingItemsRoom = (): ICard[] => {
         //     price: 0,
         //     item: basic_jacket_2,
         // },
-        {
-             type: ECardType.ITEM,
-             price: 0,
-             item: basic_jacket_2,
-        },
+        { type: ECardType.ITEM, price: 0, item: staff31, },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
         // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
         // { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
@@ -94,7 +90,7 @@ export const customStartingItemsRoom = (): ICard[] => {
         { type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes_2, isChained: true} },
         
         //{ type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
-        /*{
+        {
 
             type: ECardType.ITEM,
             price: 0,
@@ -111,8 +107,17 @@ export const customStartingItemsRoom = (): ICard[] => {
                         valueFrom: "basicMaxHp",
                     },
                 ],
+                battleBonuses: [
+                    {
+                        type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS,
+                        value: 30,
+                        valueType: "percent",
+                        valueFrom: "attack",
+                        status: EStatusType.POISON,
+                    }
+                ]
             },
-        },*/
+        },
         //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

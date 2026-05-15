@@ -22,7 +22,6 @@ import {
     getAllyTargets,
     getItemBonusValue,
     getOpponentTargets,
-    getStatusItemBonusType,
     reduceStatus,
 } from "./battleUtils";
 
@@ -90,10 +89,16 @@ const performTotemStatusApply = (unit: IBattleUnit, totem: ITotem, skill: IHeroS
 
     let finalValue = calcTotemValue(baseValue, mpScaleValue, ppScaleValue, totem);
 
-    const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
-    if (itemBonus) {
-        finalValue += calculateIncreaseValue(1, itemBonus.value, itemBonus.valueType);
-    }
+    let bonusFlat = 0;
+    let bonusPercent = 0;
+    unit.itemBonuses.forEach((b) => {
+        if (b.type === EItemBattleBonusType.STATUS_APPLY_INCREASE && b.status === status) {
+            const v = getItemBonusValue(unit, b);
+            b.valueType === "percent" ? (bonusPercent += v) : (bonusFlat += v);
+        }
+    });
+    finalValue += calculateIncreaseValue(1, bonusPercent, "percent");
+    finalValue += calculateIncreaseValue(1, bonusFlat, "number");
 
     targets.forEach((target) => {
         applyStatus(unit, target, status, finalValue, battleController.battleRecord, false);

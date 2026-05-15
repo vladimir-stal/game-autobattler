@@ -1476,22 +1476,6 @@ export const executeDebuff = (unit: IBattleUnit, debuff: IDebuff, battleRecord: 
     }
 };
 
-export const getStatusItemBonusType = (status: EStatusType) => {
-    switch (status) {
-        case EStatusType.BLEED:
-            return EItemBattleBonusType.STATUS_BLEED_APPLY_INCREASE;
-        case EStatusType.BURN:
-            return EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE;
-        case EStatusType.POISON:
-            return EItemBattleBonusType.STATUS_POISON_APPLY_INCREASE;
-        case EStatusType.SHOCK:
-            return;
-        default: {
-            console.log("ERROR No item status bonus for status type", status);
-        }
-    }
-};
-
 export const getExistingBuff = (unit: IBattleUnit, buff: IBuff) => {
     const { type, attribute, timeType } = buff;
 
@@ -1619,15 +1603,29 @@ export const calculateDamageBonuses = (
         }
     }
 
+    let modifyPercent = 0;
+    let modifyFlat = 0;
+    if (isCrit) {
+        unit.itemBonuses.forEach(b => {
+            if (b.type === EItemBattleBonusType.CRIT_INCREASE) {
+                const v = getItemBonusValue(unit, b);
+                b.valueType === "percent" ? modifyPercent += v : modifyFlat += v;
+            }
+        })
+    } else {
+        unit.itemBonuses.forEach(b => {
+            if (b.type === EItemBattleBonusType.NONCRIT_INCREASE) {
+                const v = getItemBonusValue(unit, b);
+                b.valueType === "percent" ? modifyPercent += v : modifyFlat += v;
+            }
+        })
+    }
+    attackDamage += calculateIncreaseValue(attackDamage, modifyPercent, "percent");
+    attackDamage += calculateIncreaseValue(attackDamage, modifyFlat, "number");
     // check bonuses/debuffs for crit and non-crit damage
-    const critNonCritBonus = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR);
+    const critNonCritBonus = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_INCREASE);
     if (critNonCritBonus) {
         // increase damage if critical hit, descrese damage on non critical hit
-        if (isCrit) {
-            attackDamage += calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
-        } else {
-            attackDamage -= calculateIncreaseValue(attackDamage, critNonCritBonus.value, critNonCritBonus.valueType);
-        }
     }
 
     return { attackDamage, isCrit };

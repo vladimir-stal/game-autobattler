@@ -1,5 +1,6 @@
 import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, EUnitType, IHeroSkill, IHeroSkillSet, IPassiveSkill, IUnit, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 import { mobNoSkill } from "../mobSkills";
 
 
@@ -166,13 +167,7 @@ const mimicSkillset = (ppScale: number, mpScale: number): IHeroSkill[] => {
 export const mimicPassive: IPassiveSkill = {
     desc: "At the start of 2nd round\nsummons Copycat. Boost\nsummon stats atk+35%xMP\nhp+50%xPP, MP & PP x40%\nCopycat mimics 4th slot\nskill every odd round",
     preBattleBuff: {
-        name: "Passive",
-        type: EBuffType.BATTLE_TRIGGER,
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        value: 1,
-        isHidden: true,
-        cannotBeTargeted: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: true,
             skillId: "Self copy",

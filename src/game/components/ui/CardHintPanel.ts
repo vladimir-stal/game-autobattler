@@ -367,9 +367,24 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
                 } else {
                     //text += i18n.attributes.bonusType[bonus.type] + (bonus.status ? " " + i18n.statuses[bonus.status] : "") + " [" + bonus.value + "]\n";
                     const stats = [];
-                    bonus.value && stats.push(bonus.value + "");
+                    if (bonus.value !== undefined) {
+                        stats.push(bonus.value + (bonus.valueType === "percent" ? "%" : ""));
+                    } else {
+                        stats.push("");
+                    }
                     if (bonus.valueFrom) {
                         stats.push(" " + i18n.ui.OFSTAT + " " + i18n.attributes.battleAttribute[bonus.valueFrom]);
+                    } else {
+                        stats.push("");
+                    }
+                    if (bonus.status) {
+                        if (bonus.type === EItemBattleBonusType.STATUS_APPLY_INCREASE) {
+                            stats.push(i18n.statuses[bonus.status]);
+                        } else {
+                            stats.push(i18n.statuses2[bonus.status]);
+                        }                        
+                    } else {
+                        stats.push("");
                     }
                     text += insertStats(i18n.attributes.bonusType[bonus.type], stats) + "\n";
                 }

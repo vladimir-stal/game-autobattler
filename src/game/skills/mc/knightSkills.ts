@@ -1,5 +1,6 @@
 import { EAppTriggerType, EBuffTimeType, EBuffType, EHeroAttackType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 export const knightSkill_3: IHeroSkillSet = {
     id: "KnightArmor",
@@ -66,13 +67,7 @@ export const knightSkill: IHeroSkillSet = {
 export const knightPassive: IPassiveSkill = {
     desc: "Perform physical attack for [2+50%xPP] when block or negate damage, and gain [1+25%xPP] armor",
     preBattleBuff: {
-        type: EBuffType.BATTLE_TRIGGER,
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        value: 1,
-        isHidden: true,
-        cannotBeTargeted: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             skillId: "Hit the wall",

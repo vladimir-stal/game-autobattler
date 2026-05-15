@@ -12,9 +12,9 @@ import { blackKnightSkills } from "./skills/mc/blackKnightSkills";
 import { bladedancerPassive, bladedancerSkills } from "./skills/mc/bladedancerSkills";
 import { commanderSkills } from "./skills/mc/commanderSkills";
 import { doomsayerSkills } from "./skills/mc/doomsayerSkills";
-import { druidSkills } from "./skills/mc/druidSkills";
+import { druidPassive, druidSkills } from "./skills/mc/druidSkills";
 import { duelistPassive, duelistSkills } from "./skills/mc/duelistSkills";
-import { exorcistSkills } from "./skills/mc/exorcistSkills";
+import { exorcistPassive, exorcistSkills } from "./skills/mc/exorcistSkills";
 import { forestSpiritPassive, forestSpititSkills } from "./skills/mc/forestSpiritSkills";
 import { gladiatorPassive, gladiatorSkills } from "./skills/mc/gladiatorSkills";
 import { heraldPassive, heraldSkills } from "./skills/mc/heraldSkills";
@@ -29,7 +29,7 @@ import { monkPassive, monkSkills } from "./skills/mc/monkSkills";
 import { necromancerPassive, necromancerSkills } from "./skills/mc/necromancerSkills";
 import { oraclePassive, oracleSkills } from "./skills/mc/oracleSkills";
 import { paladinPassive, paladinSkills } from "./skills/mc/paladinSkills";
-import { predatorSkills } from "./skills/mc/predatorSkills";
+import { predatorPassive, predatorSkills } from "./skills/mc/predatorSkills";
 import { runecasterPassive, runecasterSkills } from "./skills/mc/runecasterSkills";
 import { samuraiPassive, samuraiSkills } from "./skills/mc/samuraiSkills";
 import { shadowMasterSkills } from "./skills/mc/shadowMasterSkills";
@@ -577,9 +577,7 @@ export const druidHero: IUnit = {
     name: i18n.heroes.DRUID,
     id: EHeroClass.DRUID,
     skills: druidSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: druidPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -785,9 +783,7 @@ export const predatorHero: IUnit = {
     name: i18n.heroes.PREDATOR,
     id: EHeroClass.PREDATOR,
     skills: predatorSkills,
-    passiveSkill: {
-        desc: "Killing marked target\ngrants PP bonus",
-    },
+    passiveSkill: predatorPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -892,9 +888,7 @@ export const exorcistHero: IUnit = {
     name: i18n.heroes.EXORCIST,
     id: EHeroClass.EXORCIST,
     skills: exorcistSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: exorcistPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

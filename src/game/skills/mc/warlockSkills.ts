@@ -1,5 +1,6 @@
 import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const warlockSkillset = (percentDecrease:number, mpScale:number):IHeroSkill[] => {
     return [
@@ -67,13 +68,7 @@ export const warlockSkill: IHeroSkillSet = {
 export const warlockPassive: IPassiveSkill = {
     desc: "Every enemy that dies with poison stacks spread 65% poison to every other enemy",
     preBattleBuff: {
-        name: "Passive",
-        type: EBuffType.BATTLE_TRIGGER,
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             skillId: "Toxic death",

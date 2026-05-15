@@ -13,6 +13,7 @@ import {
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const oracleSkillset = (numEvades: number, numClear: number): IHeroSkill[] => {
     return [
@@ -81,13 +82,7 @@ export const oracleSkill: IHeroSkillSet = {
 export const oraclePassive: IPassiveSkill = {
     desc: "Gain Armor after each\nevade (1+40%x(MP+PP))",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        isHidden: true,
-        cannotBeTargeted: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             skillId: "Cannot hit me twice",

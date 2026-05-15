@@ -48,7 +48,6 @@ import {
     getAllyTotems,
     getExistingBuff,
     getOpponentTargets,
-    getStatusItemBonusType,
     getTargets,
     getTargetWithSummon,
     getTargetWithTotem,
@@ -667,7 +666,7 @@ export class BattleController {
         forEachNestedEffects(unit, (ne) => {
             if (ne.buffType === EBuffType.BASIC_ATTACK_ADD_TIMES) {
                 additionalBaTimes += ne.totalValue;
-                console.log(">>> Add attacks",ne);
+                console.log(">>> Add attacks", ne);
             }
         });
         //const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
@@ -1079,10 +1078,16 @@ export class BattleController {
 
         let finalValue = baseValue + mpScaleValue + ppScaleValue;
 
-        const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
-        if (itemBonus) {
-            finalValue += calculateIncreaseValue(1, itemBonus.value, itemBonus.valueType);
-        }
+        let bonusFlat = 0;
+        let bonusPercent = 0;
+        unit.itemBonuses.forEach(b => {
+            if (b.type === EItemBattleBonusType.STATUS_APPLY_INCREASE && b.status === status) {
+                const v = getItemBonusValue(unit,b);
+                b.valueType === "percent" ? bonusPercent += v : bonusFlat += v;
+            }
+        })
+        finalValue += calculateIncreaseValue(1, bonusPercent, "percent");
+        finalValue += calculateIncreaseValue(1, bonusFlat, "number");
 
         let lastTargetId;
         targets.forEach((target) => {
@@ -2203,35 +2208,23 @@ export class BattleController {
             finalDamageValue = Math.floor((finalDamageValue * (100 + resistDecreasePercent)) / 100 + resistDecreaseAbsolute);
         }
 
-        // check bonus damage to summons
-        if (target.isSummon) {
-            unit.itemBonuses &&
-                unit.itemBonuses.forEach((bonus) => {
-                    if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON) {
-                        finalDamageValue += calculateIncreaseValue(finalDamageValue, getItemBonusValue(unit, bonus), bonus.valueType);
-                    }
-                });
-        }
+        let damageBonusesPercent = 0;
+        let damageBonusesAbsolute = 0;
 
-        // check bonus damage to bleeding target
-        if (target.statuses.find((status) => status.type === EStatusType.BLEED)) {
-            unit.itemBonuses &&
-                unit.itemBonuses.forEach((bonus) => {
-                    if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING) {
-                        finalDamageValue += calculateIncreaseValue(finalDamageValue, getItemBonusValue(unit, bonus), bonus.valueType);
-                    }
-                });
-        }
-
-        // check bonus damage to poisoned target
-        if (target.statuses.find((status) => status.type === EStatusType.POISON)) {
-            unit.itemBonuses &&
-                unit.itemBonuses.forEach((bonus) => {
-                    if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED) {
-                        finalDamageValue += calculateIncreaseValue(finalDamageValue, getItemBonusValue(unit, bonus), bonus.valueType);
-                    }
-                });
-        }
+        unit.itemBonuses.forEach((bonus) => {
+            if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS) {
+                const stacks = target.statuses.find((status) => status.type === bonus.status);
+                if (!!stacks) {
+                    const v = getItemBonusValue(unit, bonus);
+                    bonus.valueType === "percent" ? damageBonusesPercent += v : damageBonusesAbsolute += v;
+                }
+            } else if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON && target.isSummon) {
+                const v = getItemBonusValue(unit, bonus);
+                bonus.valueType === "percent" ? damageBonusesPercent += v : damageBonusesAbsolute += v;
+            }
+        });
+        finalDamageValue += calculateIncreaseValue(finalDamageValue, damageBonusesPercent, "percent");
+        finalDamageValue += calculateIncreaseValue(finalDamageValue, damageBonusesAbsolute, "number");
 
         // EVASION
         // by default evasion only works versus physical attacks and skills

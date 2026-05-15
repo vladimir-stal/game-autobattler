@@ -1,5 +1,6 @@
 import { EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ESkillCondition, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const witchSkillset = (base:number, mpScale:number):IHeroSkill[] => {
     return [
@@ -56,13 +57,7 @@ export const witchSkill: IHeroSkillSet = {
 export const witchPassive: IPassiveSkill = {
     desc: "Increase MP by 35% of total bleed on all enemies",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             skillId: "Blood check",
