@@ -1,3 +1,4 @@
+import { EBuffType, EDebuffType } from "../types";
 import { bardSkills, bardSkills_2, bardSkills_3 } from "./skills/bardSkillConsts";
 import {
     attackWithBleedSkill,
@@ -36,6 +37,24 @@ export const skillPrices: Record<number, number> = {
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+export const allowedBuffTypesToGetBonuses: EBuffType[] = [
+    // what Buffs are affected by EItemBattleBonusType.INCREASE_BUFF_POTENCY bonus
+    EBuffType.ATTRIBUTE_INCREASE,
+    EBuffType.DARK_HEAL,
+    EBuffType.OUTGOING_HEAL,
+    EBuffType.OVERHEAL_TO_DAMAGE,
+    EBuffType.THORNS_SHIELD,
+    EBuffType.TOTAL_DAMAGE_INCREASE,
+];
+export const allowedDebuffTypesToGetBonuses: EDebuffType[] = [
+    // what Debuffs are affected by EItemBattleBonusType.INCREASE_DEBUFF_POTENCY bonus
+    EDebuffType.ATTRIBUTE_DECREASE,
+    EDebuffType.BLIND,
+    EDebuffType.MARK_HUNTER,
+    EDebuffType.MARK_PREDATOR,
+    EDebuffType.RESIST_DECREASE,
+    EDebuffType.HEALING_DECREASE,
+];
 
 // All basic classes basic skills
 export const allBasicClassesSkills = [

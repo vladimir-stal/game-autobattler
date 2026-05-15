@@ -1,5 +1,6 @@
-import { EBuffTimeType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, EItemBattleBonusType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 // TODO: add scaling from mp? add value if heal < value => debuff is not removed
 
@@ -53,5 +54,43 @@ export const zealotSkill: IHeroSkillSet = {
     skills: zealotSkillset(1,ETargetType.FIRST_ENEMY),
     nextLevel: zealotSkill_2,
 };
+
+export const zealotPassive: IPassiveSkill = {
+    desc: "Each turn random enemy lose 3 hp regen",
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Miasma",
+            type: EAppTriggerType.TURN_START,
+            skill: [
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.RANDOM_ENEMY,
+                    attribute: "hpRegen",
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.ATTRIBUTE_DECREASE,
+                    targetType: ETargetType.SAME_LAST_TARGET,
+                    attribute: "hpRegen",
+                    value: 3,
+                    valueType: "number",
+                    animation: AnimationType.NONE,
+                    condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE
+                },
+                {
+                    type: EHeroSkillType.ATTRIBUTE_DECREASE,
+                    targetType: ETargetType.RANDOM_ENEMY,
+                    attribute: "hpRegen",
+                    value: 3,
+                    valueType: "number",
+                    animation: AnimationType.NONE,
+                    condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO
+                },
+            ],
+        }
+    }
+}
 
 export const zealotSkills: THeroSkills = [zealotSkill];

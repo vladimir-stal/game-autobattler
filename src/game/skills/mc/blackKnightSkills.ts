@@ -1,5 +1,6 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EItemBattleBonusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const blackKnightSkillset = (value: number): IHeroSkill[] => {
     return [
@@ -50,5 +51,26 @@ export const blackKnightSkill: IHeroSkillSet = {
     skills: blackKnightSkillset(1),
     nextLevel: blackKnightSkill_2,
 };
+
+export const blackKnightPassive: IPassiveSkill = {
+    desc: "Adds 100% Magic power to Physical power",
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            limitedRepeats: true,
+            type: EAppTriggerType.PRE_BATTLE,
+            skillId: "Dark power",
+            skill: [
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    attribute: "physicalPower",
+                    value: 0,
+                    valueType: "number",
+                    mpScale: 100,
+                }
+            ],
+        }
+    }
+}
 
 export const blackKnightSkills: THeroSkills = [blackKnightSkill];

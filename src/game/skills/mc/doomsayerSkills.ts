@@ -4,10 +4,12 @@ import {
     EDebuffType,
     EHeroClass,
     EHeroSkillType,
+    EItemBattleBonusType,
     ESkillSetType,
     ETargetType,
     IHeroSkill,
     IHeroSkillSet,
+    IPassiveSkill,
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
@@ -77,5 +79,15 @@ export const doomsayerSkill: IHeroSkillSet = {
     //
     animationType: AnimationType.UNIT_DEBUFF,
 };
+
+export const doomsayerPassive: IPassiveSkill = {
+    desc: "Increase potency of debuffs by 50%",
+    itemPassive: {
+        type: EItemBattleBonusType.INCREASE_DEBUFF_POTENCY,
+        value: 50,
+        valueType: "percent",
+    }
+    
+}
 
 export const doomsayerSkills: THeroSkills = [doomsayerSkill];

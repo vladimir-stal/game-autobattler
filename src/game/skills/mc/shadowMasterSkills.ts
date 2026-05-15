@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 // TODO: when buff repeats what happens? add MP scale?
@@ -78,5 +78,10 @@ export const shadowMasterSkill: IHeroSkillSet = {
     skills: shadowMasterSkillset(15),
     nextLevel: shadowMasterSkill_2,
 };
+
+export const shadowMasterPassive: IPassiveSkill = {
+    desc: "",
+    // todo
+}
 
 export const shadowMasterSkills: THeroSkills = [shadowMasterSkill];

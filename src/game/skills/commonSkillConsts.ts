@@ -895,6 +895,7 @@ export const radiantWallSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.PRIEST],
+    type: ESkillSetType.SUMMON,
     skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon(10, 3), 0, 35, 60, 3, 3)], // summon 0/10
     image: IMAGE_SKILL_SUMMON_WITH_SHIELD,
 };
@@ -906,6 +907,7 @@ export const radiantWallSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.PRIEST],
+    type: ESkillSetType.SUMMON,
     skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon(7, 2), 0, 35, 40, 2, 3)], // summon 0/7
     nextLevel: radiantWallSkill_3,
     image: IMAGE_SKILL_SUMMON_WITH_SHIELD,
@@ -918,6 +920,7 @@ export const radiantWallSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 1,
     heroClasses: [EHeroClass.SUMMON, EHeroClass.PRIEST],
+    type: ESkillSetType.SUMMON,
     skills: [selfBuffOverheal(2), ...skillsetSummon(radiantWallSummon(5, 1), 0, 35, 20, 2, 2)], // summon 0/5
     nextLevel: radiantWallSkill_2,
     image: IMAGE_SKILL_SUMMON_WITH_SHIELD,

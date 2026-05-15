@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const minstrelSkillset = (percent:number):IHeroSkill[] => {
@@ -53,5 +53,10 @@ export const minstrelSkill: IHeroSkillSet = {
     skills: minstrelSkillset(80),
     nextLevel: minstrelSkill_2,
 };
+
+export const ministrelPassive: IPassiveSkill = {
+    desc: "",
+    // todo
+}
 
 export const minstrelSkills: THeroSkills = [minstrelSkill];

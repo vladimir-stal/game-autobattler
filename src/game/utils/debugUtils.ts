@@ -19,6 +19,7 @@ import {
     samuraiHero,
     shamanHero,
     witchHero,
+    zealotHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill, toxicTuneSkill, venomHeartSkill } from "../skills/commonSkillConsts";
@@ -59,7 +60,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: warriorHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: zealotHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
@@ -78,7 +79,7 @@ export const customStartingItemsRoom = (): ICard[] => {
         //     price: 0,
         //     item: basic_jacket_2,
         // },
-        { type: ECardType.ITEM, price: 0, item: staff31, },
+        { type: ECardType.ITEM, price: 0, item: jacket21_3, },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
         // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
         // { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
@@ -86,11 +87,11 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: warriorHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
-        { type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes, isChained: true} },
-        { type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes_2, isChained: true} },
+        //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes, isChained: true} },
+        //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes_2, isChained: true} },
         
         //{ type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
-        {
+        /*{
 
             type: ECardType.ITEM,
             price: 0,
@@ -117,7 +118,7 @@ export const customStartingItemsRoom = (): ICard[] => {
                     }
                 ]
             },
-        },
+        },*/
         //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

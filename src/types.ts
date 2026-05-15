@@ -547,10 +547,12 @@ export enum EItemBattleBonusType {
     BASIC_ONCE_IN_TWO_TURNS = "BASIC_ONCE_IN_TWO_TURNS", // TODO: implement
     SUMMON_INCREASE_DAMAGE = "SUMMON_INCREASE_DAMAGE", // TODO: implement
     TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE",
-    CRIT_EVERY_TWO_TURNS = "CRIT_EVERY_TWO_TURNS", // TODO: implement
+    CRIT_ACCUM_IF_NOT = "CRIT_ACCUM_IF_NOT", // increase crit chance if no crit, reset to 0 after crit
     STATUS_APPLY_INCREASE = "STATUS_APPLY_INCREASE",
     CAST_SKILL_X_ROUND = "CAST_SKILL_X_ROUND",
     UNPACK_SKILL_IN_STASH = "UNPACK_SKILL_IN_STASH",
+    INCREASE_BUFF_POTENCY = "INCREASE_BUFF_POTENCY",
+    INCREASE_DEBUFF_POTENCY = "INCREASE_DEBUFF_POTENCY",
 }
 
 export enum EBattleActionType {
@@ -749,6 +751,7 @@ export enum ESkillSetType {
     DEBUFF = "DEBUFF",
     HEAL = "HEAL",
     MIXED = "MIXED",
+    SUMMON = "SUMMON",
 }
 
 /**
@@ -948,6 +951,9 @@ export interface IBattleUnit extends IUnit {
     totem?: ITotem;
     statuses: IStatus[];
     itemBonuses: IItemBattleBonus[];
+    //
+    critChanceAccumulate?:number; //bonus to critChance, based on CRIT_ACCUM_IF_NOT item battle bonus
+                                  //  increase by X when non-crit, reset to 0 after crit
     //
     currentSkillIndex: number;
 }

@@ -26,6 +26,8 @@ import {
     IBattleTrigger,
     INestedBuffEffect,
     AnimationType,
+    EHeroClass,
+    ESkillSetType,
 } from "../../types";
 import { allyTargets, CRIT_MODIFIER, eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
@@ -644,8 +646,24 @@ export class BattleController {
                 return this.performForceOutOfTurnAction(unit, skill, isPlayer1, false, isStartBattle, sameLastTargetId);
             case EHeroSkillType.FORCE_UNIT_CAST_SKILL:
                 return this.performForceOutOfTurnAction(unit, skill, isPlayer1, true, isStartBattle, sameLastTargetId);
-            case EHeroSkillType.FORCE_TOTEM_ACTION:
-                return this.performForceOutOfTurnTotem(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
+            case EHeroSkillType.FORCE_TOTEM_ACTION: {
+                if (unit.heroClass === EHeroClass.BEAST_MASTER && unit.summon) {
+                    return this.performForceOutOfTurnAction(
+                        unit,
+                        {
+                            type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+                            targetType: ETargetType.SELF,
+                            animation: AnimationType.NONE,
+                        },
+                        isPlayer1,
+                        false,
+                        isStartBattle,
+                        sameLastTargetId,
+                    );
+                } else {
+                    return this.performForceOutOfTurnTotem(unit, skill, isPlayer1, isStartBattle, sameLastTargetId);
+                }
+            }
             case EHeroSkillType.NONE:
                 {
                 }
@@ -1080,12 +1098,12 @@ export class BattleController {
 
         let bonusFlat = 0;
         let bonusPercent = 0;
-        unit.itemBonuses.forEach(b => {
+        unit.itemBonuses.forEach((b) => {
             if (b.type === EItemBattleBonusType.STATUS_APPLY_INCREASE && b.status === status) {
-                const v = getItemBonusValue(unit,b);
-                b.valueType === "percent" ? bonusPercent += v : bonusFlat += v;
+                const v = getItemBonusValue(unit, b);
+                b.valueType === "percent" ? (bonusPercent += v) : (bonusFlat += v);
             }
-        })
+        });
         finalValue += calculateIncreaseValue(1, bonusPercent, "percent");
         finalValue += calculateIncreaseValue(1, bonusFlat, "number");
 
@@ -1345,9 +1363,19 @@ export class BattleController {
         });
         // check crit
         const isCritWithHeal = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_WITH_HEAL);
-        if (isCritWithHeal && unit.critChance > 0) {
-            if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
-                finalHeal += Math.floor(finalHeal * CRIT_MODIFIER);
+        if (isCritWithHeal) {
+            const critChance = unit.critChance + (unit.critChanceAccumulate || 0);
+            if (critChance > 0) {
+                if (getRandomIntFromInterval(0, 100) <= critChance) {
+                    finalHeal += Math.floor(finalHeal * CRIT_MODIFIER);
+                    unit.critChanceAccumulate = 0;
+                } else {
+                    unit.itemBonuses.forEach((b) => {
+                        if (b.type === EItemBattleBonusType.CRIT_ACCUM_IF_NOT) {
+                            unit.critChanceAccumulate = (unit.critChanceAccumulate || 0) + getItemBonusValue(unit, b);
+                        }
+                    });
+                }
             }
         }
 
@@ -2216,11 +2244,11 @@ export class BattleController {
                 const stacks = target.statuses.find((status) => status.type === bonus.status);
                 if (!!stacks) {
                     const v = getItemBonusValue(unit, bonus);
-                    bonus.valueType === "percent" ? damageBonusesPercent += v : damageBonusesAbsolute += v;
+                    bonus.valueType === "percent" ? (damageBonusesPercent += v) : (damageBonusesAbsolute += v);
                 }
             } else if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON && target.isSummon) {
                 const v = getItemBonusValue(unit, bonus);
-                bonus.valueType === "percent" ? damageBonusesPercent += v : damageBonusesAbsolute += v;
+                bonus.valueType === "percent" ? (damageBonusesPercent += v) : (damageBonusesAbsolute += v);
             }
         });
         finalDamageValue += calculateIncreaseValue(finalDamageValue, damageBonusesPercent, "percent");

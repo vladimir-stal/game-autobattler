@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 export const alchemistSkill_3: IHeroSkillSet = {
@@ -74,5 +74,10 @@ export const alchemistSkill: IHeroSkillSet = {
     ],
     nextLevel: alchemistSkill_2,
 };
+
+export const alchemistPassive: IPassiveSkill = {
+    desc: "",
+    // todo
+}
 
 export const alchemistSkills: THeroSkills = [alchemistSkill];

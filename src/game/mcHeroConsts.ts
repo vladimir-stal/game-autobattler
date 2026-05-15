@@ -6,9 +6,9 @@ import { alchemistSkills } from "./skills/mc/alchemistSkills";
 import { assassinPassive, assassinSkills } from "./skills/mc/assassinSkills";
 import { barbarianPassive, barbarianSkills } from "./skills/mc/barbarianSkills";
 import { battleMagePassive, battleMageSkills } from "./skills/mc/battleMageSkills";
-import { beastMasterSkills } from "./skills/mc/beastmasterSkills";
+import { beastMasterPassive, beastMasterSkills } from "./skills/mc/beastmasterSkills";
 import { bishopPassive, bishopSkills } from "./skills/mc/bishopSkills";
-import { blackKnightSkills } from "./skills/mc/blackKnightSkills";
+import { blackKnightPassive, blackKnightSkills } from "./skills/mc/blackKnightSkills";
 import { bladedancerPassive, bladedancerSkills } from "./skills/mc/bladedancerSkills";
 import { commanderSkills } from "./skills/mc/commanderSkills";
 import { doomsayerSkills } from "./skills/mc/doomsayerSkills";
@@ -37,7 +37,7 @@ import { shamanPassive, shamanSkills } from "./skills/mc/shamanSkills";
 import { sorcererPassive, sorcererSkills } from "./skills/mc/sorcererSkills";
 import { warlockPassive, warlockSkills } from "./skills/mc/warlockSkills";
 import { witchSkills } from "./skills/mc/witchSkills";
-import { zealotSkills } from "./skills/mc/zealotSkills";
+import { zealotPassive, zealotSkills } from "./skills/mc/zealotSkills";
 
 const i18n = LANG === "eng" ? i18n_eng : i18n_ru;
 
@@ -240,9 +240,7 @@ export const beastMasterHero: IUnit = {
     name: i18n.heroes.BEASTMASTER,
     id: EHeroClass.BEAST_MASTER,
     skills: beastMasterSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: beastMasterPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -861,9 +859,7 @@ export const zealotHero: IUnit = {
     name: i18n.heroes.ZEALOT,
     id: EHeroClass.ZEALOT,
     skills: zealotSkills,
-    passiveSkill: {
-        desc: "<EMPTY>",
-    },
+    passiveSkill: zealotPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,
@@ -938,9 +934,7 @@ export const blackKnightHero: IUnit = {
     name: i18n.heroes.BLACKKNIGHT,
     id: EHeroClass.BLACK_KNIGHT,
     skills: blackKnightSkills,
-    passiveSkill: {
-        desc: "Permanently gain 1 PP\nafter every two duels",
-    },
+    passiveSkill: blackKnightPassive,
     items: [],
     unitType: EUnitType.HERO,
     level: 1,

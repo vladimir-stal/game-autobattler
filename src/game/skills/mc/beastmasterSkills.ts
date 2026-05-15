@@ -1,4 +1,4 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 import { TOTEM_ID_BEASTMASTER_CROWS } from "../../totemConsts";
 
@@ -74,5 +74,12 @@ export const beastMasterSkill: IHeroSkillSet = {
     skills: beastMasterSkillset(2, 1),
     nextLevel: beastMasterSkill_2,
 };
+
+export const beastMasterPassive: IPassiveSkill = {
+    desc: "While having totem, buffs targeting summons and summoning skills buff Beastmaster; while having summon, totem skills activate summon",
+    // battleUtils - checkSkillCondition - HAS_SUMMON
+    // battleUtils - getAllyTargets - SUMMON_CURRENT
+    // battleUtils - getAllAllySummons
+}
 
 export const beastMasterSkills: THeroSkills = [beastMasterSkill];

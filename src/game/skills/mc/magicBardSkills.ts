@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const jesterSkillset = (base:number, mpScale:number):IHeroSkill[] => {
@@ -53,5 +53,10 @@ export const jesterSkill: IHeroSkillSet = {
     skills: jesterSkillset(1,50),
     nextLevel: jesterSkill_2,
 };
+
+export const jesterPassive: IPassiveSkill = {
+    desc: "",
+    // todo
+}
 
 export const jesterSkills: THeroSkills = [jesterSkill];

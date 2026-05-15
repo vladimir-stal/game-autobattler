@@ -34,6 +34,7 @@ import {
 } from "../../types";
 import { allyTargets, CRIT_MODIFIER } from "../battleConsts";
 import { BattleController } from "../components/BattleController";
+import { allowedBuffTypesToGetBonuses, allowedDebuffTypesToGetBonuses } from "../skillConsts";
 import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
@@ -271,6 +272,9 @@ const getAllAllySummons = (units: TBattleUnits) => {
         if (!unit) {
             return summons;
         }
+        if (unit.heroClass === EHeroClass.BEAST_MASTER && unit.totem) {
+            summons.push(unit);
+        }
         if (unit.summon) {
             summons.push(unit.summon);
         }
@@ -363,7 +367,11 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
         case ETargetType.SELF:
             return [unit];
         case ETargetType.SUMMON_CURRENT:
-            return unit.summon ? [unit.summon] : null;
+            if (unit.heroClass === EHeroClass.BEAST_MASTER && unit.totem) {
+                return [unit];
+            } else {
+                return unit.summon ? [unit.summon] : null;
+            }
         default:
             return null;
     }
@@ -511,15 +519,32 @@ export const calculateEffectValue = (unit: IBattleUnit, initialValue: number, ef
     const { value, valueType, mpScale, ppScale } = eff;
     const mpScaleValue = mpScale ? Math.floor((mpScale * unit.magicPower) / 100) : 0;
     const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
+    let bonusPercent = 0;
+    let bonusFlat = 0;
+    if (!!eff.buffType && allowedBuffTypesToGetBonuses.includes(eff.buffType)) {
+        unit.itemBonuses.forEach(b => {
+            if (b.type === EItemBattleBonusType.INCREASE_BUFF_POTENCY) {
+                const v = getItemBonusValue(unit,b);
+                b.valueType === "percent" ? bonusPercent += v : bonusFlat += v;
+            }
+        })
+    } else if (!!eff.debuffType && allowedDebuffTypesToGetBonuses.includes(eff.debuffType)) {
+        unit.itemBonuses.forEach(b => {
+            if (b.type === EItemBattleBonusType.INCREASE_DEBUFF_POTENCY) {
+                const v = getItemBonusValue(unit,b);
+                b.valueType === "percent" ? bonusPercent += v : bonusFlat += v;
+            }
+        })
+    }
     //console.log("calc buff value", value, mpScaleValue, ppScaleValue, valueType, initialValue);
     if (!valueType || valueType === "number") {
         // || valueType === "evolvedNumber"
-        return value + mpScaleValue + ppScaleValue;
+        return Math.floor((value + mpScaleValue + ppScaleValue)*(100+bonusPercent)/100) + bonusFlat;
     } else if (valueType === "percent") {
         // || valueType === "evolvedPercent"
         //const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
         let buffValue = Math.floor((initialValue * value) / 100);
-        return (buffValue || 1) + mpScaleValue + ppScaleValue;
+        return Math.floor(((buffValue || 1) + mpScaleValue + ppScaleValue)*(100+bonusPercent)/100) + bonusFlat;
     }
     return 0;
 };
@@ -613,7 +638,7 @@ export const removeBuff = (unit: IBattleUnit, buff: IBuff, battleRecord: TBattle
 export const removeDebuffSimple = (unit: IBattleUnit, debuff: IDebuff, battleRecord: TBattleRecord) => {
     const index = unit.debuffs.findIndex((b) => b === debuff);
     if (index !== -1) {
-        unit.buffs.splice(index, 1);
+        unit.debuffs.splice(index, 1);
     }
 
     const { type, attribute, totalValue } = debuff;
@@ -1521,12 +1546,22 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return unit.magicPower > unit.physicalPower;
         case ESkillCondition.PP_IS_HIGHER_THAN_MP:
             return unit.physicalPower > unit.magicPower;
-        case ESkillCondition.HAS_SUMMON:
-            return !!unit.summon;
+        case ESkillCondition.HAS_SUMMON: {
+            if (unit.heroClass === EHeroClass.BEAST_MASTER && unit.totem) {
+                return true;
+            } else {
+                return !!unit.summon;
+            }
+        }
         case ESkillCondition.HAS_NO_SUMMON_OR_TOTEM:
             return !(!!unit.summon || !!unit.totem);
-        case ESkillCondition.HAS_TOTEM:
-            return !!unit.totem;
+        case ESkillCondition.HAS_TOTEM: {
+            if (unit.heroClass === EHeroClass.BEAST_MASTER && unit.summon) {
+                return true;
+            } else {
+                return !!unit.totem;
+            }
+        }
         case ESkillCondition.CUSTOM_NUMBER_NOT_ZERO:
             return !!unit.customNumber;
         case ESkillCondition.CUSTOM_NUMBER_IS_ZERO:
@@ -1595,10 +1630,18 @@ export const calculateDamageBonuses = (
     // calculate critical strike value
     let isCrit = false;
     if (isCritAllowed) {
-        if (unit.critChance > 0) {
-            if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
+        const critChance = unit.critChance + (unit.critChanceAccumulate || 0);
+        if (critChance > 0) {
+            if (getRandomIntFromInterval(0, 100) <= critChance) {
                 isCrit = true;
                 attackDamage += Math.floor(attackDamage * CRIT_MODIFIER);
+                unit.critChanceAccumulate = 0;
+            } else {
+                unit.itemBonuses.forEach((b) => {
+                    if (b.type === EItemBattleBonusType.CRIT_ACCUM_IF_NOT) {
+                        unit.critChanceAccumulate = (unit.critChanceAccumulate || 0) + getItemBonusValue(unit, b);
+                    }
+                });
             }
         }
     }
@@ -1606,19 +1649,19 @@ export const calculateDamageBonuses = (
     let modifyPercent = 0;
     let modifyFlat = 0;
     if (isCrit) {
-        unit.itemBonuses.forEach(b => {
+        unit.itemBonuses.forEach((b) => {
             if (b.type === EItemBattleBonusType.CRIT_INCREASE) {
                 const v = getItemBonusValue(unit, b);
-                b.valueType === "percent" ? modifyPercent += v : modifyFlat += v;
+                b.valueType === "percent" ? (modifyPercent += v) : (modifyFlat += v);
             }
-        })
+        });
     } else {
-        unit.itemBonuses.forEach(b => {
+        unit.itemBonuses.forEach((b) => {
             if (b.type === EItemBattleBonusType.NONCRIT_INCREASE) {
                 const v = getItemBonusValue(unit, b);
-                b.valueType === "percent" ? modifyPercent += v : modifyFlat += v;
+                b.valueType === "percent" ? (modifyPercent += v) : (modifyFlat += v);
             }
-        })
+        });
     }
     attackDamage += calculateIncreaseValue(attackDamage, modifyPercent, "percent");
     attackDamage += calculateIncreaseValue(attackDamage, modifyFlat, "number");

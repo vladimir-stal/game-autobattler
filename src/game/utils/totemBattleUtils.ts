@@ -1,6 +1,7 @@
 import {
     EBattleActionType,
     EBuffType,
+    EDebuffType,
     EHeroAttackType,
     EHeroSkillType,
     EItemBattleBonusType,
@@ -17,6 +18,7 @@ import { BattleController } from "../components/BattleController";
 import {
     applyStatus,
     calculateIncreaseValue,
+    checkDebuffToRemove,
     dealOverhealDamage,
     emptyBattleUnit,
     getAllyTargets,
@@ -24,6 +26,7 @@ import {
     getOpponentTargets,
     reduceStatus,
 } from "./battleUtils";
+import { forEachNestedEffects } from "./unitUtils";
 
 export const performTotemSkill = (
     unit: IBattleUnit,
@@ -208,6 +211,35 @@ const performTotemHeal = (
 
     let overhealTotal = 0;
     targets.forEach((target) => {
+        // check if target has antiheal debuffs (like ANTIHEAL)
+        let antihealDebuff = false;
+        forEachNestedEffects(target, (ne) => {
+            if (ne.debuffType === EDebuffType.ANTIHEAL && ne.totalValue > 0 && !antihealDebuff) {
+                ne.totalValue -= 1;
+                antihealDebuff = true;
+            }
+        });
+        if (antihealDebuff) {
+            checkDebuffToRemove(target, EDebuffType.ANTIHEAL, battleRecord);
+            // record
+            const attackRecord: IBattleAction = {
+                unitId: target.id,
+                type: EBattleActionType.ATTACK,
+                value: finalValue,
+                targets: [],
+            };
+            battleRecord.push(attackRecord);
+            const recordTarget = {
+                targetId: target.id,
+                isEvasion: false,
+            };
+            attackRecord?.targets?.push(recordTarget);
+            //
+            battleController.takeDamage(target, finalValue, undefined, recordTarget);
+            //this.battleRecord.push({ unitId: target.id, type: EBattleActionType.BUFF_REMOVED, name: "Divine shield" });
+            return;
+        }
+
         target.hp += finalValue;
         if (target.hp > target.maxHp) {
             overhealTotal += target.hp - target.maxHp;
