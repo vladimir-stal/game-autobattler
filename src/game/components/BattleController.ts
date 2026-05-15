@@ -1882,23 +1882,60 @@ export class BattleController {
 
         let lastTargetId;
         if (skill.childSkill) {
-            targets.forEach((t) => {
-                if (
-                    skill.childSkill?.condition &&
-                    (skill.childSkill.condition === ESkillCondition.NOT_BEFORE_COMBAT || checkSkillCondition(t, skill.childSkill.condition, this))
-                ) {
-                    unit.customNumber++;
-                    lastTargetId = t.id;
-                } else if (skill.childSkill?.type === EHeroSkillType.BUFF) {
-                    unit.customNumber += t.buffs.reduce((acc: number, buff: IBuff) => {
-                        return !!buff && !buff.cannotBeTargeted ? acc + 1 : acc;
-                    }, 0);
-                } else if (skill.childSkill?.type === EHeroSkillType.DEBUFF) {
-                    unit.customNumber += t.debuffs.reduce((acc: number, debuff) => {
-                        return !!debuff && !debuff.cannotBeTargeted ? acc + 1 : acc;
-                    }, 0);
+            if (skill.childSkill?.type === EHeroSkillType.NONE && skill.childSkill?.attribute) {
+                // find random target who's attribute is greater than childSkill.value
+                //   or less then -childSkill.value
+                //   or compare attribute with childSkill.valueFrom
+                
+                // e.g. find random enemy with >50% maxhp
+                //   skill.targetType: ALL_ENEMIES,
+                //   childSkill.type: EHeroSkillType.NONE,
+                //   childSkill.attribute: "hp",
+                //   childSkill.valueFrom: "maxHp",
+                //   childSkill.value: 50
+                // then, next skill
+                //  .condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE
+                //  .targetType: ETargetType.SAME_LAST_TARGET
+                const randomIds: string[] = [];
+                const attr = skill.childSkill?.attribute;
+                const vtr = skill.childSkill?.value || 0;
+                const compareWith = skill.childSkill?.valueFrom;
+                targets.forEach((t) => {
+                    if (compareWith) {
+                        const compareValue = Math.floor((t[compareWith] * (vtr || 100)) / 100);
+                        if (attr && ((compareValue >= 0 && t[attr] >= compareValue) || (compareValue < 0 && t[attr] < -compareValue))) {
+                            unit.customNumber++;
+                            randomIds.push(t.id);
+                        }
+                    } else {
+                        if (attr && ((vtr >= 0 && t[attr] >= vtr) || (vtr < 0 && t[attr] < -vtr))) {
+                            unit.customNumber++;
+                            randomIds.push(t.id);
+                        }
+                    }
+                });
+                if (randomIds.length > 0) {
+                    lastTargetId = getRandomArrayItem(randomIds);
                 }
-            });
+            } else {
+                targets.forEach((t) => {
+                    if (
+                        skill.childSkill?.condition &&
+                        (skill.childSkill.condition === ESkillCondition.NOT_BEFORE_COMBAT || checkSkillCondition(t, skill.childSkill.condition, this))
+                    ) {
+                        unit.customNumber++;
+                        lastTargetId = t.id;
+                    } else if (skill.childSkill?.type === EHeroSkillType.BUFF) {
+                        unit.customNumber += t.buffs.reduce((acc: number, buff: IBuff) => {
+                            return !!buff && !buff.cannotBeTargeted ? acc + 1 : acc;
+                        }, 0);
+                    } else if (skill.childSkill?.type === EHeroSkillType.DEBUFF) {
+                        unit.customNumber += t.debuffs.reduce((acc: number, debuff) => {
+                            return !!debuff && !debuff.cannotBeTargeted ? acc + 1 : acc;
+                        }, 0);
+                    }
+                });
+            }
         } else if (skill.status) {
             targets.forEach((t) => {
                 const v = t.statuses?.find((s) => s.type === skill.status);

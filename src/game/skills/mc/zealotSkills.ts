@@ -66,9 +66,13 @@ export const zealotPassive: IPassiveSkill = {
             skill: [
                 {
                     type: EHeroSkillType.CALCULATE_NUMBER,
-                    targetType: ETargetType.RANDOM_ENEMY,
-                    attribute: "hpRegen",
+                    targetType: ETargetType.ALL_ENEMIES,
                     animation: AnimationType.NONE,
+                    childSkill: {
+                        type: EHeroSkillType.NONE,
+                        attribute: "hpRegen",
+                        value: 1,
+                    } // will select random enemy with (hpRegen >= 1)
                 },
                 {
                     type: EHeroSkillType.ATTRIBUTE_DECREASE,
@@ -78,15 +82,6 @@ export const zealotPassive: IPassiveSkill = {
                     valueType: "number",
                     animation: AnimationType.NONE,
                     condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE
-                },
-                {
-                    type: EHeroSkillType.ATTRIBUTE_DECREASE,
-                    targetType: ETargetType.RANDOM_ENEMY,
-                    attribute: "hpRegen",
-                    value: 3,
-                    valueType: "number",
-                    animation: AnimationType.NONE,
-                    condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO
                 },
             ],
         }
