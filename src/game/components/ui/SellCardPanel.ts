@@ -45,6 +45,16 @@ export class SellCardPanel extends Phaser.GameObjects.Container {
 
             const { card, cardSlot: previousSlot, onCardMoved } = this.gameScene.cardToMove;
 
+            // dont let send the last hero
+            if (
+                card.type === ECardType.UNIT &&
+                card.unit?.unitType === EUnitType.HERO &&
+                this.gameScene.unitPanel.getUnits().filter((unit) => unit.unitType === EUnitType.HERO).length < 2
+            ) {
+                console.log("you cant sell your only HERO unit!");
+                return;
+            }
+
             if (onCardMoved) {
                 onCardMoved();
             }

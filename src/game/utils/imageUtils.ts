@@ -345,7 +345,11 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.SHADOW_MASTER:
             return { image: IMAGE_SHADOWMASTER };
         case EHeroClass.SHAMAN:
-            return { image: IMAGE_SHAMAN };
+            //return { image: IMAGE_SHAMAN };
+            return {
+                image: IMAGE_SHAMAN,
+                animation: AnimationType.SHAMAN_IDLE,
+            };
         case EHeroClass.COMMANDER:
             return {
                 image: IMAGE_COMMANDER,
@@ -409,7 +413,12 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.ZEALOT:
             return { image: IMAGE_ZEALOT };
         case EHeroClass.INQUISITOR:
-            return { image: IMAGE_INQUISITOR };
+            return {
+                image: IMAGE_INQUISITOR,
+                animation: AnimationType.INQUISITOR_IDLE,
+                idleBattleAnimation: AnimationType.INQUISITOR_BATTLE_IDLE,
+                attackAnimation: AnimationType.INQUISITOR_ATTACK,
+            };
         case EHeroClass.DUELIST:
             return { image: IMAGE_DUELIST };
         case EHeroClass.BISHOP:

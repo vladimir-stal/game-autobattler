@@ -1,5 +1,5 @@
 import { Cameras, Input, Scale, Structs } from "phaser";
-import { ECardType, EScene, ICardToMove, IUnit, TUnits } from "../../types";
+import { ECardType, EScene, EUnitType, ICardToMove, IUnit, TUnits } from "../../types";
 import { initInputListeners } from "./PlatformScene/keyboardInputs";
 import { createUIPanels } from "../components/ui/uiPanels";
 import { TopPanel } from "../components/ui/TopPanel";
@@ -240,6 +240,16 @@ export class GameScene extends Phaser.Scene {
         activateSlots(this.allCardSlots, value, this, this.cardToMove);
 
         if (value && !this.isCardBuyMode && this.cardToMove?.card && [ECardType.ITEM, ECardType.SKILL, ECardType.UNIT].includes(this.cardToMove.card.type)) {
+            // dont let to sell the last hero
+            if (
+                this.cardToMove.card.type === ECardType.UNIT &&
+                this.cardToMove.card.unit?.unitType === EUnitType.HERO &&
+                this.unitPanel.getUnits().filter((unit) => unit.unitType === EUnitType.HERO).length < 2
+            ) {
+                this.sellCardPanel.highlight(false);
+                return;
+            }
+
             this.sellCardPanel.highlight(true);
         } else {
             this.sellCardPanel.highlight(false);

@@ -57,7 +57,7 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
                             //    unit.skills.push(v.skill);
                             //}
                         } else if (!!v.attr) {
-                            unit[v.attr] += v.incr;
+                            unit[v.attr] += v.incr || 0;
                         } else if (!!v.levelup) {
                             for (let r = 0; r < v.levelup; r++) levelUpUnit(unit);
                         } else if (!!v.moveMcSkillToSlotIndex) {

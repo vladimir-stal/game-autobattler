@@ -16,6 +16,7 @@ import {
     oracleHero,
     predatorHero,
     samuraiHero,
+    shamanHero,
     witchHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
@@ -47,7 +48,7 @@ import { basic_jacket_2 } from "../commonItemConsts";
 import { outHealBuffSkill } from "../skills/commonSkill3Consts";
 import { scrollOfSkill } from "../commonItemConsts3";
 
-export const debugHeroSelectRoom = false;
+export const debugHeroSelectRoom = true;
 export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
@@ -56,20 +57,21 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: bardHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: inquisitorHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        //{ type: ECardType.UNIT, price: 0, unit:  },
-        //{ type: ECardType.UNIT, price: 0, unit: predatorHero },
-        //{ type: ECardType.UNIT, price: 0, unit: commanderHero },
+        { type: ECardType.UNIT, price: 0, unit: shamanHero },
+        { type: ECardType.UNIT, price: 0, unit: predatorHero },
+        { type: ECardType.UNIT, price: 0, unit: commanderHero },
+        { type: ECardType.UNIT, price: 0, unit: inquisitorHero },
         //{ type: ECardType.UNIT, price: 0, unit: necromancerHero },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.SKILL, price: 0, skill: totemGiveArmorSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: totemGiveArmorSkill },
         //{ type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
         //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
 

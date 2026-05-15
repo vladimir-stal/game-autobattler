@@ -1,6 +1,6 @@
 import { AnimationType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillSetType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet } from "../../../types";
 import { i18n } from "../../consts";
-import { IMAGE_SKILL_MOB_WOLF_CLAWS, IMAGE_SKILL_PHYS_ATTACK } from "../../utils/load/skillImagesLoad";
+import { IMAGE_SKILL_MOB_WOLF_CLAWS } from "../../utils/load/skillImagesLoad";
 
 // wolf skill
 const regularWolfSkillset = (atk: number, bleed: number, ppScale: number): IHeroSkill[] => {
@@ -19,7 +19,7 @@ const regularWolfSkillset = (atk: number, bleed: number, ppScale: number): IHero
             targetType: ETargetType.SAME_LAST_TARGET,
             attackType: EHeroAttackType.PHYSICAL,
             ppScale: ppScale,
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
         },
         {
             type: EHeroSkillType.STATUS_APPLY,
@@ -35,7 +35,7 @@ const regularWolfSkillset = (atk: number, bleed: number, ppScale: number): IHero
             targetType: ETargetType.SAME_LAST_TARGET,
             attackType: EHeroAttackType.PHYSICAL,
             ppScale: ppScale,
-            animation: AnimationType.UNIT_ATTACK,
+            animation: AnimationType.NONE,
         },
     ];
 };
