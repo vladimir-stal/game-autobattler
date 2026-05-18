@@ -223,11 +223,11 @@ export const necromancerSkill: IHeroSkillSet = {
 };
 
 export const necromancerPassive: IPassiveSkill = {
-    desc: "Gain 3 MP when unit dies",
+    desc: "Gain 3 MP when any unit dies",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {
-            skillId: "NecromancerPassive",
+            skillId: "Reap the death",
             type: EAppTriggerType.DEATH,
             targetCheck: ETargetType.EVERY_UNIT,
             skill: [

@@ -1,5 +1,18 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import {
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    IPassiveSkill,
+    THeroSkills,
+} from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 // TODO: when buff repeats what happens? add MP scale?
 
@@ -80,8 +93,25 @@ export const shadowMasterSkill: IHeroSkillSet = {
 };
 
 export const shadowMasterPassive: IPassiveSkill = {
-    desc: "",
-    // todo
-}
+    desc: "Gain 1 hp regen when any unit dies",
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            skillId: "Feed on fear",
+            type: EAppTriggerType.DEATH,
+            targetCheck: ETargetType.EVERY_UNIT,
+            skill: [
+                {
+                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                    attribute: "hpRegen",
+                    value: 1,
+                    valueType: "number",
+                    targetType: ETargetType.SELF,
+                },
+            ],
+            limitedRepeats: false,
+        },
+    },
+};
 
 export const shadowMasterSkills: THeroSkills = [shadowMasterSkill];

@@ -1,5 +1,6 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 export const alchemistSkill_3: IHeroSkillSet = {
     id: "AlchemistHpSwap",
@@ -75,9 +76,54 @@ export const alchemistSkill: IHeroSkillSet = {
     nextLevel: alchemistSkill_2,
 };
 
+const passive_percent_value = 40;
+// maxhp ~ 22
+// 11+5+x/2 = 22; x = 12
+
 export const alchemistPassive: IPassiveSkill = {
-    desc: "",
+    desc: "At the start of turn gain +MP equal to 40% of lost hp for 1 round",
     // todo
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            limitedRepeats: false,
+            type: EAppTriggerType.TURN_START,
+            skillId: "Blood catalyst",
+            skill: [
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.SELF,
+                    value: passive_percent_value,
+                    valueType: "percent",
+                    valueFrom: "maxHp",
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.CALCULATE_NUMBER,
+                    targetType: ETargetType.SELF,
+                    value: -passive_percent_value,
+                    valueType: "percent",
+                    valueFrom: "hp",
+                    animation: AnimationType.NONE,
+                },
+                {
+                    type: EHeroSkillType.BUFF,
+                    buff: {
+                        name: "Catalyst",
+                        timeType: EBuffTimeType.DURATION,
+                        duration: 1,
+                        targetType: ETargetType.SELF,
+                        type: EBuffType.ATTRIBUTE_INCREASE,
+                        value: 100,
+                        valueType: "percent",
+                        valueFrom: "magicPower",
+                    },
+                    condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+                    animation: AnimationType.NONE,
+                }
+            ]
+        }
+    }
 }
 
 export const alchemistSkills: THeroSkills = [alchemistSkill];

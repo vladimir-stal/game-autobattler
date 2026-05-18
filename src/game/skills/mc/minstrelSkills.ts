@@ -1,5 +1,6 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import { EAppTriggerType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const minstrelSkillset = (percent:number):IHeroSkill[] => {
     return [
@@ -55,8 +56,25 @@ export const minstrelSkill: IHeroSkillSet = {
 };
 
 export const ministrelPassive: IPassiveSkill = {
-    desc: "",
+    desc: "Heal allies that recieve buff for [1]",
     // todo
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            type: EAppTriggerType.RECIEVE_BUFF,
+            limitedRepeats: false,
+            targetCheck: ETargetType.ALL_ALLIES,
+            skillId: "Uplifting",
+            skill: [
+                {
+                    type: EHeroSkillType.HEAL,
+                    targetType: ETargetType.BY_RELEVANT_ID,
+                    value: 1,
+                    valueType: "number",
+                }
+            ]
+        }
+    }
 }
 
 export const minstrelSkills: THeroSkills = [minstrelSkill];

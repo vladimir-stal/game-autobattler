@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EItemBattleBonusType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const jesterSkillset = (base:number, mpScale:number):IHeroSkill[] => {
@@ -55,8 +55,13 @@ export const jesterSkill: IHeroSkillSet = {
 };
 
 export const jesterPassive: IPassiveSkill = {
-    desc: "",
+    desc: "Attacks twice with basic attacks for 60% of damage",
     // todo
+    itemPassive: {
+        type: EItemBattleBonusType.BASIC_ATTACK_TWICE,
+        value: 60,
+        valueType: "number",
+    }
 }
 
 export const jesterSkills: THeroSkills = [jesterSkill];
