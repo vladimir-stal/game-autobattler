@@ -57,7 +57,7 @@ export const heraldSkill: IHeroSkillSet = {
 };
 
 export const heraldPassive: IPassiveSkill = {
-        desc: "Increase PP per\nbuff on allies",
+        desc: "Increase PP per\nbuff on allies (+1)",
         preBattleBuff: {
             ...heroPassiveTemplate,
             appTrigger: {

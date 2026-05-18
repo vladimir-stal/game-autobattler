@@ -61,7 +61,7 @@ export const druidSkill: IHeroSkillSet = {
 };
 
 export const druidPassive: IPassiveSkill = {
-    desc: "Deal bonus 35%xPP damage vs targets with shock",
+    desc: "Deal bonus 35%\nof PP damage vs targets\nwith shock",
     itemPassive: {
         type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS,
         status: EStatusType.SHOCK,

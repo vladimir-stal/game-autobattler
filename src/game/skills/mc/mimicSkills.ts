@@ -165,7 +165,8 @@ const mimicSkillset = (ppScale: number, mpScale: number): IHeroSkill[] => {
 };
 
 export const mimicPassive: IPassiveSkill = {
-    desc: "At the start of 2nd round\nsummons Copycat. Boost\nsummon stats atk+35%xMP\nhp+50%xPP, MP & PP x40%\nCopycat mimics 4th slot\nskill every odd round",
+    //desc: "At the start of 2nd round\nsummons Copycat. Boost\nsummon stats atk+35%xMP\nhp+50%xPP, MP & PP x40%\nCopycat mimics 4th slot\nskill every odd round",
+    desc: "At the start of\n2nd round summons Copycat\nIt gets atk and hp from\nMP and PP",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

@@ -93,7 +93,7 @@ export const shadowMasterSkill: IHeroSkillSet = {
 };
 
 export const shadowMasterPassive: IPassiveSkill = {
-    desc: "Gain 1 hp regen when any unit dies",
+    desc: "Gain 1 hp regen\nwhen any unit dies",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

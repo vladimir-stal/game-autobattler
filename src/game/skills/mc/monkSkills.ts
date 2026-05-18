@@ -89,7 +89,7 @@ export const monkSkill: IHeroSkillSet = {
 };
 
 export const monkPassive: IPassiveSkill = {
-    desc: "Healing skills additionally restore 2 health to self and activate a totem",
+    desc: "Healing skills\nadditionally restore 2 hp\nto self and totem activates",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

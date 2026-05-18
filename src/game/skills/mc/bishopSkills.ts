@@ -59,7 +59,7 @@ export const bishopSkill: IHeroSkillSet = {
 };
 
 export const bishopPassive: IPassiveSkill = {
-    desc: "Can crit with healing skills",
+    desc: "Can crit with\nhealing skills",
     // battleUtils - prepareUnitToBattle()
     itemPassive: {
         type: EItemBattleBonusType.CRIT_WITH_HEAL,

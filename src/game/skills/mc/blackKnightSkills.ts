@@ -53,7 +53,7 @@ export const blackKnightSkill: IHeroSkillSet = {
 };
 
 export const blackKnightPassive: IPassiveSkill = {
-    desc: "Adds 100% Magic power to Physical power",
+    desc: "Adds 100% Magic\npower to Physical power",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

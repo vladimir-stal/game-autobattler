@@ -108,13 +108,21 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.rect
             .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
                 const { x, y } = this.getWorldPoint();
-                this.gameScene.hintPanel.showUnit(x + 70, y - 30, this.unit);
+                this.gameScene.hintPanel.showUnit(x + 70, y - 30, this.unit, {isSkills: true, isLongText: this.gameScene.hintPanel.showLongText});
             })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 this.gameScene.hintPanel.hide();
             })
-            .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-                if (this.gameScene.isCardMoveMode && this.cardSlot) {
+            .on(Input.Events.GAMEOBJECT_POINTER_DOWN, (pointer) => {
+                if (pointer.rightButtonDown()) {
+                    this.gameScene.hintPanel.showLongText = ! this.gameScene.hintPanel.showLongText;
+                    if (this.gameScene.hintPanel.visible) {
+                        this.gameScene.hintPanel.hide();
+                        const { x, y } = this.getWorldPoint();
+                        this.gameScene.hintPanel.showUnit(x + 70, y - 30, this.unit, {isSkills: true, isLongText: this.gameScene.hintPanel.showLongText});
+                    }
+                    //console.log("(right click detected)");
+                } else if (this.gameScene.isCardMoveMode && this.cardSlot) {
                     this.cardSlot.click();
                 }
             });

@@ -56,7 +56,7 @@ export const minstrelSkill: IHeroSkillSet = {
 };
 
 export const ministrelPassive: IPassiveSkill = {
-    desc: "Heal allies that recieve buff for [1]",
+    desc: "Heal allies that\nrecieve buff for [1]",
     // todo
     preBattleBuff: {
         ...heroPassiveTemplate,

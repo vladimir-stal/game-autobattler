@@ -63,7 +63,7 @@ export const forestSpititSkill: IHeroSkillSet = {
 };
 
 export const forestSpiritPassive: IPassiveSkill = {
-    desc: "Cannot be healed, trigger\n50% hpRegen when attacked",
+    desc: "Cannot be healed,\ntrigger 50% hpRegen when\nattacked",
     // HEALING_DECREASE
     preBattleBuff: {
         ...heroPassiveTemplate,

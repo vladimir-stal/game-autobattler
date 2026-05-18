@@ -200,7 +200,7 @@ export const fireflyUnfairExchange: IHeroSkillSet = {
 };
 
 export const infernoFlyPassive: IPassiveSkill = {
-    desc: "Start with 1 poison & 3 cosmic shield",
+    desc: "Start with 1\npoison & 3 cosmic shield",
     preBattleBuff: {
         name: "Passive",
         targetType: ETargetType.SELF,

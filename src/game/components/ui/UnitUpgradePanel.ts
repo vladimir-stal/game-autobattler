@@ -105,12 +105,23 @@ export class UnitUpgradePanel extends Phaser.GameObjects.Container {
             .on("pointerover", () => {
                 //skillTextObject.setVisible(true);
                 const { x, y } = this.getWorldPoint();
-                this.gameScene.hintPanel.showUnit(x + index * 200 + 280, y, mcHero, { isSkills: true });
+                this.gameScene.hintPanel.showUnit(x + index * 200 + 280, y, mcHero, { isSkills: true, isLongText: this.gameScene.hintPanel.showLongText });
             })
             .on("pointerout", () => {
                 //skillTextObject.setVisible(false);
                 this.gameScene.hintPanel.hide();
-            });
+            })
+            .on("pointerdown", (pointer) => {
+                            if (pointer.rightButtonDown()) {
+                                this.gameScene.hintPanel.showLongText = ! this.gameScene.hintPanel.showLongText;
+                                if (this.gameScene.hintPanel.visible) {
+                                    this.gameScene.hintPanel.hide();
+                                    const { x, y } = this.getWorldPoint();
+                                    this.gameScene.hintPanel.showUnit(x + index * 200 + 280, y, mcHero, {isSkills: true, isLongText: this.gameScene.hintPanel.showLongText});
+                                }
+                                //console.log("(right click detected)");
+                            };
+                        });
         this.add(rect);
 
         const mcSkill = mcHero.skills[0];

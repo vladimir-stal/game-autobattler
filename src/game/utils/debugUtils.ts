@@ -6,6 +6,8 @@ import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
 import {
     barbarianHero,
+    battleMageHero,
+    beastMasterHero,
     bladedancerHero,
     commanderHero,
     doomsayerHero,
@@ -60,7 +62,7 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: zealotHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: {...warriorHero, level: 5} }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {

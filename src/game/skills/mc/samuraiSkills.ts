@@ -77,7 +77,7 @@ export const samuraiSkill: IHeroSkillSet = {
 };
 
 export const samuraiPassive: IPassiveSkill = {
-    desc: "Upon death apply [ba+PP]x50%\nbleed to all enemies",
+    desc: "Upon death apply\n[ba+PP]x50% bleed to all\nenemies",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

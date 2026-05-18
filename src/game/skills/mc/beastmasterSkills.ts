@@ -76,7 +76,7 @@ export const beastMasterSkill: IHeroSkillSet = {
 };
 
 export const beastMasterPassive: IPassiveSkill = {
-    desc: "While having totem, buffs targeting summons and summoning skills buff Beastmaster; while having summon, totem skills activate summon",
+    desc: "While having totem,\nbuffs targeting summons\nand summoning skills buff\nBeastmaster; while having\nsummon, totem skills\nactivate summon",
     // battleUtils - checkSkillCondition - HAS_SUMMON
     // battleUtils - getAllyTargets - SUMMON_CURRENT
     // battleUtils - getAllAllySummons

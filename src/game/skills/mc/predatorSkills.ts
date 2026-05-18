@@ -72,7 +72,7 @@ export const predatorSkill: IHeroSkillSet = {
 };
 
 export const predatorPassive: IPassiveSkill = {
-    desc: "Killing enemy with predator's mark, heals him 25% health and increase PP by 5",
+    desc: "Killing enemy\nwith predator's mark\nheals self 25% health and\nincrease PP by 5",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

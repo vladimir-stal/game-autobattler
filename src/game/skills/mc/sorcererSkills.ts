@@ -65,7 +65,7 @@ export const sorcererSkill: IHeroSkillSet = {
 };
 
 export const sorcererPassive: IPassiveSkill = {
-    desc: "Can crit with magical attack skills",
+    desc: "Can crit with\nmagical attack skills",
     // battleUtils - prepareUnitToBattle()
     itemPassive: {
         type: EItemBattleBonusType.CRIT_WITH_MAGIC,

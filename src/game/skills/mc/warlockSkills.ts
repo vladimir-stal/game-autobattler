@@ -66,7 +66,7 @@ export const warlockSkill: IHeroSkillSet = {
 };
 
 export const warlockPassive: IPassiveSkill = {
-    desc: "Every enemy that dies with poison stacks spread 65% poison to every other enemy",
+    desc: "Every enemy that\ndies with poison stacks\nspread 65% poison to every\nother enemy",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

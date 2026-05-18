@@ -55,7 +55,7 @@ export const witchSkill: IHeroSkillSet = {
 };
 
 export const witchPassive: IPassiveSkill = {
-    desc: "Increase MP by 35% of total bleed on all enemies",
+    desc: "Increase MP by\n35% of total bleed on\nall enemies",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

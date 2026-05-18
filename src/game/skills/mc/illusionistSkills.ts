@@ -100,7 +100,7 @@ export const illusionistSkill: IHeroSkillSet = {
 };
 
 export const illusionistPassive: IPassiveSkill = {
-    desc: "Once per each ally, when\nthey die, a random team\nsummon dies instead",
+    desc: "Once per each\nally, when they die, random\nteam summon dies instead",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

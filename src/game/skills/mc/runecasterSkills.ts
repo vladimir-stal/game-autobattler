@@ -60,7 +60,7 @@ export const runecasterSkill: IHeroSkillSet = {
 };
 
 export const runecasterPassive: IPassiveSkill = {
-    desc: "All armor gained from skills is increased by [50%xMP]",
+    desc: "All armor gained\nfrom skills is increased\nby [50%xMP]",
     // battleUtils - prepareUnitToBattle()
     itemPassive: {
         type: EItemBattleBonusType.INCREASE_ARMOR_GAIN,

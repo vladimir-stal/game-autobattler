@@ -78,7 +78,7 @@ const gladiatorSkill: IHeroSkillSet = {
 };
 
 export const gladiatorPassive: IPassiveSkill = {
-    desc: "Can crit with physical attack skills",
+    desc: "Can crit with\nphysical attack skills",
     // battleUtils - prepareUnitToBattle()
     itemPassive: {
         type: EItemBattleBonusType.CRIT_WITH_PHYSICAL,

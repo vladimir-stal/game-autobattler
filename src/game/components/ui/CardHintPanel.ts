@@ -1,5 +1,16 @@
 import { GameObjects } from "phaser";
-import { EHeroClass, EHeroClassType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EItemType, IHeroSkillSet, IItem, IUnit } from "../../../types";
+import {
+    EHeroClass,
+    EHeroClassType,
+    EItemBattleBonusType,
+    EItemBonusType,
+    EItemTargetType,
+    EItemType,
+    EUnitType,
+    IHeroSkillSet,
+    IItem,
+    IUnit,
+} from "../../../types";
 import { colors, i18n } from "../../consts";
 import { GameScene } from "../../scenes/GameScene";
 import {
@@ -80,10 +91,13 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     activeSkillText: BBCodeText;
     passiveSkillText: GameObjects.Text;
     baTypeText: GameObjects.Text;
+    longText: BBCodeText;
+    showLongText: boolean;
 
     constructor(gameScene: GameScene, x: number, y: number) {
         super(gameScene, x, y);
         //this.text = text;
+        this.showLongText = false;
         this.render();
     }
 
@@ -115,7 +129,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         //
 
-        this.descrText = this.scene.add.rexBBCodeText(10, 40, "", {
+        this.descrText = this.scene.add.rexBBCodeText(3, 40, "", {
             //this.scene.add.text(20, 40, "", {
             //fontFamily: "Arial Black",
             fontSize: 12,
@@ -125,7 +139,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.add(this.descrText);
 
         this.enchancedText = this.scene.add
-            .text(35, 170, "", {
+            .text(25, 170, "", {
                 //fontFamily: "Arial Black",
                 fontSize: 12,
                 color: "#ffffff",
@@ -135,17 +149,17 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.add(this.enchancedText);
 
         this.noBAText = this.scene.add
-            .text(35, 190, i18n.ui.NO_BA_SKILL, {
+            .text(25, 190, i18n.ui.NO_BA_SKILL, {
                 fontSize: 12,
                 color: "#ffffff",
             })
             .setVisible(false);
         this.add(this.noBAText);
 
-        this.enchancedChainedIcon = this.scene.add.image(5, 170, IMAGE_ICON_CHAINED).setOrigin(0, 0).setVisible(false);
+        this.enchancedChainedIcon = this.scene.add.image(3, 170, IMAGE_ICON_CHAINED).setOrigin(0, 0).setVisible(false);
         this.add(this.enchancedChainedIcon);
 
-        this.enchancedOnStartIcon = this.scene.add.image(5, 160, IMAGE_ICON_ATTACK).setOrigin(0, 0).setVisible(false);
+        this.enchancedOnStartIcon = this.scene.add.image(3, 160, IMAGE_ICON_ATTACK).setOrigin(0, 0).setVisible(false);
         this.add(this.enchancedOnStartIcon);
 
         // skill tags
@@ -256,13 +270,15 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         // unit skills
 
-        this.activeSkillText = this.scene.add.rexBBCodeText(10, 200, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.activeSkillText = this.scene.add.rexBBCodeText(3, 200, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         //this.activeSkillText = this.scene.add.text(10, 200, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.activeSkillText);
-        this.passiveSkillText = this.scene.add.text(10, 270, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.passiveSkillText = this.scene.add.text(3, 270, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.passiveSkillText);
         this.baTypeText = this.scene.add.text(10, 260, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.baTypeText);
+        this.longText = this.scene.add.rexBBCodeText(3, 32, "", { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.add(this.longText);
     }
 
     showSkill(x: number, y: number, skillSet: IHeroSkillSet, isFromHero?: boolean) {
@@ -382,7 +398,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
                             stats.push(i18n.statuses[bonus.status]);
                         } else {
                             stats.push(i18n.statuses2[bonus.status]);
-                        }                        
+                        }
                     } else {
                         stats.push("");
                     }
@@ -521,87 +537,157 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         }
     }
 
-    showUnit(x: number, y: number, unit: IUnit, options?: { isSkills: boolean }) {
+    showUnit(x: number, y: number, unit: IUnit, options?: { isSkills?: boolean; isLongText?: boolean }) {
         this.show(x, y);
 
         this.hideItemFields();
         this.hideSkillFields();
+        if (!options?.isLongText) {
+            this.longText.setVisible(false);
 
-        this.hpIcon.setVisible(true);
-        this.hpText.setVisible(true);
-        this.hpDescrText.setVisible(true);
+            this.hpIcon.setVisible(true);
+            this.hpText.setVisible(true);
+            this.hpDescrText.setVisible(true);
 
-        this.attackIcon.setVisible(true);
-        this.attackText.setVisible(true);
-        this.attackDescrText.setVisible(true);
+            this.attackIcon.setVisible(true);
+            this.attackText.setVisible(true);
+            this.attackDescrText.setVisible(true);
 
-        this.mpText.setVisible(true);
-        this.mpIcon.setVisible(true);
-        this.mpDescrText.setVisible(true);
+            this.mpText.setVisible(true);
+            this.mpIcon.setVisible(true);
+            this.mpDescrText.setVisible(true);
 
-        this.ppText.setVisible(true);
-        this.ppIcon.setVisible(true);
-        this.ppDescrText.setVisible(true);
+            this.ppText.setVisible(true);
+            this.ppIcon.setVisible(true);
+            this.ppDescrText.setVisible(true);
 
-        this.evasionIcon.setVisible(true);
-        this.evasionText.setVisible(true);
-        this.evasionDescrText.setVisible(true);
+            this.evasionIcon.setVisible(true);
+            this.evasionText.setVisible(true);
+            this.evasionDescrText.setVisible(true);
 
-        this.critIcon.setVisible(true);
-        this.critText.setVisible(true);
-        this.critDescrText.setVisible(true);
+            this.critIcon.setVisible(true);
+            this.critText.setVisible(true);
+            this.critDescrText.setVisible(true);
 
-        const { basicAttack, basicMaxHp, name, basicArmor, basicHpRegen, basicMagicPower, basicPhysicalPower, basicCritChance, basicEvasionChance } = unit;
+            const { basicAttack, basicMaxHp, name, basicArmor, basicHpRegen, basicMagicPower, basicPhysicalPower, basicCritChance, basicEvasionChance } = unit;
 
-        this.titleText.setText(name);
-        this.hpText.setText(basicMaxHp + "");
-        this.attackText.setText(basicAttack + "(" + i18n.ui[unit.attackType] + ")");
+            this.titleText.setText(name);
+            this.hpText.setText(basicMaxHp + "");
+            this.attackText.setText(basicAttack + "(" + i18n.ui[unit.attackType] + ")");
 
-        //if (basicArmor > 0) {
-        this.armorText.setVisible(true);
-        this.armorIcon.setVisible(true);
-        this.armorDescrText.setVisible(true);
-        this.armorText.setText(basicArmor + "");
-        // } else {
-        //     this.armorText.setVisible(false);
-        //     this.armorIcon.setVisible(false);
-        //     this.armorDescrText.setVisible(false);
-        // }
+            //if (basicArmor > 0) {
+            this.armorText.setVisible(true);
+            this.armorIcon.setVisible(true);
+            this.armorDescrText.setVisible(true);
+            this.armorText.setText(basicArmor + "");
+            // } else {
+            //     this.armorText.setVisible(false);
+            //     this.armorIcon.setVisible(false);
+            //     this.armorDescrText.setVisible(false);
+            // }
 
-        //if (basicHpRegen > 0) {
-        this.regenText.setVisible(true);
-        this.regenIcon.setVisible(true);
-        this.regenDescrText.setVisible(true);
-        this.regenText.setText(basicHpRegen + "");
-        // } else {
-        //     this.regenText.setVisible(false);
-        //     this.regenIcon.setVisible(false);
-        // }
+            //if (basicHpRegen > 0) {
+            this.regenText.setVisible(true);
+            this.regenIcon.setVisible(true);
+            this.regenDescrText.setVisible(true);
+            this.regenText.setText(basicHpRegen + "");
+            // } else {
+            //     this.regenText.setVisible(false);
+            //     this.regenIcon.setVisible(false);
+            // }
 
-        this.mpText.setText(basicMagicPower + "");
-        this.ppText.setText(basicPhysicalPower + "");
+            this.mpText.setText(basicMagicPower + "");
+            this.ppText.setText(basicPhysicalPower + "");
 
-        this.critText.setText(basicCritChance + "%");
-        this.evasionText.setText(basicEvasionChance + "%");
+            this.critText.setText(basicCritChance + "%");
+            this.evasionText.setText(basicEvasionChance + "%");
 
-        // SHOW UNIQUE SKILLS DESCIPTION
+            // SHOW UNIQUE SKILLS DESCIPTION
 
-        if (options?.isSkills && unit.heroClassType === EHeroClassType.MULTI) {
-            this.activeSkillText.setVisible(true);
-            this.activeSkillText.setText("Skill: " + unit.skills[0].name + "\n" + unit.skills[0].desc);
-
-            if (unit.passiveSkill) {
+            if (options?.isSkills && unit.heroClassType === EHeroClassType.MULTI) {
                 this.passiveSkillText.setVisible(true);
-                this.passiveSkillText.setText("Passive: " + unit.passiveSkill.desc);
+                this.passiveSkillText.setText("(right click to see\nskill information)");
+                this.activeSkillText.setText("[color=#9999aa]Passive:[/color] " + unit.passiveSkill?.desc);
+                this.activeSkillText.setVisible(true);
+                /*this.activeSkillText.setText("Skill: " + unit.skills[0].name + "\n" + unit.skills[0].desc);
+
+                if (unit.passiveSkill) {
+                    this.passiveSkillText.setVisible(true);
+                    this.passiveSkillText.setText("Passive: " + unit.passiveSkill.desc);
+                } else {
+                    this.passiveSkillText.setVisible(false);
+                }*/
+                //this.baTypeText.setVisible(true);
+                //this.baTypeText.setText("Basic attack: " + unit.attackType);
+            } else if (unit.unitType === EUnitType.UNIT) {
+                this.passiveSkillText.setVisible(true);
+                this.passiveSkillText.setText("(right click to see\nskills information)");
+                if (unit.passiveSkill) {
+                    this.activeSkillText.setText("[color=#9999aa]Passive:[/color] " + unit.passiveSkill?.desc);
+                    this.activeSkillText.setVisible(true);
+                } else {
+                    this.activeSkillText.setVisible(false);
+                }
             } else {
+                this.activeSkillText.setVisible(false);
                 this.passiveSkillText.setVisible(false);
+                this.baTypeText.setVisible(false);
             }
-            //this.baTypeText.setVisible(true);
-            //this.baTypeText.setText("Basic attack: " + unit.attackType);
         } else {
+            this.titleText.setText(unit.name);
+            // long text
+            this.hpIcon.setVisible(false);
+            this.hpText.setVisible(false);
+            this.hpDescrText.setVisible(false);
+
+            this.attackIcon.setVisible(false);
+            this.attackText.setVisible(false);
+            this.attackDescrText.setVisible(false);
+
+            this.mpText.setVisible(false);
+            this.mpIcon.setVisible(false);
+            this.mpDescrText.setVisible(false);
+
+            this.ppText.setVisible(false);
+            this.ppIcon.setVisible(false);
+            this.ppDescrText.setVisible(false);
+
+            this.evasionIcon.setVisible(false);
+            this.evasionText.setVisible(false);
+            this.evasionDescrText.setVisible(false);
+
+            this.critIcon.setVisible(false);
+            this.critText.setVisible(false);
+            this.critDescrText.setVisible(false);
+
+            this.armorText.setVisible(false);
+            this.armorIcon.setVisible(false);
+            this.armorDescrText.setVisible(false);
+            this.regenText.setVisible(false);
+            this.regenIcon.setVisible(false);
+            this.regenDescrText.setVisible(false);
+
             this.activeSkillText.setVisible(false);
             this.passiveSkillText.setVisible(false);
             this.baTypeText.setVisible(false);
+
+            const skill_prefix = "[color=#9999aa]Skill:[/color] [color=#bb8844][b]";
+            if (unit.heroClassType === EHeroClassType.MULTI) {
+                const mcSkill = unit.skills.find(sk => sk.isMcSkill);
+                const skill_1 = skill_prefix + mcSkill.name + "[/b][/color]\n" + mcSkill.desc;
+                const passive = unit.passiveSkill ? "\n\n[color=#9999aa]Passive:[/color] " + unit.passiveSkill.desc : "";
+                this.longText.setText(skill_1 + passive);
+                this.longText.setVisible(true);
+            } else if (unit.unitType === EUnitType.UNIT) {
+                const skill_1 = !!unit.skills[1]?.name ? skill_prefix + unit.skills[1].name + "[/b][/color]\n" + unit.skills[1].desc : "";
+                const skill_2 = !!unit.skills[3]?.name ? "\n\n" + skill_prefix + unit.skills[3].name + "[/b][/color]\n" + unit.skills[3].desc : "";
+                const passive = unit.passiveSkill ? "\n\n[color=#9999aa]Passive:[/color] " + unit.passiveSkill.desc : "";
+                this.longText.setText(skill_1 + skill_2 + passive);
+                this.longText.setVisible(true);
+            } else {
+                this.longText.setText("(right click to change\nthis info panel)");
+                this.longText.setVisible(true);
+            }
         }
     }
 
@@ -635,6 +721,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
     }
 
     hideUnitFields() {
+        this.longText.setVisible(false);
         this.hpText.setVisible(false);
         this.hpIcon.setVisible(false);
         this.hpDescrText.setVisible(false);

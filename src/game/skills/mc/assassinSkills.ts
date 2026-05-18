@@ -72,7 +72,7 @@ export const assassinSkill: IHeroSkillSet = {
 };
 
 export const assassinPassive: IPassiveSkill = {
-    desc: "Deal [20%] increased\ndamage to poisoned targets",
+    desc: "Deal +20% dmg\nto poisoned targets",
     itemPassive: {
         type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS,
         value: 20,

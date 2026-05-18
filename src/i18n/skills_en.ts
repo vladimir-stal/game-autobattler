@@ -655,9 +655,9 @@ export const SKILLS_EN = {
         },
         lastStandSkill: {
             name: "Last stand",
-            desc1: `If all allies are\ndead, increase Hp by [5+50%xPP]\nIf there's one or less\nallies in front\nget +[1] attack and regen`,
-            desc2: `If all allies are\ndead, increase Hp by [7+60%xPP]\nIf there's one or less\nallies in front\nget +[2] attack and regen`,
-            desc3: `If all allies are\ndead, increase Hp by [10+75%xPP]\nIf there's one or less\nallies in front\nget +[3] attack and regen`,
+            desc1: `If all allies are dead,\nincrease Hp by [5+50%xPP]\nIf there's one or less\nallies in front\nget +[1] attack and regen`,
+            desc2: `If all allies are dead,\nincrease Hp by [7+60%xPP]\nIf there's one or less\nallies in front\nget +[2] attack and regen`,
+            desc3: `If all allies are dead,\nincrease Hp by [10+75%xPP]\nIf there's one or less\nallies in front\nget +[3] attack and regen`,
         },
         peasantsStrongTogetherSkill: {
             name: "Strong together",

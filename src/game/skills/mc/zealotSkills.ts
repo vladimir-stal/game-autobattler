@@ -56,7 +56,7 @@ export const zealotSkill: IHeroSkillSet = {
 };
 
 export const zealotPassive: IPassiveSkill = {
-    desc: "Each turn random enemy lose 3 hp regen",
+    desc: "Each turn random\nenemy lose 3 hp regen",
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {
