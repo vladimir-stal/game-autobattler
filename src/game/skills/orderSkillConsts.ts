@@ -8,7 +8,7 @@ import { nextBAArea, removeDebuffSkill, statusesIntoHeal } from "./commonSkillCo
 // INCREASE ATTR ARMOR SELF SKILL
 
 export const attrArmorSelf_3: IHeroSkillSet = {
-    id: "attrIncArmorSelf",
+    id: "attrArmorSelf",
     name: i18n.skills.basic.attrIncArmorSelf.name,
     desc: i18n.skills.basic.attrIncArmorSelf.desc3,
     level: 3,
@@ -28,7 +28,7 @@ export const attrArmorSelf_3: IHeroSkillSet = {
 };
 
 export const attrArmorSelf_2: IHeroSkillSet = {
-    id: "attrIncArmorSelf",
+    id: "attrArmorSelf",
     name: i18n.skills.basic.attrIncArmorSelf.name,
     desc: i18n.skills.basic.attrIncArmorSelf.desc2,
     level: 2,
@@ -49,7 +49,7 @@ export const attrArmorSelf_2: IHeroSkillSet = {
 };
 
 export const attrArmorSelf: IHeroSkillSet = {
-    id: "attrIncArmorSelf",
+    id: "attrArmorSelf",
     name: i18n.skills.basic.attrIncArmorSelf.name,
     desc: i18n.skills.basic.attrIncArmorSelf.desc1,
     level: 1,
@@ -136,7 +136,7 @@ export const attrAttackSelf: IHeroSkillSet = {
 // INCREASE ATTR ARMOR ALL SKILL
 
 export const attrArmorAll_3: IHeroSkillSet = {
-    id: "attrIncArmorAll",
+    id: "attrArmorAll",
     //name: "+armor all(3)",
     //desc: "Armor all [5 + 65% PP]",
     name: i18n.skills.level2.attrIncArmorAll.name,
@@ -159,7 +159,7 @@ export const attrArmorAll_3: IHeroSkillSet = {
 };
 
 export const attrArmorAll_2: IHeroSkillSet = {
-    id: "attrIncArmorAll",
+    id: "attrArmorAll",
     //name: "+armor all(2)",
     //desc: "Armor all [5 + 35% PP]",
     name: i18n.skills.level2.attrIncArmorAll.name,
@@ -183,7 +183,7 @@ export const attrArmorAll_2: IHeroSkillSet = {
 };
 
 export const attrArmorAll: IHeroSkillSet = {
-    id: "attrIncArmorAll",
+    id: "attrArmorAll",
     //name: "+armor all",
     //desc: "Armor all [5 + 20% PP]",
     name: i18n.skills.level2.attrIncArmorAll.name,
@@ -209,7 +209,7 @@ export const attrArmorAll: IHeroSkillSet = {
 // // INCREASE ATTR ARMOR SELF (LEVEL 3) SKILL
 
 export const attrArmorBigSelf_3: IHeroSkillSet = {
-    id: "attrIncArmorSelf",
+    id: "attrArmorBigSelf",
     name: i18n.skills.level3.attrArmorBigSelf.name,
     desc: i18n.skills.level3.attrArmorBigSelf.desc3,
     level: 3,
@@ -230,7 +230,7 @@ export const attrArmorBigSelf_3: IHeroSkillSet = {
 };
 
 export const attrArmorBigSelf_2: IHeroSkillSet = {
-    id: "attrIncArmorSelf",
+    id: "attrArmorBigSelf",
     //name: "Armor more(2)",
     //desc: "Armor self [5]+[PPx70%]",
     name: i18n.skills.level3.attrArmorBigSelf.name,
@@ -253,7 +253,7 @@ export const attrArmorBigSelf_2: IHeroSkillSet = {
 };
 
 export const attrArmorBigSelf: IHeroSkillSet = {
-    id: "attrIncArmorSelf",
+    id: "attrArmorBigSelf",
     //name: "Armor more",
     //desc: "Armor self [5]+[PPx40%]",
     name: i18n.skills.level3.attrArmorBigSelf.name,

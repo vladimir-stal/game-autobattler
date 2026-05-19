@@ -453,13 +453,39 @@ export class SelectController {
                     if (!card.skill) {
                         return;
                     }
-                    const { skills } = unit;
+                    const { skills, level } = unit;
 
-                    skills.push(card.skill);
-
-                    targetCard.refresh();
-                    // animation
-                    targetCard.heroCard?.playAddSkill();
+                    if (unit.unitType === EUnitType.HERO) {
+                        skills.push(card.skill);
+                        targetCard.refresh();
+                        targetCard.heroCard?.playAddSkill();
+                    } else {
+                        const freeSlot1:boolean = !skills[4];
+                        const freeSlot3:boolean = level<4 ? false : !skills[5];
+                        if (freeSlot1) {
+                            if (level<4 || freeSlot3) {
+                                skills[4] = skills[1];
+                                skills[1] = card.skill;
+                                targetCard.refresh();
+                                targetCard.heroCard?.playAddSkill(0);
+                            } else if (!freeSlot3) {
+                                skills[4] = skills[1];
+                                skills[1] = skills[3];
+                                skills[3] = card.skill;
+                                targetCard.refresh();
+                                targetCard.heroCard?.playAddSkill(1);
+                            }
+                        } else if (freeSlot3) {
+                            skills[5] = skills[3];
+                            skills[3] = card.skill;
+                            targetCard.refresh();
+                            targetCard.heroCard?.playAddSkill(1);
+                        } else {
+                            [skills[1], skills[3]] = [skills[3], skills[1]];
+                            targetCard.refresh();
+                            targetCard.heroCard?.playAddSkill(1);
+                        }
+                    }
                 }
                 break;
             default: {

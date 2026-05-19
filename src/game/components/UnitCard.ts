@@ -108,18 +108,18 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.rect
             .on(Input.Events.GAMEOBJECT_POINTER_OVER, () => {
                 const { x, y } = this.getWorldPoint();
-                this.gameScene.hintPanel.showUnit(x + 70, y - 30, this.unit, {isSkills: true, isLongText: this.gameScene.hintPanel.showLongText});
+                this.gameScene.hintPanel.showUnit(x + 70, y - 30, this.unit, { isSkills: true, isLongText: this.gameScene.hintPanel.showLongText });
             })
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 this.gameScene.hintPanel.hide();
             })
             .on(Input.Events.GAMEOBJECT_POINTER_DOWN, (pointer) => {
                 if (pointer.rightButtonDown()) {
-                    this.gameScene.hintPanel.showLongText = ! this.gameScene.hintPanel.showLongText;
+                    this.gameScene.hintPanel.showLongText = !this.gameScene.hintPanel.showLongText;
                     if (this.gameScene.hintPanel.visible) {
                         this.gameScene.hintPanel.hide();
                         const { x, y } = this.getWorldPoint();
-                        this.gameScene.hintPanel.showUnit(x + 70, y - 30, this.unit, {isSkills: true, isLongText: this.gameScene.hintPanel.showLongText});
+                        this.gameScene.hintPanel.showUnit(x + 70, y - 30, this.unit, { isSkills: true, isLongText: this.gameScene.hintPanel.showLongText });
                     }
                     //console.log("(right click detected)");
                 } else if (this.gameScene.isCardMoveMode && this.cardSlot) {
@@ -198,6 +198,23 @@ export class UnitCard extends Phaser.GameObjects.Container {
         this.refresh();
     }
 
+    handleSkillRemovedMobs(index: number) {
+        // first slot is skill#2, second slot is skill#4
+        if (index === 1 && this.unit.skills[5]) {
+            // shifting second slot into first slot
+            this.unit.skills[1] = this.unit.skills[3];
+            this.unit.skills[3] = this.unit.skills[5];
+            this.unit.skills[5] = undefined;
+        } else if (index === 1 && this.unit.skills[4]) {
+            this.unit.skills[1] = this.unit.skills[4];
+            this.unit.skills[4] = undefined;
+        } else if (index === 3 && this.unit.skills[5]) {
+            this.unit.skills[3] = this.unit.skills[5];
+            this.unit.skills[5] = undefined;
+        }
+        this.refresh();
+    }
+
     showItemSlots() {
         if (!this.isShowItems) {
             return;
@@ -231,21 +248,48 @@ export class UnitCard extends Phaser.GameObjects.Container {
     }
 
     showSkillSlots() {
-        if (!this.isShowSkills || !this.unit.heroClassType) {
+        if (!this.isShowSkills /* || !this.unit.heroClassType*/) {
             return;
         }
 
-        const { id, heroClassType, skills } = this.unit;
+        const { id, heroClassType, skills, unitType, level } = this.unit;
 
-        const skillSlotsCount = getMaxUnitSkillCount(heroClassType);
+        if (unitType === EUnitType.HERO) {
+            const skillSlotsCount = getMaxUnitSkillCount(heroClassType);
 
-        for (let i = 0; i < skillSlotsCount; i++) {
-            const x = 60;
-            const y = i * 35;
+            for (let i = 0; i < skillSlotsCount; i++) {
+                const x = 60;
+                const y = i * 35;
 
-            const skillSlot = new HeroSkillSlot(this.gameScene, x, y, id, skills[i], () => this.handleSkillRemoved(i));
-            this.add(skillSlot);
-            this.skillSlots.push(skillSlot);
+                const skillSlot = new HeroSkillSlot(this.gameScene, x, y, id, skills[i], () => this.handleSkillRemoved(i));
+                this.add(skillSlot);
+                this.skillSlots.push(skillSlot);
+            }
+        } else {
+            // level 1-3: one slot
+            if (true) {
+                const x = 60;
+                const y = 0;
+                const skillSlot = new HeroSkillSlot(this.gameScene, x, y, id, skills[1], () => this.handleSkillRemovedMobs(1));
+                if (!this.unit.skills[4]) {
+                    skillSlot.canRemoveSkill = false;
+                    skillSlot.render()
+                }
+                this.add(skillSlot);
+                this.skillSlots.push(skillSlot);
+            }
+            // level 4+: two slots
+            if (level>3) {
+                const x = 60;
+                const y = 35;
+                const skillSlot = new HeroSkillSlot(this.gameScene, x, y, id, skills[3], () => this.handleSkillRemovedMobs(3));
+                if (!this.unit.skills[5]) {
+                    skillSlot.canRemoveSkill = false;
+                    skillSlot.render()
+                }
+                this.add(skillSlot);
+                this.skillSlots.push(skillSlot);
+            }
         }
         this.bringToTop(this.skillSlots[0]);
     }
@@ -281,8 +325,12 @@ export class UnitCard extends Phaser.GameObjects.Container {
 
     // ANIMATIONS
 
-    playAddSkill() {
-        this.skillSlots[this.unit.skills.length - 1].playAddSkill();
+    playAddSkill(slotId?:number) {
+        if (slotId !== undefined) {
+            this.skillSlots[slotId].playAddSkill();
+        } else {
+            this.skillSlots[this.unit.skills.length - 1].playAddSkill();
+        }
     }
 
     playAddItem(index: number) {

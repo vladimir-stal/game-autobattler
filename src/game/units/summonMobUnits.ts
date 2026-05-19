@@ -2,7 +2,7 @@ import { ETargetType, EHeroAttackType, EHeroClass, IUnit, EUnitType } from "../.
 import { basic_heal } from "../commonItemConsts";
 import { i18n } from "../consts";
 import { itemCoin, itemCoin2, itemSpiritSpear, spiritArmor } from "../mobItemConsts";
-import { chainToNextSkill as chainToNextSkill, chainToNextSkill } from "../skills/commonSkillConsts";
+import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { fireflyConfusingMistSkill, fireflyUnfairExchange, infernoFlyPassive } from "../skills/mobs/fireflyMobSkills";
 import { spiritShieldRadiate, spiritTeamFlurry, spiritTeamRevenge, spiritWarriorPassive } from "../skills/mobs/spiritWarriorMobSkills";
 import { mobNoSkill } from "../skills/mobSkills";

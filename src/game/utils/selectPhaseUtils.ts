@@ -1152,7 +1152,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
                         return;
                     }
 
-                    const { unitType, heroClass, heroClassType, skills } = unit;
+                    const { unitType, heroClass, heroClassType, skills, level, mobHeroClasses } = unit;
 
                     // case move target is unit
                     if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT && unitType === EUnitType.HERO) {
@@ -1162,7 +1162,7 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
                             return;
                         }
 
-                        if (!unitType || !heroClassType || !heroClass) {
+                        if (!heroClassType || !heroClass) {
                             return;
                         }
 
@@ -1187,6 +1187,24 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
                                     slot.setIsActive(true, "equip");
                                 }
                             }
+                        }
+                    } else if (!slot.isEmpty && slot.card?.card.type === ECardType.UNIT && unitType === EUnitType.UNIT) {
+                        if (parentUnitId && slot.card?.card.unit?.id === parentUnitId) {
+                            slot.setIsActive(true, "equip");
+                            return;
+                        }
+                        if (!mobHeroClasses) {
+                            return;
+                        }
+                        const freeSlot1:boolean = !skills[4];
+                        const freeSlot3:boolean = level<4 ? false : !skills[5];
+                        if (!freeSlot1 && !freeSlot3) {
+                            return;
+                        }
+                        if (skill.heroClasses.includes(EHeroClass.ALL)) {
+                            slot.setIsActive(true, "equip");
+                        } else if (skill.heroClasses.some(hc => mobHeroClasses.includes(hc))) {
+                            slot.setIsActive(true, "equip");
                         }
                     }
                 }

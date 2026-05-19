@@ -58,7 +58,7 @@ export const strongWolfUnit: IUnit = {
     id: STRONG_WOLF_ID,
     skills: [chainToNextSkill, regularWolfSkill, mobNoSkill, bigWolfSummonSkill],
     items: [],
-    level: 3,
+    level: 4,
     exp: 0,
     mobItems: [
         { item: basic_ring_regen, probability: 15 }, // 15%

@@ -544,8 +544,10 @@ export class GameScene extends Phaser.Scene {
             }
 
             unit.skills.forEach((skillSet) => {
-                if (!skillsIds.includes(skillSet.id)) {
-                    skillsIds.push(skillSet.id);
+                if (skillSet) {
+                    if (!skillsIds.includes(skillSet.id)) {
+                        skillsIds.push(skillSet.id);
+                    }
                 }
             });
         });

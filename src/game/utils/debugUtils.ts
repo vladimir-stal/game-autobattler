@@ -28,7 +28,7 @@ import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill, toxicTune
 import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { fireflySummonSkill, incrSummonBa, warriorSummonSkill } from "../skills/summonSkillConsts2";
-import { totemAttackSkill } from "../skills/wildSkillConsts";
+import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
 import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from "../units/summonMobUnits";
@@ -53,7 +53,7 @@ import { outHealBuffSkill } from "../skills/commonSkill3Consts";
 import { scrollOfSkill } from "../commonItemConsts3";
 import { totem5HptoDmg } from "../weaponItem5Consts";
 
-export const debugHeroSelectRoom = true;
+export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = true;
 export const debugAlwaysOneEnemy = false;
 
@@ -84,10 +84,10 @@ export const customStartingItemsRoom = (): ICard[] => {
         { type: ECardType.ITEM, price: 0, item: jacket21_3, },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
         // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
-        // { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
-        // { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
+        { type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
+        { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
-        //{ type: ECardType.UNIT, price: 0, unit: warriorHero },
+        { type: ECardType.UNIT, price: 0, unit: pirate2Unit },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes, isChained: true} },
         //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes_2, isChained: true} },

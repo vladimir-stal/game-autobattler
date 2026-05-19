@@ -171,7 +171,7 @@ export const statusesIntoHeal: IHeroSkillSet = {
 
 // PHYSICAL + BLEED
 export const attackWithBleedSkill_3: IHeroSkillSet = {
-    id: "phycNBleed",
+    id: "attackWithBleedSkill",
     name: i18n.skills.basic.phycNBleed.name,
     desc: i18n.skills.basic.phycNBleed.desc3,
     level: 3,
@@ -201,7 +201,7 @@ export const attackWithBleedSkill_3: IHeroSkillSet = {
 };
 
 export const attackWithBleedSkill_2: IHeroSkillSet = {
-    id: "phycNBleed",
+    id: "attackWithBleedSkill",
     name: i18n.skills.basic.phycNBleed.name,
     desc: i18n.skills.basic.phycNBleed.desc2,
     level: 2,
@@ -232,7 +232,7 @@ export const attackWithBleedSkill_2: IHeroSkillSet = {
 };
 
 export const attackWithBleedSkill: IHeroSkillSet = {
-    id: "phycNBleed",
+    id: "attackWithBleedSkill",
     name: i18n.skills.basic.phycNBleed.name,
     desc: i18n.skills.basic.phycNBleed.desc1,
     level: 1,
@@ -265,7 +265,7 @@ export const attackWithBleedSkill: IHeroSkillSet = {
 // PHYSICAL ATTACK
 
 export const phycisalAttackSkill_3: IHeroSkillSet = {
-    id: "phycAttack",
+    id: "phycisalAttackSkill",
     name: i18n.skills.basic.phycAttack.name,
     desc: i18n.skills.basic.phycAttack.desc3,
     level: 3,
@@ -285,7 +285,7 @@ export const phycisalAttackSkill_3: IHeroSkillSet = {
 };
 
 export const phycisalAttackSkill_2: IHeroSkillSet = {
-    id: "phycAttack",
+    id: "phycisalAttackSkill",
     name: i18n.skills.basic.phycAttack.name,
     desc: i18n.skills.basic.phycAttack.desc2,
     level: 2,
@@ -306,7 +306,7 @@ export const phycisalAttackSkill_2: IHeroSkillSet = {
 };
 
 export const phycisalAttackSkill: IHeroSkillSet = {
-    id: "phycAttack",
+    id: "phycisalAttackSkill",
     name: i18n.skills.basic.phycAttack.name,
     desc: i18n.skills.basic.phycAttack.desc1,
     level: 1,

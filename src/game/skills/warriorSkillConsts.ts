@@ -332,7 +332,7 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction: numb
 };
 
 export const mortalStrikeSkill_3: IHeroSkillSet = {
-    id: "mortalStrikeSkill",
+    id: "mortalStrike",
     name: "Mortal strike",
     desc: "Next BA apply [8] bleed and physical vulnerability, reduce targets PP & MP by [11] for 3 turns",
     level: 3,
@@ -345,7 +345,7 @@ export const mortalStrikeSkill_3: IHeroSkillSet = {
 };
 
 export const mortalStrikeSkill_2: IHeroSkillSet = {
-    id: "mortalStrikeSkill",
+    id: "mortalStrike",
     name: "Mortal strike",
     desc: "Next BA apply [5] bleed and physical vulnerability, reduce targets PP & MP by [7] for 3 turns",
     level: 2,
@@ -358,7 +358,7 @@ export const mortalStrikeSkill_2: IHeroSkillSet = {
 };
 
 export const mortalStrikeSkill: IHeroSkillSet = {
-    id: "mortalStrikeSkill",
+    id: "mortalStrike",
     name: "Mortal strike",
     desc: "Next BA apply [3] bleed and physical vulnerability, reduce targets PP & MP by [4] for 3 turns",
     level: 1,

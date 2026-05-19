@@ -42,7 +42,7 @@ export const pirate1Unit: IUnit = {
 export const pirate2Unit: IUnit = {
     unitType: EUnitType.UNIT,
     heroClass: EHeroClass.MOB,
-    mobHeroClasses: [EHeroClass.MASTER, EHeroClass.MOB],
+    mobHeroClasses: [EHeroClass.MASTER, EHeroClass.BARD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
     basicAttack: 8,

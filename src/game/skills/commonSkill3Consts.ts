@@ -48,7 +48,7 @@ export const shieldAttackSkill_3: IHeroSkillSet = {
     //name: "Shield bash(3)",
     //desc: "Deal [50%xArmor] to first enemy",
     level: 3,
-    priceLevel: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
     skills: shieldAttackSkillset(65,50),
     image: IMAGE_SKILL_TEST,
@@ -61,7 +61,7 @@ export const shieldAttackSkill_2: IHeroSkillSet = {
     //name: "Shield bash(2)",
     //desc: "Deal [30%xArmor] to first enemy",
     level: 2,
-    priceLevel: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
     skills: shieldAttackSkillset(50,40),
     nextLevel: shieldAttackSkill_3,
@@ -75,7 +75,7 @@ export const shieldAttackSkill: IHeroSkillSet = {
     //name: "Shield bash",
     //desc: "Deal [20%xArmor] to first enemy",
     level: 1,
-    priceLevel: 3,
+    priceLevel: 2,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.ORDER],
     skills: shieldAttackSkillset(35,30),
     nextLevel: shieldAttackSkill_2,
@@ -392,7 +392,7 @@ const outHealBuffSkillset = (percent:number, mpScale:number): IHeroSkill[] => {
 }
 
 export const outHealBuffSkill_3: IHeroSkillSet = {
-    id: "buffTotalDmgSkill",
+    id: "outHealBuffSkill",
     name: i18n.skills.level3.outHealBuffSkill.name,
     desc: i18n.skills.level3.outHealBuffSkill.desc3,
     level: 3,
@@ -403,7 +403,7 @@ export const outHealBuffSkill_3: IHeroSkillSet = {
 };
 
 export const outHealBuffSkill_2: IHeroSkillSet = {
-    id: "buffTotalDmgSkill",
+    id: "outHealBuffSkill",
     name: i18n.skills.level3.outHealBuffSkill.name,
     desc: i18n.skills.level3.outHealBuffSkill.desc2,
     level: 2,

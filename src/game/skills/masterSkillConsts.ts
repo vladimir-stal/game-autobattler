@@ -27,7 +27,7 @@ import { attackWithBleedSkill, phycisalAttackSkill } from "./commonSkillConsts";
 // BUFF NEXT BA X SELF
 
 const buffNextBaXSelf_3: IHeroSkillSet = {
-    id: "buffNextBaX",
+    id: "buffNextBaXSelf",
     name: i18n.skills.basic.buffNextBaX.name,
     desc: i18n.skills.basic.buffNextBaX.desc3,
     level: 3,
@@ -51,7 +51,7 @@ const buffNextBaXSelf_3: IHeroSkillSet = {
 };
 
 const buffNextBaXSelf_2: IHeroSkillSet = {
-    id: "buffNextBaX",
+    id: "buffNextBaXSelf",
     name: i18n.skills.basic.buffNextBaX.name,
     desc: i18n.skills.basic.buffNextBaX.desc2,
     level: 2,
@@ -76,7 +76,7 @@ const buffNextBaXSelf_2: IHeroSkillSet = {
 };
 
 export const buffNextBaXSelf: IHeroSkillSet = {
-    id: "buffNextBaX",
+    id: "buffNextBaXSelf",
     name: i18n.skills.basic.buffNextBaX.name,
     desc: i18n.skills.basic.buffNextBaX.desc1, //"Multiply x[1.4] self next basic attack",
     level: 1,

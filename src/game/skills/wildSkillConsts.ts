@@ -107,8 +107,8 @@ const totemAttackSkillset = (atk: number): IHeroSkill[] => {
     ];
 };
 
-export const totemAttackSkill_3: IHeroSkillSet = {
-    id: "wildBasicTotemSkill",
+export const wildBasicTotemSkill_3: IHeroSkillSet = {
+    id: "wildBasicTotem",
     //name: "attack totem(3)",
     //desc: "Summon totem that deals [3] damage to random enemy",
     name: i18n.skills.basic.wildBasicTotemSkill.name,
@@ -120,8 +120,8 @@ export const totemAttackSkill_3: IHeroSkillSet = {
     image: IMAGE_SKILL_TOTEM_1,
 };
 
-export const totemAttackSkill_2: IHeroSkillSet = {
-    id: "wildBasicTotemSkill",
+export const wildBasicTotemSkill_2: IHeroSkillSet = {
+    id: "wildBasicTotem",
     //name: "attack totem(2)",
     //desc: "Summon totem that deals [2] damage to random enemy",
     name: i18n.skills.basic.wildBasicTotemSkill.name,
@@ -130,12 +130,12 @@ export const totemAttackSkill_2: IHeroSkillSet = {
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
     skills: totemAttackSkillset(2),
-    nextLevel: totemAttackSkill_3,
+    nextLevel: wildBasicTotemSkill_3,
     image: IMAGE_SKILL_TOTEM_1,
 };
 
-export const totemAttackSkill: IHeroSkillSet = {
-    id: "wildBasicTotemSkill",
+export const wildBasicTotemSkill: IHeroSkillSet = {
+    id: "wildBasicTotem",
     //name: "attack totem",
     //desc: "Summon totem that deals [1] damage to random enemy",
     name: i18n.skills.basic.wildBasicTotemSkill.name,
@@ -144,7 +144,7 @@ export const totemAttackSkill: IHeroSkillSet = {
     priceLevel: 1,
     heroClasses: [EHeroClass.WILD],
     skills: totemAttackSkillset(1),
-    nextLevel: totemAttackSkill_2,
+    nextLevel: wildBasicTotemSkill_2,
     image: IMAGE_SKILL_TOTEM_1,
 };
 
@@ -283,7 +283,7 @@ export const incrTotemValueSkill: IHeroSkillSet = {
     nextLevel: incrTotemValueSkill_2,
 };
 
-export const wildSkills: THeroSkills = [totemAttackSkill, attrIncrHpReg];
+export const wildSkills: THeroSkills = [wildBasicTotemSkill, attrIncrHpReg];
 
 export const wildSkills_2: THeroSkills = wildSkills.concat([attrDescArmor, removeBuffSkill, statusesIntoHeal, attackWithBleedSkill]);
 

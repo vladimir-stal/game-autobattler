@@ -12,6 +12,7 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
     hint: HintPanel;
     onItemRemoved: () => void;
     parentUnitId: string;
+    canRemoveSkill: boolean;
 
     animationRect: GameObjects.Rectangle;
 
@@ -21,6 +22,7 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
         this.skillSet = skillSet;
         this.onItemRemoved = onItemRemoved;
         this.parentUnitId = parentUnitId;
+        this.canRemoveSkill = true;
         this.render();
     }
 
@@ -32,9 +34,10 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
         }
 
         const { isMcSkill } = this.skillSet;
-        const simpleColor = 0x5b8dc5; //"#5b8dc5"
+        const simpleColor = 0x5b8dc5;
         const mcColor = 0x9966cc; //0x9933cc;
-        const color = isMcSkill ? mcColor : simpleColor;
+        const mobColor = 0xc5c55b;
+        const color = isMcSkill ? mcColor : (this.canRemoveSkill ? simpleColor : mobColor);
         const rect = this.scene.add.rectangle(0, 0, 30, 30, color).setOrigin(0, 0);
         this.add(rect);
         rect.setInteractive();
@@ -56,10 +59,7 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
                 //}
             })
             .on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-                if (!this.skillSet) {
-                    return;
-                }
-                if (this.gameScene.isCardMoveMode) {
+                if (!this.skillSet || this.gameScene.isCardMoveMode || !this.canRemoveSkill) {
                     return;
                 }
                 const icard: ICard = { price: 0, type: ECardType.SKILL, skill: this.skillSet };

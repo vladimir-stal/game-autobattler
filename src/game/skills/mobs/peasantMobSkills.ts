@@ -64,7 +64,7 @@ const peasantLastStandSkillset = (hpBoost: number, ppScale: number, atkAndRegen:
 };
 
 export const peasantLastStandSkill_3: IHeroSkillSet = {
-    id: "lastStandSkill",
+    id: "peasantLastStand",
     name: i18n.skills.mobs.lastStandSkill.name,
     desc: i18n.skills.mobs.lastStandSkill.desc3,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
@@ -76,7 +76,7 @@ export const peasantLastStandSkill_3: IHeroSkillSet = {
 };
 
 export const peasantLastStandSkill_2: IHeroSkillSet = {
-    id: "lastStandSkill",
+    id: "peasantLastStand",
     name: i18n.skills.mobs.lastStandSkill.name,
     desc: i18n.skills.mobs.lastStandSkill.desc2,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
@@ -89,7 +89,7 @@ export const peasantLastStandSkill_2: IHeroSkillSet = {
 };
 
 export const peasantLastStandSkill: IHeroSkillSet = {
-    id: "lastStandSkill",
+    id: "peasantLastStand",
     name: i18n.skills.mobs.lastStandSkill.name,
     desc: i18n.skills.mobs.lastStandSkill.desc1,
     heroClasses: [EHeroClass.WARRIOR, EHeroClass.WILD],
@@ -150,7 +150,7 @@ const peasantStronkSkillset = (critAndHpBoost: number, atk: number, ppScale: num
 };
 
 export const peasantsStronkSkill_3: IHeroSkillSet = {
-    id: "peasantsStrongTogetherSkill",
+    id: "peasantsStrong",
     //name: "Strong together",
     //desc: "Ally behind get +[5] crit\nAlly in front get +[5] maxHp\n" + "Otherwise strike [7+80%xPP]\nphysical attack.",
     name: i18n.skills.mobs.peasantsStrongTogetherSkill.name,
@@ -164,7 +164,7 @@ export const peasantsStronkSkill_3: IHeroSkillSet = {
 };
 
 export const peasantsStronkSkill_2: IHeroSkillSet = {
-    id: "peasantsStrongTogetherSkill",
+    id: "peasantsStrong",
     //name: "Strong together",
     //desc: "Ally behind get +[4] crit\nAlly in front get +[4] maxHp\n" + "Otherwise strike [6+65%xPP]\nphysical attack.",
     name: i18n.skills.mobs.peasantsStrongTogetherSkill.name,
@@ -179,7 +179,7 @@ export const peasantsStronkSkill_2: IHeroSkillSet = {
 };
 
 export const peasantsStronkSkill: IHeroSkillSet = {
-    id: "peasantsStrongTogetherSkill",
+    id: "peasantsStrong",
     //name: "Strong together",
     //desc: "Ally behind get +[3] crit\nAlly in front get +[3] maxHp\n" + "Otherwise strike [5+50%xPP]\nphysical attack.",
     name: i18n.skills.mobs.peasantsStrongTogetherSkill.name,

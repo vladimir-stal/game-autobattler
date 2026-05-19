@@ -85,7 +85,7 @@ import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf, attrAttack
 import { healFirst, healFirst_2, healLowHpSkill, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, summonSkills } from "./skills/summonSkillConsts2";
 import { buffNextBa, buffNextBa_2, buffNextBa_3, buffNextBaTimes_2, debuffWorthyFoe, mortalStrikeSkill } from "./skills/warriorSkillConsts";
-import { attrDescArmor, attrIncrHpReg, totemAttackSkill, totemAttackSkill_2 } from "./skills/wildSkillConsts";
+import { attrDescArmor, attrIncrHpReg, wildBasicTotemSkill, wildBasicTotemSkill_2 } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
 import {
@@ -318,7 +318,7 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
             { item: scepter21 },
             { item: scepter31 },
             { skill: healLowHpSkill, chained: true },
-            { skill: totemAttackSkill, chained: true },
+            { skill: wildBasicTotemSkill, chained: true },
             { skill: healFirst_2 },
             { moveMcSkillToSlotIndex: 3 },
         ],
@@ -503,7 +503,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
     // day 2
     {
         1: [{ unit: priestHero }, { item: scepter22 }, { item: basic_heal_2 }, { skill: healSelf }, { levelup: 2 }, { attr: "basicMaxHp", incr: 3 }],
-        2: [{ unit: wildHero }, { item: basic_ring_damage }, { item: basic_hat }, { skill: totemAttackSkill }],
+        2: [{ unit: wildHero }, { item: basic_ring_damage }, { item: basic_hat }, { skill: wildBasicTotemSkill }],
         3: [{ unit: goldGoblin1Unit }],
     },
     // day 3
@@ -518,7 +518,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { attr: "basicMaxHp", incr: 3 },
             { attr: "basicMagicPower", incr: 1 },
         ],
-        2: [{ unit: wildHero }, { item: axe21 }, { item: basic_hat }, { skill: totemAttackSkill }, { skill: removeBuffSkill }, { levelup: 1 }],
+        2: [{ unit: wildHero }, { item: axe21 }, { item: basic_hat }, { skill: wildBasicTotemSkill }, { skill: removeBuffSkill }, { levelup: 1 }],
         3: [{ unit: peasantUnit }, { item: itemPeasantPitchfork }],
         4: [{ unit: goldGoblin1Unit }],
     },
@@ -538,7 +538,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { attr: "basicArmor", incr: 3 },
             { attr: "basicEvasionChance", incr: 2 },
         ],
-        2: [{ unit: druidHero }, { item: axe21 }, { item: basic_hat }, { item: basic_pants }, { skill: totemAttackSkill }, { skill: removeBuffSkill }],
+        2: [{ unit: druidHero }, { item: axe21 }, { item: basic_hat }, { item: basic_pants }, { skill: wildBasicTotemSkill }, { skill: removeBuffSkill }],
         3: [{ unit: bardHero }, { skill: buffNextBaAll }],
         4: [{ unit: goldGoblin1Unit }],
     },
@@ -563,7 +563,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { item: axe21 },
             { item: basic_hat },
             { item: basic_pants },
-            { skill: totemAttackSkill_2 },
+            { skill: wildBasicTotemSkill_2 },
             { skill: removeBuffSkill },
             { attr: "basicMagicPower", incr: 1 },
         ],
@@ -593,7 +593,7 @@ export const enemy5: TDuelEnemy = buildDuelEnemy([
             { item: axe21 },
             { item: basic_hat_2 },
             { item: basic_pants_2 },
-            { skill: totemAttackSkill_2 },
+            { skill: wildBasicTotemSkill_2 },
             { skill: removeBuffSkill },
             { attr: "basicMagicPower", incr: 1 },
             { levelup: 1 },
@@ -1113,12 +1113,12 @@ export const enemy9: TDuelEnemy = buildDuelEnemy([
 export const enemy10: TDuelEnemy = buildDuelEnemy([
     // day 1
     {
-        1: [{ unit: wildHero }, { levelup: 1 }, { item: totem1 }, { skill: totemAttackSkill }],
+        1: [{ unit: wildHero }, { levelup: 1 }, { item: totem1 }, { skill: wildBasicTotemSkill }],
     },
     // day 2
     {
-        1: [{ unit: wildHero }, { levelup: 1 }, { attr: "basicCritChance", incr: 2 }, { item: totem1 }, { skill: totemAttackSkill }, { skill: attrIncrHpReg }],
-        2: [{ unit: wildHero }, { item: axe22 }, { skill: totemAttackSkill }, { skill: peasantLastStandSkill }],
+        1: [{ unit: wildHero }, { levelup: 1 }, { attr: "basicCritChance", incr: 2 }, { item: totem1 }, { skill: wildBasicTotemSkill }, { skill: attrIncrHpReg }],
+        2: [{ unit: wildHero }, { item: axe22 }, { skill: wildBasicTotemSkill }, { skill: peasantLastStandSkill }],
         3: [{ unit: pirate1Unit }, { item: axe1 }],
         4: [{ unit: peasantUnit }],
     },
@@ -1129,12 +1129,12 @@ export const enemy10: TDuelEnemy = buildDuelEnemy([
             { attr: "basicCritChance", incr: 2 },
             { attr: "basicPhysicalPower", incr: 1 },
             { item: totem1 },
-            { skill: totemAttackSkill },
+            { skill: wildBasicTotemSkill },
             { skill: statusesIntoHeal, chained: true },
             { skill: attrIncrHpReg },
             { moveMcSkillToSlotIndex: 2 },
         ],
-        2: [{ unit: wildHero }, { levelup: 1 }, { item: axe22 }, { item: ring_regen2 }, { skill: totemAttackSkill }, { skill: peasantLastStandSkill }],
+        2: [{ unit: wildHero }, { levelup: 1 }, { item: axe22 }, { item: ring_regen2 }, { skill: wildBasicTotemSkill }, { skill: peasantLastStandSkill }],
         3: [{ unit: pirate1Unit }, { item: axe1 }],
         4: [{ unit: pirate1Unit }],
     },
@@ -1147,7 +1147,7 @@ export const enemy10: TDuelEnemy = buildDuelEnemy([
             { attr: "basicMagicPower", incr: 2 },
             { item: totem1 },
             { item: musical1_2 },
-            { skill: totemAttackSkill },
+            { skill: wildBasicTotemSkill },
             { skill: statusesIntoHeal, chained: true },
             { skill: attrIncrHpReg },
             { moveMcSkillToSlotIndex: 2 },
@@ -1156,7 +1156,7 @@ export const enemy10: TDuelEnemy = buildDuelEnemy([
             { unit: hunterHero },
             { item: axe22 },
             { item: ring_regen2 },
-            { skill: totemAttackSkill },
+            { skill: wildBasicTotemSkill },
             { skill: attackWithBleedSkill },
             { skill: peasantLastStandSkill },
             { moveMcSkillToSlotIndex: 2 },
@@ -1175,7 +1175,7 @@ export const enemy10: TDuelEnemy = buildDuelEnemy([
             { attr: "basicArmor", incr: 3 },
             { item: totem1 },
             { item: musical1_2 },
-            { skill: totemAttackSkill },
+            { skill: wildBasicTotemSkill },
             { skill: statusesIntoHeal, chained: true },
             { skill: attrIncrHpReg },
             { moveMcSkillToSlotIndex: 2 },
@@ -1188,7 +1188,7 @@ export const enemy10: TDuelEnemy = buildDuelEnemy([
             { item: ring_regen2 },
             { attr: "basicCritChance", incr: 2 },
             { attr: "basicPhysicalPower", incr: 1 },
-            { skill: totemAttackSkill },
+            { skill: wildBasicTotemSkill },
             { skill: attackWithBleedSkill },
             { skill: peasantLastStandSkill },
             { moveMcSkillToSlotIndex: 2 },
@@ -1223,7 +1223,7 @@ export const enemy10: TDuelEnemy = buildDuelEnemy([
             { attr: "basicCritChance", incr: 2 },
             { attr: "basicPhysicalPower", incr: 1 },
             { attr: "basicMaxHp", incr: 3 },
-            { skill: totemAttackSkill },
+            { skill: wildBasicTotemSkill },
             { skill: attackWithBleedSkill },
             { skill: peasantLastStandSkill },
             { moveMcSkillToSlotIndex: 2 },

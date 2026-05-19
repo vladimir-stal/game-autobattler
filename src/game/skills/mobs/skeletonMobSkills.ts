@@ -167,7 +167,7 @@ const skeletonPoisonedFlamesSkillset = (atk: number, mpScale: number, stacks: nu
 };
 
 export const skeletonPoisonedFlames_3: IHeroSkillSet = {
-    id: "poisonedFlames",
+    id: "skeletonPoisonedFlames",
     //name: "Poisoned flames",
     //desc: "Attack random enemy with\nmagic [10+MP] and apply\n[4] poison and burn",
     name: i18n.skills.mobs.poisonedFlames.name,
@@ -182,7 +182,7 @@ export const skeletonPoisonedFlames_3: IHeroSkillSet = {
 };
 
 export const skeletonPoisonedFlames_2: IHeroSkillSet = {
-    id: "poisonedFlames",
+    id: "skeletonPoisonedFlames",
     //name: "Poisoned flames",
     //desc: "Attack random enemy with\nmagic [8+65%xMP] and apply\n[3] poison and burn",
     name: i18n.skills.mobs.poisonedFlames.name,
@@ -198,7 +198,7 @@ export const skeletonPoisonedFlames_2: IHeroSkillSet = {
 };
 
 export const skeletonPoisonedFlames: IHeroSkillSet = {
-    id: "poisonedFlames",
+    id: "skeletonPoisonedFlames",
     //name: "Poisoned flames",
     //desc: "Attack random enemy with\nmagic [6+35%xMP] and apply\n[2] poison and burn",
     name: i18n.skills.mobs.poisonedFlames.name,
