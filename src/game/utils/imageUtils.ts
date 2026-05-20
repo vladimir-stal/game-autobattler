@@ -476,6 +476,8 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 //appearAnimation: AnimationType.MOB_FIREFLY_APPEAR,
             };
         }
+        case "SPIRITWARRIOR5":
+        case "SPIRITWARRIOR3":
         case "SPIRITWARRIOR": {
             return {
                 //size: 400,

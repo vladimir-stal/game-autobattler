@@ -494,6 +494,8 @@ export const copyUnit = (unit: IUnit, copyItems: boolean = false): IUnit => {
 /** @returns id of initial unit if units have same animations */
 export const getMainUnitId = (unitId: string): string => {
     switch (unitId) {
+        case "SPIRITWARRIOR5":
+        case "SPIRITWARRIOR3":
         case "SPIRITWARRIOR":
             return "WARRIORSUMMON";
         case "SPIRITSHIELDWARRIOR":

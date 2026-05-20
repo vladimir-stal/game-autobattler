@@ -1,52 +1,22 @@
 import {
-    AnimationType,
-    EAppTriggerType,
-    EBuffTimeType,
-    EBuffType,
-    EDebuffType,
-    EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
-    ESkillCondition,
-    ESkillSetType,
-    EStatusType,
     ETargetType,
-    IHeroSkill,
     IHeroSkillSet,
-    IPassiveSkill,
-    IUnit,
 } from "../../types";
 import { i18n } from "../consts";
 import {
-    IMAGE_FIREFLY_SELF_POISON,
     IMAGE_SKILL_BARD_BUFF_1,
-    IMAGE_SKILL_DOUBLE_SWORD,
-    IMAGE_SKILL_KNIGHT_SHIELD,
-    IMAGE_SKILL_MOB_FIREFLY_MIST,
-    IMAGE_SKILL_MOB_GOBLIN_REGEN,
-    IMAGE_SKILL_MOB_GOBLIN_SAND,
-    IMAGE_SKILL_MOB_GOBLIN_SHOCK,
-    IMAGE_SKILL_MOB_GOBLIN_SONG,
-    IMAGE_SKILL_MOB_LAST_STAND,
-    IMAGE_SKILL_MOB_PIRATE_BLACK_MARK,
-    IMAGE_SKILL_MOB_POISON_BLADE,
-    IMAGE_SKILL_MOB_POISON_FLAME,
-    IMAGE_SKILL_MOB_SKELETON_SHIELD,
-    IMAGE_SKILL_MOB_SPIRIT_SPEAR_REVENGE,
-    IMAGE_SKILL_MOB_SPIRIT_SPEARS,
-    IMAGE_SKILL_MOB_STRONG_TOGEATHER,
-    IMAGE_SKILL_PHYS_ATTACK,
-    IMAGE_SKILL_REGEN,
-    IMAGE_SKILL_TEST,
+    IMAGE_SKILL_CHAIN,
 } from "../utils/load/skillImagesLoad";
 
 export const mobNoSkill: IHeroSkillSet = {
     id: "mobNoSkill",
-    name: "no skill",
-    desc: "skip casting",
+    name: i18n.skills.mobs.mobNoSkill.name,
+    desc: i18n.skills.mobs.mobNoSkill.desc1,
     level: 1,
     priceLevel: 1,
-    heroClasses: [EHeroClass.ALL],
+    heroClasses: [EHeroClass.MOB],
     isBasicAttack: true,
     isMcSkill: true,
     skills: [
@@ -54,6 +24,7 @@ export const mobNoSkill: IHeroSkillSet = {
             type: EHeroSkillType.NONE,
         },
     ],
+    image: IMAGE_SKILL_CHAIN,
 };
 
 export const radiantWallNoAttackButArmorSkill: IHeroSkillSet = {

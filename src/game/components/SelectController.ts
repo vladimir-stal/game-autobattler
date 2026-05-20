@@ -262,13 +262,13 @@ export class SelectController {
                         //}
                     }),
                     skills: uscc.skills.map((skill) => {
-                        //if (skill) {
-                        return {
-                            id: skill.id,
-                            level: skill.level,
-                            isChained: skill.isChained,
-                        };
-                        //}
+                        if (skill) {
+                            return {
+                                id: skill.id,
+                                level: skill.level,
+                                isChained: skill.isChained,
+                            };
+                        }
                     }),
                 };
                 return unitEntry;

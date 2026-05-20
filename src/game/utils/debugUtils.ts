@@ -31,7 +31,7 @@ import { fireflySummonSkill, incrSummonBa, warriorSummonSkill } from "../skills/
 import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
-import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from "../units/summonMobUnits";
+import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob, warriorSummonMob_3, warriorSummonMob_5 } from "../units/summonMobUnits";
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { axe31, dagger31, staff31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
@@ -84,10 +84,12 @@ export const customStartingItemsRoom = (): ICard[] => {
         { type: ECardType.ITEM, price: 0, item: jacket21_3, },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
         // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
-        { type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
-        { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
+        //{ type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
+        //{ type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
-        { type: ECardType.UNIT, price: 0, unit: pirate2Unit },
+        { type: ECardType.UNIT, price: 0, unit: {...warriorSummonMob_3, level: 4} },
+        { type: ECardType.UNIT, price: 0, unit: {...warriorSummonMob_3, level: 4} },
+        { type: ECardType.UNIT, price: 0, unit: {...warriorSummonMob_3, level: 4} },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
         //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes, isChained: true} },
         //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes_2, isChained: true} },

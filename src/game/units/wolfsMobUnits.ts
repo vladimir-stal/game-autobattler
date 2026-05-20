@@ -26,7 +26,7 @@ export const wolfUnit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.WOLF,
     id: WOLF_ID,
-    skills: [mobNoSkill, regularWolfSkill, chainToNextSkill],
+    skills: [mobNoSkill, regularWolfSkill, chainToNextSkill, mobNoSkill],
     items: [],
     level: 2,
     exp: 0,
@@ -45,10 +45,10 @@ export const strongWolfUnit: IUnit = {
     mobHeroClasses: [EHeroClass.WILD, EHeroClass.MOB],
     attackType: EHeroAttackType.PHYSICAL,
     attackTargetType: ETargetType.FIRST_ENEMY,
-    basicAttack: 8,
+    basicAttack: 9,
     basicAttackTimes: 1,
-    basicMaxHp: 18,
-    basicHpRegen: 1,
+    basicMaxHp: 24,
+    basicHpRegen: 3,
     basicArmor: 0,
     basicCritChance: 0,
     basicEvasionChance: 0,
@@ -58,7 +58,7 @@ export const strongWolfUnit: IUnit = {
     id: STRONG_WOLF_ID,
     skills: [chainToNextSkill, regularWolfSkill, mobNoSkill, bigWolfSummonSkill],
     items: [],
-    level: 4,
+    level: 4, /* was level 3*/
     exp: 0,
     mobItems: [
         { item: basic_ring_regen, probability: 15 }, // 15%
@@ -66,6 +66,6 @@ export const strongWolfUnit: IUnit = {
         { item: itemCoin2, probability: 14 }, // 10% ~ 10/(0.85*0.83)
         // 100*0.85*0.83*0.86 = 60% not to get anything
         //{ skill: bigWolfSummonSkill, probability: 8 }, // ~5%
-        { skill: regularWolfSkill, probability: 9 }, // ~5%
+        { skill: regularWolfSkill, probability: /*9*/16 }, // ~5%
     ],
 };

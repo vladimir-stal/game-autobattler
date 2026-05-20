@@ -23,7 +23,7 @@ export const pirate1Unit: IUnit = {
     basicPhysicalPower: 0,
     name: i18n.units.PIRATE_1,
     id: "PIRATE1",
-    skills: [mobNoSkill, pirateDragNDrown, chainToNextSkill],
+    skills: [mobNoSkill, pirateDragNDrown, chainToNextSkill, mobNoSkill],
     items: [],
     level: 2,
     exp: 0,

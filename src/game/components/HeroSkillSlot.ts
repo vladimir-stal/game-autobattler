@@ -37,7 +37,7 @@ export class HeroSkillSlot extends Phaser.GameObjects.Container {
         const simpleColor = 0x5b8dc5;
         const mcColor = 0x9966cc; //0x9933cc;
         const mobColor = 0xc5c55b;
-        const color = isMcSkill ? mcColor : (this.canRemoveSkill ? simpleColor : mobColor);
+        const color = (this.canRemoveSkill ? (isMcSkill ? mcColor : simpleColor) :  mobColor);
         const rect = this.scene.add.rectangle(0, 0, 30, 30, color).setOrigin(0, 0);
         this.add(rect);
         rect.setInteractive();
