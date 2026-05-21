@@ -71,7 +71,7 @@ export const hunterSkill: IHeroSkillSet = {
 };
 
 export const hunterPassive: IPassiveSkill = {
-    desc: "Increase active\nHunter's mark strength\nby 10 after landing a\ncritical hit",
+    desc: i18n.skills.passives.hunterPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

@@ -223,7 +223,7 @@ export const necromancerSkill: IHeroSkillSet = {
 };
 
 export const necromancerPassive: IPassiveSkill = {
-    desc: "Gain 3 MP when\nany unit dies",
+    desc: i18n.skills.passives.necromancerPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

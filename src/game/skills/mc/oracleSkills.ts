@@ -80,7 +80,7 @@ export const oracleSkill: IHeroSkillSet = {
 };
 
 export const oraclePassive: IPassiveSkill = {
-    desc: "Gain Armor after\neach evade (1+40%x(MP+PP))",
+    desc: i18n.skills.passives.oraclePassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

@@ -81,7 +81,7 @@ export const doomsayerSkill: IHeroSkillSet = {
 };
 
 export const doomsayerPassive: IPassiveSkill = {
-    desc: "Increase potency\nof debuffs by 50%",
+    desc: i18n.skills.passives.doomsayerPassive,
     itemPassive: {
         type: EItemBattleBonusType.INCREASE_DEBUFF_POTENCY,
         value: 50,

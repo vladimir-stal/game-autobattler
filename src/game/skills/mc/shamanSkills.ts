@@ -63,7 +63,7 @@ export const shamanSkill: IHeroSkillSet = {
 };
 
 export const shamanPassive: IPassiveSkill = {
-    desc: "Summons totem\nbefore battle; it uses\nabilities of any other\ntotem skills of Shaman",
+    desc: i18n.skills.passives.shamanPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

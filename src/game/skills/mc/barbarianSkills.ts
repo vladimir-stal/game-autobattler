@@ -100,7 +100,7 @@ export const barbarianSkill: IHeroSkillSet = {
 };
 
 export const barbarianPassive: IPassiveSkill = {
-    desc: "Every incoming\nbasic attack increase regen\nby 1 (max +20)",
+    desc: i18n.skills.passives.barbarianPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         value: 20,

@@ -312,7 +312,7 @@ export const spiritShieldRadiate: IHeroSkillSet = {
 };
 
 export const spiritWarriorPassive: IPassiveSkill = {
-    desc: "Gain 3 armor\nper turn, if have less\narmor than 35% atk +PP",
+    desc: i18n.skills.passives.spiritWarriorPassive,
     preBattleBuff: {
         name: "Passive",
         targetType: ETargetType.SELF,

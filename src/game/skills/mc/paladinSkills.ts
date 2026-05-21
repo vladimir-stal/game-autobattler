@@ -84,7 +84,7 @@ export const paladinSkill: IHeroSkillSet = {
 };
 
 export const paladinPassive: IPassiveSkill = {
-    desc: "Heal low hp unit\nwhen block or negate dmg\nfor [2+35%x(PP+MP)]",
+    desc: i18n.skills.passives.paladinPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

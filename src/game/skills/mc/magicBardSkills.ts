@@ -55,8 +55,7 @@ export const jesterSkill: IHeroSkillSet = {
 };
 
 export const jesterPassive: IPassiveSkill = {
-    desc: "Attacks twice\nwith basic attacks for 60%\nof damage",
-    // todo
+    desc: i18n.skills.passives.jesterPassive,
     itemPassive: {
         type: EItemBattleBonusType.BASIC_ATTACK_TWICE,
         value: 60,

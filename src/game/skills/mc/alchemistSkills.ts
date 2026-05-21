@@ -81,7 +81,7 @@ const passive_percent_value = 40;
 // 11+5+x/2 = 22; x = 12
 
 export const alchemistPassive: IPassiveSkill = {
-    desc: "At the start of\nturn gain +MP equal to\n40% of lost hp for 1 round",
+    desc: i18n.skills.passives.alchemistPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

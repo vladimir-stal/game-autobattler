@@ -83,7 +83,7 @@ export const bladedancerSkill: IHeroSkillSet = {
 };
 
 export const bladedancerPassive: IPassiveSkill = {
-    desc: "Consecutive basic\nattacks at the same target\nincrease damage by 1; makes\n+1 basic attack after\nevasion, but reduce attack\nby 40%",
+    desc: i18n.skills.passives.bladedancerPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

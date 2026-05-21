@@ -113,7 +113,7 @@ export const commanderSkill: IHeroSkillSet = {
 };
 
 export const commanderPassive: IPassiveSkill = {
-    desc: "Increase all\nsummons' basic attack\ndamage by [2]+[MPx50%]",
+    desc: i18n.skills.passives.commanderPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

@@ -98,7 +98,7 @@ export const inquisitorSkill: IHeroSkillSet = {
 };
 
 export const inquisitorPassive: IPassiveSkill = {
-    desc: "At the end of turn\ngain armor equal to 30%\nof burn stacks on all\nenemies",
+    desc: i18n.skills.passives.inquisitorPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

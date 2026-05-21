@@ -176,6 +176,7 @@ export interface Ii18n {
         level4: Record<string, TSkillI18n>;
         mobs: Record<string, TSkillI18n>;
         mc: Record<string, TSkillI18n>;
+        passives: Record<string, string>;
     };
     statuses: Record<EStatusType, string>;
     statuses2: Record<EStatusType, string>;

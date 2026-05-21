@@ -88,7 +88,7 @@ export const duelistSkill: IHeroSkillSet = {
 };
 
 export const duelistPassive: IPassiveSkill = {
-    desc: "Add crit.chance\nto evasion and evasion\nto crit.chance",
+    desc: i18n.skills.passives.duelistPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

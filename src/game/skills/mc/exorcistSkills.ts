@@ -85,7 +85,7 @@ export const exorcistSkill: IHeroSkillSet = {
 };
 
 export const exorcistPassive: IPassiveSkill = {
-    desc: "After any heal\nskill reduce statuses by 2\non last healed target",
+    desc: i18n.skills.passives.exorcistPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {

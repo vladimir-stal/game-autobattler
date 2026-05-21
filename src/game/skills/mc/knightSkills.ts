@@ -65,7 +65,7 @@ export const knightSkill: IHeroSkillSet = {
 };
 
 export const knightPassive: IPassiveSkill = {
-    desc: "Perform physical\nattack for [2+50%xPP] when\nblock or negate damage, and\ngain [1+25%xPP] armor",
+    desc: i18n.skills.passives.knightPassive,
     preBattleBuff: {
         ...heroPassiveTemplate,
         appTrigger: {
