@@ -25,7 +25,7 @@ export const hunterSkill_3: IHeroSkillSet = {
     priceLevel: 4,
     heroClasses: [EHeroClass.HUNTER],
     isMcSkill: true,
-    skills: hunterSkillset(25),
+    skills: hunterSkillset(35),
 };
 
 export const hunterSkill_2: IHeroSkillSet = {

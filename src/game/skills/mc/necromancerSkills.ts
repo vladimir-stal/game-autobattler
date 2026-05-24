@@ -16,6 +16,7 @@ import {
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 export const NECROMANCER_MC_SKILL_ID = "NecromancerSkeletonSkill";
 export const NECROMANCER_SKELTON_FRONT_ID = "SkeletonFrontSummon";
@@ -224,13 +225,7 @@ export const necromancerSkill: IHeroSkillSet = {
 export const necromancerPassive: IPassiveSkill = {
     desc: "Gain 3 MP when unit dies",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             skillId: "NecromancerPassive",
             type: EAppTriggerType.DEATH,

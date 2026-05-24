@@ -413,9 +413,9 @@ export const SKILLS_EN = {
         },
         battleMageSkill: {
             name: "Multi attack",
-            desc1: "Attack random enemy with\nphysical damage [4+35%xPP]\nAttack random enemy with\nmagical damage [4+35%xMP]",
-            desc2: "Attack random enemy with\nphysical damage [6+50%xPP]\nAttack random enemy with\nmagical damage [6+50%xMP]",
-            desc3: "Attack random enemy with\nphysical damage [9+65%xPP]\nAttack random enemy with\nmagical damage [9+65%xMP]",
+            desc1: "Attack random enemy with\nphysical damage [1+35%xPP]\n1/3 of basic attack becomes\nPP and 1/3 becomes MP for\n2 turns; Make magic attacks\nfor [1+35%xMP] instead of\nregular basic attacks",
+            desc2: "Attack random enemy with\nphysical damage [1+50%xPP]\n1/3 of basic attack becomes\nPP and 1/3 becomes MP for\n2 turns; Make magic attacks\nfor [1+50%xMP] instead of\nregular basic attacks",
+            desc3: "Attack random enemy with\nphysical damage [1+65%xPP]\n1/3 of basic attack becomes\nPP and 1/3 becomes MP for\n2 turns; Make magic attacks\nfor [1+65%xMP] instead of\nregular basic attacks",
         },
         beastMasterSkill: {
             name: "Beastmaster crow",
@@ -581,9 +581,9 @@ export const SKILLS_EN = {
         },
         shamanTotemEmpower: {
             name: "Empower all totems",
-            desc1: "Increase all totems' values\nby [1+MPx50%]",
-            desc2: "Increase all totems' values\nby [1+MPx70%]",
-            desc3: "Increase all totems' values\nby [1+MP]",
+            desc1: "Increase all totems' values\nby [MPx50%]",
+            desc2: "Increase all totems' values\nby [MPx70%]",
+            desc3: "Increase all totems' values\nby [MP]",
         },
         sorcererSkill: {
             name: "Sorcerer attack",

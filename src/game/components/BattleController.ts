@@ -27,8 +27,9 @@ import {
     INestedBuffEffect,
     AnimationType,
 } from "../../types";
-import { allyTargets, eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
+import { allyTargets, CRIT_MODIFIER, eachTurnDebuffs, EVASION_MODIFIER, summonItemBattleBonuses } from "../battleConsts";
 import { PHYSICAL_RESIST_DESCREASE_DEBUFFS } from "../heroConsts";
+import { TOTEM_ID_SHAMAN } from "../totemConsts";
 import {
     applyBuff,
     applyDebuff,
@@ -47,7 +48,6 @@ import {
     getAllyTotems,
     getExistingBuff,
     getOpponentTargets,
-    getStatusItemBonusType,
     getTargets,
     getTargetWithSummon,
     getTargetWithTotem,
@@ -69,6 +69,7 @@ import {
     dealOverhealDamage,
     checkBuffToRemove,
     checkDebuffToRemove,
+    getItemBonusValue,
 } from "../utils/battleUtils";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomIntFromInterval } from "../utils/commonUtils";
 import { calculateSkillValue } from "../utils/skillUtils";
@@ -403,7 +404,7 @@ export class BattleController {
             if (!skillSet.isMcSkill) {
                 let disableSkillDebuff = false;
                 forEachNestedEffects(unit, (ne) => {
-                    if (ne.debuffType === EDebuffType.DISABLE_SKILL && ne.totalValue > 0 && !disableSkillDebuff) {
+                    if (ne.debuffType === EDebuffType.DISABLE_SKILL && ne.totalValue && ne.totalValue > 0 && !disableSkillDebuff) {
                         ne.totalValue -= 1;
                         disableSkillDebuff = true;
                     }
@@ -429,7 +430,18 @@ export class BattleController {
                 });
                 this.performAction(unit, round, isPlayer1, recurseDeep + 1);
             } else if (skillSet.isBasicAttack || skillSet.isBasicAttack === undefined) {
-                this.performBasicAttack(unit, undefined, isPlayer1);
+                let skipAttackDebuff = false;
+                forEachNestedEffects(unit, (ne) => {
+                    if (ne.debuffType === EDebuffType.SKILL_SKIP_BASIC_ATTACK && ne.value > 0 && !skipAttackDebuff) {
+                        ne.value -= 1;
+                        skipAttackDebuff = true;
+                    }
+                });
+                if (skipAttackDebuff) {
+                    checkDebuffToRemove(unit, EDebuffType.SKILL_SKIP_BASIC_ATTACK, this.battleRecord);
+                } else {
+                    this.performBasicAttack(unit, undefined, isPlayer1);
+                }
             }
         } else {
             // if there is no skill for the round perform basic attack
@@ -476,6 +488,7 @@ export class BattleController {
         if (unit.hp <= 0) {
             return;
         }
+        triggerBattleTrigger(EAppTriggerType.TURN_END, this, unit, unit.id);
         // debuffs
         debuffs.forEach((debuff) => {
             if (eachTurnDebuffs.includes(debuff.type)) {
@@ -538,8 +551,12 @@ export class BattleController {
             }
             takeStatusDamage(unit, value, type, this.battleRecord);
         });
-        // totem
+        //
+        // TOTEM
         totem && this.performTotemActionSkill(totem, unit, isPlayer1);
+        if (unit.hp <= 0) {
+            triggerBattleTrigger(EAppTriggerType.DEATH, this, unit, unit.id);
+        }
     }
 
     performTotemActionSkill(totem: ITotem, unit: IBattleUnit, isPlayer1: boolean) {
@@ -648,13 +665,14 @@ export class BattleController {
 
         let additionalBaTimes = 0;
         forEachNestedEffects(unit, (ne) => {
-            if (ne.buffType === EBuffType.BASIC_ATTACK_ADD_TIMES) {
+            if (ne.buffType === EBuffType.BASIC_ATTACK_ADD_TIMES && ne.totalValue) {
                 additionalBaTimes += ne.totalValue;
+                console.log(">>> Add attacks", ne);
             }
         });
         //const baTimesBuff = unit.buffs.find((buff) => buff.type === EBuffType.BASIC_ATTACK_ADD_TIMES);
         //const additionalBaTimes = baTimesBuff ? baTimesBuff.value : 0;
-        const twiceAttackMods = unit.itemBonuses.filter((ib) => ib.type == EItemBattleBonusType.BASIC_ATTACK_TWICE).map((ib) => ib.value);
+        const twiceAttackMods = unit.itemBonuses.filter((ib) => ib.type == EItemBattleBonusType.BASIC_ATTACK_TWICE).map((ib) => getItemBonusValue(unit, ib));
         twiceAttackMods.sort((a, b) => b - a);
         //console.log("DEBUG: twice attacks: " + twiceAttackMods.join(", "));
 
@@ -663,16 +681,19 @@ export class BattleController {
             // get maximum twice attack mod (first index position)
             // and perform 2+addBaTimes attacks
             for (let i = -2; i < additionalBaTimes; i++) {
-                lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1, twiceAttackMods[0]);
+                const baTarget = this.basicAttack(unit, isPlayer1, twiceAttackMods[0]);
+                lastTargetId = lastTargetId || baTarget;
             }
             // perform 1 attack per rest twice attack mods (excluding max mod)
             for (let j = 1; j < twiceAttackMods.length; j++) {
-                lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1, twiceAttackMods[j]);
+                const baTarget = this.basicAttack(unit, isPlayer1, twiceAttackMods[j]);
+                lastTargetId = lastTargetId || baTarget;
             }
         } else {
             lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1);
             for (let i = 0; i < additionalBaTimes; i++) {
-                lastTargetId = lastTargetId || this.basicAttack(unit, isPlayer1);
+                const baTarget = this.basicAttack(unit, isPlayer1);
+                lastTargetId = lastTargetId || baTarget;
             }
         }
         // triggers
@@ -695,7 +716,12 @@ export class BattleController {
             return sameLastTargetId;
         }
 
-        let isCritAllowed = attackType === EHeroAttackType.PHYSICAL;
+        let isCritAllowed = false;
+        if (attackType === EHeroAttackType.PHYSICAL) {
+            // check if crit with magic available
+            const isCritWithPhys = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_WITH_PHYSICAL);
+            isCritAllowed = !!isCritWithPhys;
+        }
         if (attackType === EHeroAttackType.MAGIC) {
             // check if crit with magic available
             const isCritWithMagic = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_WITH_MAGIC);
@@ -727,7 +753,7 @@ export class BattleController {
         let lastAliveTargetId: string | undefined = undefined;
         targets.forEach((target) => {
             // check if target has a summon - summon takes damage instead
-            let parentUnit; // owner of a summon
+            let parentUnit: IBattleUnit; // owner of a summon
             let finalTarget = target;
             if (target.summon) {
                 finalTarget = target.summon;
@@ -744,7 +770,7 @@ export class BattleController {
             // check if target unit has antiskill shield
             let antiskillShieldBuff = false;
             forEachNestedEffects(finalTarget, (ne) => {
-                if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue > 0 && !antiskillShieldBuff) {
+                if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue && ne.totalValue > 0 && !antiskillShieldBuff && parentUnit) {
                     ne.totalValue -= 1;
                     this.dealDamage(unit, unit, attackDamage, skill.attackType!, parentUnit, attackRecord);
                     antiskillShieldBuff = true;
@@ -760,7 +786,7 @@ export class BattleController {
                 return;
             }
 
-            this.dealDamage(unit, finalTarget, attackDamage, skill.attackType!, parentUnit, attackRecord);
+            this.dealDamage(unit, finalTarget, attackDamage, skill.attackType!, parentUnit!, attackRecord);
             if (finalTarget.hp > 0) {
                 lastAliveTargetId = finalTarget.id;
             }
@@ -769,6 +795,7 @@ export class BattleController {
         if (isCrit) {
             triggerBattleTrigger(EAppTriggerType.AFTER_CRIT, this, unit, lastAliveTargetId);
         }
+        triggerBattleTrigger(EAppTriggerType.AFTER_SKILL_ATTACK, this, unit, lastAliveTargetId);
         return lastAliveTargetId || sameLastTargetId;
     }
 
@@ -803,27 +830,19 @@ export class BattleController {
         targets.forEach((target) => {
             //console.log("INCR ATTR TARGET", attribute, target);
             const increaseValue = calculateIncreaseValue(target[attribute], value || 0, valueType, valueFrom && unit[valueFrom]) + mpScaleValue + ppScaleValue;
-
-            // if (attribute === "maxHp") {
-            //     const percent = target.hp / target.maxHp;
-            //     target.maxHp += increaseValue;
-            //     target.hp = Math.min(target.maxHp, Math.floor(target.maxHp * percent) + 1);
-            //     battleAction.targets?.push({
-            //         targetId: target.id,
-            //         attribute: "maxHp",
-            //         value: increaseValue,
-            //     });
-            //     battleAction.targets?.push({
-            //         targetId: target.id,
-            //         attribute: "hp",
-            //         value: increaseValue,
-            //     });
-            // } else {
-            target[attribute] += increaseValue;
+            let addValue = 0;
+            if (attribute === "armor") {
+                target.itemBonuses.forEach((bonus) => {
+                    if (bonus.type === EItemBattleBonusType.INCREASE_ARMOR_GAIN) {
+                        addValue += calculateIncreaseValue(increaseValue, getItemBonusValue(target, bonus), bonus.valueType);
+                    }
+                });
+            }
+            target[attribute] += increaseValue + addValue;
             battleAction.targets?.push({
                 targetId: target.id,
                 attribute,
-                value: increaseValue,
+                value: increaseValue + addValue,
                 // @ts-ignore
                 ATTR: target[attribute],
             });
@@ -935,21 +954,6 @@ export class BattleController {
             return sameLastTargetId;
         }
 
-        // const targets = ((): IBattleUnit[] => {
-        //     if (
-        //         targetType === ETargetType.SAME_LAST_TARGET ||
-        //         targetType === ETargetType.BY_UNIT_ID ||
-        //         targetType === ETargetType.BY_RELEVANT_ID ||
-        //         targetType === ETargetType.ANCHOR_TARGET
-        //     ) {
-        //         return this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
-        //     } else {
-        //         const allyUnits = isPlayer1 ? this.player1BattleUnits : this.player2BattleUnits;
-        //         const filteredUnits = targetBuffId ? allyUnits.filter((u) => !!u && u.buffs.some((b) => b.name === targetBuffId)) : allyUnits;
-        //         return getAllyTargets(unit, filteredUnits, targetType);
-        //     }
-        // })();
-
         let targets: IBattleUnit[] | null;
         if (
             targetType === ETargetType.SAME_LAST_TARGET ||
@@ -996,6 +1000,7 @@ export class BattleController {
             buff.valueType = "number";
             buff.targetType = ETargetType.BY_UNIT_ID;
             buff.targetUnitId = target.id;
+            buff.cannotBeTargeted = true; // do not trigger After_buff
 
             //console.log("performBuffValueIncrease > BUFF", buff);
 
@@ -1074,10 +1079,16 @@ export class BattleController {
 
         let finalValue = baseValue + mpScaleValue + ppScaleValue;
 
-        const itemBonus = unit.itemBonuses.find((itemBonus) => itemBonus.type === getStatusItemBonusType(status));
-        if (itemBonus) {
-            finalValue += calculateIncreaseValue(1, itemBonus.value, itemBonus.valueType);
-        }
+        let bonusFlat = 0;
+        let bonusPercent = 0;
+        unit.itemBonuses.forEach((b) => {
+            if (b.type === EItemBattleBonusType.STATUS_APPLY_INCREASE && b.status === status) {
+                const v = getItemBonusValue(unit, b);
+                b.valueType === "percent" ? (bonusPercent += v) : (bonusFlat += v);
+            }
+        });
+        finalValue += calculateIncreaseValue(1, bonusPercent, "percent");
+        finalValue += calculateIncreaseValue(1, bonusFlat, "number");
 
         let lastTargetId;
         targets.forEach((target) => {
@@ -1212,7 +1223,7 @@ export class BattleController {
                     // check if target unit has antis debuff bonuses (ANTISKILL_SHIELD, IGNORE_NEXT_DEBUFF)
                     let antiskillShieldBuff = false;
                     forEachNestedEffects(target, (ne) => {
-                        if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue > 0 && !antiskillShieldBuff) {
+                        if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue && ne.totalValue > 0 && !antiskillShieldBuff) {
                             ne.totalValue -= 1;
                             applyDebuff(unit, debuff, debuffAction, this, unit, isPlayer1);
                             antiskillShieldBuff = true;
@@ -1224,7 +1235,7 @@ export class BattleController {
                     }
                     let ignoreDebuffBuff = false;
                     forEachNestedEffects(target, (ne) => {
-                        if (ne.buffType === EBuffType.IGNORE_NEXT_DEBUFF && ne.totalValue > 0 && !ignoreDebuffBuff) {
+                        if (ne.buffType === EBuffType.IGNORE_NEXT_DEBUFF && ne.totalValue && ne.totalValue > 0 && !ignoreDebuffBuff) {
                             ne.totalValue -= 1;
                             ignoreDebuffBuff = true;
                         }
@@ -1330,14 +1341,21 @@ export class BattleController {
         // calculate outgoing heal bonuses from items
         unit.itemBonuses.forEach((bonus) => {
             if (bonus.type === EItemBattleBonusType.HEAL_INCREASE) {
-                finalHeal += calculateIncreaseValue(finalHeal, bonus.value, bonus.valueType);
+                finalHeal += calculateIncreaseValue(finalHeal, getItemBonusValue(unit, bonus), bonus.valueType);
             }
         });
+        // check crit
+        const isCritWithHeal = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_WITH_HEAL);
+        if (isCritWithHeal && unit.critChance > 0) {
+            if (getRandomIntFromInterval(0, 100) <= unit.critChance) {
+                finalHeal += Math.floor(finalHeal * CRIT_MODIFIER);
+            }
+        }
 
         // check for DARK_HEAL buff
         let darkHealMod = 0;
         forEachNestedEffects(unit, (ne) => {
-            if (ne.buffType === EBuffType.DARK_HEAL) {
+            if (ne.buffType === EBuffType.DARK_HEAL && ne.totalValue) {
                 darkHealMod += ne.totalValue;
             }
         });
@@ -1354,7 +1372,7 @@ export class BattleController {
             if (target) {
                 // calculate incoming heal value from target buffs and debuffs
                 forEachNestedEffects(unit, (ne) => {
-                    if (ne.debuffType === EDebuffType.HEALING_DECREASE && ne.totalValue > 0) {
+                    if (ne.debuffType === EDebuffType.HEALING_DECREASE && ne.totalValue && ne.totalValue > 0) {
                         const { totalValue, valueType } = ne;
                         if (!valueType) {
                             return;
@@ -1367,7 +1385,7 @@ export class BattleController {
                 // check if target has antiheal debuffs (like ANTIHEAL)
                 let antihealDebuff = false;
                 forEachNestedEffects(target, (ne) => {
-                    if (ne.debuffType === EDebuffType.ANTIHEAL && ne.totalValue > 0 && !antihealDebuff) {
+                    if (ne.debuffType === EDebuffType.ANTIHEAL && ne.totalValue && ne.totalValue > 0 && !antihealDebuff) {
                         ne.totalValue -= 1;
                         antihealDebuff = true;
                     }
@@ -1409,6 +1427,7 @@ export class BattleController {
                 });
             }
         });
+        triggerBattleTrigger(EAppTriggerType.AFTER_HEAL, this, unit, lastTargetId);
         // overheal managing
         const opponentUnits = isPlayer1 ? this.player2BattleUnits : this.player1BattleUnits;
         dealOverhealDamage(overhealTotal, unit, unit.id, skill, opponentUnits, this);
@@ -1467,11 +1486,11 @@ export class BattleController {
 
         const summonBonuses = unit.itemBonuses.filter((bonus) => summonItemBattleBonuses.includes(bonus.type));
         summonBonuses.forEach((bonus) => {
-            const { type, value, valueType } = bonus;
+            const { type, valueType } = bonus;
             if (type === EItemBattleBonusType.INCREASE_SUMMON_ATTACK) {
-                unit.summon!.attack += calculateIncreaseValue(unit.summon!.attack, value, valueType);
+                unit.summon!.attack += calculateIncreaseValue(unit.summon!.attack, getItemBonusValue(unit, bonus), valueType);
             } else if (type === EItemBattleBonusType.INCREASE_SUMMON_HP) {
-                const addHpValue = calculateIncreaseValue(unit.summon!.maxHp, value, valueType);
+                const addHpValue = calculateIncreaseValue(unit.summon!.maxHp, getItemBonusValue(unit, bonus), valueType);
                 unit.summon!.maxHp += addHpValue;
                 unit.summon!.hp += addHpValue;
             }
@@ -1553,6 +1572,28 @@ export class BattleController {
         }
 
         unit.totem = prepareTotemToBattle(totem);
+        if (totem.id === TOTEM_ID_SHAMAN) {
+            unit.skills.forEach((skset) => {
+                skset?.skills?.forEach((sk) => {
+                    if (sk.totem) {
+                        sk.totem.skills.forEach((ts) => unit.totem?.skills.push({ ...ts }));
+                    }
+                });
+            });
+        }
+        unit.itemBonuses
+            .filter((ib) => ib.type == EItemBattleBonusType.TOTEM_INCREASE_VALUE)
+            .forEach((ib) => {
+                if (!unit.totem) {
+                    return;
+                }
+                const value = getItemBonusValue(unit, ib);
+                if (ib.valueType === "percent") {
+                    unit.totem.valuesIncreasePercent = (unit.totem.valuesIncreasePercent || 0) + value;
+                } else {
+                    unit.totem.valuesIncreaseFlat = (unit.totem.valuesIncreaseFlat || 0) + value;
+                }
+            });
         this.battleRecord.push({
             unitId: unit.id,
             type: EBattleActionType.TOTEM_PLACE,
@@ -1608,14 +1649,12 @@ export class BattleController {
         const ppScaleValue = ppScale ? Math.floor((ppScale * unit.physicalPower) / 100) : 0;
 
         totemTargets.forEach((totem) => {
-            totem.skills.forEach((totemSkill) => {
-                if (totemSkill.value === undefined) {
-                    return;
-                }
-                const percentFrom = valueFrom ? unit[valueFrom] : undefined;
-                totemSkill.value += calculateIncreaseValue(totemSkill.value, value, valueType, percentFrom) + mpScaleValue + ppScaleValue;
-            });
-
+            const baseValue = valueFrom ? Math.floor((unit[valueFrom] * value) / 100) : value;
+            if (valueType === "percent") {
+                totem.valuesIncreasePercent = (totem.valuesIncreasePercent || 0) + baseValue + mpScaleValue + ppScaleValue;
+            } else {
+                totem.valuesIncreaseFlat = (totem.valuesIncreaseFlat || 0) + baseValue + mpScaleValue + ppScaleValue;
+            }
             this.battleRecord.push({
                 unitId: unit.id,
                 type: EBattleActionType.TOTEM_INCREASE_VALUE,
@@ -1720,7 +1759,7 @@ export class BattleController {
     ): string | undefined {
         const { targetType } = skill;
         if (!targetType) {
-            console.log("performForceOutOfTurnAction > NO TARGET TYPE OR VALUE");
+            console.log("performForceOutOfTurnAction > NO TARGET TYPE");
             return sameLastTargetId;
         }
         const targets = this.getTargetsSimple(unit, targetType, isPlayer1, skill.markType, skill.targetUnitId, sameLastTargetId);
@@ -1963,14 +2002,7 @@ export class BattleController {
             return;
         }
 
-        let isCritAllowed = unit.attackType === EHeroAttackType.PHYSICAL;
-        if (unit.attackType === EHeroAttackType.MAGIC) {
-            // check if crit with magic available
-            const isCritWithMagic = unit.itemBonuses.find((bonus) => bonus.type === EItemBattleBonusType.CRIT_WITH_MAGIC);
-            isCritAllowed = !!isCritWithMagic;
-        }
-
-        let { attackDamage, isCrit } = calculateDamageBonuses(unit, unit.attackType, unit.attack, isCritAllowed, 0, 0);
+        let { attackDamage, isCrit } = calculateDamageBonuses(unit, unit.attackType, unit.attack, true, 0, 0);
 
         // calculate dmg if using daggers with 2 attacks but lower damage
         attackDamage = attackPercent ? Math.floor((attackDamage * attackPercent) / 100) : attackDamage;
@@ -2007,7 +2039,8 @@ export class BattleController {
         unit.itemBonuses
             .filter((itemBonus) => itemBonus.type === EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK)
             .forEach((applyStatusBonus) => {
-                const { value, status } = applyStatusBonus;
+                const { status } = applyStatusBonus;
+                const value = getItemBonusValue(unit, applyStatusBonus);
                 if (!status) {
                     return;
                 }
@@ -2032,7 +2065,7 @@ export class BattleController {
                 parentUnit = target;
             }
             //
-            if (isCritAllowed && isCrit) {
+            if (isCrit) {
                 const bleedStacks = finalTarget.statuses.find((st) => st.type === EStatusType.BLEED);
                 //console.log("basicAttack --> ",finalTarget,bleedStacks)
                 if (bleedStacks && bleedStacks.value > 0) {
@@ -2069,33 +2102,21 @@ export class BattleController {
                     }
                 }
             });
-            // check if target has on-basic debuffs (like BLADEDANCER_MARK)
+
             const bladedanceBuff = unit.buffs.find((buff) => buff.type === EBuffType.BLADEDANCE);
             if (bladedanceBuff) {
-                //
-
-                const debuff: IDebuff = {
-                    type: EDebuffType.MARK_BLADEDANCER,
-                    value: 1,
-                    totalValue: 1,
-                    targetType: ETargetType.CUSTOM,
-                    timeType: EBuffTimeType.DUEL,
-                    name: "Bladedancer mark",
-                };
-                const debuffAction: IBattleAction = {
-                    unitId: unit.id,
-                    type: EBattleActionType.DEBUFF,
-                    buffTargets: [],
-                    debuff,
-                };
-                this.battleRecord.push(debuffAction);
-
-                applyDebuff(finalTarget, debuff, debuffAction, this);
-
-                const bladedancerMark = finalTarget.debuffs.find((debuff) => debuff.type === EDebuffType.MARK_BLADEDANCER);
-                if (bladedancerMark && bladedancerMark.totalValue) {
-                    attackDamage += bladedancerMark.totalValue;
+                if (finalTarget.id !== bladedanceBuff.targetUnitId) {
+                    bladedanceBuff.targetUnitId = finalTarget.id;
+                    bladedanceBuff.totalValue = 0;
                 }
+                attackDamage += bladedanceBuff.totalValue || 0;
+                bladedanceBuff.totalValue = (bladedanceBuff.totalValue || 0) + bladedanceBuff.value;
+                this.battleRecord.push({
+                    unitId: unit.id,
+                    type: EBattleActionType.BUFF,
+                    buff: bladedanceBuff,
+                    buffTargets: [{ targetId: unit.id, isExisting: true, value: bladedanceBuff.totalValue }],
+                });
             }
 
             // triggers
@@ -2146,12 +2167,12 @@ export class BattleController {
 
         // check if cosmic shield is active
         let cosmicShield = false;
-        forEachNestedEffects(target, ne => {
-            if (ne.buffType === EBuffType.COSMIC_SHIELD && ne.totalValue > 0 && !cosmicShield) {
+        forEachNestedEffects(target, (ne) => {
+            if (ne.buffType === EBuffType.COSMIC_SHIELD && ne.totalValue && ne.totalValue > 0 && !cosmicShield) {
                 ne.totalValue -= 1;
                 cosmicShield = true;
             }
-        })
+        });
         if (cosmicShield) {
             this.battleRecord.push({
                 unitId: target.id,
@@ -2159,13 +2180,14 @@ export class BattleController {
                 value: 0,
                 value2: target.hp,
             });
-            checkBuffToRemove(target,EBuffType.COSMIC_SHIELD,this.battleRecord);
+            triggerBattleTrigger(EAppTriggerType.AFTER_FULL_BLOCK, this, target, unit.id);
+            checkBuffToRemove(target, EBuffType.COSMIC_SHIELD, this.battleRecord);
             return;
         }
         let resistDecreasePercent = 0;
         let resistDecreaseAbsolute = 0;
         forEachNestedEffects(target, (ne) => {
-            if (ne.debuffType === EDebuffType.RESIST_DECREASE && ne.totalValue > 0) {
+            if (ne.debuffType === EDebuffType.RESIST_DECREASE && ne.totalValue && ne.totalValue > 0) {
                 const { totalValue, valueType } = ne;
                 if (valueType === "percent") {
                     resistDecreasePercent += totalValue;
@@ -2176,7 +2198,7 @@ export class BattleController {
         });
         if (damageType === EHeroAttackType.PHYSICAL) {
             forEachNestedEffects(target, (ne) => {
-                if ((ne.debuffType === EDebuffType.MARK_HUNTER || ne.debuffType === EDebuffType.MARK_PREDATOR) && ne.totalValue > 0) {
+                if ((ne.debuffType === EDebuffType.MARK_HUNTER || ne.debuffType === EDebuffType.MARK_PREDATOR) && ne.totalValue && ne.totalValue > 0) {
                     const { totalValue, valueType } = ne;
                     if (valueType === "percent") {
                         resistDecreasePercent += totalValue;
@@ -2187,44 +2209,32 @@ export class BattleController {
             });
         }
         if (resistDecreasePercent > 0 || resistDecreaseAbsolute) {
-            finalDamageValue = Math.floor(finalDamageValue*(100+resistDecreasePercent)/100 + resistDecreaseAbsolute);
+            finalDamageValue = Math.floor((finalDamageValue * (100 + resistDecreasePercent)) / 100 + resistDecreaseAbsolute);
         }
 
-        // check bonus damage to summons
-        if (target.isSummon) {
-            unit.itemBonuses &&
-                unit.itemBonuses.forEach((bonus) => {
-                    if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON) {
-                        finalDamageValue += calculateIncreaseValue(finalDamageValue, bonus.value, bonus.valueType);
-                    }
-                });
-        }
+        let damageBonusesPercent = 0;
+        let damageBonusesAbsolute = 0;
 
-        // check bonus damage to bleeding target
-        if (target.statuses.find((status) => status.type === EStatusType.BLEED)) {
-            unit.itemBonuses &&
-                unit.itemBonuses.forEach((bonus) => {
-                    if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING) {
-                        finalDamageValue += calculateIncreaseValue(finalDamageValue, bonus.value, bonus.valueType);
-                    }
-                });
-        }
-
-        // check bonus damage to poisoned target
-        if (target.statuses.find((status) => status.type === EStatusType.POISON)) {
-            unit.itemBonuses &&
-                unit.itemBonuses.forEach((bonus) => {
-                    if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED) {
-                        finalDamageValue += calculateIncreaseValue(finalDamageValue, bonus.value, bonus.valueType);
-                    }
-                });
-        }
+        unit.itemBonuses.forEach((bonus) => {
+            if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS) {
+                const stacks = target.statuses.find((status) => status.type === bonus.status);
+                if (!!stacks) {
+                    const v = getItemBonusValue(unit, bonus);
+                    bonus.valueType === "percent" ? (damageBonusesPercent += v) : (damageBonusesAbsolute += v);
+                }
+            } else if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_SUMMON && target.isSummon) {
+                const v = getItemBonusValue(unit, bonus);
+                bonus.valueType === "percent" ? (damageBonusesPercent += v) : (damageBonusesAbsolute += v);
+            }
+        });
+        finalDamageValue += calculateIncreaseValue(finalDamageValue, damageBonusesPercent, "percent");
+        finalDamageValue += calculateIncreaseValue(finalDamageValue, damageBonusesAbsolute, "number");
 
         // EVASION
         // by default evasion only works versus physical attacks and skills
         let blindDebuff2 = 0;
         forEachNestedEffects(target, (ne) => {
-            if (ne.debuffType === EDebuffType.BLIND && ne.totalValue > 0) {
+            if (ne.debuffType === EDebuffType.BLIND && ne.totalValue && ne.totalValue > 0) {
                 blindDebuff2 += ne.totalValue;
             }
         });
@@ -2240,7 +2250,7 @@ export class BattleController {
         if (!recordTarget.isEvasion) {
             let evadeBuff = false;
             forEachNestedEffects(target, (ne) => {
-                if (ne.buffType === EBuffType.EVADE && ne.totalValue > 0 && !evadeBuff) {
+                if (ne.buffType === EBuffType.EVADE && ne.totalValue && ne.totalValue > 0 && !evadeBuff) {
                     evadeBuff = true;
                     ne.totalValue -= 1;
                 }
@@ -2254,7 +2264,7 @@ export class BattleController {
 
         let divineShield2 = false;
         forEachNestedEffects(target, (ne) => {
-            if (ne.buffType === EBuffType.DIVINE_SHIELD && ne.totalValue > 0 && !divineShield2) {
+            if (ne.buffType === EBuffType.DIVINE_SHIELD && ne.totalValue && ne.totalValue > 0 && !divineShield2) {
                 if (finalDamageValue > ne.totalValue) {
                     ne.totalValue = 0;
                 }
@@ -2268,6 +2278,7 @@ export class BattleController {
                 value: 0,
                 value2: target.hp,
             });
+            triggerBattleTrigger(EAppTriggerType.AFTER_FULL_BLOCK, this, target, unit.id);
             checkBuffToRemove(target, EBuffType.DIVINE_SHIELD, this.battleRecord);
             return;
         }
@@ -2275,7 +2286,7 @@ export class BattleController {
 
         let ignoreArmorBuff = false;
         forEachNestedEffects(unit, (ne) => {
-            if (ne.buffType == EBuffType.IGNORE_ARMOR && ne.totalValue > 0) {
+            if (ne.buffType == EBuffType.IGNORE_ARMOR && ne.totalValue && ne.totalValue > 0) {
                 ignoreArmorBuff = true;
             }
         });
@@ -2284,7 +2295,7 @@ export class BattleController {
             unit.itemBonuses &&
                 unit.itemBonuses.forEach((bonus) => {
                     if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_HP) {
-                        finalDamageValue += calculateIncreaseValue(finalDamageValue, bonus.value, bonus.valueType);
+                        finalDamageValue += calculateIncreaseValue(finalDamageValue, getItemBonusValue(unit, bonus), bonus.valueType);
                     }
                 });
         } else {
@@ -2297,7 +2308,7 @@ export class BattleController {
                 unit.itemBonuses &&
                     unit.itemBonuses.forEach((bonus) => {
                         if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_ARMOR) {
-                            finalDamageValue += calculateIncreaseValue(finalDamageValue, bonus.value, bonus.valueType);
+                            finalDamageValue += calculateIncreaseValue(finalDamageValue, getItemBonusValue(unit, bonus), bonus.valueType);
                         }
                     });
             } else {
@@ -2305,7 +2316,7 @@ export class BattleController {
                 unit.itemBonuses &&
                     unit.itemBonuses.forEach((bonus) => {
                         if (bonus.type === EItemBattleBonusType.INCREASE_DAMAGE_TO_HP) {
-                            finalDamageValue += calculateIncreaseValue(finalDamageValue, bonus.value, bonus.valueType);
+                            finalDamageValue += calculateIncreaseValue(finalDamageValue, getItemBonusValue(unit, bonus), bonus.valueType);
                         }
                     });
             }
@@ -2322,8 +2333,9 @@ export class BattleController {
             }
 
             finalDamageValue -= armor;
-            if (finalDamageValue < 0) {
+            if (finalDamageValue <= 0) {
                 finalDamageValue = 0;
+                triggerBattleTrigger(EAppTriggerType.AFTER_FULL_BLOCK, this, target, unit.id);
             }
             // decrease armor
             target.armor = armorLeft;
@@ -2361,7 +2373,7 @@ export class BattleController {
                 unitId: target.id,
                 type: EBattleActionType.DEATH,
             });
-            triggerBattleTrigger(EAppTriggerType.DEATH, this, target);
+            triggerBattleTrigger(EAppTriggerType.DEATH, this, target, target.id);
             // if summon dies remove it from parent unit
             if (parentUnit) {
                 console.log("SUMMON is DED!", parentUnit.summon);

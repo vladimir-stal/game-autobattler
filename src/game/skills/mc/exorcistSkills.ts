@@ -1,5 +1,6 @@
-import { EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const exorcistSkillset = (heal:number, mpScale:number):IHeroSkill[] => {
     return [
@@ -82,5 +83,26 @@ export const exorcistSkill: IHeroSkillSet = {
     skills: exorcistSkillset(0,25),
     nextLevel: exorcistSkill_2,
 };
+
+export const exorcistPassive: IPassiveSkill = {
+    desc: "After any healing skill reduce statuses by 2 on last healed target",
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Little cure",
+            type: EAppTriggerType.AFTER_HEAL,
+            skill: [
+                {
+                    type: EHeroSkillType.STATUS_MODIFY_AMOUNT,
+                    targetType: ETargetType.BY_RELEVANT_ID, // last healed target
+                    value: -2,
+                    valueType: "number",
+                    animation: AnimationType.NONE,
+                }
+            ],
+        }
+    }
+}
 
 export const exorcistSkills: THeroSkills = [exorcistSkill];

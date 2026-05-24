@@ -12,6 +12,7 @@ import {
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const samuraiSkillset = (bleed: number): IHeroSkill[] => {
     return [
@@ -78,13 +79,7 @@ export const samuraiSkill: IHeroSkillSet = {
 export const samuraiPassive: IPassiveSkill = {
     desc: "Upon death apply [ba+PP]x50%\nbleed to all enemies",
     preBattleBuff: {
-        name: "Passive",
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             allowCastFromDead: true,

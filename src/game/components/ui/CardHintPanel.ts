@@ -359,11 +359,33 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
             (battleBonuses?.reduce((text, bonus) => {
                 if (bonus.type === EItemBattleBonusType.CAST_SKILL_X_ROUND) {
                     text += i18n.attributes.bonusType[bonus.type] + " " + (bonus.value + 1) + " (" + bonus.relatedSkill?.name || "" + ")\n";
-                } else {
-                    //text += i18n.attributes.bonusType[bonus.type] + (bonus.status ? " " + i18n.statuses[bonus.status] : "") + " [" + bonus.value + "]\n";
+                } else if (bonus.type === EItemBattleBonusType.APPLY_STATUS_ON_BASIC_ATTACK) {
                     const stats = [];
                     bonus.value && stats.push(bonus.value + "");
                     bonus.status && stats.push(i18n.statuses[bonus.status]);
+                    text += insertStats(i18n.attributes.bonusType[bonus.type], stats) + "\n";
+                } else {
+                    //text += i18n.attributes.bonusType[bonus.type] + (bonus.status ? " " + i18n.statuses[bonus.status] : "") + " [" + bonus.value + "]\n";
+                    const stats = [];
+                    if (bonus.value !== undefined) {
+                        stats.push(bonus.value + (bonus.valueType === "percent" ? "%" : ""));
+                    } else {
+                        stats.push("");
+                    }
+                    if (bonus.valueFrom) {
+                        stats.push(" " + i18n.ui.OFSTAT + " " + i18n.attributes.battleAttribute[bonus.valueFrom]);
+                    } else {
+                        stats.push("");
+                    }
+                    if (bonus.status) {
+                        if (bonus.type === EItemBattleBonusType.STATUS_APPLY_INCREASE) {
+                            stats.push(i18n.statuses[bonus.status]);
+                        } else {
+                            stats.push(i18n.statuses2[bonus.status]);
+                        }                        
+                    } else {
+                        stats.push("");
+                    }
                     text += insertStats(i18n.attributes.bonusType[bonus.type], stats) + "\n";
                 }
                 return text;
@@ -380,14 +402,35 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
         const attrsText =
             bonuses?.reduce((text, bonus) => {
-                const { attribute, value, targetType, isEvolved } = bonus;
+                const { attribute, value, targetType, isEvolved, valueType, valueFrom } = bonus;
                 if (attribute) {
-                    const targetText = targetType === EItemTargetType.ALL_ALLIES ? " " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
-                    //[color=${colors.PHYSICAL_ATTACK}]
-                    const colorTagOpen = isEvolved ? "[color=#99cc55]" : "";
-                    const colorTagClose = isEvolved ? "[/color]" : "";
+                    if (valueFrom) {
+                        const targetText = targetType === EItemTargetType.ALL_ALLIES ? "\n  " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
+                        const colorTagOpen = isEvolved ? "[color=#99cc55]" : "";
+                        const colorTagClose = isEvolved ? "[/color]" : "";
+                        const valuePrefix = " " + (valueType === "percent" ? "%" : "") + (value < 0 ? "-" : "+");
 
-                    text += colorTagOpen + i18n.attributes.attribute[attribute] + " " + value + targetText + colorTagClose + "\n";
+                        text +=
+                            colorTagOpen +
+                            i18n.attributes.attribute[attribute] +
+                            valuePrefix +
+                            value +
+                            "% " +
+                            i18n.ui.OFSTAT +
+                            " " +
+                            i18n.attributes.attribute[valueFrom] +
+                            targetText +
+                            colorTagClose +
+                            "\n";
+                    } else {
+                        const targetText = targetType === EItemTargetType.ALL_ALLIES ? " " + i18n.ui[EItemTargetType.ALL_ALLIES] : "";
+                        //[color=${colors.PHYSICAL_ATTACK}]
+                        const colorTagOpen = isEvolved ? "[color=#99cc55]" : "";
+                        const colorTagClose = isEvolved ? "[/color]" : "";
+                        const valueText = valueType === "percent" ? (value < 0 ? "-" : "+") + value + "%" : value;
+
+                        text += colorTagOpen + i18n.attributes.attribute[attribute] + " " + valueText + targetText + colorTagClose + "\n";
+                    }
                 }
                 return text;
             }, "") || "";

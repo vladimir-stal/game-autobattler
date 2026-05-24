@@ -1,5 +1,6 @@
-import { AnimationType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, THeroSkills } from "../../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 //TODO: DivineShield should also ignore dmg below X instead of removing self. X is increased with lvl and scales from PP or hp%
 export const paladinSkill_3: IHeroSkillSet = {
@@ -81,5 +82,26 @@ export const paladinSkill: IHeroSkillSet = {
     ],
     nextLevel: paladinSkill_2,
 };
+
+export const paladinPassive: IPassiveSkill = {
+    desc: "Heal low hp unit when block or negate dmg for [2+35%x(PP+MP)]",
+    preBattleBuff: {
+        ...heroPassiveTemplate,
+        appTrigger: {
+            limitedRepeats: false,
+            skillId: "Holy light",
+            type: EAppTriggerType.AFTER_FULL_BLOCK,
+            skill: [
+                {
+                    type: EHeroSkillType.HEAL,
+                    targetType: ETargetType.LOW_PERCENT_ALLY,
+                    value: 2,
+                    ppScale: 35,
+                    mpScale: 35,
+                }
+            ],
+        }
+    }
+}
 
 export const paladinSkills: THeroSkills = [paladinSkill];

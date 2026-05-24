@@ -1,5 +1,6 @@
 import { EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const heraldSkillset = (base:number, ppScale: number):IHeroSkill[] => {
     return [
@@ -58,13 +59,7 @@ export const heraldSkill: IHeroSkillSet = {
 export const heraldPassive: IPassiveSkill = {
         desc: "Increase PP per\nbuff on allies",
         preBattleBuff: {
-            name: "Passive",
-            targetType: ETargetType.SELF,
-            timeType: EBuffTimeType.DUEL,
-            type: EBuffType.BATTLE_TRIGGER,
-            value: 1,
-            isHidden: true,
-            cannotBeTargeted: true,
+            ...heroPassiveTemplate,
             appTrigger: {
                 limitedRepeats: false,
                 skillId: "Herald +PP",

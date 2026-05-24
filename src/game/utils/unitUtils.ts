@@ -38,6 +38,7 @@ import {
     unitsLvl5,
 } from "../unitConsts";
 import { checkProbability, getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
+import { getMulticlassSubclasses } from "./heroUtils";
 import { applyItemBonuses, getHeroClassWeaponTypes, removeItemBonuses } from "./itemUtils";
 
 const MAX_LEVEL = 5;
@@ -537,4 +538,17 @@ export const forEachNestedEffects = (unit: IBattleUnit, func: battleUnitIterateT
         func(parentEffect, { debuff });
         debuff.totalValue = parentEffect.totalValue;
     });
+};
+
+export const isUnitHasHeroClass = (unit: IUnit, heroClass: EHeroClass): boolean => {
+    if (unit.unitType === EUnitType.HERO) {
+        if (unit.heroClassType === EHeroClassType.BASIC) {
+            return heroClass === unit.heroClass;
+        } else if (unit.heroClassType === EHeroClassType.MULTI) {
+            return getMulticlassSubclasses(unit.heroClass).includes(heroClass);
+        }
+    } else if (unit.unitType === EUnitType.UNIT) {
+        return unit.mobHeroClasses?.includes(heroClass);
+    }
+    return false;
 };

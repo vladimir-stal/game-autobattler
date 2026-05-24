@@ -1,4 +1,4 @@
-import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, EItemBattleBonusType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
 
 const runecasterSkillset = (base:number, mpScale:number):IHeroSkill[] => {
@@ -57,6 +57,17 @@ export const runecasterSkill: IHeroSkillSet = {
     isMcSkill: true,
     skills: runecasterSkillset(1,50),
     nextLevel: runecasterSkill_2,
+};
+
+export const runecasterPassive: IPassiveSkill = {
+    desc: "All armor gained from skills is increased by [50%xMP]",
+    // battleUtils - prepareUnitToBattle()
+    itemPassive: {
+        type: EItemBattleBonusType.INCREASE_ARMOR_GAIN,
+        value: 50,
+        valueType: "number",
+        valueFrom: "magicPower",
+    },
 };
 
 export const runecasterSkills: THeroSkills = [runecasterSkill];

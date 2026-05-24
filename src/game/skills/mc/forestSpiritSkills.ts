@@ -1,5 +1,6 @@
 import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EDebuffType, EHeroClass, EHeroSkillType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const forestSpititSkillset = (conversionRate:number): IHeroSkill[] => {
     return [
@@ -65,13 +66,7 @@ export const forestSpiritPassive: IPassiveSkill = {
     desc: "Cannot be healed, trigger\n50% hpRegen when attacked",
     // HEALING_DECREASE
     preBattleBuff: {
-        name: "Passive",
-        isHidden: true,
-        cannotBeTargeted: true,
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        type: EBuffType.BATTLE_TRIGGER,
-        value: 1,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: true,
             type: EAppTriggerType.PRE_BATTLE,

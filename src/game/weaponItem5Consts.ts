@@ -100,7 +100,7 @@ export const totem5HptoDmg: IItem = {
         { type: EItemBonusType.ATTRIBUTE, value: 30, valueType: "number", attribute: "basicMaxHp" },
         { type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicPhysicalPower" },
     ],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_TOTAL_DAMAGE_FROM_HP, value: 50, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_TOTAL_DAMAGE, value: 50, valueType: "percent", valueFrom: "hp" }],
     image: IMAGE_ITEM_TOTEM_5,
 };
 

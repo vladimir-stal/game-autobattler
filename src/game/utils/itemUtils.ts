@@ -13,6 +13,7 @@ import {
     IItemBattleBonus,
     IItemBonus,
     IUnit,
+    THeroAttribute,
 } from "../../types";
 import { axe1 } from "../basicWeaponItemConsts";
 import { gloves_magic2, gloves_priest2, gloves_war2 } from "../commonItemConsts2";
@@ -37,53 +38,92 @@ import { GameScene } from "../scenes/GameScene";
 import { calculateIncreaseValue } from "./battleUtils";
 import { getRandomArrayItem, getRandomArrayItems } from "./commonUtils";
 import { getMulticlassSubclasses } from "./heroUtils";
+import { isUnitHasHeroClass } from "./unitUtils";
+
+const calcItemBonuses = (unit: IUnit, newItem: IItem) => {
+    unit.items.forEach((item) => {
+        item?.bonuses
+            ?.filter((b) => !!b.valueFrom && b.type === EItemBonusType.ATTRIBUTE)
+            .forEach((b) => {
+                const v = Math.floor((unit[b.valueFrom] * b.value) / 100);
+                const a = b.valueType === "percent" ? Math.floor((unit[b.attribute] * v) / 100) : v;
+                b.calculatedValue = a;
+                //console.log("~~~ calc", b.attribute, unit[b.attribute], b.valueFrom, unit[b.valueFrom], v, a);
+            });
+    });
+    newItem?.bonuses
+        ?.filter((b) => !!b.valueFrom && b.type === EItemBonusType.ATTRIBUTE)
+        .forEach((b) => {
+            const v = Math.floor((unit[b.valueFrom] * b.value) / 100);
+            const a = b.valueType === "percent" ? Math.floor((unit[b.attribute] * v) / 100) : v;
+            b.calculatedValue = a;
+            //console.log("~~~ calc", b.attribute, unit[b.attribute], b.valueFrom, unit[b.valueFrom], v, a);
+        });
+};
 
 /** Apply item bonuses to unit (or all units) on equip */
 export const applyItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => {
-    item.bonuses.forEach((bonus) => applyItemBonus(bonus, unit, units));
+    unit.items.forEach((ii) =>
+        ii.bonuses
+            .filter((b) => !!b.calculatedValue && !!b.valueFrom)
+            .forEach((b) => {
+                removeItemBonus(b, unit, units);
+                b.calculatedValue = 0;
+            }),
+    );
+    item.bonuses
+        .filter((b) => !!b.calculatedValue && !!b.valueFrom)
+        .forEach((b) => {
+            removeItemBonus(b, unit, units);
+            b.calculatedValue = 0;
+        });
+    item.bonuses.filter((b) => !b.valueFrom).forEach((bonus) => applyItemBonus(bonus, unit, units));
     //
     item.heroClassBonuses &&
         item.heroClassBonuses.forEach((hCbonus) => {
-            // hero unit
-            if (unit.unitType === EUnitType.HERO) {
-                // basic heroclass
-                if (unit.heroClassType === EHeroClassType.BASIC) {
-                    if (hCbonus.heroClass === unit.heroClass && hCbonus.bonus) {
-                        applyItemBonus(hCbonus.bonus, unit);
-                    }
-                }
-                // multiclass
-                else if (unit.heroClassType === EHeroClassType.MULTI) {
-                    if (getMulticlassSubclasses(unit.heroClass).includes(hCbonus.heroClass) && hCbonus.bonus) {
-                        applyItemBonus(hCbonus.bonus, unit);
-                    }
-                }
-            }
-            // mob unit
-            else if (unit.unitType === EUnitType.UNIT && unit.mobHeroClasses?.includes(hCbonus.heroClass)) {
-                if (hCbonus.bonus) {
-                    applyItemBonus(hCbonus.bonus, unit);
-                }
+            if (isUnitHasHeroClass(unit, hCbonus.heroClass) && hCbonus.bonus) {
+                applyItemBonus(hCbonus.bonus, unit);
             }
         });
+    calcItemBonuses(unit, item);
+    unit.items.forEach((ii) =>
+        ii.bonuses
+            .filter((b) => !!b.valueFrom)
+            .forEach((b) => {
+                applyItemBonus(b, unit, units);
+            }),
+    );
+    item.bonuses
+        .filter((b) => !!b.calculatedValue && !!b.valueFrom)
+        .forEach((b) => {
+            applyItemBonus(b, unit, units);
+        });
+};
+
+export const fixAuraBonusesForNewUnit = (unit: IUnit, bonuses:IItemBonus[]) => {
+    console.log("~~~ fix aura",unit,bonuses);
+    bonuses.forEach(b => applyItemBonus(b,unit,[unit]));
 };
 
 const applyItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
     //console.log("APPLY ITem BONUS", bonus);
-    const { type, attribute, value, valueType, targetType } = bonus;
+    const { type, attribute, value, valueType, targetType, calculatedValue, valueFrom } = bonus;
     switch (type) {
         case EItemBonusType.ATTRIBUTE:
             {
                 if (!attribute || value === undefined || !valueType) {
                     return;
                 }
+                const vv = !!valueFrom ? calculatedValue || 0 : value;
+
+                //console.log("add item bonus", bonus);
 
                 if (!targetType || targetType === EItemTargetType.SELF) {
-                    const newAttrValue = unit[attribute] + calculateIncreaseValue(unit[attribute], value, valueType);
+                    const newAttrValue = unit[attribute] + calculateIncreaseValue(unit[attribute], vv, valueType);
                     unit[attribute] = newAttrValue;
                 } else if (targetType === EItemTargetType.ALL_ALLIES) {
                     units?.forEach((u) => {
-                        const newAttrValue = u[attribute] + calculateIncreaseValue(u[attribute], value, valueType);
+                        const newAttrValue = u[attribute] + calculateIncreaseValue(u[attribute], vv, valueType);
                         u[attribute] = newAttrValue;
                     });
                 }
@@ -96,7 +136,15 @@ const applyItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
 
 /** Remove item bonuses from unit on unequip */
 export const removeItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => {
-    item.bonuses.forEach((bonus) => removeItemBonus(bonus, unit, units));
+    unit.items.forEach((ii) =>
+        ii.bonuses
+            .filter((b) => !!b.calculatedValue && !!b.valueFrom)
+            .forEach((b) => {
+                removeItemBonus(b, unit, units);
+                b.calculatedValue = 0;
+            }),
+    );
+    item.bonuses.filter((b) => !b.valueFrom).forEach((bonus) => removeItemBonus(bonus, unit, units));
     //
     item.heroClassBonuses &&
         item.heroClassBonuses.forEach((hCbonus) => {
@@ -110,21 +158,34 @@ export const removeItemBonuses = (item: IItem, unit: IUnit, units?: IUnit[]) => 
                 }
             }
         });
+    calcItemBonuses(unit, item);
+    unit.items.forEach((ii) => {
+        ii.bonuses
+            .filter((b) => !!b.valueFrom)
+            .forEach((b) => {
+                if (ii === item) {
+                    b.calculatedValue = 0;
+                } else {
+                    applyItemBonus(b, unit, units);
+                }
+            });
+    });
 };
 
 const removeItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
-    const { type, attribute, value, valueType, targetType } = bonus;
+    const { type, attribute, value, valueType, targetType, valueFrom, calculatedValue } = bonus;
     switch (type) {
         case EItemBonusType.ATTRIBUTE:
             {
                 if (!attribute || value === undefined || !valueType) {
                     return;
                 }
+                const vv = !!valueFrom ? calculatedValue || 0 : value;
 
-                console.log("remove item bonus", bonus);
+                //console.log("remove item bonus", bonus);
 
                 if (!targetType || targetType === EItemTargetType.SELF) {
-                    const newAttrValue = unit[attribute] - calculateIncreaseValue(unit[attribute], value, valueType);
+                    const newAttrValue = unit[attribute] - calculateIncreaseValue(unit[attribute], vv, valueType);
                     unit[attribute] = newAttrValue;
                 } else if (targetType === EItemTargetType.ALL_ALLIES) {
                     units?.forEach((u) => {
@@ -132,10 +193,10 @@ const removeItemBonus = (bonus: IItemBonus, unit: IUnit, units?: IUnit[]) => {
                             return;
                         }
 
-                        const newAttrValue = u[attribute] - calculateIncreaseValue(u[attribute], value, valueType);
+                        const newAttrValue = u[attribute] - calculateIncreaseValue(u[attribute], vv, valueType);
                         u[attribute] = newAttrValue;
 
-                        console.log("remove item bonus from unit", u, newAttrValue);
+                        //console.log("remove item bonus from unit", u, newAttrValue);
                     });
                 }
             }

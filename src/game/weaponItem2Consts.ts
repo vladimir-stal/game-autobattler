@@ -1,4 +1,4 @@
-import { EItemBattleBonusType, EItemBonusType, EItemType, EWeaponItemType, IItem } from "../types";
+import { EItemBattleBonusType, EItemBonusType, EItemType, EStatusType, EWeaponItemType, IItem } from "../types";
 import { i18n } from "./consts";
 import {
     IMAGE_ITEM_AXE_21,
@@ -38,7 +38,7 @@ export const axe21_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING, value: 3, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 3, valueType: "number", status:EStatusType.BLEED }],
 };
 
 export const axe21_2: IItem = {
@@ -51,7 +51,7 @@ export const axe21_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING, value: 2, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 2, valueType: "number", status:EStatusType.BLEED }],
     nextLevel: axe21_3,
 };
 
@@ -65,7 +65,7 @@ export const axe21: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_BLEEDING, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 1, valueType: "number", status:EStatusType.BLEED }],
     nextLevel: axe21_2,
 };
 
@@ -766,7 +766,7 @@ export const totem22_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 4, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 4, valueType: "number", status:EStatusType.POISON }],
 };
 
 export const totem22_2: IItem = {
@@ -779,7 +779,7 @@ export const totem22_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 2, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 2, valueType: "number", status:EStatusType.POISON }],
     nextLevel: totem22_3,
 };
 
@@ -793,7 +793,7 @@ export const totem22: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 4, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 1, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 1, valueType: "number", status:EStatusType.POISON }],
     nextLevel: totem22_2,
 };
 

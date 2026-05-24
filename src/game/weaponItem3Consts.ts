@@ -5,6 +5,7 @@ import {
     EItemBattleBonusType,
     EItemBonusType,
     EItemType,
+    EStatusType,
     EWeaponItemType,
     IItem,
 } from "../types";
@@ -132,7 +133,10 @@ export const axe31_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 12, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR, value: 60, valueType: "percent" }],
+    battleBonuses: [
+        { type: EItemBattleBonusType.CRIT_INCREASE, value: 60, valueType: "percent" },
+        { type: EItemBattleBonusType.NONCRIT_INCREASE, value: -60, valueType: "percent" }
+    ],
 };
 
 export const axe31_2: IItem = {
@@ -145,7 +149,10 @@ export const axe31_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 10, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR, value: 50, valueType: "percent" }],
+    battleBonuses: [
+        { type: EItemBattleBonusType.CRIT_INCREASE, value: 50, valueType: "percent" },
+        { type: EItemBattleBonusType.NONCRIT_INCREASE, value: -50, valueType: "percent" }
+    ],
     nextLevel: axe31_3,
 };
 
@@ -159,7 +166,10 @@ export const axe31: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.AXE,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 8, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.CRIT_INCR_NONCRIT_DECR, value: 40, valueType: "percent" }],
+    battleBonuses: [
+        { type: EItemBattleBonusType.CRIT_INCREASE, value: 40, valueType: "percent" },
+        { type: EItemBattleBonusType.NONCRIT_INCREASE, value: -40, valueType: "percent" }
+    ],
     nextLevel: axe31_2,
 };
 
@@ -429,7 +439,7 @@ export const staff31_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 8, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.STATUS_APPLY_INCREASE, value: 8, valueType: "number", status: EStatusType.BURN }],
 };
 
 export const staff31_2: IItem = {
@@ -442,7 +452,7 @@ export const staff31_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 4, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.STATUS_APPLY_INCREASE, value: 4, valueType: "number", status: EStatusType.BURN }],
     nextLevel: staff31_3,
 };
 
@@ -456,7 +466,7 @@ export const staff31: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.STAFF,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.STATUS_BURN_APPLY_INCREASE, value: 2, valueType: "number" }],
+    battleBonuses: [{ type: EItemBattleBonusType.STATUS_APPLY_INCREASE, value: 2, valueType: "number", status: EStatusType.BURN }],
     nextLevel: staff31_2,
 };
 

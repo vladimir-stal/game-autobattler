@@ -256,7 +256,10 @@ export enum AnimationType {
     BOSS_MINOTAUR_HURT = "BOSS_MINOTAUR_HURT",
     //
     // TOTEMS
-    TOTEM_WILD_1_IDLE = "TOTEM_WILD_1_IDLE",
+    TOTEM_WILD_BASIC_IDLE = "TOTEM_WILD_BASIC_IDLE",
+    TOTEM_WILD_BASIC_ACTIVE = "TOTEM_WILD_BASIC_ACTIVE",
+    // BATTLE BACKGROUND
+    BATTLE_BACKGROUND_TORCH_1_IDLE = "BATTLE_BACKGROUND_TORCH_1_IDLE",
 }
 
 export enum EEffectAnimationType {
@@ -531,27 +534,28 @@ export enum EItemBattleBonusType {
     ADDITIONAL_BUFF_TARGET = "ADDITIONAL_BUFF_TARGET", // add one additional target when appliing single target buff (except initial target)
     //APPLY_POISON_ON_HIT = "APPLY_POISON_ON_HIT",
     APPLY_STATUS_ON_BASIC_ATTACK = "APPLY_STATUS_ON_BASIC_ATTACK",
-    CRIT_INCR_NONCRIT_DECR = "CRIT_INCR_NONCRIT_DECR", // TODO: implement
+    CRIT_INCREASE = "CRIT_INCREASE",
+    NONCRIT_INCREASE = "NONCRIT_INCREASE",
     CRIT_WITH_MAGIC = "CRIT_WITH_MAGIC", // allows crit with magic attacks
+    CRIT_WITH_PHYSICAL = "CRIT_WITH_PHYSICAL", // allows crit with physical attacks
+    CRIT_WITH_HEAL = "CRIT_WITH_HEAL", // allows crit with heal
     HEAL_INCREASE = "HEAL_INCREASE",
     INCREASE_MAGIC_DAMAGE = "INCREASE_MAGIC_DAMAGE",
     INCREASE_PHYSICAL_DAMAGE = "INCREASE_PHYSICAL_DAMAGE",
     INCREASE_DAMAGE_TO_ARMOR = "INCREASE_DAMAGE_TO_ARMOR",
     INCREASE_DAMAGE_TO_HP = "INCREASE_DAMAGE_TO_HP",
-    INCREASE_DAMAGE_TO_BLEEDING = "INCREASE_DAMAGE_TO_BLEEDING",
-    INCREASE_DAMAGE_TO_POISONED = "INCREASE_DAMAGE_TO_POISONED",
+    INCREASE_DAMAGE_TO_TARGET_WITH_STATUS = "INCREASE_DAMAGE_TO_TARGET_WITH_STATUS",
     INCREASE_DAMAGE_TO_SUMMON = "INCREASE_DAMAGE_TO_SUMMON",
     INCREASE_SUMMON_ATTACK = "INCREASE_SUMMON_ATTACK",
     INCREASE_SUMMON_HP = "INCREASE_SUMMON_HP",
-    INCREASE_TOTAL_DAMAGE_FROM_HP = "INCREASE_TOTAL_DAMAGE_FROM_HP",
+    INCREASE_TOTAL_DAMAGE = "INCREASE_TOTAL_DAMAGE",
+    INCREASE_ARMOR_GAIN = "INCREASE_ARMOR_GAIN",
     BASIC_ATTACK_TWICE = "BASIC_ATTACK_TWICE",
     BASIC_ONCE_IN_TWO_TURNS = "BASIC_ONCE_IN_TWO_TURNS", // TODO: implement
     SUMMON_INCREASE_DAMAGE = "SUMMON_INCREASE_DAMAGE", // TODO: implement
-    TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE", // TODO: implement
+    TOTEM_INCREASE_VALUE = "TOTEM_INCREASE_VALUE",
     CRIT_EVERY_TWO_TURNS = "CRIT_EVERY_TWO_TURNS", // TODO: implement
-    STATUS_BURN_APPLY_INCREASE = "STATUS_BURN_APPLY_INCREASE",
-    STATUS_POISON_APPLY_INCREASE = "STATUS_POISON_APPLY_INCREASE",
-    STATUS_BLEED_APPLY_INCREASE = "STATUS_BLEED_APPLY_INCREASE",
+    STATUS_APPLY_INCREASE = "STATUS_APPLY_INCREASE",
     CAST_SKILL_X_ROUND = "CAST_SKILL_X_ROUND",
     UNPACK_SKILL_IN_STASH = "UNPACK_SKILL_IN_STASH",
 }
@@ -669,6 +673,8 @@ export enum EDebuffType {
     BLIND = "BLIND", // enemy attacks have their target evasion chance +X
     MARK_WORTHY_FOE = "MARK_WORTHY_FOE",
     BATTLE_TRIGGER = "BATTLE_TRIGGER", // uses appTrigger field to do stuff
+    SKILL_SKIP_BASIC_ATTACK = "SKILL_SKIP_BASIC_ATTACK", // make no basic attack after skill
+    // ..
 }
 
 export enum EBuffTimeType {
@@ -849,6 +855,7 @@ export interface ICardToMove {
 export interface IPassiveSkill {
     desc: string;
     preBattleBuff?: IBuff;
+    itemPassive?: IItemBattleBonus;
 }
 
 /**
@@ -956,9 +963,13 @@ export interface IItemBonus {
     type: EItemBonusType;
     value: number;
     valueType: TValueType;
+    valueFrom?: THeroAttribute; // if set, value will be recalculated as unit[valueFrom]*value/100
+    // then if valueType is "number" - result is added to attribute
+    // if valueType is "percent" - attribute will get % increase of calculated value
     attribute?: THeroAttribute;
     targetType?: EItemTargetType;
     isEvolved?: boolean;
+    calculatedValue?: number; // should be set to 0; is used when valueFrom is present
 }
 
 /** @property isEvolving - after duel bonus is applied to the item itself, not to the unit */
@@ -973,6 +984,7 @@ export interface IItemBattleBonus {
     type: EItemBattleBonusType;
     value: number;
     valueType: TValueType;
+    valueFrom?: THeroBattleAttribute;
     status?: EStatusType;
     relatedSkill?: IHeroSkillSet;
 }
@@ -1016,6 +1028,7 @@ export interface IActionBuffTarget {
     targetId: string;
     isExisting?: boolean;
     value?: number;
+    duration?: number;
 }
 
 export interface IBattleAction {
@@ -1055,6 +1068,11 @@ export enum EAppTriggerType {
     AFTER_EVADE = "AFTER_EVADE", // after successful evade
     AFTER_CRIT = "AFTER_CRIT",
     PRE_BATTLE = "PRE_BATTLE", // once pre battle (as non-repeatable skill)
+    AFTER_SKILL_ATTACK = "AFTER_SKILL_ATTACK",
+    TURN_END = "TURN_END",
+    AFTER_FULL_BLOCK = "AFTER_FULL_BLOCK", // negating damage to 0
+    AFTER_HEAL = "AFTER_HEAL",
+    // ..
 }
 
 export interface IAppTrigger {
@@ -1203,6 +1221,8 @@ export interface ITotem {
     id: string;
     name: string;
     skills: IHeroSkill[];
+    valuesIncreaseFlat?: number;
+    valuesIncreasePercent?: number;
 }
 
 export type TBattleRecord = IBattleAction[];

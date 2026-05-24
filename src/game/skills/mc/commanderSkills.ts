@@ -13,6 +13,7 @@ import {
     THeroSkills,
 } from "../../../types";
 import { i18n } from "../../consts";
+import { heroPassiveTemplate } from "../../utils/skillUtils2";
 
 const commanderSkillsetOld = (atk: number, ppScale: number): IHeroSkill[] => {
     return [
@@ -114,13 +115,7 @@ export const commanderSkill: IHeroSkillSet = {
 export const commanderPassive: IPassiveSkill = {
     desc: "Increase all summons basic\nattack damage [2]+[MPx50%]",
     preBattleBuff: {
-        name: "Passive",
-        type: EBuffType.BATTLE_TRIGGER,
-        targetType: ETargetType.SELF,
-        timeType: EBuffTimeType.DUEL,
-        value: 1,
-        cannotBeTargeted: true,
-        isHidden: true,
+        ...heroPassiveTemplate,
         appTrigger: {
             limitedRepeats: false,
             skillId: "Commander's banner",

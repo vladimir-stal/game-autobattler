@@ -2,6 +2,7 @@ import {
     EItemBattleBonusType,
     EItemBonusType,
     EItemType,
+    EStatusType,
     EWeaponItemType,
     IItem,
 } from "../types";
@@ -56,7 +57,7 @@ export const totem41_3: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 7, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 60, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 60, valueType: "percent", status:EStatusType.POISON }],
 };
 
 export const totem41_2: IItem = {
@@ -69,7 +70,7 @@ export const totem41_2: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 6, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 40, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 40, valueType: "percent", status:EStatusType.POISON }],
     nextLevel: totem41_3,
 };
 
@@ -83,7 +84,7 @@ export const totem41: IItem = {
     heroClasses: [],
     weaponType: EWeaponItemType.TOTEM,
     bonuses: [{ type: EItemBonusType.ATTRIBUTE, value: 5, valueType: "number", attribute: "basicAttack" }],
-    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_POISONED, value: 30, valueType: "percent" }],
+    battleBonuses: [{ type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS, value: 30, valueType: "percent", status:EStatusType.POISON }],
     nextLevel: totem41_2,
 };
 

@@ -1,13 +1,13 @@
 import { GameScene } from "../../scenes/GameScene";
-import { ECardType, EHeroClass, ERoomType, ESelectCardHint, EUnitType, ICard } from "../../../types";
+import { ECardType, EHeroClass, EItemTargetType, ERoomType, ESelectCardHint, EUnitType, ICard, IItemBonus } from "../../../types";
 import { getRandomArrayItem } from "../../utils/commonUtils";
 import { Card } from "../Card";
 import { colors, i18n } from "../../consts";
 import { GameObjects, Input } from "phaser";
-import { createUnit } from "../../utils/unitUtils";
+import { createUnit, isUnitHasHeroClass } from "../../utils/unitUtils";
 import { getRerollPrice } from "../../utils/selectPhaseUtils";
 import { MIN_WIDTH } from "./uiPanels";
-import { createItem } from "../../utils/itemUtils";
+import { createItem, fixAuraBonusesForNewUnit } from "../../utils/itemUtils";
 import { IMAGE_ICON_REROLL } from "../../utils/imageLoadUtil";
 
 const hintTopY = -50;
@@ -245,6 +245,25 @@ export class CardSelectPanel extends Phaser.GameObjects.Container {
                 card.unit = createUnit(card.unit);
                 // TODO: remove the hack when find why unitPanel set units after new select room is rendered
                 if (card.unit.unitType === EUnitType.HERO) this.gameScene.unitPanel.lastBoughtHeroClass = card.unit.heroClass;
+                const auraBonuses:IItemBonus[] = [];
+                this.gameScene.unitPanel.slots.forEach(slot => {
+                    const unit = slot?.slot?.card?.card?.unit;
+                    unit?.items?.forEach(
+                    item => {
+                        item.bonuses.forEach(b => {
+                            if (b.targetType === EItemTargetType.ALL_ALLIES) {
+                                auraBonuses.push(b);
+                            }
+                        });
+                        item.heroClassBonuses?.forEach(hcb => {
+                            if (isUnitHasHeroClass(unit,hcb.heroClass) && hcb.bonus?.targetType === EItemTargetType.ALL_ALLIES) {
+                                auraBonuses.push(hcb.bonus);
+                            }
+                        });
+                    }
+                )
+                })
+                fixAuraBonusesForNewUnit(card.unit, auraBonuses);
             } else if (card.type === ECardType.ITEM && card.item) {
                 card.item = createItem(card.item);
             }

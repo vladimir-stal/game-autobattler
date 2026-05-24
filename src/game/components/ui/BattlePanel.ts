@@ -1,11 +1,12 @@
 import { GameScene } from "../../scenes/GameScene";
-import { EBattleActionType, IBattleAction, IBattleUnit, TBattleRecord, TBattleUnits, TUnits } from "../../../types";
+import { AnimationType, EBattleActionType, IBattleAction, IBattleUnit, TBattleRecord, TBattleUnits, TUnits } from "../../../types";
 import { colors, i18n } from "../../consts";
 import { BattleUnitCard } from "../BattleUnitCard";
 import { prepareUnitToBattle } from "../../utils/battleUtils";
 import { BattleSummonCard } from "../BattleSummonCard";
 import { GameObjects } from "phaser";
 import { MAX_WIDTH, MIDDLE_WIDTH, MIN_WIDTH } from "./uiPanels";
+import { IMAGE_BACKGROUND_TORCH_1, IMAGE_BATTLE_BACKGROUND_1, IMAGE_BATTLE_BACKGROUND_FLOOR_1 } from "../../utils/imageLoadUtil";
 
 const mode: "DEV" | "FAST" = "FAST";
 
@@ -75,6 +76,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         });
         console.log("BattlePanel check", this.playerUnits, this.enemyUnits);
         this.removeAll(true);
+        this.renderFloorImage();
         this.renderPlayerUnitsPanel();
         this.renderEnemyUnitsPanel();
         this.renderResultPanel();
@@ -170,6 +172,23 @@ export class BattlePanel extends Phaser.GameObjects.Container {
     renderBorder() {
         const rect = this.scene.add.rectangle(100, -50, 900, 400, colors.WHITE, 0.2).setOrigin(0, 0);
         this.add(rect);
+    }
+
+    renderFloorImage() {
+        const backgroundImage = this.scene.add.image(0, -500, IMAGE_BATTLE_BACKGROUND_1).setOrigin(0.5, 0);
+        this.add(backgroundImage);
+
+        const floorImage = this.scene.add.image(0, -135, IMAGE_BATTLE_BACKGROUND_FLOOR_1).setOrigin(0.5, 0);
+        this.add(floorImage);
+
+        // BACKGROUND DETAILS
+        const torchSprite1 = this.scene.add.sprite(-800, 85, IMAGE_BACKGROUND_TORCH_1).setOrigin(0.5, 0);
+        torchSprite1.anims.play(AnimationType.BATTLE_BACKGROUND_TORCH_1_IDLE);
+        this.add(torchSprite1);
+        //
+        const torchSprite2 = this.scene.add.sprite(760, 85, IMAGE_BACKGROUND_TORCH_1).setOrigin(0.5, 0);
+        torchSprite2.anims.play(AnimationType.BATTLE_BACKGROUND_TORCH_1_IDLE);
+        this.add(torchSprite2);
     }
 
     stopBattle() {
@@ -380,17 +399,16 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                     // }
                 }
                 break;
-            // case EBattleActionType.BUFF_VALUE_CHANGED:
-            //     {
-            //         if (!buff) {
-            //             console.error("ERROR! no buff", type);
-            //             return;
-            //         }
-
-            //         this.cards[unitId].changeBuffValue(buff);
-            //         this.playNextAction();
-            //     }
-            //     break;
+            case EBattleActionType.BUFF_VALUE_CHANGED:
+                {
+                    if (!targetId) {
+                        console.error("ERROR! BUFF_VALUE_CHANGED >> no targetId", type);
+                        return;
+                    }
+                    this.cards[targetId]?.renderBuffs();
+                    this.playNextAction();
+                }
+                break;
             case EBattleActionType.BUFF_REMOVED:
                 {
                     if (!buff) {
@@ -735,6 +753,28 @@ export class BattlePanel extends Phaser.GameObjects.Container {
         this.resultRect.setVisible(true);
         this.resultText.setVisible(true);
         this.resultText.setText(this.gameScene.battleController.isBattleWin ? i18n.ui.VICTORY : i18n.ui.DEFEAT);
+
+        this.gameScene.tweens.add({
+            targets: this.resultRect,
+            //x: { from: 0, to: -200 },
+            y: { from: 0, to: -200 },
+            //alpha: { from: 0, to: 1 },
+            ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 500,
+            repeat: 0, // -1: infinity
+            yoyo: false,
+        });
+
+        this.gameScene.tweens.add({
+            targets: this.resultText,
+            //x: { from: 0, to: -200 },
+            y: { from: 0, to: -200 },
+            //alpha: { from: 0, to: 1 },
+            ease: "Linear", // 'Cubic', 'Elastic', 'Bounce', 'Back'
+            duration: 500,
+            repeat: 0, // -1: infinity
+            yoyo: false,
+        });
 
         this.gameScene.topPanel.changeSelectButtonToNext();
     }

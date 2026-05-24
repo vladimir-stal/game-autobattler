@@ -44,8 +44,8 @@ import {
     IMAGE_SORCERER,
     IMAGE_SUMMON_IDLE,
     IMAGE_TOTEM_4,
-    IMAGE_TOTEM_ATTACK,
     IMAGE_TOTEM_BOSS_MINOTAUR,
+    IMAGE_TOTEM_WILD_BASIC_IDLE,
     IMAGE_WARLOCK,
     IMAGE_WARRIOR_IDLE,
     IMAGE_WILD_IDLE,
@@ -311,6 +311,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.HUNTER:
             return {
                 image: IMAGE_HUNTER_IDLE,
+                distanceEnemy: -80,
                 animation: AnimationType.HUNTER_IDLE,
                 idleBattleAnimation: AnimationType.HUNTER_BATTLE_IDLE,
                 attackAnimation: AnimationType.HUNTER_ATTACK,
@@ -654,14 +655,16 @@ export const getUnitImage = (unitId: string): IAnimations => {
 
 export const getTotemImage = (totemId: string): IAnimations => {
     const id = totemId.split("_")[0];
-    console.log(">>>>>>>>>>> GET TOTEM IMAGE BY ID", totemId);
+    console.log(">>>>>>>>>>> GET TOTEM IMAGE BY ID", id);
     switch (id) {
         case TOTEM_ID_WILD_BASIC:
             return {
                 //image: IMAGE_TOTEM_ATTACK,
                 //idleBattleAnimation: AnimationType.TOTEM_WILD_1_IDLE,
-                image: IMAGE_TOTEM_ATTACK,
                 distance: -40,
+                image: IMAGE_TOTEM_WILD_BASIC_IDLE,
+                idleBattleAnimation: AnimationType.TOTEM_WILD_BASIC_IDLE,
+                attackAnimation: AnimationType.TOTEM_WILD_BASIC_ACTIVE,
             };
         case TOTEM_ID_BOSS_MINOTAUR:
             return {
@@ -677,6 +680,9 @@ export const getTotemImage = (totemId: string): IAnimations => {
             };
         }
         default:
-            return { image: IMAGE_SKELETON_1 };
+            return {
+                image: IMAGE_TOTEM_WILD_BASIC_IDLE,
+                distance: -40,
+            };
     }
 };

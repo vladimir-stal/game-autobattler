@@ -30,6 +30,14 @@ export function createUIPanels(scene: GameScene) {
 
     const { width, height } = scene.camera;
 
+    // DUEL PHASE ///////////////////////////////////////////////////////////
+
+    const { x: battlePanelX, y: battlePanelY } = getBattlePanelPosition(width, height);
+    scene.battlePanel = new BattlePanel(scene, battlePanelX, battlePanelY);
+    fixedContainer.add(scene.battlePanel);
+
+    ////////////////////////////////////////////
+
     // SELECTION PHASE ///////////////////////////////////////////////////////////
 
     //
@@ -118,14 +126,6 @@ export function createUIPanels(scene: GameScene) {
 
     scene.hintPanel = new CardHintPanel(scene, 0, 0).setDepth(500).setVisible(false);
     scene.add.existing(scene.hintPanel);
-
-    // DUEL PHASE ///////////////////////////////////////////////////////////
-
-    const { x: battlePanelX, y: battlePanelY } = getBattlePanelPosition(width, height);
-    scene.battlePanel = new BattlePanel(scene, battlePanelX, battlePanelY);
-    fixedContainer.add(scene.battlePanel);
-
-    ////////////////////////////////////////////
 
     //on window resize - move fixed panels
     scene.scale.addListener(
@@ -230,7 +230,7 @@ function getInventoryPanelPosition(width: number, height: number): { x: number; 
 
 function getBattlePanelPosition(width: number, height: number): { x: number; y: number } {
     const x = width / 2;
-    const y = -height + 400;
+    const y = -height / 2;
     return { x, y };
 }
 

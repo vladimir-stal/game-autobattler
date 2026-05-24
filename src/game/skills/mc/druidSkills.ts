@@ -1,48 +1,5 @@
-import { EHeroClass, EHeroSkillType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../../types";
+import { EHeroClass, EHeroSkillType, EItemBattleBonusType, EStatusType, ETargetType, IHeroSkill, IHeroSkillSet, IPassiveSkill, THeroSkills } from "../../../types";
 import { i18n } from "../../consts";
-
-// export const druidSkill_2: IHeroSkillSet = {
-//     id: "DruidBurn",
-//     name: "Druid burn(2)",
-//     desc: "Apply [1]+[MP*70%] burn on all enemies",
-//     level: 2,
-//     heroClasses: [EHeroClass.DRUID],
-//     isMcSkill: true,
-//     skills: [
-//         {
-//             type: EHeroSkillType.STATUS_APPLY,
-//             isBasicAttack: true,
-//             status: EStatusType.BURN,
-//             value: 1,
-//             targetType: ETargetType.ALL_ENEMIES,
-//             mpScale: 70,
-//         },
-//     ],
-// };
-
-// export const druidSkill: IHeroSkillSet = {
-//     id: "DruidBurn",
-//     name: "Druid burn",
-//     desc: "Apply [1]+[MP*50%] burn on all enemies",
-//     level: 1,
-//     heroClasses: [EHeroClass.DRUID],
-//     isMcSkill: true,
-//     skills: [
-//         {
-//             type: EHeroSkillType.STATUS_APPLY,
-//             isBasicAttack: true,
-//             status: EStatusType.BURN,
-//             value: 1,
-//             targetType: ETargetType.ALL_ENEMIES,
-//             mpScale: 50,
-//         },
-//     ],
-//     nextLevel: druidSkill_2,
-// };
-
-//TODO: how to improve skill with level? more targets?
-
-// TODO: make times depend on MP!
 
 const druidSkillset = (repeats: number): IHeroSkill[] => {
     return [
@@ -102,5 +59,16 @@ export const druidSkill: IHeroSkillSet = {
     skills: druidSkillset(3),
     nextLevel: druidSkill_2,
 };
+
+export const druidPassive: IPassiveSkill = {
+    desc: "Deal bonus 35%xPP damage vs targets with shock",
+    itemPassive: {
+        type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS,
+        status: EStatusType.SHOCK,
+        value: 35,
+        valueType: "number",
+        valueFrom: "physicalPower",
+    }
+}
 
 export const druidSkills: THeroSkills = [druidSkill];

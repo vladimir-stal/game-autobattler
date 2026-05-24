@@ -2,7 +2,7 @@ import { Scene } from "phaser";
 import { AnimationType } from "../../types";
 import { createMcHeroesAnimations } from "./animations/mcHeroesAnimations";
 import { createMobAnimations } from "./animations/mobsAnimations";
-import { IMAGE_LEADER_1_IDLE } from "./imageLoadUtil";
+import { IMAGE_BACKGROUND_TORCH_1, IMAGE_LEADER_1_IDLE } from "./imageLoadUtil";
 import { createTotemAnimations } from "./animations/totemAnimations";
 import { createBasicHeroesAnimations, createBasicHeroesIdleAnimations } from "./animations/basicHeroesAnimations";
 import { createCommonEffectAnimations, createEffectAnimations } from "./animations/effectAnimations";
@@ -25,7 +25,7 @@ export function createAnimations(scene: Scene) {
 
     // TOTEMS
 
-    createTotemAnimations(scene);
+    //createTotemAnimations(scene);
 
     // LEADER ///////////////////////////////////////////////////////
 
@@ -48,6 +48,15 @@ export function createIntialAnimations(scene: Scene) {
     scene.anims.create({
         key: AnimationType.LEADER_1_IDLE,
         frames: scene.anims.generateFrameNumbers(IMAGE_LEADER_1_IDLE, { start: 0, end: 103 }),
+        frameRate: 20,
+        repeat: -1,
+    });
+
+    // BATTLE
+    // background details
+    scene.anims.create({
+        key: AnimationType.BATTLE_BACKGROUND_TORCH_1_IDLE,
+        frames: scene.anims.generateFrameNumbers(IMAGE_BACKGROUND_TORCH_1, { start: 0, end: 21 }),
         frameRate: 20,
         repeat: -1,
     });
