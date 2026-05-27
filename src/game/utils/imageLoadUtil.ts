@@ -119,7 +119,7 @@ import {
     TOTEM_ID_WILD_BASIC,
 } from "../totemConsts";
 import { loadBardHeroictuneTotemImages, loadBasicWildTotemImages, loadBossMinotaurTotemImages } from "./load/totemsImagesLoad";
-import { createWildBasicTotemAnimations } from "./animations/totemAnimations";
+import { createTotemAnimations, createWildBasicTotemAnimations } from "./animations/totemAnimations";
 import { EHeroClass } from "../../types";
 import { createMcHeroBattleAnimations, createMcHeroIdleAnimations } from "./animations/mcHeroesAnimations";
 import { BOSS_MINOTAUR_ID, WOLF_ID } from "../units/mobUnitConsts";
@@ -293,7 +293,9 @@ export const IMAGE_BOSS_MINOTAUR_HURT = "IMAGE_BOSS_MINOTAUR_HURT";
 
 // TOTEMS
 
-export const IMAGE_TOTEM_ATTACK = "IMAGE_TOTEM_ATTACK";
+export const IMAGE_TOTEM_WILD_BASIC_IDLE = "IMAGE_TOTEM_WILD_BASIC_IDLE";
+export const IMAGE_TOTEM_WILD_BASIC_ACTIVE = "IMAGE_TOTEM_WILD_BASIC_ACTIVE";
+
 export const IMAGE_TOTEM_BOSS_MINOTAUR = "IMAGE_TOTEM_BOSS_MINOTAUR";
 export const IMAGE_TOTEM_4 = "IMAGE_TOTEM_4";
 
@@ -331,6 +333,10 @@ export const IMAGE_ATTRIBUTE_PHYSICAL_POWER = "IMAGE_ATTRIBUTE_PHYSICAL_POWER";
 export const IMAGE_CARD_EXP = "IMAGE_CARD_EXP";
 export const IMAGE_ICON_REROLL = "IMAGE_ICON_REROLL";
 export const IMAGE_ICON_GOLD = "IMAGE_ICON_GOLD";
+
+export const IMAGE_BATTLE_BACKGROUND_FLOOR_1 = "IMAGE_BATTLE_BACKGROUND_FLOOR_1";
+export const IMAGE_BATTLE_BACKGROUND_1 = "IMAGE_BATTLE_BACKGROUND_1";
+export const IMAGE_BACKGROUND_TORCH_1 = "IMAGE_BACKGROUND_TORCH_1";
 
 export function loadImages(scene: Scene) {
     // BASIC HEROES
@@ -393,6 +399,17 @@ export function loadImages(scene: Scene) {
     //
     scene.load.image(IMAGE_ICON_REROLL, "assets/sprites/icons/reroll.png");
     //scene.load.image(IMAGE_ICON_GOLD, "assets/sprites/icons/coin.png");
+
+    // BATTLE BACKGROUNDS
+    scene.load.image(IMAGE_BATTLE_BACKGROUND_FLOOR_1, "assets/sprites/battle/floor_5.png");
+    scene.load.image(IMAGE_BATTLE_BACKGROUND_1, "assets/sprites/battle/background_1_4.png");
+
+    // background details
+    //WEBP
+    scene.load.spritesheet(IMAGE_BACKGROUND_TORCH_1, "assets/sprites/battle/torch_cut_116x104.png", {
+        frameWidth: 104,
+        frameHeight: 116,
+    });
 }
 
 /**
@@ -734,6 +751,7 @@ export async function loadTotemImagesForDuel(scene: Scene, totemId: string) {
             {
                 await loadBasicWildTotemImages(scene);
                 //createWildBasicTotemAnimations(scene);
+                createTotemAnimations(scene, TOTEM_ID_WILD_BASIC);
             }
             break;
     }
@@ -792,7 +810,7 @@ export function getTotemIdsBySkill(skillId: string): string[] {
             break;
         case "flyingBladeTotem":
             unitsIds.push(TOTEM_ID_BLADEDANCER);
-            break;    
+            break;
     }
     return unitsIds;
 }

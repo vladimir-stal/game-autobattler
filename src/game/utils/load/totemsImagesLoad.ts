@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
 import { COMPLETE } from "../../consts";
-import { IMAGE_TOTEM_4, IMAGE_TOTEM_ATTACK, IMAGE_TOTEM_BOSS_MINOTAUR } from "../imageLoadUtil";
+import { IMAGE_TOTEM_4, IMAGE_TOTEM_WILD_BASIC_IDLE, IMAGE_TOTEM_BOSS_MINOTAUR, IMAGE_TOTEM_WILD_BASIC_ACTIVE } from "../imageLoadUtil";
 
 // TOTEMS
 //scene.load.image(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/green_totem_1_300.png"); //totem1
@@ -12,12 +12,18 @@ import { IMAGE_TOTEM_4, IMAGE_TOTEM_ATTACK, IMAGE_TOTEM_BOSS_MINOTAUR } from "..
 
 export async function loadBasicWildTotemImages(scene: Scene) {
     //WEBP
-    // scene.load.spritesheet(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/wild_basic_totem_cut_100.png", {
-    //     frameWidth: 100,
-    //     frameHeight: 100,
-    // });
+    scene.load.spritesheet(IMAGE_TOTEM_WILD_BASIC_IDLE, "assets/sprites/totems/totem_1/totem_1_idle_cut_200.png", {
+        frameWidth: 200,
+        frameHeight: 300,
+    });
+    //WEBP
+    scene.load.spritesheet(IMAGE_TOTEM_WILD_BASIC_ACTIVE, "assets/sprites/totems/totem_1/totem_1_active_cut_200.png", {
+        frameWidth: 200,
+        frameHeight: 300,
+    });
+
     //
-    scene.load.image(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/totem_1.png");
+    //scene.load.image(IMAGE_TOTEM_ATTACK, "assets/sprites/totems/totem_1.png");
     //
     return new Promise((resolve) => {
         scene.load.once(COMPLETE, resolve);

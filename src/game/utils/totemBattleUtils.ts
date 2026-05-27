@@ -143,7 +143,7 @@ const performTotemAttack = (unit: IBattleUnit, totem: ITotem, skill: IHeroSkill,
             finalTarget = target.summon;
         }
         if (bladedanceBuff) {
-            if (finalTarget.id === bladedanceBuff.targetUnitId) {
+            if (finalTarget.id === bladedanceBuff.targetUnitId && bladedanceBuff.totalValue) {
                 attackDamage += bladedanceBuff.totalValue;
                 attackRecord.value = attackDamage;
                 bladedanceBuff.totalValue = (bladedanceBuff.totalValue || 0) + bladedanceBuff.value;

@@ -6,8 +6,6 @@ import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
 import {
     barbarianHero,
-    battleMageHero,
-    beastMasterHero,
     bladedancerHero,
     commanderHero,
     doomsayerHero,
@@ -21,17 +19,16 @@ import {
     samuraiHero,
     shamanHero,
     witchHero,
-    zealotHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill, toxicTuneSkill, venomHeartSkill } from "../skills/commonSkillConsts";
 import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { fireflySummonSkill, incrSummonBa, warriorSummonSkill } from "../skills/summonSkillConsts2";
-import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
+import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
-import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob, warriorSummonMob_3, warriorSummonMob_5 } from "../units/summonMobUnits";
+import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from "../units/summonMobUnits";
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { axe31, dagger31, staff31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
@@ -54,7 +51,7 @@ import { scrollOfSkill } from "../commonItemConsts3";
 import { totem5HptoDmg } from "../weaponItem5Consts";
 
 export const debugHeroSelectRoom = false;
-export const debugStartingItemsRoom = true;
+export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = enemy4_test;
@@ -62,15 +59,21 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: {...warriorHero, level: 5} }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        //{ type: ECardType.UNIT, price: 0, unit:  },
-        //{ type: ECardType.UNIT, price: 0, unit: predatorHero },
+        { type: ECardType.UNIT, price: 0, unit: shamanHero },
+        { type: ECardType.UNIT, price: 0, unit: predatorHero },
         //{ type: ECardType.UNIT, price: 0, unit: commanderHero },
-        //{ type: ECardType.SKILL, price: 0, skill: toxicTuneSkill },
+        { type: ECardType.UNIT, price: 0, unit: inquisitorHero },
+        //{ type: ECardType.UNIT, price: 0, unit: necromancerHero },
+        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
+        //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
+        //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
+        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
+        { type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
         //{ type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
         //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
         //{ type: ECardType.ITEM, price: 0, item: totem5HptoDmg },
@@ -81,22 +84,19 @@ export const customStartingItemsRoom = (): ICard[] => {
         //     price: 0,
         //     item: basic_jacket_2,
         // },
-        { type: ECardType.ITEM, price: 0, item: jacket21_3, },
+        //{ type: ECardType.ITEM, price: 0, item: staff31 },
         //{ type: ECardType.SKILL, price: 0, skill: magicAttackAll },
         // { type: ECardType.SKILL, price: 0, skill: { ...warriorSummonSkill, isChained: true } },
-        //{ type: ECardType.SKILL, price: 0, skill: phycisalAttackSkill },
-        //{ type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
+        // { type: ECardType.SKILL, price: 0, skill: pirateDragNDrown },
+        // { type: ECardType.SKILL, price: 0, skill: pirateCallTheCannons },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
-        { type: ECardType.UNIT, price: 0, unit: {...warriorSummonMob_3, level: 4} },
-        { type: ECardType.UNIT, price: 0, unit: {...warriorSummonMob_3, level: 4} },
-        { type: ECardType.UNIT, price: 0, unit: {...warriorSummonMob_3, level: 4} },
+        //{ type: ECardType.UNIT, price: 0, unit: warriorHero },
         //{ type: ECardType.SKILL, price: 0, skill: { ...debuffWorthyFoe, isChained: true } },
-        //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes, isChained: true} },
-        //{ type: ECardType.SKILL, price: 0, skill: {...buffNextBaTimes_2, isChained: true} },
-        
-        //{ type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
-        /*{
+        //{ type: ECardType.SKILL, price: 0, skill: { ...buffNextBaTimes, isChained: true } },
+        //{ type: ECardType.SKILL, price: 0, skill: { ...buffNextBaTimes_2, isChained: true } },
 
+        //{ type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
+        {
             type: ECardType.ITEM,
             price: 0,
             item: {
@@ -105,9 +105,9 @@ export const customStartingItemsRoom = (): ICard[] => {
                     ...jacket21_3.bonuses,
                     {
                         type: EItemBonusType.ATTRIBUTE,
-                        value: 50, 
+                        value: 50,
                         valueType: "number",
-                        attribute: "basicMagicPower", 
+                        attribute: "basicMagicPower",
                         targetType: EItemTargetType.ALL_ALLIES,
                         valueFrom: "basicMaxHp",
                     },
@@ -119,10 +119,10 @@ export const customStartingItemsRoom = (): ICard[] => {
                         valueType: "percent",
                         valueFrom: "attack",
                         status: EStatusType.POISON,
-                    }
-                ]
+                    },
+                ],
             },
-        },*/
+        },
         //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

@@ -406,7 +406,7 @@ export class BattleController {
             if (!skillSet.isMcSkill) {
                 let disableSkillDebuff = false;
                 forEachNestedEffects(unit, (ne) => {
-                    if (ne.debuffType === EDebuffType.DISABLE_SKILL && ne.totalValue > 0 && !disableSkillDebuff) {
+                    if (ne.debuffType === EDebuffType.DISABLE_SKILL && ne.totalValue && ne.totalValue > 0 && !disableSkillDebuff) {
                         ne.totalValue -= 1;
                         disableSkillDebuff = true;
                     }
@@ -553,7 +553,8 @@ export class BattleController {
             }
             takeStatusDamage(unit, value, type, this.battleRecord);
         });
-        // totem
+        //
+        // TOTEM
         totem && this.performTotemActionSkill(totem, unit, isPlayer1);
         if (unit.hp <= 0) {
             triggerBattleTrigger(EAppTriggerType.DEATH, this, unit, unit.id);
@@ -682,7 +683,7 @@ export class BattleController {
 
         let additionalBaTimes = 0;
         forEachNestedEffects(unit, (ne) => {
-            if (ne.buffType === EBuffType.BASIC_ATTACK_ADD_TIMES) {
+            if (ne.buffType === EBuffType.BASIC_ATTACK_ADD_TIMES && ne.totalValue) {
                 additionalBaTimes += ne.totalValue;
                 console.log(">>> Add attacks", ne);
             }
@@ -770,7 +771,7 @@ export class BattleController {
         let lastAliveTargetId: string | undefined = undefined;
         targets.forEach((target) => {
             // check if target has a summon - summon takes damage instead
-            let parentUnit; // owner of a summon
+            let parentUnit: IBattleUnit; // owner of a summon
             let finalTarget = target;
             if (target.summon) {
                 finalTarget = target.summon;
@@ -787,7 +788,7 @@ export class BattleController {
             // check if target unit has antiskill shield
             let antiskillShieldBuff = false;
             forEachNestedEffects(finalTarget, (ne) => {
-                if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue > 0 && !antiskillShieldBuff) {
+                if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue && ne.totalValue > 0 && !antiskillShieldBuff && parentUnit) {
                     ne.totalValue -= 1;
                     this.dealDamage(unit, unit, attackDamage, skill.attackType!, parentUnit, attackRecord);
                     antiskillShieldBuff = true;
@@ -803,7 +804,7 @@ export class BattleController {
                 return;
             }
 
-            this.dealDamage(unit, finalTarget, attackDamage, skill.attackType!, parentUnit, attackRecord);
+            this.dealDamage(unit, finalTarget, attackDamage, skill.attackType!, parentUnit!, attackRecord);
             if (finalTarget.hp > 0) {
                 lastAliveTargetId = finalTarget.id;
             }
@@ -1240,7 +1241,7 @@ export class BattleController {
                     // check if target unit has antis debuff bonuses (ANTISKILL_SHIELD, IGNORE_NEXT_DEBUFF)
                     let antiskillShieldBuff = false;
                     forEachNestedEffects(target, (ne) => {
-                        if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue > 0 && !antiskillShieldBuff) {
+                        if (ne.buffType === EBuffType.ANTISKILL_MIRROR && ne.totalValue && ne.totalValue > 0 && !antiskillShieldBuff) {
                             ne.totalValue -= 1;
                             applyDebuff(unit, debuff, debuffAction, this, unit, isPlayer1);
                             antiskillShieldBuff = true;
@@ -1252,7 +1253,7 @@ export class BattleController {
                     }
                     let ignoreDebuffBuff = false;
                     forEachNestedEffects(target, (ne) => {
-                        if (ne.buffType === EBuffType.IGNORE_NEXT_DEBUFF && ne.totalValue > 0 && !ignoreDebuffBuff) {
+                        if (ne.buffType === EBuffType.IGNORE_NEXT_DEBUFF && ne.totalValue && ne.totalValue > 0 && !ignoreDebuffBuff) {
                             ne.totalValue -= 1;
                             ignoreDebuffBuff = true;
                         }
@@ -1382,7 +1383,7 @@ export class BattleController {
         // check for DARK_HEAL buff
         let darkHealMod = 0;
         forEachNestedEffects(unit, (ne) => {
-            if (ne.buffType === EBuffType.DARK_HEAL) {
+            if (ne.buffType === EBuffType.DARK_HEAL && ne.totalValue) {
                 darkHealMod += ne.totalValue;
             }
         });
@@ -1399,7 +1400,7 @@ export class BattleController {
             if (target) {
                 // calculate incoming heal value from target buffs and debuffs
                 forEachNestedEffects(unit, (ne) => {
-                    if (ne.debuffType === EDebuffType.HEALING_DECREASE && ne.totalValue > 0) {
+                    if (ne.debuffType === EDebuffType.HEALING_DECREASE && ne.totalValue && ne.totalValue > 0) {
                         const { totalValue, valueType } = ne;
                         if (!valueType) {
                             return;
@@ -1412,7 +1413,7 @@ export class BattleController {
                 // check if target has antiheal debuffs (like ANTIHEAL)
                 let antihealDebuff = false;
                 forEachNestedEffects(target, (ne) => {
-                    if (ne.debuffType === EDebuffType.ANTIHEAL && ne.totalValue > 0 && !antihealDebuff) {
+                    if (ne.debuffType === EDebuffType.ANTIHEAL && ne.totalValue && ne.totalValue > 0 && !antihealDebuff) {
                         ne.totalValue -= 1;
                         antihealDebuff = true;
                     }
@@ -1603,7 +1604,7 @@ export class BattleController {
             unit.skills.forEach((skset) => {
                 skset?.skills?.forEach((sk) => {
                     if (sk.totem) {
-                        sk.totem.skills.forEach((ts) => unit.totem.skills.push({ ...ts }));
+                        sk.totem.skills.forEach((ts) => unit.totem?.skills.push({ ...ts }));
                     }
                 });
             });
@@ -1611,6 +1612,9 @@ export class BattleController {
         unit.itemBonuses
             .filter((ib) => ib.type == EItemBattleBonusType.TOTEM_INCREASE_VALUE)
             .forEach((ib) => {
+                if (!unit.totem) {
+                    return;
+                }
                 const value = getItemBonusValue(unit, ib);
                 if (ib.valueType === "percent") {
                     unit.totem.valuesIncreasePercent = (unit.totem.valuesIncreasePercent || 0) + value;
@@ -2170,7 +2174,7 @@ export class BattleController {
                     bladedanceBuff.targetUnitId = finalTarget.id;
                     bladedanceBuff.totalValue = 0;
                 }
-                attackDamage += bladedanceBuff.totalValue;
+                attackDamage += bladedanceBuff.totalValue || 0;
                 bladedanceBuff.totalValue = (bladedanceBuff.totalValue || 0) + bladedanceBuff.value;
                 this.battleRecord.push({
                     unitId: unit.id,
@@ -2229,7 +2233,7 @@ export class BattleController {
         // check if cosmic shield is active
         let cosmicShield = false;
         forEachNestedEffects(target, (ne) => {
-            if (ne.buffType === EBuffType.COSMIC_SHIELD && ne.totalValue > 0 && !cosmicShield) {
+            if (ne.buffType === EBuffType.COSMIC_SHIELD && ne.totalValue && ne.totalValue > 0 && !cosmicShield) {
                 ne.totalValue -= 1;
                 cosmicShield = true;
             }
@@ -2248,7 +2252,7 @@ export class BattleController {
         let resistDecreasePercent = 0;
         let resistDecreaseAbsolute = 0;
         forEachNestedEffects(target, (ne) => {
-            if (ne.debuffType === EDebuffType.RESIST_DECREASE && ne.totalValue > 0) {
+            if (ne.debuffType === EDebuffType.RESIST_DECREASE && ne.totalValue && ne.totalValue > 0) {
                 const { totalValue, valueType } = ne;
                 if (valueType === "percent") {
                     resistDecreasePercent += totalValue;
@@ -2259,7 +2263,7 @@ export class BattleController {
         });
         if (damageType === EHeroAttackType.PHYSICAL) {
             forEachNestedEffects(target, (ne) => {
-                if ((ne.debuffType === EDebuffType.MARK_HUNTER || ne.debuffType === EDebuffType.MARK_PREDATOR) && ne.totalValue > 0) {
+                if ((ne.debuffType === EDebuffType.MARK_HUNTER || ne.debuffType === EDebuffType.MARK_PREDATOR) && ne.totalValue && ne.totalValue > 0) {
                     const { totalValue, valueType } = ne;
                     if (valueType === "percent") {
                         resistDecreasePercent += totalValue;
@@ -2295,7 +2299,7 @@ export class BattleController {
         // by default evasion only works versus physical attacks and skills
         let blindDebuff2 = 0;
         forEachNestedEffects(target, (ne) => {
-            if (ne.debuffType === EDebuffType.BLIND && ne.totalValue > 0) {
+            if (ne.debuffType === EDebuffType.BLIND && ne.totalValue && ne.totalValue > 0) {
                 blindDebuff2 += ne.totalValue;
             }
         });
@@ -2311,7 +2315,7 @@ export class BattleController {
         if (!recordTarget.isEvasion) {
             let evadeBuff = false;
             forEachNestedEffects(target, (ne) => {
-                if (ne.buffType === EBuffType.EVADE && ne.totalValue > 0 && !evadeBuff) {
+                if (ne.buffType === EBuffType.EVADE && ne.totalValue && ne.totalValue > 0 && !evadeBuff) {
                     evadeBuff = true;
                     ne.totalValue -= 1;
                 }
@@ -2325,7 +2329,7 @@ export class BattleController {
 
         let divineShield2 = false;
         forEachNestedEffects(target, (ne) => {
-            if (ne.buffType === EBuffType.DIVINE_SHIELD && ne.totalValue > 0 && !divineShield2) {
+            if (ne.buffType === EBuffType.DIVINE_SHIELD && ne.totalValue && ne.totalValue > 0 && !divineShield2) {
                 if (finalDamageValue > ne.totalValue) {
                     ne.totalValue = 0;
                 }
@@ -2347,7 +2351,7 @@ export class BattleController {
 
         let ignoreArmorBuff = false;
         forEachNestedEffects(unit, (ne) => {
-            if (ne.buffType == EBuffType.IGNORE_ARMOR && ne.totalValue > 0) {
+            if (ne.buffType == EBuffType.IGNORE_ARMOR && ne.totalValue && ne.totalValue > 0) {
                 ignoreArmorBuff = true;
             }
         });

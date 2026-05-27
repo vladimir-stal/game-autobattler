@@ -256,7 +256,10 @@ export enum AnimationType {
     BOSS_MINOTAUR_HURT = "BOSS_MINOTAUR_HURT",
     //
     // TOTEMS
-    TOTEM_WILD_1_IDLE = "TOTEM_WILD_1_IDLE",
+    TOTEM_WILD_BASIC_IDLE = "TOTEM_WILD_BASIC_IDLE",
+    TOTEM_WILD_BASIC_ACTIVE = "TOTEM_WILD_BASIC_ACTIVE",
+    // BATTLE BACKGROUND
+    BATTLE_BACKGROUND_TORCH_1_IDLE = "BATTLE_BACKGROUND_TORCH_1_IDLE",
 }
 
 export enum EEffectAnimationType {
@@ -967,12 +970,12 @@ export interface IItemBonus {
     value: number;
     valueType: TValueType;
     valueFrom?: THeroAttribute; // if set, value will be recalculated as unit[valueFrom]*value/100
-        // then if valueType is "number" - result is added to attribute
-        // if valueType is "percent" - attribute will get % increase of calculated value
+    // then if valueType is "number" - result is added to attribute
+    // if valueType is "percent" - attribute will get % increase of calculated value
     attribute?: THeroAttribute;
     targetType?: EItemTargetType;
     isEvolved?: boolean;
-    calculatedValue?: number; // should be set to 0; is used when valueFrom is present 
+    calculatedValue?: number; // should be set to 0; is used when valueFrom is present
 }
 
 /** @property isEvolving - after duel bonus is applied to the item itself, not to the unit */

@@ -18,12 +18,13 @@ import {
     IUnit,
     THeroBattleAttribute,
 } from "../../types";
-import { IMAGE_ICON_ATTACK, IMAGE_ICON_SHIELD, IMAGE_TOTEM_ATTACK } from "../utils/imageLoadUtil";
+import { IMAGE_ICON_ATTACK, IMAGE_ICON_SHIELD, IMAGE_TOTEM_WILD_BASIC_IDLE } from "../utils/imageLoadUtil";
 import { getHeroImage, getTotemImage, getUnitImage } from "../utils/imageUtils";
 import { BattleBuffCard } from "./BattleBuffCard";
 import { BattleDebuffCard } from "./BattleDebuffCard";
 import { BattleStatusCard } from "./BattleStatusCard";
 import { IMAGE_EFFECT_LIGHTNING_1 } from "../utils/load/imageLoadEffects";
+import { TOTEM_ID_WILD_BASIC } from "../totemConsts";
 
 /** Card to show summoned unit or totem in battle  */
 export class BattleSummonCard extends Phaser.GameObjects.Container {
@@ -76,6 +77,7 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     appearAnimation: string | undefined;
     size: number | undefined;
     distance: number | undefined;
+    totemImageObject: GameObjects.Sprite;
 
     isDead: boolean;
 
@@ -348,18 +350,20 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
 
         console.log("renderTotemImage >> this.distance", distance);
 
-        const totemImage = this.scene.add
-            .sprite(x || 0, 0, image || IMAGE_TOTEM_ATTACK)
+        this.totemImageObject = this.scene.add
+            .sprite(x || 0, 0, image)
             .setOrigin(0, 1)
-            .setDepth(-1); //.setDisplaySize(150, 269);
+            .setDepth(-1) //.setDisplaySize(150, 269);
+            // TOTEM_ID_WILD_BASIC is initially inverted
+            .setFlipX(!this.isInverted && ![TOTEM_ID_WILD_BASIC].includes(this.totem.id));
 
-        // const { idleBattleAnimation } = getTotemImage(this.totem.id);
+        const { idleBattleAnimation } = getTotemImage(this.totem.id);
 
-        // if (idleBattleAnimation) {
-        //     totemImage.anims.play(idleBattleAnimation);
-        // }
+        if (idleBattleAnimation) {
+            this.totemImageObject.anims.play(idleBattleAnimation);
+        }
 
-        this.add(totemImage);
+        this.add(this.totemImageObject);
     }
 
     renderBuffs() {
@@ -442,6 +446,14 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
     playSkillSet(name: string, animation?: string) {}
 
     async playAttack(value?: number, skill?: IHeroSkill) {
+        if (this.unit) {
+            await this.playUnitAttack(value, skill);
+        } else if (this.totem) {
+            await this.playTotemAttack(value, skill);
+        }
+    }
+
+    async playUnitAttack(value?: number, skill?: IHeroSkill) {
         this.setAction("ATTACK " + (value || ""));
         //
         let skillAnimation: string | undefined = undefined;
@@ -473,6 +485,42 @@ export class BattleSummonCard extends Phaser.GameObjects.Container {
                 setTimeout(() => {
                     resolve(0);
                 }, this.unitImageObject.anims.currentAnim?.duration || 0);
+            });
+        } else {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, 1000);
+            });
+        }
+    }
+
+    async playTotemAttack(value?: number, skill?: IHeroSkill) {
+        console.log("PLAY TOTEM ATTACK");
+        if (!this.totem) {
+            return;
+        }
+        this.setAction("ATTACK " + (value || ""));
+        //
+        let { attackAnimation, idleBattleAnimation } = getTotemImage(this.totem.id);
+        if (attackAnimation) {
+            if (attackAnimation === AnimationType.NONE) {
+                return;
+            }
+            console.log("attackAnimation =>", attackAnimation);
+
+            this.totemImageObject.anims.play(attackAnimation);
+            this.totemImageObject.on(ANIMATION_COMPLETE, () => {
+                if (idleBattleAnimation) {
+                    this.totemImageObject.anims.play(idleBattleAnimation);
+                }
+                this.totemImageObject.removeListener(ANIMATION_COMPLETE);
+            });
+
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(0);
+                }, this.totemImageObject.anims.currentAnim?.duration || 0);
             });
         } else {
             return new Promise((resolve, reject) => {
