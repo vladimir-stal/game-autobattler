@@ -333,8 +333,8 @@ const mortalStrikeSkillset = (bleedAndVulnerability: number, statReduction: numb
 
 export const mortalStrikeSkill_3: IHeroSkillSet = {
     id: "mortalStrike",
-    name: "Mortal strike",
-    desc: "Next BA apply [8] bleed and physical vulnerability, reduce targets PP & MP by [11] for 3 turns",
+    name: i18n.skills.level3.mortalStrikeSkill.name,
+    desc: i18n.skills.level3.mortalStrikeSkill.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR],
@@ -346,8 +346,8 @@ export const mortalStrikeSkill_3: IHeroSkillSet = {
 
 export const mortalStrikeSkill_2: IHeroSkillSet = {
     id: "mortalStrike",
-    name: "Mortal strike",
-    desc: "Next BA apply [5] bleed and physical vulnerability, reduce targets PP & MP by [7] for 3 turns",
+    name: i18n.skills.level3.mortalStrikeSkill.name,
+    desc: i18n.skills.level3.mortalStrikeSkill.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR],
@@ -359,8 +359,8 @@ export const mortalStrikeSkill_2: IHeroSkillSet = {
 
 export const mortalStrikeSkill: IHeroSkillSet = {
     id: "mortalStrike",
-    name: "Mortal strike",
-    desc: "Next BA apply [3] bleed and physical vulnerability, reduce targets PP & MP by [4] for 3 turns",
+    name: i18n.skills.level3.mortalStrikeSkill.name,
+    desc: i18n.skills.level3.mortalStrikeSkill.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.WARRIOR],

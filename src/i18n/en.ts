@@ -13,6 +13,7 @@ import {
     THeroAttribute,
     THeroBattleAttribute,
 } from "../types";
+import { HINTS_EN } from "./hints_en";
 import { MOBS_EN } from "./mobs_en";
 import { SKILLS_EN } from "./skills_en";
 
@@ -59,6 +60,13 @@ export interface Ii18n {
     };
     totems: {
         basicWildTotem: string;
+        minotaurTotem: string;
+        heroicTuneTotem: string;
+        toxicTuneTotem: string;
+        beastmasterCrowsTotem: string;
+        bladedancerSwordTotem: string;
+        gladiatorTotem: string;
+        shamanTotem: string;
     };
     items: {
         coin: string;
@@ -252,6 +260,7 @@ export interface Ii18n {
             START_GAME: string;
         };
     };
+    hints: string[];
 }
 
 export const i18n: Ii18n = {
@@ -396,7 +405,14 @@ export const i18n: Ii18n = {
     },
     mobs: MOBS_EN,
     totems: {
-        basicWildTotem: "Wild Totem",
+        basicWildTotem: "Wild totem",
+        minotaurTotem: "Healing totem",
+        heroicTuneTotem: "Heroic tune",
+        toxicTuneTotem: "Toxic tune",
+        beastmasterCrowsTotem: "Crows",
+        bladedancerSwordTotem: "Flying blade",
+        gladiatorTotem: "Gladiators totem",
+        shamanTotem: "Shamans totem",
     },
     items: {
         // WEAPON
@@ -665,4 +681,5 @@ export const i18n: Ii18n = {
             START_GAME: "START GAME",
         },
     },
+    hints: HINTS_EN,
 };

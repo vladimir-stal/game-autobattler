@@ -1,5 +1,6 @@
 import { EHeroAttackType, EHeroClass, EItemAfterDuelBonusCondition, EItemTargetType, ERoomType, ESelectCardHint, ESelectRoomHint } from "../types";
 import { Ii18n } from "./en";
+import { HINTS_RU } from "./hints_ru";
 import { MOBS_RU } from "./mobs_ru";
 import { SKILLS_RU } from "./skills_ru";
 
@@ -254,6 +255,13 @@ export const i18n: Ii18n = {
     },
     totems: {
         basicWildTotem: "Дикий тотем",
+        minotaurTotem: "Лечащий тотем",
+        heroicTuneTotem: "Героический мотив",
+        toxicTuneTotem: "Токсичный мотив",
+        beastmasterCrowsTotem: "Вороны",
+        bladedancerSwordTotem: "Летающий меч",
+        gladiatorTotem: "Тотем гладиатора",
+        shamanTotem: "Тотем шамана",
     },
     rooms: {
         //
@@ -448,4 +456,5 @@ export const i18n: Ii18n = {
             START_GAME: "НАЧАТЬ ИГРУ",
         },
     },
+    hints: HINTS_RU,
 };

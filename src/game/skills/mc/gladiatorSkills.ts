@@ -24,7 +24,7 @@ const gladiatorSkillset = (pp: number): IHeroSkill[] => {
             type: EHeroSkillType.TOTEM,
             totem: {
                 id: TOTEM_ID_GLADIATOR,
-                name: "Тотем гладиатора",
+                name: i18n.totems.gladiatorTotem,
                 skills: [
                     {
                         type: EHeroSkillType.ATTRIBUTE_INCREASE,

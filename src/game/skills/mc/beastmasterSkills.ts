@@ -13,7 +13,7 @@ const beastMasterSkillset = (atk: number, repeats: number): IHeroSkill[] => {
             type: EHeroSkillType.TOTEM,
             totem: {
                 id: TOTEM_ID_BEASTMASTER_CROWS,
-                name: "Crows",
+                name: i18n.totems.beastmasterCrowsTotem,
                 skills: [
                     {
                         type: EHeroSkillType.REPEATING_SKILL,

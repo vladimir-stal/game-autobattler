@@ -335,7 +335,7 @@ const totemGiveArmorSkillset = (amount: number): IHeroSkill[] => {
             type: EHeroSkillType.TOTEM,
             totem: {
                 id: TOTEM_ID_BARD_HEROICTUNE,
-                name: "Героический мотив",
+                name: i18n.totems.heroicTuneTotem,
                 skills: [
                     {
                         type: EHeroSkillType.ATTRIBUTE_INCREASE,
@@ -353,8 +353,8 @@ const totemGiveArmorSkillset = (amount: number): IHeroSkill[] => {
 
 export const totemGiveArmorSkill_3: IHeroSkillSet = {
     id: "totemGiveArmorSkill",
-    name: "HeroicTune",
-    desc: "Призывает тотем который\nувеличивает броню героя\nс наименьшим процентом\nздоровья на [8]",
+    name: i18n.skills.level2.totemGiveArmorSkill.name,
+    desc: i18n.skills.level2.totemGiveArmorSkill.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
@@ -365,8 +365,8 @@ export const totemGiveArmorSkill_3: IHeroSkillSet = {
 
 export const totemGiveArmorSkill_2: IHeroSkillSet = {
     id: "totemGiveArmorSkill",
-    name: "HeroicTune",
-    desc: "Призывает тотем который\nувеличивает броню героя\nс наименьшим процентом\nздоровья на [5]",
+    name: i18n.skills.level2.totemGiveArmorSkill.name,
+    desc: i18n.skills.level2.totemGiveArmorSkill.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],
@@ -377,8 +377,9 @@ export const totemGiveArmorSkill_2: IHeroSkillSet = {
 
 export const totemGiveArmorSkill: IHeroSkillSet = {
     id: "totemGiveArmorSkill",
-    name: "HeroicTune",
-    desc: "Призывает тотем который\nувеличивает броню героя\nс наименьшим процентом\nздоровья на [3]",
+    name: i18n.skills.level2.totemGiveArmorSkill.name,
+    desc: i18n.skills.level2.totemGiveArmorSkill.desc1,
+    //"Призывает тотем который\nувеличивает броню героя\nс наименьшим процентом\nздоровья на [3]",
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.BARD],

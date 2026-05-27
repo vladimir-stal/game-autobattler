@@ -60,7 +60,7 @@ const minotaurTotemSkill: IHeroSkillSet = {
             type: EHeroSkillType.TOTEM,
             totem: {
                 id: TOTEM_ID_BOSS_MINOTAUR,
-                name: "Minotaur Totem",
+                name: i18n.totems.minotaurTotem,
                 skills: [
                     {
                         type: EHeroSkillType.HEAL,

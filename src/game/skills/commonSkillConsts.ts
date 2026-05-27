@@ -620,7 +620,7 @@ const toxicTuneSkillset = (first: number, rand?: number): IHeroSkill[] => {
                 type: EHeroSkillType.TOTEM,
                 totem: {
                     id: TOTEM_ID_BARD_DARK_TOXICTUNE,
-                    name: "Токсичный мотив",
+                    name: i18n.totems.toxicTuneTotem,
                     skills: [
                         {
                             type: EHeroSkillType.STATUS_APPLY,
@@ -652,7 +652,7 @@ const toxicTuneSkillset = (first: number, rand?: number): IHeroSkill[] => {
                 type: EHeroSkillType.TOTEM,
                 totem: {
                     id: TOTEM_ID_BARD_DARK_TOXICTUNE,
-                    name: "Токсичный мотив",
+                    name: i18n.totems.toxicTuneTotem,
                     skills: [
                         {
                             type: EHeroSkillType.STATUS_APPLY,

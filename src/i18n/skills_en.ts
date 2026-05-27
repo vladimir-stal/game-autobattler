@@ -315,6 +315,12 @@ export const SKILLS_EN = {
             desc2: "Makes preemptive strike\nwith +[1+35%xPP] damage\nbasic attack against enemy\nthat targets him with\nbasic attack",
             desc3: "Makes preemptive strike\nwith +[1+65%xPP] damage\nbasic attack against enemy\nthat targets him with\nbasic attack",
         },
+        totemGiveArmorSkill: {
+            name: "Heroic tune",
+            desc1: `Summons [color=${colors.TOTEM}]totem[/color] that\ngives [color=${colors.ARMOR}][3] armor[/color] to an ally\nwith lowest % health`,
+            desc2: `Summons [color=${colors.TOTEM}]totem[/color] that\ngives [color=${colors.ARMOR}][5] armor[/color] to an ally\nwith lowest % health`,
+            desc3: `Summons [color=${colors.TOTEM}]totem[/color] that\ngives [color=${colors.ARMOR}][8] armor[/color] to an ally\nwith lowest % health`,
+        },
     },
     level3: {
         attrArmorBigSelf: {
@@ -396,6 +402,36 @@ export const SKILLS_EN = {
             desc2: `At the end of the round\ndeals [color=${colors.PHYSICAL_ATTACK}][3+70%xMP] physical\ndamage[/color] to all enemies and\napply [color=${colors.BURN}][3] burn[/color]. Lasts\n[2] rounds`,
             desc3: `At the end of the round\ndeals [color=${colors.PHYSICAL_ATTACK}][3+MP] physical\ndamage[/color] to all enemies and\napply [color=${colors.BURN}][3] burn[/color]. Lasts\n[3] rounds`,
         },
+        ringOfHealing: {
+            name: "Ring of healing",
+            desc1: `[color=${colors.HEAL}]Heal[/color] allies by both sides\nof caster for [15%] of sum\nof their current health\nAnd for 2 turns overheals\napply [color=${colors.BURN}]burn[/color] to first enemy`,
+            desc2: `[color=${colors.HEAL}]Heal[/color] allies by both sides\nof caster for [20%] of sum\nof their current health\nAnd for 2 turns overheals\napply [color=${colors.BURN}]burn[/color] to first enemy`,
+            desc3: `[color=${colors.HEAL}]Heal[/color] allies by both sides\nof caster for [25%] of sum\nof their current health\nAnd for 2 turns overheals\napply [color=${colors.BURN}]burn[/color] to first enemy`,
+        },
+        followupCombo: {
+            name: "Follow up combo",
+            desc1: "Quickly use next skill\nafter next basic attack\nIncrease PP by [3] for\nthat skill",
+            desc2: "Quickly use next skill\nafter next basic attack\nIncrease PP by [6] for\nthat skill",
+            desc3: "Quickly use next skill\nafter next basic attack\nIncrease PP by [9] for\nthat skill",
+        },
+        attackIgnoringArmor: {
+            name: "Ignore armor",
+            desc1: `Make [color=${colors.PHYSICAL_ATTACK}]physical attack[/color] with\n100% attack strength.\nIgnore [color=${colors.ARMOR}]armor[/color] this turn`,
+            desc2: `Make [color=${colors.PHYSICAL_ATTACK}]physical attack[/color] with\n125% attack strength.\nIgnore [color=${colors.ARMOR}]armor[/color] this turn`,
+            desc3: `Make [color=${colors.PHYSICAL_ATTACK}]physical attack[/color] with\n150% attack strength.\nIgnore [color=${colors.ARMOR}]armor[/color] this turn`,
+        },
+        summonerFamiliar: {
+            name: "Familiar",
+            desc1: `[color=${colors.SUMMON}]Summon[/color] [stats] creature\nbefore battle`,
+            desc2: `[color=${colors.SUMMON}]Summon[/color] [stats] creature\nbefore battle`,
+            desc3: `[color=${colors.SUMMON}]Summon[/color] [stats] creature\nbefore battle`,
+        },
+        explodingSummonsBuff: {
+            name: "Summons explode",
+            desc1: `For 3 turns, when [color=${colors.SUMMON}]summons[/color]\ndie, they apply [color=${colors.SHOCK}]1 shock[/color]\nand deal [color=${colors.MAGIC_ATTACK}][50%xMP] magic\ndamage[/color] to first enemy`,
+            desc2: `For 3 turns, when [color=${colors.SUMMON}]summons[/color]\ndie, they apply [color=${colors.SHOCK}]1 shock[/color]\nand deal [color=${colors.MAGIC_ATTACK}][65%xMP] magic\ndamage[/color] to first 2 enemies`,
+            desc3: `For 3 turns, when [color=${colors.SUMMON}]summons[/color]\ndie, they apply [color=${colors.SHOCK}]1 shock[/color]\nand deal [color=${colors.MAGIC_ATTACK}][80%xMP] magic\ndamage[/color] to first 3 enemies`,
+        }
     },
     level4: {},
     passives: {
@@ -730,6 +766,12 @@ export const SKILLS_EN = {
             desc2: `Blind [25] all enemies\nuntil they take attack\nRandom [25%xMP] allies\napply [color=${colors.SHOCK}][1] shock[/color] with\nnext basic attack`,
             desc3: `Blind [35] all enemies\nuntil they take attack\nRandom [35%xMP] allies\napply [color=${colors.SHOCK}][1] shock[/color] with\nnext basic attack`,
         },
+        fireflyUnfairExchange: {
+            name: "Unfair exchange",
+            desc1: `Swap Hp in percentage\nwith highest Hp% enemy,\nbut get only half Hp restored\nand [30%xMP] +[30%] of\nrestored Hp as buff to\nnext basic attack`,
+            desc2: `Swap Hp in percentage\nwith highest Hp% enemy,\nbut get only half Hp restored\nand [45%xMP] +[45%] of\nrestored Hp as buff to\nnext basic attack`,
+            desc3: `Swap Hp in percentage\nwith highest Hp% enemy,\nbut get only half Hp restored\nand [60%xMP] +[60%] of\nrestored Hp as buff to\nnext basic attack`,
+        },
         spiritTeamFlurry: {
             name: "Pointy sticks",
             desc1: `Unleash [35%xPP] plus number\nof teammates times attacks\nfor [color=${colors.PHYSICAL_ATTACK}][1] physical damage[/color]\nAnd if none allies alive,\nstrike two enemies with\n[color=${colors.PHYSICAL_ATTACK}]physical damage[/color] equal\nbase attack`,
@@ -741,6 +783,12 @@ export const SKILLS_EN = {
             desc1: `Next enemy that uses\nbasic attack will provoke\nrevenge basic attack and\nget [color=${colors.BLEED}][1+35%xPP] bleed[/color]`,
             desc2: `Next enemy that uses\nbasic attack will provoke\nrevenge basic attack and\nget [color=${colors.BLEED}][1+65%xPP] bleed[/color]`,
             desc3: `Next enemy that uses\nbasic attack will provoke\nrevenge basic attack and\nget [color=${colors.BLEED}][1+PP] bleed[/color]`,
+        },
+        spiritShieldRadiate: {
+            name: "Sanctuary",
+            desc1: `Gain [color=${colors.ARMOR}][3+35%xPP] armor[/color]\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round`,
+            desc2: `Gain [color=${colors.ARMOR}][4+50%xPP] armor[/color]\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round`,
+            desc3: `Gain [color=${colors.ARMOR}][5+65%xPP] armor[/color]\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round`,
         },
         pirateDeadmansCurse: {
             name: "Deadmans curse",

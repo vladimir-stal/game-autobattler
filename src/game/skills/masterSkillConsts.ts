@@ -193,8 +193,8 @@ const attackIgnoringArmorSkillset = (atk: number): IHeroSkill[] => {
 
 export const attackIgnoringArmor_3: IHeroSkillSet = {
     id: "attackIgnoringArmor",
-    name: "Ignore armor",
-    desc: "Make physical attack with\n150% attack strength\nIgnore armor this turn",
+    name: i18n.skills.level3.attackIgnoringArmor.name,
+    desc: i18n.skills.level3.attackIgnoringArmor.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.MASTER],
@@ -205,8 +205,8 @@ export const attackIgnoringArmor_3: IHeroSkillSet = {
 
 export const attackIgnoringArmor_2: IHeroSkillSet = {
     id: "attackIgnoringArmor",
-    name: "Ignore armor",
-    desc: "Make physical attack with\n125% attack strength\nIgnore armor this turn",
+    name: i18n.skills.level3.attackIgnoringArmor.name,
+    desc: i18n.skills.level3.attackIgnoringArmor.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.MASTER],
@@ -218,8 +218,8 @@ export const attackIgnoringArmor_2: IHeroSkillSet = {
 
 export const attackIgnoringArmor: IHeroSkillSet = {
     id: "attackIgnoringArmor",
-    name: "Ignore armor",
-    desc: "Make physical attack with\n100% attack strength\nIgnore armor this turn",
+    name: i18n.skills.level3.attackIgnoringArmor.name,
+    desc: i18n.skills.level3.attackIgnoringArmor.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.MASTER],
@@ -436,9 +436,9 @@ const followupComboSkillset = (ppIncrease: number): IHeroSkill[] => {
 };
 
 export const followupComboSkill_3: IHeroSkillSet = {
-    id: "followupComboSkill",
-    name: "Follow up combo",
-    desc: "Quickly use next skill\nafter next basic attack\nIncrease PP by [9] for\nthat skill",
+    id: "followupCombo",
+    name: i18n.skills.level3.followupCombo.name,
+    desc: i18n.skills.level3.followupCombo.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.MASTER],
@@ -448,9 +448,9 @@ export const followupComboSkill_3: IHeroSkillSet = {
 };
 
 export const followupComboSkill_2: IHeroSkillSet = {
-    id: "followupComboSkill",
-    name: "Follow up combo",
-    desc: "Quickly use next skill\nafter next basic attack\nIncrease PP by [6] for\nthat skill",
+    id: "followupCombo",
+    name: i18n.skills.level3.followupCombo.name,
+    desc: i18n.skills.level3.followupCombo.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.MASTER],
@@ -461,9 +461,9 @@ export const followupComboSkill_2: IHeroSkillSet = {
 };
 
 export const followupComboSkill: IHeroSkillSet = {
-    id: "followupComboSkill",
-    name: "Follow up combo",
-    desc: "Quickly use next skill\nafter next basic attack\nIncrease PP by [3] for\nthat skill",
+    id: "followupCombo",
+    name: i18n.skills.level3.followupCombo.name,
+    desc: i18n.skills.level3.followupCombo.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.MASTER],

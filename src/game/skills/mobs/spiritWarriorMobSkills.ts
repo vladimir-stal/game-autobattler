@@ -271,8 +271,8 @@ const spiritShieldRadiateSkillset = (armor: number, ppScale: number, vStacks: nu
 
 export const spiritShieldRadiate_3: IHeroSkillSet = {
     id: "spiritShieldRadiate",
-    name: "Sanctuary",
-    desc: "Gain [5+65%xPP] armor\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round",
+    name: i18n.skills.mobs.spiritShieldRadiate.name,
+    desc: i18n.skills.mobs.spiritShieldRadiate.desc3,
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
@@ -285,8 +285,8 @@ export const spiritShieldRadiate_3: IHeroSkillSet = {
 
 export const spiritShieldRadiate_2: IHeroSkillSet = {
     id: "spiritShieldRadiate",
-    name: "Sanctuary",
-    desc: "Gain [4+50%xPP] armor\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round",
+    name: i18n.skills.mobs.spiritShieldRadiate.name,
+    desc: i18n.skills.mobs.spiritShieldRadiate.desc2,
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
@@ -299,8 +299,8 @@ export const spiritShieldRadiate_2: IHeroSkillSet = {
 
 export const spiritShieldRadiate: IHeroSkillSet = {
     id: "spiritShieldRadiate",
-    name: "Sanctuary",
-    desc: "Gain [3+35%xPP] armor\nAnd next time get hit by\nbasic attack, attacker gets\nvulnerable [2] and allies\nget +25 crit.chance for\n1 round",
+    name: i18n.skills.mobs.spiritShieldRadiate.name,
+    desc: i18n.skills.mobs.spiritShieldRadiate.desc1,
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],

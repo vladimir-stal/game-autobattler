@@ -253,8 +253,8 @@ const ringOfHealingSkillset = (hpPercent: number): IHeroSkill[] => {
 
 export const ringOfHealingSkill_3: IHeroSkillSet = {
     id: "ringOfHealing",
-    name: "Ring of healing",
-    desc: "Heal allies by both sides\nof caster for [25%] of sum\nof thier current health\nAnd for 2 turns overheals\napply burn to first enemy",
+    name: i18n.skills.level3.ringOfHealing.name,
+    desc: i18n.skills.level3.ringOfHealing.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.PRIEST],
@@ -265,8 +265,8 @@ export const ringOfHealingSkill_3: IHeroSkillSet = {
 
 export const ringOfHealingSkill_2: IHeroSkillSet = {
     id: "ringOfHealing",
-    name: "Ring of healing",
-    desc: "Heal allies by both sides\nof caster for [20%] of sum\nof thier current health\nAnd for 2 turns overheals\napply burn to first enemy",
+    name: i18n.skills.level3.ringOfHealing.name,
+    desc: i18n.skills.level3.ringOfHealing.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.PRIEST],
@@ -277,8 +277,8 @@ export const ringOfHealingSkill_2: IHeroSkillSet = {
 
 export const ringOfHealingSkill: IHeroSkillSet = {
     id: "ringOfHealing",
-    name: "Ring of healing",
-    desc: "Heal allies by both sides\nof caster for [15%] of sum\nof thier current health\nAnd for 2 turns overheals\napply burn to first enemy",
+    name: i18n.skills.level3.ringOfHealing.name,
+    desc: i18n.skills.level3.ringOfHealing.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.PRIEST],

@@ -75,7 +75,7 @@ export const shamanPassive: IPassiveSkill = {
                     type: EHeroSkillType.TOTEM,
                     totem: {
                         id: TOTEM_ID_SHAMAN,
-                        name: "Тотем шамана",
+                        name: i18n.totems.shamanTotem,
                         skills: [],
                     },
                 },

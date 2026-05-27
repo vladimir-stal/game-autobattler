@@ -25,7 +25,6 @@ import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill, toxicTune
 import { magicAttack } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { fireflySummonSkill, incrSummonBa, warriorSummonSkill } from "../skills/summonSkillConsts2";
-import { totemAttackSkill } from "../skills/wildSkillConsts";
 import { goblinUnit } from "../units/goblinMobUnits";
 import { pirate1Unit, pirate2Unit } from "../units/piratesMobUnits";
 import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from "../units/summonMobUnits";
@@ -49,6 +48,7 @@ import { basic_jacket_2 } from "../commonItemConsts";
 import { outHealBuffSkill } from "../skills/commonSkill3Consts";
 import { scrollOfSkill } from "../commonItemConsts3";
 import { totem5HptoDmg } from "../weaponItem5Consts";
+import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
 
 export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
@@ -73,7 +73,7 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.SKILL, price: 0, skill: totemAttackSkill },
+        { type: ECardType.SKILL, price: 0, skill: wildBasicTotemSkill },
         //{ type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
         //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
         //{ type: ECardType.ITEM, price: 0, item: totem5HptoDmg },

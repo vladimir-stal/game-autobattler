@@ -374,8 +374,8 @@ export const incrSummonBa: IHeroSkillSet = {
 //
 export const summonerFamiliarSkill_3: IHeroSkillSet = {
     id: "summonerFamiliar",
-    name: "Familiar",
-    desc: "Summons [1,1] creature\nbefore battle and\nbuffs summon [+1,+2]",
+    name: i18n.skills.level3.summonerFamiliar.name,
+    desc: i18n.skills.level3.summonerFamiliar.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON],
@@ -389,8 +389,8 @@ export const summonerFamiliarSkill_3: IHeroSkillSet = {
 
 export const summonerFamiliarSkill_2: IHeroSkillSet = {
     id: "summonerFamiliar",
-    name: "Familiar",
-    desc: "Summons [1,1] creature\nbefore battle and\nbuffs summon [+1,+1]",
+    name: i18n.skills.level3.summonerFamiliar.name,
+    desc: i18n.skills.level3.summonerFamiliar.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON],
@@ -404,8 +404,8 @@ export const summonerFamiliarSkill_2: IHeroSkillSet = {
 
 export const summonerFamiliarSkill: IHeroSkillSet = {
     id: "summonerFamiliar",
-    name: "Familiar",
-    desc: "Summons [1,1] creature before battle",
+    name: i18n.skills.level3.summonerFamiliar.name,
+    desc: i18n.skills.level3.summonerFamiliar.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON],
@@ -547,8 +547,8 @@ const explodingSummonsBuffSkillset = (mpScale: number, area: ETargetType): IHero
 
 export const explodingSummonsBuffSkill_3: IHeroSkillSet = {
     id: "explodingSummonsBuff",
-    name: "Summons explode",
-    desc: "For 3 turns, when summons\ndie, they apply 1 shock\nand deal [80%xMP]\ndamage to first 3 enemies",
+    name: i18n.skills.level3.explodingSummonsBuff.name,
+    desc: i18n.skills.level3.explodingSummonsBuff.desc3,
     level: 3,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON],
@@ -559,8 +559,8 @@ export const explodingSummonsBuffSkill_3: IHeroSkillSet = {
 
 export const explodingSummonsBuffSkill_2: IHeroSkillSet = {
     id: "explodingSummonsBuff",
-    name: "Summons explode",
-    desc: "For 3 turns, when summons\ndie, they apply 1 shock\nand deal [65%xMP]\ndamage to first 2 enemies",
+    name: i18n.skills.level3.explodingSummonsBuff.name,
+    desc: i18n.skills.level3.explodingSummonsBuff.desc2,
     level: 2,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON],
@@ -571,8 +571,8 @@ export const explodingSummonsBuffSkill_2: IHeroSkillSet = {
 
 export const explodingSummonsBuffSkill: IHeroSkillSet = {
     id: "explodingSummonsBuff",
-    name: "Summons explode",
-    desc: "For 3 turns, when summons\ndie, they apply 1 shock\nand deal [50%xMP]\ndamage to first enemy",
+    name: i18n.skills.level3.explodingSummonsBuff.name,
+    desc: i18n.skills.level3.explodingSummonsBuff.desc1,
     level: 1,
     priceLevel: 3,
     heroClasses: [EHeroClass.SUMMON],

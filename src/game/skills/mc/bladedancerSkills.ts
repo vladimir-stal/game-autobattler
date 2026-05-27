@@ -30,7 +30,7 @@ const bladedancerSkillset = (atk:number, scale:number):IHeroSkill[] => {
                 type: EHeroSkillType.TOTEM,
                 totem: {
                     id: TOTEM_ID_BLADEDANCER,
-                    name: "Flying blade",
+                    name: i18n.totems.bladedancerSwordTotem,
                     skills: [
                         {
                             type: EHeroSkillType.ATTACK,
