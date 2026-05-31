@@ -455,7 +455,7 @@ export const enemy3: TDuelEnemy = {
 
 export const enemy4_test: TDuelEnemy = buildDuelEnemy([
     // day 1
-    { 1: [{ unit: oracleHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
+    { 1: [{ unit: inquisitorHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
     // day 2
     {
         1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],
@@ -1117,7 +1117,14 @@ export const enemy10: TDuelEnemy = buildDuelEnemy([
     },
     // day 2
     {
-        1: [{ unit: wildHero }, { levelup: 1 }, { attr: "basicCritChance", incr: 2 }, { item: totem1 }, { skill: wildBasicTotemSkill }, { skill: attrIncrHpReg }],
+        1: [
+            { unit: wildHero },
+            { levelup: 1 },
+            { attr: "basicCritChance", incr: 2 },
+            { item: totem1 },
+            { skill: wildBasicTotemSkill },
+            { skill: attrIncrHpReg },
+        ],
         2: [{ unit: wildHero }, { item: axe22 }, { skill: wildBasicTotemSkill }, { skill: peasantLastStandSkill }],
         3: [{ unit: pirate1Unit }, { item: axe1 }],
         4: [{ unit: peasantUnit }],

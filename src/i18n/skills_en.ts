@@ -193,9 +193,9 @@ export const SKILLS_EN = {
         //
         venomHeartSkill: {
             name: "Venom heart",
-            desc1: "Buff summon's and\nown attacks to apply\n[color=${colors.POISON}][1] poison[/color] for [2] turns",
-            desc2: "Buff summon's and\nown attacks to apply\n[color=${colors.POISON}][2] poison[/color] for [2] turns",
-            desc3: "Buff summon's and\nown attacks to apply\n[color=${colors.POISON}][2] poison[/color] for [4] turns",
+            desc1: `Buff summon's and\nown attacks to apply\n[color=${colors.POISON}][1] poison[/color] for [2] turns`,
+            desc2: `Buff summon's and\nown attacks to apply\n[color=${colors.POISON}][2] poison[/color] for [2] turns`,
+            desc3: `Buff summon's and\nown attacks to apply\n[color=${colors.POISON}][2] poison[/color] for [4] turns`,
         },
         //
         // BARD + MAGIC
@@ -265,7 +265,7 @@ export const SKILLS_EN = {
             desc1: "Debuff next basic attack\nof all enemies by -[1+MPx50%]",
             desc2: "Debuff next basic attack\nof all enemies by -[1+MPx70%]",
             desc3: "Debuff next basic attack\nof all enemies by -[1+MP]",
-            // Debuff next basic attack\nof all enemies by [1+MP*50%] 
+            // Debuff next basic attack\nof all enemies by [1+MP*50%]
         },
         healLowHpSkill: {
             name: "Helping hand",
@@ -431,7 +431,7 @@ export const SKILLS_EN = {
             desc1: `For 3 turns, when [color=${colors.SUMMON}]summons[/color]\ndie, they apply [color=${colors.SHOCK}]1 shock[/color]\nand deal [color=${colors.MAGIC_ATTACK}][50%xMP] magic\ndamage[/color] to first enemy`,
             desc2: `For 3 turns, when [color=${colors.SUMMON}]summons[/color]\ndie, they apply [color=${colors.SHOCK}]1 shock[/color]\nand deal [color=${colors.MAGIC_ATTACK}][65%xMP] magic\ndamage[/color] to first 2 enemies`,
             desc3: `For 3 turns, when [color=${colors.SUMMON}]summons[/color]\ndie, they apply [color=${colors.SHOCK}]1 shock[/color]\nand deal [color=${colors.MAGIC_ATTACK}][80%xMP] magic\ndamage[/color] to first 3 enemies`,
-        }
+        },
     },
     level4: {},
     passives: {
@@ -439,10 +439,12 @@ export const SKILLS_EN = {
         assassinPassive: "Deal +20% dmg\nto poisoned targets",
         barbarianPassive: "Every incoming\nbasic attack increase regen\nby 1 (max +20)",
         battleMagePassive: "Skills with MP\nscaling get equal PP scaling\nand vice versa (skill with\nboth scaling are not\naffected)",
-        beastMasterPassive: "While having totem,\nbuffs targeting summons\nand summoning skills buff\nBeastmaster; while having\nsummon, totem skills\nactivate summon",
+        beastMasterPassive:
+            "While having totem,\nbuffs targeting summons\nand summoning skills buff\nBeastmaster; while having\nsummon, totem skills\nactivate summon",
         bishopPassive: "Can crit with\nhealing skills",
         blackKnightPassive: "Adds 100% Magic\npower to Physical power",
-        bladedancerPassive: "Consecutive basic\nattacks at the same target\nincrease damage by 1; makes\n+1 basic attack after\nevasion, but reduce attack\nby 40%",
+        bladedancerPassive:
+            "Consecutive basic\nattacks at the same target\nincrease damage by 1; makes\n+1 basic attack after\nevasion, but reduce attack\nby 40%",
         commanderPassive: "Increase all\nsummons' basic attack\ndamage by [2+MPx50%]",
         doomsayerPassive: "Increase potency\nof debuffs by 50%",
         druidPassive: "Deal bonus [35%xPP]\ndamage vs targets\nwith shock",

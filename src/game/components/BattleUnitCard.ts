@@ -139,7 +139,7 @@ export class BattleUnitCard extends Phaser.GameObjects.Container {
         } = unitType === EUnitType.HERO ? getHeroImage(heroClass) : getUnitImage(id);
         this.unitImage = imageBattle || image;
         //if (GAME_MODE === "FULL" || unitType === EUnitType.UNIT || (unitType === EUnitType.HERO && heroClassType === EHeroClassType.BASIC)) {
-        this.unitAnimation = idleBattleAnimation || animation;
+        this.unitAnimation = idleBattleAnimation; // || animation;
         this.unitAttackAnimation = attackAnimation;
         this.unitHealAnimation = healAnimation;
         this.unitHurtAnimation = hurtAnimation;

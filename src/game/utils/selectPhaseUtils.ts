@@ -1196,14 +1196,14 @@ export const activateSlots = (slots: CardSlot[], value: boolean, gameScene: Game
                         if (!mobHeroClasses) {
                             return;
                         }
-                        const freeSlot1:boolean = !skills[4];
-                        const freeSlot3:boolean = level<4 ? false : !skills[5];
+                        const freeSlot1: boolean = !skills[4];
+                        const freeSlot3: boolean = level < 4 ? false : !skills[5];
                         if (!freeSlot1 && !freeSlot3) {
                             return;
                         }
                         if (skill.heroClasses.includes(EHeroClass.ALL)) {
                             slot.setIsActive(true, "equip");
-                        } else if (skill.heroClasses.some(hc => mobHeroClasses.includes(hc))) {
+                        } else if (skill.heroClasses.some((hc) => mobHeroClasses.includes(hc))) {
                             slot.setIsActive(true, "equip");
                         }
                     }

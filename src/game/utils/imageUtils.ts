@@ -416,6 +416,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.INQUISITOR:
             return {
                 image: IMAGE_INQUISITOR,
+                distanceEnemy: -80,
                 animation: AnimationType.INQUISITOR_IDLE,
                 idleBattleAnimation: AnimationType.INQUISITOR_BATTLE_IDLE,
                 attackAnimation: AnimationType.INQUISITOR_ATTACK,
