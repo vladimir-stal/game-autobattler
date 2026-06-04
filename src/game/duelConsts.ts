@@ -129,26 +129,6 @@ import { skeletonPoisonedFlames } from "./skills/mobs/skeletonMobSkills";
 import { peasantUnit } from "./units/peasantMobUnits";
 import { pirate1Unit } from "./units/piratesMobUnits";
 
-const addItem = (unit: IUnit, item: IItem) => {
-    unit.items.push(item);
-};
-
-const applyItems = (unit: IUnit): IUnit => {
-    const resulUnit = { ...unit };
-    unit.items.forEach((item) => {
-        applyItemBonuses(item, resulUnit);
-    });
-    return resulUnit;
-};
-
-const createUnit = (templateUnit: IUnit) => {
-    const { heroClassType, unitType, skills } = templateUnit;
-    const hero = { ...templateUnit };
-    hero.items = [];
-    hero.skills = unitType === EUnitType.HERO && heroClassType === EHeroClassType.MULTI ? [skills[0]] : [];
-    return hero;
-};
-
 //////////////////////// ENEMY 1 //////////////////
 
 export const enemy1_test: TDuelEnemy = buildDuelEnemy([
@@ -343,119 +323,68 @@ export const enemy2: TDuelEnemy = buildDuelEnemy([
 
 //////////////////////// ENEMY 3 //////////////////
 
-// 0
-
-const unit31 = createUnit(bardHero);
-addItem(unit31, musical1);
-unit31.skills.push(buffNextBaAll);
-
-// 1
-
-const unit31_1 = { ...unit31 };
-unit31_1.items = [...unit31.items];
-unit31_1.skills = [...unit31.skills];
-
-const unit32_1 = { ...peasantUnit };
-
-// 2
-
-const unit31_2 = { ...unit31_1 };
-unit31_2.items = [...unit31_1.items];
-unit31_2.skills = [...unit31_1.skills];
-levelUpUnit(unit31_1);
-
-const unit32_2 = createUnit(peasantUnit);
-
-const unit33_2 = { ...wildHero };
-unit33_2.items = [axe1];
-unit33_2.skills.push(attrDescArmor);
-
-// 3
-
-const unit31_3 = { ...unit31_2 };
-unit31_3.items = [...unit31_2.items];
-unit31_3.skills = [...unit31_2.skills];
-levelUpUnit(unit31_3);
-
-const unit32_3 = { ...peasantUnit };
-
-const unit33_3 = { ...unit33_2 };
-unit33_3.items = [...unit33_2.items, basic_hat];
-unit33_3.skills = [...unit33_2.skills];
-
-// 4
-
-const unit31_4 = createUnit(jesterHero);
-unit31_4.items = [musical1_2, basic_hat];
-unit31_4.skills = unit31_4.skills.concat([...unit31_3.skills]);
-
-const unit32_4 = { ...peasantUnit };
-
-const unit33_4 = { ...unit33_3 };
-unit33_4.items = [...unit33_3.items];
-unit33_4.skills = [...unit33_3.skills];
-levelUpUnit(unit33_4);
-
-const unit34_4 = createUnit(masterHero);
-addItem(unit34_4, sword1_2);
-unit34_4.skills.push(phycisalAttackSkill);
-unit34_4.skills.push(phycisalAttackSkill);
-
-// 5
-
-const unit31_5 = { ...unit31_4 };
-unit31_5.items = [...unit31_4.items];
-unit31_5.skills = [...unit31_4.skills];
-
-const unit32_5 = { ...peasantUnit };
-
-const unit33_5 = createUnit(forestSpiritHero);
-unit33_5.items = [basic_hat, shield1, totem21];
-unit33_5.skills = unit33_5.skills.concat([...unit33_4.skills]);
-
-const unit34_5 = { ...unit34_4 };
-unit34_5.items = [...unit34_4.items];
-unit34_5.skills = [...unit34_4.skills];
-levelUpUnit(unit34_5);
-unit34_5.basicPhysicalPower++;
-unit34_5.basicCritChance += 2;
-
-// 6
-
-const unit31_6 = { ...unit31_5 };
-unit31_6.items = [...unit31_5.items, musical21];
-unit31_6.skills = [...unit31_5.skills];
-
-const unit32_6 = { ...peasantUnit };
-
-const unit33_6 = { ...unit33_5 };
-unit33_6.items = [...unit33_5.items];
-unit33_6.skills = [...unit33_5.skills];
-
-const unit34_6 = createUnit(hunterHero);
-unit34_6.items = [...unit34_5.items, totem1];
-unit34_6.skills = unit34_6.skills.concat([...unit34_5.skills]);
-
-/** Enemy 3 - Duel units for each day */
-export const enemy3: TDuelEnemy = {
-    0: [applyItems(unit31)],
-    1: [applyItems(unit31_1), unit32_1],
-    2: [applyItems(unit33_2), applyItems(unit31_2), unit32_2],
-    3: [applyItems(unit33_3), applyItems(unit31_3), unit32_3],
-    4: [applyItems(unit33_4), applyItems(unit31_4), applyItems(unit34_4), unit32_4],
-    5: [applyItems(unit33_5), applyItems(unit31_5), applyItems(unit34_5), unit32_5],
-    6: [applyItems(unit33_6), applyItems(unit31_6), applyItems(unit34_6), unit32_6],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-};
+export const enemy3: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    {
+        1: [{ unit: bardHero }, { item: musical1 }, { skill: buffNextBaAll }],
+        2: [{ unit: peasantUnit }],
+    },
+    // day 2
+    {
+        1: [{ unit: wildHero }, { item: axe1 }, { skill: attrDescArmor }],
+        2: [{ unit: bardHero }, { levelup: 1 }, { item: musical1 }, { skill: buffNextBaAll }],
+        3: [{ unit: peasantUnit }],
+    },
+    // day 3
+    {
+        1: [{ unit: wildHero }, { item: axe1 }, { item: basic_hat }, { skill: attrDescArmor }],
+        2: [{ unit: bardHero }, { levelup: 2 }, { item: musical1 }, { skill: buffNextBaAll }],
+        3: [{ unit: peasantUnit }],
+    },
+    // day 4
+    {
+        1: [{ unit: wildHero }, { levelup: 1 }, { item: axe1 }, { item: basic_hat }, { skill: attrDescArmor }],
+        2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { skill: buffNextBaAll }],
+        3: [{ unit: masterHero }, { item: sword1_2 }, { skill: phycisalAttackSkill }, { skill: phycisalAttackSkill }],
+        4: [{ unit: peasantUnit }],
+    },
+    // day 5
+    {
+        1: [{ unit: forestSpiritHero }, { item: axe1 }, { item: basic_hat }, { item: shield1 }, { item: totem21 }, { skill: attrDescArmor }],
+        2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { skill: buffNextBaAll }],
+        3: [
+            { unit: masterHero },
+            { levelup: 1 },
+            { attr: "basicPhysicalPower", incr: 2 },
+            { attr: "basicCritChance", incr: 2 },
+            { item: sword1_2 },
+            { skill: phycisalAttackSkill },
+            { skill: phycisalAttackSkill },
+        ],
+        4: [{ unit: peasantUnit }],
+    },
+    // day 6
+    {
+        1: [{ unit: forestSpiritHero }, { item: axe1 }, { item: basic_hat }, { item: shield1 }, { item: totem21 }, { skill: attrDescArmor }],
+        2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { item: musical21 }, { skill: buffNextBaAll }],
+        3: [
+            { unit: hunterHero },
+            { attr: "basicPhysicalPower", incr: 2 },
+            { attr: "basicCritChance", incr: 2 },
+            { item: sword1_2 },
+            { item: totem1 },
+            { skill: phycisalAttackSkill },
+            { skill: phycisalAttackSkill },
+        ],
+        4: [{ unit: peasantUnit }],
+    },
+]);
 
 //////////////////////// ENEMY 4 //////////////////
 
 export const enemy4_test: TDuelEnemy = buildDuelEnemy([
     // day 1
-    { 1: [{ unit: inquisitorHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
+    { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
     // day 2
     {
         1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],
@@ -731,138 +660,149 @@ export const enemy6: TDuelEnemy = buildDuelEnemy([
 
 //////////////////////// ENEMY 7 //////////////////
 
-// 1
-
-const unit71_magic = createUnit(magicHero);
-addItem(unit71_magic, wand1);
-unit71_magic.skills.push(magicAttack);
-
-const unit72_goblin = createUnit(goblinUnit);
-
-// 2
-
-const unit71_magic_2 = { ...unit71_magic };
-unit71_magic_2.skills = [applyBurn, magicAttack];
-
-const unit72_goblin_2 = { ...unit72_goblin };
-addItem(unit72_goblin_2, itemGoblinBoneDagger);
-
-const unit73_order_2 = createUnit(orderHero);
-unit73_order_2.skills.push(attrArmorSelf);
-addItem(unit73_order_2, basic_jacket);
-
-// 3
-
-const unit71_magic_3 = { ...unit71_magic_2 };
-levelUpUnit(unit71_magic_3);
-unit71_magic_3.skills = [{ ...applyShock, isMcSkill: true }, magicAttack];
-unit71_magic_3.items = [wand1_2];
-
-const unit72_goblin_3 = { ...unit72_goblin_2 };
-
-const unit73_order_3 = { ...unit73_order_2 };
-levelUpUnit(unit73_order_3);
-levelUpUnit(unit73_order_3);
-unit73_order_3.basicArmor += 3;
-unit73_order_3.skills = [attrArmorAll, attrArmorSelf];
-unit73_order_3.items.push(hat21);
-
-const unit74_goblin_3 = createUnit(goblinUnit);
-
-// 4
-
-//const unit71_magic_4 = { ...unit71_magic_3 };
-const unit71_druid_4 = createUnit(druidHero);
-unit71_druid_4.basicMagicPower = 3;
-unit71_druid_4.skills.push({ ...applyShock, isMcSkill: true });
-unit71_druid_4.skills.push(applyShock);
-unit71_druid_4.skills.push(magicAttack);
-//unit71_magic_4.basicMagicPower += 1;
-unit71_druid_4.items = [staff22];
-
-const unit72_goblin_4 = { ...unit72_goblin_3 };
-levelUpUnit(unit72_goblin_4);
-
-//const unit73_order_4 = { ...unit73_order_3 };
-const unit73_knight_4 = createUnit(knightHero);
-unit73_knight_4.basicArmor = 24;
-unit73_knight_4.basicArmor = 25;
-unit73_knight_4.skills.push(attrArmorAll);
-unit73_knight_4.skills.push(attrArmorSelf);
-unit73_knight_4.items = [basic_jacket, hat21, sword22];
-
-const unit74_goblin_4 = { ...unit74_goblin_3 };
-levelUpUnit(unit74_goblin_4);
-unit74_goblin_4.items = [wand1_2];
-
-// 5
-
-const unit71_druid_5 = { ...unit71_druid_4 };
-unit71_druid_5.basicMagicPower += 2;
-
-const unit73_knight_5 = { ...unit73_knight_4 };
-levelUpUnit(unit73_knight_5);
-unit73_knight_5.basicArmor += 3;
-unit73_knight_5.skills = [unit73_knight_4.skills[0], attrArmorAll_2, removeDebuffSkill, attrArmorAll];
-
-const unit72_goblin_5 = { ...unit72_goblin_4 };
-
-const unit74_goblin_5 = { ...unit74_goblin_4 };
-
-// 6
-
-const unit71_druid_6 = { ...unit71_druid_5 };
-levelUpUnit(unit71_druid_5);
-unit71_druid_6.basicArmor += 3;
-unit71_druid_6.items.push(basic_jacket);
-
-const unit73_knight_6 = { ...unit73_knight_5 };
-levelUpUnit(unit73_knight_6);
-unit73_knight_6.items = [jacket21, hat21, sword22, shield32];
-
-const unit72_goblin_6 = { ...unit72_goblin_5 };
-levelUpUnit(unit72_goblin_6);
-levelUpUnit(unit72_goblin_6);
-
-const unit74_goblin_6 = { ...unit74_goblin_5 };
-levelUpUnit(unit72_goblin_5);
-
-// 7
-
-const unit71_druid_7 = { ...unit71_druid_6 };
-unit71_druid_7.basicMaxHp += 3;
-
-const unit73_knight_7 = { ...unit73_knight_6 };
-unit73_knight_7.skills = [unit73_knight_6.skills[0], buffSelfMPorPP, attrArmorAll_2, attrArmorAll];
-
-const unit72_goblin_7 = { ...unit72_goblin_6 };
-levelUpUnit(unit72_goblin_7);
-
-const unit74_goblin_7 = { ...unit74_goblin_6 };
-levelUpUnit(unit74_goblin_7);
-
-// hp aura - hack
-unit71_druid_7.basicMaxHp += 10;
-unit73_knight_7.basicMaxHp += 10;
-unit72_goblin_7.basicMaxHp += 10;
-unit74_goblin_7.basicMaxHp += 10;
-
-const units_7_7 = [applyItems(unit73_knight_7), applyItems(unit71_druid_7), applyItems(unit72_goblin_7), applyItems(unit74_goblin_7)];
-
-/** Enemy 7 - for RELEASE_1 */
-export const enemy7: TDuelEnemy = {
-    0: [unit72_goblin, applyItems(unit71_magic)],
-    1: [unit72_goblin, applyItems(unit71_magic)],
-    2: [applyItems(unit73_order_2), applyItems(unit72_goblin_2), applyItems(unit71_magic_2)],
-    3: [applyItems(unit73_order_3), applyItems(unit72_goblin_3), applyItems(unit71_magic_3), applyItems(unit74_goblin_3)],
-    4: [applyItems(unit73_knight_4), applyItems(unit71_druid_4), applyItems(unit72_goblin_4), applyItems(unit74_goblin_4)],
-    5: [applyItems(unit73_knight_5), applyItems(unit71_druid_5), applyItems(unit72_goblin_5), applyItems(unit74_goblin_5)],
-    6: [applyItems(unit73_knight_6), applyItems(unit71_druid_6), applyItems(unit72_goblin_6), applyItems(unit74_goblin_6)],
-    7: units_7_7,
-    8: units_7_7,
-    9: units_7_7,
-    10: units_7_7,
-};
+export const enemy7: TDuelEnemy = buildDuelEnemy([
+    // day 1
+    {
+        2: [{ unit: magicHero }, { item: wand1 }, { skill: magicAttack }],
+        1: [{ unit: goblinUnit }],
+    },
+    // day 2
+    {
+        1: [{ unit: orderHero }, { item: basic_jacket }, { skill: attrArmorSelf }],
+        2: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+        3: [{ unit: magicHero }, { item: wand1 }, { skill: applyBurn }, { skill: magicAttack }],
+    },
+    // day 3
+    {
+        1: [
+            { unit: orderHero },
+            { levelup: 2 },
+            { attr: "basicArmor", incr: 3 },
+            { item: basic_jacket },
+            { item: hat21 },
+            { skill: attrArmorAll },
+            { skill: attrArmorSelf },
+        ],
+        2: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+        3: [{ unit: magicHero }, { levelup: 1 }, { item: wand1_2 }, { skill: applyShock, chained: true }, { skill: magicAttack }],
+        4: [{ unit: goblinUnit }],
+    },
+    // day 4
+    {
+        1: [
+            { unit: knightHero },
+            { attr: "basicArmor", incr: 3 }, // ?? was unit73_knight_4.basicArmor = 25;
+            { item: basic_jacket },
+            { item: hat21 },
+            { item: sword22 },
+            { skill: attrArmorAll },
+            { skill: attrArmorSelf },
+        ],
+        2: [
+            { unit: druidHero },
+            { attr: "basicMagicPower", incr: 3 },
+            { item: staff22 },
+            { skill: applyShock, chained: true },
+            { skill: applyShock },
+            { skill: magicAttack },
+        ],
+        3: [{ unit: goblinUnit }, { levelup: 1 }, { item: itemGoblinBoneDagger }],
+        4: [{ unit: goblinUnit }, { levelup: 1 }, { item: wand1_2 }],
+    },
+    // day 5
+    {
+        1: [
+            { unit: knightHero },
+            { levelup: 1 },
+            { attr: "basicArmor", incr: 6 },
+            { item: basic_jacket },
+            { item: hat21 },
+            { item: sword22 },
+            { skill: attrArmorAll_2 },
+            { skill: removeDebuffSkill },
+            { skill: attrArmorAll },
+        ],
+        2: [
+            { unit: druidHero },
+            { attr: "basicMagicPower", incr: 5 },
+            { item: staff22 },
+            { skill: applyShock, chained: true },
+            { skill: applyShock },
+            { skill: magicAttack },
+        ],
+        3: [{ unit: goblinUnit }, { levelup: 1 }, { item: itemGoblinBoneDagger }],
+        4: [{ unit: goblinUnit }, { levelup: 1 }, { item: wand1_2 }],
+    },
+    // day 6
+    {
+        1: [
+            { unit: knightHero },
+            { levelup: 2 },
+            { attr: "basicArmor", incr: 6 },
+            { item: jacket21 },
+            { item: hat21 },
+            { item: sword22 },
+            { item: shield32 },
+            { skill: attrArmorAll_2 },
+            { skill: removeDebuffSkill },
+            { skill: attrArmorAll },
+        ],
+        2: [
+            { unit: druidHero },
+            { levelup: 1 },
+            { attr: "basicMagicPower", incr: 5 },
+            { attr: "basicArmor", incr: 3 },
+            { item: staff22 },
+            { item: basic_jacket },
+            { skill: applyShock, chained: true },
+            { skill: applyShock },
+            { skill: magicAttack },
+        ],
+        3: [{ unit: goblinUnit }, { levelup: 3 }, { item: itemGoblinBoneDagger }],
+        4: [{ unit: goblinUnit }, { levelup: 2 }, { item: wand1_2 }],
+    },
+    // -- day 7 --
+    {
+        1: [
+            { unit: knightHero },
+            { levelup: 2 },
+            { attr: "basicArmor", incr: 6 },
+            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+            { item: jacket21 },
+            { item: hat21 },
+            { item: sword22 },
+            { item: shield32 },
+            { skill: buffSelfMPorPP },
+            { skill: attrArmorAll_2 },
+            { skill: attrArmorAll },
+        ],
+        2: [
+            { unit: druidHero },
+            { levelup: 1 },
+            { attr: "basicMagicPower", incr: 5 },
+            { attr: "basicArmor", incr: 3 },
+            { attr: "basicMaxHp", incr: 3 },
+            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+            { item: staff22 },
+            { item: basic_jacket },
+            { skill: applyShock, chained: true },
+            { skill: applyShock },
+            { skill: magicAttack },
+        ],
+        3: [
+            { unit: goblinUnit },
+            { levelup: 3 },
+            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+            { item: itemGoblinBoneDagger },
+        ],
+        4: [
+            { unit: goblinUnit },
+            { levelup: 3 },
+            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+            { item: wand1_2 },
+        ],
+    },
+]);
 
 // Enemy 8
 
