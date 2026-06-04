@@ -26,7 +26,7 @@ import { attackWithBleedSkill, phycisalAttackSkill } from "./commonSkillConsts";
 
 // BUFF NEXT BA X SELF
 
-const buffNextBaXSelf_3: IHeroSkillSet = {
+export const buffNextBaXSelf_3: IHeroSkillSet = {
     id: "buffNextBaXSelf",
     name: i18n.skills.basic.buffNextBaX.name,
     desc: i18n.skills.basic.buffNextBaX.desc3,
@@ -50,7 +50,7 @@ const buffNextBaXSelf_3: IHeroSkillSet = {
     image: IMAGE_SKILL_AXE_BUFF,
 };
 
-const buffNextBaXSelf_2: IHeroSkillSet = {
+export const buffNextBaXSelf_2: IHeroSkillSet = {
     id: "buffNextBaXSelf",
     name: i18n.skills.basic.buffNextBaX.name,
     desc: i18n.skills.basic.buffNextBaX.desc2,

@@ -43,7 +43,7 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
                 if (unitTemplate && unitTemplate.unitType === EUnitType.HERO) {
                     unit = createHero(unitTemplate);
                 } else if (unitTemplate && unitTemplate.unitType === EUnitType.UNIT) {
-                    unit = { ...unitTemplate, items: [] };
+                    unit = { ...unitTemplate, items: [], skills: [...unitTemplate.skills] };
                 }
                 if (unit) {
                     dc[unitSlot].forEach((v) => {
@@ -51,11 +51,15 @@ export const buildDuelEnemy = (daysCards: TDuelCards[]): TDuelEnemy => {
                         if (!!v.item) {
                             addItem(unit, v.item);
                         } else if (!!v.skill) {
-                            //if (v.chained) {
                             unit.skills.push({ ...v.skill, isChained: v.chained });
-                            //} else {
-                            //    unit.skills.push(v.skill);
-                            //}
+                            if (unit.unitType === EUnitType.UNIT) {
+                                if (unit.skills[4]) {
+                                    unit.skills[1] = unit.skills[4];
+                                }
+                                if (unit.skills[5]) {
+                                    unit.skills[3] = unit.skills[5];
+                                }
+                            }
                         } else if (!!v.attr) {
                             unit[v.attr] += v.incr || 0;
                         } else if (!!v.levelup) {

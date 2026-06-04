@@ -505,7 +505,7 @@ export class BattlePanel extends Phaser.GameObjects.Container {
                         return;
                     }
 
-                    await this.cards[unitId].playSkillSet(name, animation);
+                    await this.cards[unitId]?.playSkillSet(name, animation);
 
                     this.playNextAction();
                 }
