@@ -1,4 +1,4 @@
-import { EHeroClass, EHeroClassType, EItemBonusType, EUnitType, IItem, IUnit, TDuelCards, TDuelEnemy } from "../types";
+import { EHeroClass, EHeroClassType, EItemBonusType, EUnitType, IItem, IUnit, TDuelCards, TDuelEnemy, TDuelEnemy2 } from "../types";
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "./basicHeroConsts";
 import {
     axe1,
@@ -12,6 +12,7 @@ import {
     scepter1_2,
     shield1,
     staff1,
+    staff1_2,
     sword1,
     sword1_2,
     totem1,
@@ -63,6 +64,7 @@ import {
     exorcistHero,
     battleMageHero,
     illusionistHero,
+    warlockHero,
 } from "./mcHeroConsts";
 import { buffBaSelf, buffBaSelf_2, buffNextBaAll, buffNextBaAll_2, totemGiveArmorSkill } from "./skills/bardSkillConsts";
 import {
@@ -90,7 +92,7 @@ import {
     venomHeartSkill_2,
     heatUpSkill_3,
 } from "./skills/commonSkillConsts";
-import { concentrateThePoisonSkill, magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
+import { concentrateThePoisonSkill, concentrateThePoisonSkill_2, magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack, meteoriteFallSkill } from "./skills/magicSkillConsts";
 import {
     attackIgnoringArmor,
@@ -106,7 +108,7 @@ import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf, attrAttack
 import { healFirst, healFirst_2, healLowHpSkill, healSelf } from "./skills/priestSkillConsts";
 import { fireflySummonSkill, fireflySummonSkill_2, summonSkills } from "./skills/summonSkillConsts2";
 import { buffNextBa, buffNextBa_2, buffNextBa_3, buffNextBaTimes_2, debuffWorthyFoe, mortalStrikeSkill } from "./skills/warriorSkillConsts";
-import { attrDescArmor, attrIncrHpReg, wildBasicTotemSkill, wildBasicTotemSkill_2 } from "./skills/wildSkillConsts";
+import { attrDescArmor, attrDescArmor_2, attrIncrHpReg, wildBasicTotemSkill, wildBasicTotemSkill_2 } from "./skills/wildSkillConsts";
 import { applyItemBonuses } from "./utils/itemUtils";
 import { levelUpUnit } from "./utils/unitUtils";
 import {
@@ -146,7 +148,7 @@ import { removeBuff } from "./utils/battleUtils";
 import { music5AddBuffTarget, staff5MagicCrit, totem5HptoDmg } from "./weaponItem5Consts";
 import { fireflySummonMob, warriorSummonMob, warriorSummonMob_3 } from "./units/summonMobUnits";
 import { skeletonWarriorUnit } from "./units/skeletonsMobUnits";
-import { peasantLastStandSkill } from "./skills/mobs/peasantMobSkills";
+import { peasantLastStandSkill, peasantsStronkSkill } from "./skills/mobs/peasantMobSkills";
 import { skeletonPoisonedFlames } from "./skills/mobs/skeletonMobSkills";
 import { peasantUnit, peasantUnit_4 } from "./units/peasantMobUnits";
 import { pirate1Unit } from "./units/piratesMobUnits";
@@ -154,1724 +156,1980 @@ import { pirateDragNDrown } from "./skills/mobs/pirateMobSkills";
 import { regularWolfSkill, regularWolfSkill_2 } from "./skills/mobs/wolfMobSkills";
 import { summonerMantle3 } from "./commonItemConsts3";
 
-//////////////////////// ENEMY 1 //////////////////
-
-export const enemy1_test: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    { 1: [{ unit: warriorHero }, { item: shield1 }, { skill: phycisalAttackSkill }] },
-    // day 2
-    { 1: [{ unit: warriorHero }, { item: shield1 }, { skill: phycisalAttackSkill }, { levelup: 1 }], 2: [{ unit: masterHero }, { skill: buffNextBaXSelf }] },
-    // day 3
-    {
-        1: [{ unit: warriorHero }, { item: shield1 }, { skill: phycisalAttackSkill }, { levelup: 2 }, { item: basic_hat }],
-        2: [{ unit: masterHero }, { skill: buffNextBaXSelf }, { levelup: 1 }],
-    },
-    // day 4
-    {
-        1: [{ unit: paladinHero }, { skill: healFirst }, { skill: phycisalAttackSkill }, { item: shield1 }, { item: basic_hat }],
-        2: [{ unit: masterHero }, { skill: buffNextBaXSelf }, { levelup: 2 }],
-        3: [{ unit: darkHero }, { skill: magicAttackX3 }, { item: wand1_2 }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: paladinHero },
-            { skill: healFirst_2 },
-            { skill: phycisalAttackSkill },
-            { skill: phycisalAttackSkill },
-            { item: shield1 },
-            { item: basic_hat },
-        ],
-        2: [{ unit: samuraiHero }, { skill: buffNextBaXSelf }],
-        3: [{ unit: darkHero }, { skill: magicAttackX3 }, { item: wand1_2 }, { levelup: 2 }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: paladinHero },
-            { skill: healFirst_2 },
-            { skill: phycisalAttackSkill },
-            { skill: phycisalAttackSkill },
-            { item: shield1 },
-            { item: basic_hat },
-        ],
-        2: [{ unit: samuraiHero }, { skill: buffNextBaXSelf }],
-        3: [{ unit: darkHero }, { skill: magicAttackX3 }, { item: wand1_2 }, { levelup: 2 }],
-        4: [{ unit: strongWolfUnit }, { levelup: 1 }],
-    },
-]);
-
-//////////////////////// ENEMY 2 //////////////////
-
-export const enemy2: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    { 1: [{ unit: warriorHero }, { item: shield1 }, { item: basic_hat_2 }, { skill: buffNextBa }] },
-    // day 2
-    {
-        1: [{ unit: peasantUnit }, { item: basic_boots }],
-        2: [{ unit: priestHero }, { item: basic_ring_regen }, { item: basic_hat_2 }, { skill: healFirst }, { skill: healFirst_2 }],
-        3: [
-            { unit: warriorHero },
-            { levelup: 1 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: shield1 },
-            { skill: buffNextBa },
-            { skill: peasantLastStandSkill },
-        ],
-    },
-    // day 3
-    {
-        1: [{ unit: peasantUnit }, { item: shield1 }],
-        2: [
-            { unit: priestHero },
-            { levelup: 1 },
-            { item: regenMantle },
-            { attr: "basicArmor", incr: 2 },
-            { item: basic_hat_2 },
-            { skill: healLowHpSkill, chained: true },
-            { skill: healFirst_2 },
-        ],
-        3: [
-            { unit: warriorHero },
-            { levelup: 2 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { item: sword1 },
-            { item: gloves_war2 },
-            { skill: peasantLastStandSkill },
-            { skill: debuffWorthyFoe },
-        ],
-    },
-    // day 4
-    {
-        1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 1 }],
-        2: [
-            { unit: priestHero },
-            { levelup: 2 },
-            { attr: "basicHpRegen", incr: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { item: regenMantle },
-            { attr: "basicArmor", incr: 2 },
-            { item: basic_hat_2 },
-            { skill: healLowHpSkill, chained: true },
-            { skill: healFirst_2 },
-        ],
-        3: [
-            { unit: gladiatorHero },
-            //{ levelup: 2 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: sword1 },
-            { item: sword1 },
-            { item: gloves_war2 },
-            { item: basic_ring_regen },
-            { skill: peasantLastStandSkill },
-            { skill: debuffWorthyFoe },
-        ],
-        4: [{ unit: bardHero }, { item: musical21 }, { item: jacket21 }, { skill: buffNextBaAll }],
-    },
-    // day 5
-    {
-        1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 1 }],
-        2: [
-            { unit: monkHero },
-            //{ levelup: 2 },
-            { attr: "basicHpRegen", incr: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { item: regenMantle },
-            { attr: "basicArmor", incr: 2 },
-            { item: basic_hat_2 },
-            { item: scepter21 },
-            { skill: healLowHpSkill, chained: true },
-            { skill: healFirst_2 },
-            { skill: heatUpSkill },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        3: [
-            { unit: gladiatorHero },
-            //{ levelup: 2 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: sword1 },
-            { item: sword1 },
-            { item: gloves_war2 },
-            { item: basic_ring_regen },
-            { skill: peasantLastStandSkill },
-            { skill: phycisalAttackSkill },
-            { skill: debuffWorthyFoe },
-        ],
-        4: [{ unit: bardHero }, { levelup: 1 }, { item: musical21 }, { item: jacket21 }, { skill: buffNextBaAll }, { skill: buffNextBaAll }],
-    },
-    // day 6
-    {
-        1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 2 }],
-        2: [
-            { unit: monkHero },
-            //{ levelup: 2 },
-            { attr: "basicHpRegen", incr: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicArmor", incr: 6 },
-            { item: jacket21_2 },
-            { attr: "basicArmor", incr: 2 },
-            { item: basic_hat_2 },
-            { item: scepter21 },
-            { item: scepter31 },
-            { skill: healLowHpSkill, chained: true },
-            { skill: wildBasicTotemSkill, chained: true },
-            { skill: healFirst_2 },
-            { moveMcSkillToSlotIndex: 3 },
-        ],
-        3: [
-            { unit: gladiatorHero },
-            { levelup: 1 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: sword1 },
-            { item: sword1 },
-            { item: gloves_war2 },
-            { item: basic_ring_regen },
-            { skill: phycisalAttackSkill_2, chained: true },
-            { skill: peasantLastStandSkill },
-            { skill: debuffWorthyFoe },
-        ],
-        4: [{ unit: doomsayerHero }, { item: musical21 }, { item: regenMantle }, { skill: skeletonPoisonedFlames }, { skill: buffNextBaAll_2 }],
-    },
-]);
-
-//////////////////////// ENEMY 3 //////////////////
-
-export const enemy3: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: bardHero }, { item: musical1 }, { skill: buffNextBaAll }],
-        2: [{ unit: peasantUnit }],
-    },
-    // day 2
-    {
-        1: [{ unit: wildHero }, { item: axe1 }, { skill: attrDescArmor }],
-        2: [{ unit: bardHero }, { levelup: 1 }, { item: musical1 }, { skill: buffNextBaAll }],
-        3: [{ unit: peasantUnit }],
-    },
-    // day 3
-    {
-        1: [{ unit: wildHero }, { item: axe1 }, { item: basic_hat }, { skill: attrDescArmor }],
-        2: [{ unit: bardHero }, { levelup: 2 }, { item: musical1 }, { skill: buffNextBaAll }],
-        3: [{ unit: peasantUnit }],
-    },
-    // day 4
-    {
-        1: [{ unit: wildHero }, { levelup: 1 }, { item: axe1 }, { item: basic_hat }, { skill: attrDescArmor }],
-        2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { skill: buffNextBaAll }],
-        3: [{ unit: masterHero }, { item: sword1_2 }, { skill: phycisalAttackSkill }, { skill: phycisalAttackSkill }],
-        4: [{ unit: peasantUnit }],
-    },
-    // day 5
-    {
-        1: [{ unit: forestSpiritHero }, { item: axe1 }, { item: basic_hat }, { item: shield1 }, { item: totem21 }, { skill: attrDescArmor }],
-        2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { skill: buffNextBaAll }],
-        3: [
-            { unit: masterHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: sword1_2 },
-            { skill: phycisalAttackSkill },
-            { skill: phycisalAttackSkill },
-        ],
-        4: [{ unit: peasantUnit }],
-    },
-    // day 6
-    {
-        1: [{ unit: forestSpiritHero }, { item: axe1 }, { item: basic_hat }, { item: shield1 }, { item: totem21 }, { skill: attrDescArmor }],
-        2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { item: musical21 }, { skill: buffNextBaAll }],
-        3: [
-            { unit: hunterHero },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: sword1_2 },
-            { item: totem1 },
-            { skill: phycisalAttackSkill },
-            { skill: phycisalAttackSkill },
-        ],
-        4: [{ unit: peasantUnit }],
-    },
-]);
-
-//////////////////////// ENEMY 4 //////////////////
-
-export const enemy4_test: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
-    // day 2
-    {
-        1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],
-        2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }],
-    },
-    // day 3
-    {
-        1: [{ unit: summonHero }, { item: scepter1_2 }, { item: basic_pants }, { skill: fireflySummonSkill }, { levelup: 2 }],
-        2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }, { levelup: 1 }],
-    },
-    // day 4
-    {
-        1: [{ unit: witchHero }, { item: scepter1_2 }, { item: basic_pants }, { item: musical21 }, { item: basic_hat }, { skill: fireflySummonSkill }],
-        2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }, { levelup: 2 }],
-        3: [{ unit: darkHero }, { item: wand21 }, { skill: poisonRandom }],
-    },
-    // day 5
-    {
-        1: [{ unit: witchHero }, { item: scepter1_2 }, { item: basic_pants }, { item: musical21_2 }, { item: basic_hat }, { skill: fireflySummonSkill }],
-        2: [{ unit: predatorHero }, { item: totem22 }, { item: axe22 }, { item: basic_hat }, { skill: poisonRandom_2 }],
-        3: [{ unit: darkHero }, { item: wand21 }, { skill: poisonRandom }, { levelup: 1 }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: witchHero },
-            { item: scepter1_2 },
-            { item: basic_pants },
-            { item: musical21_2 },
-            { item: basic_hat },
-            { skill: fireflySummonSkill },
-            { levelup: 1 },
-        ],
-        2: [{ unit: predatorHero }, { item: totem22 }, { item: axe22 }, { item: basic_hat }, { item: basic_hat }, { skill: poisonRandom_2 }, { levelup: 1 }],
-        3: [{ unit: predatorHero }, { item: wand21_2 }, { item: wand1_2 }, { skill: poisonRandom }],
-    },
-]);
-
-//////////////////////// ENEMY 5 //////////////////
-
-/** Enemy 5 - Duel units for each day */
-export const enemy5: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    { 1: [{ unit: priestHero }, { item: mace1 }, { item: basic_heal }, { skill: healSelf }, { levelup: 1 }] },
-    // day 2
-    {
-        1: [{ unit: priestHero }, { item: scepter22 }, { item: basic_heal_2 }, { skill: healSelf }, { levelup: 2 }, { attr: "basicMaxHp", incr: 3 }],
-        2: [{ unit: wildHero }, { item: basic_ring_damage }, { item: basic_hat }, { skill: wildBasicTotemSkill }],
-        3: [{ unit: goldGoblin1Unit }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: inquisitorHero },
-            { item: scepter22 },
-            { item: basic_heal_2 },
-            { item: basic_ring_damage },
-            { skill: chainToNextSkill },
-            { skill: healSelf },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicMagicPower", incr: 1 },
-        ],
-        2: [{ unit: wildHero }, { item: axe21 }, { item: basic_hat }, { skill: wildBasicTotemSkill }, { skill: removeBuffSkill }, { levelup: 1 }],
-        3: [{ unit: peasantUnit }, { item: itemPeasantPitchfork }],
-        4: [{ unit: goldGoblin1Unit }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: inquisitorHero },
-            { item: scepter22 },
-            { item: basic_heal_2 },
-            { item: basic_ring_damage },
-            { item: shield22 },
-            { skill: chainToNextSkill },
-            { skill: healSelf },
-            { skill: attrArmorAll },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicEvasionChance", incr: 2 },
-        ],
-        2: [{ unit: druidHero }, { item: axe21 }, { item: basic_hat }, { item: basic_pants }, { skill: wildBasicTotemSkill }, { skill: removeBuffSkill }],
-        3: [{ unit: bardHero }, { skill: buffNextBaAll }],
-        4: [{ unit: goldGoblin1Unit }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: inquisitorHero },
-            { item: scepter22 },
-            { item: basic_heal_2 },
-            { item: basic_ring_damage },
-            { item: shield22 },
-            { skill: chainToNextSkill },
-            { skill: healSelf },
-            { skill: attrArmorAll },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicEvasionChance", incr: 2 },
-        ],
-        2: [
-            { unit: druidHero },
-            { item: axe21 },
-            { item: basic_hat },
-            { item: basic_pants },
-            { skill: wildBasicTotemSkill_2 },
-            { skill: removeBuffSkill },
-            { attr: "basicMagicPower", incr: 1 },
-        ],
-        3: [{ unit: bardHero }, { skill: buffNextBaAll }, { item: music5AddBuffTarget }],
-        4: [{ unit: goldGoblin1Unit }, { item: musical21 }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: inquisitorHero },
-            { item: scepter22 },
-            { item: basic_heal_2 },
-            { item: basic_ring_damage },
-            { item: shield22_2 },
-            { skill: chainToNextSkill },
-            { skill: healSelf },
-            { skill: attrArmorAll },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicEvasionChance", incr: 2 },
-            { attr: "basicCritChance", incr: 2 },
-            { levelup: 1 },
-        ],
-        2: [
-            { unit: druidHero },
-            { item: axe21 },
-            { item: basic_hat_2 },
-            { item: basic_pants_2 },
-            { skill: wildBasicTotemSkill_2 },
-            { skill: removeBuffSkill },
-            { attr: "basicMagicPower", incr: 1 },
-            { levelup: 1 },
-        ],
-        3: [{ unit: bladedancerHero }, { skill: buffNextBaAll }, { item: music5AddBuffTarget }, { item: musical21 }],
-        4: [{ unit: magicHero }, { skill: applyBurn }, { skill: applyBurn }, { item: staff22 }],
-    },
-]);
-
-//////////////////////// ENEMY 6 //////////////////
-
-export const enemy6: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: masterHero }, { item: sword1 }, { item: basic_ring_regen }, { skill: buffNextBaXSelf }],
-    },
-    // day 2
-    {
-        1: [
-            { unit: masterHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 1 },
-            { item: sword1 },
-            { item: basic_ring_regen },
-            { skill: buffNextBaXSelf },
-        ],
-        2: [{ unit: warriorHero }, { item: shield21 }, { item: basic_ring_damage }, { skill: buffNextBa }, { skill: buffNextBa }],
-        3: [{ unit: warriorSummonMob }],
-        4: [{ unit: goldGoblin1Unit }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: masterHero },
-            { levelup: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicArmor", incr: 6 },
-            { item: sword1 },
-            { item: basic_ring_regen },
-            { skill: buffNextBaXSelf },
-        ],
-        2: [{ unit: warriorHero }, { item: shield21 }, { item: ring_regen2 }, { skill: buffNextBa_2, chained: true }, { skill: buffNextBa_2, chained: true }],
-        3: [{ unit: warriorSummonMob }],
-        4: [{ unit: wolfUnit }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: assasinHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 9 },
-            { attr: "basicCritChance", incr: 10 },
-            { item: axe32 },
-            { item: basic_ring_regen },
-            { skill: attackWithBleedSkill },
-            { skill: buffNextBaXSelf },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: warriorHero },
-            { levelup: 2 },
-            { item: shield21 },
-            { item: ring_regen2 },
-            { skill: buffNextBa_2, chained: true },
-            { skill: buffNextBa_2, chained: true },
-        ],
-        3: [{ unit: wolfUnit }],
-        4: [{ unit: warriorSummonMob }, { attr: "basicMaxHp", incr: 4 }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: assasinHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 9 },
-            { attr: "basicCritChance", incr: 10 },
-            { attr: "basicMaxHp", incr: 3 },
-            { item: axe32 },
-            { item: basic_ring_regen },
-            { skill: attackWithBleedSkill },
-            { skill: buffNextBaXSelf },
-            { skill: riposteSkill_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: paladinHero },
-            { item: dagger32 },
-            { item: scepter31 },
-            { item: ring_regen2 },
-            { skill: buffNextBa_2, chained: true },
-            { skill: buffNextBa_2, chained: true },
-            { skill: buffNextBaTimes_2 },
-            { moveMcSkillToSlotIndex: 3 },
-        ],
-        3: [{ unit: wolfUnit }],
-        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attr: "basicMaxHp", incr: 4 }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: assasinHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 9 },
-            { attr: "basicCritChance", incr: 10 },
-            { attr: "basicMaxHp", incr: 3 },
-            { item: axe32 },
-            { item: dagger21 },
-            { item: basic_ring_regen },
-            { skill: attackWithBleedSkill },
-            { skill: buffNextBaXSelf },
-            { skill: riposteSkill_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: paladinHero },
-            { levelup: 1 },
-            { item: dagger32 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: scepter31 },
-            { item: ring_regen2 },
-            { skill: buffNextBa_3, chained: true },
-            { skill: mortalStrikeSkill, chained: true },
-            { skill: buffNextBaTimes_2 },
-            { moveMcSkillToSlotIndex: 3 },
-        ],
-        3: [{ unit: wolfUnit }, { attr: "basicMaxHp", incr: 4 }],
-        4: [{ unit: warriorSummonMob }, { item: shield21 }, { attr: "basicMaxHp", incr: 4 }],
-    },
-]);
-
-//////////////////////// ENEMY 7 //////////////////
-
-export const enemy7: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        2: [{ unit: magicHero }, { item: wand1 }, { skill: magicAttack }],
-        1: [{ unit: goblinUnit }],
-    },
-    // day 2
-    {
-        1: [{ unit: orderHero }, { item: basic_jacket }, { skill: attrArmorSelf }],
-        2: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
-        3: [{ unit: magicHero }, { item: wand1 }, { skill: applyBurn }, { skill: magicAttack }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: orderHero },
-            { levelup: 2 },
-            { attr: "basicArmor", incr: 3 },
-            { item: basic_jacket },
-            { item: hat21 },
-            { skill: attrArmorAll },
-            { skill: attrArmorSelf },
-        ],
-        2: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
-        3: [{ unit: magicHero }, { levelup: 1 }, { item: wand1_2 }, { skill: applyShock, chained: true }, { skill: magicAttack }],
-        4: [{ unit: goblinUnit }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: knightHero },
-            { attr: "basicArmor", incr: 3 }, // ?? was unit73_knight_4.basicArmor = 25;
-            { item: basic_jacket },
-            { item: hat21 },
-            { item: sword22 },
-            { skill: attrArmorAll },
-            { skill: attrArmorSelf },
-        ],
-        2: [
-            { unit: druidHero },
-            { attr: "basicMagicPower", incr: 3 },
-            { item: staff22 },
-            { skill: applyShock, chained: true },
-            { skill: applyShock },
-            { skill: magicAttack },
-        ],
-        3: [{ unit: goblinUnit }, { levelup: 1 }, { item: itemGoblinBoneDagger }],
-        4: [{ unit: goblinUnit }, { levelup: 1 }, { item: wand1_2 }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: knightHero },
-            { levelup: 1 },
-            { attr: "basicArmor", incr: 6 },
-            { item: basic_jacket },
-            { item: hat21 },
-            { item: sword22 },
-            { skill: attrArmorAll_2 },
-            { skill: removeDebuffSkill },
-            { skill: attrArmorAll },
-        ],
-        2: [
-            { unit: druidHero },
-            { attr: "basicMagicPower", incr: 5 },
-            { item: staff22 },
-            { skill: applyShock, chained: true },
-            { skill: applyShock },
-            { skill: magicAttack },
-        ],
-        3: [{ unit: goblinUnit }, { levelup: 1 }, { item: itemGoblinBoneDagger }],
-        4: [{ unit: goblinUnit }, { levelup: 1 }, { item: wand1_2 }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: knightHero },
-            { levelup: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { item: jacket21 },
-            { item: hat21 },
-            { item: sword22 },
-            { item: shield32 },
-            { skill: attrArmorAll_2 },
-            { skill: removeDebuffSkill },
-            { skill: attrArmorAll },
-        ],
-        2: [
-            { unit: druidHero },
-            { levelup: 1 },
-            { attr: "basicMagicPower", incr: 5 },
-            { attr: "basicArmor", incr: 3 },
-            { item: staff22 },
-            { item: basic_jacket },
-            { skill: applyShock, chained: true },
-            { skill: applyShock },
-            { skill: magicAttack },
-        ],
-        3: [{ unit: goblinUnit }, { levelup: 3 }, { item: itemGoblinBoneDagger }],
-        4: [{ unit: goblinUnit }, { levelup: 2 }, { item: wand1_2 }],
-    },
-    // -- day 7 --
-    {
-        1: [
-            { unit: knightHero },
-            { levelup: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
-            { item: jacket21 },
-            { item: hat21 },
-            { item: sword22 },
-            { item: shield32 },
-            { skill: buffSelfMPorPP },
-            { skill: attrArmorAll_2 },
-            { skill: attrArmorAll },
-        ],
-        2: [
-            { unit: druidHero },
-            { levelup: 1 },
-            { attr: "basicMagicPower", incr: 5 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
-            { item: staff22 },
-            { item: basic_jacket },
-            { skill: applyShock, chained: true },
-            { skill: applyShock },
-            { skill: magicAttack },
-        ],
-        3: [
-            { unit: goblinUnit },
-            { levelup: 3 },
-            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
-            { item: itemGoblinBoneDagger },
-        ],
-        4: [
-            { unit: goblinUnit },
-            { levelup: 3 },
-            { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
-            { item: wand1_2 },
-        ],
-    },
-]);
-
-// Enemy 8
-
-export const enemy8: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    { 1: [{ unit: orderHero }, { item: shield1 }, { item: basic_jacket }, { skill: attrAttackSelf_2 }] },
-    // day 2
-    {
-        1: [
-            { unit: orderHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: shield1 },
-            { item: basic_jacket_2 },
-            { skill: attrAttackSelf_2 },
-        ],
-        2: [{ unit: darkHero }, { item: totem1 }, { item: basic_hat }, { skill: poisonRandom }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: orderHero },
-            { levelup: 2 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: shield1 },
-            { item: basic_jacket_2 },
-            { attr: "basicMaxHp", incr: 1 },
-            { skill: attrAttackSelf_2 },
-        ],
-        2: [{ unit: darkHero }, { item: totem1 }, { item: ring_regen2_2 }, { skill: magicAttackX3, chained: true }, { skill: poisonRandom }],
-        3: [{ unit: warriorSummonMob }, { item: basic_hat }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: forestSpiritHero },
-            //{ levelup: 2 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicCritChance", incr: 8 },
-            { item: shield1 },
-            { item: totem22 },
-            { item: basic_jacket_2 },
-            { item: basic_hat },
-            { attr: "basicMaxHp", incr: 2 },
-            { skill: attrAttackSelf_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: necromancerHero },
-            { attr: "basicMagicPower", incr: 5 },
-            { item: totem1 },
-            { item: wand22 },
-            { item: ring_regen2_2 },
-            { attr: "basicHpRegen", incr: 1 },
-            { skill: magicAttackX3, chained: true },
-            { skill: poisonRandom },
-            { skill: poisonRandom },
-        ],
-        3: [{ unit: warriorSummonMob_3 }],
-        4: [{ unit: warriorSummonMob }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: forestSpiritHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicCritChance", incr: 8 },
-            { attr: "basicEvasionChance", incr: 2 },
-            { item: shield1 },
-            { item: totem1 },
-            { item: basic_jacket_2 },
-            { item: basic_hat },
-            { attr: "basicMaxHp", incr: 3 },
-            { skill: attrAttackSelf_2 },
-            { skill: increaseMaxHpSkill },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: necromancerHero },
-            { attr: "basicMagicPower", incr: 5 },
-            { item: totem1 },
-            { item: wand22 },
-            { item: ring_regen2_2 },
-            { attr: "basicHpRegen", incr: 2 },
-            { skill: magicAttackX3, chained: true },
-            { skill: poisonRandom_2 },
-            { skill: concentrateThePoisonSkill, chained: true },
-        ],
-        3: [{ unit: warriorSummonMob_3 }],
-        4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: forestSpiritHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicCritChance", incr: 8 },
-            { attr: "basicEvasionChance", incr: 2 },
-            { item: axe32 },
-            { item: totem1 },
-            { item: basic_jacket_2 },
-            { item: basic_hat },
-            { attr: "basicMaxHp", incr: 4 },
-            { skill: attrAttackSelf_2 },
-            { skill: attrArmorSelf, chained: true },
-            { skill: increaseMaxHpSkill },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: necromancerHero },
-            { levelup: 1 },
-            { attr: "basicMagicPower", incr: 5 },
-            { item: totem1 },
-            { item: wand22 },
-            { item: ring_regen2_2 },
-            { attr: "basicHpRegen", incr: 3 },
-            { skill: magicAttackX3, chained: true },
-            { skill: poisonRandom_2 },
-            { skill: concentrateThePoisonSkill, chained: true },
-        ],
-        3: [{ unit: warriorSummonMob_3 }],
-        4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
-    },
-]);
-
-export const enemy9: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: masterHero }, { item: sword1 }, { skill: buffNextBaXSelf }],
-        2: [{ unit: warriorSummonMob }, { item: staff1 }],
-        3: [{ unit: warriorSummonMob }],
-        4: [{ unit: warriorSummonMob }],
-    },
-    // day 2
-    {
-        1: [
-            { unit: masterHero },
-            { levelup: 2 },
-            { attr: "basicMaxHp", incr: 3 },
-            { attr: "basicEvasionChance", incr: 2 },
-            { item: axe1 },
-            { skill: phycisalAttackSkill },
-            { skill: buffNextBaXSelf },
-        ],
-        2: [{ unit: warriorSummonMob }, { item: staff1 }],
-        3: [{ unit: warriorSummonMob }, { item: sword1 }],
-        4: [{ unit: warriorSummonMob }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: mimicHero },
-            { attr: "basicMaxHp", incr: 9 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { attr: "basicArmor", incr: 3 },
-            { item: axe1_2 },
-            { item: jacket21 },
-            { item: regenMantle },
-            { item: basic_pants },
-            { skill: attackWithBleedSkill, chained: true },
-            { skill: phycisalAttackSkill },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
-        3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
-        4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: mimicHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 9 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicHpRegen", incr: 1 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 3 },
-            { item: axe1_2 },
-            { item: jacket21 },
-            { item: regenMantle },
-            { item: basic_pants },
-            { skill: attackWithBleedSkill_2, chained: true },
-            { skill: chainToNextSkill, chained: true },
-            { skill: phycisalAttackSkill_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
-        3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
-        4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: mimicHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 9 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicHpRegen", incr: 2 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 3 },
-            { attr: "basicMagicPower", incr: 2 },
-            { item: axe1_2 },
-            { item: jacket21 },
-            { item: regenMantle },
-            { item: sword22 },
-            { skill: attackWithBleedSkill_3, chained: true },
-            { skill: chainToNextSkill, chained: true },
-            { skill: phycisalAttackSkill_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
-        3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
-        4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: mimicHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 9 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicHpRegen", incr: 3 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 3 },
-            { attr: "basicMagicPower", incr: 2 },
-            { item: axe1_2 },
-            { item: jacket21 },
-            { item: regenMantle },
-            { item: sword31 },
-            { skill: attackWithBleedSkill_3, chained: true },
-            { skill: attackWithBleedSkill, chained: true },
-            { skill: phycisalAttackSkill_3 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: sword22 }],
-        3: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: staff1 }],
-        4: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: sword1_2 }],
-    },
-]);
-
-export const enemy10: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: wildHero }, { levelup: 1 }, { item: totem1 }, { skill: wildBasicTotemSkill }],
-    },
-    // day 2
-    {
-        1: [
-            { unit: wildHero },
-            { levelup: 1 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: totem1 },
-            { skill: wildBasicTotemSkill },
-            { skill: attrIncrHpReg },
-        ],
-        2: [{ unit: wildHero }, { item: axe22 }, { skill: wildBasicTotemSkill }, { skill: peasantLastStandSkill }],
-        3: [{ unit: pirate1Unit }, { item: axe1 }],
-        4: [{ unit: peasantUnit }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: shamanHero },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: totem1 },
-            { skill: wildBasicTotemSkill },
-            { skill: statusesIntoHeal, chained: true },
-            { skill: attrIncrHpReg },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        2: [{ unit: wildHero }, { levelup: 1 }, { item: axe22 }, { item: ring_regen2 }, { skill: wildBasicTotemSkill }, { skill: peasantLastStandSkill }],
-        3: [{ unit: pirate1Unit }, { item: axe1 }],
-        4: [{ unit: pirate1Unit }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: shamanHero },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { item: totem1 },
-            { item: musical1_2 },
-            { skill: wildBasicTotemSkill },
-            { skill: statusesIntoHeal, chained: true },
-            { skill: attrIncrHpReg },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        2: [
-            { unit: hunterHero },
-            { item: axe22 },
-            { item: ring_regen2 },
-            { skill: wildBasicTotemSkill },
-            { skill: attackWithBleedSkill },
-            { skill: peasantLastStandSkill },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        3: [{ unit: pirate1Unit }, { item: axe1 }],
-        4: [{ unit: pirate1Unit }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: shamanHero },
-            { levelup: 1 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 3 },
-            { item: totem1 },
-            { item: musical1_2 },
-            { skill: wildBasicTotemSkill },
-            { skill: statusesIntoHeal, chained: true },
-            { skill: attrIncrHpReg },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        2: [
-            { unit: hunterHero },
-            { item: axe22 },
-            { item: ring_regen2 },
-            { item: totem5HptoDmg },
-            { item: ring_regen2 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { skill: wildBasicTotemSkill },
-            { skill: attackWithBleedSkill },
-            { skill: peasantLastStandSkill },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        3: [{ unit: pirate1Unit }, { item: axe1 }],
-        4: [{ unit: pirate1Unit }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: shamanHero },
-            { levelup: 1 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 3 },
-            { attr: "basicMaxHp", incr: 3 },
-            { item: totem21_2 },
-            { item: totem1 },
-            { skill: statusesIntoHeal_2, chained: true },
-            { skill: chainBasicAttackSkill },
-            { skill: chainBasicAttackSkill },
-            { moveMcSkillToSlotIndex: 3 },
-        ],
-        2: [
-            { unit: hunterHero },
-            { levelup: 1 },
-            { item: axe22 },
-            { item: ring_regen2 },
-            { item: totem5HptoDmg },
-            { item: ring_regen2 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { skill: wildBasicTotemSkill },
-            { skill: attackWithBleedSkill },
-            { skill: peasantLastStandSkill },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        3: [{ unit: pirate1Unit }, { levelup: 1 }, { item: axe1 }],
-        4: [{ unit: pirate1Unit }, { levelup: 1 }],
-    },
-]);
-
-export const enemy11: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: darkHero }, { item: wand1 }, { skill: poisonRandom }, { skill: toxicTuneSkill }],
-    },
-    // day 2
-    {
-        1: [
-            { unit: darkHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: wand1 },
-            { item: basic_jacket },
-            { skill: poisonRandom },
-            { skill: toxicTuneSkill },
-        ],
-        2: [
-            { unit: wildHero },
-            { attr: "basicCritChance", incr: 2 },
-            { item: axe21 },
-            { item: basic_ring_regen },
-            { skill: attrIncrHpReg },
-            { skill: peasantLastStandSkill },
-        ],
-    },
-    // day 3
-    {
-        1: [
-            { unit: darkHero },
-            { levelup: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { item: wand1 },
-            { item: basic_jacket },
-            { skill: poisonRandom },
-            { skill: toxicTuneSkill_2 },
-        ],
-        2: [
-            { unit: wildHero },
-            { levelup: 1 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: axe21 },
-            { item: basic_ring_regen },
-            { skill: attrIncrHpReg },
-            { skill: peasantLastStandSkill },
-        ],
-    },
-    // day 4
-    {
-        1: [
-            { unit: necromancerHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { item: totem1 },
-            { item: staff21 },
-            { item: basic_jacket },
-            { skill: poisonRandom },
-            { skill: toxicTuneSkill_2 },
-        ],
-        2: [
-            { unit: wildHero },
-            { levelup: 2 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: totem21 },
-            { item: basic_ring_regen },
-            { skill: attrIncrHpReg },
-            { skill: peasantLastStandSkill },
-        ],
-        3: [{ unit: masterHero }, { levelup: 1 }, { item: axe21 }, { skill: buffNextBaBeCritSelf_2, chained: true }, { skill: feintAttack }],
-        4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: necromancerHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { item: totem1 },
-            { item: staff21_2 },
-            { item: basic_jacket },
-            { item: basic_jacket },
-            { skill: poisonRandom },
-            { skill: toxicTuneSkill_2 },
-            { skill: radiantWallSkill },
-        ],
-        2: [
-            { unit: barbarianHero },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: totem21 },
-            { item: sword31 },
-            { item: basic_ring_regen },
-            { skill: attrIncrHpReg },
-            { skill: peasantLastStandSkill },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        3: [{ unit: masterHero }, { levelup: 1 }, { item: axe21 }, { skill: buffNextBaBeCritSelf_2, chained: true }, { skill: feintAttack }],
-        4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: necromancerHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicMagicPower", incr: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { item: totem1 },
-            { item: staff21_2 },
-            { item: basic_jacket },
-            { item: basic_jacket },
-            { skill: poisonRandom },
-            { skill: toxicTuneSkill_2 },
-            { skill: radiantWallSkill },
-        ],
-        2: [
-            { unit: barbarianHero },
-            { levelup: 1 },
-            { attr: "basicCritChance", incr: 2 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: totem21 },
-            { item: sword31 },
-            { item: basic_ring_regen },
-            { skill: attrIncrHpReg },
-            { skill: peasantLastStandSkill },
-            { skill: nextBAArea, chained: true },
-            { moveMcSkillToSlotIndex: 3 },
-        ],
-        3: [
-            { unit: assasinHero },
-            { item: axe21 },
-            { item: dagger21 },
-            { item: gloves_magic2 },
-            { skill: buffNextBaBeCritSelf_2, chained: true },
-            { skill: feintAttack },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
-    },
-]);
-
-export const enemy12: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: summonHero }, { item: scepter1 }, { skill: fireflySummonSkill }],
-    },
-    // day 2
-    {
-        1: [{ unit: summonHero }, { levelup: 1 }, { item: scepter1 }, { item: basic_pants }, { skill: fireflySummonSkill_2 }],
-        2: [{ unit: magicHero }, { attr: "basicCritChance", incr: 4 }, { item: staff1 }, { skill: applyBurn }],
-        3: [{ unit: pirate1Unit }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: summonHero },
-            { levelup: 2 },
-            { attr: "basicEvasionChance", incr: 2 },
-            { item: scepter1 },
-            { item: basic_pants },
-            { skill: fireflySummonSkill_2 },
-        ],
-        2: [
-            { unit: magicHero },
-            { levelup: 1 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: staff1 },
-            { skill: blindingBeamSkill, chained: true },
-            { skill: applyBurn },
-        ],
-        3: [{ unit: peasantUnit_4 }],
-        4: [{ unit: pirate1Unit }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: exorcistHero },
-            { attr: "basicEvasionChance", incr: 4 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { item: scepter1_2 },
-            { item: scepter1 },
-            { item: basic_pants },
-            { skill: fireflySummonSkill_2 },
-        ],
-        2: [
-            { unit: magicHero },
-            { levelup: 2 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: staff1 },
-            { skill: blindingBeamSkill, chained: true },
-            { skill: applyBurn },
-        ],
-        3: [{ unit: peasantUnit_4 }],
-        4: [{ unit: pirate1Unit }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: exorcistHero },
-            { attr: "basicEvasionChance", incr: 4 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { item: scepter1_2 },
-            { item: staff1 },
-            { item: basic_pants },
-            { item: basic_hat },
-            { skill: fireflySummonSkill_2 },
-        ],
-        2: [
-            { unit: battleMageHero },
-            { attr: "basicCritChance", incr: 4 },
-            { item: staff22 },
-            { item: staff5MagicCrit },
-            { item: gloves_magic2 },
-            { skill: blindingBeamSkill, chained: true },
-            { skill: meteoriteFallSkill },
-            { skill: applyBurn },
-        ],
-        3: [{ unit: peasantUnit_4 }, { item: mace31 }],
-        4: [{ unit: pirate1Unit }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: exorcistHero },
-            { levelup: 1 },
-            { attr: "basicEvasionChance", incr: 4 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 3 },
-            { item: scepter1_2 },
-            { item: staff1 },
-            { item: basic_pants },
-            { item: basic_hat },
-            { skill: chainToNextSkill },
-            { skill: fireflySummonSkill_2 },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        2: [
-            { unit: battleMageHero },
-            { attr: "basicCritChance", incr: 4 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: staff22 },
-            { item: staff5MagicCrit },
-            { item: gloves_magic2_2 },
-            { skill: heatUpSkill_2, chained: true },
-            { skill: blindingBeamSkill, chained: true },
-            { skill: meteoriteFallSkill },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        3: [{ unit: peasantUnit_4 }, { item: mace31 }],
-        4: [{ unit: pirate1Unit }, { levelup: 1 }, { item: basic_ring_regen }],
-    },
-]);
-
-export const enemy13: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: priestHero }, { item: mace1 }, { item: basic_jacket }, { skill: healFirst }],
-    },
-    // day 2
-    {
-        1: [{ unit: priestHero }, { levelup: 1 }, { attr: "basicPhysicalPower", incr: 1 }, { item: mace1_2 }, { item: basic_jacket }, { skill: healFirst }],
-        2: [{ unit: masterHero }, { item: itemPeasantPitchfork }, { item: basic_ring_damage }, { skill: buffNextBaXSelf_2 }, { skill: buffNextBaXSelf }],
-        3: [{ unit: fireflySummonMob }],
-    },
-    // day 3
-    {
-        1: [{ unit: priestHero }, { levelup: 2 }, { attr: "basicPhysicalPower", incr: 1 }, { item: mace1_2 }, { item: basic_jacket }, { skill: healFirst }],
-        2: [
-            { unit: masterHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: sword21 },
-            { item: basic_ring_damage },
-            { skill: buffNextBaXSelf_2 },
-            { skill: buffNextBaXSelf },
-        ],
-        3: [{ unit: fireflySummonMob }, { item: gloves_magic2 }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: minstrelHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 6 },
-            { item: mace1_2 },
-            { item: mace1 },
-            { item: basic_jacket },
-            { skill: healFirst },
-        ],
-        2: [
-            { unit: masterHero },
-            { levelup: 2 },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { item: sword21 },
-            { item: basic_ring_damage },
-            { skill: buffNextBaXSelf_3 },
-            { skill: feintAttack, chained: true },
-        ],
-        3: [{ unit: priestHero }, { attr: "basicMagicPower", incr: 1 }, { item: scepter31 }, { skill: healFirst }],
-        4: [{ unit: fireflySummonMob }, { levelup: 1 }, { item: gloves_magic2 }, { skill: fireflySummonSkill }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: minstrelHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicMaxHp", incr: 6 },
-            { item: mace1_2 },
-            { item: mace1_2 },
-            { item: basic_jacket },
-        ],
-        2: [
-            { unit: samuraiHero },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { item: sword21 },
-            { item: shield1 },
-            { item: basic_ring_damage },
-            { skill: buffNextBaXSelf_3 },
-            { skill: feintAttack, chained: true },
-            { skill: pirateDragNDrown },
-        ],
-        3: [{ unit: priestHero }, { levelup: 1 }, { attr: "basicMagicPower", incr: 1 }, { item: scepter31_2 }, { skill: healFirst_2 }],
-        4: [{ unit: fireflySummonMob }, { levelup: 1 }, { item: gloves_magic2 }, { skill: fireflySummonSkill }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: minstrelHero },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicMaxHp", incr: 6 },
-            { item: mace1_2 },
-            { item: mace1_2 },
-            { item: basic_jacket },
-            { item: basic_hat },
-            { skill: blindingBeamSkill_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: samuraiHero },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: sword21 },
-            { item: shield1 },
-            { item: basic_ring_damage },
-            { item: armor_amulet },
-            { skill: attackIgnoringArmor, chained: true },
-            { skill: buffNextBaXSelf_3 },
-            { skill: feintAttack, chained: true },
-        ],
-        3: [
-            { unit: minstrelHero },
-            { attr: "basicMagicPower", incr: 1 },
-            { item: scepter31_2 },
-            { skill: healFirst_2 },
-            { skill: removeDebuffSkill },
-            { skill: chainToNextSkill },
-        ],
-        4: [{ unit: fireflySummonMob }, { levelup: 2 }, { item: gloves_magic2 }, { skill: fireflySummonSkill }],
-    },
-]);
-
-export const enemy14: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: warriorHero }, { item: sword1 }, { item: spiritArmor }, { skill: debuffWorthyFoe }],
-        2: [{ unit: warriorSummonMob }, { skill: venomHeartSkill }],
-    },
-    // day 2
-    {
-        1: [
-            { unit: warriorHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 3 },
-            { item: sword21 },
-            { item: spiritArmor },
-            { skill: debuffWorthyFoe },
-            { skill: buffNextBa },
-        ],
-        2: [{ unit: warriorSummonMob }, { item: scepter1 }, { skill: venomHeartSkill }],
-        3: [{ unit: masterHero }, { item: sword1 }, { item: spiritArmor }, { skill: regularWolfSkill }, { skill: regularWolfSkill }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: bladedancerHero },
-            { attr: "basicMaxHp", incr: 9 },
-            { item: sword21 },
-            { item: spiritArmor },
-            { skill: debuffWorthyFoe },
-            { skill: buffNextBa },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
-        3: [
-            { unit: masterHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: dagger21 },
-            { item: spiritArmor },
-            { skill: buffNextBaXSelf, chained: true },
-            { skill: regularWolfSkill_2 },
-        ],
-        4: [{ unit: pirate1Unit }, { item: sword1 }],
-    },
-    // day 4
-    {
-        1: [
-            { unit: bladedancerHero },
-            { attr: "basicMaxHp", incr: 9 },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { item: sword21 },
-            { item: shield31 },
-            { skill: debuffWorthyFoe },
-            { skill: buffNextBa },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
-        3: [
-            { unit: mimicHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: dagger21 },
-            { item: spiritArmor },
-            { item: spiritArmor },
-            { skill: buffNextBaXSelf, chained: true },
-            { skill: regularWolfSkill_2 },
-        ],
-        4: [{ unit: pirate1Unit }, { item: sword1 }, { skill: buffNextBaBeCritSelf }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: bladedancerHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 9 },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicEvasionChance", incr: 2 },
-            { item: sword21 },
-            { item: shield31 },
-            { item: jacket21 },
-            { item: basic_boots },
-            { skill: debuffWorthyFoe },
-            { skill: buffNextBa },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
-        3: [
-            { unit: mimicHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: dagger21 },
-            { item: spiritArmor },
-            { item: spiritArmor_2 },
-            { item: summonerMantle3 },
-            { skill: buffNextBaXSelf, chained: true },
-            { skill: regularWolfSkill_2 },
-        ],
-        4: [{ unit: pirate1Unit }, { item: sword1 }, { skill: buffNextBaBeCritSelf }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: bladedancerHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 9 },
-            { attr: "basicPhysicalPower", incr: 2 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicEvasionChance", incr: 2 },
-            { item: sword21 },
-            { item: shield31 },
-            { item: jacket21 },
-            { item: basic_boots },
-            { skill: chainToNextSkill },
-            { skill: debuffWorthyFoe },
-            { skill: chainBasicAttackSkill },
-        ],
-        2: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
-        3: [
-            { unit: mimicHero },
-            { levelup: 1 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: dagger21 },
-            { item: spiritArmor },
-            { item: spiritArmor_2 },
-            { item: summonerMantle3 },
-            { skill: buffNextBaXSelf, chained: true },
-            { skill: buffNextBaBeCritSelf_2, chained: true },
-            { skill: chainBasicAttackSkill },
-            { moveMcSkillToSlotIndex: 2 },
-        ],
-        4: [{ unit: pirate1Unit }, { levelup: 1 }, { item: sword1 }, { skill: regularWolfSkill_2 }],
-    },
-]);
-
-export const enemy15: TDuelEnemy = buildDuelEnemy([
-    // day 1
-    {
-        1: [{ unit: bardHero }, { item: musical1 }, { item: basic_boots }, { skill: buffBaSelf_2 }, { skill: buffBaSelf }],
-    },
-    // day 2
-    {
-        1: [
-            { unit: bardHero },
-            { levelup: 1 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: musical1 },
-            { item: basic_boots },
-            { skill: buffBaSelf_2 },
-            { skill: buffBaSelf },
-        ],
-        2: [{ unit: magicHero }, { item: staff1 }, { item: basic_ring_damage }, { skill: heatUpSkill }, { skill: magicAttack }],
-    },
-    // day 3
-    {
-        1: [
-            { unit: bardHero },
-            { levelup: 2 },
-            { attr: "basicMaxHp", incr: 12 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicCritChance", incr: 2 },
-            { item: musical1 },
-            { item: basic_boots },
-            { skill: buffBaSelf_2 },
-            { skill: buffBaSelf },
-        ],
-        2: [
-            { unit: magicHero },
-            { levelup: 1 },
-            { item: staff1 },
-            { item: basic_ring_damage },
-            { skill: heatUpSkill_2, chained: true },
-            { skill: magicAttack },
-        ],
-    },
-    // day 4
-    {
-        1: [
-            { unit: jesterHero },
-            { attr: "basicMaxHp", incr: 12 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicCritChance", incr: 4 },
-            { item: musical1 },
-            { item: musical21 },
-            { item: basic_boots },
-            { item: basic_ring_regen },
-            { skill: buffBaSelf_2 },
-            { skill: buffBaSelf },
-            { skill: buffNextBaAll },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: magicHero },
-            { levelup: 2 },
-            { item: staff1 },
-            { item: basic_ring_damage },
-            { skill: heatUpSkill_2, chained: true },
-            { skill: magicAttack },
-        ],
-        3: [{ unit: bardHero }, { item: dagger1 }, { skill: buffNextBaAll }, { skill: buffNextBaAll }],
-    },
-    // day 5
-    {
-        1: [
-            { unit: jesterHero },
-            { attr: "basicMaxHp", incr: 12 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicCritChance", incr: 4 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: musical1 },
-            { item: musical21 },
-            { item: basic_boots },
-            { item: basic_ring_regen },
-            { skill: buffBaSelf_2 },
-            { skill: chainToNextSkill },
-            { skill: buffBaSelf_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: illusionistHero },
-            { item: staff1 },
-            { item: basic_ring_damage },
-            { skill: heatUpSkill_3, chained: true },
-            { skill: magicAttack },
-            { skill: blindingBeamSkill },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        3: [{ unit: bardHero }, { levelup: 1 }, { item: dagger1 }, { skill: buffNextBaAll_2 }, { skill: buffNextBaAll }],
-    },
-    // day 6
-    {
-        1: [
-            { unit: jesterHero },
-            { levelup: 1 },
-            { attr: "basicMaxHp", incr: 12 },
-            { attr: "basicArmor", incr: 6 },
-            { attr: "basicCritChance", incr: 4 },
-            { attr: "basicPhysicalPower", incr: 1 },
-            { item: wand31 },
-            { item: musical21 },
-            { item: basic_boots },
-            { item: basic_ring_regen_2 },
-            { skill: totemGiveArmorSkill, chained: true },
-            { skill: buffBaSelf_2 },
-            { skill: buffBaSelf_2 },
-            { moveMcSkillToSlotIndex: 1 },
-        ],
-        2: [
-            { unit: illusionistHero },
-            { attr: "basicMagicPower", incr: 1 },
-            { item: staff1 },
-            { item: dagger31 },
-            { item: basic_ring_damage },
-            { item: basic_pants },
-            { skill: heatUpSkill_3, chained: true },
-            { skill: magicAttack },
-            { skill: blindingBeamSkill },
-            { moveMcSkillToSlotIndex: 1 },
+export const duelEnemies2: TDuelEnemy2[] = [
+    {
+        name: "Lolodin87",
+        unitData: [
+            // day 1
+            { 1: [{ unit: warriorHero }, { item: shield1 }, { skill: phycisalAttackSkill }] },
+            // day 2
+            {
+                1: [{ unit: warriorHero }, { item: shield1 }, { skill: phycisalAttackSkill }, { levelup: 1 }],
+                2: [{ unit: masterHero }, { skill: buffNextBaXSelf }],
+            },
+            // day 3
+            {
+                1: [{ unit: warriorHero }, { item: shield1 }, { skill: phycisalAttackSkill }, { levelup: 2 }, { item: basic_hat }],
+                2: [{ unit: masterHero }, { skill: buffNextBaXSelf }, { levelup: 1 }],
+            },
+            // day 4
+            {
+                1: [{ unit: paladinHero }, { skill: healFirst }, { skill: phycisalAttackSkill }, { item: shield1 }, { item: basic_hat }],
+                2: [{ unit: masterHero }, { skill: buffNextBaXSelf }, { levelup: 2 }],
+                3: [{ unit: darkHero }, { skill: magicAttackX3 }, { item: wand1_2 }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: paladinHero },
+                    { skill: healFirst_2 },
+                    { skill: phycisalAttackSkill },
+                    { skill: phycisalAttackSkill },
+                    { item: shield1 },
+                    { item: basic_hat },
+                ],
+                2: [{ unit: samuraiHero }, { skill: buffNextBaXSelf }],
+                3: [{ unit: darkHero }, { skill: magicAttackX3 }, { item: wand1_2 }, { levelup: 2 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: paladinHero },
+                    { skill: healFirst_2 },
+                    { skill: phycisalAttackSkill },
+                    { skill: phycisalAttackSkill },
+                    { item: shield1 },
+                    { item: basic_hat },
+                ],
+                2: [{ unit: samuraiHero }, { skill: buffNextBaXSelf }],
+                3: [{ unit: darkHero }, { skill: magicAttackX3 }, { item: wand1_2 }, { levelup: 2 }],
+                4: [{ unit: strongWolfUnit }, { levelup: 1 }],
+            },
+        ],
+    },
+    {
+        name: "xXxRatWarxXx",
+        unitData: [
+            // day 1
+            { 1: [{ unit: warriorHero }, { item: shield1 }, { item: basic_hat_2 }, { skill: buffNextBa }] },
+            // day 2
+            {
+                1: [{ unit: peasantUnit }, { item: basic_boots }],
+                2: [{ unit: priestHero }, { item: basic_ring_regen }, { item: basic_hat_2 }, { skill: healFirst }, { skill: healFirst_2 }],
+                3: [
+                    { unit: warriorHero },
+                    { levelup: 1 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: shield1 },
+                    { skill: buffNextBa },
+                    { skill: peasantLastStandSkill },
+                ],
+            },
+            // day 3
+            {
+                1: [{ unit: peasantUnit }, { item: shield1 }],
+                2: [
+                    { unit: priestHero },
+                    { levelup: 1 },
+                    { item: regenMantle },
+                    { attr: "basicArmor", incr: 2 },
+                    { item: basic_hat_2 },
+                    { skill: healLowHpSkill, chained: true },
+                    { skill: healFirst_2 },
+                ],
+                3: [
+                    { unit: warriorHero },
+                    { levelup: 2 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: sword1 },
+                    { item: gloves_war2 },
+                    { skill: peasantLastStandSkill },
+                    { skill: debuffWorthyFoe },
+                ],
+            },
+            // day 4
+            {
+                1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 1 }],
+                2: [
+                    { unit: priestHero },
+                    { levelup: 2 },
+                    { attr: "basicHpRegen", incr: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { item: regenMantle },
+                    { attr: "basicArmor", incr: 2 },
+                    { item: basic_hat_2 },
+                    { skill: healLowHpSkill, chained: true },
+                    { skill: healFirst_2 },
+                ],
+                3: [
+                    { unit: gladiatorHero },
+                    //{ levelup: 2 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: sword1 },
+                    { item: sword1 },
+                    { item: gloves_war2 },
+                    { item: basic_ring_regen },
+                    { skill: peasantLastStandSkill },
+                    { skill: debuffWorthyFoe },
+                ],
+                4: [{ unit: bardHero }, { item: musical21 }, { item: jacket21 }, { skill: buffNextBaAll }],
+            },
+            // day 5
+            {
+                1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 1 }],
+                2: [
+                    { unit: monkHero },
+                    //{ levelup: 2 },
+                    { attr: "basicHpRegen", incr: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { item: regenMantle },
+                    { attr: "basicArmor", incr: 2 },
+                    { item: basic_hat_2 },
+                    { item: scepter21 },
+                    { skill: healLowHpSkill, chained: true },
+                    { skill: healFirst_2 },
+                    { skill: heatUpSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                3: [
+                    { unit: gladiatorHero },
+                    //{ levelup: 2 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: sword1 },
+                    { item: sword1 },
+                    { item: gloves_war2 },
+                    { item: basic_ring_regen },
+                    { skill: peasantLastStandSkill },
+                    { skill: phycisalAttackSkill },
+                    { skill: debuffWorthyFoe },
+                ],
+                4: [{ unit: bardHero }, { levelup: 1 }, { item: musical21 }, { item: jacket21 }, { skill: buffNextBaAll }, { skill: buffNextBaAll }],
+            },
+            // day 6
+            {
+                1: [{ unit: peasantUnit }, { item: shield1 }, { levelup: 2 }],
+                2: [
+                    { unit: monkHero },
+                    //{ levelup: 2 },
+                    { attr: "basicHpRegen", incr: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicArmor", incr: 6 },
+                    { item: jacket21_2 },
+                    { attr: "basicArmor", incr: 2 },
+                    { item: basic_hat_2 },
+                    { item: scepter21 },
+                    { item: scepter31 },
+                    { skill: healLowHpSkill, chained: true },
+                    { skill: wildBasicTotemSkill, chained: true },
+                    { skill: healFirst_2 },
+                    { moveMcSkillToSlotIndex: 3 },
+                ],
+                3: [
+                    { unit: gladiatorHero },
+                    { levelup: 1 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: sword1 },
+                    { item: sword1 },
+                    { item: gloves_war2 },
+                    { item: basic_ring_regen },
+                    { skill: phycisalAttackSkill_2, chained: true },
+                    { skill: peasantLastStandSkill },
+                    { skill: debuffWorthyFoe },
+                ],
+                4: [{ unit: doomsayerHero }, { item: musical21 }, { item: regenMantle }, { skill: skeletonPoisonedFlames }, { skill: buffNextBaAll_2 }],
+            },
+        ],
+    },
+    {
+        name: "MeAndMySon",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: bardHero }, { item: musical1 }, { skill: buffNextBaAll }],
+                2: [{ unit: peasantUnit }],
+            },
+            // day 2
+            {
+                1: [{ unit: wildHero }, { item: axe1 }, { skill: attrDescArmor }],
+                2: [{ unit: bardHero }, { levelup: 1 }, { item: musical1 }, { skill: buffNextBaAll }],
+                3: [{ unit: peasantUnit }],
+            },
+            // day 3
+            {
+                1: [{ unit: wildHero }, { item: axe1 }, { item: basic_hat }, { skill: attrDescArmor }],
+                2: [{ unit: bardHero }, { levelup: 2 }, { item: musical1 }, { skill: buffNextBaAll }],
+                3: [{ unit: peasantUnit }],
+            },
+            // day 4
+            {
+                1: [{ unit: wildHero }, { levelup: 1 }, { item: axe1 }, { item: basic_hat }, { skill: attrDescArmor }],
+                2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { skill: buffNextBaAll }],
+                3: [{ unit: masterHero }, { item: sword1_2 }, { skill: phycisalAttackSkill }, { skill: phycisalAttackSkill }],
+                4: [{ unit: peasantUnit }],
+            },
+            // day 5
+            {
+                1: [{ unit: forestSpiritHero }, { item: axe1 }, { item: basic_hat }, { item: shield1 }, { item: totem21 }, { skill: attrDescArmor }],
+                2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { skill: buffNextBaAll }],
+                3: [
+                    { unit: masterHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: sword1_2 },
+                    { skill: phycisalAttackSkill },
+                    { skill: phycisalAttackSkill },
+                ],
+                4: [{ unit: peasantUnit }],
+            },
+            // day 6
+            {
+                1: [{ unit: forestSpiritHero }, { item: axe1 }, { item: basic_hat }, { item: shield1 }, { item: totem21 }, { skill: attrDescArmor }],
+                2: [{ unit: jesterHero }, { item: musical1_2 }, { item: basic_hat }, { item: musical21 }, { skill: buffNextBaAll }],
+                3: [
+                    { unit: hunterHero },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: sword1_2 },
+                    { item: totem1 },
+                    { skill: phycisalAttackSkill },
+                    { skill: phycisalAttackSkill },
+                ],
+                4: [{ unit: peasantUnit }],
+            },
+        ],
+    },
+    {
+        name: "CuteWitch99",
+        unitData: [
+            // day 1
+            { 1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }] },
+            // day 2
+            {
+                1: [{ unit: summonHero }, { item: scepter1_2 }, { skill: fireflySummonSkill }, { levelup: 1 }],
+                2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }],
+            },
+            // day 3
+            {
+                1: [{ unit: summonHero }, { item: scepter1_2 }, { item: basic_pants }, { skill: fireflySummonSkill }, { levelup: 2 }],
+                2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }, { levelup: 1 }],
+            },
+            // day 4
+            {
+                1: [{ unit: witchHero }, { item: scepter1_2 }, { item: basic_pants }, { item: musical21 }, { item: basic_hat }, { skill: fireflySummonSkill }],
+                2: [{ unit: darkHero }, { item: totem22 }, { skill: poisonRandom_2 }, { levelup: 2 }],
+                3: [{ unit: darkHero }, { item: wand21 }, { skill: poisonRandom }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: witchHero },
+                    { item: scepter1_2 },
+                    { item: basic_pants },
+                    { item: musical21_2 },
+                    { item: basic_hat },
+                    { skill: fireflySummonSkill },
+                ],
+                2: [{ unit: predatorHero }, { item: totem22 }, { item: axe22 }, { item: basic_hat }, { skill: poisonRandom_2 }],
+                3: [{ unit: darkHero }, { item: wand21 }, { skill: poisonRandom }, { levelup: 1 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: witchHero },
+                    { item: scepter1_2 },
+                    { item: basic_pants },
+                    { item: musical21_2 },
+                    { item: basic_hat },
+                    { skill: fireflySummonSkill },
+                    { levelup: 1 },
+                ],
+                2: [
+                    { unit: predatorHero },
+                    { item: totem22 },
+                    { item: axe22 },
+                    { item: basic_hat },
+                    { item: basic_hat },
+                    { skill: poisonRandom_2 },
+                    { levelup: 1 },
+                ],
+                3: [{ unit: predatorHero }, { item: wand21_2 }, { item: wand1_2 }, { skill: poisonRandom }],
+            },
+        ],
+    },
+    {
+        name: "NobodyExpects",
+        unitData: [
+            // day 1
+            { 1: [{ unit: priestHero }, { item: mace1 }, { item: basic_heal }, { skill: healSelf }, { levelup: 1 }] },
+            // day 2
+            {
+                1: [{ unit: priestHero }, { item: scepter22 }, { item: basic_heal_2 }, { skill: healSelf }, { levelup: 2 }, { attr: "basicMaxHp", incr: 3 }],
+                2: [{ unit: wildHero }, { item: basic_ring_damage }, { item: basic_hat }, { skill: wildBasicTotemSkill }],
+                3: [{ unit: goldGoblin1Unit }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: inquisitorHero },
+                    { item: scepter22 },
+                    { item: basic_heal_2 },
+                    { item: basic_ring_damage },
+                    { skill: chainToNextSkill },
+                    { skill: healSelf },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicMagicPower", incr: 1 },
+                ],
+                2: [{ unit: wildHero }, { item: axe21 }, { item: basic_hat }, { skill: wildBasicTotemSkill }, { skill: removeBuffSkill }, { levelup: 1 }],
+                3: [{ unit: peasantUnit }, { item: itemPeasantPitchfork }],
+                4: [{ unit: goldGoblin1Unit }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: inquisitorHero },
+                    { item: scepter22 },
+                    { item: basic_heal_2 },
+                    { item: basic_ring_damage },
+                    { item: shield22 },
+                    { skill: chainToNextSkill },
+                    { skill: healSelf },
+                    { skill: attrArmorAll },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                ],
+                2: [
+                    { unit: druidHero },
+                    { item: axe21 },
+                    { item: basic_hat },
+                    { item: basic_pants },
+                    { skill: wildBasicTotemSkill },
+                    { skill: removeBuffSkill },
+                ],
+                3: [{ unit: bardHero }, { skill: buffNextBaAll }],
+                4: [{ unit: goldGoblin1Unit }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: inquisitorHero },
+                    { item: scepter22 },
+                    { item: basic_heal_2 },
+                    { item: basic_ring_damage },
+                    { item: shield22 },
+                    { skill: chainToNextSkill },
+                    { skill: healSelf },
+                    { skill: attrArmorAll },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                ],
+                2: [
+                    { unit: druidHero },
+                    { item: axe21 },
+                    { item: basic_hat },
+                    { item: basic_pants },
+                    { skill: wildBasicTotemSkill_2 },
+                    { skill: removeBuffSkill },
+                    { attr: "basicMagicPower", incr: 1 },
+                ],
+                3: [{ unit: bardHero }, { skill: buffNextBaAll }, { item: music5AddBuffTarget }],
+                4: [{ unit: goldGoblin1Unit }, { item: musical21 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: inquisitorHero },
+                    { item: scepter22 },
+                    { item: basic_heal_2 },
+                    { item: basic_ring_damage },
+                    { item: shield22_2 },
+                    { skill: chainToNextSkill },
+                    { skill: healSelf },
+                    { skill: attrArmorAll },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { levelup: 1 },
+                ],
+                2: [
+                    { unit: druidHero },
+                    { item: axe21 },
+                    { item: basic_hat_2 },
+                    { item: basic_pants_2 },
+                    { skill: wildBasicTotemSkill_2 },
+                    { skill: removeBuffSkill },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { levelup: 1 },
+                ],
+                3: [{ unit: bladedancerHero }, { skill: buffNextBaAll }, { item: music5AddBuffTarget }, { item: musical21 }],
+                4: [{ unit: magicHero }, { skill: applyBurn }, { skill: applyBurn }, { item: staff22 }],
+            },
+        ],
+    },
+    {
+        name: "Holy_Dagger_13",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: masterHero }, { item: sword1 }, { item: basic_ring_regen }, { skill: buffNextBaXSelf }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: masterHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { item: sword1 },
+                    { item: basic_ring_regen },
+                    { skill: buffNextBaXSelf },
+                ],
+                2: [{ unit: warriorHero }, { item: shield21 }, { item: basic_ring_damage }, { skill: buffNextBa }, { skill: buffNextBa }],
+                3: [{ unit: warriorSummonMob }],
+                4: [{ unit: goldGoblin1Unit }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: masterHero },
+                    { levelup: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicArmor", incr: 6 },
+                    { item: sword1 },
+                    { item: basic_ring_regen },
+                    { skill: buffNextBaXSelf },
+                ],
+                2: [
+                    { unit: warriorHero },
+                    { item: shield21 },
+                    { item: ring_regen2 },
+                    { skill: buffNextBa_2, chained: true },
+                    { skill: buffNextBa_2, chained: true },
+                ],
+                3: [{ unit: warriorSummonMob }],
+                4: [{ unit: wolfUnit }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: assasinHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 9 },
+                    { attr: "basicCritChance", incr: 10 },
+                    { item: axe32 },
+                    { item: basic_ring_regen },
+                    { skill: attackWithBleedSkill },
+                    { skill: buffNextBaXSelf },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: warriorHero },
+                    { levelup: 2 },
+                    { item: shield21 },
+                    { item: ring_regen2 },
+                    { skill: buffNextBa_2, chained: true },
+                    { skill: buffNextBa_2, chained: true },
+                ],
+                3: [{ unit: wolfUnit }],
+                4: [{ unit: warriorSummonMob }, { attr: "basicMaxHp", incr: 4 }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: assasinHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 9 },
+                    { attr: "basicCritChance", incr: 10 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { item: axe32 },
+                    { item: basic_ring_regen },
+                    { skill: attackWithBleedSkill },
+                    { skill: buffNextBaXSelf },
+                    { skill: riposteSkill_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: paladinHero },
+                    { item: dagger32 },
+                    { item: scepter31 },
+                    { item: ring_regen2 },
+                    { skill: buffNextBa_2, chained: true },
+                    { skill: buffNextBa_2, chained: true },
+                    { skill: buffNextBaTimes_2 },
+                    { moveMcSkillToSlotIndex: 3 },
+                ],
+                3: [{ unit: wolfUnit }],
+                4: [{ unit: warriorSummonMob }, { item: shield21 }, { attr: "basicMaxHp", incr: 4 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: assasinHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 9 },
+                    { attr: "basicCritChance", incr: 10 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { item: axe32 },
+                    { item: dagger21 },
+                    { item: basic_ring_regen },
+                    { skill: attackWithBleedSkill },
+                    { skill: buffNextBaXSelf },
+                    { skill: riposteSkill_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: paladinHero },
+                    { levelup: 1 },
+                    { item: dagger32 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: scepter31 },
+                    { item: ring_regen2 },
+                    { skill: buffNextBa_3, chained: true },
+                    { skill: mortalStrikeSkill, chained: true },
+                    { skill: buffNextBaTimes_2 },
+                    { moveMcSkillToSlotIndex: 3 },
+                ],
+                3: [{ unit: wolfUnit }, { attr: "basicMaxHp", incr: 4 }],
+                4: [{ unit: warriorSummonMob }, { item: shield21 }, { attr: "basicMaxHp", incr: 4 }],
+            },
+        ],
+    },
+    {
+        name: "shocKING",
+        unitData: [
+            // day 1
+            {
+                2: [{ unit: magicHero }, { item: wand1 }, { skill: magicAttack }],
+                1: [{ unit: goblinUnit }],
+            },
+            // day 2
+            {
+                1: [{ unit: orderHero }, { item: basic_jacket }, { skill: attrArmorSelf }],
+                2: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+                3: [{ unit: magicHero }, { item: wand1 }, { skill: applyBurn }, { skill: magicAttack }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: orderHero },
+                    { levelup: 2 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: basic_jacket },
+                    { item: hat21 },
+                    { skill: attrArmorAll },
+                    { skill: attrArmorSelf },
+                ],
+                2: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+                3: [{ unit: magicHero }, { levelup: 1 }, { item: wand1_2 }, { skill: applyShock, chained: true }, { skill: magicAttack }],
+                4: [{ unit: goblinUnit }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: knightHero },
+                    { attr: "basicArmor", incr: 3 }, // ?? was unit73_knight_4.basicArmor = 25;
+                    { item: basic_jacket },
+                    { item: hat21 },
+                    { item: sword22 },
+                    { skill: attrArmorAll },
+                    { skill: attrArmorSelf },
+                ],
+                2: [
+                    { unit: druidHero },
+                    { attr: "basicMagicPower", incr: 3 },
+                    { item: staff22 },
+                    { skill: applyShock, chained: true },
+                    { skill: applyShock },
+                    { skill: magicAttack },
+                ],
+                3: [{ unit: goblinUnit }, { levelup: 1 }, { item: itemGoblinBoneDagger }],
+                4: [{ unit: goblinUnit }, { levelup: 1 }, { item: wand1_2 }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: knightHero },
+                    { levelup: 1 },
+                    { attr: "basicArmor", incr: 6 },
+                    { item: basic_jacket },
+                    { item: hat21 },
+                    { item: sword22 },
+                    { skill: attrArmorAll_2 },
+                    { skill: removeDebuffSkill },
+                    { skill: attrArmorAll },
+                ],
+                2: [
+                    { unit: druidHero },
+                    { attr: "basicMagicPower", incr: 5 },
+                    { item: staff22 },
+                    { skill: applyShock, chained: true },
+                    { skill: applyShock },
+                    { skill: magicAttack },
+                ],
+                3: [{ unit: goblinUnit }, { levelup: 1 }, { item: itemGoblinBoneDagger }],
+                4: [{ unit: goblinUnit }, { levelup: 1 }, { item: wand1_2 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: knightHero },
+                    { levelup: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { item: jacket21 },
+                    { item: hat21 },
+                    { item: sword22 },
+                    { item: shield32 },
+                    { skill: attrArmorAll_2 },
+                    { skill: removeDebuffSkill },
+                    { skill: attrArmorAll },
+                ],
+                2: [
+                    { unit: druidHero },
+                    { levelup: 1 },
+                    { attr: "basicMagicPower", incr: 5 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: staff22 },
+                    { item: basic_jacket },
+                    { skill: applyShock, chained: true },
+                    { skill: applyShock },
+                    { skill: magicAttack },
+                ],
+                3: [{ unit: goblinUnit }, { levelup: 3 }, { item: itemGoblinBoneDagger }],
+                4: [{ unit: goblinUnit }, { levelup: 2 }, { item: wand1_2 }],
+            },
+            // -- day 7 --
+            {
+                1: [
+                    { unit: knightHero },
+                    { levelup: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+                    { item: jacket21 },
+                    { item: hat21 },
+                    { item: sword22 },
+                    { item: shield32 },
+                    { skill: buffSelfMPorPP },
+                    { skill: attrArmorAll_2 },
+                    { skill: attrArmorAll },
+                ],
+                2: [
+                    { unit: druidHero },
+                    { levelup: 1 },
+                    { attr: "basicMagicPower", incr: 5 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+                    { item: staff22 },
+                    { item: basic_jacket },
+                    { skill: applyShock, chained: true },
+                    { skill: applyShock },
+                    { skill: magicAttack },
+                ],
+                3: [
+                    { unit: goblinUnit },
+                    { levelup: 3 },
+                    { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+                    { item: itemGoblinBoneDagger },
+                ],
+                4: [
+                    { unit: goblinUnit },
+                    { levelup: 3 },
+                    { attr: "basicMaxHp", incr: 10 }, // hp aura - hack
+                    { item: wand1_2 },
+                ],
+            },
+        ],
+    },
+    {
+        name: "MisterDETH",
+        unitData: [
+            // day 1
+            { 1: [{ unit: orderHero }, { item: shield1 }, { item: basic_jacket }, { skill: attrAttackSelf_2 }] },
+            // day 2
+            {
+                1: [
+                    { unit: orderHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: shield1 },
+                    { item: basic_jacket_2 },
+                    { skill: attrAttackSelf_2 },
+                ],
+                2: [{ unit: darkHero }, { item: totem1 }, { item: basic_hat }, { skill: poisonRandom }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: orderHero },
+                    { levelup: 2 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: shield1 },
+                    { item: basic_jacket_2 },
+                    { attr: "basicMaxHp", incr: 1 },
+                    { skill: attrAttackSelf_2 },
+                ],
+                2: [{ unit: darkHero }, { item: totem1 }, { item: ring_regen2_2 }, { skill: magicAttackX3, chained: true }, { skill: poisonRandom }],
+                3: [{ unit: warriorSummonMob }, { item: basic_hat }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: forestSpiritHero },
+                    //{ levelup: 2 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicCritChance", incr: 8 },
+                    { item: shield1 },
+                    { item: totem22 },
+                    { item: basic_jacket_2 },
+                    { item: basic_hat },
+                    { attr: "basicMaxHp", incr: 2 },
+                    { skill: attrAttackSelf_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: necromancerHero },
+                    { attr: "basicMagicPower", incr: 5 },
+                    { item: totem1 },
+                    { item: wand22 },
+                    { item: ring_regen2_2 },
+                    { attr: "basicHpRegen", incr: 1 },
+                    { skill: magicAttackX3, chained: true },
+                    { skill: poisonRandom },
+                    { skill: poisonRandom },
+                ],
+                3: [{ unit: warriorSummonMob_3 }],
+                4: [{ unit: warriorSummonMob }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: forestSpiritHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicCritChance", incr: 8 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                    { item: shield1 },
+                    { item: totem1 },
+                    { item: basic_jacket_2 },
+                    { item: basic_hat },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { skill: attrAttackSelf_2 },
+                    { skill: increaseMaxHpSkill },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: necromancerHero },
+                    { attr: "basicMagicPower", incr: 5 },
+                    { item: totem1 },
+                    { item: wand22 },
+                    { item: ring_regen2_2 },
+                    { attr: "basicHpRegen", incr: 2 },
+                    { skill: magicAttackX3, chained: true },
+                    { skill: poisonRandom_2 },
+                    { skill: concentrateThePoisonSkill, chained: true },
+                ],
+                3: [{ unit: warriorSummonMob_3 }],
+                4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: forestSpiritHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicCritChance", incr: 8 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                    { item: axe32 },
+                    { item: totem1 },
+                    { item: basic_jacket_2 },
+                    { item: basic_hat },
+                    { attr: "basicMaxHp", incr: 4 },
+                    { skill: attrAttackSelf_2 },
+                    { skill: attrArmorSelf, chained: true },
+                    { skill: increaseMaxHpSkill },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: necromancerHero },
+                    { levelup: 1 },
+                    { attr: "basicMagicPower", incr: 5 },
+                    { item: totem1 },
+                    { item: wand22 },
+                    { item: ring_regen2_2 },
+                    { attr: "basicHpRegen", incr: 3 },
+                    { skill: magicAttackX3, chained: true },
+                    { skill: poisonRandom_2 },
+                    { skill: concentrateThePoisonSkill, chained: true },
+                ],
+                3: [{ unit: warriorSummonMob_3 }],
+                4: [{ unit: skeletonWarriorUnit }, { item: totem22 }],
+            },
+        ],
+    },
+    {
+        name: "ClownSticks",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: masterHero }, { item: sword1 }, { skill: buffNextBaXSelf }],
+                2: [{ unit: warriorSummonMob }, { item: staff1 }],
+                3: [{ unit: warriorSummonMob }],
+                4: [{ unit: warriorSummonMob }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: masterHero },
+                    { levelup: 2 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                    { item: axe1 },
+                    { skill: phycisalAttackSkill },
+                    { skill: buffNextBaXSelf },
+                ],
+                2: [{ unit: warriorSummonMob }, { item: staff1 }],
+                3: [{ unit: warriorSummonMob }, { item: sword1 }],
+                4: [{ unit: warriorSummonMob }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: mimicHero },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: axe1_2 },
+                    { item: jacket21 },
+                    { item: regenMantle },
+                    { item: basic_pants },
+                    { skill: attackWithBleedSkill, chained: true },
+                    { skill: phycisalAttackSkill },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+                3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+                4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: mimicHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicHpRegen", incr: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 3 },
+                    { item: axe1_2 },
+                    { item: jacket21 },
+                    { item: regenMantle },
+                    { item: basic_pants },
+                    { skill: attackWithBleedSkill_2, chained: true },
+                    { skill: chainToNextSkill, chained: true },
+                    { skill: phycisalAttackSkill_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+                3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+                4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: mimicHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicHpRegen", incr: 2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 3 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { item: axe1_2 },
+                    { item: jacket21 },
+                    { item: regenMantle },
+                    { item: sword22 },
+                    { skill: attackWithBleedSkill_3, chained: true },
+                    { skill: chainToNextSkill, chained: true },
+                    { skill: phycisalAttackSkill_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+                3: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+                4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: sword1 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: mimicHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicHpRegen", incr: 3 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 3 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { item: axe1_2 },
+                    { item: jacket21 },
+                    { item: regenMantle },
+                    { item: sword31 },
+                    { skill: attackWithBleedSkill_3, chained: true },
+                    { skill: attackWithBleedSkill, chained: true },
+                    { skill: phycisalAttackSkill_3 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: sword22 }],
+                3: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: staff1 }],
+                4: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: sword1_2 }],
+            },
+        ],
+    },
+    {
+        name: "WiLdPiRaTe",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: wildHero }, { levelup: 1 }, { item: totem1 }, { skill: wildBasicTotemSkill }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: wildHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: totem1 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: attrIncrHpReg },
+                ],
+                2: [{ unit: wildHero }, { item: axe22 }, { skill: wildBasicTotemSkill }, { skill: peasantLastStandSkill }],
+                3: [{ unit: pirate1Unit }, { item: axe1 }],
+                4: [{ unit: peasantUnit }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: shamanHero },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: totem1 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: statusesIntoHeal, chained: true },
+                    { skill: attrIncrHpReg },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                2: [
+                    { unit: wildHero },
+                    { levelup: 1 },
+                    { item: axe22 },
+                    { item: ring_regen2 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: peasantLastStandSkill },
+                ],
+                3: [{ unit: pirate1Unit }, { item: axe1 }],
+                4: [{ unit: pirate1Unit }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: shamanHero },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { item: totem1 },
+                    { item: musical1_2 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: statusesIntoHeal, chained: true },
+                    { skill: attrIncrHpReg },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                2: [
+                    { unit: hunterHero },
+                    { item: axe22 },
+                    { item: ring_regen2 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: attackWithBleedSkill },
+                    { skill: peasantLastStandSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                3: [{ unit: pirate1Unit }, { item: axe1 }],
+                4: [{ unit: pirate1Unit }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: shamanHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: totem1 },
+                    { item: musical1_2 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: statusesIntoHeal, chained: true },
+                    { skill: attrIncrHpReg },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                2: [
+                    { unit: hunterHero },
+                    { item: axe22 },
+                    { item: ring_regen2 },
+                    { item: totem5HptoDmg },
+                    { item: ring_regen2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: attackWithBleedSkill },
+                    { skill: peasantLastStandSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                3: [{ unit: pirate1Unit }, { item: axe1 }],
+                4: [{ unit: pirate1Unit }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: shamanHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { item: totem21_2 },
+                    { item: totem1 },
+                    { skill: statusesIntoHeal_2, chained: true },
+                    { skill: chainBasicAttackSkill },
+                    { skill: chainBasicAttackSkill },
+                    { moveMcSkillToSlotIndex: 3 },
+                ],
+                2: [
+                    { unit: hunterHero },
+                    { levelup: 1 },
+                    { item: axe22 },
+                    { item: ring_regen2 },
+                    { item: totem5HptoDmg },
+                    { item: ring_regen2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { skill: wildBasicTotemSkill },
+                    { skill: attackWithBleedSkill },
+                    { skill: peasantLastStandSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                3: [{ unit: pirate1Unit }, { levelup: 1 }, { item: axe1 }],
+                4: [{ unit: pirate1Unit }, { levelup: 1 }],
+            },
+        ],
+    },
+    {
+        name: "_toxxic_edgy_",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: darkHero }, { item: wand1 }, { skill: poisonRandom }, { skill: toxicTuneSkill }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: darkHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: wand1 },
+                    { item: basic_jacket },
+                    { skill: poisonRandom },
+                    { skill: toxicTuneSkill },
+                ],
+                2: [
+                    { unit: wildHero },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: axe21 },
+                    { item: basic_ring_regen },
+                    { skill: attrIncrHpReg },
+                    { skill: peasantLastStandSkill },
+                ],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: darkHero },
+                    { levelup: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: wand1 },
+                    { item: basic_jacket },
+                    { skill: poisonRandom },
+                    { skill: toxicTuneSkill_2 },
+                ],
+                2: [
+                    { unit: wildHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: axe21 },
+                    { item: basic_ring_regen },
+                    { skill: attrIncrHpReg },
+                    { skill: peasantLastStandSkill },
+                ],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: necromancerHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { item: totem1 },
+                    { item: staff21 },
+                    { item: basic_jacket },
+                    { skill: poisonRandom },
+                    { skill: toxicTuneSkill_2 },
+                ],
+                2: [
+                    { unit: wildHero },
+                    { levelup: 2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: totem21 },
+                    { item: basic_ring_regen },
+                    { skill: attrIncrHpReg },
+                    { skill: peasantLastStandSkill },
+                ],
+                3: [{ unit: masterHero }, { levelup: 1 }, { item: axe21 }, { skill: buffNextBaBeCritSelf_2, chained: true }, { skill: feintAttack }],
+                4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: necromancerHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { item: totem1 },
+                    { item: staff21_2 },
+                    { item: basic_jacket },
+                    { item: basic_jacket },
+                    { skill: poisonRandom },
+                    { skill: toxicTuneSkill_2 },
+                    { skill: radiantWallSkill },
+                ],
+                2: [
+                    { unit: barbarianHero },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: totem21 },
+                    { item: sword31 },
+                    { item: basic_ring_regen },
+                    { skill: attrIncrHpReg },
+                    { skill: peasantLastStandSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                3: [{ unit: masterHero }, { levelup: 1 }, { item: axe21 }, { skill: buffNextBaBeCritSelf_2, chained: true }, { skill: feintAttack }],
+                4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: necromancerHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicMagicPower", incr: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { item: totem1 },
+                    { item: staff21_2 },
+                    { item: basic_jacket },
+                    { item: basic_jacket },
+                    { skill: poisonRandom },
+                    { skill: toxicTuneSkill_2 },
+                    { skill: radiantWallSkill },
+                ],
+                2: [
+                    { unit: barbarianHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: totem21 },
+                    { item: sword31 },
+                    { item: basic_ring_regen },
+                    { skill: attrIncrHpReg },
+                    { skill: peasantLastStandSkill },
+                    { skill: nextBAArea, chained: true },
+                    { moveMcSkillToSlotIndex: 3 },
+                ],
+                3: [
+                    { unit: assasinHero },
+                    { item: axe21 },
+                    { item: dagger21 },
+                    { item: gloves_magic2 },
+                    { skill: buffNextBaBeCritSelf_2, chained: true },
+                    { skill: feintAttack },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                4: [{ unit: goblinUnit }, { item: itemGoblinBoneDagger }],
+            },
+        ],
+    },
+    {
+        name: "exoBattle67",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: summonHero }, { item: scepter1 }, { skill: fireflySummonSkill }],
+            },
+            // day 2
+            {
+                1: [{ unit: summonHero }, { levelup: 1 }, { item: scepter1 }, { item: basic_pants }, { skill: fireflySummonSkill_2 }],
+                2: [{ unit: magicHero }, { attr: "basicCritChance", incr: 4 }, { item: staff1 }, { skill: applyBurn }],
+                3: [{ unit: pirate1Unit }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: summonHero },
+                    { levelup: 2 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                    { item: scepter1 },
+                    { item: basic_pants },
+                    { skill: fireflySummonSkill_2 },
+                ],
+                2: [
+                    { unit: magicHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: staff1 },
+                    { skill: blindingBeamSkill, chained: true },
+                    { skill: applyBurn },
+                ],
+                3: [{ unit: peasantUnit_4 }],
+                4: [{ unit: pirate1Unit }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: exorcistHero },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: scepter1_2 },
+                    { item: scepter1 },
+                    { item: basic_pants },
+                    { skill: fireflySummonSkill_2 },
+                ],
+                2: [
+                    { unit: magicHero },
+                    { levelup: 2 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: staff1 },
+                    { skill: blindingBeamSkill, chained: true },
+                    { skill: applyBurn },
+                ],
+                3: [{ unit: peasantUnit_4 }],
+                4: [{ unit: pirate1Unit }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: exorcistHero },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: scepter1_2 },
+                    { item: staff1 },
+                    { item: basic_pants },
+                    { item: basic_hat },
+                    { skill: fireflySummonSkill_2 },
+                ],
+                2: [
+                    { unit: battleMageHero },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: staff22 },
+                    { item: staff5MagicCrit },
+                    { item: gloves_magic2 },
+                    { skill: blindingBeamSkill, chained: true },
+                    { skill: meteoriteFallSkill },
+                    { skill: applyBurn },
+                ],
+                3: [{ unit: peasantUnit_4 }, { item: mace31 }],
+                4: [{ unit: pirate1Unit }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: exorcistHero },
+                    { levelup: 1 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: scepter1_2 },
+                    { item: staff1 },
+                    { item: basic_pants },
+                    { item: basic_hat },
+                    { skill: chainToNextSkill },
+                    { skill: fireflySummonSkill_2 },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                2: [
+                    { unit: battleMageHero },
+                    { attr: "basicCritChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: staff22 },
+                    { item: staff5MagicCrit },
+                    { item: gloves_magic2_2 },
+                    { skill: heatUpSkill_2, chained: true },
+                    { skill: blindingBeamSkill, chained: true },
+                    { skill: meteoriteFallSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                3: [{ unit: peasantUnit_4 }, { item: mace31 }],
+                4: [{ unit: pirate1Unit }, { levelup: 1 }, { item: basic_ring_regen }],
+            },
+        ],
+    },
+    {
+        name: "SamuraiSong",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: priestHero }, { item: mace1 }, { item: basic_jacket }, { skill: healFirst }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: priestHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: mace1_2 },
+                    { item: basic_jacket },
+                    { skill: healFirst },
+                ],
+                2: [
+                    { unit: masterHero },
+                    { item: itemPeasantPitchfork },
+                    { item: basic_ring_damage },
+                    { skill: buffNextBaXSelf_2 },
+                    { skill: buffNextBaXSelf },
+                ],
+                3: [{ unit: fireflySummonMob }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: priestHero },
+                    { levelup: 2 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: mace1_2 },
+                    { item: basic_jacket },
+                    { skill: healFirst },
+                ],
+                2: [
+                    { unit: masterHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: sword21 },
+                    { item: basic_ring_damage },
+                    { skill: buffNextBaXSelf_2 },
+                    { skill: buffNextBaXSelf },
+                ],
+                3: [{ unit: fireflySummonMob }, { item: gloves_magic2 }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: minstrelHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 6 },
+                    { item: mace1_2 },
+                    { item: mace1 },
+                    { item: basic_jacket },
+                    { skill: healFirst },
+                ],
+                2: [
+                    { unit: masterHero },
+                    { levelup: 2 },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { item: sword21 },
+                    { item: basic_ring_damage },
+                    { skill: buffNextBaXSelf_3 },
+                    { skill: feintAttack, chained: true },
+                ],
+                3: [{ unit: priestHero }, { attr: "basicMagicPower", incr: 1 }, { item: scepter31 }, { skill: healFirst }],
+                4: [{ unit: fireflySummonMob }, { levelup: 1 }, { item: gloves_magic2 }, { skill: fireflySummonSkill }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: minstrelHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicMaxHp", incr: 6 },
+                    { item: mace1_2 },
+                    { item: mace1_2 },
+                    { item: basic_jacket },
+                ],
+                2: [
+                    { unit: samuraiHero },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { item: sword21 },
+                    { item: shield1 },
+                    { item: basic_ring_damage },
+                    { skill: buffNextBaXSelf_3 },
+                    { skill: feintAttack, chained: true },
+                    { skill: pirateDragNDrown },
+                ],
+                3: [{ unit: priestHero }, { levelup: 1 }, { attr: "basicMagicPower", incr: 1 }, { item: scepter31_2 }, { skill: healFirst_2 }],
+                4: [{ unit: fireflySummonMob }, { levelup: 1 }, { item: gloves_magic2 }, { skill: fireflySummonSkill }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: minstrelHero },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicMaxHp", incr: 6 },
+                    { item: mace1_2 },
+                    { item: mace1_2 },
+                    { item: basic_jacket },
+                    { item: basic_hat },
+                    { skill: blindingBeamSkill_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: samuraiHero },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: sword21 },
+                    { item: shield1 },
+                    { item: basic_ring_damage },
+                    { item: armor_amulet },
+                    { skill: attackIgnoringArmor, chained: true },
+                    { skill: buffNextBaXSelf_3 },
+                    { skill: feintAttack, chained: true },
+                ],
+                3: [
+                    { unit: minstrelHero },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { item: scepter31_2 },
+                    { skill: healFirst_2 },
+                    { skill: removeDebuffSkill },
+                    { skill: chainToNextSkill },
+                ],
+                4: [{ unit: fireflySummonMob }, { levelup: 2 }, { item: gloves_magic2 }, { skill: fireflySummonSkill }],
+            },
+        ],
+    },
+    {
+        name: "NdomBlshtGo!",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: warriorHero }, { item: sword1 }, { item: spiritArmor }, { skill: debuffWorthyFoe }],
+                2: [{ unit: warriorSummonMob }, { skill: venomHeartSkill }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: warriorHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 3 },
+                    { item: sword21 },
+                    { item: spiritArmor },
+                    { skill: debuffWorthyFoe },
+                    { skill: buffNextBa },
+                ],
+                2: [{ unit: warriorSummonMob }, { item: scepter1 }, { skill: venomHeartSkill }],
+                3: [{ unit: masterHero }, { item: sword1 }, { item: spiritArmor }, { skill: regularWolfSkill }, { skill: regularWolfSkill }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: bladedancerHero },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { item: sword21 },
+                    { item: spiritArmor },
+                    { skill: debuffWorthyFoe },
+                    { skill: buffNextBa },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
+                3: [
+                    { unit: masterHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: dagger21 },
+                    { item: spiritArmor },
+                    { skill: buffNextBaXSelf, chained: true },
+                    { skill: regularWolfSkill_2 },
+                ],
+                4: [{ unit: pirate1Unit }, { item: sword1 }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: bladedancerHero },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { item: sword21 },
+                    { item: shield31 },
+                    { skill: debuffWorthyFoe },
+                    { skill: buffNextBa },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
+                3: [
+                    { unit: mimicHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: dagger21 },
+                    { item: spiritArmor },
+                    { item: spiritArmor },
+                    { skill: buffNextBaXSelf, chained: true },
+                    { skill: regularWolfSkill_2 },
+                ],
+                4: [{ unit: pirate1Unit }, { item: sword1 }, { skill: buffNextBaBeCritSelf }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: bladedancerHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                    { item: sword21 },
+                    { item: shield31 },
+                    { item: jacket21 },
+                    { item: basic_boots },
+                    { skill: debuffWorthyFoe },
+                    { skill: buffNextBa },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
+                3: [
+                    { unit: mimicHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: dagger21 },
+                    { item: spiritArmor },
+                    { item: spiritArmor_2 },
+                    { item: summonerMantle3 },
+                    { skill: buffNextBaXSelf, chained: true },
+                    { skill: regularWolfSkill_2 },
+                ],
+                4: [{ unit: pirate1Unit }, { item: sword1 }, { skill: buffNextBaBeCritSelf }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: bladedancerHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicPhysicalPower", incr: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicEvasionChance", incr: 2 },
+                    { item: sword21 },
+                    { item: shield31 },
+                    { item: jacket21 },
+                    { item: basic_boots },
+                    { skill: chainToNextSkill },
+                    { skill: debuffWorthyFoe },
+                    { skill: chainBasicAttackSkill },
+                ],
+                2: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: scepter1 }, { skill: venomHeartSkill_2 }],
+                3: [
+                    { unit: mimicHero },
+                    { levelup: 1 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: dagger21 },
+                    { item: spiritArmor },
+                    { item: spiritArmor_2 },
+                    { item: summonerMantle3 },
+                    { skill: buffNextBaXSelf, chained: true },
+                    { skill: buffNextBaBeCritSelf_2, chained: true },
+                    { skill: chainBasicAttackSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                4: [{ unit: pirate1Unit }, { levelup: 1 }, { item: sword1 }, { skill: regularWolfSkill_2 }],
+            },
+        ],
+    },
+    {
+        name: "FeStIvAlBuFfS",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: bardHero }, { item: musical1 }, { item: basic_boots }, { skill: buffBaSelf_2 }, { skill: buffBaSelf }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: bardHero },
+                    { levelup: 1 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: musical1 },
+                    { item: basic_boots },
+                    { skill: buffBaSelf_2 },
+                    { skill: buffBaSelf },
+                ],
+                2: [{ unit: magicHero }, { item: staff1 }, { item: basic_ring_damage }, { skill: heatUpSkill }, { skill: magicAttack }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: bardHero },
+                    { levelup: 2 },
+                    { attr: "basicMaxHp", incr: 12 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: musical1 },
+                    { item: basic_boots },
+                    { skill: buffBaSelf_2 },
+                    { skill: buffBaSelf },
+                ],
+                2: [
+                    { unit: magicHero },
+                    { levelup: 1 },
+                    { item: staff1 },
+                    { item: basic_ring_damage },
+                    { skill: heatUpSkill_2, chained: true },
+                    { skill: magicAttack },
+                ],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: jesterHero },
+                    { attr: "basicMaxHp", incr: 12 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { item: musical1 },
+                    { item: musical21 },
+                    { item: basic_boots },
+                    { item: basic_ring_regen },
+                    { skill: buffBaSelf_2 },
+                    { skill: buffBaSelf },
+                    { skill: buffNextBaAll },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: magicHero },
+                    { levelup: 2 },
+                    { item: staff1 },
+                    { item: basic_ring_damage },
+                    { skill: heatUpSkill_2, chained: true },
+                    { skill: magicAttack },
+                ],
+                3: [{ unit: bardHero }, { item: dagger1 }, { skill: buffNextBaAll }, { skill: buffNextBaAll }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: jesterHero },
+                    { attr: "basicMaxHp", incr: 12 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: musical1 },
+                    { item: musical21 },
+                    { item: basic_boots },
+                    { item: basic_ring_regen },
+                    { skill: buffBaSelf_2 },
+                    { skill: chainToNextSkill },
+                    { skill: buffBaSelf_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: illusionistHero },
+                    { item: staff1 },
+                    { item: basic_ring_damage },
+                    { skill: heatUpSkill_3, chained: true },
+                    { skill: magicAttack },
+                    { skill: blindingBeamSkill },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                3: [{ unit: bardHero }, { levelup: 1 }, { item: dagger1 }, { skill: buffNextBaAll_2 }, { skill: buffNextBaAll }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: jesterHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 12 },
+                    { attr: "basicArmor", incr: 6 },
+                    { attr: "basicCritChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: wand31 },
+                    { item: musical21 },
+                    { item: basic_boots },
+                    { item: basic_ring_regen_2 },
+                    { skill: totemGiveArmorSkill, chained: true },
+                    { skill: buffBaSelf_2 },
+                    { skill: buffBaSelf_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [
+                    { unit: illusionistHero },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { item: staff1 },
+                    { item: dagger31 },
+                    { item: basic_ring_damage },
+                    { item: basic_pants },
+                    { skill: heatUpSkill_3, chained: true },
+                    { skill: magicAttack },
+                    { skill: blindingBeamSkill },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                3: [
+                    { unit: heraldHero },
+                    { item: dagger1 },
+                    { item: musical1 },
+                    { skill: buffNextBaAll_2 },
+                    { skill: buffNextBaAll },
+                    { skill: chainToNextSkill },
+                ],
+            },
+        ],
+    },
+    {
+        name: "OongaBoonga",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: warriorHero }, { item: shield1 }, { skill: buffNextBa }],
+                2: [{ unit: warriorSummonMob }, { item: staff1 }],
+            },
+            // day 2
+            {
+                1: [{ unit: warriorHero }, { levelup: 1 }, { item: shield1 }, { item: basic_jacket }, { skill: buffNextBa }],
+                2: [{ unit: warriorSummonMob }, { item: staff1 }],
+                3: [{ unit: darkHero }, { item: wand22 }, { skill: magicAttackX3 }, { skill: pirateDragNDrown }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: warriorHero },
+                    { levelup: 2 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicArmor", incr: 6 },
+                    { item: shield1 },
+                    { item: basic_jacket },
+                    { skill: buffNextBa },
+                ],
+                2: [{ unit: skeletonWarriorUnit }, { item: totem1 }],
+                3: [{ unit: darkHero }, { levelup: 1 }, { item: wand22 }, { skill: poisonRandom }, { skill: concentrateThePoisonSkill, chained: true }],
+                4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: barbarianHero },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicArmor", incr: 9 },
+                    { item: shield1 },
+                    { item: sword31 },
+                    { item: basic_jacket },
+                    { skill: buffNextBa },
+                    { skill: peasantsStronkSkill },
+                ],
+                2: [{ unit: skeletonWarriorUnit }, { item: totem1 }],
+                3: [
+                    { unit: warlockHero },
+                    { attr: "basicMagicPower", incr: 7 },
+                    { item: wand22 },
+                    { item: gloves_magic2 },
+                    { skill: concentrateThePoisonSkill, chained: true },
+                    { skill: magicAttackX3 },
+                    { skill: applyBurn },
+                ],
+                4: [{ unit: warriorSummonMob }, { levelup: 1 }, { item: staff1 }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: barbarianHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicArmor", incr: 9 },
+                    { item: shield1 },
+                    { item: sword31 },
+                    { item: basic_jacket },
+                    { skill: buffNextBa },
+                    { skill: peasantsStronkSkill },
+                ],
+                2: [{ unit: skeletonWarriorUnit }, { item: totem1 }],
+                3: [
+                    { unit: warlockHero },
+                    { attr: "basicMagicPower", incr: 7 },
+                    { item: wand22 },
+                    { item: wand1 },
+                    { item: gloves_magic2 },
+                    { skill: concentrateThePoisonSkill_2, chained: true },
+                    { skill: magicAttackX3 },
+                    { skill: applyBurn },
+                ],
+                4: [{ unit: warriorSummonMob }, { levelup: 2 }, { item: staff1 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: barbarianHero },
+                    { levelup: 1 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { attr: "basicArmor", incr: 9 },
+                    { item: shield1 },
+                    { item: sword31 },
+                    { item: basic_jacket },
+                    { skill: buffNextBa_2, chained: true },
+                    { skill: chainToNextSkill },
+                    { skill: chainBasicAttackSkill },
+                    { moveMcSkillToSlotIndex: 3 },
+                ],
+                2: [{ unit: skeletonWarriorUnit }, { item: totem1 }],
+                3: [
+                    { unit: warlockHero },
+                    { levelup: 1 },
+                    { attr: "basicMagicPower", incr: 7 },
+                    { item: wand22 },
+                    { item: wand1 },
+                    { item: gloves_magic2 },
+                    { skill: concentrateThePoisonSkill_2, chained: true },
+                    { skill: magicAttackX3 },
+                    { skill: heatUpSkill_2 },
+                ],
+                4: [{ unit: warriorSummonMob }, { levelup: 3 }, { item: staff1 }],
+            },
+        ],
+    },
+    {
+        name: "REturn2Monke",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: summonHero }, { attr: "basicMaxHp", incr: 9 }, { item: staff1 }, { item: basic_jacket }, { skill: fireflySummonSkill }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: summonHero },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicArmor", incr: 3 },
+                    { item: staff1_2 },
+                    { item: basic_jacket },
+                    { skill: fireflySummonSkill },
+                ],
+                2: [{ unit: wildHero }, { skill: wildBasicTotemSkill }],
+                3: [{ unit: pirate1Unit }, { item: axe22 }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: summonHero },
+                    { levelup: 1 },
+                    { attr: "basicMaxHp", incr: 9 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { item: staff1_2 },
+                    { item: basic_jacket },
+                    { skill: fireflySummonSkill },
+                ],
+                2: [{ unit: wildHero }, { item: axe22 }, { skill: attrDescArmor_2, chained: true }, { skill: wildBasicTotemSkill }],
+                3: [{ unit: pirate1Unit }, { item: sword21 }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: beastMasterHero },
+                    { attr: "basicMaxHp", incr: 12 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 6 },
+                    { item: staff1_2 },
+                    { item: staff22 },
+                    { item: basic_jacket },
+                    { skill: fireflySummonSkill },
+                ],
+                2: [{ unit: wildHero }, { levelup: 1 }, { item: axe22 }, { skill: attrDescArmor_2, chained: true }, { skill: wildBasicTotemSkill }],
+                3: [{ unit: pirate1Unit }, { item: sword21 }],
+                4: [{ unit: priestHero }, { item: scepter22 }, { skill: healFirst }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: beastMasterHero },
+                    { attr: "basicMaxHp", incr: 12 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 6 },
+                    { item: staff1_2 },
+                    { item: totem5HptoDmg },
+                    { item: basic_jacket },
+                    { skill: fireflySummonSkill },
+                    { skill: radiantWallSkill },
+                ],
+                2: [
+                    { unit: shamanHero },
+                    { item: axe22 },
+                    { skill: attrDescArmor_2, chained: true },
+                    { skill: wildBasicTotemSkill_2 },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                3: [{ unit: pirate1Unit }, { item: sword21 }],
+                4: [{ unit: priestHero }, { levelup: 1 }, { item: scepter22 }, { skill: healFirst_2 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: beastMasterHero },
+                    { attr: "basicMaxHp", incr: 12 },
+                    { attr: "basicArmor", incr: 3 },
+                    { attr: "basicEvasionChance", incr: 6 },
+                    { attr: "basicCritChance", incr: 2 },
+                    { item: staff1_2 },
+                    { item: totem5HptoDmg },
+                    { item: basic_jacket },
+                    { skill: attackWithBleedSkill_2, chained: true },
+                    { skill: chainBasicAttackSkill },
+                    { skill: fireflySummonSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                2: [
+                    { unit: shamanHero },
+                    { levelup: 1 },
+                    { item: axe22 },
+                    { item: axe21 },
+                    { skill: attrDescArmor_2, chained: true },
+                    { skill: wildBasicTotemSkill_2 },
+                    { skill: toxicTuneSkill },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                3: [{ unit: pirate1Unit }, { levelup: 1 }, { item: sword21 }],
+                4: [{ unit: bishopHero }, { item: scepter22 }, { skill: healFirst_2 }, { skill: radiantWallSkill }],
+            },
         ],
-        3: [{ unit: heraldHero }, { item: dagger1 }, { item: musical1 }, { skill: buffNextBaAll_2 }, { skill: buffNextBaAll }, { skill: chainToNextSkill }],
     },
-]);
-///////////////////////////////////////////////////////////
-
-//
-
-export const duelEnemies = [
-    enemy1_test,
-    enemy2,
-    enemy3,
-    enemy4_test,
-    enemy5,
-    enemy6,
-    enemy7,
-    enemy8,
-    enemy9,
-    enemy10,
-    enemy11,
-    enemy12,
-    enemy13,
-    enemy14,
-    enemy15,
-];
-
-export const duelEnemyNames = [
-    "Lolodin87",
-    "xXxRatWarxXx",
-    "MeAndMySon",
-    "CuteWitch99",
-    "NobodyExpects",
-    "Holy_Dagger_13",
-    "shocKING",
-    "MisterDETH",
-    "ClownSticks",
-    "WiLdPiRaTe",
-    "_toxxic_edgy_",
-    // new from 2026-06-04
-    "exoBattle67",
-    "SamuraiSong",
-    "NdomBlshtGo!",
-    "FeStIvAlBuFfS",
 ];

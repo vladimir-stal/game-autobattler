@@ -1,6 +1,8 @@
-import { duelEnemyNames } from "../duelConsts";
+import { IUnit } from "../../types";
+import { duelEnemies2 } from "../duelConsts";
 import { GameScene } from "../scenes/GameScene";
 import { getRandomArrayIndex, getRandomArrayItem, getRandomArrayItems } from "../utils/commonUtils";
+import { getDuelEnemy as getDuelEnemy_duelUtils } from "../utils/duelUtils";
 
 const START_HP = 30;
 export const INITIAL_PLAYERS_COUNT = 8;
@@ -24,17 +26,21 @@ export class LeaderController {
         this.hp = START_HP;
         this.leaders = [];
         const potentialPlayers = []
-        duelEnemyNames.forEach((n, i) => potentialPlayers.push(i));
+        duelEnemies2.forEach((n, i) => potentialPlayers.push(i)); // array of indexes
         for (let i = 0; i < INITIAL_PLAYERS_COUNT; i++) {
             if (i>0) {
                 const index = getRandomArrayIndex(potentialPlayers);
                 const pick = potentialPlayers[index];
                 potentialPlayers.splice(index,1);
-                this.leaders.push({ id: pick, hp: START_HP, name: duelEnemyNames[pick] });
+                this.leaders.push({ id: pick, hp: START_HP, name: duelEnemies2[pick].name });
             } else {
                 this.leaders.push({ id: 0, hp: START_HP, name: "YOU" });
             }
         }
+    }
+
+    getDuelEnemy(day: number): (IUnit | null)[] {
+        return getDuelEnemy_duelUtils(this.nextOpponentId)[day];
     }
 
     //decreaseMainPlayerHp

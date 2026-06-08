@@ -1,5 +1,5 @@
 import { IUnit, ICard, TDuelCards, TDuelEnemy, EUnitType, IItem, EHeroClassType, ESelectCardHint, IHeroSkillSet } from "../../types";
-import { duelEnemies } from "../duelConsts";
+import { duelEnemies2 } from "../duelConsts";
 import { debugAlwaysOneEnemy, debugEnemy } from "./debugUtils";
 import { applyItemBonuses, createItem } from "./itemUtils";
 import { levelUpUnit } from "./unitUtils";
@@ -7,7 +7,7 @@ import { levelUpUnit } from "./unitUtils";
 export const getDuelEnemy = (player: number) => {
     if (debugAlwaysOneEnemy)
         return debugEnemy; // FOR TESTING
-    else return duelEnemies[player]; // [player];
+    else return buildDuelEnemy(duelEnemies2[player].unitData); // [player];
 };
 
 const addItem = (unit: IUnit, item: IItem) => {

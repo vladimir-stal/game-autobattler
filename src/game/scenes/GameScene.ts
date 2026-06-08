@@ -22,7 +22,6 @@ import { LeaderController } from "../components/LeaderController";
 import { SellCardPanel } from "../components/ui/SellCardPanel";
 import { LeaderPanel } from "../components/ui/LeaderPanel";
 import { LeadersPanel } from "../components/ui/LeadersPanel";
-import { getDuelEnemy } from "../utils/duelUtils";
 import { CardUpgradetPanel } from "../components/ui/CardUpgradetPanel";
 import { SkillCardEnchantPanel } from "../components/ui/SkillCardEnchantPanel";
 import { CardHintPanel } from "../components/ui/CardHintPanel";
@@ -90,105 +89,7 @@ export class GameScene extends Phaser.Scene {
 
         //console.log("GAME SCENE >> CREATE");
         this.camera = this.cameras.main;
-        //this.audio = new AudioManager(this);
-
-        // initial house and players creation
-        // EventBus.on(
-        //     EventType.GET_HOUSE_createUnit(PONSE,
-        //     (house: House, mainDude: IDude, dudes: IDude[], houseItems: IHouseItem[], inventory: IInventoryItem[], players: Player[]) => {
-        //         // init UI
-        //         createUIPanels(this);
-        //         //
-        //         this.floorCount = house.floors.length;
-        //         //const floorY = getFloorY(mainDude.floor, this.floorCount);
-
-        //         console.log(">>> GET_HOUSE_createUnit(PONSE");
-        //         console.log(">>> mainDude", mainDude);
-        //         console.log(">>> dudes", dudes);
-        //         console.log(">>> players", players);
-
-        //         // get start room coordinates
-        //         let baseRoomRoom = 0;
-        //         let baseRoomFloor = 0;
-        //         house.floors.forEach((floor, floorIndex) => {
-        //             floor.rooms.forEach((room, roomIndex) => {
-        //                 if (room.type === EHouseRoomType.BASE) {
-        //                     baseRoomRoom = roomIndex;
-        //                     baseRoomFloor = floorIndex;
-        //                 }
-        //             });
-        //         });
-        //         //const floorY = getFloorY(baseRoomFloor);
-        //         //this.cameraY = floorY - GROUND_HEIGHT - this.camera.height / 2 + 200;
-        //         this.setCameraY(baseRoomFloor);
-
-        //         let isHost = false;
-        //         // players.forEach((player) => {
-        //         //     if (player.isHost && player.userId === this.mainDude.userId) {
-        //         //         isHost = true;
-        //         //     }
-        //         // });
-        //         this.isHost = isHost;
-
-        //         if (isHost) {
-        //             // init bots (for host player only)
-        //             // const bots = this.dudesContainer.dudes.filter((dude) => dude.isBot);
-        //             // if (bots.length > 0) {
-        //             //     this.botController.init(bots);
-        //             // }
-        //         }
-
-        //         // init house events
-        //         this.houseEventController = new HouseEventController(this);
-        //         this.houseEventController.init();
-
-        //         // room objects
-        //         this.houseColliders = this.houseContainer.getColliders();
-        //         this.roomObjectsController = new RoomObjectsController(this.queue, this.houseContainer.getRoomObjects(0));
-
-        //         // house items
-        //         this.houseItemsContainer.init(houseItems, this.mainDude, this.levelController.getLevel());
-        //         this.houseItemsColliders = this.houseItemsContainer.getCollideItems();
-        //         // center camera on main player
-        //         centerCameraOnMainDude(this, 0);
-        //         //set camera bounds
-        //         const maxRooms = house.floors.reduce((max, floor) => {
-        //             return Math.max(max, floor.rooms.length);
-        //         }, 0);
-        //         //this.camera.setBounds(-50, 0, house.floors[0].rooms.length * ROOM_WIDTH + 100, (house.floors.length + 1) * FLOOR_HEIGHT);
-        //         this.camera.setBounds(-50, -100, maxRooms * ROOM_WIDTH + 100, (house.floors.length + 1) * FLOOR_HEIGHT);
-
-        //         // start walking after delay
-        //         this.startWalkLevel();
-
-        //         // test
-        //         // const mainMenuMusic = this.sound.add(SOUND_MAIN_MENU_MUSIC, { loop: false, volume: 0.02 });
-        //         // setTimeout(() => {
-        //         //     mainMenuMusic.play();
-        //         // }, 3000);
-        //     }
-        // );
-
-        // ON SCALE
-        // this.scale.addListener(
-        //     Scale.Events.RESIZE,
-        //     (gameSize: Structs.Size, baseSize: Structs.Size, displaySize: Structs.Size, previousWidth: number, previousHeight: number) => {
-        //         //console.log("CAMERA: W:", this.camera.width, "H:", this.camera.height);
-        //         // CAMERA
-        //         //this.camera.pan(this.mainDude.gameObject.x, this.cameraY, 0, "Sine.easeIn");
-        //         //this.setCameraY(this.levelController.getLevel());
-        //         //this.scale.refresh();
-        //     },
-        // );
-        // this.scale.on("resize", (gameSize) => {
-        //     //this.scale.refresh();
-        //     const { width, height } = gameSize;
-        //     // CRITICAL: Update the camera size so input coordinates align
-        //     this.camera.setSize(width, height);
-        // });
-
-        //EventBus.emit(EventType.GET_HOUSE);
-
+        
         // KEYBOARD EVENT LISTENERS
         this.cursors = this.input!.keyboard!.createCursorKeys();
         initInputListeners(this);
@@ -383,7 +284,7 @@ export class GameScene extends Phaser.Scene {
         const units = this.unitPanel.slots.map((slot) => (slot.slot.card ? slot.slot.card.card.unit || basicClassHeroes[0] : null));
 
         const relativeDay = Math.min(6, this.selectController.day);
-        const enemyUnits: (IUnit | null)[] = getDuelEnemy(this.leaderController.nextOpponentId)[relativeDay];
+        const enemyUnits: (IUnit | null)[] = this.leaderController.getDuelEnemy(relativeDay);
         enemyUnits.forEach((enemyUnit) => {
             enemyUnit && generateUnitId(enemyUnit);
         });

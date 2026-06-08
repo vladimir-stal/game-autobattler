@@ -2,7 +2,6 @@ import { ECardType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EStat
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { jacket21_3 } from "../commonItemConsts2";
-import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
 import {
     barbarianHero,
@@ -49,12 +48,14 @@ import { outHealBuffSkill } from "../skills/commonSkill3Consts";
 import { scrollOfSkill } from "../commonItemConsts3";
 import { totem5HptoDmg } from "../weaponItem5Consts";
 import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
+import { buildDuelEnemy } from "./duelUtils";
+import { duelEnemies2 } from "../duelConsts";
 
 export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
 export const debugAlwaysOneEnemy = false;
 
-export const debugEnemy: TDuelEnemy = enemy4_test;
+export const debugEnemy: TDuelEnemy = buildDuelEnemy(duelEnemies2.find(d => d.name === "MeAndMySon")?.unitData || []);
 
 //
 

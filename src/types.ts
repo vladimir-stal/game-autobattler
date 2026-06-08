@@ -1237,6 +1237,10 @@ export type THeroSkills = IHeroSkillSet[];
 
 export type TDuelEnemy = Record<number, (IUnit | null)[]>;
 export type TDuelCards = Record<number, IMixedDuelCard[]>;
+export interface TDuelEnemy2 {
+    name: string;
+    unitData: TDuelCards[];
+}
 
 export interface IMixedDuelCard {
     unit?: IUnit;
