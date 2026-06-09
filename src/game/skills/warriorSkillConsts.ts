@@ -224,6 +224,7 @@ const wortyFoeSkillset = (atkMinus: number, ppScale: number, vulStacks: number):
                 targetType: ETargetType.SELF,
                 timeType: EBuffTimeType.TILL_NEXT_BA,
                 isHidden: true,
+                cannotBeTargeted: true, // no reason to be targeted by copy buff
             },
         },
     ];

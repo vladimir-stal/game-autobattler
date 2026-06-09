@@ -65,6 +65,8 @@ import {
     battleMageHero,
     illusionistHero,
     warlockHero,
+    duelistHero,
+    sorcererHero,
 } from "./mcHeroConsts";
 import { buffBaSelf, buffBaSelf_2, buffNextBaAll, buffNextBaAll_2, totemGiveArmorSkill } from "./skills/bardSkillConsts";
 import {
@@ -91,6 +93,8 @@ import {
     venomHeartSkill,
     venomHeartSkill_2,
     heatUpSkill_3,
+    radiantWallSkill_2,
+    radiantWallSkill_3,
 } from "./skills/commonSkillConsts";
 import { concentrateThePoisonSkill, concentrateThePoisonSkill_2, magicAttackX3, poisonRandom, poisonRandom_2 } from "./skills/darkSkillConsts";
 import { applyBurn, applyShock, magicAttack, meteoriteFallSkill } from "./skills/magicSkillConsts";
@@ -102,6 +106,9 @@ import {
     buffNextBaXSelf_2,
     buffNextBaXSelf_3,
     feintAttack,
+    feintAttack_2,
+    feintAttack_3,
+    riposteSkill,
     riposteSkill_2,
 } from "./skills/masterSkillConsts";
 import { attrArmorAll, attrArmorAll_2, attrArmorSelf, attrAttackSelf, attrAttackSelf_2 } from "./skills/orderSkillConsts";
@@ -147,7 +154,7 @@ import { buildDuelEnemy } from "./utils/duelUtils";
 import { removeBuff } from "./utils/battleUtils";
 import { music5AddBuffTarget, staff5MagicCrit, totem5HptoDmg } from "./weaponItem5Consts";
 import { fireflySummonMob, warriorSummonMob, warriorSummonMob_3 } from "./units/summonMobUnits";
-import { skeletonWarriorUnit } from "./units/skeletonsMobUnits";
+import { skeletonUnit, skeletonWarriorUnit } from "./units/skeletonsMobUnits";
 import { peasantLastStandSkill, peasantsStronkSkill } from "./skills/mobs/peasantMobSkills";
 import { skeletonPoisonedFlames } from "./skills/mobs/skeletonMobSkills";
 import { peasantUnit, peasantUnit_4 } from "./units/peasantMobUnits";
@@ -155,6 +162,7 @@ import { pirate1Unit } from "./units/piratesMobUnits";
 import { pirateDragNDrown } from "./skills/mobs/pirateMobSkills";
 import { regularWolfSkill, regularWolfSkill_2 } from "./skills/mobs/wolfMobSkills";
 import { summonerMantle3 } from "./commonItemConsts3";
+import { fireflyConfusingMistSkill } from "./skills/mobs/fireflyMobSkills";
 
 export const duelEnemies2: TDuelEnemy2[] = [
     {
@@ -2129,6 +2137,110 @@ export const duelEnemies2: TDuelEnemy2[] = [
                 ],
                 3: [{ unit: pirate1Unit }, { levelup: 1 }, { item: sword21 }],
                 4: [{ unit: bishopHero }, { item: scepter22 }, { skill: healFirst_2 }, { skill: radiantWallSkill }],
+            },
+        ],
+    },
+    {
+        name: "DeadFly",
+        unitData: [
+            // day 1
+            {
+                1: [{ unit: masterHero }, { levelup: 1 }, { attr: "basicEvasionChance", incr: 4 }, { item: axe1 }, { skill: feintAttack }],
+            },
+            // day 2
+            {
+                1: [
+                    { unit: masterHero },
+                    { levelup: 2 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 1 },
+                    { item: axe1 },
+                    { skill: feintAttack_2 },
+                ],
+                2: [{ unit: masterHero }, { item: axe22 }, { skill: feintAttack }],
+                3: [{ unit: fireflySummonMob }],
+            },
+            // day 3
+            {
+                1: [
+                    { unit: duelistHero },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 3 },
+                    { item: axe1 },
+                    { skill: feintAttack_3, chained: true },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                2: [{ unit: masterHero }, { levelup: 1 }, { attr: "basicMagicPower", incr: 1 }, { item: axe22 }],
+                3: [{ unit: fireflySummonMob }, { item: staff21 }, { skill: radiantWallSkill_2 }],
+            },
+            // day 4
+            {
+                1: [
+                    { unit: duelistHero },
+                    { levelup: 1 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 3 },
+                    { item: axe1 },
+                    { item: musical21 },
+                    { skill: feintAttack_3, chained: true },
+                    { skill: riposteSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                2: [{ unit: sorcererHero }, { attr: "basicMagicPower", incr: 1 }, { item: axe22 }],
+                3: [{ unit: fireflySummonMob }, { levelup: 1 }, { item: staff21 }, { skill: radiantWallSkill_2 }],
+            },
+            // day 5
+            {
+                1: [
+                    { unit: duelistHero },
+                    { levelup: 1 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 3 },
+                    { item: axe1 },
+                    { item: musical21 },
+                    { skill: feintAttack_3, chained: true },
+                    { skill: riposteSkill },
+                    { skill: fireflyConfusingMistSkill },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                2: [
+                    { unit: sorcererHero },
+                    { attr: "basicMagicPower", incr: 1 },
+                    { item: axe22 },
+                    { skill: feintAttack_2, chained: true },
+                    { moveMcSkillToSlotIndex: 1 },
+                ],
+                3: [{ unit: skeletonUnit }],
+                4: [{ unit: fireflySummonMob }, { levelup: 1 }, { item: staff21 }, { skill: radiantWallSkill_3 }],
+            },
+            // day 6
+            {
+                1: [
+                    { unit: duelistHero },
+                    { levelup: 2 },
+                    { attr: "basicEvasionChance", incr: 4 },
+                    { attr: "basicPhysicalPower", incr: 3 },
+                    { attr: "basicCritChance", incr: 6 },
+                    { item: axe1 },
+                    { item: musical21 },
+                    { item: basic_ring_regen_2},
+                    { skill: feintAttack_3, chained: true },
+                    { skill: buffNextBaBeCritSelf, chained: true },
+                    { skill: riposteSkill },
+                    { moveMcSkillToSlotIndex: 3 },
+                ],
+                2: [
+                    { unit: sorcererHero },
+                    { levelup: 1},
+                    { attr: "basicMagicPower", incr: 1 },
+                    { item: axe22 },
+                    { item: basic_jacket},
+                    { skill: feintAttack_2, chained: true },
+                    { skill: feintAttack_2, chained: true },
+                    { moveMcSkillToSlotIndex: 2 },
+                ],
+                3: [{ unit: skeletonUnit }],
+                4: [{ unit: fireflySummonMob }, { levelup: 2 }, { item: staff21 }, { skill: radiantWallSkill_3 }],
             },
         ],
     },

@@ -305,17 +305,6 @@ export class BattleController {
             this.anchorTriggerUnitId = bt.anchorTarget.id;
             this.battleRecord.push(triggerBattleAction);
             let lastTargetId: string | undefined = undefined;
-            at.skill.forEach((sk) => {
-                if (sk.condition) {
-                    const isConditionFulfilled = checkSkillCondition(bt.originBattleUnit, sk.condition, this);
-                    if (isConditionFulfilled) {
-                        lastTargetId = this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false, lastTargetId);
-                    }
-                } else {
-                    lastTargetId = this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false, lastTargetId);
-                }
-                //this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false);
-            });
             if (at.limitedRepeats) {
                 if (bfodbf.buff) {
                     console.log("limited repeats", bfodbf.buff.totalValue);
@@ -333,6 +322,19 @@ export class BattleController {
                     }
                 }
             }
+            // moved skillset execution after trigger removal
+            // (bugfix of Duelist copy buff trigger)
+            at.skill.forEach((sk) => {
+                if (sk.condition) {
+                    const isConditionFulfilled = checkSkillCondition(bt.originBattleUnit, sk.condition, this);
+                    if (isConditionFulfilled) {
+                        lastTargetId = this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false, lastTargetId);
+                    }
+                } else {
+                    lastTargetId = this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false, lastTargetId);
+                }
+                //this.performSkill(bt.originBattleUnit, sk, bt.isPlayer1, false);
+            });
             this.anchorTriggerUnitId = undefined;
         }
     }
