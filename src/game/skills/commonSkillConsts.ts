@@ -1,5 +1,6 @@
 import {
     AnimationType,
+    EAppTriggerType,
     EBuffTimeType,
     EBuffType,
     EDebuffType,
@@ -29,6 +30,14 @@ import {
     IMAGE_SKILL_SKULLS,
     IMAGE_SKILL_BURNING_MAN,
     IMAGE_SKILL_MACE_ATTACK,
+    IMAGE_SKILL_TEST,
+    IMAGE_DRAFT_GRUDGE,
+    IMAGE_DRAFT_OPENING,
+    IMAGE_DRAFT_FRAGILE,
+    IMAGE_DRAFT_CLEAN_CUT,
+    IMAGE_DRAFT_OVERWHELM,
+    IMAGE_DRAFT_ORCHESTRATE,
+    IMAGE_DRAFT_PUPPET,
 } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 import { outHealBuffSkill } from "./commonSkill3Consts";
@@ -927,6 +936,471 @@ export const radiantWallSkill: IHeroSkillSet = {
     animationType: AnimationType.SUMMON_SPELL,
 };
 
+const grudgeHealSkillset = (dmg:number, percent:number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.FIRST_ENEMY,
+            attribute: "hp",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTACK,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            attackType: EHeroAttackType.PHYSICAL,
+            value: dmg,
+            valueType: "number",
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            value: -100,
+            valueFrom: "hp",
+            valueType: "percent",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
+            value: percent,
+            valueFrom: "customNumber",
+            valueType: "percent",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+            animation: AnimationType.NONE,
+        }
+    ];
+}
+
+export const grudgeHealSkill_3: IHeroSkillSet = {
+    id: "grudgeHealSkill",
+    name: "Grudge heal",
+    desc: "Deal [10] phys.dmg and\nheal most injured ally for\n[85%] of this attack\neffective damage",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.PRIEST],
+    type: ESkillSetType.PHYSICAL_ATTACK,
+    skills: grudgeHealSkillset(10,85),
+    image: IMAGE_DRAFT_GRUDGE, // IMAGE_SKILL_TEST,
+};
+
+export const grudgeHealSkill_2: IHeroSkillSet = {
+    id: "grudgeHealSkill",
+    name: "Grudge heal",
+    desc: "Deal [7] phys.dmg and heal\nmost injured ally for\n[75%] of this attack\neffective damage",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.PRIEST],
+    type: ESkillSetType.PHYSICAL_ATTACK,
+    skills: grudgeHealSkillset(7,75),
+    nextLevel: grudgeHealSkill_3,
+    image: IMAGE_DRAFT_GRUDGE, // IMAGE_SKILL_TEST,
+};
+
+export const grudgeHealSkill: IHeroSkillSet = {
+    id: "grudgeHealSkill",
+    name: "Grudge heal",
+    desc: "Deal [5] phys.dmg and heal\nmost injured ally for\n[65%] of this attack\neffective damage",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.PRIEST],
+    type: ESkillSetType.PHYSICAL_ATTACK,
+    skills: grudgeHealSkillset(5,65),
+    nextLevel: grudgeHealSkill_2,
+    image: IMAGE_DRAFT_GRUDGE, // IMAGE_SKILL_TEST,
+};
+
+const openingSkillset = (dmgBoost:number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Opening",
+                targetType: ETargetType.ALLY_IN_FRONT,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "attack",
+                value: dmgBoost,
+                valueType: "percent",
+                isHidden: true,
+                cannotBeTargeted: true,
+            },
+            condition: ESkillCondition.HAS_ALLY_IN_FRONT,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.FORCE_UNIT_MAKE_ATTACK,
+            targetType: ETargetType.ALLY_IN_FRONT,
+            //condition: ESkillCondition.HAS_ALLY_IN_FRONT,
+            // w/o condition will target self if no ally in front
+        },
+    ];
+}
+
+export const openingSkill_3: IHeroSkillSet = {
+    id: "openingSkill",
+    name: "Opening",
+    desc: "Ally in front makes basic\nattack with x1.5 strength",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.BARD],
+    type: ESkillSetType.BUFF, // ?
+    skills: openingSkillset(50),
+    image: IMAGE_DRAFT_OPENING, // IMAGE_SKILL_TEST,
+};
+
+export const openingSkill_2: IHeroSkillSet = {
+    id: "openingSkill",
+    name: "Opening",
+    desc: "Ally in front makes basic\nattack with x1.3 strength",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.BARD],
+    type: ESkillSetType.BUFF, // ?
+    skills: openingSkillset(30),
+    nextLevel: openingSkill_3,
+    image: IMAGE_DRAFT_OPENING, // IMAGE_SKILL_TEST,
+};
+
+export const openingSkill: IHeroSkillSet = {
+    id: "openingSkill",
+    name: "Opening",
+    desc: "Ally in front makes basic\nattack with x1.2 strength",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.BARD],
+    type: ESkillSetType.BUFF, // ?
+    skills: openingSkillset(20),
+    nextLevel: openingSkill_2,
+    isBasicAttack: false,
+    image: IMAGE_DRAFT_OPENING, // IMAGE_SKILL_TEST,
+};
+
+const fragileSkillset = (value:number):IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Fragile",
+                targetType: ETargetType.RANDOM_ENEMY,
+                timeType: EBuffTimeType.DUEL,
+                type: EDebuffType.STATUS_VULNERABILITY,
+                value,
+                valueType: "number",
+            }
+        }
+    ];
+}
+
+export const fragileSkill_3: IHeroSkillSet = {
+    id: "fragileSkill",
+    name: "Fragile",
+    desc: "Random enemy is cursed\nto take [3] more damage\nfrom statuses",
+    level: 3,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MAGIC, EHeroClass.WILD],
+    type: ESkillSetType.DEBUFF,
+    skills: fragileSkillset(3),
+    image: IMAGE_DRAFT_FRAGILE, // IMAGE_SKILL_TEST,
+};
+
+export const fragileSkill_2: IHeroSkillSet = {
+    id: "fragileSkill",
+    name: "Fragile",
+    desc: "Random enemy is cursed\nto take [2] more damage\nfrom statuses",
+    level: 2,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MAGIC, EHeroClass.WILD],
+    type: ESkillSetType.DEBUFF,
+    skills: fragileSkillset(2),
+    nextLevel: fragileSkill_3,
+    image: IMAGE_DRAFT_FRAGILE, // IMAGE_SKILL_TEST,
+};
+
+export const fragileSkill: IHeroSkillSet = {
+    id: "fragileSkill",
+    name: "Fragile",
+    desc: "Random enemy is cursed\nto take [1] more damage\nfrom statuses",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.MAGIC, EHeroClass.WILD],
+    type: ESkillSetType.DEBUFF,
+    skills: fragileSkillset(1),
+    nextLevel: fragileSkill_2,
+    image: IMAGE_DRAFT_FRAGILE, // IMAGE_SKILL_TEST,
+};
+
+const cleanCutSkillset = (value:number, ppScale:number):IHeroSkill[] => {
+    // apply bleed to first enemy, apply buff: if next basic attack is crit, apply bleed same amount to second enemy
+    return [
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            targetType: ETargetType.FIRST_ENEMY,
+            status: EStatusType.BLEED,
+            value,
+            valueType: "number",
+            ppScale,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Clean cut",
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.TILL_NEXT_BA,
+                type: EBuffType.BATTLE_TRIGGER,
+                value: 1,
+                appTrigger: {
+                    limitedRepeats: true,
+                    type: EAppTriggerType.AFTER_CRIT,
+                    skillId: "Clean cut splash",
+                    skill: [
+                        {
+                            type: EHeroSkillType.CALCULATE_NUMBER,
+                            targetType: ETargetType.BY_RELEVANT_ID,
+                            status: EStatusType.BLEED,
+                            animation: AnimationType.NONE,
+                        },
+                        { // fallback target
+                            type: EHeroSkillType.CALCULATE_NUMBER,
+                            targetType: ETargetType.FIRST_ENEMY,
+                            status: EStatusType.BLEED,
+                            animation: AnimationType.NONE,
+                            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+                        },
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            targetType: ETargetType.SECOND_ENEMY,
+                            status: EStatusType.BLEED,
+                            value: 100,
+                            valueFrom: "customNumber",
+                            valueType: "percent",
+                        },
+                    ],
+                }
+            },
+            animation: AnimationType.NONE,
+        }
+    ];
+}
+
+export const cleanCutSkill_3: IHeroSkillSet = {
+    id: "cleanCutSkill",
+    name: "Clean cut",
+    desc: "Apply [7+50%xPP] bleed to\nfirst enemy, and if next\nbasic attack is crit,\nsecond enemy gets bleed\nas crit target",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
+    skills: cleanCutSkillset(7,50),
+    image: IMAGE_DRAFT_CLEAN_CUT, // IMAGE_SKILL_TEST,
+};
+
+export const cleanCutSkill_2: IHeroSkillSet = {
+    id: "cleanCutSkill",
+    name: "Clean cut",
+    desc: "Apply [6+35%xPP] bleed to\nfirst enemy, and if next\nbasic attack is crit,\nsecond enemy gets bleed\nas crit target",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
+    skills: cleanCutSkillset(6,35),
+    nextLevel: cleanCutSkill_3,
+    image: IMAGE_DRAFT_CLEAN_CUT, // IMAGE_SKILL_TEST,
+};
+
+export const cleanCutSkill: IHeroSkillSet = {
+    id: "cleanCutSkill",
+    name: "Clean cut",
+    desc: "Apply [5] bleed to\nfirst enemy, and if next\nbasic attack is crit,\nsecond enemy gets bleed\nas crit target",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.MASTER],
+    skills: cleanCutSkillset(5,0),
+    nextLevel: cleanCutSkill_2,
+    image: IMAGE_DRAFT_CLEAN_CUT, // IMAGE_SKILL_TEST,
+};
+
+const overwhelmSkillset = (value:number):IHeroSkill[] => {
+    // debuff all enemies to make em vulnerable and take increased dmg from statuses
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Overwhelmed",
+                targetType: ETargetType.ALL_ENEMIES,
+                timeType: EBuffTimeType.DUEL,
+                type: EDebuffType.RESIST_DECREASE,
+                value,
+                valueType: "number",
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.STATUS_VULNERABILITY,
+                        value,
+                        valueType: "number",
+                    }
+                ],
+            }
+        }
+    ];
+}
+
+export const overwhelmSkill_3: IHeroSkillSet = {
+    id: "overwhelmSkill",
+    name: "Overwhelm",
+    desc: "Curse all enemies to be vulnerable [3] and take [3] more damage from statuses",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.DARK],
+    skills: overwhelmSkillset(3),
+    image: IMAGE_DRAFT_OVERWHELM, // IMAGE_SKILL_TEST,
+};
+
+export const overwhelmSkill_2: IHeroSkillSet = {
+    id: "overwhelmSkill",
+    name: "Overwhelm",
+    desc: "Curse all enemies to be vulnerable [2] and take [2] more damage from statuses",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.DARK],
+    skills: overwhelmSkillset(1),
+    nextLevel: overwhelmSkill_3,
+    image: IMAGE_DRAFT_OVERWHELM, // IMAGE_SKILL_TEST,
+};
+
+export const overwhelmSkill: IHeroSkillSet = {
+    id: "overwhelmSkill",
+    name: "Overwhelm",
+    desc: "Curse all enemies to be vulnerable [1] and take [1] more damage from statuses",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR, EHeroClass.DARK],
+    skills: overwhelmSkillset(1),
+    nextLevel: overwhelmSkill_2,
+    image: IMAGE_DRAFT_OVERWHELM, // IMAGE_SKILL_TEST,
+};
+
+const orchestrateSkillset = (value:number):IHeroSkill[] => {
+    // all totems value incr by 1
+    return [
+        {
+            type: EHeroSkillType.TOTEM_INCREASE_VALUE,
+            targetType: ETargetType.ALL_ALLIES,
+            value,
+            valueType: "number",
+        }
+    ];
+}
+
+export const orchestrateSkill_3: IHeroSkillSet = {
+    id: "orchestrateSkill",
+    name: "Orchestrate",
+    desc: "Increase values of all ally totems by [2]",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.BARD, EHeroClass.WILD],
+    skills: orchestrateSkillset(2),
+    image: IMAGE_DRAFT_ORCHESTRATE, // IMAGE_SKILL_TEST,
+};
+
+export const orchestrateSkill_2: IHeroSkillSet = {
+    id: "orchestrateSkill",
+    name: "Orchestrate",
+    desc: "Increase values of all ally totems by [1]",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.BARD, EHeroClass.WILD],
+    skills: orchestrateSkillset(1),
+    nextLevel: orchestrateSkill_3,
+    image: IMAGE_DRAFT_ORCHESTRATE, // IMAGE_SKILL_TEST,
+};
+
+export const orchestrateSkill: IHeroSkillSet = {
+    id: "orchestrateSkill",
+    name: "Orchestrate",
+    desc: "Increase values of all ally totems by [1]",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.BARD, EHeroClass.WILD],
+    isBasicAttack: false,
+    skills: orchestrateSkillset(1),
+    nextLevel: overwhelmSkill_2,
+    image: IMAGE_DRAFT_ORCHESTRATE, // IMAGE_SKILL_TEST,
+};
+
+const puppetSkillset = (percent:number, ppScale:number):IHeroSkill[] => {
+    // Lose 50% current hp to increase summons max hp and heal it for same amount.
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            value: percent,
+            valueType: "percent",
+            valueFrom: "hp",
+            animation: AnimationType.NONE,
+            ppScale,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SUMMON_CURRENT,
+            attribute: "maxHp",
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.HAS_SUMMON
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.RANDOM_SUMMON_ALLIED,
+            attribute: "maxHp",
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.HAS_NO_SUMMON_OR_TOTEM,
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+            animation: AnimationType.NONE,
+        }
+    ]
+}
+
+export const puppetSkill_3: IHeroSkillSet = {
+    id: "puppetSkill",
+    name: "Puppet",
+    desc: "Lose 50% current hp to\nincrease summons max hp\nand heal it for same\namount plus [75%xPP].\nIf has no summon, then\ntarget random ally summon.",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.WARRIOR],
+    skills: puppetSkillset(50,75),
+    image: IMAGE_DRAFT_PUPPET, // IMAGE_SKILL_TEST,
+};
+
+export const puppetSkill_2: IHeroSkillSet = {
+    id: "puppetSkill",
+    name: "Puppet",
+    desc: "Lose 50% current hp to\nincrease summons max hp\nand heal it for same\namount plus [50%xPP].\nIf has no summon, then\ntarget random ally summon.",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.WARRIOR],
+    skills: puppetSkillset(50,50),
+    nextLevel: puppetSkill_3,
+    image: IMAGE_DRAFT_PUPPET, // IMAGE_SKILL_TEST,
+};
+
+export const puppetSkill: IHeroSkillSet = {
+    id: "puppetSkill",
+    name: "Puppet",
+    desc: "Lose 50% current hp to\nincrease summons max hp\nand heal it for same\namount plus [35%xPP].\nIf has no summon, then\ntarget random ally summon.",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.WARRIOR],
+    skills: puppetSkillset(50,35),
+    nextLevel: puppetSkill_2,
+    image: IMAGE_DRAFT_PUPPET, // IMAGE_SKILL_TEST,
+};
+
 export const mixedClassSkills1 = [
     // physical classes
     phycisalAttackSkill,
@@ -939,8 +1413,21 @@ export const mixedClassSkills1 = [
     venomHeartSkill,
     toxicTuneSkill,
     heatUpSkill,
+    // mixed
+    grudgeHealSkill,
+    openingSkill,
+    fragileSkill,
 ];
 
-export const mixedClassSkills2 = [removeBuffSkill, removeDebuffSkill, chainToNextSkill];
+export const mixedClassSkills2 = [
+    removeBuffSkill,
+    removeDebuffSkill,
+    chainToNextSkill,
+    // new
+    cleanCutSkill,
+    overwhelmSkill,
+    orchestrateSkill,
+    puppetSkill,
+];
 
 export const mixedClassSkills3 = [outHealBuffSkill, shieldAttackSkill, buffSelfMPorPP, increaseMaxHpSkill, buffSummonCritSkill, chainBasicAttackSkill];

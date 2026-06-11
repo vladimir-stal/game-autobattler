@@ -676,6 +676,7 @@ export enum EDebuffType {
     MARK_WORTHY_FOE = "MARK_WORTHY_FOE",
     BATTLE_TRIGGER = "BATTLE_TRIGGER", // uses appTrigger field to do stuff
     SKILL_SKIP_BASIC_ATTACK = "SKILL_SKIP_BASIC_ATTACK", // make no basic attack after skill
+    STATUS_VULNERABILITY = "STATUS_VULNERABILITY", // take more damage from statuses
     // ..
 }
 
@@ -705,6 +706,8 @@ export enum ETargetType {
     SELF = "SELF",
     TOTEM_ALLY_ALL = "TOTEM_ALLY_ALL", // all totems on ally side
     TOTEM_ALLY_CURRENT = "TOTEM_ALLY_CURRENT",
+    SUMMON_CURRENT = "SUMMON_CURRENT",
+    RANDOM_SUMMON_ALLIED = "RANDOM_SUMMON_ALLIED", // summon of random ally with summon
     // ENEMY
     ALL_ENEMIES = "ALL_ENEMIES",
     FIRST_ENEMY = "FIRST_ENEMY",
@@ -725,7 +728,6 @@ export enum ETargetType {
     ALL_MARKED_ENEMIES = "ALL_MARKED_ENEMIES",
     RANDOM_ENEMY = "RANDOM_ENEMY",
     SECOND_ENEMY = "SECOND_ENEMY",
-    SUMMON_CURRENT = "SUMMON_CURRENT",
     DEBUFFED_ENEMY_RANDOM = "DEBUFFED_ENEMY_RANDOM",
     BUFFED_ENEMY_RANDOM = "BUFFED_ENEMY_RANDOM",
     // COMMON
@@ -926,7 +928,7 @@ export type THeroAttribute = keyof Pick<
 
 export type THeroBattleAttribute = keyof Pick<
     IBattleUnit,
-    "attack" | "armor" | "hpRegen" | "critChance" | "evasionChance" | "magicPower" | "physicalPower" | "hp" | "maxHp" | "customNumber"
+    "attack" | "armor" | "hpRegen" | "critChance" | "evasionChance" | "magicPower" | "physicalPower" | "hp" | "maxHp" | "customNumber" | "customNumber2"
 >;
 
 export interface IStatus {
@@ -951,6 +953,7 @@ export interface IBattleUnit extends IUnit {
     //    > skill.valueFrom (add%) > skill.valueType="percent" (multiply this customNumber)
     // after calculation IHeroSkill may use .valueFrom="customNumber"
     // is set to 0 before every IHeroSkillSet
+    customNumber2: number;
     isSummon: boolean;
     buffs: IBuff[];
     debuffs: IDebuff[];

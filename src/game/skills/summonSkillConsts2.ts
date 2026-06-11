@@ -19,6 +19,7 @@ import {
 } from "../../types";
 import { i18n } from "../consts";
 import {
+    IMAGE_DRAFT_ASONE,
     IMAGE_SKILL_SUMMON_FIREFLY,
     IMAGE_SKILL_SUMMON_SHIELD,
     IMAGE_SKILL_SUMMON_SPIRIT,
@@ -580,10 +581,112 @@ export const explodingSummonsBuffSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_SUMMON_SHIELD,
     nextLevel: explodingSummonsBuffSkill_2,
 };
+
+const AS_ONE_BUFF_NAME = "As one"
+const asOneSkillset = (regen: number, duration: number): IHeroSkill[] => {
+    // For 3 turns increase summons regen by 1 (stacking) and attack by own basic attack
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SUMMON_CURRENT,
+            targetBuffId: AS_ONE_BUFF_NAME,
+            animation: AnimationType.NONE,
+            condition: ESkillCondition.HAS_SUMMON,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SUMMON_CURRENT,
+            value: regen,
+            valueType: "number",
+            valueFrom: "customNumber", // number + this -> perform addition (customNumber += value)
+            animation: AnimationType.NONE,
+            condition: ESkillCondition.HAS_SUMMON,
+        }, // these 2 above is to perform stacking; because buffs with duration only stack dutation time, and use highest totalValue
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SUMMON_CURRENT,
+            attribute: "customNumber", // push caster.customNumber value into summon.customNumber
+            value: 100,                // because buff.valueFrom uses target's attribute values
+            valueType: "percent",
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+            condition: ESkillCondition.HAS_SUMMON,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SUMMON_CURRENT,
+            attribute: "customNumber2", // push caster.attack value into summon.customNumber2
+            value: 100,
+            valueType: "percent",
+            valueFrom: "attack",
+            animation: AnimationType.NONE,
+            condition: ESkillCondition.HAS_SUMMON,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: AS_ONE_BUFF_NAME,
+                targetType: ETargetType.SUMMON_CURRENT,
+                type: EBuffType.ATTRIBUTE_INCREASE,
+                attribute: "hpRegen",
+                timeType: EBuffTimeType.DURATION,
+                value: 100,
+                valueFrom: "customNumber",
+                valueType: "percent",
+                duration,
+                nestedEffects: [
+                    {
+                        buffType: EBuffType.ATTRIBUTE_INCREASE,
+                        attribute: "attack",
+                        value: 100,
+                        valueFrom: "customNumber2",
+                        valueType: "percent",
+                    }
+                ],
+            },
+            condition: ESkillCondition.HAS_SUMMON,
+        }
+    ];
+}
+
+export const asOneSkill_3: IHeroSkillSet = {
+    id: "asOneSkill",
+    name: "As one",
+    desc: "For 4 turns increase\nsummon's regen by [3]\n(stacking) and attack by own basic\nattack (not stacking)",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: asOneSkillset(3, 4),
+    image: IMAGE_DRAFT_ASONE, //IMAGE_SKILL_TEST,
+};
+
+export const asOneSkill_2: IHeroSkillSet = {
+    id: "asOneSkill",
+    name: "As one",
+    desc: "For 3 turns increase\nsummon's regen by [2]\n(stacking) and attack by own basic\nattack (not stacking)",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: asOneSkillset(2, 3),
+    image: IMAGE_DRAFT_ASONE, //IMAGE_SKILL_TEST,
+    nextLevel: asOneSkill_3,
+};
+
+export const asOneSkill: IHeroSkillSet = {
+    id: "asOneSkill",
+    name: "As one",
+    desc: "For 3 turns increase\nsummon's regen by [1]\n(stacking) and attack by own basic\nattack (not stacking)",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON],
+    skills: asOneSkillset(1, 3),
+    image: IMAGE_DRAFT_ASONE, //IMAGE_SKILL_TEST,
+    nextLevel: asOneSkill_2,
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill];
 
-export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa, incrSummonArmor, radiantWallSkill, venomHeartSkill]);
+export const summonSkills_2: THeroSkills = summonSkills.concat([incrSummonBa, incrSummonArmor, radiantWallSkill, venomHeartSkill, asOneSkill]);
 
 export const summonSkills_3: THeroSkills = summonSkills_2.concat([explodingSummonsBuffSkill, summonerFamiliarSkill, buffSummonCritSkill]);

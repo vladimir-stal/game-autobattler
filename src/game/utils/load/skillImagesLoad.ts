@@ -25,7 +25,16 @@ export const IMAGE_SKILL_CLEAR = "clear.png";
 export const IMAGE_SKILL_DUEL = "duel.png";
 export const IMAGE_SKILL_MACE_ATTACK = "mace_attack.png";
 
-export const IMAGE_FIREFLY_SELF_POISON = "poison1.png";
+export const IMAGE_FIREFLY_SELF_POISON = "poison1.png"; //not used anymore
+
+export const IMAGE_DRAFT_OPENING = "draft/opening.png";
+export const IMAGE_DRAFT_GRUDGE = "draft/grudgeHeal.png";
+export const IMAGE_DRAFT_FRAGILE = "draft/fragile.png";
+export const IMAGE_DRAFT_CLEAN_CUT = "draft/cleanCut.png";
+export const IMAGE_DRAFT_OVERWHELM = "draft/overwhelm.png";
+export const IMAGE_DRAFT_ORCHESTRATE = "draft/orchestrate.png";
+export const IMAGE_DRAFT_ASONE = "draft/asOne.png";
+export const IMAGE_DRAFT_PUPPET = "draft/puppet.png";
 
 // LEVEL 2
 

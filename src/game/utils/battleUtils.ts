@@ -49,6 +49,7 @@ export const emptyBattleUnit: IBattleUnit = {
     critChance: 0,
     currentSkillIndex: 0,
     customNumber: 0,
+    customNumber2: 0,
     debuffs: [],
     evasionChance: 0,
     hp: 0,
@@ -358,11 +359,11 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
         }
         case ETargetType.RANDOM_ALLY_EXCEPT_ID: {
             const target = getRandomArrayItem(units.filter((unit) => unit !== null && unit.id !== targetUnitId));
-            return target ? [] : null;
+            return target ? [target] : null;
         }
         case ETargetType.RANDOM_ALLY_WITH_SUMMON: {
             const target = getRandomArrayItem(units.filter((unit) => !!unit?.summon));
-            return target ? [] : null;
+            return target ? [target] : null;
         }
         case ETargetType.SELF:
             return [unit];
@@ -372,6 +373,14 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             } else {
                 return unit.summon ? [unit.summon] : null;
             }
+        case ETargetType.RANDOM_SUMMON_ALLIED: {
+            const target = getRandomArrayItem(units.filter((unit) => !!unit?.summon));
+            if (target?.heroClass === EHeroClass.BEAST_MASTER && target?.totem) {
+                return [target];
+            } else {
+                return target?.summon ? [target.summon] : null;
+            }
+        }
         default:
             return null;
     }
@@ -756,6 +765,7 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
         magicPower: basicMagicPower,
         physicalPower: basicPhysicalPower,
         customNumber: 0,
+        customNumber2: 0,
         isBackRowPosition: backrow,
         //
         buffs: [],

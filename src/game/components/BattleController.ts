@@ -168,6 +168,7 @@ export class BattleController {
                 animation: skillSet.animationType,
             };
             unit.customNumber = 0;
+            unit.customNumber2 = 0;
             this.battleRecord.push(skillSetBattleAction);
 
             let lastTargetId: string | undefined = undefined;
@@ -184,6 +185,7 @@ export class BattleController {
                 //this.performSkill(unit, skill, isPlayer1, true);
             });
             unit.customNumber = 0;
+            unit.customNumber2 = 0;
         });
         // pre battle triggers
         triggerBattleTrigger(EAppTriggerType.PRE_BATTLE, this);
@@ -348,6 +350,7 @@ export class BattleController {
         };
         this.battleRecord.push(skillSetBattleAction);
         unit.customNumber = 0;
+        unit.customNumber2 = 0;
         let sameLastTarget: string | undefined; // SAME_LAST_TARGET
         skillSet.skills.forEach((skill) => {
             if (forcedSingleCast && skill.type === EHeroSkillType.FORCE_UNIT_CAST_SKILL) return; // Ban FORCE_UNIT_CAST_SKILL on FORCE_UNIT_CAST_SKILL
@@ -361,6 +364,7 @@ export class BattleController {
             }
         });
         unit.customNumber = 0;
+        unit.customNumber2 = 0;
     }
 
     performAction(unit: IBattleUnit | null, round: number, isPlayer1: boolean, recurseDeep: number = 0, forcedSingleCast: boolean = false) {
@@ -465,6 +469,7 @@ export class BattleController {
                         return;
                     }
                     unit.customNumber = 0;
+                    unit.customNumber2 = 0;
                     let lastTargetId: string | undefined;
                     itemSkillSet.skills.forEach((skill) => {
                         if (skill.condition) {
@@ -477,6 +482,7 @@ export class BattleController {
                         }
                     });
                     unit.customNumber = 0;
+                    unit.customNumber2 = 0;
                 });
             this.currentActingUnitId = undefined;
         }
@@ -844,7 +850,9 @@ export class BattleController {
             skill,
             isStartBattle,
         };
-        this.battleRecord.push(battleAction);
+        if (attribute !== "customNumber" && attribute !== "customNumber2") {
+            this.battleRecord.push(battleAction);
+        }      
 
         let lastTargetId;
         targets.forEach((target) => {
@@ -858,15 +866,18 @@ export class BattleController {
                     }
                 });
             }
-            target[attribute] += increaseValue + addValue;
-            battleAction.targets?.push({
-                targetId: target.id,
-                attribute,
-                value: increaseValue + addValue,
-                // @ts-ignore
-                ATTR: target[attribute],
-            });
-            // }
+            if (attribute === "customNumber" || attribute === "customNumber2") {
+                target[attribute] = increaseValue;
+            } else {
+                target[attribute] += increaseValue + addValue;
+                battleAction.targets?.push({
+                    targetId: target.id,
+                    attribute,
+                    value: increaseValue + addValue,
+                    // @ts-ignore
+                    ATTR: target[attribute],
+                });
+            }
             lastTargetId = target.id;
         });
         return lastTargetId || sameLastTargetId;
@@ -1892,7 +1903,7 @@ export class BattleController {
                 // find random target who's attribute is greater than childSkill.value
                 //   or less then -childSkill.value
                 //   or compare attribute with childSkill.valueFrom
-                
+
                 // e.g. find random enemy with >50% maxhp
                 //   skill.targetType: ALL_ENEMIES,
                 //   childSkill.type: EHeroSkillType.NONE,
@@ -1958,8 +1969,11 @@ export class BattleController {
                 }
             });
         } else if (skill.valueType === "number") {
-            // || skill.valueType === "evolvedNumber"
-            unit.customNumber = value || 0;
+            if (skill.valueFrom === "customNumber") {
+                unit.customNumber += value;
+            } else {
+                unit.customNumber = value || 0;
+            }
         } else if (skill.valueType === "percent" && skill.valueFrom) {
             //|| skill.valueType === "evolvedPercent"
             targets.forEach((t) => {
@@ -2020,6 +2034,7 @@ export class BattleController {
             this.battleRecord.push(skillSetBattleAction);
 
             summonUnit.customNumber = 0;
+            summonUnit.customNumber2 = 0;
             let lastTargetId: string | undefined;
             skillSet.skills.forEach((skill) => {
                 if (skill.condition) {
