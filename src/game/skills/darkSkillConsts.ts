@@ -1,5 +1,6 @@
 import {
     AnimationType,
+    EAppTriggerType,
     EBuffTimeType,
     EDebuffType,
     EEffectAnimationType,
@@ -7,6 +8,7 @@ import {
     EHeroClass,
     EHeroSkillType,
     ESkillCondition,
+    ESkillSetType,
     EStatusType,
     ETargetType,
     IHeroSkill,
@@ -15,11 +17,13 @@ import {
 } from "../../types";
 import { i18n } from "../consts";
 import {
+    IMAGE_DRAFT_POISONHOST,
     IMAGE_SKILL_DARK_21,
     IMAGE_SKILL_DARK_22,
     IMAGE_SKILL_DARK_MISSILES_RAIN,
     IMAGE_SKILL_MAGIC_MISSILES,
     IMAGE_SKILL_POISON,
+    IMAGE_SKILL_TEST,
 } from "../utils/load/skillImagesLoad";
 import { removeBuffSkill, toxicTuneSkill, venomHeartSkill } from "./commonSkillConsts";
 
@@ -541,8 +545,116 @@ export const concentrateThePoisonSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_POISON,
 };
 
+const poisonHostSkillset = (percent: number): IHeroSkill[] => {
+    // Move all poison from enemies to last enemy and debuff him: on death apply 50% of poison to random enemy
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALL_ENEMIES,
+            status: EStatusType.POISON,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.STATUS_MODIFY_AMOUNT,
+            targetType: ETargetType.ALL_ENEMIES,
+            status: EStatusType.POISON,
+            value: -100,
+            valueType: "percent",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            targetType: ETargetType.LAST_ENEMY,
+            status: EStatusType.POISON,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Host",
+                timeType: EBuffTimeType.DUEL,
+                type: EDebuffType.BATTLE_TRIGGER,
+                targetType: ETargetType.LAST_ENEMY,
+                value: 1,
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.MARK_STATUS_GROW,
+                        status: EStatusType.POISON,
+                        value: 1,
+                        valueType: "number",
+                    }
+                ],
+                appTrigger: {
+                    limitedRepeats: true,
+                    skillId: "Posion boom",
+                    type: EAppTriggerType.DEATH,
+                    allowCastFromDead: true,
+                    skill: [
+                        {
+                            type: EHeroSkillType.CALCULATE_NUMBER,
+                            targetType: ETargetType.ANCHOR_TARGET,
+                            status: EStatusType.POISON,
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.STATUS_APPLY,
+                            targetType: ETargetType.RANDOM_ENEMY,
+                            status: EStatusType.POISON,
+                            value: percent,
+                            valueType: "percent",
+                            valueFrom: "customNumber",
+                            animation: AnimationType.NONE,
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+};
+
+export const poisonHostSkill_3: IHeroSkillSet = {
+    id: "poisonHostSkill",
+    name: "Poison host",
+    desc: "Move all poison from all\nenemies to last enemy, each\nturn he gets 1 poison and\nwhen he dies, 50% of his\npoison is applied to\nrandom enemy",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    type: ESkillSetType.DEBUFF,
+    skills: poisonHostSkillset(75),
+    image: IMAGE_DRAFT_POISONHOST, //IMAGE_SKILL_TEST,
+};
+
+export const poisonHostSkill_2: IHeroSkillSet = {
+    id: "poisonHostSkill",
+    name: "Poison host",
+    desc: "Move all poison from all\nenemies to last enemy, each\nturn he gets 1 poison and\nwhen he dies, 50% of his\npoison is applied to\nrandom enemy",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    type: ESkillSetType.DEBUFF,
+    skills: poisonHostSkillset(65),
+    nextLevel: poisonHostSkill_3,
+    image: IMAGE_DRAFT_POISONHOST, //IMAGE_SKILL_TEST,
+};
+
+export const poisonHostSkill: IHeroSkillSet = {
+    id: "poisonHostSkill",
+    name: "Poison host",
+    desc: "Move all poison from all\nenemies to last enemy, each\nturn he gets 1 poison and\nwhen he dies, 50% of his\npoison is applied to\nrandom enemy",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    type: ESkillSetType.DEBUFF,
+    skills: poisonHostSkillset(50),
+    nextLevel: poisonHostSkill_2,
+    image: IMAGE_DRAFT_POISONHOST, //IMAGE_SKILL_TEST,
+};
+
 export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];
 
-export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, concentrateThePoisonSkill, removeBuffSkill, toxicTuneSkill, venomHeartSkill]);
+export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, concentrateThePoisonSkill, removeBuffSkill, toxicTuneSkill, venomHeartSkill, poisonHostSkill]);
 
 export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill, magicRain]);

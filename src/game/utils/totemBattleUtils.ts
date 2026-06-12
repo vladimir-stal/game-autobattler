@@ -240,6 +240,7 @@ const performTotemHeal = (
             return;
         }
 
+        target.latestDamageRecieved -= Math.min(target.maxHp - target.hp, finalValue);
         target.hp += finalValue;
         if (target.hp > target.maxHp) {
             overhealTotal += target.hp - target.maxHp;

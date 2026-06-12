@@ -1,4 +1,5 @@
 import {
+    AnimationType,
     EAppTriggerType,
     EBuffTimeType,
     EBuffType,
@@ -6,6 +7,7 @@ import {
     EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
+    ESkillCondition,
     ESkillSetType,
     EStatusType,
     ETargetType,
@@ -15,11 +17,13 @@ import {
 } from "../../types";
 import { i18n } from "../consts";
 import {
+    IMAGE_DRAFT_PAINBOLTS,
     IMAGE_SKILL_3_INFERNO,
     IMAGE_SKILL_BURN,
     IMAGE_SKILL_DRAGON_FIRE,
     IMAGE_SKILL_LIGHTNING,
     IMAGE_SKILL_SHOCK_HAND,
+    IMAGE_SKILL_TEST,
     IMAGE_SKILL_YELLOW_EXPLOSION,
 } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP } from "./commonSkill3Consts";
@@ -376,9 +380,86 @@ export const meteoriteFallSkill: IHeroSkillSet = {
     nextLevel: meteoriteFallSkill_2,
 };
 
+const painBoltsSkillset = (dmg:number, mpScale:number, percent:number): IHeroSkill[] => {
+    // Deal X dmg to first enemy twice; 50% of lost hp from this is dealt to random enemy
+    return [
+        {
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.MAGIC,
+            targetType: ETargetType.FIRST_ENEMY,
+            value: dmg,
+            valueType: "number",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.MAGIC,
+            targetType: ETargetType.FIRST_ENEMY,
+            value: dmg,
+            valueType: "number",
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.ALL_ENEMIES_UNFILTERED,
+            value: percent,
+            valueType: "percent",
+            valueFrom: "latestDamageRecieved",
+            mpScale,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.MAGIC,
+            targetType: ETargetType.RANDOM_ENEMY,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+        },
+    ];
+}
+
+export const painBoltsSkill_3: IHeroSkillSet = {
+    id: "painBoltsSkill",
+    name: "Pain bolts",
+    desc: "Deal [4] mag.damage twice\nto first enemy, then random\nenemy get (75+[10xMP])%\nof dealt damage mag.damage",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
+    skills: painBoltsSkillset(4, 1000, 75),
+    image: IMAGE_DRAFT_PAINBOLTS, //IMAGE_SKILL_TEST,
+};
+
+export const painBoltsSkill_2: IHeroSkillSet = {
+    id: "painBoltsSkill",
+    name: "Pain bolts",
+    desc: "Deal [3] mag.damage twice\nto first enemy, then random\nenemy get (65+[7xMP])%\nof dealt damage mag.damage",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
+    skills: painBoltsSkillset(3, 700, 65),
+    image: IMAGE_DRAFT_PAINBOLTS, //IMAGE_SKILL_TEST,
+    nextLevel: painBoltsSkill_3,
+};
+
+export const painBoltsSkill: IHeroSkillSet = {
+    id: "painBoltsSkill",
+    name: "Pain bolts",
+    desc: "Deal [2] mag.damage twice\nto first enemy, then random\nenemy get (50+[5xMP])%\nof dealt damage mag.damage",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.MAGIC],
+    type: ESkillSetType.MAGIC_ATTACK,
+    skills: painBoltsSkillset(2, 500, 50),
+    image: IMAGE_DRAFT_PAINBOLTS, //IMAGE_SKILL_TEST,
+    nextLevel: painBoltsSkill_2,
+};
+
 //
 export const magicSkills: THeroSkills = [magicAttack, applyBurn];
 
-export const magicSkills_2: THeroSkills = magicSkills.concat([magicAttackAll, applyShock, heatUpSkill, blindingBeamSkill]);
+export const magicSkills_2: THeroSkills = magicSkills.concat([magicAttackAll, applyShock, heatUpSkill, blindingBeamSkill, painBoltsSkill]);
 
 export const magicSkills_3: THeroSkills = magicSkills_2.concat([buffSelfMPorPP, meteoriteFallSkill]);

@@ -664,7 +664,7 @@ export enum EDebuffType {
     ANTIHEAL = "ANTIHEAL", // transforms next incoming heal into damage
     HEALING_DECREASE = "HEALING_DECREASE", // descrese hero outgoing healing
     ATTRIBUTE_DECREASE = "ATTRIBUTE_DECREASE", // descrese hero attribute
-    MARK_BURN = "MARK_BURN", // debuff hero with a mark, that applies burn each turn
+    MARK_STATUS_GROW = "MARK_STATUS_GROW", // applies (status) each turn
     MARK_HUNTER = "MARK_HUNTER", // debuff hero with specific mark (HUNTER)
     MARK_PREDATOR = "MARK_PREDATOR", // debuff hero with specific mark (PREDATOR)
     MARK_BLADEDANCER = "MARK_BLADEDANCER", // debuff hero with specific mark (BLADEDANCER)
@@ -685,6 +685,7 @@ export enum EBuffTimeType {
     TILL_NEXT_BA = "TILL_NEXT_BA",
     DURATION = "DURATION",
     TILL_GOT_HIT = "TILL_GOT_HIT",
+    NEXT_TWO_BA = "NEXT_TWO_BA",
 }
 
 export enum ETargetType {
@@ -710,6 +711,7 @@ export enum ETargetType {
     RANDOM_SUMMON_ALLIED = "RANDOM_SUMMON_ALLIED", // summon of random ally with summon
     // ENEMY
     ALL_ENEMIES = "ALL_ENEMIES",
+    ALL_ENEMIES_UNFILTERED = "ALL_ENEMIES_UNFILTERED",
     FIRST_ENEMY = "FIRST_ENEMY",
     FIRST_TWO_ENEMIES = "FIRST_TWO_ENEMIES",
     FIRST_THREE_ENEMIES = "FIRST_THREE_ENEMIES",
@@ -722,6 +724,7 @@ export enum ETargetType {
     HIGH_MP_ENEMY = "HIGH_MP_ENEMY",
     HIGH_PP_ENEMY = "HIGH_PP_ENEMY",
     LOW_HP_ENEMY = "LOW_HP_ENEMY",
+    LAST_ENEMY = "LAST_ENEMY",
     LOW_PERCENT_ENEMY = "LOW_PERCENT_ENEMY", // lowest hp% = hp/maxhp
     HIGH_PERCENT_ENEMY = "HIGH_PERCENT_ENEMY", // highest hp%
     MARKED_ENEMY = "MARKED_ENEMY",
@@ -928,7 +931,7 @@ export type THeroAttribute = keyof Pick<
 
 export type THeroBattleAttribute = keyof Pick<
     IBattleUnit,
-    "attack" | "armor" | "hpRegen" | "critChance" | "evasionChance" | "magicPower" | "physicalPower" | "hp" | "maxHp" | "customNumber" | "customNumber2"
+    "attack" | "armor" | "hpRegen" | "critChance" | "evasionChance" | "magicPower" | "physicalPower" | "hp" | "maxHp" | "customNumber" | "customNumber2" | "latestDamageRecieved"
 >;
 
 export interface IStatus {
@@ -954,6 +957,7 @@ export interface IBattleUnit extends IUnit {
     // after calculation IHeroSkill may use .valueFrom="customNumber"
     // is set to 0 before every IHeroSkillSet
     customNumber2: number;
+    latestDamageRecieved: number;
     isSummon: boolean;
     buffs: IBuff[];
     debuffs: IDebuff[];
@@ -1158,6 +1162,7 @@ export interface INestedBuffEffect {
     valueType?: TValueType;
     valueFrom?: THeroBattleAttribute;
     attribute?: THeroBattleAttribute;
+    status?: EStatusType;
     totalValue?: number;
     mpScale?: number;
     ppScale?: number;
@@ -1257,3 +1262,5 @@ export interface IMixedDuelCard {
 }
 
 export type battleUnitIterateThruNestedEffects = (eff: INestedBuffEffect, bod?: IBuffOrDebuff) => void;
+export type battleUnitIterateThruBuffsOrDebuffs = (bod?: IBuffOrDebuff) => void;
+

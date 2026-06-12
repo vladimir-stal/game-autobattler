@@ -80,7 +80,7 @@ export class SkillCard extends Phaser.GameObjects.Container {
         }
 
         //TODO: remove -  HACK TO DIVIDE SINGLE AND ATLAS SKILL IMAGES
-        if (image.startsWith("IMAGE_SKILL_MOB") || image.startsWith("IMAGE_SKILL_3")) {
+        if (image.startsWith("IMAGE_SKILL_MOB") || image.startsWith("IMAGE_SKILL_3") || image.startsWith("draft/")) {
             this.image = this.gameScene.add.image(0, 5, image).setOrigin(0.5, 0);
         } else {
             this.image = this.gameScene.add.sprite(0, 5, IMAGE_MULTIATALAS_SKILLS, image).setOrigin(0.5, 0);

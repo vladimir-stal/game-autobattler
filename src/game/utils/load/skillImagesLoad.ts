@@ -35,6 +35,24 @@ export const IMAGE_DRAFT_OVERWHELM = "draft/overwhelm.png";
 export const IMAGE_DRAFT_ORCHESTRATE = "draft/orchestrate.png";
 export const IMAGE_DRAFT_ASONE = "draft/asOne.png";
 export const IMAGE_DRAFT_PUPPET = "draft/puppet.png";
+export const IMAGE_DRAFT_MOMENTUM = "draft/momentum.png";
+export const IMAGE_DRAFT_FIREBLOOD = "draft/fireBlood.png";
+export const IMAGE_DRAFT_PAINBOLTS = "draft/painBolts.png";
+export const IMAGE_DRAFT_POISONHOST = "draft/poisonHost.png";
+const draftList = [
+    IMAGE_DRAFT_PAINBOLTS,
+    IMAGE_DRAFT_ASONE,
+    IMAGE_DRAFT_CLEAN_CUT,
+    IMAGE_DRAFT_FIREBLOOD,
+    IMAGE_DRAFT_FRAGILE,
+    IMAGE_DRAFT_GRUDGE,
+    IMAGE_DRAFT_MOMENTUM,
+    IMAGE_DRAFT_OPENING,
+    IMAGE_DRAFT_ORCHESTRATE,
+    IMAGE_DRAFT_OVERWHELM,
+    IMAGE_DRAFT_PUPPET,
+    IMAGE_DRAFT_POISONHOST,
+];
 
 // LEVEL 2
 
@@ -121,6 +139,9 @@ export function loadSkillImages(scene: Scene) {
     scene.load.image(IMAGE_SKILL_MOB_PIRATE_CANNON_FIRE, "assets/sprites/skills/mobs/cannon.png");
     scene.load.image(IMAGE_SKILL_3_TOTAL_BUFF, "assets/sprites/skills/3/total_buff.png");
     scene.load.image(IMAGE_SKILL_3_INFERNO, "assets/sprites/skills/3/inferno.png");
+
+    // draft
+    draftList.forEach((v) => scene.load.image(v, "assets/sprites/skills/" + v));
 
     // LEVEL 1
     // scene.load.image(IMAGE_SKILL_PHYS_ATTACK, "assets/sprites/skills/sword_attack_100.png");

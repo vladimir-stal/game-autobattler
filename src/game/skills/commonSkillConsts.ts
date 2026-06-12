@@ -939,23 +939,17 @@ export const radiantWallSkill: IHeroSkillSet = {
 const grudgeHealSkillset = (dmg:number, percent:number): IHeroSkill[] => {
     return [
         {
-            type: EHeroSkillType.CALCULATE_NUMBER,
-            targetType: ETargetType.FIRST_ENEMY,
-            attribute: "hp",
-            animation: AnimationType.NONE,
-        },
-        {
             type: EHeroSkillType.ATTACK,
-            targetType: ETargetType.SAME_LAST_TARGET,
+            targetType: ETargetType.FIRST_ENEMY,
             attackType: EHeroAttackType.PHYSICAL,
             value: dmg,
             valueType: "number",
         },
         {
             type: EHeroSkillType.CALCULATE_NUMBER,
-            targetType: ETargetType.SAME_LAST_TARGET,
-            value: -100,
-            valueFrom: "hp",
+            targetType: ETargetType.ALL_ENEMIES_UNFILTERED,
+            value: 100,
+            valueFrom: "latestDamageRecieved",
             valueType: "percent",
             animation: AnimationType.NONE,
         },

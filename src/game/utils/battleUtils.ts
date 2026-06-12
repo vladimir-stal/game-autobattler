@@ -39,7 +39,7 @@ import { chainToNextSkill } from "../skills/commonSkillConsts";
 import { getRandomArrayItem, getRandomIntFromInterval } from "./commonUtils";
 import { checkUnitBasicClass, getMcHeroByClass, getMulticlassSubclasses } from "./heroUtils";
 import { getHeroClassesWeaponItems } from "./itemUtils";
-import { emptyUnit, generateId, generateUnitId } from "./unitUtils";
+import { emptyUnit, forEachNestedEffects, generateId, generateUnitId } from "./unitUtils";
 
 export const emptyBattleUnit: IBattleUnit = {
     ...emptyUnit,
@@ -50,6 +50,7 @@ export const emptyBattleUnit: IBattleUnit = {
     currentSkillIndex: 0,
     customNumber: 0,
     customNumber2: 0,
+    latestDamageRecieved: 0,
     debuffs: [],
     evasionChance: 0,
     hp: 0,
@@ -65,6 +66,16 @@ export const emptyBattleUnit: IBattleUnit = {
 
 export const getFirstTarget = (units: TBattleUnits) => {
     return units.find((unit) => unit && unit.hp > 0) || null;
+};
+
+export const getLastTarget = (units: TBattleUnits) => {
+    let lastTarget = null;
+    units.forEach((unit) => {
+        if (unit && unit.hp > 0) {
+            lastTarget = unit;
+        }
+    })
+    return lastTarget;
 };
 
 export const getSecondTarget = (units: TBattleUnits) => {
@@ -394,11 +405,17 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             //console.log("getOpponentTargets >>>> BY_UNIT_ID >>>> targetUnit = ", targetUnit);
             return targetUnit ? [targetUnit] : null;
         }
+        case ETargetType.ALL_ENEMIES_UNFILTERED:
+            return units.filter((unit) => !!unit);;
         case ETargetType.ALL_ENEMIES:
             return units.filter((unit) => isAliveUnit(unit));
         case ETargetType.FIRST_ENEMY: {
             const firstTarget = getFirstTarget(units);
             return firstTarget ? [firstTarget] : null;
+        }
+        case ETargetType.LAST_ENEMY: {
+            const lastTarget = getLastTarget(units);
+            return lastTarget ? [lastTarget] : null;
         }
         case ETargetType.FIRST_TWO_ENEMIES: {
             return getFirstTwoTargets(units);
@@ -531,29 +548,29 @@ export const calculateEffectValue = (unit: IBattleUnit, initialValue: number, ef
     let bonusPercent = 0;
     let bonusFlat = 0;
     if (!!eff.buffType && allowedBuffTypesToGetBonuses.includes(eff.buffType)) {
-        unit.itemBonuses.forEach(b => {
+        unit.itemBonuses.forEach((b) => {
             if (b.type === EItemBattleBonusType.INCREASE_BUFF_POTENCY) {
-                const v = getItemBonusValue(unit,b);
-                b.valueType === "percent" ? bonusPercent += v : bonusFlat += v;
+                const v = getItemBonusValue(unit, b);
+                b.valueType === "percent" ? (bonusPercent += v) : (bonusFlat += v);
             }
-        })
+        });
     } else if (!!eff.debuffType && allowedDebuffTypesToGetBonuses.includes(eff.debuffType)) {
-        unit.itemBonuses.forEach(b => {
+        unit.itemBonuses.forEach((b) => {
             if (b.type === EItemBattleBonusType.INCREASE_DEBUFF_POTENCY) {
-                const v = getItemBonusValue(unit,b);
-                b.valueType === "percent" ? bonusPercent += v : bonusFlat += v;
+                const v = getItemBonusValue(unit, b);
+                b.valueType === "percent" ? (bonusPercent += v) : (bonusFlat += v);
             }
-        })
+        });
     }
     //console.log("calc buff value", value, mpScaleValue, ppScaleValue, valueType, initialValue);
     if (!valueType || valueType === "number") {
         // || valueType === "evolvedNumber"
-        return Math.floor((value + mpScaleValue + ppScaleValue)*(100+bonusPercent)/100) + bonusFlat;
+        return Math.floor(((value + mpScaleValue + ppScaleValue) * (100 + bonusPercent)) / 100) + bonusFlat;
     } else if (valueType === "percent") {
         // || valueType === "evolvedPercent"
         //const initValue = buff.valueFrom ? target[buff.valueFrom] : initialValue;
         let buffValue = Math.floor((initialValue * value) / 100);
-        return Math.floor(((buffValue || 1) + mpScaleValue + ppScaleValue)*(100+bonusPercent)/100) + bonusFlat;
+        return Math.floor((((buffValue || 1) + mpScaleValue + ppScaleValue) * (100 + bonusPercent)) / 100) + bonusFlat;
     }
     return 0;
 };
@@ -766,6 +783,7 @@ export const prepareUnitToBattle = (unit: IUnit, backrow: boolean = false): IBat
         physicalPower: basicPhysicalPower,
         customNumber: 0,
         customNumber2: 0,
+        latestDamageRecieved: 0,
         isBackRowPosition: backrow,
         //
         buffs: [],
@@ -843,73 +861,6 @@ export const calculateUnitsAfterBattle = (battleUnits: (IBattleUnit | null)[]): 
     });
 };
 
-/** Calculate final damage according to target unit defense, buffs and debuffs
- *    used only for Totems
- *    see also BattleController.dealDamage() for regular damage dealing
- */
-export const dealDamage = (target: IBattleUnit, damageValue: number, damageType: EHeroAttackType, battleRecord: TBattleRecord) => {
-    let finalDamageValue = damageValue;
-    // check if divine shield is active
-    const divineShield = target.buffs.find((buff) => buff.type === EBuffType.DIVINE_SHIELD);
-    if (divineShield) {
-        const stacks = divineShield.totalValue;
-        if (stacks) {
-            if (finalDamageValue <= stacks) {
-                battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-                return;
-            }
-            changeBuffValue(target, divineShield, finalDamageValue - stacks, battleRecord);
-        }
-    }
-    const cosmicShield = target.buffs.find((buff) => buff.type === EBuffType.COSMIC_SHIELD);
-    if (cosmicShield) {
-        battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: 0, value2: target.hp });
-        changeBuffValue(target, cosmicShield, -1, battleRecord);
-        return;
-    }
-
-    if (damageType === EHeroAttackType.MAGIC) {
-        // calculate defense debuffs
-        target.debuffs.forEach((debuff) => {
-            if (debuff.type === EDebuffType.RESIST_DECREASE) {
-                if (debuff.valueType === "number") {
-                    finalDamageValue += debuff.value;
-                } else if (debuff.valueType === "percent") {
-                    let addDamage = Math.floor((finalDamageValue * debuff.value) / 100);
-                    finalDamageValue += addDamage;
-                }
-            }
-        });
-    } else if (damageType === EHeroAttackType.PHYSICAL) {
-        //TODO:calculate total armor
-        let armor = target.armor;
-
-        let armorLeft = armor - finalDamageValue;
-        if (armorLeft < 0) {
-            armorLeft = 0;
-        }
-        finalDamageValue -= armor;
-        if (finalDamageValue < 0) {
-            finalDamageValue = 0;
-        }
-        // decrease armor
-        target.armor = armorLeft;
-    }
-
-    takeDamage(target, finalDamageValue, battleRecord);
-};
-
-export const takeDamage = (target: IBattleUnit, damageValue: number, battleRecord: TBattleRecord) => {
-    target.hp -= damageValue;
-
-    battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp });
-
-    if (target.hp <= 0) {
-        target.hp = 0;
-        battleRecord.push({ unitId: target.id, type: EBattleActionType.DEATH });
-    }
-};
-
 export const applyStatus = (
     unit: IBattleUnit,
     target: IBattleUnit,
@@ -932,15 +883,29 @@ export const applyStatus = (
 };
 
 export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statusType: EStatusType, battleRecord: TBattleRecord) => {
-    target.hp -= damageValue;
+    let resistDecreasePercent = 0;
+    let resistDecreaseAbsolute = 0;
+    forEachNestedEffects(target, (ne) => {
+        if (ne.debuffType === EDebuffType.STATUS_VULNERABILITY && ne.totalValue && ne.totalValue > 0) {
+            const { totalValue, valueType } = ne;
+            if (valueType === "percent") {
+                resistDecreasePercent += totalValue;
+            } else {
+                resistDecreaseAbsolute += totalValue;
+            }
+        }
+    });
 
     const { armor } = target;
 
     const ignoreArmor = [EStatusType.BLEED, EStatusType.POISON].includes(statusType);
+    let finalDamageValue = damageValue;
+    if (resistDecreasePercent > 0 || resistDecreaseAbsolute) {
+      finalDamageValue = Math.floor((finalDamageValue * (100 + resistDecreasePercent)) / 100 + resistDecreaseAbsolute);
+    }
 
     if (!ignoreArmor && target.armor > 0) {
         // calclate damage to armor
-        let finalDamageValue = damageValue;
         let armorLeft = armor - finalDamageValue;
         if (armorLeft < 0) {
             armorLeft = 0;
@@ -965,12 +930,13 @@ export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statu
     } else {
         battleRecord.push({ unitId: target.id, type: EBattleActionType.TAKE_DAMAGE, value: damageValue, value2: target.hp, status: statusType });
     }
+    target.latestDamageRecieved += Math.min(target.hp, finalDamageValue);
+    target.hp -= finalDamageValue;
 
-    // remove(edited) *reduce BURN after damage
     if (statusType === EStatusType.BURN) {
         // change from removeStatus() to reduceStacks
         //removeStatus(target, target, statusType, battleRecord);
-        reduceStatus(target, target, statusType, Math.floor(damageValue / 2) + 1, battleRecord);
+        reduceStatus(target, target, statusType, Math.floor(finalDamageValue / 2) + 1, battleRecord);
     }
     // remove RADIATE after damage
     // radiate status is from Overheal trigger
@@ -1455,7 +1421,9 @@ export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBa
         const unitPercent = unitHp / unit.maxHp;
         const targetPercent = targetHp / target.maxHp;
         unit.hp = Math.floor(0.5 + unit.maxHp * targetPercent);
+        unit.latestDamageRecieved = unit.hp - unitHp;
         target.hp = Math.floor(0.5 + target.maxHp * unitPercent);
+        target.latestDamageRecieved = target.hp - targetHp;
     } else {
         unit.hp = targetHp;
         if (unit.hp > unit.maxHp) {
@@ -1465,6 +1433,8 @@ export const swapHp = (unit: IBattleUnit, target: IBattleUnit, battleRecord: TBa
         if (target.hp > target.maxHp) {
             target.hp = target.maxHp;
         }
+        unit.latestDamageRecieved = unit.hp - unitHp;
+        target.latestDamageRecieved = target.hp - targetHp;
     }
     battleRecord.push({ unitId: unit.id, targetId: target.id, type: EBattleActionType.SWAP_HP, value: unit.hp, value2: target.hp, isStartBattle });
 };
@@ -1495,20 +1465,6 @@ export const getTargetWithSummon = (units: TBattleUnits): IBattleUnit | null => 
 
 export const removeTotem = (target: IBattleUnit) => {
     target.totem = undefined;
-};
-
-export const executeDebuff = (unit: IBattleUnit, debuff: IDebuff, battleRecord: TBattleRecord) => {
-    switch (debuff.type) {
-        case EDebuffType.MARK_BURN:
-            {
-                // TODO: do we need % target type handling here?
-                applyStatus(unit, unit, EStatusType.BURN, debuff.value, battleRecord);
-            }
-            break;
-        default: {
-            console.log("ERROR. executeDebuff no handler for debuff type", debuff.type);
-        }
-    }
 };
 
 export const getExistingBuff = (unit: IBattleUnit, buff: IBuff) => {

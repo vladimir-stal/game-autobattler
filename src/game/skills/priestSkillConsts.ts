@@ -5,6 +5,7 @@ import {
     EEffectAnimationType,
     EHeroClass,
     EHeroSkillType,
+    ESkillCondition,
     EStatusType,
     ETargetType,
     IHeroSkill,
@@ -12,7 +13,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_HEAL_1, IMAGE_SKILL_HEAL_2 } from "../utils/load/skillImagesLoad";
+import { IMAGE_DRAFT_FIREBLOOD, IMAGE_SKILL_HEAL_1, IMAGE_SKILL_HEAL_2, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { outHealBuffSkill } from "./commonSkill3Consts";
 import { increaseMaxHpSkill } from "./commonSkill3Consts";
 import { heatUpSkill, radiantWallSkill, removeDebuffSkill, selfBuffOverheal } from "./commonSkillConsts";
@@ -287,8 +288,73 @@ export const ringOfHealingSkill: IHeroSkillSet = {
     image: IMAGE_SKILL_HEAL_2,
 };
 
+const fireBloodSkillset = (heal: number, mpScale:number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.HEAL,
+            targetType: ETargetType.FIRST_ALLY,
+            value: heal,
+            valueType: "number",
+            mpScale,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.FIRST_ALLY,
+            value: -100,
+            valueType: "percent",
+            valueFrom: "latestDamageRecieved",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            status: EStatusType.BURN,
+            targetType: ETargetType.FIRST_ENEMY,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE
+        }
+    ];
+}
+
+export const fireBloodSkill_3: IHeroSkillSet = {
+    id: "fireBloodSkill",
+    name: "Fire blood",
+    desc: "Heal first ally for\n[6+60%xMP] and apply burn\nequal to healed amount",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.PRIEST],
+    skills: fireBloodSkillset(6,60),
+    image: IMAGE_DRAFT_FIREBLOOD, //IMAGE_SKILL_TEST,
+};
+
+export const fireBloodSkill_2: IHeroSkillSet = {
+    id: "fireBloodSkill",
+    name: "Fire blood",
+    desc: "Heal first ally for\n[5+30%xMP] and apply burn\nequal to healed amount",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.PRIEST],
+    skills: fireBloodSkillset(5,30),
+    nextLevel: fireBloodSkill_3,
+    image: IMAGE_DRAFT_FIREBLOOD, //IMAGE_SKILL_TEST,
+};
+
+export const fireBloodSkill: IHeroSkillSet = {
+    id: "fireBloodSkill",
+    name: "Fire blood",
+    desc: "Heal first ally for [4]\nand apply burn equal to\nhealed amount",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.PRIEST],
+    skills: fireBloodSkillset(4,0),
+    nextLevel: fireBloodSkill_2,
+    image: IMAGE_DRAFT_FIREBLOOD, //IMAGE_SKILL_TEST,
+};
+
 export const priestSkills: THeroSkills = [healSelf, healFirst];
 
-export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill, removeDebuffSkill, radiantWallSkill, heatUpSkill]);
+export const priestSkills_2: THeroSkills = priestSkills.concat([healLowHpSkill, removeDebuffSkill, radiantWallSkill, heatUpSkill, fireBloodSkill]);
 
 export const priestSkills_3: THeroSkills = priestSkills_2.concat([outHealBuffSkill, increaseMaxHpSkill, ringOfHealingSkill]);

@@ -4,6 +4,7 @@ import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summo
 import { jacket21_3 } from "../commonItemConsts2";
 
 import {
+    assasinHero,
     barbarianHero,
     bladedancerHero,
     commanderHero,
@@ -20,8 +21,8 @@ import {
     witchHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
-import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill, toxicTuneSkill, venomHeartSkill } from "../skills/commonSkillConsts";
-import { magicAttack } from "../skills/magicSkillConsts";
+import { chainBasicAttackSkill, grudgeHealSkill, phycisalAttackSkill, radiantWallSkill, toxicTuneSkill, venomHeartSkill } from "../skills/commonSkillConsts";
+import { magicAttack, painBoltsSkill } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { fireflySummonSkill, incrSummonBa, warriorSummonSkill } from "../skills/summonSkillConsts2";
 import { goblinUnit } from "../units/goblinMobUnits";
@@ -30,9 +31,9 @@ import { fireflySummonMob, shieldWarriorsSummonMob, warriorSummonMob_3 } from ".
 import { strongWolfUnit, wolfUnit } from "../units/wolfsMobUnits";
 import { axe31, dagger31, staff31 } from "../weaponItem3Consts";
 import { inquisitorHero } from "../mcHeroConsts";
-import { healFirst, healSelf, ringOfHealingSkill } from "../skills/priestSkillConsts";
+import { fireBloodSkill, healFirst, healSelf, ringOfHealingSkill } from "../skills/priestSkillConsts";
 import { buffNextBaTimes, buffNextBaTimes_2, mortalStrikeSkill } from "../skills/warriorSkillConsts";
-import { debuffBaNextBaAll } from "../skills/darkSkillConsts";
+import { debuffBaNextBaAll, poisonHostSkill } from "../skills/darkSkillConsts";
 import { skeletonMageUnit, skeletonUnit } from "../units/skeletonsMobUnits";
 import {} from "../skills/mobSkills";
 import { regularWolfSkill } from "../skills/mobs/wolfMobSkills";
@@ -41,7 +42,7 @@ import { pirateCallTheCannons, pirateDeadmansCurse, pirateDragNDrown } from "../
 import { fireflyConfusingMistSkill } from "../skills/mobs/fireflyMobSkills";
 import { spiritTeamFlurry, spiritTeamRevenge } from "../skills/mobs/spiritWarriorMobSkills";
 import { buffTotalDmgSkill } from "../skills/bardSkillConsts";
-import { dagger1, shield1, sword1 } from "../basicWeaponItemConsts";
+import { dagger1, shield1, sword1, wand1 } from "../basicWeaponItemConsts";
 import { goblinPocketSand } from "../skills/mobs/goblinMobSkills";
 import { basic_jacket_2 } from "../commonItemConsts";
 import { outHealBuffSkill } from "../skills/commonSkill3Consts";
@@ -50,9 +51,10 @@ import { totem5HptoDmg } from "../weaponItem5Consts";
 import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
 import { buildDuelEnemy } from "./duelUtils";
 import { duelEnemies2 } from "../duelConsts";
+import { momentumSkill } from "../skills/orderSkillConsts";
 
-export const debugHeroSelectRoom = false;
-export const debugStartingItemsRoom = false;
+export const debugHeroSelectRoom = true;
+export const debugStartingItemsRoom = true;
 export const debugAlwaysOneEnemy = false;
 
 export const debugEnemy: TDuelEnemy = buildDuelEnemy(duelEnemies2.find(d => d.name === "MeAndMySon")?.unitData || []);
@@ -60,24 +62,25 @@ export const debugEnemy: TDuelEnemy = buildDuelEnemy(duelEnemies2.find(d => d.na
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: assasinHero }];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
-        { type: ECardType.UNIT, price: 0, unit: shamanHero },
-        { type: ECardType.UNIT, price: 0, unit: predatorHero },
+        //{ type: ECardType.UNIT, price: 0, unit: shamanHero },
+        //{ type: ECardType.UNIT, price: 0, unit: predatorHero },
         //{ type: ECardType.UNIT, price: 0, unit: commanderHero },
-        { type: ECardType.UNIT, price: 0, unit: inquisitorHero },
+        //{ type: ECardType.UNIT, price: 0, unit: inquisitorHero },
         //{ type: ECardType.UNIT, price: 0, unit: necromancerHero },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.SKILL, price: 0, skill: wildBasicTotemSkill },
-        //{ type: ECardType.SKILL, price: 0, skill: venomHeartSkill },
+        { type: ECardType.SKILL, price: 0, skill: poisonHostSkill },
+        { type: ECardType.SKILL, price: 0, skill: poisonHostSkill },
         //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
-        //{ type: ECardType.ITEM, price: 0, item: totem5HptoDmg },
+        //{ type: ECardType.ITEM, price: 0, item: dagger31 },
+        //{ type: ECardType.ITEM, price: 0, item: wand1 },
         //{ type: ECardType.ITEM, price: 0, item: scrollOfSkill(goblinPocketSand) },
         // { type: ECardType.ITEM, price: 0, item: itemGoblinBoneDagger },
         // {
@@ -97,33 +100,7 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.SKILL, price: 0, skill: { ...buffNextBaTimes_2, isChained: true } },
 
         //{ type: ECardType.SKILL, price: 0, skill: ringOfHealingSkill },
-        {
-            type: ECardType.ITEM,
-            price: 0,
-            item: {
-                ...jacket21_3,
-                bonuses: [
-                    ...jacket21_3.bonuses,
-                    {
-                        type: EItemBonusType.ATTRIBUTE,
-                        value: 50,
-                        valueType: "number",
-                        attribute: "basicMagicPower",
-                        targetType: EItemTargetType.ALL_ALLIES,
-                        valueFrom: "basicMaxHp",
-                    },
-                ],
-                battleBonuses: [
-                    {
-                        type: EItemBattleBonusType.INCREASE_DAMAGE_TO_TARGET_WITH_STATUS,
-                        value: 30,
-                        valueType: "percent",
-                        valueFrom: "attack",
-                        status: EStatusType.POISON,
-                    },
-                ],
-            },
-        },
-        //{ type: ECardType.ITEM, price: 0, item: jacket21_3 },
+        
+        { type: ECardType.ITEM, price: 0, item: jacket21_3 },
     ];
 };

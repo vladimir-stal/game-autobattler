@@ -1,5 +1,7 @@
 import {
+    battleUnitIterateThruBuffsOrDebuffs,
     battleUnitIterateThruNestedEffects,
+    EBuffTimeType,
     EHeroAttackType,
     EHeroClass,
     EHeroClassType,
@@ -540,6 +542,13 @@ export const forEachNestedEffects = (unit: IBattleUnit, func: battleUnitIterateT
         func(parentEffect, { debuff });
         debuff.totalValue = parentEffect.totalValue;
     });
+};
+
+export const iterateBuffsAndDebuffs = (unit: IBattleUnit, timeType: EBuffTimeType, func: battleUnitIterateThruBuffsOrDebuffs) => {
+    const buffsList = unit.buffs.filter((buff) => buff.timeType === timeType);
+    buffsList.forEach((buff) => func({ buff }));
+    const debuffsList = unit.debuffs.filter((debuff) => debuff.timeType === timeType);
+    debuffsList.forEach((debuff) => func({ debuff }));
 };
 
 export const isUnitHasHeroClass = (unit: IUnit, heroClass: EHeroClass): boolean => {

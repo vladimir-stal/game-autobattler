@@ -1,7 +1,7 @@
-import { EHeroClass, EHeroSkillType, ETargetType, IHeroSkillSet, THeroSkills } from "../../types";
+import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { removeDebuff } from "../utils/battleUtils";
-import { IMAGE_SKILL_BATTLE, IMAGE_SKILL_KNIGHT, IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import { IMAGE_DRAFT_MOMENTUM, IMAGE_SKILL_BATTLE, IMAGE_SKILL_KNIGHT, IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { shieldAttackSkill } from "./commonSkill3Consts";
 import { nextBAArea, removeDebuffSkill, statusesIntoHeal } from "./commonSkillConsts";
 
@@ -275,8 +275,119 @@ export const attrArmorBigSelf: IHeroSkillSet = {
     image: IMAGE_SKILL_KNIGHT,
 };
 
+const momentumSkillset = (ppScale:number, percent:number):IHeroSkill[] => {
+    // Next 2 basic attacks deal +%pp damage, then increase PP by %damage dealt for 3 turns
+    return [
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: "Momentum",
+                type: EBuffType.BATTLE_TRIGGER,
+                targetType: ETargetType.SELF,
+                value: 1,
+                timeType: EBuffTimeType.NEXT_TWO_BA,
+                appTrigger: {
+                    limitedRepeats: false,
+                    type: EAppTriggerType.BASIC_ATTACK, // after basic attack
+                    skillId: "Momentum +pp",
+                    skill: [
+                        {
+                            type: EHeroSkillType.CALCULATE_NUMBER,
+                            targetType: ETargetType.ALL_ENEMIES_UNFILTERED,
+                            attribute: "latestDamageRecieved", // damage since from current action start
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                            targetType: ETargetType.ANCHOR_TARGET,
+                            attribute: "customNumber2",
+                            value: percent,
+                            valueType: "percent",
+                            valueFrom: "customNumber",
+                        },
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                name: "PP+",
+                                type: EBuffType.ATTRIBUTE_INCREASE,
+                                attribute: "physicalPower",
+                                timeType: EBuffTimeType.DUEL,
+                                targetType: ETargetType.ANCHOR_TARGET,
+                                value: 100,
+                                valueType: "percent",
+                                valueFrom: "customNumber2",
+                            },
+                            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.BUFF,
+                            buff: {
+                                name: "BA+",
+                                type: EBuffType.ATTRIBUTE_INCREASE,
+                                attribute: "attack",
+                                timeType: EBuffTimeType.NEXT_TWO_BA,
+                                targetType: ETargetType.ANCHOR_TARGET,
+                                value: ppScale,
+                                valueType: "percent",
+                                valueFrom: "customNumber2",
+                            },
+                            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+                            animation: AnimationType.NONE,
+                        },
+                    ]
+                },
+                nestedEffects: [
+                    {
+                        buffType: EBuffType.ATTRIBUTE_INCREASE,
+                        attribute: "attack",
+                        value: ppScale,
+                        valueType: "percent",
+                        valueFrom: "physicalPower",
+                    }
+                ]
+            }
+        }
+    ];
+}
+
+export const momentumSkill_3: IHeroSkillSet = {
+    id: "momentumSkill",
+    name: "Momentum",
+    desc: "Next 2 basic attacks deal\n+[65%xPP] damage, then\nincrease PP by 25% damage\ndealt",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.ORDER],
+    skills: momentumSkillset(65,25),
+    image: IMAGE_DRAFT_MOMENTUM, //IMAGE_SKILL_TEST,
+};
+
+export const momentumSkill_2: IHeroSkillSet = {
+    id: "momentumSkill",
+    name: "Momentum",
+    desc: "Next 2 basic attacks deal\n+[50%xPP] damage, then\nincrease PP by 25% damage\ndealt",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.ORDER],
+    skills: momentumSkillset(50,25),
+    nextLevel: momentumSkill_3,
+    image: IMAGE_DRAFT_MOMENTUM, //IMAGE_SKILL_TEST,
+};
+
+export const momentumSkill: IHeroSkillSet = {
+    id: "momentumSkill",
+    name: "Momentum",
+    desc: "Next 2 basic attacks deal\n+[35%xPP] damage, then\nincrease PP by 25% damage\ndealt",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.ORDER],
+    skills: momentumSkillset(35,25),
+    nextLevel: momentumSkill_2,
+    image: IMAGE_DRAFT_MOMENTUM, //IMAGE_SKILL_TEST,
+};
+
 export const orderSkills: THeroSkills = [attrArmorSelf, attrAttackSelf];
 
-export const orderSkills_2: THeroSkills = orderSkills.concat([attrArmorAll, removeDebuffSkill, statusesIntoHeal, nextBAArea]);
+export const orderSkills_2: THeroSkills = orderSkills.concat([attrArmorAll, removeDebuffSkill, statusesIntoHeal, nextBAArea, momentumSkill]);
 
 export const orderSkills_3: THeroSkills = orderSkills_2.concat([attrArmorBigSelf, shieldAttackSkill]);
