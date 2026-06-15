@@ -228,6 +228,35 @@ export const getHighestStatusTarget = (units: TBattleUnits, statusType: EStatusT
     }, initial).unit;
 };
 
+export const getHighestAnyStatusTarget = (units: TBattleUnits): IBattleUnit | null => {
+    const initial: { unit: IBattleUnit | null; statusValue: number; statusType: EStatusType } = { unit: null, statusValue: 0, statusType: undefined };
+    return units.reduce((result, unit) => {
+        if (!unit) {
+            return result;
+        }
+
+        if (unit && unit.hp > 0) {
+            let maxValue = 0;
+            let status;
+            unit.statuses.forEach(s => {
+                if (s.value > result.statusValue) {
+                    maxValue = s.value;
+                    status = s.type;
+                }
+            })
+
+            if (!result.unit && !!status) {
+                return { unit, maxValue, status };
+            } else if (maxValue > result.statusValue) {
+                return { unit, maxValue, status }
+            } else {
+                return result
+            }
+        }
+        return result;
+    }, initial).unit;
+};
+
 export const getLowHpTarget = (units: TBattleUnits): IBattleUnit | null => {
     return units.reduce((result, unit) => {
         if (unit && unit.hp > 0) {
@@ -351,6 +380,10 @@ export const getAllyTargets = (unit: IBattleUnit, units: TBattleUnits, targetTyp
             const target = getHighestAttributeTarget(units, "physicalPower");
             return target ? [target] : null;
         }
+        case ETargetType.HIGH_STATUS_ALLY: {
+            const target = getHighestAnyStatusTarget(units);
+            return target ? [target] : null;
+        }
         case ETargetType.LOW_HP_ALLY: {
             // changed logic from MIN(unit.hp) to MAX(unit.maxHp - unit.hp)
             // (from lowest hp to highest recieved damage, so it won't target full hp feeble units)
@@ -447,12 +480,20 @@ export const getOpponentTargets = (units: TBattleUnits, targetType: ETargetType,
             const target = getHighestStatusTarget(units, EStatusType.RADIATE);
             return target ? [target] : null;
         }
+        case ETargetType.HIGH_STATUS_ENEMY: {
+            const target = getHighestAnyStatusTarget(units);
+            return target ? [target] : null;
+        }
         case ETargetType.HIGH_MP_ENEMY: {
             const target = getHighestAttributeTarget(units, "magicPower");
             return target ? [target] : null;
         }
         case ETargetType.HIGH_PP_ENEMY: {
             const target = getHighestAttributeTarget(units, "physicalPower");
+            return target ? [target] : null;
+        }
+        case ETargetType.HIGH_CRIT_ENEMY: {
+            const target = getHighestAttributeTarget(units, "critChance");
             return target ? [target] : null;
         }
         case ETargetType.LOW_HP_ENEMY: {
@@ -882,7 +923,7 @@ export const applyStatus = (
     } else target.statuses.push({ type: statusType, value });
 };
 
-export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statusType: EStatusType, battleRecord: TBattleRecord) => {
+export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statusType: EStatusType, battleRecord: TBattleRecord, skipReduction?:boolean) => {
     let resistDecreasePercent = 0;
     let resistDecreaseAbsolute = 0;
     forEachNestedEffects(target, (ne) => {
@@ -933,7 +974,7 @@ export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statu
     target.latestDamageRecieved += Math.min(target.hp, finalDamageValue);
     target.hp -= finalDamageValue;
 
-    if (statusType === EStatusType.BURN) {
+    if (statusType === EStatusType.BURN && !skipReduction) {
         // change from removeStatus() to reduceStacks
         //removeStatus(target, target, statusType, battleRecord);
         reduceStatus(target, target, statusType, Math.floor(finalDamageValue / 2) + 1, battleRecord);
@@ -941,7 +982,7 @@ export const takeStatusDamage = (target: IBattleUnit, damageValue: number, statu
     // remove RADIATE after damage
     // radiate status is from Overheal trigger
     //   see BattleController.performHeal()
-    if (statusType === EStatusType.RADIATE) {
+    if (statusType === EStatusType.RADIATE && !skipReduction) {
         removeStatus(target, target, statusType, battleRecord);
     }
 
@@ -1548,6 +1589,8 @@ export const checkSkillCondition = (unit: IBattleUnit, condition: ESkillConditio
             return battleController.getUnitsInFrontOrBehind(unit, false).length < 2;
         case ESkillCondition.ONE_OR_LESS_ALLY_BEHIND:
             return battleController.getUnitsInFrontOrBehind(unit, true).length < 2;
+        case ESkillCondition.HAS_ONE_OR_LESS_HP:
+            return unit.hp < 2;
     }
 };
 

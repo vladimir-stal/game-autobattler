@@ -1,7 +1,27 @@
-import { AnimationType, EAppTriggerType, EBuffTimeType, EBuffType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
+import {
+    AnimationType,
+    EAppTriggerType,
+    EBuffTimeType,
+    EBuffType,
+    EHeroClass,
+    EHeroSkillType,
+    ESkillCondition,
+    ETargetType,
+    IHeroSkill,
+    IHeroSkillSet,
+    THeroSkills,
+} from "../../types";
 import { i18n } from "../consts";
 import { removeDebuff } from "../utils/battleUtils";
-import { IMAGE_DRAFT_MOMENTUM, IMAGE_SKILL_BATTLE, IMAGE_SKILL_KNIGHT, IMAGE_SKILL_SHIELD_BUFF_1, IMAGE_SKILL_SWORD_BUFF, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
+import {
+    IMAGE_DRAFT_MARTYR,
+    IMAGE_DRAFT_MOMENTUM,
+    IMAGE_SKILL_BATTLE,
+    IMAGE_SKILL_KNIGHT,
+    IMAGE_SKILL_SHIELD_BUFF_1,
+    IMAGE_SKILL_SWORD_BUFF,
+    IMAGE_SKILL_TEST,
+} from "../utils/load/skillImagesLoad";
 import { shieldAttackSkill } from "./commonSkill3Consts";
 import { nextBAArea, removeDebuffSkill, statusesIntoHeal } from "./commonSkillConsts";
 
@@ -275,7 +295,7 @@ export const attrArmorBigSelf: IHeroSkillSet = {
     image: IMAGE_SKILL_KNIGHT,
 };
 
-const momentumSkillset = (ppScale:number, percent:number):IHeroSkill[] => {
+const momentumSkillset = (ppScale: number, percent: number): IHeroSkill[] => {
     // Next 2 basic attacks deal +%pp damage, then increase PP by %damage dealt for 3 turns
     return [
         {
@@ -335,7 +355,7 @@ const momentumSkillset = (ppScale:number, percent:number):IHeroSkill[] => {
                             condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
                             animation: AnimationType.NONE,
                         },
-                    ]
+                    ],
                 },
                 nestedEffects: [
                     {
@@ -344,12 +364,12 @@ const momentumSkillset = (ppScale:number, percent:number):IHeroSkill[] => {
                         value: ppScale,
                         valueType: "percent",
                         valueFrom: "physicalPower",
-                    }
-                ]
-            }
-        }
+                    },
+                ],
+            },
+        },
     ];
-}
+};
 
 export const momentumSkill_3: IHeroSkillSet = {
     id: "momentumSkill",
@@ -358,7 +378,7 @@ export const momentumSkill_3: IHeroSkillSet = {
     level: 3,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
-    skills: momentumSkillset(65,25),
+    skills: momentumSkillset(65, 25),
     image: IMAGE_DRAFT_MOMENTUM, //IMAGE_SKILL_TEST,
 };
 
@@ -369,7 +389,7 @@ export const momentumSkill_2: IHeroSkillSet = {
     level: 2,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
-    skills: momentumSkillset(50,25),
+    skills: momentumSkillset(50, 25),
     nextLevel: momentumSkill_3,
     image: IMAGE_DRAFT_MOMENTUM, //IMAGE_SKILL_TEST,
 };
@@ -381,13 +401,132 @@ export const momentumSkill: IHeroSkillSet = {
     level: 1,
     priceLevel: 2,
     heroClasses: [EHeroClass.ORDER],
-    skills: momentumSkillset(35,25),
+    skills: momentumSkillset(35, 25),
     nextLevel: momentumSkill_2,
     image: IMAGE_DRAFT_MOMENTUM, //IMAGE_SKILL_TEST,
+};
+
+const MARTYR_BUFF_NAME = "Martyr";
+
+const martyrSkillset = (armorPercent:number, healPercent:number): IHeroSkill[] => {
+    // remove highest status from ally and take same value dmg
+    return [
+        {
+            type: EHeroSkillType.MARTYR_STATUS,
+            targetType: ETargetType.SELF,
+            targetFromType: ETargetType.HIGH_STATUS_ALLY,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            value: 100,
+            valueFrom: "latestDamageRecieved",
+            valueType: "percent",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            targetType: ETargetType.SELF,
+            value: 1,
+            valueType: "number",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "armor",
+            targetType: ETargetType.SELF,
+            value: armorPercent,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.HAS_ONE_OR_LESS_HP,
+        },
+        {
+            type: EHeroSkillType.BUFF,
+            buff: {
+                name: MARTYR_BUFF_NAME,
+                type: EBuffType.BATTLE_TRIGGER,
+                targetType: ETargetType.SELF,
+                timeType: EBuffTimeType.DUEL,
+                value: 2,
+                nestedEffects: [
+                    {
+                        buffType: EBuffType.SAVED_VALUE,
+                        value: healPercent,
+                        valueType: "percent",
+                        valueFrom: "customNumber",
+                    },
+                ],
+                appTrigger: {
+                    limitedRepeats: true,
+                    skillId: "Martyr heal",
+                    type: EAppTriggerType.TURN_START,
+                    skill: [
+                        {
+                            type: EHeroSkillType.CALCULATE_NUMBER,
+                            targetType: ETargetType.ANCHOR_TARGET,
+                            buff: {
+                                name: MARTYR_BUFF_NAME,
+                                type: EBuffType.SAVED_VALUE,
+                                // sum all nested effects of buff/debuff with name (name)
+                                // of buffType SAVED_VALUE
+                                targetType: ETargetType.SELF, // not used
+                                timeType: EBuffTimeType.DUEL, // not used
+                                value: 1, // not used
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.HEAL,
+                            targetType: ETargetType.ANCHOR_TARGET,
+                            value: 100,
+                            valueType: "percent",
+                            valueFrom: "customNumber",
+                        },
+                    ],
+                },
+            },
+            animation: AnimationType.NONE,
+        },
+    ];
+};
+
+export const martyrSkill_3: IHeroSkillSet = {
+    id: "martyrSkill",
+    name: "Martyr",
+    desc: "Remove highest status from\nally and recieve that\namount of status damage.\nIf fatal, gain 130% of dmg\nas armor and survive with\n1 hp. At start of next 2\nturns heal 65% of damage",
+    level: 3,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.ORDER],
+    skills: martyrSkillset(130, 65),
+    image: IMAGE_DRAFT_MARTYR, //IMAGE_SKILL_TEST,
+};
+
+export const martyrSkill_2: IHeroSkillSet = {
+    id: "martyrSkill",
+    name: "Martyr",
+    desc: "Remove highest status from\nally and recieve that\namount of status damage.\nIf fatal, gain 80% of dmg\nas armor and survive with\n1 hp. At start of next 2\nturns heal 50% of damage",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.ORDER],
+    skills: martyrSkillset(80, 50),
+    nextLevel: martyrSkill_3,
+    image: IMAGE_DRAFT_MARTYR, //IMAGE_SKILL_TEST,
+};
+
+export const martyrSkill: IHeroSkillSet = {
+    id: "martyrSkill",
+    name: "Martyr",
+    desc: "Remove highest status from\nally and recieve that\namount of status damage.\nIf fatal, gain 50% of dmg\nas armor and survive with\n1 hp. At start of next 2\nturns heal 35% of damage",
+    level: 1,
+    priceLevel: 3,
+    heroClasses: [EHeroClass.ORDER],
+    skills: martyrSkillset(50, 35),
+    nextLevel: martyrSkill_2,
+    image: IMAGE_DRAFT_MARTYR, //IMAGE_SKILL_TEST,
 };
 
 export const orderSkills: THeroSkills = [attrArmorSelf, attrAttackSelf];
 
 export const orderSkills_2: THeroSkills = orderSkills.concat([attrArmorAll, removeDebuffSkill, statusesIntoHeal, nextBAArea, momentumSkill]);
 
-export const orderSkills_3: THeroSkills = orderSkills_2.concat([attrArmorBigSelf, shieldAttackSkill]);
+export const orderSkills_3: THeroSkills = orderSkills_2.concat([attrArmorBigSelf, shieldAttackSkill, martyrSkill]);

@@ -102,11 +102,10 @@ export const forestSpiritPassive: IPassiveSkill = {
                             type: EAppTriggerType.TAKE_ATTACK,
                             skill: [
                                 {
-                                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                                    type: EHeroSkillType.FORCE_HP_REGEN,
                                     animation: AnimationType.NONE,
-                                    attribute: "hp",
                                     targetType: ETargetType.SELF,
-                                    value: 50,
+                                    value: -50,
                                     valueFrom: "hpRegen",
                                     valueType: "percent",
                                 }
@@ -131,11 +130,10 @@ export const forestSpiritPassive: IPassiveSkill = {
                             type: EAppTriggerType.TAKE_SKILL_ATTACK,
                             skill: [
                                 {
-                                    type: EHeroSkillType.ATTRIBUTE_INCREASE,
+                                    type: EHeroSkillType.FORCE_HP_REGEN,
                                     animation: AnimationType.NONE,
-                                    attribute: "hp",
                                     targetType: ETargetType.SELF,
-                                    value: 50,
+                                    value: -50,
                                     valueFrom: "hpRegen",
                                     valueType: "percent",
                                 }

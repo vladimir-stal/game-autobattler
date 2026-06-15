@@ -1,4 +1,4 @@
-import { ECardType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EStatusType, ICard, TDuelEnemy } from "../../types";
+import { ECardType, EHeroClass, EHeroSkillType, EItemBattleBonusType, EItemBonusType, EItemTargetType, EStatusType, ETargetType, ICard, IHeroSkillSet, TDuelEnemy } from "../../types";
 
 import { bardHero, darkHero, magicHero, masterHero, orderHero, priestHero, summonHero, warriorHero, wildHero } from "../basicHeroConsts";
 import { jacket21_3 } from "../commonItemConsts2";
@@ -21,7 +21,7 @@ import {
     witchHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
-import { chainBasicAttackSkill, grudgeHealSkill, phycisalAttackSkill, radiantWallSkill, toxicTuneSkill, venomHeartSkill } from "../skills/commonSkillConsts";
+import { chainBasicAttackSkill, grudgeHealSkill, hopeSkill, phycisalAttackSkill, radiantWallSkill, removeDebuffSkill, toxicTuneSkill, venomHeartSkill } from "../skills/commonSkillConsts";
 import { magicAttack, painBoltsSkill } from "../skills/magicSkillConsts";
 import { followupComboSkill, riposteSkill } from "../skills/masterSkillConsts";
 import { fireflySummonSkill, incrSummonBa, warriorSummonSkill } from "../skills/summonSkillConsts2";
@@ -51,7 +51,10 @@ import { totem5HptoDmg } from "../weaponItem5Consts";
 import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
 import { buildDuelEnemy } from "./duelUtils";
 import { duelEnemies2 } from "../duelConsts";
-import { momentumSkill } from "../skills/orderSkillConsts";
+import { martyrSkill, momentumSkill } from "../skills/orderSkillConsts";
+import { peasantUnit_4 } from "../units/peasantMobUnits";
+import { removeDebuff } from "./battleUtils";
+import { IMAGE_SKILL_TEST } from "./load/skillImagesLoad";
 
 export const debugHeroSelectRoom = true;
 export const debugStartingItemsRoom = true;
@@ -62,8 +65,28 @@ export const debugEnemy: TDuelEnemy = buildDuelEnemy(duelEnemies2.find(d => d.na
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: assasinHero }];
+    return [null, { type: ECardType.UNIT, price: 0, unit: orderHero }];
 };
+
+const debugCustomSkill: IHeroSkillSet = {
+    id: "debugSkill",
+    name: "Debug skill",
+    desc: "Something",
+    level: 1,
+    priceLevel: 1,
+    heroClasses: [EHeroClass.ALL],
+    skills: [
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            targetType: ETargetType.SELF,
+            status: EStatusType.BURN,
+            value: 40,
+            valueType: "number",
+        }
+    ],
+    isChained: true,
+    image: IMAGE_SKILL_TEST,
+}
 
 export const customStartingItemsRoom = (): ICard[] => {
     return [
@@ -75,9 +98,9 @@ export const customStartingItemsRoom = (): ICard[] => {
         //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
         //{ type: ECardType.UNIT, price: 0, unit: pirate1Unit },
         //{ type: ECardType.UNIT, price: 0, unit: fireflySummonMob },
-        //{ type: ECardType.UNIT, price: 0, unit: wolfUnit },
-        { type: ECardType.SKILL, price: 0, skill: poisonHostSkill },
-        { type: ECardType.SKILL, price: 0, skill: poisonHostSkill },
+        //{ type: ECardType.UNIT, price: 0, unit: peasantUnit_4 },
+        { type: ECardType.SKILL, price: 0, skill: debugCustomSkill },
+        { type: ECardType.SKILL, price: 0, skill: martyrSkill },
         //{ type: ECardType.SKILL, price: 0, skill: outHealBuffSkill },
         //{ type: ECardType.ITEM, price: 0, item: dagger31 },
         //{ type: ECardType.ITEM, price: 0, item: wand1 },

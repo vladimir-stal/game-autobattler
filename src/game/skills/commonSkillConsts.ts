@@ -38,6 +38,10 @@ import {
     IMAGE_DRAFT_OVERWHELM,
     IMAGE_DRAFT_ORCHESTRATE,
     IMAGE_DRAFT_PUPPET,
+    IMAGE_DRAFT_STATIC,
+    IMAGE_DRAFT_IGNITE,
+    IMAGE_DRAFT_STING,
+    IMAGE_DRAFT_HOPE,
 } from "../utils/load/skillImagesLoad";
 import { skillsetSummon } from "../utils/skillUtils2";
 import { outHealBuffSkill } from "./commonSkill3Consts";
@@ -1395,33 +1399,401 @@ export const puppetSkill: IHeroSkillSet = {
     image: IMAGE_DRAFT_PUPPET, // IMAGE_SKILL_TEST,
 };
 
+const staticSkillset = (percent:number, defNum:number):IHeroSkill[] => {
+    // Random enemy gets 50% shock stacks of enemy with highest shock. Otherwise apply 1 shock
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.HIGH_SHOCK_ENEMY,
+            status: EStatusType.SHOCK,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.HIGH_SHOCK_ENEMY,
+            value: percent,
+            valueType: "percent",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            targetType: ETargetType.RANDOM_ENEMY,
+            status: EStatusType.SHOCK,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            targetType: ETargetType.RANDOM_ENEMY,
+            status: EStatusType.SHOCK,
+            value: defNum,
+            valueType: "number",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO,
+        },
+    ];
+}
+
+export const staticSkill_3: IHeroSkillSet = {
+    id: "staticSkill",
+    name: "Static",
+    desc: "Random enemy gets 75% shock\nstacks of enemy with\nhighest shock. Otherwise\napply 2 shock",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.MAGIC],
+    skills: staticSkillset(75,2),
+    image: IMAGE_DRAFT_STATIC, // IMAGE_SKILL_TEST,
+};
+
+export const staticSkill_2: IHeroSkillSet = {
+    id: "staticSkill",
+    name: "Static",
+    desc: "Random enemy gets 65% shock\nstacks of enemy with\nhighest shock. Otherwise\napply 1 shock",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.MAGIC],
+    skills: staticSkillset(65,1),
+    nextLevel: staticSkill_3,
+    image: IMAGE_DRAFT_STATIC, // IMAGE_SKILL_TEST,
+};
+
+export const staticSkill: IHeroSkillSet = {
+    id: "staticSkill",
+    name: "Static",
+    desc: "Random enemy gets 50% shock\nstacks of enemy with\nhighest shock. Otherwise\napply 1 shock",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.SUMMON, EHeroClass.MAGIC],
+    skills: staticSkillset(50,1),
+    nextLevel: staticSkill_2,
+    image: IMAGE_DRAFT_STATIC, // IMAGE_SKILL_TEST,
+};
+
+const igniteSkillset = (mpScale:number, ppScale:number): IHeroSkill[] => {
+    // trigger highest burn enemy burn
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.HIGH_BURN_ENEMY,
+            status: EStatusType.BURN,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.HIGH_BURN_ENEMY,
+            value: 100,
+            valueType: "percent",
+            mpScale,
+        },
+        {
+            type: EHeroSkillType.STATUS_ATTACK,
+            targetType: ETargetType.HIGH_BURN_ENEMY,
+            status: EStatusType.BURN,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Ignite",
+                type: EDebuffType.BATTLE_TRIGGER,
+                targetType: ETargetType.RANDOM_ENEMY,
+                value: 1,
+                valueType: "number",
+                timeType: EBuffTimeType.DUEL,
+                appTrigger: {
+                    limitedRepeats: true,
+                    skillId: "Ignite tick tock",
+                    skill: [],
+                    type: EAppTriggerType.TURN_END,
+                },
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.MARK_STATUS_GROW,
+                        status: EStatusType.BURN,
+                        value: 1,
+                        valueType: "number",
+                        ppScale,
+                    }
+                ],
+            },
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_ZERO
+        },
+    ];
+}
+
+export const igniteSkill_3: IHeroSkillSet = {
+    id: "igniteSkill",
+    name: "Ignite",
+    desc: "Trigger burn on enemy with\nhighest burn, with\n+[10xMP]% damage increase.\nIf no burn, a random enemy\ngets [1+50%xPP] burn at\nthe end of his turn",
+    level: 3,
+    priceLevel: 2,
+    type: ESkillSetType.MAGIC_ATTACK,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.MAGIC],
+    skills: igniteSkillset(1000,50),
+    image: IMAGE_DRAFT_IGNITE, // IMAGE_SKILL_TEST,
+};
+
+export const igniteSkill_2: IHeroSkillSet = {
+    id: "igniteSkill",
+    name: "Ignite",
+    desc: "Trigger burn on enemy with\nhighest burn, with\n+[7xMP]% damage increase.\nIf no burn, a random enemy\ngets [1+35%xPP] burn at\nthe end of his turn",
+    level: 2,
+    priceLevel: 2,
+    type: ESkillSetType.MAGIC_ATTACK,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.MAGIC],
+    skills: igniteSkillset(700,35),
+    nextLevel: igniteSkill_3,
+    image: IMAGE_DRAFT_IGNITE, // IMAGE_SKILL_TEST,
+};
+
+export const igniteSkill: IHeroSkillSet = {
+    id: "igniteSkill",
+    name: "Ignite",
+    desc: "Trigger burn on enemy with\nhighest burn, with\n+[5xMP]% damage increase.\nIf no burn, a random enemy\ngets [1+25%xPP] burn at\nthe end of his turn",
+    level: 1,
+    priceLevel: 2,
+    type: ESkillSetType.MAGIC_ATTACK,
+    heroClasses: [EHeroClass.MASTER, EHeroClass.MAGIC],
+    skills: igniteSkillset(500,25),
+    nextLevel: igniteSkill_2,
+    image: IMAGE_DRAFT_IGNITE, // IMAGE_SKILL_TEST,
+};
+
+const stingSkillset = (base:number, ppScale:number, poison:number): IHeroSkill[] => {
+    // deal phys dmg (pp) and apply poison if dmg dealt to hp
+    return [
+        {
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.PHYSICAL,
+            targetType: ETargetType.FIRST_ENEMY,
+            value: base,
+            valueType: "number",
+            ppScale,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.FIRST_ENEMY,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "latestDamageRecieved",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.STATUS_APPLY,
+            targetType: ETargetType.FIRST_ENEMY,
+            status: EStatusType.POISON,
+            value: poison,
+            valueType: "number",
+            animation: AnimationType.NONE,
+            condition: ESkillCondition.CUSTOM_NUMBER_IS_POSITIVE
+        }
+    ];
+}
+
+export const stingSkill_3: IHeroSkillSet = {
+    id: "stingSkill",
+    name: "Sting",
+    desc: "Deal [1+150%xPP] physical\ndamage and if dealt damage\nto health apply 14 poison",
+    level: 3,
+    priceLevel: 2,
+    type: ESkillSetType.PHYSICAL_ATTACK,
+    heroClasses: [EHeroClass.WILD, EHeroClass.WARRIOR],
+    skills: stingSkillset(1,150,14),
+    image: IMAGE_DRAFT_STING, // IMAGE_SKILL_TEST,
+};
+
+export const stingSkill_2: IHeroSkillSet = {
+    id: "stingSkill",
+    name: "Sting",
+    desc: "Deal [1+100%xPP] physical\ndamage and if dealt damage\nto health apply 9 poison",
+    level: 2,
+    priceLevel: 2,
+    type: ESkillSetType.PHYSICAL_ATTACK,
+    heroClasses: [EHeroClass.WILD, EHeroClass.WARRIOR],
+    skills: stingSkillset(1,100,9),
+    nextLevel: stingSkill_3,
+    image: IMAGE_DRAFT_STING, // IMAGE_SKILL_TEST,
+};
+
+export const stingSkill: IHeroSkillSet = {
+    id: "stingSkill",
+    name: "Sting",
+    desc: "Deal [1+50%xPP] physical\ndamage and if dealt damage\nto health apply 6 poison",
+    level: 1,
+    priceLevel: 2,
+    type: ESkillSetType.PHYSICAL_ATTACK,
+    heroClasses: [EHeroClass.WILD, EHeroClass.WARRIOR],
+    skills: stingSkillset(1,50,6),
+    nextLevel: stingSkill_2,
+    image: IMAGE_DRAFT_STING, // IMAGE_SKILL_TEST,
+};
+
+
+const HOPE_BUFF_NAME = "Hope"
+const hopeSkillset = (hp:number): IHeroSkill[] => {
+    return [
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SELF,
+            value: hp,
+            valueType: "number",
+            animation: AnimationType.NONE,
+        },        
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.LOW_PERCENT_ALLY,
+            value: 10,
+            valueFrom: "maxHp",
+            valueType: "percent",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            attribute: "maxHp",
+            targetType: ETargetType.LOW_PERCENT_ALLY,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+        },
+        {
+            type: EHeroSkillType.HEAL,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            value: 100,
+            valueType: "percent",
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: HOPE_BUFF_NAME,
+                targetType: ETargetType.SAME_LAST_TARGET,
+                type: EDebuffType.BATTLE_TRIGGER,
+                timeType: EBuffTimeType.DUEL,
+                value: 1,
+                appTrigger: {
+                    limitedRepeats: true,
+                    allowCastFromDead: true,
+                    skillId: "Hope expired",
+                    type: EAppTriggerType.TURN_START,
+                    targetNumber: 2,
+                    skill: [
+                        {
+                            type: EHeroSkillType.CALCULATE_NUMBER,
+                            targetType: ETargetType.ANCHOR_TARGET,
+                            buff: {
+                                name: HOPE_BUFF_NAME,
+                                type: EBuffType.SAVED_VALUE,
+                                value: 0, // not used
+                                targetType: ETargetType.SELF, // not used
+                                timeType: EBuffTimeType.DUEL, // not used
+                            },
+                            animation: AnimationType.NONE,
+                        },
+                        {
+                            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+                            targetType: ETargetType.ANCHOR_TARGET,
+                            attribute: "maxHp",
+                            value: 100,
+                            valueType: "percent",
+                            valueFrom: "customNumber",
+                        }
+                    ],
+                },
+                nestedEffects: [
+                    {
+                        buffType: EBuffType.SAVED_VALUE,
+                        value: 100,
+                        valueType: "percent",
+                        valueFrom: "customNumber",
+                    }
+                ]
+            },
+            animation: AnimationType.NONE,
+        }
+    ];
+}
+
+export const hopeSkill_3: IHeroSkillSet = {
+    id: "hopeSkill",
+    name: "Hope",
+    desc: "Most injured ally has his\nmax hp increased by 10%\nplus 13, and healed for same\namount, then recieves a\ndebuff that will reduce\ngained max hp in 2 turns",
+    level: 3,
+    priceLevel: 2,
+    type: ESkillSetType.HEAL,
+    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    skills: hopeSkillset(13),
+    image: IMAGE_DRAFT_HOPE, // IMAGE_SKILL_TEST,
+};
+
+export const hopeSkill_2: IHeroSkillSet = {
+    id: "hopeSkill",
+    name: "Hope",
+    desc: "Most injured ally has his\nmax hp increased by 10%\nplus 7, and healed for same\namount, then recieves a\ndebuff that will reduce\ngained max hp in 2 turns",
+    level: 2,
+    priceLevel: 2,
+    type: ESkillSetType.HEAL,
+    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    skills: hopeSkillset(7),
+    nextLevel: hopeSkill_3,
+    image: IMAGE_DRAFT_HOPE, // IMAGE_SKILL_TEST,
+};
+
+export const hopeSkill: IHeroSkillSet = {
+    id: "hopeSkill",
+    name: "Hope",
+    desc: "Most injured ally has his\nmax hp increased by 10%\nplus 4, and healed for same\namount, then recieves a\ndebuff that will reduce\ngained max hp in 2 turns",
+    level: 1,
+    priceLevel: 2,
+    type: ESkillSetType.HEAL,
+    heroClasses: [EHeroClass.PRIEST, EHeroClass.ORDER],
+    skills: hopeSkillset(4),
+    nextLevel: hopeSkill_2,
+    image: IMAGE_DRAFT_HOPE, // IMAGE_SKILL_TEST,
+};
+
 export const mixedClassSkills1 = [
     // physical classes
-    phycisalAttackSkill,
-    statusesIntoHeal,
-    attackWithBleedSkill,
-    nextBAArea,
+    phycisalAttackSkill,    // warrior + master
+    statusesIntoHeal,       // order + wild
+    attackWithBleedSkill,   // master + wild
+    nextBAArea,             // order + warrior
     // magical classes
-    radiantWallSkill,
-    blindingBeamSkill,
-    venomHeartSkill,
-    toxicTuneSkill,
-    heatUpSkill,
+    radiantWallSkill,   // summon + priest
+    blindingBeamSkill,  // magic + bard
+    venomHeartSkill,    // dark + summon
+    toxicTuneSkill,     // dark + bard
+    heatUpSkill,        // magic + priest
     // mixed
-    grudgeHealSkill,
-    openingSkill,
-    fragileSkill,
+    grudgeHealSkill,    // warrior + priest
+    openingSkill,       // master + bard
+    fragileSkill,       // magic + wild
 ];
 
 export const mixedClassSkills2 = [
-    removeBuffSkill,
-    removeDebuffSkill,
+    removeBuffSkill,    // dark + wild
+    removeDebuffSkill,  // priest + order
     chainToNextSkill,
     // new
-    cleanCutSkill,
-    overwhelmSkill,
-    orchestrateSkill,
-    puppetSkill,
+    cleanCutSkill,      // warrior + master
+    overwhelmSkill,     // warrior + dark
+    orchestrateSkill,   // bard + wild
+    puppetSkill,        // warrior + summon
+    hopeSkill,          // order + priest
+    igniteSkill,        // magic + master
+    stingSkill,         // warrior + wild
+    staticSkill,        // magic + summon
 ];
 
-export const mixedClassSkills3 = [outHealBuffSkill, shieldAttackSkill, buffSelfMPorPP, increaseMaxHpSkill, buffSummonCritSkill, chainBasicAttackSkill];
+export const mixedClassSkills3 = [
+    outHealBuffSkill,    // priest + bard
+    shieldAttackSkill,   // warrior + order
+    buffSelfMPorPP,      // warrior + magic
+    increaseMaxHpSkill,  // wild + priest
+    buffSummonCritSkill, // master + summon
+    chainBasicAttackSkill
+];

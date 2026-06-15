@@ -5,8 +5,6 @@ export const EVASION_MODIFIER = 0.5;
 
 export const summonItemBattleBonuses = [EItemBattleBonusType.INCREASE_SUMMON_ATTACK, EItemBattleBonusType.INCREASE_SUMMON_HP];
 
-export const eachTurnDebuffs = [EDebuffType.MARK_BURN];
-
 export const allyTargets = [
     ETargetType.ALL_ALLIES,
     ETargetType.BUFFED_ALLY_RANDOM,
@@ -27,4 +25,5 @@ export const allyTargets = [
     ETargetType.RANDOM_ALLY_EXCEPT_ID,
     ETargetType.RANDOM_ALLY_WITH_SUMMON,
     ETargetType.RANDOM_SUMMON_ALLIED,
+    ETargetType.HIGH_STATUS_ALLY,
 ];

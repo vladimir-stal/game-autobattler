@@ -629,6 +629,13 @@ export enum EHeroSkillType {
         (please, avoid using values x>3 and x<-4)
     */
     COPY_UNIT_CAST_SKILL = "COPY_UNIT_CAST_SKILL",
+    STATUS_ATTACK = "STATUS_ATTACK", // as attack, but with status damage modifiers used (instead of usual)
+    /* MARTYR_STATUS ~ remove X status (all stacks or up to Value+ValueType stacks)
+        from targetFromType target(s) and deal status damage to targetType
+        if status==undefined - choose status with maximum stacks
+    */
+    MARTYR_STATUS = "MARTYR_STATUS",
+    FORCE_HP_REGEN = "FORCE_HP_REGEN", // trigger target's hp regen; may increase value with value+valuetype
 }
 
 export enum EStatusType {
@@ -658,6 +665,7 @@ export enum EBuffType {
     OUTGOING_HEAL = "OUTGOING_HEAL",
     OVERHEAL_TO_DAMAGE = "OVERHEAL_TO_DAMAGE", // Every heal beyond maxHp apply RADIATE status on [changeTargetTypeTo] targets
     BATTLE_TRIGGER = "BATTLE_TRIGGER", // uses appTrigger field to do stuff
+    SAVED_VALUE = "SAVED_VALUE", // does nothing, but can be used to save value in totalValue
 }
 
 export enum EDebuffType {
@@ -702,6 +710,7 @@ export enum ETargetType {
     RANDOM_ALLY = "RANDOM_ALLY",
     HIGH_MP_ALLY = "HIGH_MP_ALLY",
     HIGH_PP_ALLY = "HIGH_PP_ALLY",
+    HIGH_STATUS_ALLY = "HIGH_STATUS_ALLY",
     RANDOM_ALLY_EXCEPT_ID = "RANDOM_ALLY_EXCEPT_ID", // get random ally except ally with id
     RANDOM_ALLY_WITH_SUMMON = "RANDOM_ALLY_WITH_SUMMON",
     SELF = "SELF",
@@ -721,8 +730,10 @@ export enum ETargetType {
     HIGH_SHOCK_ENEMY = "HIGH_SHOCK_ENEMY",
     HIGH_BURN_ENEMY = "HIGH_BURN_ENEMY",
     HIGH_RADIATE_ENEMY = "HIGH_RADIATE_ENEMY",
+    HIGH_STATUS_ENEMY = "HIGH_STATUS_ENEMY",
     HIGH_MP_ENEMY = "HIGH_MP_ENEMY",
     HIGH_PP_ENEMY = "HIGH_PP_ENEMY",
+    HIGH_CRIT_ENEMY = "HIGH_CRIT_ENEMY",
     LOW_HP_ENEMY = "LOW_HP_ENEMY",
     LAST_ENEMY = "LAST_ENEMY",
     LOW_PERCENT_ENEMY = "LOW_PERCENT_ENEMY", // lowest hp% = hp/maxhp
@@ -789,6 +800,7 @@ export enum ESkillCondition {
     HAS_ALLY_BEHIND = "HAS_ALLY_BEHIND",
     ONE_OR_LESS_ALLY_IN_FRONT = "ONE_OR_LESS_ALLY_IN_FRONT",
     ONE_OR_LESS_ALLY_BEHIND = "ONE_OR_LESS_ALLY_BEHIND",
+    HAS_ONE_OR_LESS_HP = "HAS_ONE_OR_LESS_HP",
 }
 
 /**

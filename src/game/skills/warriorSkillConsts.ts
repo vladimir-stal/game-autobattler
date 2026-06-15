@@ -4,8 +4,10 @@ import {
     EBuffTimeType,
     EBuffType,
     EDebuffType,
+    EHeroAttackType,
     EHeroClass,
     EHeroSkillType,
+    ESkillCondition,
     EStatusType,
     ETargetType,
     IHeroSkill,
@@ -13,7 +15,7 @@ import {
     THeroSkills,
 } from "../../types";
 import { i18n } from "../consts";
-import { IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE } from "../utils/load/skillImagesLoad";
+import { IMAGE_DRAFT_FRACTURE, IMAGE_SKILL_AXE_BUFF, IMAGE_SKILL_DOUBLE_SWORD, IMAGE_SKILL_DUEL, IMAGE_SKILL_RAGE, IMAGE_SKILL_TEST } from "../utils/load/skillImagesLoad";
 import { buffSelfMPorPP, shieldAttackSkill } from "./commonSkill3Consts";
 import { nextBAArea, phycisalAttackSkill } from "./commonSkillConsts";
 
@@ -371,8 +373,89 @@ export const mortalStrikeSkill: IHeroSkillSet = {
     //nextLevel: mortalStrikeSkill_2, // next level > (5,7,3) > (8,11,3)
 };
 
+const fractureSkillset = (dmg:number, bleedPercent:number, staticReduce:number):IHeroSkill[] => {
+    // Deal Y phys dmg, remove X+2 regen; X = Bleed * 50% 
+    // (next levels: +phys dmg, +static regen remove)
+    return [
+        {
+            type: EHeroSkillType.ATTACK,
+            attackType: EHeroAttackType.PHYSICAL,
+            value: dmg,
+            valueType: "number",
+            targetType: ETargetType.FIRST_ENEMY,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            status: EStatusType.BLEED,
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            value: bleedPercent,
+            valueType: "percent",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.CALCULATE_NUMBER,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            value: staticReduce,
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+        },
+        {
+            type: EHeroSkillType.ATTRIBUTE_DECREASE,
+            targetType: ETargetType.SAME_LAST_TARGET,
+            attribute: "hpRegen",
+            value: 100,
+            valueFrom: "customNumber",
+            animation: AnimationType.NONE,
+        }
+    ];
+}
+
+export const fractureSkill_3: IHeroSkillSet = {
+    id: "fractureSkill",
+    name: "Fracture",
+    desc: "Attack for [13] physical\ndamage and reduce target's\nregen by 50% bleed stacks\nplus 5",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: fractureSkillset(13, 50, 5),
+    image: IMAGE_DRAFT_FRACTURE, //IMAGE_SKILL_TEST,
+    //nextLevel: fractureSkill_2,
+};
+
+export const fractureSkill_2: IHeroSkillSet = {
+    id: "fractureSkill",
+    name: "Fracture",
+    desc: "Attack for [8] physical\ndamage and reduce target's\nregen by 50% bleed stacks\nplus 3",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: fractureSkillset(8, 50, 3),
+    image: IMAGE_DRAFT_FRACTURE, //IMAGE_SKILL_TEST,
+    nextLevel: fractureSkill_3,
+};
+
+export const fractureSkill: IHeroSkillSet = {
+    id: "fractureSkill",
+    name: "Fracture",
+    desc: "Attack for [5] physical\ndamage and reduce target's\nregen by 50% bleed stacks\nplus 2",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WARRIOR],
+    isBasicAttack: true, // make basic attack
+    skills: fractureSkillset(5, 50, 2),
+    image: IMAGE_DRAFT_FRACTURE, //IMAGE_SKILL_TEST,
+    nextLevel: fractureSkill_2,
+};
+
 export const warriorSkills: THeroSkills = [debuffWorthyFoe, buffNextBa];
 
-export const warriorSkills_2: THeroSkills = warriorSkills.concat([buffNextBaTimes, nextBAArea, phycisalAttackSkill]);
+export const warriorSkills_2: THeroSkills = warriorSkills.concat([buffNextBaTimes, nextBAArea, phycisalAttackSkill, fractureSkill]);
 
 export const warriorSkills_3: THeroSkills = warriorSkills_2.concat([mortalStrikeSkill, buffSelfMPorPP, shieldAttackSkill]);

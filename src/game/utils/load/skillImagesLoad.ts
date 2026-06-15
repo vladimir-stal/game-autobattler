@@ -39,6 +39,14 @@ export const IMAGE_DRAFT_MOMENTUM = "draft/momentum.png";
 export const IMAGE_DRAFT_FIREBLOOD = "draft/fireBlood.png";
 export const IMAGE_DRAFT_PAINBOLTS = "draft/painBolts.png";
 export const IMAGE_DRAFT_POISONHOST = "draft/poisonHost.png";
+export const IMAGE_DRAFT_FRACTURE = "draft/fracture.png";
+export const IMAGE_DRAFT_STATIC = "draft/static.png";
+export const IMAGE_DRAFT_IGNITE = "draft/ignite.png";
+export const IMAGE_DRAFT_MARTYR = "draft/martyr.png";
+export const IMAGE_DRAFT_EVOLVE = "draft/evolve.png";
+export const IMAGE_DRAFT_STING = "draft/sting.png";
+export const IMAGE_DRAFT_HUBRIS = "draft/hubris.png";
+export const IMAGE_DRAFT_HOPE = "draft/hope.png";
 const draftList = [
     IMAGE_DRAFT_PAINBOLTS,
     IMAGE_DRAFT_ASONE,
@@ -52,6 +60,14 @@ const draftList = [
     IMAGE_DRAFT_OVERWHELM,
     IMAGE_DRAFT_PUPPET,
     IMAGE_DRAFT_POISONHOST,
+    IMAGE_DRAFT_FRACTURE,
+    IMAGE_DRAFT_STATIC,
+    IMAGE_DRAFT_IGNITE,
+    IMAGE_DRAFT_MARTYR,
+    IMAGE_DRAFT_EVOLVE,
+    IMAGE_DRAFT_STING,
+    IMAGE_DRAFT_HUBRIS,
+    IMAGE_DRAFT_HOPE,
 ];
 
 // LEVEL 2

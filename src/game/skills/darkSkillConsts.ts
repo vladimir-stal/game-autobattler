@@ -17,6 +17,7 @@ import {
 } from "../../types";
 import { i18n } from "../consts";
 import {
+    IMAGE_DRAFT_HUBRIS,
     IMAGE_DRAFT_POISONHOST,
     IMAGE_SKILL_DARK_21,
     IMAGE_SKILL_DARK_22,
@@ -493,12 +494,12 @@ const concentrateThePoisonSkillset = (mpScale: number): IHeroSkill[] => {
             animation: AnimationType.NONE,
         },
         {
-            type: EHeroSkillType.ATTACK,
+            type: EHeroSkillType.STATUS_ATTACK,
             targetType: ETargetType.HIGH_POISON_ENEMY,
+            status: EStatusType.POISON,
             value: 100,
             valueType: "percent",
             valueFrom: "customNumber",
-            attackType: EHeroAttackType.MAGIC,
             animation: AnimationType.NONE,
         },
     ];
@@ -653,8 +654,72 @@ export const poisonHostSkill: IHeroSkillSet = {
     image: IMAGE_DRAFT_POISONHOST, //IMAGE_SKILL_TEST,
 };
 
+const hubrisSkillset = (crit: number, atk: number): IHeroSkill[] => {
+    // curse highest crit enemy, reducing crit & ba
+    return [
+        {
+            type: EHeroSkillType.DEBUFF,
+            debuff: {
+                name: "Hubris",
+                targetType: ETargetType.HIGH_CRIT_ENEMY,
+                timeType: EBuffTimeType.DUEL,
+                type: EDebuffType.ATTRIBUTE_DECREASE,
+                value: crit,
+                valueType: "number",
+                attribute: "critChance",
+                nestedEffects: [
+                    {
+                        debuffType: EDebuffType.ATTRIBUTE_DECREASE,
+                        attribute: "attack",
+                        value: atk,
+                        valueType: "number",
+                    }
+                ]
+            }
+        }
+    ];
+};
+
+export const hubrisSkill_3: IHeroSkillSet = {
+    id: "hubrisSkill",
+    name: "Hubris",
+    desc: "Curse highest crit enemy,\nreducing his crit by 15\nand basic attack by 3",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    type: ESkillSetType.DEBUFF,
+    skills: hubrisSkillset(15,1),
+    image: IMAGE_DRAFT_HUBRIS, //IMAGE_SKILL_TEST,
+};
+
+export const hubrisSkill_2: IHeroSkillSet = {
+    id: "hubrisSkill",
+    name: "Hubris",
+    desc: "Curse highest crit enemy,\nreducing his crit by 10\nand basic attack by 2",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    type: ESkillSetType.DEBUFF,
+    skills: hubrisSkillset(10,1),
+    nextLevel: hubrisSkill_3,
+    image: IMAGE_DRAFT_HUBRIS, //IMAGE_SKILL_TEST,
+};
+
+export const hubrisSkill: IHeroSkillSet = {
+    id: "hubrisSkill",
+    name: "Hubris",
+    desc: "Curse highest crit enemy,\nreducing his crit by 5\nand basic attack by 1",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.DARK],
+    type: ESkillSetType.DEBUFF,
+    skills: hubrisSkillset(5,1),
+    nextLevel: hubrisSkill_2,
+    image: IMAGE_DRAFT_HUBRIS, //IMAGE_SKILL_TEST,
+};
+
 export const darkSkills: THeroSkills = [poisonRandom, magicAttackX3];
 
-export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, concentrateThePoisonSkill, removeBuffSkill, toxicTuneSkill, venomHeartSkill, poisonHostSkill]);
+export const darkSkills_2: THeroSkills = darkSkills.concat([debuffBaNextBaAll, concentrateThePoisonSkill, removeBuffSkill, toxicTuneSkill, venomHeartSkill, poisonHostSkill, hubrisSkill]);
 
 export const darkSkills_3: THeroSkills = darkSkills_2.concat([stealPPorMPSkill, magicRain]);

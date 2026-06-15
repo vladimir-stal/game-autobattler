@@ -683,6 +683,8 @@ export const asOneSkill: IHeroSkillSet = {
     image: IMAGE_DRAFT_ASONE, //IMAGE_SKILL_TEST,
     nextLevel: asOneSkill_2,
 };
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const summonSkills: THeroSkills = [fireflySummonSkill, warriorSummonSkill];

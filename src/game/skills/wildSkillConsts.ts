@@ -1,7 +1,8 @@
-import { EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
+import { AnimationType, EHeroAttackType, EHeroClass, EHeroSkillType, ESkillCondition, ETargetType, IHeroSkill, IHeroSkillSet, THeroSkills } from "../../types";
 import { i18n } from "../consts";
 import { TOTEM_ID_WILD_BASIC } from "../totemConsts";
 import {
+    IMAGE_DRAFT_EVOLVE,
     IMAGE_SKILL_NATURE_SHIELD,
     IMAGE_SKILL_REGEN,
     IMAGE_SKILL_TEST,
@@ -283,8 +284,62 @@ export const incrTotemValueSkill: IHeroSkillSet = {
     nextLevel: incrTotemValueSkill_2,
 };
 
+const evolveSkillset = (hp:number):IHeroSkill[] => {
+    // increase self max hp by x and trigger self Regen
+    return [
+        {
+            type: EHeroSkillType.ATTRIBUTE_INCREASE,
+            targetType: ETargetType.SELF,
+            attribute: "maxHp",
+            value: hp,
+            valueType: "number",
+        },
+        {
+            type: EHeroSkillType.FORCE_HP_REGEN,
+            targetType: ETargetType.SELF,
+            animation: AnimationType.NONE,
+        }
+    ];
+}
+
+export const evolveSkill_3: IHeroSkillSet = {
+    id: "evolveSkill",
+    name: "Evolve",
+    desc: "Increase max hp by 13 and\ntrigger hp regen",
+    level: 3,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WILD],
+    skills: evolveSkillset(13),
+    //nextLevel: evolveSkill_2,
+    image: IMAGE_DRAFT_EVOLVE, //IMAGE_SKILL_TEST,
+};
+
+export const evolveSkill_2: IHeroSkillSet = {
+    id: "evolveSkill",
+    name: "Evolve",
+    desc: "Increase max hp by 8 and\ntrigger hp regen",
+    level: 2,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WILD],
+    skills: evolveSkillset(8),
+    nextLevel: evolveSkill_3,
+    image: IMAGE_DRAFT_EVOLVE, //IMAGE_SKILL_TEST,
+};
+
+export const evolveSkill: IHeroSkillSet = {
+    id: "evolveSkill",
+    name: "Evolve",
+    desc: "Increase max hp by 5 and\ntrigger hp regen",
+    level: 1,
+    priceLevel: 2,
+    heroClasses: [EHeroClass.WILD],
+    skills: evolveSkillset(5),
+    nextLevel: evolveSkill_2,
+    image: IMAGE_DRAFT_EVOLVE, //IMAGE_SKILL_TEST,
+};
+
 export const wildSkills: THeroSkills = [wildBasicTotemSkill, attrIncrHpReg];
 
-export const wildSkills_2: THeroSkills = wildSkills.concat([attrDescArmor, removeBuffSkill, statusesIntoHeal, attackWithBleedSkill]);
+export const wildSkills_2: THeroSkills = wildSkills.concat([attrDescArmor, removeBuffSkill, statusesIntoHeal, attackWithBleedSkill, evolveSkill]);
 
 export const wildSkills_3: THeroSkills = wildSkills_2.concat([incrTotemValueSkill, increaseMaxHpSkill]);
