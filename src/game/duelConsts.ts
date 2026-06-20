@@ -1394,14 +1394,14 @@ export const duelEnemies = [enemy1_test, enemy2, enemy3, enemy4_test, enemy5, en
 
 export const duelEnemyNames = [
     "Lolodin87",
-    "xXxRatWarxXx",
+    "RatWar",
     "MeAndMySon",
-    "CuteWitch99",
-    "NobodyExpects",
+    "CuteWitch9",
+    "NoExpects",
     "Holy_Dagger_13",
     "shocKING",
     "MisterDETH",
     "ClownSticks",
     "WiLdPiRaTe",
-    "_toxxic_edgy_",
+    "toxxicedgy",
 ];

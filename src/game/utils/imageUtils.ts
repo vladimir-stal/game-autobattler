@@ -301,7 +301,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.BEAST_MASTER:
             return { image: IMAGE_BEASTMASTER };
         case EHeroClass.BLADEDANCER:
-            return { image: IMAGE_BLADEDANCER, animation: AnimationType.BLADEDANCER_IDLE };
+            return { image: IMAGE_BLADEDANCER, animation: AnimationType.BLADEDANCER_IDLE, idleBattleAnimation: AnimationType.BLADEDANCER_IDLE };
         case EHeroClass.DRUID:
             return { image: IMAGE_DRUID };
         case EHeroClass.GLADIATOR:
@@ -342,7 +342,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             };
         //return { image: IMAGE_PALADIN };
         case EHeroClass.PREDATOR:
-            return { image: IMAGE_PREDATOR, animation: AnimationType.PREDATOR_IDLE };
+            return { image: IMAGE_PREDATOR, animation: AnimationType.PREDATOR_IDLE, idleBattleAnimation: AnimationType.PREDATOR_IDLE };
         case EHeroClass.SHADOW_MASTER:
             return { image: IMAGE_SHADOWMASTER };
         case EHeroClass.SHAMAN:
@@ -350,11 +350,13 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
             return {
                 image: IMAGE_SHAMAN,
                 animation: AnimationType.SHAMAN_IDLE,
+                idleBattleAnimation: AnimationType.SHAMAN_IDLE,
             };
         case EHeroClass.COMMANDER:
             return {
                 image: IMAGE_COMMANDER,
                 animation: AnimationType.COMMANDER_IDLE,
+                idleBattleAnimation: AnimationType.COMMANDER_IDLE,
             };
         case EHeroClass.SAMURAI:
             return {
@@ -391,7 +393,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.RUNECASTER:
             return { image: IMAGE_RUNECASTER_IDLE, animation: AnimationType.RUNECASTER_IDLE, idleBattleAnimation: AnimationType.RUNECASTER_IDLE };
         case EHeroClass.SORCERER:
-            return { image: IMAGE_SORCERER, animation: AnimationType.SORCERER_IDLE };
+            return { image: IMAGE_SORCERER, animation: AnimationType.SORCERER_IDLE, idleBattleAnimation: AnimationType.SORCERER_IDLE };
         case EHeroClass.DOOMSAYER:
             return {
                 distance: -20,
@@ -406,7 +408,7 @@ export function getHeroImage(heroClass: EHeroClass): IAnimations {
         case EHeroClass.MINSTREL:
             return { image: IMAGE_MINSTREL };
         case EHeroClass.WARLOCK:
-            return { image: IMAGE_WARLOCK, animation: AnimationType.WARLOCK_IDLE };
+            return { image: IMAGE_WARLOCK, animation: AnimationType.WARLOCK_IDLE, idleBattleAnimation: AnimationType.WARLOCK_IDLE };
         case EHeroClass.EXORCIST:
             return { image: IMAGE_EXORCIST };
         case EHeroClass.ILLUSIONIST:
@@ -450,6 +452,7 @@ export const getUnitImage = (unitId: string): IAnimations => {
                 distanceEnemy: -100,
                 image: IMAGE_BOSS_MINOTAUR,
                 animation: AnimationType.BOSS_MINOTAUR_IDLE,
+                idleBattleAnimation: AnimationType.BOSS_MINOTAUR_IDLE,
                 attackAnimation: AnimationType.BOSS_MINOTAUR_ATTACK,
                 massAttackAnimation: AnimationType.BOSS_MINOTAUR_STOMP,
                 hurtAnimation: AnimationType.BOSS_MINOTAUR_HURT,

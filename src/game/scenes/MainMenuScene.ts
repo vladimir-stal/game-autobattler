@@ -1,3 +1,4 @@
+import { colors } from "../../i18n/skills_ru";
 import { EScene } from "../../types";
 import { i18n } from "../consts";
 import { EventBus, EventType } from "../EventBus";
@@ -36,16 +37,16 @@ export class MainMenuScene extends Scene {
         const screenCenterY = this.cameras.main.height / 2;
         this.background = this.add.image(screenCenterX, screenCenterY, IMAGE_MAIN_MENU).setOrigin(0.5, 0.5).setDisplaySize(600, 190);
 
-        this.background.setInteractive();
-        this.background.on(
-            Input.Events.GAMEOBJECT_POINTER_DOWN,
-            () => {
-                //this.playChangeSceneSound();
-                EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
-                this.scene.switch(EScene.LOBBY_LOADING);
-            },
-            this,
-        );
+        //this.background.setInteractive();
+        // this.background.on(
+        //     Input.Events.GAMEOBJECT_POINTER_DOWN,
+        //     () => {
+        //         //this.playChangeSceneSound();
+        //         EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
+        //         this.scene.switch(EScene.LOBBY_LOADING);
+        //     },
+        //     this,
+        // );
 
         //sounds
         //this.changeSceneSound1 = this.sound.add(SOUND_MAIN_MENU_CLICK_2, { loop: false, volume: 0.05 });
@@ -125,6 +126,39 @@ export class MainMenuScene extends Scene {
             .setOrigin(0.5);
         this.mainContainer.add(gameTitleText);
 
+        const tutorialLinkText = this.add
+            .rexBBCodeText(0, -170, `BEFORE PLAYING GAME PLEASE CHECK THE SHORT [color=${colors.HEAL}]TUTORIAL![/color]`, {
+                fontFamily: "Arial Black",
+                fontSize: 16,
+                color: "#e74e4e",
+                stroke: "#000000",
+                strokeThickness: 8,
+                align: "center",
+            })
+            .setOrigin(0.5);
+        this.mainContainer.add(tutorialLinkText);
+
+        tutorialLinkText.setInteractive();
+        tutorialLinkText
+            .on(
+                Input.Events.GAMEOBJECT_POINTER_OVER,
+                () => {
+                    tutorialLinkText.setText(`BEFORE PLAYING GAME PLEASE CHECK THE SHORT [color=${colors.TOTEM}]TUTORIAL![/color]`);
+                },
+                this,
+            )
+            .on(
+                Input.Events.GAMEOBJECT_POINTER_OUT,
+                () => {
+                    tutorialLinkText.setText(`BEFORE PLAYING GAME PLEASE CHECK THE SHORT [color=${colors.HEAL}]TUTORIAL![/color]`);
+                },
+                this,
+            );
+
+        tutorialLinkText.on(Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+            window.open("https://steamcommunity.com/sharedfiles/filedetails/?id=3724244199", "_blank");
+        });
+
         const titleText = this.add
             .text(0, -250, i18n.ui.mainMenu.START_GAME, {
                 fontFamily: "Arial Black",
@@ -142,6 +176,20 @@ export class MainMenuScene extends Scene {
                 //this.playChangeSceneSound();
                 EventBus.removeListener(EventType.ROOM_STATUS_CHANGED);
                 this.scene.switch(EScene.LOBBY_LOADING);
+            },
+            this,
+        );
+        titleText.on(
+            Input.Events.GAMEOBJECT_POINTER_OVER,
+            () => {
+                titleText.setColor("#c0e9cc");
+            },
+            this,
+        );
+        titleText.on(
+            Input.Events.GAMEOBJECT_POINTER_OUT,
+            () => {
+                titleText.setColor("#ffffff");
             },
             this,
         );

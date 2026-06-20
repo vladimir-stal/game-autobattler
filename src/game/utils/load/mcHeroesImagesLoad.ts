@@ -170,7 +170,7 @@ export function loadMcHeroesImages(scene: Scene) {
     });
 
     if (GAME_MODE === "FULL") {
-        scene.load.spritesheet(IMAGE_BATTLEMAGE_BATTLE_IDLE, "assets/sprites/units/mc/battlemage/battlemage_battle_idle_cut_400.webp", {
+        scene.load.spritesheet(IMAGE_BATTLEMAGE_BATTLE_IDLE, "assets/sprites/units/mc/battlemage/battlemage_battle_idle_cut_400.png", {
             frameWidth: 400,
             frameHeight: 400,
         });
@@ -199,7 +199,7 @@ export function loadMcHeroesImages(scene: Scene) {
 
     //scene.load.image(IMAGE_BLADEDANCER, "assets/sprites/units/mc/bladedancer/bladedancer_2_400.webp");
 
-    scene.load.spritesheet(IMAGE_BLADEDANCER_IDLE, "assets/sprites/units/mc/bladedancer/bladedancer_idle_cut_350.webp", {
+    scene.load.spritesheet(IMAGE_BLADEDANCER_IDLE, "assets/sprites/units/mc/bladedancer/bladedancer_idle_cut_350.png", {
         frameWidth: 350,
         frameHeight: 350,
     });
@@ -272,7 +272,7 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // NECROMANCER ///////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_NECROMANCER_IDLE, "assets/sprites/units/mc/necromancer/necromancer_idle_cut_300.webp", {
+    scene.load.spritesheet(IMAGE_NECROMANCER_IDLE, "assets/sprites/units/mc/necromancer/necromancer_idle_cut_300.png", {
         frameWidth: 300,
         frameHeight: 300,
     });
@@ -376,7 +376,7 @@ export function loadMcHeroesImages(scene: Scene) {
 
     // SORCERER ///////////////////////////////////////////////////////////////////
 
-    scene.load.spritesheet(IMAGE_SORCERER_IDLE, "assets/sprites/units/mc/sorcerer/sorcerer_idle_cut_300.webp", {
+    scene.load.spritesheet(IMAGE_SORCERER_IDLE, "assets/sprites/units/mc/sorcerer/sorcerer_idle_cut_300.png", {
         frameWidth: 300,
         frameHeight: 300,
     });
@@ -468,7 +468,7 @@ export function loadMcHeroIdleImages(scene: Scene, mcHeroClass: EHeroClass, load
             break;
         case EHeroClass.BLADEDANCER:
             {
-                scene.load.spritesheet(IMAGE_BLADEDANCER_IDLE, "assets/sprites/units/mc/bladedancer/bladedancer_idle_cut_350.webp", {
+                scene.load.spritesheet(IMAGE_BLADEDANCER_IDLE, "assets/sprites/units/mc/bladedancer/bladedancer_idle_cut_350.png", {
                     frameWidth: 350,
                     frameHeight: 350,
                 });
@@ -531,7 +531,7 @@ export function loadMcHeroIdleImages(scene: Scene, mcHeroClass: EHeroClass, load
             break;
         case EHeroClass.NECROMANCER:
             {
-                scene.load.spritesheet(IMAGE_NECROMANCER_IDLE, "assets/sprites/units/mc/necromancer/necromancer_idle_cut_300.webp", {
+                scene.load.spritesheet(IMAGE_NECROMANCER_IDLE, "assets/sprites/units/mc/necromancer/necromancer_idle_cut_300.png", {
                     frameWidth: 300,
                     frameHeight: 300,
                 });
@@ -576,7 +576,7 @@ export function loadMcHeroIdleImages(scene: Scene, mcHeroClass: EHeroClass, load
             break;
         case EHeroClass.SORCERER:
             {
-                scene.load.spritesheet(IMAGE_SORCERER_IDLE, "assets/sprites/units/mc/sorcerer/sorcerer_idle_cut_300.webp", {
+                scene.load.spritesheet(IMAGE_SORCERER_IDLE, "assets/sprites/units/mc/sorcerer/sorcerer_idle_cut_300.png", {
                     frameWidth: 300,
                     frameHeight: 300,
                 });
@@ -624,7 +624,7 @@ export function loadMcHeroBattleImages(scene: Scene, mcHeroClass: EHeroClass) {
             break;
         case EHeroClass.BATTLE_MAGE:
             {
-                scene.load.spritesheet(IMAGE_BATTLEMAGE_BATTLE_IDLE, "assets/sprites/units/mc/battlemage/battlemage_battle_idle_cut_400.webp", {
+                scene.load.spritesheet(IMAGE_BATTLEMAGE_BATTLE_IDLE, "assets/sprites/units/mc/battlemage/battlemage_battle_idle_cut_400.png", {
                     frameWidth: 400,
                     frameHeight: 400,
                 });
@@ -655,7 +655,7 @@ export function loadMcHeroBattleImages(scene: Scene, mcHeroClass: EHeroClass) {
             break;
         case EHeroClass.BLADEDANCER:
             {
-                scene.load.spritesheet(IMAGE_BLADEDANCER_IDLE, "assets/sprites/units/mc/bladedancer/bladedancer_idle_cut_350.webp", {
+                scene.load.spritesheet(IMAGE_BLADEDANCER_IDLE, "assets/sprites/units/mc/bladedancer/bladedancer_idle_cut_350.png", {
                     frameWidth: 350,
                     frameHeight: 350,
                 });
@@ -890,7 +890,7 @@ export function loadMcHeroBattleImages(scene: Scene, mcHeroClass: EHeroClass) {
             break;
         case EHeroClass.SORCERER:
             {
-                scene.load.spritesheet(IMAGE_SORCERER_IDLE, "assets/sprites/units/mc/sorcerer/sorcerer_idle_cut_300.webp", {
+                scene.load.spritesheet(IMAGE_SORCERER_IDLE, "assets/sprites/units/mc/sorcerer/sorcerer_idle_cut_300.png", {
                     frameWidth: 300,
                     frameHeight: 300,
                 });

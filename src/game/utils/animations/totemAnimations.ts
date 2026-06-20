@@ -4,6 +4,7 @@ import { Scene } from "phaser";
 import { AnimationType } from "../../../types";
 import { IMAGE_TOTEM_WILD_BASIC_ACTIVE, IMAGE_TOTEM_WILD_BASIC_IDLE } from "../imageLoadUtil";
 import { TOTEM_ID_WILD_BASIC } from "../../totemConsts";
+import { createLogger } from "vite";
 
 //
 
@@ -15,6 +16,7 @@ export function createTotemAnimations(scene: Scene, totemId: string) {
         case TOTEM_ID_WILD_BASIC:
         default:
             {
+                console.log("create basic totem animations");
                 scene.anims.create({
                     key: AnimationType.TOTEM_WILD_BASIC_IDLE,
                     //frames: scene.anims.generateFrameNumbers(IMAGE_TOTEM_ATTACK, { start: 0, end: 103 }),

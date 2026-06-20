@@ -218,7 +218,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
         this.add(this.attackText);
         this.attackIcon = this.scene.add.image(35, 80, IMAGE_ICON_ATTACK).setDisplaySize(20, 20).setVisible(false);
         this.add(this.attackIcon);
-        this.attackDescrText = this.scene.add.text(90, 72, i18n.attributes.attribute.basicAttack, { fontSize: 12, color: "#dddddd" }).setVisible(false);
+        this.attackDescrText = this.scene.add.text(70, 72, i18n.attributes.attribute.basicAttack, { fontSize: 12, color: "#dddddd" }).setVisible(false);
         this.add(this.attackDescrText);
 
         //
@@ -573,7 +573,7 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
             this.titleText.setText(name);
             this.hpText.setText(basicMaxHp + "");
-            this.attackText.setText(basicAttack + "(" + i18n.ui[unit.attackType] + ")");
+            this.attackText.setText(basicAttack + ""); // + "(" + i18n.ui[unit.attackType] + ")");
 
             //if (basicArmor > 0) {
             this.armorText.setVisible(true);
@@ -673,7 +673,10 @@ export class CardHintPanel extends Phaser.GameObjects.Container {
 
             const skill_prefix = "[color=#9999aa]Skill:[/color] [color=#bb8844][b]";
             if (unit.heroClassType === EHeroClassType.MULTI) {
-                const mcSkill = unit.skills.find(sk => sk.isMcSkill);
+                const mcSkill = unit.skills.find((sk) => sk.isMcSkill);
+                if (!mcSkill) {
+                    return;
+                }
                 const skill_1 = skill_prefix + mcSkill.name + "[/b][/color]\n" + mcSkill.desc;
                 const passive = unit.passiveSkill ? "\n\n[color=#9999aa]Passive:[/color] " + unit.passiveSkill.desc : "";
                 this.longText.setText(skill_1 + passive);

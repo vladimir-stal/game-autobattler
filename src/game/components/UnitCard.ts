@@ -113,7 +113,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
             .on(Input.Events.GAMEOBJECT_POINTER_OUT, () => {
                 this.gameScene.hintPanel.hide();
             })
-            .on(Input.Events.GAMEOBJECT_POINTER_DOWN, (pointer) => {
+            .on(Input.Events.GAMEOBJECT_POINTER_DOWN, (pointer: Phaser.Input.Pointer) => {
                 if (pointer.rightButtonDown()) {
                     this.gameScene.hintPanel.showLongText = !this.gameScene.hintPanel.showLongText;
                     if (this.gameScene.hintPanel.visible) {
@@ -273,19 +273,19 @@ export class UnitCard extends Phaser.GameObjects.Container {
                 const skillSlot = new HeroSkillSlot(this.gameScene, x, y, id, skills[1], () => this.handleSkillRemovedMobs(1));
                 if (!this.unit.skills[4]) {
                     skillSlot.canRemoveSkill = false;
-                    skillSlot.render()
+                    skillSlot.render();
                 }
                 this.add(skillSlot);
                 this.skillSlots.push(skillSlot);
             }
             // level 4+: two slots
-            if (level>3) {
+            if (level > 3) {
                 const x = 60;
                 const y = 35;
                 const skillSlot = new HeroSkillSlot(this.gameScene, x, y, id, skills[3], () => this.handleSkillRemovedMobs(3));
                 if (!this.unit.skills[5]) {
                     skillSlot.canRemoveSkill = false;
-                    skillSlot.render()
+                    skillSlot.render();
                 }
                 this.add(skillSlot);
                 this.skillSlots.push(skillSlot);
@@ -325,7 +325,7 @@ export class UnitCard extends Phaser.GameObjects.Container {
 
     // ANIMATIONS
 
-    playAddSkill(slotId?:number) {
+    playAddSkill(slotId?: number) {
         if (slotId !== undefined) {
             this.skillSlots[slotId].playAddSkill();
         } else {

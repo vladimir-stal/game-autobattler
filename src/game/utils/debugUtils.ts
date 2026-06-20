@@ -5,20 +5,41 @@ import { jacket21_3 } from "../commonItemConsts2";
 import { enemy1_test, enemy4_test, enemy5 } from "../duelConsts";
 
 import {
+    alchemistHero,
+    assasinHero,
     barbarianHero,
+    battleMageHero,
+    beastMasterHero,
+    bishopHero,
+    blackKnightHero,
     bladedancerHero,
     commanderHero,
     doomsayerHero,
+    druidHero,
+    duelistHero,
+    exorcistHero,
     forestSpiritHero,
     gladiatorHero,
+    heraldHero,
+    hunterHero,
     illusionistHero,
+    jesterHero,
+    knightHero,
     mimicHero,
+    minstrelHero,
+    monkHero,
     necromancerHero,
     oracleHero,
+    paladinHero,
     predatorHero,
+    runecasterHero,
     samuraiHero,
+    shadowMasterHero,
     shamanHero,
+    sorcererHero,
+    warlockHero,
     witchHero,
+    zealotHero,
 } from "../mcHeroConsts";
 import { itemGoblinBoneDagger } from "../mobItemConsts";
 import { chainBasicAttackSkill, phycisalAttackSkill, radiantWallSkill, toxicTuneSkill, venomHeartSkill } from "../skills/commonSkillConsts";
@@ -49,6 +70,8 @@ import { outHealBuffSkill } from "../skills/commonSkill3Consts";
 import { scrollOfSkill } from "../commonItemConsts3";
 import { totem5HptoDmg } from "../weaponItem5Consts";
 import { wildBasicTotemSkill } from "../skills/wildSkillConsts";
+import { runecasterSkill } from "../skills/mc/runecasterSkills";
+import { ministrelPassive } from "../skills/mc/minstrelSkills";
 
 export const debugHeroSelectRoom = false;
 export const debugStartingItemsRoom = false;
@@ -59,7 +82,11 @@ export const debugEnemy: TDuelEnemy = enemy4_test;
 //
 
 export const customHeroSelectRoom = (): (ICard | null)[] => {
-    return [null, { type: ECardType.UNIT, price: 0, unit: wildHero }];
+    return [
+        { type: ECardType.UNIT, price: 0, unit: sorcererHero },
+        { type: ECardType.UNIT, price: 0, unit: necromancerHero },
+        { type: ECardType.UNIT, price: 0, unit: battleMageHero },
+    ];
 };
 
 export const customStartingItemsRoom = (): ICard[] => {

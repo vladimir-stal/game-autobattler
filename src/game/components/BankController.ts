@@ -35,7 +35,7 @@ export class BankController {
 
     getIncome(day: number) {
         if (day > 0 && day % 3 === 0) {
-            this.increaseIncome(2);
+            this.increaseIncome(3);
         }
 
         this.changeBank(this.totalGold + this.income);

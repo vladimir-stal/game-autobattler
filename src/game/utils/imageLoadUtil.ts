@@ -787,7 +787,7 @@ export function getUnitIdsBySkill(skillId: string): string[] {
 export function getTotemIdsBySkill(skillId: string): string[] {
     const unitsIds: string[] = [];
     switch (skillId) {
-        case "wildBasicTotemSkill":
+        case "wildBasicTotem":
             unitsIds.push(TOTEM_ID_WILD_BASIC);
             break;
         case "GladiatorTotem":
